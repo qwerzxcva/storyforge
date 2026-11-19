@@ -309,4 +309,3 @@ test('一致性JSON审计中关闭面板会停止等待，刷新不生成报告�
   expect(calls).toBe(1)
   await expect(page.locator('.tiptap-editor')).toContainText(quote)
 })
-

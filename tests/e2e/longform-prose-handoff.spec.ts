@@ -264,4 +264,3 @@ test('模型窗口不够时显示错误，不发送被裁短的正式正文请�
   await expect(page.getByRole('textbox', { name: 'AI 候选可编辑内容', exact: true })).toHaveCount(0)
   await expect(page.locator('.tiptap-editor')).toBeEmpty()
 })
-

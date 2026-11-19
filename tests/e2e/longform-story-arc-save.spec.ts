@@ -389,4 +389,3 @@ test('active native IME event draft blocks close and structural navigation until
   expect(await guarded()).toBe(false)
   await page.reload(); expect((await stage(page, id)).keyEvents).toEqual(['核验尚在输入'])
 })
-
