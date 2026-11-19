@@ -11,6 +11,9 @@ test('two native tabs adopt one selection once and terminal repair preserves lat
     return { scope: f.scope, revision: f.revision, clocks: campaign.clocks, fronts: campaign.fronts }
   })
   let requests = 0
+  await page.route('**/fixture-adoption/api/v1/models', route => route.fulfill({
+    json: { models: [{ key: 'fixture-model', type: 'llm', loaded_instances: [{ config: { context_length: 131072 } }] }] },
+  }))
   await page.route('**/fixture-adoption/v1/chat/completions', async route => {
     requests++
     const messages = route.request().postDataJSON().messages, keys = JSON.parse(messages[1].content.match(/【实际读取资源闭集】([^\n]+)/)[1])

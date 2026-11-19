@@ -16,15 +16,18 @@ async function configureMockedTextProvider(page: Page) {
     localStorage.setItem(
       "storyforge-ai-config",
       JSON.stringify({
-        provider: "agnes",
+        provider: "custom",
         apiKey: "browser-rehearsal-key",
-        model: "agnes-2.0-flash",
-        baseUrl: "https://apihub.agnes-ai.com/v1",
+        model: "ttrpg-browser-fixture",
+        baseUrl: `${location.origin}/ttrpg-fixture/v1`,
         temperature: 0,
         maxTokens: 0,
       }),
     );
   });
+  await page.route('**/ttrpg-fixture/api/v1/models', route => route.fulfill({
+    json: { models: [{ key: 'ttrpg-browser-fixture', type: 'llm', loaded_instances: [{ config: { context_length: 131072 } }] }] },
+  }))
   await page.route("**/chat/completions", async (route) => {
     const body = route.request().postDataJSON() as {
       messages?: Array<{ role?: string; content?: string }>;
@@ -72,7 +75,7 @@ async function configureMockedTextProvider(page: Page) {
         id: `ttrpg-browser-rehearsal-${Date.now()}`,
         object: "chat.completion",
         created: Math.floor(Date.now() / 1000),
-        model: "agnes-2.0-flash",
+        model: "ttrpg-browser-fixture",
         choices: [
           {
             index: 0,

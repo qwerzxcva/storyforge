@@ -2,12 +2,18 @@ name: Fork Android Release
 
 on:
   workflow_dispatch:
+    inputs:
+      test_scope:
+        description: 'Full release acceptance or focused CI regression verification'
+        type: choice
+        default: full
+        options: [full, regression]
 
 permissions:
   contents: read
 
 concurrency:
-  group: fork-android-release
+  group: fork-android-${{ inputs.test_scope == 'regression' && format('regression-{0}', github.ref) || 'release' }}
   cancel-in-progress: false
 
 env:
@@ -16,6 +22,7 @@ env:
 
 jobs:
   coverage-shards:
+    if: inputs.test_scope != 'regression'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     strategy:
@@ -63,6 +70,7 @@ jobs:
         run: npm run ci
 
   browser-checks:
+    if: inputs.test_scope != 'regression'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     strategy:
@@ -98,8 +106,51 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
+  regression:
+    if: inputs.test_scope == 'regression'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [inputs, design, runtime, town]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - if: matrix.suite != 'town'
+        run: npx playwright install --with-deps chromium
+      - name: Verify the failed paths without changing release acceptance
+        env:
+          SUITE: ${{ matrix.suite }}
+          PLAYWRIGHT_FROZEN_WORKSPACE: '1'
+          STORYFORGE_COVERAGE_SHARD_COMPONENT: '1'
+        shell: bash
+        run: |
+          case "$SUITE" in
+            inputs) npm run ci:e2e -- -- tests/e2e/input-area-layout.spec.ts tests/e2e/theme-collection.spec.ts --reporter=github,blob ;;
+            design) npm run ci:e2e -- -- tests/e2e/ttrpg-open-authoring-design-candidate.spec.ts tests/e2e/ttrpg-open-authoring-design-adoption.spec.ts --reporter=github,blob ;;
+            runtime) npm run ci:e2e -- -- tests/e2e/ttrpg-production-journey.spec.ts --reporter=github,blob ;;
+            town) node node_modules/vitest/vitest.mjs run tests/regression/R-SFQA112-ai-town-draft-basis.test.tsx --config=vitest.shard.config.ts --coverage --pool=forks --isolate --maxWorkers=1 ;;
+            *) exit 1 ;;
+          esac
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() }}
+        with:
+          name: fork-regression-${{ matrix.suite }}
+          path: |
+            test-results/
+            blob-report/
+          if-no-files-found: ignore
+          retention-days: 5
+
   android:
-    if: github.repository == 'qwerzxcva/storyforge' && github.ref == 'refs/heads/main'
+    if: inputs.test_scope != 'regression' && github.repository == 'qwerzxcva/storyforge' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     env:
@@ -205,7 +256,7 @@ jobs:
 
   publish:
     needs: [checks, browser-checks, android]
-    if: github.ref == 'refs/heads/main'
+    if: inputs.test_scope != 'regression' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
