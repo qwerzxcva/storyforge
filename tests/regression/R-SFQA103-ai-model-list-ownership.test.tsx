@@ -94,6 +94,15 @@ describe('SFQA103 · mounted settings model-list ownership', () => {
     expect(useAIConfigStore.getState().config.model).toBe('manual-model')
   })
 
+  it('does not publish models from old custom headers at the same endpoint', async () => {
+    await configure({ customHeaders: [{ name: 'X-Tenant', value: 'tenant-a' }] })
+    await start()
+    await configure({ customHeaders: [{ name: 'X-Tenant', value: 'tenant-b' }] })
+    await respond(0, ['tenant-a-only'])
+    expect(options()).toEqual([])
+    expect(refresh().disabled).toBe(false)
+  })
+
   it('invalidates a provider change even when endpoint and private credential are equal', async () => {
     await start()
     await configure({ provider: 'agnes', baseUrl: BASE.baseUrl, apiKey: BASE.apiKey })

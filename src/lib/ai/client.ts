@@ -8,7 +8,8 @@ import { createLog, updateLog, type TokenUsage } from './logger'
 import { recordUsage } from './usage-log'
 import { estimateTokens, trimMessagesToFit } from './context-budget'
 import { buildOpenAIEndpoint } from './openai-endpoint'
-import { getAIConfigPresetApiKeyV1, useAIConfigStore } from '../../stores/ai-config'
+import { getAIConfigPresetApiKeyV1, getAIConfigPresetHeadersV1, useAIConfigStore } from '../../stores/ai-config'
+import { buildAIRequestHeaders, customHeaderValues } from './request-headers'
 import { resolveAIConfigForTask, type AITaskKind } from './task-routing'
 import { AICompletionResponseErrorV1, inspectCompletionResponseV1, requireCompletionTextV1 } from './completion-response'
 import { allowsSamplingTemperature, targetsOfficialProvider } from './provider-model-lifecycle'
@@ -41,6 +42,7 @@ export function resolveRequestConfig(config: AIConfig, meta?: AICallMeta) {
       config: {
         ...preset.config,
         apiKey: getAIConfigPresetApiKeyV1(preset),
+        customHeaders: getAIConfigPresetHeadersV1(preset),
       },
     })),
     routes: state.taskRoutes,
@@ -281,10 +283,8 @@ function buildRequest(
 
   return {
     url: buildOpenAIEndpoint(config.baseUrl, 'chat/completions'),
-    headers: {
-      'Content-Type': 'application/json',
-      ...(config.apiKey ? { Authorization: `Bearer ${config.apiKey}` } : {}),
-    },
+    headers: buildAIRequestHeaders(config),
+    redirect: config.provider === 'custom' && config.customHeaders?.length ? 'error' as const : undefined,
     body: JSON.stringify(body),
   }
 }
@@ -362,7 +362,7 @@ export async function chatWithImagesV1(
   }
   const req = buildRequest(config, requestMessages, false, options)
   const response = await fetch(req.url, {
-    method: 'POST', headers: req.headers, body: req.body, signal,
+    method: 'POST', headers: req.headers, redirect: req.redirect, body: req.body, signal,
   })
   if (!response.ok) throw new AIError(response.status, await response.text())
   const json = await response.json()
@@ -427,7 +427,7 @@ export async function* streamChat(
     model: config.model,
     status: 'pending',
   }, {
-    sensitiveValues: [config.apiKey],
+    sensitiveValues: [config.apiKey, ...customHeaderValues(config)],
     baseUrl: config.baseUrl,
   })
 
@@ -445,6 +445,7 @@ export async function* streamChat(
       response = await fetch(req.url, {
         method: 'POST',
         headers: req.headers,
+        redirect: req.redirect,
         body: req.body,
         signal,
       })
@@ -603,7 +604,7 @@ export async function chat(
   const startedAt = Date.now()
   const log = createLog(
     { type: 'chat', provider: config.provider, model: config.model, url: req.url, status: 'pending' },
-    { sensitiveValues: [config.apiKey], baseUrl: config.baseUrl },
+    { sensitiveValues: [config.apiKey, ...customHeaderValues(config)], baseUrl: config.baseUrl },
   )
   try {
     if (result?.beforeModelDispatch) await assertModelDispatchGuardV1(result, signal)
@@ -613,6 +614,7 @@ export async function chat(
     const response = await fetch(req.url, {
       method: 'POST',
       headers: req.headers,
+      redirect: req.redirect,
       body: req.body,
       signal,
     })
