@@ -15,7 +15,7 @@ for (const module of ['世界起源', '自然环境', '人文环境', '故事设
     await openLongformLeaf(page, '世界起源')
     await page.locator('div.cursor-text:visible').first().click()
     const text = page.locator('textarea:visible').first()
-    await text.fill('读取失败也不能改写的正式世界来源'); await text.press('Tab'); await expect(text).not.toBeVisible()
+    await text.fill('读取失败也不能改写的正式世界来源'); await page.getByRole('navigation', { name: '长篇一级导航' }).getByRole('button', { name: '作品库', exact: true }).focus(); await expect(text).not.toBeVisible()
     await openLongformLeaf(page, module === '故事设计' ? '自然环境' : '故事设计')
     const original = await page.evaluate(async id => {
       const { db } = await (new Function('return import("/storyforge/src/lib/db/schema.ts")'))()

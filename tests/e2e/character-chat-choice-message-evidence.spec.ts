@@ -11,7 +11,7 @@ async function setup(page: Page, invalid = false, completedResponse = false) {
   await page.addInitScript(() => {
     localStorage.setItem('storyforge_guide_completed', 'e2e')
   })
-  registerBrowserFixtureAIConfigV1(page, { provider: 'openai', baseUrl: 'https://choice-messages.invalid/v1', model: 'test', maxTokens: 8000, apiKey: 'isolated-test-key' })
+  registerBrowserFixtureAIConfigV1(page, { provider: 'custom', contextWindow: 131072, baseUrl: 'https://choice-messages.invalid/v1', model: 'test', maxTokens: 8000, apiKey: 'isolated-test-key' })
   const calls: string[] = []
   let citedMessageId: string | undefined
   await page.route('https://choice-messages.invalid/**', async route => {

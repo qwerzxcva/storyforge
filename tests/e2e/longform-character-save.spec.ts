@@ -1,3 +1,4 @@
+import { mockOllamaCapacity } from './helpers/model-capacity'
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
 import { openLongformLeaf } from './helpers/longform-navigation'
@@ -6,6 +7,7 @@ import { CHARACTER_DIMENSIONS } from '../../src/lib/character/character-dimensio
 async function createCharacter(page: Page, weight = '主要') {
   await page.addInitScript(() => localStorage.setItem('storyforge_guide_completed', 'e2e'))
   await page.route(/^https?:\/\//, route => ['127.0.0.1', 'localhost'].includes(new URL(route.request().url()).hostname) ? route.continue() : route.abort())
+  await mockOllamaCapacity(page, [{ baseUrl: 'https://character-terminal.invalid/v1', model: 'isolated-character' }])
   await createLongform(page, '角色写入与归属隔离验收')
   const projectId = Number(new URL(page.url()).pathname.match(/workspace\/(\d+)/)![1])
   await openLongformLeaf(page, '角色生成'); await expect(page).toHaveURL(/module=characters/)

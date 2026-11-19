@@ -10,7 +10,7 @@ test('existing goal holds its source through report, return, weak assent and exp
   await page.addInitScript(() => {
     localStorage.setItem('storyforge_guide_completed', 'e2e')
   })
-  registerBrowserFixtureAIConfigV1(page, { provider: 'openai', baseUrl: 'https://player-pause.invalid/v1', model: 'test', apiKey: 'isolated-test-key' })
+  registerBrowserFixtureAIConfigV1(page, { provider: 'custom', contextWindow: 131072, baseUrl: 'https://player-pause.invalid/v1', model: 'test', apiKey: 'isolated-test-key' })
   const read = () => page.evaluate(async id => {const load = new Function('p', 'return import(p)'); return (await (await load('/storyforge/src/lib/character-interaction/runtime-api.ts')).readProductRuntimeState(id)).interaction}, sessionId)
   await page.route('https://player-pause.invalid/**', async route => {
           if (await fulfillChatActionChoiceFixture(route)) return

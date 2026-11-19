@@ -57,7 +57,7 @@ async function editFirst(page: Page, text: string) {
   await page.locator('div.cursor-text:visible').first().click()
   const editor = page.locator('textarea:visible').first()
   await editor.fill(text)
-  await editor.press('Tab')
+  await page.getByRole('navigation', { name: '长篇一级导航' }).getByRole('button', { name: '作品库', exact: true }).focus()
   await expect(editor).not.toBeVisible()
 }
 
@@ -95,7 +95,7 @@ test(`rejected ${field} write keeps the draft and retries without a page crash`,
   }, table)
   await page.locator('div.cursor-text:visible').first().click()
   const editor = page.locator('textarea:visible').first()
-  await editor.fill('写入失败但必须保留的中文草稿'); await editor.press('Tab')
+  await editor.fill('写入失败但必须保留的中文草稿'); await page.getByRole('navigation', { name: '长篇一级导航' }).getByRole('button', { name: '作品库', exact: true }).focus()
   await expect(page.getByRole('alert').filter({ hasText: '隔离配额耗尽' })).toBeVisible()
   await expect(editor).toHaveValue('写入失败但必须保留的中文草稿')
   expect((await read(page, projectId, table))?.[field]).toBe('已保存的世界来源')
@@ -116,7 +116,7 @@ test('structured resource and divinity leaves retain siblings, support clearing,
   const editAt = async (index: number, value: string) => {
     await page.locator('div.cursor-text:visible').nth(index).click()
     const editor = page.locator('textarea:visible').first()
-    await editor.fill(value); await editor.press('Tab'); await expect(editor).not.toBeVisible()
+    await editor.fill(value); await page.getByRole('navigation', { name: '长篇一级导航' }).getByRole('button', { name: '作品库', exact: true }).focus(); await expect(editor).not.toBeVisible()
   }
   await openField(page, '自然环境', '自然资源')
   await page.getByText('自然资源分类明细（原生结构）', { exact: true }).click()

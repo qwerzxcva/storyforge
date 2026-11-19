@@ -1,3 +1,4 @@
+import { mockOllamaCapacity } from './helpers/model-capacity'
 import { expect, test } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
 
@@ -111,7 +112,7 @@ test('step generation shows waiting and stops without adopting a late response o
   let calls = 0
   let respond!: () => void
   const release = new Promise<void>(resolve => { respond = resolve })
-  await page.route('https://step-stop.invalid/**', async route => {
+  await page.route('https://step-stop.invalid/v1/chat/completions', async route => {
     calls++
     await release
     await route.fulfill({ contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { content: JSON.stringify({ field: 'logline', value: '迟到的模型内容不应进入作品。' }) }, finish_reason: 'stop' }] }) }).catch(() => undefined)
@@ -139,7 +140,7 @@ test('streamed scene details survive a burst of chunks and reload before adoptio
   })
   const output = JSON.stringify({ scenes: [{ title: '钟楼铜箔', summary: '沈砚寻找停钟原因，取出铜箔后发现明日潮汐记录，敲门声迫使他藏起证据。', location: '海关钟楼', conflict: '开闸前修好钟还是保护刚发现的证据', characterIds: [], pace: 'medium', estimatedWords: 600 }] })
   let calls = 0
-  await page.route('https://step-scenes.invalid/**', async route => {
+  await page.route('https://step-scenes.invalid/v1/chat/completions', async route => {
     calls++
     const chunks = Array.from(output).map(content => `data: ${JSON.stringify({ choices: [{ delta: { content } }] })}\n\n`).join('')
     await route.fulfill({ contentType: 'text/event-stream', body: `${chunks}data: [DONE]\n\n` })
@@ -189,7 +190,7 @@ test('step prose honors the author request in the wire prompt and adopts edited 
   const revised = '沈砚将铜箔夹进 <维修本>，门外响起三声叩击。他没有开门。纸上保留 &lt;三声&gt;。'
   const authorRequest = '只写600字，结尾停在敲门声，不要开门。'
   const requests: Array<{ messages: Array<{ content: string }> }> = []
-  await page.route('https://step-prose.invalid/**', async route => {
+  await page.route('https://step-prose.invalid/v1/chat/completions', async route => {
     requests.push(route.request().postDataJSON())
     await route.fulfill({ contentType: 'text/event-stream', body: `data: ${JSON.stringify({ choices: [{ delta: { content: generated } }] })}\n\ndata: [DONE]\n\n` })
   })
@@ -300,7 +301,7 @@ test('older chapter memory settles before prose freezes its context and remains 
   let proseCalls = 0
   let releaseMemory!: () => void
   const heldMemory = new Promise<void>(resolve => { releaseMemory = resolve })
-  await page.route('https://step-memory.invalid/**', async route => {
+  await page.route('https://step-memory.invalid/v1/chat/completions', async route => {
     const body = route.request().postDataJSON()
     const isMemory = body.messages.some((message: { content: string }) => message.content.includes('章节连续性记忆抽取器'))
     if (isMemory) { memoryCalls++; await heldMemory } else { proseCalls++ }
@@ -362,7 +363,7 @@ for (const missing of ['summary', 'detail'] as const) {
     await page.addInitScript(() => {
       localStorage.setItem('storyforge-ai-config', JSON.stringify({ provider: 'ollama', baseUrl: 'https://continuation-guard.invalid/v1', model: 'guard-test', maxTokens: 4000, temperature: 0 }))
     })
-    await page.route('https://continuation-guard.invalid/**', async route => { requests++; await route.abort() })
+    await page.route('https://continuation-guard.invalid/v1/chat/completions', async route => { requests++; await route.abort() })
     await createLongform(page, `续写前置条件隔离 ${missing}`)
     await page.getByRole('button', { name: '大纲与章纲', exact: true }).click()
     await page.getByRole('button', { name: '添加卷', exact: true }).click()
@@ -381,3 +382,7 @@ for (const missing of ['summary', 'detail'] as const) {
     expect(requests).toBe(0)
   })
 }
+
+test.beforeEach(async ({ page }) => {
+  await mockOllamaCapacity(page, [{"baseUrl": "https://continuation-guard.invalid/v1","model": "guard-test"},{"baseUrl": "https://step-memory.invalid/v1","model": "step-test"},{"baseUrl": "https://step-prose.invalid/v1","model": "step-test"},{"baseUrl": "https://step-scenes.invalid/v1","model": "step-test"},{"baseUrl": "https://step-stop.invalid/v1","model": "step-test"}])
+})

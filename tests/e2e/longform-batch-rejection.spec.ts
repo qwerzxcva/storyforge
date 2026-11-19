@@ -1,3 +1,4 @@
+import { mockOllamaCapacity } from './helpers/model-capacity'
 import { expect, test } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
 import { openLongformLeaf } from './helpers/longform-navigation'
@@ -8,7 +9,7 @@ test('SFQA095: a failed batch rejection stays visible and restores the exact unf
     localStorage.setItem('storyforge-ai-config', JSON.stringify({ provider: 'ollama', baseUrl: 'https://batch-rejection-test.invalid/v1', model: 'batch-rejection-e2e', temperature: 0.2, maxTokens: 4000 }))
   })
   let modelCalls = 0
-  await page.route('https://batch-rejection-test.invalid/**', async route => {
+  await page.route('https://batch-rejection-test.invalid/v1/chat/completions', async route => {
     modelCalls++
     await route.fulfill({ contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { content: JSON.stringify([{ title: `候选章${modelCalls}`, summary: `第${modelCalls}卷推进剧情` }]) }, finish_reason: 'stop' }], usage: { prompt_tokens: 100, completion_tokens: 100, total_tokens: 200 } }) })
   })
@@ -49,4 +50,8 @@ test('SFQA095: a failed batch rejection stays visible and restores the exact unf
     return { statuses: runs.map(run => run.status), chapters: nodes.filter(node => node.type === 'chapter').length }
   })
   expect(states).toEqual({ statuses: ['failed', 'failed'], chapters: 0 })
+})
+
+test.beforeEach(async ({ page }) => {
+  await mockOllamaCapacity(page, [{"baseUrl": "https://batch-rejection-test.invalid/v1","model": "batch-rejection-e2e"}])
 })

@@ -1,3 +1,4 @@
+import { mockOllamaCapacity } from './helpers/model-capacity'
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
 
@@ -6,6 +7,7 @@ const style = '用具体动作与不同声线，少替人物解释情绪。'.rep
 const generated = '两人把余下的材料清点了一遍，约定明天的分工。店主先问了搭档的意愿，最后签收并关灯。'.repeat(8)
 
 async function prepare(page: Page, smallWindow = false) {
+  await mockOllamaCapacity(page, [{ baseUrl: 'https://prose-handoff.invalid/v1', model: 'handoff-test', contextWindow: smallWindow ? 1500 : 64000 }])
   await page.addInitScript(({ smallWindow }) => {
     localStorage.setItem('storyforge-ai-config', JSON.stringify({ provider: 'ollama', baseUrl: 'https://prose-handoff.invalid/v1', model: 'handoff-test', maxTokens: smallWindow ? 500 : 3000, contextWindow: smallWindow ? 1500 : 64000, temperature: 0 }))
   }, { smallWindow })
@@ -46,7 +48,7 @@ async function prepare(page: Page, smallWindow = false) {
 
 test('正文拒绝的终态写失败会保留候选，刷新后明确重试且不重发模型', async ({ page }) => {
   let requests = 0
-  await page.route('https://prose-handoff.invalid/**', async route => {
+  await page.route('https://prose-handoff.invalid/v1/chat/completions', async route => {
     requests += 1
     await route.fulfill({ contentType: 'text/event-stream', body: `data: ${JSON.stringify({ choices: [{ delta: { content: generated } }] })}\n\ndata: [DONE]\n\n` })
   })
@@ -94,7 +96,7 @@ test('正文拒绝的终态写失败会保留候选，刷新后明确重试且�
 
 test('分步骤实际请求完整交付长备注、元素和作者文风；自定义模板保留，候选刷新采纳', async ({ page }) => {
   const requests: Array<{ messages: Array<{ content: string }>; temperature: number; max_tokens: number }> = []
-  await page.route('https://prose-handoff.invalid/**', async route => {
+  await page.route('https://prose-handoff.invalid/v1/chat/completions', async route => {
     requests.push(route.request().postDataJSON())
     await route.fulfill({ contentType: 'text/event-stream', body: `data: ${JSON.stringify({ choices: [{ delta: { content: generated } }] })}\n\ndata: [DONE]\n\n` })
   })
@@ -140,7 +142,7 @@ test('分步骤实际请求完整交付长备注、元素和作者文风；自�
 
 test('输出上限停止留下明确提示，刷新保留原候选，不自动重发', async ({ page }) => {
   let calls = 0
-  await page.route('https://prose-handoff.invalid/**', route => {
+  await page.route('https://prose-handoff.invalid/v1/chat/completions', route => {
     calls++
     return route.fulfill({ contentType: 'text/event-stream', body: `data: ${JSON.stringify({ choices: [{ delta: { content: generated }, finish_reason: 'length' }] })}\n\ndata: [DONE]\n\n` })
   })
@@ -158,7 +160,7 @@ test('输出上限停止留下明确提示，刷新保留原候选，不自动�
 test('默认模板实际请求按本轮600～900字渲染，不再并存2500字，候选仍按原链刷新采纳', async ({ page }) => {
   const requests: Array<{ messages: Array<{ content: string }> }> = []
   const output = generated.repeat(2)
-  await page.route('https://prose-handoff.invalid/**', route => {
+  await page.route('https://prose-handoff.invalid/v1/chat/completions', route => {
     requests.push(route.request().postDataJSON())
     return route.fulfill({ contentType: 'text/event-stream', body: `data: ${JSON.stringify({ choices: [{ delta: { content: output }, finish_reason: 'stop' }] })}\n\ndata: [DONE]\n\n` })
   })
@@ -188,7 +190,7 @@ test('默认模板实际请求按本轮600～900字渲染，不再并存2500字�
 test('连接结束缺少完成确认时保留片段及证据，刷新恢复只读结果，不能采纳或自动重发', async ({ page }) => {
   let calls = 0
   const fragment = '他收好第一把工具，正要转身。'
-  await page.route('https://prose-handoff.invalid/**', route => {
+  await page.route('https://prose-handoff.invalid/v1/chat/completions', route => {
     calls++
     return route.fulfill({ contentType: 'text/event-stream', body: `data: ${JSON.stringify({ choices: [{ delta: { content: fragment } }] })}\n\n` })
   })
@@ -209,7 +211,7 @@ test('作者在响应到达前停止，刷新保留停止状态，不出现可�
   let calls = 0
   let release!: () => void
   const waiting = new Promise<void>(resolve => { release = resolve })
-  await page.route('https://prose-handoff.invalid/**', async route => {
+  await page.route('https://prose-handoff.invalid/v1/chat/completions', async route => {
     calls++
     await waiting
     await route.fulfill({ contentType: 'text/event-stream', body: 'data: [DONE]\n\n' }).catch(() => {})
@@ -230,7 +232,7 @@ test('作者在响应到达前停止，刷新保留停止状态，不出现可�
 
 test('等待采纳期间改规则拒绝旧候选，保留原稿', async ({ page }) => {
   let calls = 0
-  await page.route('https://prose-handoff.invalid/**', async route => {
+  await page.route('https://prose-handoff.invalid/v1/chat/completions', async route => {
     calls++
     await route.fulfill({ contentType: 'text/event-stream', body: `data: ${JSON.stringify({ choices: [{ delta: { content: generated } }] })}\n\ndata: [DONE]\n\n` })
   })
@@ -253,7 +255,7 @@ test('等待采纳期间改规则拒绝旧候选，保留原稿', async ({ page 
 
 test('模型窗口不够时显示错误，不发送被裁短的正式正文请求', async ({ page }) => {
   let calls = 0
-  await page.route('https://prose-handoff.invalid/**', route => { calls++; return route.abort() })
+  await page.route('https://prose-handoff.invalid/v1/chat/completions', route => { calls++; return route.abort() })
   await prepare(page, true)
   await page.getByRole('button', { name: '✨ 生成正文', exact: true }).click()
   await page.getByRole('dialog', { name: '正文生成提示', exact: true }).getByRole('button', { name: '开始生成', exact: true }).click()

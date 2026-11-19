@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-test('runtime errors survive refresh and remain local until the author opens a reviewed feedback handoff', async ({ page }) => {
+test('runtime errors survive refresh and cancellation without sending the reviewed feedback form', async ({ page }) => {
   const reports: string[] = []
   await page.route('**/api/feedback', async route => {
     reports.push(route.request().url())
@@ -21,12 +21,16 @@ test('runtime errors survive refresh and remain local until the author opens a r
   const preview = panel.getByLabel('故障摘要预览')
   await expect(preview).toContainText('TypeError')
   await expect(preview).not.toContainText('PRIVATE-SENTINEL')
-  const link = panel.getByRole('link', { name: '带摘要打开官方反馈表单' })
-  const href = await link.getAttribute('href')
-  expect(href).toMatch(/^https:\/\/docs\.storyforge-lab\.com\/feedback\/bug#storyforge-report=/)
+  const form = panel.getByRole('form', { name: '报告 Bug 表单' })
+  await expect(form.getByRole('button', { name: '提交反馈', exact: true })).toBeVisible()
+  await expect(form.getByRole('checkbox', { name: '附带下方预览的脱敏错误记录' })).toBeChecked()
   expect(reports).toEqual([])
-  await panel.getByRole('button', { name: '清空本地错误记录' }).click()
+  await form.getByRole('button', { name: '取消', exact: true }).click()
   await expect(preview).toHaveCount(0)
+  await page.reload()
+  await panel.getByRole('button', { name: '查看故障摘要并反馈' }).click()
+  await expect(preview).toContainText('TypeError')
+  await expect(preview).not.toContainText('PRIVATE-SENTINEL')
   expect(await page.evaluate(() => localStorage.getItem('failure-test-private-config'))).toBe('API-PRIVATE-SENTINEL')
   expect(reports).toEqual([])
 })
