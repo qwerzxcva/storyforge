@@ -6,6 +6,7 @@ import { normalizeProviderModel, PROVIDER_PRESETS } from '../lib/types'
 import { createLog, updateLog } from '../lib/ai/logger'
 import { nanoid } from '../lib/utils/id'
 import { buildOpenAIEndpoint, normalizeOpenAIBaseUrl } from '../lib/ai/openai-endpoint'
+import { buildAIRequestHeaders, customHeaderValues, parseCustomHeaders } from '../lib/ai/request-headers'
 import { sameAICredentialAuthorityV1 } from '../lib/ai/credential-identity'
 import { createSessionCredentialV1, readSessionCredentialV1, type SessionCredentialV1 } from '../lib/ai/session-credential'
 import { isProviderQuotaRejectionV1 } from '../lib/ai/provider-rejection'
@@ -34,6 +35,8 @@ const STORAGE_KEY = 'storyforge-ai-config'
 const PRESETS_KEY = 'storyforge-ai-presets'
 const SESSION_API_KEY = 'storyforge-ai-api-key-session'
 const PRESET_SESSION_API_KEYS = 'storyforge-ai-preset-api-keys-session'
+const SESSION_HEADERS = 'storyforge-ai-headers-session'
+const PRESET_SESSION_HEADERS = 'storyforge-ai-preset-headers-session'
 const REMEMBER_API_KEY = 'storyforge-ai-api-key-remember'
 const EMBEDDING_KEY = 'storyforge-embedding-config'
 const EMBEDDING_SESSION_KEY = 'storyforge-embedding-key-session'
@@ -104,9 +107,9 @@ function savePresets(presets: AIConfigPreset[]) {
   localStorage.setItem(PRESETS_KEY, JSON.stringify(presets.map(preset => ({ ...preset, config: normalizeConfigModel(preset.config) }))))
 }
 
-function loadPresetSessionApiKeys(): Record<string, unknown> {
+function loadPresetSessionApiKeys(storageKey = PRESET_SESSION_API_KEYS): Record<string, unknown> {
   try {
-    const raw = sessionStorage.getItem(PRESET_SESSION_API_KEYS)
+    const raw = sessionStorage.getItem(storageKey)
     if (!raw) return {}
     const parsed = JSON.parse(raw)
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return {}
@@ -116,17 +119,32 @@ function loadPresetSessionApiKeys(): Record<string, unknown> {
   }
 }
 
-function savePresetSessionApiKey(id: string, credential: SessionCredentialV1 | null): void {
-  const keys = loadPresetSessionApiKeys()
+function savePresetSessionApiKey(id: string, credential: SessionCredentialV1 | null, storageKey = PRESET_SESSION_API_KEYS): void {
+  const keys = loadPresetSessionApiKeys(storageKey)
   if (credential) Object.defineProperty(keys, id, { value: credential, enumerable: true, writable: true, configurable: true })
   else delete keys[id]
-  if (Object.keys(keys).length) sessionStorage.setItem(PRESET_SESSION_API_KEYS, JSON.stringify(keys))
-  else sessionStorage.removeItem(PRESET_SESSION_API_KEYS)
+  if (Object.keys(keys).length) sessionStorage.setItem(storageKey, JSON.stringify(keys))
+  else sessionStorage.removeItem(storageKey)
 }
 
 export function getAIConfigPresetSessionApiKey(id: string): string {
   const preset = useAIConfigStore.getState().presets.find(item => item.id === id)
   return preset ? readSessionCredentialV1(loadPresetSessionApiKeys()[id], preset.config, preset.sessionCredentialId) : ''
+}
+
+function readSessionHeaders(input: unknown, owner: AIConfig, referenceId: unknown): NonNullable<AIConfig['customHeaders']> {
+  const raw = readSessionCredentialV1(input, owner, referenceId)
+  try { return parseCustomHeaders(raw ? JSON.parse(raw) : []) } catch { return [] }
+}
+
+export function getAIConfigPresetHeadersV1(preset: AIConfigPreset): NonNullable<AIConfig['customHeaders']> {
+  return preset.config.customHeaders?.length ? parseCustomHeaders(preset.config.customHeaders)
+    : readSessionHeaders(loadPresetSessionApiKeys(PRESET_SESSION_HEADERS)[preset.id], preset.config, preset.sessionCredentialId)
+}
+
+function savePresetSessionHeaders(preset: AIConfigPreset, config: AIConfig, remember: boolean): void {
+  savePresetSessionApiKey(preset.id, !remember && config.customHeaders?.length
+    ? createSessionCredentialV1(config, preset.sessionCredentialId!, JSON.stringify(config.customHeaders)) : null, PRESET_SESSION_HEADERS)
 }
 
 export function getAIConfigPresetApiKeyV1(preset: AIConfigPreset): string {
@@ -154,7 +172,7 @@ function sameChatCredentialAuthority(left: AIConfig, right: AIConfig): boolean {
 export function resolveAIConfigPresetV1(preset: AIConfigPreset, current: AIConfig): AIConfig {
   const apiKey = getAIConfigPresetApiKeyV1(preset)
     || (sameChatCredentialAuthority(preset.config, current) ? current.apiKey : '')
-  return normalizeConfigModel({ ...preset.config, apiKey })
+  return normalizeConfigModel({ ...preset.config, apiKey, customHeaders: getAIConfigPresetHeadersV1(preset) })
 }
 
 function loadTaskRoutes(): AITaskRoutes {
@@ -290,6 +308,8 @@ function loadInitialConfig(): { config: AIConfig; rememberApiKey: boolean } {
     ...DEFAULT_CONFIG,
     ...fields,
     apiKey: rememberApiKey ? (fields.apiKey || '') : sessionKey,
+    customHeaders: rememberApiKey ? parseCustomHeaders(fields.customHeaders)
+      : readSessionHeaders(sessionStorage.getItem(SESSION_HEADERS), owner, _sessionCredentialId),
   })
   if ((fields.contextWindow !== undefined || fields.modelCapacity !== undefined || (fields.model && config.model !== fields.model)) && (rememberApiKey || !rawSession || sessionKey || !fields.apiKey)) {
     persistConfig(config, rememberApiKey)
@@ -305,6 +325,8 @@ function normalizeConfigModel(config: AIConfig): AIConfig {
   config = { ...config }
   delete config.contextWindow
   delete config.modelCapacity
+  if (config.provider !== 'custom') delete config.customHeaders
+  else if (config.customHeaders) config.customHeaders = parseCustomHeaders(config.customHeaders)
   if (config.provider === 'codex') return { ...config, apiKey: '', baseUrl: '/storyforge/local-codex/v1' }
   const model = normalizeProviderModel(config.provider, config.model)
   return model === config.model ? config : { ...config, model }
@@ -312,9 +334,12 @@ function normalizeConfigModel(config: AIConfig): AIConfig {
 
 function persistConfig(config: AIConfig, rememberApiKey: boolean): void {
   const referenceId = nanoid()
-  const persisted = { ...normalizeConfigModel(config), apiKey: rememberApiKey ? config.apiKey : '', _sessionCredentialId: referenceId }
+  const persisted = { ...presetConfig(normalizeConfigModel(config), rememberApiKey), _sessionCredentialId: referenceId }
   localStorage.setItem(STORAGE_KEY, JSON.stringify(persisted))
   localStorage.setItem(REMEMBER_API_KEY, String(rememberApiKey))
+  if (!rememberApiKey && config.customHeaders?.length) {
+    sessionStorage.setItem(SESSION_HEADERS, JSON.stringify(createSessionCredentialV1(config, referenceId, JSON.stringify(config.customHeaders))))
+  } else sessionStorage.removeItem(SESSION_HEADERS)
   if (rememberApiKey) {
     sessionStorage.removeItem(SESSION_API_KEY)
   } else if (config.apiKey) {
@@ -325,7 +350,7 @@ function persistConfig(config: AIConfig, rememberApiKey: boolean): void {
 }
 
 function presetConfig(config: AIConfig, rememberApiKey: boolean): AIConfig {
-  return rememberApiKey ? { ...config } : { ...config, apiKey: '' }
+  return rememberApiKey ? { ...config } : { ...config, apiKey: '', customHeaders: config.customHeaders ? [] : undefined }
 }
 
 export interface TestResult {
@@ -395,7 +420,10 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
     const previous = get().config
     const newConfig = normalizeConfigModel({ ...previous, ...partial })
     const identityChanged = previous.provider !== newConfig.provider || previous.baseUrl !== newConfig.baseUrl
-    if (!Object.prototype.hasOwnProperty.call(partial, 'apiKey') && identityChanged && !sameChatCredentialAuthority(previous, newConfig)) newConfig.apiKey = ''
+    if (identityChanged && !sameChatCredentialAuthority(previous, newConfig)) {
+      if (!Object.prototype.hasOwnProperty.call(partial, 'apiKey')) newConfig.apiKey = ''
+      if (!Object.prototype.hasOwnProperty.call(partial, 'customHeaders')) delete newConfig.customHeaders
+    }
     persistConfig(newConfig, get().rememberApiKey)
     // 手动改动配置后，与已选预设脱钩（除非改动等于该预设）
     set({ config: newConfig, activePresetId: null })
@@ -406,7 +434,15 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
     const state = get(), config = { ...state.config }, embedding = { ...state.embedding }
     persistConfig(config, remember)
     persistEmbeddingConfig(embedding, remember)
-    set({ rememberApiKey: remember })
+    const presets = state.presets.map(preset => {
+      const headers = getAIConfigPresetHeadersV1(preset)
+      const next = { ...preset, sessionCredentialId: preset.sessionCredentialId || nanoid(),
+        config: { ...preset.config, customHeaders: remember ? headers : [] } }
+      savePresetSessionHeaders(next, { ...next.config, customHeaders: headers }, remember)
+      return next
+    })
+    savePresets(presets)
+    set({ rememberApiKey: remember, presets })
   },
 
   saveAsPreset: (name: string) => {
@@ -421,6 +457,7 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
     }
     const presets = [...state.presets, preset]
     savePresets(presets)
+    savePresetSessionHeaders(preset, config, remember)
     savePresetSessionApiKey(id, remember || !config.apiKey ? null
       : createSessionCredentialV1(config, preset.sessionCredentialId!, config.apiKey))
     set({ presets, activePresetId: id, editingPresetId: id })
@@ -449,6 +486,7 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
     savePresets(presets)
     savePresetSessionApiKey(id, remember || !config.apiKey ? null
       : createSessionCredentialV1(config, referenceId, config.apiKey))
+    savePresetSessionHeaders(presets.find(preset => preset.id === id)!, config, remember)
     set({ presets, activePresetId: id, editingPresetId: id })
   },
 
@@ -466,6 +504,7 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
     savePresets(presets)
     saveTaskRoutes(taskRoutes)
     savePresetSessionApiKey(id, null)
+    savePresetSessionApiKey(id, null, PRESET_SESSION_HEADERS)
     set({
       presets,
       taskRoutes,
@@ -514,6 +553,7 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
     const newConfig = normalizeConfigModel({
       ...owner,
       apiKey: sameChatCredentialAuthority(previous, owner) ? previous.apiKey : (preset.apiKey || ''),
+      customHeaders: sameChatCredentialAuthority(previous, owner) ? previous.customHeaders : undefined,
     })
     persistConfig(newConfig, state.rememberApiKey)
     set({ config: newConfig, activePresetId: null, editingPresetId: null })
@@ -557,7 +597,7 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
       model: config.model,
       status: 'pending',
     }, {
-      sensitiveValues: [config.apiKey],
+      sensitiveValues: [config.apiKey, ...customHeaderValues(config)],
       baseUrl: config.baseUrl,
     })
 
@@ -565,10 +605,8 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
       const response = await fetch(url, {
         method: 'POST',
         signal: controller.signal,
-        headers: {
-          'Content-Type': 'application/json',
-          ...(config.apiKey ? { Authorization: `Bearer ${config.apiKey}` } : {}),
-        },
+        headers: buildAIRequestHeaders(config),
+        redirect: config.provider === 'custom' && config.customHeaders?.length ? 'error' : undefined,
         body: JSON.stringify({
           model: config.model,
           messages: [{ role: 'user', content: '请回复"连接成功"' }],

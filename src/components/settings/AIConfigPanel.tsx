@@ -19,6 +19,7 @@ import AIConfigPresetSection from './AIConfigPresetSection'
 import AITaskRoutingSection from './AITaskRoutingSection'
 import AIConnectionTestSection from './AIConnectionTestSection'
 import ThemeSelector from './ThemeSelector'
+import CustomRequestHeaders from './CustomRequestHeaders'
 
 export const PROVIDER_OPTIONS: { value: AIProvider; label: string; cors: boolean; hint: string }[] = [
   { value: 'codex', label: 'Codex（本机 ChatGPT 登录）', cors: true, hint: '无需 API Key；复用本机 Codex 登录，需要 StoryForge 本地服务运行。' },
@@ -56,14 +57,17 @@ interface ModelListOwner {
   baseUrl: string
   /** Private component memory only, never a rendered or persisted identity. */
   apiKey: string
+  customHeaders: AIConfig['customHeaders']
 }
 interface ModelListRequest extends ModelListOwner { generation: number }
 
 function modelListOwner(config: AIConfig): ModelListOwner {
-  return { provider: config.provider, baseUrl: normalizeOpenAIBaseUrl(config.baseUrl).baseUrl, apiKey: config.apiKey }
+  return { provider: config.provider, baseUrl: normalizeOpenAIBaseUrl(config.baseUrl).baseUrl, apiKey: config.apiKey,
+    customHeaders: config.provider === 'custom' ? config.customHeaders : undefined }
 }
 function sameModelListOwner(left: ModelListOwner, right: ModelListOwner): boolean {
   return left.provider === right.provider && left.baseUrl === right.baseUrl && left.apiKey === right.apiKey
+    && JSON.stringify(left.customHeaders ?? []) === JSON.stringify(right.customHeaders ?? [])
 }
 
 function AIConfigPanelFull({ showDeveloperTools }: { showDeveloperTools: boolean }) {
@@ -116,6 +120,7 @@ function AIConfigPanelFull({ showDeveloperTools }: { showDeveloperTools: boolean
       const models = await fetchOpenAIModels({
         baseUrl: request.baseUrl,
         apiKey: request.apiKey,
+        customHeaders: request.customHeaders,
       })
       if (!isCurrent()) return
       modelListSession.resultOwner = request
@@ -197,7 +202,7 @@ function AIConfigPanelFull({ showDeveloperTools }: { showDeveloperTools: boolean
       <div className="bg-bg-surface border border-border rounded-xl p-5 mb-6">
         <h3 className="text-base font-semibold text-text-primary mb-4">AI 模型配置</h3>
         <p className="text-xs text-text-muted mb-4 rounded-lg border border-border bg-bg-base px-3 py-2">
-          API Key 默认仅保存在本次浏览器会话；勾选“记住在本机”才会写入 localStorage。发起 AI 生成、测试连接或使用自定义 baseUrl 时，相关提示词和上下文会发送到你配置的模型服务。
+          API Key 和自定义请求头默认仅保存在本次浏览器会话；勾选“记住在本机”才会写入 localStorage。发起 AI 生成、测试连接或使用自定义 baseUrl 时，相关提示词和上下文会发送到你配置的模型服务。
         </p>
 
         <AIConfigPresetSection
@@ -280,10 +285,14 @@ function AIConfigPanelFull({ showDeveloperTools }: { showDeveloperTools: boolean
                 className="mt-0.5 accent-accent"
               />
               <span>
-                在本机记住 API Key（写入 localStorage）。不勾选时仅本次浏览器会话有效。
+                在本机记住 API Key 和自定义请求头（写入 localStorage）。不勾选时仅本次浏览器会话有效。
               </span>
             </label>
           </div>
+
+          {config.provider === 'custom' && (
+            <CustomRequestHeaders headers={config.customHeaders ?? []} onChange={customHeaders => setConfig({ customHeaders })} />
+          )}
 
           <div className="ai-connection-grid">
             <div>

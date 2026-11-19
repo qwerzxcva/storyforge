@@ -20,10 +20,16 @@ export type AIProvider =
   | 'ollama'
   | 'custom'
 
+export interface AIRequestHeader {
+  name: string
+  value: string
+}
+
 /** AI 配置 */
 export interface AIConfig {
   provider: AIProvider
   apiKey: string
+  customHeaders?: AIRequestHeader[]
   model: string
   baseUrl: string
   temperature: number

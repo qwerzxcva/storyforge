@@ -3,6 +3,7 @@ import { bytesToHex } from '@noble/hashes/utils.js'
 import type { AIConfig } from '../types'
 import { targetsOfficialProvider } from './provider-model-lifecycle'
 import { normalizeOpenAIBaseUrl } from './openai-endpoint'
+import { buildAIRequestHeaders } from './request-headers'
 
 /** Private connection identities are hashed; receipts never contain endpoints or credentials. */
 export interface ModelCapacityV1 {
@@ -42,6 +43,7 @@ let durablePins = new WeakSet<AIConfig>()
 function identity(config: AIConfig): string {
   return bytesToHex(sha256(new TextEncoder().encode(JSON.stringify([
     config.provider, normalizeOpenAIBaseUrl(config.baseUrl).baseUrl, config.model, config.apiKey,
+    ...(config.provider === 'custom' && config.customHeaders?.length ? [config.customHeaders] : []),
   ]))))
 }
 function positive(value: unknown): value is number {
@@ -113,7 +115,7 @@ async function discover(config: AIConfig, fetchImpl: typeof fetch, now: number):
   const timer = setTimeout(() => controller.abort(), 2500)
   async function read(url: string, gemini = false): Promise<Record<string, unknown>> {
     const response = await fetchImpl(url, { method: 'GET', signal: controller.signal, redirect: 'error',
-      headers: config.apiKey ? gemini ? { 'x-goog-api-key': config.apiKey } : { Authorization: `Bearer ${config.apiKey}` } : undefined })
+      headers: gemini ? (config.apiKey ? { 'x-goog-api-key': config.apiKey } : undefined) : buildAIRequestHeaders(config, false) })
     if (!response.ok) throw new Error('metadata-unavailable')
     return record(await response.json())
   }
