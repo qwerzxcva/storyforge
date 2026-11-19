@@ -1,8 +1,11 @@
+import type { AIConfig } from '../types'
 import { buildOpenAIEndpoint } from './openai-endpoint'
+import { buildAIRequestHeaders } from './request-headers'
 
 interface FetchOpenAIModelsOptions {
   baseUrl: string
   apiKey?: string
+  customHeaders?: AIConfig['customHeaders']
   timeoutMs?: number
   fetchImpl?: typeof fetch
 }
@@ -10,6 +13,7 @@ interface FetchOpenAIModelsOptions {
 export async function fetchOpenAIModels({
   baseUrl,
   apiKey = '',
+  customHeaders,
   timeoutMs = 10_000,
   fetchImpl = fetch,
 }: FetchOpenAIModelsOptions): Promise<string[]> {
@@ -21,7 +25,8 @@ export async function fetchOpenAIModels({
       method: 'GET',
       cache: 'no-store',
       signal: controller.signal,
-      headers: apiKey ? { Authorization: `Bearer ${apiKey}` } : undefined,
+      headers: buildAIRequestHeaders({ provider: 'custom', apiKey, customHeaders }, false),
+      redirect: customHeaders?.length ? 'error' : undefined,
     })
 
     if (!response.ok) {
