@@ -218,6 +218,7 @@ test('abandoning a failed event releases only its failure; the unsubmitted text 
 async function eventAISetup(page: Page) {
   await page.addInitScript(() => localStorage.setItem('storyforge-ai-config', JSON.stringify({ provider: 'ollama', model: 'scoped-events', baseUrl: 'https://arc-events.invalid/v1', maxTokens: 10000, contextWindow: 128000 })))
   const id = await setup(page); await addStage(page)
+  await mockOllamaCapacity(page, [{ baseUrl: 'https://arc-events.invalid/v1', model: 'scoped-events' }])
   await page.getByLabel('故事阶段描述', { exact: true }).fill('依据实测数据逐步决定通行。')
   await page.getByLabel('故事阶段描述', { exact: true }).blur()
   for (const text of ['测绳', '记录', '校核', '报告', '等待批复']) {
@@ -389,6 +390,3 @@ test('active native IME event draft blocks close and structural navigation until
   await page.reload(); expect((await stage(page, id)).keyEvents).toEqual(['核验尚在输入'])
 })
 
-test.beforeEach(async ({ page }) => {
-  await mockOllamaCapacity(page, [{"baseUrl": "https://arc-events.invalid/v1","model": "scoped-events"}])
-})

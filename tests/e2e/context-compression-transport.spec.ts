@@ -19,7 +19,10 @@ async function runCompression(page: Page, maxOutputTokens?: number) {
     return { result, deliveredTokens: result?.content ? estimateTokens(result.content) : null }
   }, maxOutputTokens)
 }
-test.beforeEach(async ({ page }) => { await createLongform(page, '压缩协议隔离验证') })
+test.beforeEach(async ({ page }) => {
+  await page.clock.setFixedTime(new Date('2026-11-19T12:00:00Z'))
+  await createLongform(page, '压缩协议隔离验证')
+})
 test('actual bounded JSON transport preserves literal anchors and source budget', async ({ page }) => {
   const requests: Record<string, unknown>[] = []
   await page.route('https://apihub.agnes-ai.com/v1/chat/completions', async route => {

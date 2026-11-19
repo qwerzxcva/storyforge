@@ -7,6 +7,7 @@ const style = '用具体动作与不同声线，少替人物解释情绪。'.rep
 const generated = '两人把余下的材料清点了一遍，约定明天的分工。店主先问了搭档的意愿，最后签收并关灯。'.repeat(8)
 
 async function prepare(page: Page, smallWindow = false) {
+  await mockOllamaCapacity(page, [{ baseUrl: 'https://prose-handoff.invalid/v1', model: 'handoff-test', contextWindow: smallWindow ? 1500 : 64000 }])
   await page.addInitScript(({ smallWindow }) => {
     localStorage.setItem('storyforge-ai-config', JSON.stringify({ provider: 'ollama', baseUrl: 'https://prose-handoff.invalid/v1', model: 'handoff-test', maxTokens: smallWindow ? 500 : 3000, contextWindow: smallWindow ? 1500 : 64000, temperature: 0 }))
   }, { smallWindow })
@@ -264,6 +265,3 @@ test('模型窗口不够时显示错误，不发送被裁短的正式正文请�
   await expect(page.locator('.tiptap-editor')).toBeEmpty()
 })
 
-test.beforeEach(async ({ page }) => {
-  await mockOllamaCapacity(page, [{"baseUrl": "https://prose-handoff.invalid/v1","model": "handoff-test"}])
-})

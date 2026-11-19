@@ -163,6 +163,7 @@ test('cancelling a saved choice preserves the story without expression or review
 })
 
 for (const budget of [2, 3]) test(`fresh action respects the three-call allowance in the actual controls (${budget})`, async ({page}) => {
+  if (budget === 3) await page.clock.setFixedTime(new Date('2026-11-19T12:00:00Z'))
   if (budget === 3) registerBrowserFixtureAIConfigV1(page, { provider: 'agnes', baseUrl: 'https://apihub.agnes-ai.com/v1', model: 'agnes-2.5-flash', maxTokens: 9000, apiKey: 'isolated-test-key' })
   const calls = await provider(page, false, budget === 3), f = await seed(page, 'fresh', budget), before = await read(page, f.sessionId)
   await page.getByLabel('本轮行动角色', {exact: true}).selectOption('guard')

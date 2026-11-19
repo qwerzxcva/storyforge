@@ -77,6 +77,7 @@ test('全文请求覆盖4000字后的结尾，三个模式保存报告，刷新�
 })
 
 test('bounded Agnes review records the exact thinking toggle for all three modes and reloads with no request', async ({ page }) => {
+  await page.clock.setFixedTime(new Date('2026-11-19T12:00:00Z'))
   const requests: any[] = []
   const target = await setup(page)
   await page.evaluate(async () => {
@@ -309,6 +310,3 @@ test('一致性JSON审计中关闭面板会停止等待，刷新不生成报告�
   await expect(page.locator('.tiptap-editor')).toContainText(quote)
 })
 
-test.beforeEach(async ({ page }) => {
-  await mockOllamaCapacity(page, [{"baseUrl": "https://whole-review.invalid/v1","model": "whole-review-test"}])
-})
