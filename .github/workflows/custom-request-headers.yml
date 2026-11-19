@@ -1,26 +1,13 @@
 name: Custom Request Headers
 
 on:
-  pull_request:
-    branches: [main]
-    paths:
-      - '.github/workflows/custom-request-headers.yml'
-      - 'tests/e2e/custom-request-headers.spec.ts'
-      - 'src/components/settings/CustomRequestHeaders.tsx'
-      - 'src/lib/ai/request-headers.ts'
-      - 'src/components/settings/AIConfigPanel.tsx'
-      - 'src/lib/ai/client.ts'
-      - 'src/lib/ai/model-capacity.ts'
-      - 'src/lib/ai/model-list.ts'
-      - 'src/lib/types/ai.ts'
-      - 'src/stores/ai-config.ts'
-      - 'tests/regression/R-custom-request-headers*'
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: custom-request-headers-${{ github.event.pull_request.number }}
+  group: custom-request-headers-${{ github.ref }}
   cancel-in-progress: true
 
 env:
