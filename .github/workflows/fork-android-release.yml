@@ -236,4 +236,5 @@ jobs:
           sha256sum "StoryForge-$version-android.apk" > SHA256SUMS.txt
           sha256sum --check SHA256SUMS.txt
           cd ../../..
-          gh release create "v$version" "$apk" verified/release/android/SHA256SUMS.txt verified/release-test/signing-certificate.txt verified/release-test/tested-release.json --target "$GITHUB_SHA" --title "StoryForge $version — Android Fork" --notes-file .github/release-notes/fork-android.md --latest
+          gh api --method POST "repos/$GITHUB_REPOSITORY/git/refs" -f "ref=refs/tags/v$version" -f "sha=$GITHUB_SHA"
+          gh release create "v$version" --verify-tag "$apk" verified/release/android/SHA256SUMS.txt verified/release-test/signing-certificate.txt verified/release-test/tested-release.json --target "$GITHUB_SHA" --title "StoryForge $version — Android Fork" --notes-file .github/release-notes/fork-android.md --latest
