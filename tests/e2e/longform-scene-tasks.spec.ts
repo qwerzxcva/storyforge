@@ -1,3 +1,4 @@
+import { mockOllamaCapacity } from './helpers/model-capacity'
 import { expect, test } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
 
@@ -55,7 +56,7 @@ test('新任务字段走原细纲 Harness；候选在其它章节仍有标记，
   await page.addInitScript(() => localStorage.setItem('storyforge-ai-config', JSON.stringify({ provider: 'ollama', baseUrl: 'https://scene-tasks.invalid/v1', model: 'task-contract-test', maxTokens: 4000, temperature: 0 })))
   const output = { scenePlanMode: 'replace', scenes: [{ action: 'add', title: '收店约定', summary: '两人收店后安排明天的分工', location: '小店', conflict: '', pace: 'slow', estimatedWords: 600, characterIds: [], entryState: '分工未定', goal: '明确分工', keyChoice: '先问搭档意愿', outcome: '达成约定', exitState: '约定未履行', sceneFunction: '关系缓冲', notes: '不要追加敌人' }] }
   let calls = 0
-  await page.route('https://scene-tasks.invalid/**', async route => {
+  await page.route('https://scene-tasks.invalid/v1/chat/completions', async route => {
     calls++
     expect(route.request().postDataJSON().messages.map((row: { content: string }) => row.content).join('\n')).toContain('entryState')
     await route.fulfill({ contentType: 'text/event-stream', body: `data: ${JSON.stringify({ choices: [{ delta: { content: JSON.stringify(output) } }] })}\n\ndata: [DONE]\n\n` })
@@ -124,4 +125,8 @@ test('新任务字段走原细纲 Harness；候选在其它章节仍有标记，
   await expect(page.getByLabel('场景1 · 退出状态', { exact: true })).toHaveValue('约定未履行')
   await expect(page.getByPlaceholder('备注 / AI 建议...', { exact: true })).toHaveValue('不要追加敌人')
   expect(calls).toBe(2)
+})
+
+test.beforeEach(async ({ page }) => {
+  await mockOllamaCapacity(page, [{"baseUrl": "https://scene-tasks.invalid/v1","model": "task-contract-test"}])
 })

@@ -1,3 +1,4 @@
+import { mockOllamaCapacity } from './helpers/model-capacity'
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
 import { openLongformLeaf } from './helpers/longform-navigation'
@@ -175,4 +176,8 @@ test('rejecting the last generated character closes its durable run and survives
   expect((await status()).events.filter((e: { type: string }) => e.type === 'run.cancelled')).toHaveLength(1)
   await page.reload(); await expect(page.getByRole('button', { name: 'AI 设计角色', exact: true })).toBeEnabled()
   expect((await status()).runs[0]?.status).toBe('cancelled'); expect(calls).toBe(1)
+})
+
+test.beforeEach(async ({ page }) => {
+  await mockOllamaCapacity(page, [{"baseUrl": "https://character-terminal.invalid/v1","model": "isolated-character"}])
 })

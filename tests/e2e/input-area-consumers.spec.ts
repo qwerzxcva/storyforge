@@ -344,6 +344,7 @@ test('047 native StoryCore raw toggle preserves the governed candidate and has a
   await nudge(page, 'story.logline/candidate')
   await page.getByRole('button', { name: '查看原始结构', exact: true }).click()
   const raw = page.locator('[data-input-area-layout="story.logline/raw"]')
+  await expect(raw.locator('textarea')).toHaveValue(JSON.stringify({ field: 'logline', value: text }))
   expect(JSON.parse(await raw.locator('textarea').inputValue())).toEqual({ field: 'logline', value: text })
   await nudge(page, 'story.logline/raw')
   await raw.getByRole('button', { name: '恢复自适应', exact: true }).click()

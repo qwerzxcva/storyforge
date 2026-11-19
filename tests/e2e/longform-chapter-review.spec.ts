@@ -1,3 +1,4 @@
+import { mockOllamaCapacity } from './helpers/model-capacity'
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
 import { openLongformLeaf } from './helpers/longform-navigation'
@@ -16,7 +17,7 @@ async function setup(page: Page, responses: string[]) {
     localStorage.setItem('storyforge_guide_completed', 'e2e')
     localStorage.setItem('storyforge-ai-config', JSON.stringify({ provider: 'ollama', baseUrl: 'https://chapter-review-test.invalid/v1', model: 'chapter-review-e2e', temperature: 0.2, maxTokens: 4000 }))
   })
-  await page.route('https://chapter-review-test.invalid/**', async route => {
+  await page.route('https://chapter-review-test.invalid/v1/chat/completions', async route => {
     const content = responses[calls++]
     if (content === undefined) throw new Error('Unexpected extra model request')
     await route.fulfill({ contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { content }, finish_reason: 'stop' }], usage: { prompt_tokens: 100, completion_tokens: 120, total_tokens: 220 } }) })
@@ -75,4 +76,8 @@ test('SFQA099: omitted model original is rejected visibly without changing the s
   await page.getByRole('button', { name: '关闭', exact: true }).click()
   await expect(page.getByLabel('章节摘要', { exact: true })).toHaveValue(original)
   expect(calls()).toBe(2)
+})
+
+test.beforeEach(async ({ page }) => {
+  await mockOllamaCapacity(page, [{"baseUrl": "https://chapter-review-test.invalid/v1","model": "chapter-review-e2e"}])
 })

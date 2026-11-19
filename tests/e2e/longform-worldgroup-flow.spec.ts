@@ -23,7 +23,7 @@ async function origin(page: Page, value?: string) {
   if (value !== undefined) {
     await page.locator('div.cursor-text:visible').first().click()
     const input = page.locator('textarea:visible').first()
-    await input.fill(value); await input.press('Tab'); await expect(input).not.toBeVisible()
+    await input.fill(value); await page.getByRole('navigation', { name: '长篇一级导航' }).getByRole('button', { name: '作品库', exact: true }).focus(); await expect(input).not.toBeVisible()
   }
   return page.locator('div.cursor-text:visible').first()
 }

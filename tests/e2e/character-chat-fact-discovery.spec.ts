@@ -67,7 +67,7 @@ for (const rejected of [false, true]) test(`a completed investigation only revea
   await page.addInitScript(() => {
     localStorage.setItem('storyforge_guide_completed', 'e2e')
   })
-  registerBrowserFixtureAIConfigV1(page, { provider: 'openai', baseUrl: 'https://chat-discovery.invalid/v1', model: 'test', maxTokens: 6000, apiKey: 'isolated-test-key' })
+  registerBrowserFixtureAIConfigV1(page, { provider: 'custom', contextWindow: 131072, baseUrl: 'https://chat-discovery.invalid/v1', model: 'test', maxTokens: 6000, apiKey: 'isolated-test-key' })
   await page.route('https://chat-discovery.invalid/**', async route => {
           if (await fulfillChatActionChoiceFixture(route)) return
     const prompt = route.request().postDataJSON().messages.map((m: {content: string}) => m.content).join('\n')

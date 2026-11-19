@@ -7,7 +7,7 @@ test('three independent role consequences survive a local failure and explicit c
   await page.addInitScript(() => {
     localStorage.setItem('storyforge_guide_completed', 'e2e')
   })
-  registerBrowserFixtureAIConfigV1(page, { provider: 'openai', model: 'test', baseUrl: 'https://chat-ensemble.invalid/v1', maxTokens: 6000, apiKey: 'isolated-test-key' })
+  registerBrowserFixtureAIConfigV1(page, { provider: 'custom', contextWindow: 131072, model: 'test', baseUrl: 'https://chat-ensemble.invalid/v1', maxTokens: 6000, apiKey: 'isolated-test-key' })
   const actors: string[] = []
   let calls = 0
   await page.route('https://chat-ensemble.invalid/**', async route => {

@@ -7,13 +7,13 @@ on:
         description: 'Full release acceptance or focused CI regression verification'
         type: choice
         default: full
-        options: [full, regression]
+        options: [full, regression, audit]
 
 permissions:
   contents: read
 
 concurrency:
-  group: fork-android-${{ inputs.test_scope == 'regression' && format('regression-{0}', github.ref) || 'release' }}
+  group: fork-android-${{ inputs.test_scope != 'full' && format('{0}-{1}', inputs.test_scope, github.ref) || 'release' }}
   cancel-in-progress: false
 
 env:
@@ -22,7 +22,7 @@ env:
 
 jobs:
   coverage-shards:
-    if: inputs.test_scope != 'regression'
+    if: inputs.test_scope == 'full'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     strategy:
@@ -70,7 +70,7 @@ jobs:
         run: npm run ci
 
   browser-checks:
-    if: inputs.test_scope != 'regression'
+    if: inputs.test_scope == 'full'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     strategy:
@@ -149,8 +149,88 @@ jobs:
           if-no-files-found: ignore
           retention-days: 5
 
+  audit:
+    if: inputs.test_scope == 'audit'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Recheck the failed browser files
+        env:
+          SHARD: ${{ matrix.shard }}
+          PLAYWRIGHT_FROZEN_WORKSPACE: '1'
+        shell: bash
+        run: |
+          files=(
+            tests/e2e/character-chat-action-choice.spec.ts
+            tests/e2e/character-chat-action-revision.spec.ts
+            tests/e2e/character-chat-actor-progression.spec.ts
+            tests/e2e/character-chat-choice-message-evidence.spec.ts
+            tests/e2e/character-chat-commitments.spec.ts
+            tests/e2e/character-chat-completed-goal-continuation.spec.ts
+            tests/e2e/character-chat-control-handoff.spec.ts
+            tests/e2e/character-chat-ensemble.spec.ts
+            tests/e2e/character-chat-existing-goal-pause.spec.ts
+            tests/e2e/character-chat-fact-discovery.spec.ts
+            tests/e2e/character-chat-history-edit.spec.ts
+            tests/e2e/character-chat-inquiry-result.spec.ts
+            tests/e2e/character-chat-inquiry-settlement.spec.ts
+            tests/e2e/character-chat-integration.spec.ts
+            tests/e2e/character-chat-turn-resume.spec.ts
+            tests/e2e/context-compression-transport.spec.ts
+            tests/e2e/core-workflow.spec.ts
+            tests/e2e/failure-reporting.spec.ts
+            tests/e2e/inkwash-theme.spec.ts
+            tests/e2e/input-area-consumers.spec.ts
+            tests/e2e/longform-agent-experience.spec.ts
+            tests/e2e/longform-author-save.spec.ts
+            tests/e2e/longform-batch-adoption.spec.ts
+            tests/e2e/longform-batch-rejection.spec.ts
+            tests/e2e/longform-chapter-review.spec.ts
+            tests/e2e/longform-character-save.spec.ts
+            tests/e2e/longform-post-authorization-recovery.spec.ts
+            tests/e2e/longform-prose-handoff.spec.ts
+            tests/e2e/longform-provider-frame.spec.ts
+            tests/e2e/longform-scene-tasks.spec.ts
+            tests/e2e/longform-selected-revision.spec.ts
+            tests/e2e/longform-setting-read-recovery.spec.ts
+            tests/e2e/longform-state-card-recovery.spec.ts
+            tests/e2e/longform-step-quality.spec.ts
+            tests/e2e/longform-story-arc-save.spec.ts
+            tests/e2e/longform-system-elements.spec.ts
+            tests/e2e/longform-whole-review.spec.ts
+            tests/e2e/longform-work-metadata.spec.ts
+            tests/e2e/longform-worldgroup-flow.spec.ts
+            tests/e2e/markdown-read-safety.spec.ts
+            tests/e2e/new-ui-foundation.spec.ts
+            tests/e2e/quality001016-creation-task-recovery.spec.ts
+            tests/e2e/quality013-import-lifecycle.spec.ts
+          )
+          npm run ci:e2e -- -- "${files[@]}" --shard="$SHARD/10" --max-failures=4 --reporter=github,blob
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() }}
+        with:
+          name: fork-audit-${{ matrix.shard }}
+          path: |
+            test-results/
+            blob-report/
+          if-no-files-found: ignore
+          retention-days: 5
+
   android:
-    if: inputs.test_scope != 'regression' && github.repository == 'qwerzxcva/storyforge' && github.ref == 'refs/heads/main'
+    if: inputs.test_scope == 'full' && github.repository == 'qwerzxcva/storyforge' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     env:
@@ -256,7 +336,7 @@ jobs:
 
   publish:
     needs: [checks, browser-checks, android]
-    if: inputs.test_scope != 'regression' && github.ref == 'refs/heads/main'
+    if: inputs.test_scope == 'full' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
