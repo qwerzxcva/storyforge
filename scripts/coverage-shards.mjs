@@ -6,31 +6,36 @@ import path from 'node:path'
 
 export const COVERAGE_SHARD_COUNT = 8
 export const vitestExecutable = () => path.resolve('node_modules/vitest/vitest.mjs')
+/** @param {string} file */
 export const fileDigest = file => createHash('sha256').update(readFileSync(file)).digest('hex')
 
 export function coverageSource() {
+  /** @param {string} revision */
   const git = revision => execFileSync('git', ['rev-parse', revision], { encoding: 'utf8' }).trim()
   return {
     commit: git('HEAD'),
     tree: git('HEAD^{tree}'),
-    vitest: JSON.parse(readFileSync('node_modules/vitest/package.json', 'utf8')).version,
+    vitest: /** @type {{version: string}} */ (JSON.parse(readFileSync('node_modules/vitest/package.json', 'utf8'))).version,
   }
 }
 
 export function coverageFiles() {
   // Keep --json last: its optional value is an output filename, not a filter.
   const output = execFileSync(process.execPath, [vitestExecutable(), 'list', '--filesOnly', '--json'], { encoding: 'utf8' })
-  const files = JSON.parse(output).map(row => relativeTestFile(row.file))
+  const rows = /** @type {{file: string}[]} */ (JSON.parse(output))
+  const files = rows.map(row => relativeTestFile(row.file))
   if (!files.length || new Set(files).size !== files.length) throw new Error('Invalid complete coverage file inventory')
   return files.sort()
 }
 
+/** @param {string} file */
 export function relativeTestFile(file) {
   const relative = path.relative(process.cwd(), file).split(path.sep).join('/')
   if (!relative || relative.startsWith('../') || path.isAbsolute(relative)) throw new Error('Coverage file is outside this checkout')
   return relative
 }
 
+/** @param {{success?: boolean, numTotalTests: number, numFailedTests: number, numFailedTestSuites: number, testResults: {name: string}[]}} report */
 export function completedTestFiles(report) {
   if (report.success !== true || !(report.numTotalTests > 0)
     || report.numFailedTests !== 0 || report.numFailedTestSuites !== 0
@@ -40,6 +45,10 @@ export function completedTestFiles(report) {
   return report.testResults.map(row => relativeTestFile(row.name)).sort()
 }
 
+/**
+ * @param {string} directory
+ * @param {{source: ReturnType<typeof coverageSource>, expectedFiles: readonly string[], count?: number}} options
+ */
 export function validateCoverageShards(directory, { source, expectedFiles, count = COVERAGE_SHARD_COUNT }) {
   const folders = readdirSync(directory, { withFileTypes: true })
   if (folders.length !== count || folders.some(row => !row.isDirectory())) throw new Error('Incomplete coverage shard set')
@@ -52,7 +61,7 @@ export function validateCoverageShards(directory, { source, expectedFiles, count
       throw new Error('Invalid or duplicate coverage shard index')
     }
     indexes.add(receipt.index)
-    for (const key of ['commit', 'tree', 'vitest']) {
+    for (const key of /** @type {const} */ (['commit', 'tree', 'vitest'])) {
       if (receipt.source?.[key] !== source[key]) throw new Error(`Coverage shard source mismatch: ${key}`)
     }
     const blob = path.join(root, 'blob.json'), results = path.join(root, 'test-results.json')
@@ -73,6 +82,7 @@ export function validateCoverageShards(directory, { source, expectedFiles, count
   return blobs
 }
 
+/** @param {string} directory */
 export function prepareCoverageMerge(directory) {
   const expectedFiles = coverageFiles()
   const blobs = validateCoverageShards(directory, { source: coverageSource(), expectedFiles })
