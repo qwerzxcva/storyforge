@@ -6,7 +6,7 @@ import { normalizeProviderModel, PROVIDER_PRESETS } from '../lib/types'
 import { createLog, updateLog } from '../lib/ai/logger'
 import { nanoid } from '../lib/utils/id'
 import { buildOpenAIEndpoint, normalizeOpenAIBaseUrl } from '../lib/ai/openai-endpoint'
-import { buildAIRequestHeaders, customHeaderValues, parseCustomHeaders } from '../lib/ai/request-headers'
+import { buildAIRequestHeaders, customHeaderValues, parseCustomHeaders, redactAIResponseError } from '../lib/ai/request-headers'
 import { sameAICredentialAuthorityV1 } from '../lib/ai/credential-identity'
 import { createSessionCredentialV1, readSessionCredentialV1, type SessionCredentialV1 } from '../lib/ai/session-credential'
 import { isProviderQuotaRejectionV1 } from '../lib/ai/provider-rejection'
@@ -638,18 +638,19 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
       }
 
       // 解析错误信息
+      const safeBody = redactAIResponseError(bodyText, config)
       let rawErrorMsg = `HTTP ${response.status}`
       try {
         const parsed = JSON.parse(bodyText)
         // Gemini OpenAI compatibility can wrap its normal error object in a
         // one-element array. Normalize both shapes before classification.
         const errJson = Array.isArray(parsed) ? parsed[0] : parsed
-        if (errJson.error?.message) rawErrorMsg = errJson.error.message
-        else if (errJson.message) rawErrorMsg = errJson.message
-        else if (errJson.error_msg) rawErrorMsg = errJson.error_msg
-        else if (bodyText.trim()) rawErrorMsg = bodyText.slice(0, 500)
+        const message = [errJson?.error?.message, errJson?.message, errJson?.error_msg]
+          .find(value => typeof value === 'string' && value.length > 0)
+        if (message) rawErrorMsg = message
+        else if (safeBody.trim()) rawErrorMsg = safeBody.slice(0, 500)
       } catch {
-        if (bodyText.trim()) rawErrorMsg += ': ' + bodyText.slice(0, 500)
+        if (safeBody.trim()) rawErrorMsg += ': ' + safeBody.slice(0, 500)
       }
 
       // 常见英文错误 → 中文翻译映射
@@ -661,9 +662,9 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
       const localHint = ['custom', 'ollama'].includes(config.provider)
         ? '；本地 OpenAI 兼容服务的 Base URL 通常应填到 /v1，例如 LM Studio: http://主机:1234/v1，Ollama: http://localhost:11434/v1'
         : ''
-      const errorMsg = `${cnExplanation ? `${rawErrorMsg}（${cnExplanation}）` : rawErrorMsg}${urlHint}${localHint}`
+      const errorMsg = `${cnExplanation ? `${redactAIResponseError(rawErrorMsg, config)}（${cnExplanation}）` : redactAIResponseError(rawErrorMsg, config)}${urlHint}${localHint}`
 
-      updateLog(log.id, { status: 'error', statusCode: response.status, duration, errorMessage: errorMsg, responseBody: bodyText.slice(0, 500) })
+      updateLog(log.id, { status: 'error', statusCode: response.status, duration, errorMessage: errorMsg, responseBody: safeBody.slice(0, 500) })
       return { ok: false, message: `❌ ${errorMsg}`, statusCode: response.status, duration }
 
     } catch (err: unknown) {
@@ -676,7 +677,7 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
       } else if (error.name === 'AbortError') {
         errorMsg = '请求超时'
       } else {
-        errorMsg = error.message || '未知错误'
+        errorMsg = redactAIResponseError(error.message || '未知错误', config)
       }
 
       updateLog(log.id, { status: 'error', duration, errorMessage: errorMsg })

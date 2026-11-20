@@ -12,6 +12,22 @@ export function customHeaderValues(config: Pick<AIConfig, 'provider' | 'customHe
   return config.provider === 'custom' ? (config.customHeaders ?? []).flatMap(header => [header.value, header.value.trim()]) : []
 }
 
+export function redactAIResponseError(body: string, config: HeaderConfig): string {
+  const secrets = [...new Set([config.apiKey, ...customHeaderValues(config)].filter(Boolean))]
+    .sort((a, b) => b.length - a.length)
+  if (!secrets.length) return body
+  const redact = (text: string) => {
+    for (const secret of secrets) text = text.split(secret).join('[REDACTED]')
+    return text
+  }
+  try { JSON.parse(body) } catch { return redact(body) }
+  return body.replace(/"(?:\\[\s\S]|[^"\\])*"/g, token => {
+    const value: string = JSON.parse(token)
+    const safe = redact(value)
+    return safe === value ? token : JSON.stringify(safe)
+  })
+}
+
 export function buildAIRequestHeaders(config: HeaderConfig, json = true): Record<string, string> | undefined {
   const headers: Record<string, string> = json ? { 'Content-Type': 'application/json' } : {}
   if (config.apiKey) headers.Authorization = `Bearer ${config.apiKey}`

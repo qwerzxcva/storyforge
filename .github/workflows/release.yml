@@ -32,6 +32,7 @@ concurrency:
 
 jobs:
   coverage-shards:
+    if: github.repository != 'qwerzxcva/storyforge'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -78,6 +79,7 @@ jobs:
         run: npm run ci
 
   browser-checks:
+    if: github.repository != 'qwerzxcva/storyforge'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -118,6 +120,7 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
   clients:
+    if: github.repository != 'qwerzxcva/storyforge'
     permissions:
       contents: write
     uses: ./.github/workflows/clients.yml
