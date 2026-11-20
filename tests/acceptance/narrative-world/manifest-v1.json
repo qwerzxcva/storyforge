@@ -21,7 +21,7 @@
     "edits": 48
   },
   "baseline": {
-    "path": "tests/acceptance/narrative-world/baseline-20261119-035-cover-input-v1.json",
+    "path": "tests/acceptance/narrative-world/baseline-20261120-release-v408-v1.json",
     "policy": "Preserve this dated receipt. Changed corpus requires a new dataset version; changed implementation requires a reviewed new receipt.",
     "history": [
       {
@@ -1380,6 +1380,11 @@
         "path": "tests/acceptance/narrative-world/baseline-20261119-043-main-input-v1.json",
         "workPackage": "ISSUE-483",
         "note": "Preserved measured main before the two existing workStatus compression declarations."
+      },
+      {
+        "path": "tests/acceptance/narrative-world/baseline-20261120-release-v408-v1.json",
+        "workPackage": "RELEASE-408",
+        "note": "Regenerated the deterministic NW-0B receipt after the split CI release scripts changed package.json inputs."
       }
     ],
     "comparison": "NW-2E checkpoint of the unchanged legacy v3 120-query comparator. Typed v4 query, exact product plans, current impact diagnostics and scale failures have separate receipts; no model or human quality acceptance is inferred."

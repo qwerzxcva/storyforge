@@ -40,6 +40,7 @@ export function completedTestFiles(report) {
   return report.testResults.map(row => relativeTestFile(row.name)).sort()
 }
 
+/** @param {string} directory */
 export function validateCoverageShards(directory, { source, expectedFiles, count = COVERAGE_SHARD_COUNT }) {
   const folders = readdirSync(directory, { withFileTypes: true })
   if (folders.length !== count || folders.some(row => !row.isDirectory())) throw new Error('Incomplete coverage shard set')
@@ -73,6 +74,7 @@ export function validateCoverageShards(directory, { source, expectedFiles, count
   return blobs
 }
 
+/** @param {string} directory */
 export function prepareCoverageMerge(directory) {
   const expectedFiles = coverageFiles()
   const blobs = validateCoverageShards(directory, { source: coverageSource(), expectedFiles })
