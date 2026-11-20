@@ -82,6 +82,18 @@ describe('custom request headers settings', () => {
     expect(useAIConfigStore.getState().config.customHeaders ?? []).toEqual([])
   })
 
+  it('discards an in-flight connection result after the request headers change', async () => {
+    useAIConfigStore.getState().setConfig({ customHeaders: [{ name: 'X-Gateway-Token', value: 'before' }] })
+    await mount()
+    let finish!: (response: Response) => void
+    vi.stubGlobal('fetch', vi.fn(() => new Promise<Response>(resolve => { finish = resolve })))
+    await click('测试最小连接')
+    await input('请求头值 1', 'after')
+    await act(async () => finish(Response.json({ choices: [{ message: { content: 'ok' }, finish_reason: 'stop' }] })))
+    expect(host.textContent).not.toContain('最小连接成功')
+    expect([...host.querySelectorAll('button')].find(button => button.textContent?.includes('测试最小连接'))?.disabled).toBe(false)
+  })
+
   it('passes edited headers to model refresh through the actual refresh button', async () => {
     await mount()
     await click('添加请求头')

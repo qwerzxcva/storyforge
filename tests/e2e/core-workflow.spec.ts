@@ -615,6 +615,7 @@ test('人文知识主入口可保存拆分概述，并安全关联与断开城�
   await expect(page.getByText('雁门关', { exact: true })).toBeVisible()
 
   await openWorkspaceLeaf(page, '人文环境')
+  await expect(sidebarButton(page, '人文环境')).toHaveAttribute('aria-current', 'page')
   await expect(page.locator('.lf-world-panel')).toBeVisible()
   await expect(page.getByRole('button', { name: /打开正式历史年表/ })).toBeVisible()
   await page.getByRole('button', { name: /打开正式历史年表/ }).click()
@@ -3300,6 +3301,7 @@ test('Codex 内容拆分刷新恢复候选，作者确认后才原子新增词�
   await openCleanHome(page)
   await createProject(page, 'E2E Codex durable 拆分闭环')
   await openSidebarLeaf(page, '世界观', '自然环境')
+  await expect(sidebarButton(page, '自然环境')).toHaveAttribute('aria-current', 'page')
   await expect(page.locator('.lf-world-panel')).toBeVisible()
   await expect(page.getByText('📚 世界结构 · 具体词条', { exact: true })).toBeVisible()
 

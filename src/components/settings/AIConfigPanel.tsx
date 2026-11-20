@@ -78,6 +78,7 @@ function AIConfigPanelFull() {
   const [showKey, setShowKey] = useState(false)
   const [testing, setTesting] = useState(false)
   const [testResult, setTestResult] = useState<TestResult | null>(null)
+  const connectionTestGeneration = useRef(0)
   const [showLogs, setShowLogs] = useState(false)
   const [savingPreset, setSavingPreset] = useState(false)
   const [presetName, setPresetName] = useState('')
@@ -138,13 +139,14 @@ function AIConfigPanelFull() {
   }
 
   const handleTest = async () => {
+    const generation = ++connectionTestGeneration.current
     setTesting(true)
     setTestResult(null)
     try {
       const result = await testConnection()
-      setTestResult(result)
+      if (connectionTestGeneration.current === generation) setTestResult(result)
     } finally {
-      setTesting(false)
+      if (connectionTestGeneration.current === generation) setTesting(false)
     }
   }
 
@@ -168,19 +170,17 @@ function AIConfigPanelFull() {
     if (ok) deletePreset(id)
   }
 
-  // 切换 provider 时清空测试结果
-  useEffect(() => {
-    setTestResult(null)
-  }, [config.provider])
-
   useEffect(() => {
     modelListSession.active = true
-    let owner = modelListOwner(useAIConfigStore.getState().config)
     // Observe every owner change, including A -> B -> A in one React batch.
-    const unsubscribe = useAIConfigStore.subscribe(state => {
-      const next = modelListOwner(state.config)
-      if (sameModelListOwner(owner, next)) return
-      owner = next
+    const unsubscribe = useAIConfigStore.subscribe((state, previous) => {
+      const sameOwner = sameModelListOwner(modelListOwner(previous.config), modelListOwner(state.config))
+      if (!sameOwner || state.config.model !== previous.config.model) {
+        connectionTestGeneration.current += 1
+        setTestResult(null)
+        setTesting(false)
+      }
+      if (sameOwner) return
       modelListSession.generation += 1
       modelListSession.resultOwner = null
       setFetchedModels([])
@@ -189,6 +189,7 @@ function AIConfigPanelFull() {
     })
     return () => {
       modelListSession.active = false
+      connectionTestGeneration.current += 1
       modelListSession.generation += 1
       modelListSession.resultOwner = null
       unsubscribe()

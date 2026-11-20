@@ -172,8 +172,31 @@ describe('custom model request headers', () => {
     const store = await freshStore()
     store.getState().setConfig(config())
     vi.stubGlobal('fetch', vi.fn(async () => new Response('gateway rejected synthetic-gateway-secret', { status: 401 })))
-    expect((await store.getState().testConnection()).ok).toBe(false)
+    const result = await store.getState().testConnection()
+    expect(result).toMatchObject({ ok: false, statusCode: 401 })
+    expect(result.message).toContain('gateway rejected')
+    expect(result.message).not.toContain('synthetic-gateway-secret')
     const { getLogs } = await import('../../src/lib/ai/logger')
     expect(JSON.stringify(getLogs())).not.toContain('synthetic-gateway-secret')
+  })
+
+  it.each(['chat', 'stream', 'images'] as const)('redacts echoed credentials from the %s error body without losing provider diagnostics', async mode => {
+    const { chat, streamChat, chatWithImagesV1 } = await import('../../src/lib/ai/client')
+    const settings = config()
+    settings.customHeaders = [{ name: 'X-Gateway-Token', value: 'synthetic-"gateway"-secret' }]
+    vi.stubGlobal('fetch', vi.fn(async () => Response.json({ error: {
+      code: 'gateway_rejection', message: `gateway rejected ${settings.customHeaders![0].value}`,
+    } }, { status: 401 })))
+    const messages = [{ role: 'user' as const, content: 'hello' }]
+    async function run() {
+      if (mode === 'chat') return chat(messages, settings)
+      if (mode === 'images') return chatWithImagesV1(messages, [
+        { label: 'test', dataUrl: 'data:image/png;base64,dGVzdA==', detail: 'low' },
+      ], settings)
+      return streamChat(messages, settings).next()
+    }
+    await expect(run()).rejects.toMatchObject({ status: 401, body: JSON.stringify({
+      error: { code: 'gateway_rejection', message: 'gateway rejected [REDACTED]' },
+    }) })
   })
 })

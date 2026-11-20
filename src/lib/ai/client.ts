@@ -9,7 +9,7 @@ import { recordUsage } from './usage-log'
 import { estimateTokens, trimMessagesToFit } from './context-budget'
 import { buildOpenAIEndpoint } from './openai-endpoint'
 import { getAIConfigPresetApiKeyV1, getAIConfigPresetHeadersV1, useAIConfigStore } from '../../stores/ai-config'
-import { buildAIRequestHeaders, customHeaderValues } from './request-headers'
+import { buildAIRequestHeaders, customHeaderValues, redactAIResponseError } from './request-headers'
 import { resolveAIConfigForTask, type AITaskKind } from './task-routing'
 import { AICompletionResponseErrorV1, inspectCompletionResponseV1, requireCompletionTextV1 } from './completion-response'
 import { allowsSamplingTemperature, targetsOfficialProvider } from './provider-model-lifecycle'
@@ -364,7 +364,7 @@ export async function chatWithImagesV1(
   const response = await fetch(req.url, {
     method: 'POST', headers: req.headers, redirect: req.redirect, body: req.body, signal,
   })
-  if (!response.ok) throw new AIError(response.status, await response.text())
+  if (!response.ok) throw new AIError(response.status, redactAIResponseError(await response.text(), config))
   const json = await response.json()
   if (json.usage) {
     const usage = {
@@ -464,7 +464,7 @@ export async function* streamChat(
     }
 
     if (!response!.ok) {
-      const errorText = await response!.text()
+      const errorText = redactAIResponseError(await response!.text(), config)
       const duration = Date.now() - startTime
       updateLog(log.id, { status: 'error', statusCode: response!.status, duration, errorMessage: errorText.slice(0, 200) })
       throw new AIError(response!.status, errorText)
@@ -623,7 +623,7 @@ export async function chat(
     }
 
     if (!response.ok) {
-      const errorText = await response.text()
+      const errorText = redactAIResponseError(await response.text(), config)
       throw new AIError(response!.status, errorText)
     }
 
