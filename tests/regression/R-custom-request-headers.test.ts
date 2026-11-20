@@ -90,6 +90,20 @@ describe('custom model request headers', () => {
     expect((await freshStore()).getState().config.customHeaders).toEqual(CUSTOM_HEADERS)
   })
 
+  it('persists preset header ownership names without leaking session-only header values', async () => {
+    let store = await freshStore()
+    store.getState().setConfig({ ...config(), customHeadersPresetNames: ['x-gateway-token'] })
+    const id = store.getState().saveAsPreset('session-only gateway')
+    const saved = JSON.parse(localStorage.getItem('storyforge-ai-presets')!)
+    expect(saved[0].config.customHeaders).toEqual([])
+    expect(saved[0].config.customHeadersPresetNames).toEqual(['x-gateway-token'])
+    expect(localStorage.getItem('storyforge-ai-presets')).not.toContain('synthetic-gateway-secret')
+    store = await freshStore()
+    store.getState().applyPreset(id)
+    expect(store.getState().config.customHeaders).toEqual(CUSTOM_HEADERS)
+    expect(store.getState().config.customHeadersPresetNames).toEqual(['x-gateway-token'])
+  })
+
   it('restores preset-specific session headers and supplies them to task routes', async () => {
     const store = await freshStore()
     store.getState().setConfig(config())

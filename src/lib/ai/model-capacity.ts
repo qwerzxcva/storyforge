@@ -1,3 +1,4 @@
+import { providerApiFormat } from './provider-protocol'
 import { sha256 } from '@noble/hashes/sha2.js'
 import { bytesToHex } from '@noble/hashes/utils.js'
 import type { AIConfig } from '../types'
@@ -42,7 +43,8 @@ let pinned = new WeakMap<AIConfig, ModelCapacityV1>()
 let durablePins = new WeakSet<AIConfig>()
 function identity(config: AIConfig): string {
   return bytesToHex(sha256(new TextEncoder().encode(JSON.stringify([
-    config.provider, normalizeOpenAIBaseUrl(config.baseUrl).baseUrl, config.model, config.apiKey,
+    config.provider, normalizeOpenAIBaseUrl(config.baseUrl, providerApiFormat(config)).baseUrl, config.model, config.apiKey,
+    ...(providerApiFormat(config) !== 'chat-completions' ? [providerApiFormat(config)] : []),
     ...(config.provider === 'custom' && config.customHeaders?.length ? [config.customHeaders] : []),
   ]))))
 }
@@ -109,7 +111,7 @@ function serviceWindow(window: number): Limits {
 }
 async function discover(config: AIConfig, fetchImpl: typeof fetch, now: number): Promise<ModelCapacityV1> {
   const fallback = getModelCapacityV1({ ...config, modelCapacity: undefined }, now)
-  const base = normalizeOpenAIBaseUrl(config.baseUrl).baseUrl
+  const base = normalizeOpenAIBaseUrl(config.baseUrl, providerApiFormat(config)).baseUrl
   if (config.provider === 'codex') return fallback
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), 2500)
@@ -132,7 +134,7 @@ async function discover(config: AIConfig, fetchImpl: typeof fetch, now: number):
       const rows = Array.isArray(data.models) ? data.models.map(record).filter(row => row.name === config.model || row.model === config.model) : []
       const windows = rows.map(row => row.context_length).filter(positive)
       if (windows.length) { limits = serviceWindow(Math.min(...windows)); source = 'https://docs.ollama.com/api/ps' }
-    } else if (config.provider === 'custom') {
+    } else if (config.provider === 'custom' && providerApiFormat(config) === 'chat-completions') {
       // LM Studio documents configured loaded-instance limits separately from theoretical max_context_length.
       const data = await read(`${base.replace(/\/v1$/, '')}/api/v1/models`)
       const row = Array.isArray(data.models) ? data.models.map(record).find(row => row.key === config.model && row.type === 'llm') : undefined

@@ -1,6 +1,6 @@
 import type { AIConfig, AIRequestHeader } from '../types'
 
-type HeaderConfig = Pick<AIConfig, 'provider' | 'apiKey' | 'customHeaders'>
+type HeaderConfig = Pick<AIConfig, 'provider' | 'apiKey' | 'customHeaders' | 'apiFormat'>
 
 export function parseCustomHeaders(input: unknown): AIRequestHeader[] {
   return Array.isArray(input) ? input.filter((row): row is AIRequestHeader => (
@@ -48,7 +48,11 @@ export function redactRequestSecrets(text: string, config: Pick<AIConfig, 'provi
 
 export function buildAIRequestHeaders(config: HeaderConfig, json = true): Record<string, string> | undefined {
   const headers: Record<string, string> = json ? { 'Content-Type': 'application/json' } : {}
-  if (config.apiKey) headers.Authorization = `Bearer ${config.apiKey}`
+  const anthropic = config.apiFormat === 'anthropic-messages'
+  if (anthropic) {
+    headers['anthropic-version'] = '2023-06-01'
+    if (config.apiKey) headers['x-api-key'] = config.apiKey
+  } else if (config.apiKey) headers.Authorization = `Bearer ${config.apiKey}`
   if (config.provider === 'custom') {
     for (const { name, value } of config.customHeaders ?? []) {
       const trimmedName = name.trim()

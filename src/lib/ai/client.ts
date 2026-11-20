@@ -1,3 +1,4 @@
+import { transformProviderRequest, normalizeProviderCompletion, normalizeProviderStream } from './provider-protocol'
 import { inheritModelCapacityV1, prepareModelCapacityV1, freezeModelCapacityV1, modelInputBudgetV1 } from './model-capacity'
 import { assertGenerationAvailable } from '../showcase/policy'
 import { streamCodex, CODEX_BASE_URL, assertModelDispatchGuardV1, modelDispatchWasCancelledV1, ModelDispatchGuardRejectedV1, type CodexRequestRefV1 } from './codex-transport'
@@ -7,9 +8,8 @@ import { AIError, CodexRequestError } from '../types'
 import { createLog, updateLog, type TokenUsage } from './logger'
 import { recordUsage } from './usage-log'
 import { estimateTokens, trimMessagesToFit } from './context-budget'
-import { buildOpenAIEndpoint } from './openai-endpoint'
 import { getAIConfigPresetApiKeyV1, getAIConfigPresetHeadersV1, useAIConfigStore } from '../../stores/ai-config'
-import { buildAIRequestHeaders, customHeaderValues, hasCustomHeaders, redactRequestSecrets } from './request-headers'
+import { customHeaderValues, redactRequestSecrets } from './request-headers'
 import { resolveAIConfigForTask, type AITaskKind } from './task-routing'
 import { AICompletionResponseErrorV1, inspectCompletionResponseV1, requireCompletionTextV1 } from './completion-response'
 import { allowsSamplingTemperature, targetsOfficialProvider } from './provider-model-lifecycle'
@@ -77,7 +77,7 @@ export function describeResolvedAIRequestSettingsV1(
   const parameters: Record<string, unknown> = {}
   if (config.provider !== 'codex') {
     const body = JSON.parse(buildRequest(config, [], stream, options).body) as Record<string, unknown>
-    for (const key of ['temperature', 'max_tokens', 'reasoning_effort', 'thinking', 'chat_template_kwargs']) {
+    for (const key of ['temperature', 'max_tokens', 'max_output_tokens', 'reasoning_effort', 'thinking', 'chat_template_kwargs', 'tool_choice', 'store', 'output_config', 'text']) {
       if (body[key] !== undefined) parameters[key] = body[key]
     }
     if (body.response_format && typeof body.response_format === 'object'
@@ -281,12 +281,7 @@ function buildRequest(
     if (config.maxTokens && config.maxTokens > 0) body.max_tokens = config.maxTokens
   }
 
-  return {
-    url: buildOpenAIEndpoint(config.baseUrl, 'chat/completions'),
-    headers: buildAIRequestHeaders(config),
-    redirect: hasCustomHeaders(config) ? 'error' as const : undefined,
-    body: JSON.stringify(body),
-  }
+  return transformProviderRequest(config, body)
 }
 
 export interface ChatImageInputV1 {
@@ -365,7 +360,7 @@ export async function chatWithImagesV1(
     method: 'POST', headers: req.headers, redirect: req.redirect, body: req.body, signal,
   })
   if (!response.ok) throw new AIError(response.status, redactRequestSecrets(await response.text(), config))
-  const json = await response.json()
+  const json = normalizeProviderCompletion(config, await response.json())
   if (json.usage) {
     const usage = {
       inputTokens: json.usage.prompt_tokens ?? 0,
@@ -471,7 +466,8 @@ export async function* streamChat(
       throw new AIError(response!.status, safeErrorText)
     }
 
-    reader = response!.body!.getReader()
+    response = normalizeProviderStream(config, response!)
+    reader = response.body!.getReader()
     const decoder = new TextDecoder()
     let buffer = ''
 
@@ -628,10 +624,11 @@ export async function chat(
       throw new AIError(response!.status, errorText)
     }
 
-    let json
-    try { json = await response.json() } catch {
-      throw new AICompletionResponseErrorV1('invalid-json', '无法读取 chat/completions 响应。')
+    let payload
+    try { payload = await response.json() } catch {
+      throw new AICompletionResponseErrorV1('invalid-json', '模型服务响应不是有效 JSON。')
     }
+    const json = normalizeProviderCompletion(config, payload)
     const responseSummary = inspectCompletionResponseV1(json).summary
     updateLog(log.id, { statusCode: response.status, responseSummary })
     if (result?.captureProviderTokenUsage && json?.usage && typeof json.usage === 'object' && !Array.isArray(json.usage)) {

@@ -1,3 +1,4 @@
+import { transformProviderRequest, normalizeProviderCompletion } from '../lib/ai/provider-protocol'
 import { IS_MODEL_DISABLED_BUILD, MODEL_DISABLED_NOTICE } from '../lib/showcase/policy'
 import { streamCodex } from '../lib/ai/codex-transport'
 import { create } from 'zustand'
@@ -5,8 +6,8 @@ import type { AIConfig, AIProvider, AIConfigPreset, EmbeddingConfig } from '../l
 import { normalizeProviderModel, PROVIDER_PRESETS } from '../lib/types'
 import { createLog, updateLog } from '../lib/ai/logger'
 import { nanoid } from '../lib/utils/id'
-import { buildOpenAIEndpoint, normalizeOpenAIBaseUrl } from '../lib/ai/openai-endpoint'
-import { buildAIRequestHeaders, customHeaderValues, hasCustomHeaders, parseCustomHeaders, redactRequestSecrets } from '../lib/ai/request-headers'
+import { buildOpenAIEndpoint, normalizeOpenAIBaseUrl, providerApiFormat } from '../lib/ai/openai-endpoint'
+import { customHeaderValues, parseCustomHeaders, redactRequestSecrets } from '../lib/ai/request-headers'
 import { sameAICredentialAuthorityV1 } from '../lib/ai/credential-identity'
 import { createSessionCredentialV1, readSessionCredentialV1, type SessionCredentialV1 } from '../lib/ai/session-credential'
 import { isProviderQuotaRejectionV1 } from '../lib/ai/provider-rejection'
@@ -38,6 +39,7 @@ const PRESET_SESSION_API_KEYS = 'storyforge-ai-preset-api-keys-session'
 const SESSION_HEADERS = 'storyforge-ai-headers-session'
 const PRESET_SESSION_HEADERS = 'storyforge-ai-preset-headers-session'
 const REMEMBER_API_KEY = 'storyforge-ai-api-key-remember'
+const ANDROID_CREDENTIAL_MIGRATION = 'storyforge-android-ai-credentials-v1'
 const EMBEDDING_KEY = 'storyforge-embedding-config'
 const EMBEDDING_SESSION_KEY = 'storyforge-embedding-key-session'
 export const TASK_ROUTES_KEY = 'storyforge-ai-task-routes'
@@ -325,8 +327,15 @@ function normalizeConfigModel(config: AIConfig): AIConfig {
   config = { ...config }
   delete config.contextWindow
   delete config.modelCapacity
-  if (config.provider !== 'custom') delete config.customHeaders
-  else if (config.customHeaders) config.customHeaders = parseCustomHeaders(config.customHeaders)
+  if (config.provider !== 'custom') {
+    delete config.customHeaders
+    delete config.customHeadersPresetNames
+  } else {
+    if (config.customHeaders) config.customHeaders = parseCustomHeaders(config.customHeaders)
+    if (config.customHeadersPresetNames) config.customHeadersPresetNames = [...new Set(config.customHeadersPresetNames
+      .filter(name => typeof name === 'string' && /^[!#$%&'*+.^_`|~0-9a-z-]+$/i.test(name.trim()))
+      .map(name => name.trim().toLowerCase()))]
+  }
   if (config.provider === 'codex') return { ...config, apiKey: '', baseUrl: '/storyforge/local-codex/v1' }
   const model = normalizeProviderModel(config.provider, config.model)
   return model === config.model ? config : { ...config, model }
@@ -418,7 +427,7 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
   setConfig: (partial: Partial<AIConfig>) => {
     if (IS_MODEL_DISABLED_BUILD) return
     const previous = get().config
-    const newConfig = normalizeConfigModel({ ...previous, ...partial })
+    const newConfig = normalizeConfigModel({ ...previous, ...(partial.provider && partial.provider !== previous.provider ? { apiFormat: undefined } : {}), ...partial })
     const identityChanged = previous.provider !== newConfig.provider || previous.baseUrl !== newConfig.baseUrl
     if (identityChanged && !sameChatCredentialAuthority(previous, newConfig)) {
       if (!Object.prototype.hasOwnProperty.call(partial, 'apiKey')) newConfig.apiKey = ''
@@ -436,8 +445,11 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
     persistEmbeddingConfig(embedding, remember)
     const presets = state.presets.map(preset => {
       const headers = getAIConfigPresetHeadersV1(preset)
+      const apiKey = getAIConfigPresetApiKeyV1(preset)
       const next = { ...preset, sessionCredentialId: preset.sessionCredentialId || nanoid(),
-        config: { ...preset.config, customHeaders: remember ? headers : [] } }
+        config: { ...preset.config, apiKey: remember ? apiKey : '', customHeaders: remember ? headers : [] } }
+      savePresetSessionApiKey(next.id, !remember && apiKey
+        ? createSessionCredentialV1(next.config, next.sessionCredentialId, apiKey) : null)
       savePresetSessionHeaders(next, { ...next.config, customHeaders: headers }, remember)
       return next
     })
@@ -549,7 +561,7 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
     if (IS_MODEL_DISABLED_BUILD) return
     const state = get(), previous = { ...state.config }
     const preset = PROVIDER_PRESETS[provider] || {}
-    const owner = { ...previous, provider, ...preset }
+    const owner = { ...previous, provider, apiFormat: undefined, ...preset }
     const newConfig = normalizeConfigModel({
       ...owner,
       apiKey: sameChatCredentialAuthority(previous, owner) ? previous.apiKey : (preset.apiKey || ''),
@@ -575,13 +587,15 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
         return { ok: false, message: error instanceof Error ? error.message : 'Codex 连接失败', duration: Date.now() - startedAt }
       }
     }
-    const normalized = normalizeOpenAIBaseUrl(config.baseUrl)
+    const format = providerApiFormat(config)
+    const normalized = normalizeOpenAIBaseUrl(config.baseUrl, format)
     if (normalized.changed) {
       const newConfig = { ...config, baseUrl: normalized.baseUrl }
       persistConfig(newConfig, get().rememberApiKey)
       set({ config: newConfig, activePresetId: null })
     }
-    const url = buildOpenAIEndpoint(normalized.baseUrl, 'chat/completions')
+    const route = format === 'anthropic-messages' ? 'messages' : format === 'openai-responses' ? 'responses' : 'chat/completions'
+    const url = buildOpenAIEndpoint(normalized.baseUrl, route, format)
     const startTime = Date.now()
     const controller = new AbortController()
     // NVIDIA 的托管开发端点常有冷启动；连接探活只限制输出，不把首 token
@@ -602,18 +616,16 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
     })
 
     try {
-      const response = await fetch(url, {
+      const endpoint = transformProviderRequest(config, {
+        model: config.model, messages: [{ role: 'user', content: '请回复“连接成功”' }],
+        max_tokens: config.provider === 'agnes' || format === 'openai-responses' ? 1024 : 32,
+      })
+      const response = await fetch(endpoint.url, {
         method: 'POST',
         signal: controller.signal,
-        headers: buildAIRequestHeaders(config),
-        redirect: hasCustomHeaders(config) ? 'error' : undefined,
-        body: JSON.stringify({
-          model: config.model,
-          messages: [{ role: 'user', content: '请回复"连接成功"' }],
-          // Agnes may emit reasoning before its answer. A 32-token cap can
-          // produce HTTP 200 + empty content + finish_reason=length.
-          max_tokens: config.provider === 'agnes' ? 1024 : 32,
-        }),
+        headers: endpoint.headers,
+        redirect: endpoint.redirect,
+        body: endpoint.body,
       })
 
       const duration = Date.now() - startTime
@@ -625,6 +637,7 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
         try { completion = JSON.parse(bodyText) } catch {
           throw new AICompletionResponseErrorV1('invalid-json', '连接测试收到 HTTP 200，但响应不是 JSON。')
         }
+        completion = normalizeProviderCompletion(config, completion)
         const responseSummary = inspectCompletionResponseV1(completion).summary
         updateLog(log.id, { statusCode: response.status, responseSummary })
         requireCompletionTextV1(completion)
@@ -692,3 +705,9 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
     }
   },
 }))
+
+// Promote only owner-matched credentials once; a later explicit opt-out remains effective.
+if (!IS_MODEL_DISABLED_BUILD && import.meta.env.MODE === 'android' && localStorage.getItem(ANDROID_CREDENTIAL_MIGRATION) !== '1') {
+  useAIConfigStore.getState().setRememberApiKey(true)
+  localStorage.setItem(ANDROID_CREDENTIAL_MIGRATION, '1')
+}

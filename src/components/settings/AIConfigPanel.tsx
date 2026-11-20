@@ -53,6 +53,7 @@ export default function AIConfigPanel({ showDeveloperTools = false }: { showDeve
 }
 
 interface ModelListOwner {
+  apiFormat: AIConfig['apiFormat']
   provider: AIProvider
   baseUrl: string
   /** Private component memory only, never a rendered or persisted identity. */
@@ -62,11 +63,11 @@ interface ModelListOwner {
 interface ModelListRequest extends ModelListOwner { generation: number }
 
 function modelListOwner(config: AIConfig): ModelListOwner {
-  return { provider: config.provider, baseUrl: normalizeOpenAIBaseUrl(config.baseUrl).baseUrl, apiKey: config.apiKey,
+  return { apiFormat: config.apiFormat, provider: config.provider, baseUrl: normalizeOpenAIBaseUrl(config.baseUrl, config.apiFormat).baseUrl, apiKey: config.apiKey,
     customHeaders: config.provider === 'custom' ? config.customHeaders : undefined }
 }
 function sameModelListOwner(left: ModelListOwner, right: ModelListOwner): boolean {
-  return left.provider === right.provider && left.baseUrl === right.baseUrl && left.apiKey === right.apiKey
+  return left.apiFormat === right.apiFormat && left.provider === right.provider && left.baseUrl === right.baseUrl && left.apiKey === right.apiKey
     && JSON.stringify(left.customHeaders ?? []) === JSON.stringify(right.customHeaders ?? [])
 }
 
@@ -119,6 +120,8 @@ function AIConfigPanelFull({ showDeveloperTools }: { showDeveloperTools: boolean
       invalidateModelCapacityV1(current)
       const models = await fetchOpenAIModels({
         baseUrl: request.baseUrl,
+        provider: request.provider,
+        apiFormat: request.apiFormat,
         apiKey: request.apiKey,
         customHeaders: request.customHeaders,
       })
@@ -202,7 +205,7 @@ function AIConfigPanelFull({ showDeveloperTools }: { showDeveloperTools: boolean
       <div className="bg-bg-surface border border-border rounded-xl p-5 mb-6">
         <h3 className="text-base font-semibold text-text-primary mb-4">AI 模型配置</h3>
         <p className="text-xs text-text-muted mb-4 rounded-lg border border-border bg-bg-base px-3 py-2">
-          API Key 和自定义请求头默认仅保存在本次浏览器会话；勾选“记住在本机”才会写入 localStorage。发起 AI 生成、测试连接或使用自定义 baseUrl 时，相关提示词和上下文会发送到你配置的模型服务。
+          浏览器版默认仅本次会话保存；Android 默认在本机持久保存（未加密，可关闭），其他平台勾选“记住在本机”才会写入本地存储。发起 AI 生成、测试连接或使用自定义 baseUrl 时，相关提示词和上下文会发送到你配置的模型服务。
         </p>
 
         <AIConfigPresetSection
@@ -285,13 +288,16 @@ function AIConfigPanelFull({ showDeveloperTools }: { showDeveloperTools: boolean
                 className="mt-0.5 accent-accent"
               />
               <span>
-                在本机记住 API Key 和自定义请求头（写入 localStorage）。不勾选时仅本次浏览器会话有效。
+                在本机记住 API Key 和自定义请求头（写入本地存储，未加密）。Android 默认开启；关闭后仅本次会话有效。
               </span>
             </label>
           </div>
 
           {config.provider === 'custom' && (
-            <CustomRequestHeaders headers={config.customHeaders ?? []} onChange={customHeaders => setConfig({ customHeaders })} />
+            <CustomRequestHeaders headers={config.customHeaders ?? []} presetHeaderNames={config.customHeadersPresetNames ?? []}
+              onChange={(customHeaders, customHeadersPresetNames) => setConfig({ customHeaders, customHeadersPresetNames })}
+              apiFormat={config.apiFormat} onProtocolChange={(apiFormat, customHeaders, customHeadersPresetNames) =>
+                setConfig({ apiFormat, customHeaders, customHeadersPresetNames })} />
           )}
 
           <div className="ai-connection-grid">
