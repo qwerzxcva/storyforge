@@ -1382,9 +1382,9 @@
         "note": "Preserved measured main before the two existing workStatus compression declarations."
       },
       {
-        "path": "tests/acceptance/narrative-world/baseline-20261120-release-v408-v1.json",
-        "workPackage": "RELEASE-408",
-        "note": "Regenerated the deterministic NW-0B receipt after the split CI release scripts changed package.json inputs."
+        "path": "tests/acceptance/narrative-world/baseline-20261119-035-cover-input-v1.json",
+        "workPackage": "BUG-035-S",
+        "note": "Preserves the measured inputs before the split CI scripts changed package.json."
       }
     ],
     "comparison": "NW-2E checkpoint of the unchanged legacy v3 120-query comparator. Typed v4 query, exact product plans, current impact diagnostics and scale failures have separate receipts; no model or human quality acceptance is inferred."

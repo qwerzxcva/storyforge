@@ -7469,7 +7469,7 @@
       "tests/acceptance/narrative-world/impact-model-protocol-20261015-v1.json": "842a089019217e274a8bc3248f0a44049ca3eb7725032fcaa3a10776b2d32d34",
       "tests/acceptance/narrative-world/impact-model-protocol-20261015-v2.json": "8182063a8c9649f94cb580efa5887caec05e8f8e52e456e3f80e082d617606fc",
       "tests/acceptance/narrative-world/impact-semantic-20261015-v2.json": "ef4079a373e51ebeed959f467fb106e04b2345f1cf5ccba107b35b96dab82440",
-      "tests/acceptance/narrative-world/manifest-v1.json": "0b8c679a160d772e07b8ae9fbd99465fd7a355988fbdde133b506a0b42c08bcd",
+      "tests/acceptance/narrative-world/manifest-v1.json": "f7c91a6e52b8f2789196e27d0269003fd1bfecd37a7521469daa4566572411ca",
       "tests/acceptance/narrative-world/raw/nw2e-reader-quarantine-20261015-v1/interruption-audit.json": "ae112d585a826ef1492ca40aec8544b189c7539bf056f09dc2428607c47b00a7",
       "tests/acceptance/narrative-world/raw/reader-semantic-judge-20261015-v3/calls/2b912ed54820752a26c14b67f937b52ea56f6d0652aed0231695eac9447aebb0.request.json": "d07378fcb0bbe1069ace718c10938b8c6f90f8433f7c18881400d82fb78cf2cb",
       "tests/acceptance/narrative-world/raw/reader-semantic-judge-20261015-v3/calls/2b912ed54820752a26c14b67f937b52ea56f6d0652aed0231695eac9447aebb0.result.json": "8bb56e6add1fae9be63ece3b171a971ac6a4e0709f2315a666e823f942d2bc7e",
@@ -7592,11 +7592,11 @@
       "tests/setup.ts": "33e223c8c3ae15a23248d206b2bc910c3a23f22a4411d7f3c63b71269d87fe71",
       "vitest.config.ts": "d95877f7130bf751d07761303dde21b8d82625a6e6bc4d418a85e9f7edf7ecd5"
     },
-    "sha256": "4ecdf0c628ca3ae35852667c31e4926f4ef6aee2822036d0540ff5dced5fe036"
+    "sha256": "95bf2f58cac0b9154f27fb9f22313a5e187b21d442fd50e579129332ad0aecae"
   },
   "run": {
-    "evaluatedCommit": "b09df77744d5d320c2e409d5a3f01f05b549d0f6",
-    "generatedAt": "2026-11-20T07:01:35.735Z",
+    "evaluatedCommit": "604358ee9f8c85ff88f9d4d8b0f7fc910f1fa9cb",
+    "generatedAt": "2026-11-20T07:30:58.642Z",
     "node": "v24.22.3",
     "platform": "linux",
     "architecture": "arm64",
