@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars -- Declaration parameter names are part of the public API. */
 export const COVERAGE_SHARD_COUNT: 8
 export function vitestExecutable(): string
 export function fileDigest(file: string): string
