@@ -9,7 +9,7 @@ import { recordUsage } from './usage-log'
 import { estimateTokens, trimMessagesToFit } from './context-budget'
 import { buildOpenAIEndpoint } from './openai-endpoint'
 import { getAIConfigPresetApiKeyV1, getAIConfigPresetHeadersV1, useAIConfigStore } from '../../stores/ai-config'
-import { buildAIRequestHeaders, customHeaderValues } from './request-headers'
+import { buildAIRequestHeaders, customHeaderValues, hasCustomHeaders, redactRequestSecrets } from './request-headers'
 import { resolveAIConfigForTask, type AITaskKind } from './task-routing'
 import { AICompletionResponseErrorV1, inspectCompletionResponseV1, requireCompletionTextV1 } from './completion-response'
 import { allowsSamplingTemperature, targetsOfficialProvider } from './provider-model-lifecycle'
@@ -284,7 +284,7 @@ function buildRequest(
   return {
     url: buildOpenAIEndpoint(config.baseUrl, 'chat/completions'),
     headers: buildAIRequestHeaders(config),
-    redirect: config.provider === 'custom' && config.customHeaders?.length ? 'error' as const : undefined,
+    redirect: hasCustomHeaders(config) ? 'error' as const : undefined,
     body: JSON.stringify(body),
   }
 }
@@ -364,7 +364,7 @@ export async function chatWithImagesV1(
   const response = await fetch(req.url, {
     method: 'POST', headers: req.headers, redirect: req.redirect, body: req.body, signal,
   })
-  if (!response.ok) throw new AIError(response.status, await response.text())
+  if (!response.ok) throw new AIError(response.status, redactRequestSecrets(await response.text(), config))
   const json = await response.json()
   if (json.usage) {
     const usage = {
@@ -466,8 +466,9 @@ export async function* streamChat(
     if (!response!.ok) {
       const errorText = await response!.text()
       const duration = Date.now() - startTime
-      updateLog(log.id, { status: 'error', statusCode: response!.status, duration, errorMessage: errorText.slice(0, 200) })
-      throw new AIError(response!.status, errorText)
+      const safeErrorText = redactRequestSecrets(errorText, config)
+      updateLog(log.id, { status: 'error', statusCode: response!.status, duration, errorMessage: safeErrorText.slice(0, 200) })
+      throw new AIError(response!.status, safeErrorText)
     }
 
     reader = response!.body!.getReader()
@@ -623,7 +624,7 @@ export async function chat(
     }
 
     if (!response.ok) {
-      const errorText = await response.text()
+      const errorText = redactRequestSecrets(await response.text(), config)
       throw new AIError(response!.status, errorText)
     }
 

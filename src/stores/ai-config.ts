@@ -6,7 +6,7 @@ import { normalizeProviderModel, PROVIDER_PRESETS } from '../lib/types'
 import { createLog, updateLog } from '../lib/ai/logger'
 import { nanoid } from '../lib/utils/id'
 import { buildOpenAIEndpoint, normalizeOpenAIBaseUrl } from '../lib/ai/openai-endpoint'
-import { buildAIRequestHeaders, customHeaderValues, parseCustomHeaders } from '../lib/ai/request-headers'
+import { buildAIRequestHeaders, customHeaderValues, hasCustomHeaders, parseCustomHeaders, redactRequestSecrets } from '../lib/ai/request-headers'
 import { sameAICredentialAuthorityV1 } from '../lib/ai/credential-identity'
 import { createSessionCredentialV1, readSessionCredentialV1, type SessionCredentialV1 } from '../lib/ai/session-credential'
 import { isProviderQuotaRejectionV1 } from '../lib/ai/provider-rejection'
@@ -606,7 +606,7 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
         method: 'POST',
         signal: controller.signal,
         headers: buildAIRequestHeaders(config),
-        redirect: config.provider === 'custom' && config.customHeaders?.length ? 'error' : undefined,
+        redirect: hasCustomHeaders(config) ? 'error' : undefined,
         body: JSON.stringify({
           model: config.model,
           messages: [{ role: 'user', content: '请回复"连接成功"' }],
@@ -618,6 +618,7 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
 
       const duration = Date.now() - startTime
       const bodyText = await response.text()
+      const safeBodyText = redactRequestSecrets(bodyText, config)
 
       if (response.ok) {
         let completion
@@ -640,16 +641,20 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
       // 解析错误信息
       let rawErrorMsg = `HTTP ${response.status}`
       try {
-        const parsed = JSON.parse(bodyText)
+        const parsed = JSON.parse(safeBodyText)
         // Gemini OpenAI compatibility can wrap its normal error object in a
         // one-element array. Normalize both shapes before classification.
         const errJson = Array.isArray(parsed) ? parsed[0] : parsed
-        if (errJson.error?.message) rawErrorMsg = errJson.error.message
-        else if (errJson.message) rawErrorMsg = errJson.message
-        else if (errJson.error_msg) rawErrorMsg = errJson.error_msg
-        else if (bodyText.trim()) rawErrorMsg = bodyText.slice(0, 500)
+        const errRecord = errJson && typeof errJson === 'object' ? errJson as Record<string, unknown> : {}
+        const nestedError = errRecord.error && typeof errRecord.error === 'object'
+          ? errRecord.error as Record<string, unknown>
+          : {}
+        const candidate = [nestedError.message, errRecord.message, errRecord.error_msg]
+          .find((value): value is string => typeof value === 'string' && value.length > 0)
+        if (candidate) rawErrorMsg = candidate
+        else if (safeBodyText.trim()) rawErrorMsg = safeBodyText.slice(0, 500)
       } catch {
-        if (bodyText.trim()) rawErrorMsg += ': ' + bodyText.slice(0, 500)
+        if (safeBodyText.trim()) rawErrorMsg += ': ' + safeBodyText.slice(0, 500)
       }
 
       // 常见英文错误 → 中文翻译映射
@@ -661,9 +666,10 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
       const localHint = ['custom', 'ollama'].includes(config.provider)
         ? '；本地 OpenAI 兼容服务的 Base URL 通常应填到 /v1，例如 LM Studio: http://主机:1234/v1，Ollama: http://localhost:11434/v1'
         : ''
-      const errorMsg = `${cnExplanation ? `${rawErrorMsg}（${cnExplanation}）` : rawErrorMsg}${urlHint}${localHint}`
+      const safeRawErrorMsg = redactRequestSecrets(rawErrorMsg, config)
+      const errorMsg = `${cnExplanation ? `${safeRawErrorMsg}（${cnExplanation}）` : safeRawErrorMsg}${urlHint}${localHint}`
 
-      updateLog(log.id, { status: 'error', statusCode: response.status, duration, errorMessage: errorMsg, responseBody: bodyText.slice(0, 500) })
+      updateLog(log.id, { status: 'error', statusCode: response.status, duration, errorMessage: errorMsg, responseBody: safeBodyText.slice(0, 500) })
       return { ok: false, message: `❌ ${errorMsg}`, statusCode: response.status, duration }
 
     } catch (err: unknown) {
@@ -676,7 +682,7 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
       } else if (error.name === 'AbortError') {
         errorMsg = '请求超时'
       } else {
-        errorMsg = error.message || '未知错误'
+        errorMsg = redactRequestSecrets(error.message || '未知错误', config)
       }
 
       updateLog(log.id, { status: 'error', duration, errorMessage: errorMsg })

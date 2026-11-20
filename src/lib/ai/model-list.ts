@@ -1,6 +1,6 @@
 import type { AIConfig } from '../types'
 import { buildOpenAIEndpoint } from './openai-endpoint'
-import { buildAIRequestHeaders } from './request-headers'
+import { buildAIRequestHeaders, hasCustomHeaders } from './request-headers'
 
 interface FetchOpenAIModelsOptions {
   baseUrl: string
@@ -26,7 +26,7 @@ export async function fetchOpenAIModels({
       cache: 'no-store',
       signal: controller.signal,
       headers: buildAIRequestHeaders({ provider: 'custom', apiKey, customHeaders }, false),
-      redirect: customHeaders?.length ? 'error' : undefined,
+      redirect: hasCustomHeaders({ provider: 'custom', customHeaders }) ? 'error' : undefined,
     })
 
     if (!response.ok) {
