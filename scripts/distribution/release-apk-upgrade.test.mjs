@@ -1,6 +1,5 @@
-/* global process */
 import assert from 'node:assert/strict'
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { spawnSync } from 'node:child_process'
@@ -9,7 +8,7 @@ import { fileURLToPath } from 'node:url'
 
 const script = fileURLToPath(new URL('./test-release-apk-upgrade.sh', import.meta.url))
 
-function runProbe(failBaseline = false) {
+function runProbe(failBaseline = false, signingDigest = '4bc440d0734135945d9cc143bb45723fa750e1a6d03bfb9753c165e9c3c056f0') {
   const directory = mkdtempSync(path.join(tmpdir(), 'storyforge-upgrade-order-'))
   const bin = path.join(directory, 'bin')
   const sdk = path.join(directory, 'sdk')
@@ -38,10 +37,10 @@ if (args.includes('instrument')) {
 `, { mode: 0o700 })
   const result = spawnSync('bash', [script], {
     cwd: directory,
-    env: { ...process.env, PATH: `${bin}${path.delimiter}${process.env.PATH}`, ANDROID_HOME: sdk, PREVIOUS_CLIENT_VERSION: '4.0.2', ADB_TRACE: trace, FAIL_BASELINE: failBaseline ? '1' : '0' },
+    env: { ...process.env, PATH: `${bin}${path.delimiter}${process.env.PATH}`, ANDROID_HOME: sdk, PREVIOUS_CLIENT_VERSION: '4.0.2', ADB_TRACE: trace, FAIL_BASELINE: failBaseline ? '1' : '0', ANDROID_SIGNING_CERT_SHA256: signingDigest },
     encoding: 'utf8',
   })
-  return { directory, result, calls: readFileSync(trace, 'utf8').trim().split('\n').map(line => JSON.parse(line)) }
+  return { directory, result, calls: existsSync(trace) ? readFileSync(trace, 'utf8').trim().split('\n').map(line => JSON.parse(line)) : [] }
 }
 
 test('formal replacement follows a successful old-package restart and preserves separate evidence', () => {
@@ -59,6 +58,16 @@ test('formal replacement follows a successful old-package restart and preserves 
     }
   } finally { rmSync(probe.directory, { recursive: true, force: true }) }
 })
+
+for (const digest of ['a'.repeat(64), 'not-a-certificate-digest']) {
+  test(`a wrong or invalid required certificate stops before installation: ${digest}`, () => {
+    const probe = runProbe(false, digest)
+    try {
+      assert.notEqual(probe.result.status, 0)
+      assert.equal(probe.calls.length, 0)
+    } finally { rmSync(probe.directory, { recursive: true, force: true }) }
+  })
+}
 
 test('old-package baseline failure stops before replacement even when instrumentation exits zero', () => {
   const probe = runProbe(true)
