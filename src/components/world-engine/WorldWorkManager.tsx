@@ -6,6 +6,7 @@ import { createWorldWork, listWorldWorks, switchActiveWork } from '../../lib/wor
 import { deleteWork } from '../../lib/workspace/lifecycle'
 import { useDialog } from '../shared/Dialog'
 import WorkKindBadge from '../work/WorkKindBadge'
+import { isWorkAvailableInBuild } from '../../lib/runtime/app-mode'
 
 interface Props {
   projectId: number
@@ -22,7 +23,7 @@ export default function WorldWorkManager({ projectId, activeWorkId, onChanged }:
   const [error, setError] = useState('')
 
   const reload = useCallback(async () => {
-    setWorks(await listWorldWorks(projectId))
+    setWorks((await listWorldWorks(projectId)).filter(work => isWorkAvailableInBuild(work)))
   }, [projectId])
 
   useEffect(() => { void reload() }, [reload])

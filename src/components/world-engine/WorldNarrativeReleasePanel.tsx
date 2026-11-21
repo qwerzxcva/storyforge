@@ -28,6 +28,7 @@ import {
 } from '../../lib/world-engine/releases'
 import { useDialog } from '../shared/Dialog'
 import NarrativeCompilationPanel from './NarrativeCompilationPanel'
+import { isAndroidAppBuild } from '../../lib/runtime/app-mode'
 
 interface Props {
   projectId: number
@@ -142,11 +143,11 @@ export default function WorldNarrativeReleasePanel({
   }
 
   return (
-    <section className="sf-world-pipeline" aria-label="世界修订、发布与产品交接">
+    <section className="sf-world-pipeline" aria-label={isAndroidAppBuild() ? "世界修订与封存" : "世界修订、发布与产品交接"}>
       <div className="sf-world-pipeline-heading">
         <div>
           <span className="sf-card-kicker"><GitBranch className="h-4 w-4" /> SEMANTIC WORLD RELEASE</span>
-          <h3>冻结世界与交给具体产品</h3>
+          <h3>{isAndroidAppBuild() ? "冻结并封存世界版本" : "冻结世界与交给具体产品"}</h3>
         </div>
         <span className="sf-project-status"><ShieldCheck className="h-3.5 w-3.5" />世界页不创建产品或运行实例</span>
       </div>
@@ -195,23 +196,26 @@ export default function WorldNarrativeReleasePanel({
           </div>}
         </div>
 
-        <div className="sf-world-pipeline-stage">
-          <div className="sf-world-pipeline-stage-head"><span>2</span><div><strong>显式交给产品</strong><small>进入产品配置，确认需求后再明确开始</small></div></div>
-          <label className="sf-world-pipeline-field">冻结世界版本<select value={selectedReleaseId ?? ''} onChange={event => setSelectedReleaseId(Number(event.target.value) || null)}><option value="">选择 WorldRelease</option>{releases.map(release => <option key={release.id} value={release.id}>v{release.version} · {release.label}</option>)}</select></label>
-          <p className="sf-world-pipeline-note">这里不会生成游戏、媒资、聊天会话或跑团实例。进入具体产品后，用户仍需确认产品设置和 Brief，并明确下达开始指令。</p>
-          {selectedRelease && <code>{selectedRelease.sourceWorldCode}@v{selectedRelease.version} · {selectedRelease.contentHash.slice(0, 16)}…</code>}
-          <div className="sf-world-pipeline-actions">
-            <button className="sf-button sf-button-secondary" onClick={() => handoff('text-adventure')} disabled={!selectedRelease?.id}>
-              <Gamepad2 className="h-4 w-4" />交给文字冒险
-            </button>
-            <button className="sf-button sf-button-secondary" onClick={() => handoff('text-open-world')} disabled={!selectedRelease?.id}>
-              <Globe2 className="h-4 w-4" />交给文字开放世界
-            </button>
-            <button className="sf-button sf-button-primary" onClick={() => handoff('ttrpg')} disabled={!selectedRelease?.id}>
-              <WandSparkles className="h-4 w-4" />交给跑团
-            </button>
+        {!isAndroidAppBuild() && (
+          <div className="sf-world-pipeline-stage">
+            <div className="sf-world-pipeline-stage-head"><span>2</span><div><strong>显式交给产品</strong><small>进入产品配置，确认需求后再明确开始</small></div></div>
+            <label className="sf-world-pipeline-field">冻结世界版本<select value={selectedReleaseId ?? ''} onChange={event => setSelectedReleaseId(Number(event.target.value) || null)}><option value="">选择 WorldRelease</option>{releases.map(release => <option key={release.id} value={release.id}>v{release.version} · {release.label}</option>)}</select></label>
+            <p className="sf-world-pipeline-note">这里不会生成游戏、媒资、聊天会话或跑团实例。进入具体产品后，用户仍需确认产品设置和 Brief，并明确下达开始指令。</p>
+            {selectedRelease && <code>{selectedRelease.sourceWorldCode}@v{selectedRelease.version} · {selectedRelease.contentHash.slice(0, 16)}…</code>}
+            <div className="sf-world-pipeline-actions">
+              <button className="sf-button sf-button-secondary" onClick={() => handoff('text-adventure')} disabled={!selectedRelease?.id}>
+                <Gamepad2 className="h-4 w-4" />交给文字冒险
+              </button>
+              <button className="sf-button sf-button-secondary" onClick={() => handoff('text-open-world')} disabled={!selectedRelease?.id}>
+                <Globe2 className="h-4 w-4" />交给文字开放世界
+              </button>
+              <button className="sf-button sf-button-primary" onClick={() => handoff('ttrpg')} disabled={!selectedRelease?.id}>
+                <WandSparkles className="h-4 w-4" />交给跑团
+              </button>
+            </div>
           </div>
-        </div>
+        )}
+
       </div>
       {message && <p className="sf-product-message" role="status">{message}</p>}
     </section>

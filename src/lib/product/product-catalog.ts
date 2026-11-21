@@ -7,6 +7,7 @@
  */
 import type { ProductionProductKindV1 } from '../types/product-identity'
 import type { NovelWorkflowProfile, WorkKind } from '../types/world-ownership'
+import { isProductAvailableInBuild } from '../runtime/app-mode'
 
 export const PRODUCT_RELEASE_STATUSES_V1 = [
   'experimental',
@@ -165,6 +166,10 @@ export function evaluateProductEntryV1(input: {
 }): ProductEntryDecisionV1 {
   const entry = PRODUCT_CATALOG_BY_ID_V1.get(input.productId)
   if (!entry) throw new Error(`[product-catalog] 未登记产品：${input.productId}`)
+  if (!isProductAvailableInBuild(entry.id)) {
+    return { entry, channel: input.channel, visible: false, enterable: false, badge: null,
+      blockers: ['Android 版仅开放世界引擎与长篇创作。'] }
+  }
   const local = input.channel === 'local-development' || input.channel === 'test'
   const released = entry.status === 'released'
   const experimentalAllowed = local && input.experimentalOptIn === true

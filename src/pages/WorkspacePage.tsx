@@ -5,6 +5,7 @@ import { resolveLongformChapterNavigationV1, type LongformChapterModuleV1 } from
 import ShortNovelHistory from '../components/short-novel/ShortNovelHistory'
 import LongformCompletion from '../components/longform/LongformCompletion'
 import { worldModulePath } from '../components/world-engine/navigation'
+import { isAndroidAppBuild, isWorkAvailableInBuild } from '../lib/runtime/app-mode'
 import { useCallback, useEffect, useRef, useState, useMemo, lazy, Suspense, Fragment } from 'react'
 import { Navigate, useLocation, useNavigate, useParams } from 'react-router'
 import { useProjectStore } from '../stores/project'
@@ -620,7 +621,8 @@ export default function WorkspacePage({ embeddedProjectId, embeddedModule, embed
     }
   }
 
-  if (activeWork && effectiveWorkKind(activeWork)==='screenplay') return <Navigate replace to={`/script/editor?work=${activeWork.id}`}/>
+  if (isAndroidAppBuild() && project.workspacePurpose !== 'world-engine' && activeWork && !isWorkAvailableInBuild(activeWork)) return <Navigate replace to="/home/library"/>
+  if ((!isAndroidAppBuild() || project.workspacePurpose !== 'world-engine') && activeWork && effectiveWorkKind(activeWork)==='screenplay') return <Navigate replace to={`/script/editor?work=${activeWork.id}`}/>
   if (project.workspacePurpose === 'independent-work' && activeWork && effectiveWorkKind(activeWork) === 'novel' && effectiveNovelProfile(activeWork) === 'short') return <Navigate replace to={`/short/${activeModule === 'chapters-list' ? 'editor' : activeModule === 'version-history' || activeModule === 'export' ? 'versions' : 'intent'}?project=${project.id}`}/>
 
   if (!embeddedProjectId && project.workspacePurpose === 'world-engine') return <Navigate replace to={worldModulePath(project.id!, activeModule, query)}/>

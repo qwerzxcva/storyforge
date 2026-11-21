@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { isAndroidAppBuild } from '../../lib/runtime/app-mode'
 import { workLabel, workPath, type HomeWork } from '../../lib/home/catalog'
 import type { HomeOpen } from './HomeTools'
 import type { HomeData } from './useHomeData'
@@ -47,7 +48,7 @@ export function HomeResults({ data, open, renderWorkCard }: {
         })}
         {!data.releases.length && <p>尚无独立作品发布版本。</p>}
       </section>
-      <section className="lf-paper">
+      {!isAndroidAppBuild() && <section className="lf-paper">
         <h3>互动产品发布记录</h3>
         {data.products.map(release => {
           const route = PRODUCT_RESULT_ROUTES.get(release.productType) ?? 'adventure/runtime'
@@ -65,7 +66,7 @@ export function HomeResults({ data, open, renderWorkCard }: {
           )
         })}
         {!data.products.length && <p>尚无互动产品发布记录。</p>}
-      </section>
+      </section>}
       <section className="lf-paper">
         <h3>已完成的长篇</h3>
         {completedLongform.map(renderWorkCard)}

@@ -1,3 +1,5 @@
+import { isAndroidAppBuild } from '../../lib/runtime/app-mode'
+
 /** Bookmarks remain readable, but can never select a retired application shell. */
 export function retiredHomeDestination(params: URLSearchParams): string | null {
   const tab = params.get('tab'), product = params.get('product')
@@ -5,6 +7,16 @@ export function retiredHomeDestination(params: URLSearchParams): string | null {
   const next = new URLSearchParams(params)
   next.delete('tab'); next.delete('legacy'); next.delete('product')
   const suffix = () => next.size ? `?${next}` : ''
+  if (isAndroidAppBuild()) {
+    if (tab === 'home' || (!tab && !product)) return '/'
+    if (tab === 'worlds' || tab === 'world' || product === 'world-engine') return `/world/worlds${next.has('project') ? `?project=${encodeURIComponent(next.get('project')!)}` : ''}`
+    if (tab === 'novel' || tab === 'nodes') {
+      if (tab === 'nodes') { next.set('mode', 'nodes'); next.set('module', 'visual-workflows') }
+      const project = next.get('project'); next.delete('project')
+      return `${project ? `/workspace/${encodeURIComponent(project)}` : '/long'}${suffix()}`
+    }
+    return '/home/library'
+  }
   const page = next.has('worldHandoff') ? 'source' : next.has('session') ? 'play' : next.has('project') ? 'production' : 'library'
   if (product === 'avg') return `/avg/${page}${suffix()}`
   if (tab === 'ttrpg') return `/ttrpg/${next.has('onlineHandoff') ? 'room' : page}${suffix()}`
@@ -23,6 +35,7 @@ export function retiredHomeDestination(params: URLSearchParams): string | null {
 
 /** Only same-application return paths; never accept an external redirect. */
 export function safeSettingsReturn(value: string | null): string | null {
+  if (isAndroidAppBuild() && (!value || !/^\/(?:long|world|home|workspace)(?:[/?][^#]*)?$/.test(value))) return null
   if (!value || !/^\/(?:play|ttrpg|avg|town|chat|long|short|script|comic|motion|world|home|workspace)(?:[/?][^#]*)?$/.test(value)
     || /[\\\r\n]/.test(value) || value.includes('..')) return null
   return value

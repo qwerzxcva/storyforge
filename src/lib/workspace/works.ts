@@ -24,6 +24,7 @@ import {
 import type { Chapter } from '../types/outline'
 import { canonicalManuscriptWordCount } from '../chapters/selectors'
 import { assertCurrentProductEntryV1, productCatalogIdForWorkV1 } from '../product/product-catalog'
+import { isAndroidAppBuild, isWorkAvailableInBuild } from '../runtime/app-mode'
 
 export interface CreateWorkInput {
   title: string
@@ -117,6 +118,10 @@ export async function switchActiveWork(projectId: number, workId: number): Promi
   return db.transaction('rw', db.projects, db.worlds, db.works, async () => {
     const [project, work] = await Promise.all([db.projects.get(projectId), db.works.get(workId)])
     if (!project || !work || work.projectId !== projectId) throw new Error('[works] Work 不属于当前工作区')
+    if (isAndroidAppBuild() && project.workspacePurpose !== 'world-engine'
+      && !isWorkAvailableInBuild(work)) {
+      throw new Error('[works] Android 版不能切换到已下线的 Work')
+    }
     const world = await db.worlds.get(work.worldId)
     if (!world || world.projectId !== projectId) throw new Error('[works] Work 的 World 根无效')
     await db.projects.update(projectId, { activeWorldId: world.id!, activeWorkId: work.id!, updatedAt: Date.now() })
@@ -153,6 +158,7 @@ export async function switchNovelProfile(input: {
       throw new Error('[works] Work 不属于当前工作区')
     }
     if (effectiveWorkKind(work) !== 'novel') throw new Error('[works] 只有小说 Work 可以切换短篇/长篇 Profile')
+    assertCurrentProductEntryV1(productCatalogIdForWorkV1({ kind: 'novel', novelProfile: input.profile }))
     const world = await db.worlds.get(work.worldId)
     if (!world || world.projectId !== input.projectId) throw new Error('[works] Work 的 World 根无效')
 
