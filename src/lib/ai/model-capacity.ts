@@ -1,8 +1,10 @@
+import { providerApiFormat } from './provider-protocol'
 import { sha256 } from '@noble/hashes/sha2.js'
 import { bytesToHex } from '@noble/hashes/utils.js'
 import type { AIConfig } from '../types'
 import { targetsOfficialProvider } from './provider-model-lifecycle'
 import { normalizeOpenAIBaseUrl } from './openai-endpoint'
+import { buildAIRequestHeaders } from './request-headers'
 
 /** Private connection identities are hashed; receipts never contain endpoints or credentials. */
 export interface ModelCapacityV1 {
@@ -41,7 +43,9 @@ let pinned = new WeakMap<AIConfig, ModelCapacityV1>()
 let durablePins = new WeakSet<AIConfig>()
 function identity(config: AIConfig): string {
   return bytesToHex(sha256(new TextEncoder().encode(JSON.stringify([
-    config.provider, normalizeOpenAIBaseUrl(config.baseUrl).baseUrl, config.model, config.apiKey,
+    config.provider, normalizeOpenAIBaseUrl(config.baseUrl, providerApiFormat(config)).baseUrl, config.model, config.apiKey,
+    ...(providerApiFormat(config) !== 'chat-completions' ? [providerApiFormat(config)] : []),
+    ...(config.provider === 'custom' && config.customHeaders?.length ? [config.customHeaders] : []),
   ]))))
 }
 function positive(value: unknown): value is number {
@@ -107,13 +111,13 @@ function serviceWindow(window: number): Limits {
 }
 async function discover(config: AIConfig, fetchImpl: typeof fetch, now: number): Promise<ModelCapacityV1> {
   const fallback = getModelCapacityV1({ ...config, modelCapacity: undefined }, now)
-  const base = normalizeOpenAIBaseUrl(config.baseUrl).baseUrl
+  const base = normalizeOpenAIBaseUrl(config.baseUrl, providerApiFormat(config)).baseUrl
   if (config.provider === 'codex') return fallback
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), 2500)
   async function read(url: string, gemini = false): Promise<Record<string, unknown>> {
     const response = await fetchImpl(url, { method: 'GET', signal: controller.signal, redirect: 'error',
-      headers: config.apiKey ? gemini ? { 'x-goog-api-key': config.apiKey } : { Authorization: `Bearer ${config.apiKey}` } : undefined })
+      headers: gemini ? (config.apiKey ? { 'x-goog-api-key': config.apiKey } : undefined) : buildAIRequestHeaders(config, false) })
     if (!response.ok) throw new Error('metadata-unavailable')
     return record(await response.json())
   }
@@ -130,7 +134,7 @@ async function discover(config: AIConfig, fetchImpl: typeof fetch, now: number):
       const rows = Array.isArray(data.models) ? data.models.map(record).filter(row => row.name === config.model || row.model === config.model) : []
       const windows = rows.map(row => row.context_length).filter(positive)
       if (windows.length) { limits = serviceWindow(Math.min(...windows)); source = 'https://docs.ollama.com/api/ps' }
-    } else if (config.provider === 'custom') {
+    } else if (config.provider === 'custom' && providerApiFormat(config) === 'chat-completions') {
       // LM Studio documents configured loaded-instance limits separately from theoretical max_context_length.
       const data = await read(`${base.replace(/\/v1$/, '')}/api/v1/models`)
       const row = Array.isArray(data.models) ? data.models.map(record).find(row => row.key === config.model && row.type === 'llm') : undefined

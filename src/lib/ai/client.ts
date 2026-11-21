@@ -1,3 +1,4 @@
+import { transformProviderRequest, normalizeProviderCompletion, normalizeProviderStream } from './provider-protocol'
 import { inheritModelCapacityV1, prepareModelCapacityV1, freezeModelCapacityV1, modelInputBudgetV1 } from './model-capacity'
 import { assertGenerationAvailable } from '../showcase/policy'
 import { streamCodex, CODEX_BASE_URL, assertModelDispatchGuardV1, modelDispatchWasCancelledV1, ModelDispatchGuardRejectedV1, type CodexRequestRefV1 } from './codex-transport'
@@ -7,8 +8,8 @@ import { AIError, CodexRequestError } from '../types'
 import { createLog, updateLog, type TokenUsage } from './logger'
 import { recordUsage } from './usage-log'
 import { estimateTokens, trimMessagesToFit } from './context-budget'
-import { buildOpenAIEndpoint } from './openai-endpoint'
-import { getAIConfigPresetApiKeyV1, useAIConfigStore } from '../../stores/ai-config'
+import { getAIConfigPresetApiKeyV1, getAIConfigPresetHeadersV1, useAIConfigStore } from '../../stores/ai-config'
+import { customHeaderValues, redactRequestSecrets } from './request-headers'
 import { resolveAIConfigForTask, type AITaskKind } from './task-routing'
 import { AICompletionResponseErrorV1, inspectCompletionResponseV1, requireCompletionTextV1 } from './completion-response'
 import { allowsSamplingTemperature, targetsOfficialProvider } from './provider-model-lifecycle'
@@ -41,6 +42,7 @@ export function resolveRequestConfig(config: AIConfig, meta?: AICallMeta) {
       config: {
         ...preset.config,
         apiKey: getAIConfigPresetApiKeyV1(preset),
+        customHeaders: getAIConfigPresetHeadersV1(preset),
       },
     })),
     routes: state.taskRoutes,
@@ -75,7 +77,7 @@ export function describeResolvedAIRequestSettingsV1(
   const parameters: Record<string, unknown> = {}
   if (config.provider !== 'codex') {
     const body = JSON.parse(buildRequest(config, [], stream, options).body) as Record<string, unknown>
-    for (const key of ['temperature', 'max_tokens', 'reasoning_effort', 'thinking', 'chat_template_kwargs']) {
+    for (const key of ['temperature', 'max_tokens', 'max_output_tokens', 'reasoning_effort', 'thinking', 'chat_template_kwargs', 'tool_choice', 'store', 'output_config', 'text']) {
       if (body[key] !== undefined) parameters[key] = body[key]
     }
     if (body.response_format && typeof body.response_format === 'object'
@@ -279,14 +281,7 @@ function buildRequest(
     if (config.maxTokens && config.maxTokens > 0) body.max_tokens = config.maxTokens
   }
 
-  return {
-    url: buildOpenAIEndpoint(config.baseUrl, 'chat/completions'),
-    headers: {
-      'Content-Type': 'application/json',
-      ...(config.apiKey ? { Authorization: `Bearer ${config.apiKey}` } : {}),
-    },
-    body: JSON.stringify(body),
-  }
+  return transformProviderRequest(config, body)
 }
 
 export interface ChatImageInputV1 {
@@ -362,10 +357,10 @@ export async function chatWithImagesV1(
   }
   const req = buildRequest(config, requestMessages, false, options)
   const response = await fetch(req.url, {
-    method: 'POST', headers: req.headers, body: req.body, signal,
+    method: 'POST', headers: req.headers, redirect: req.redirect, body: req.body, signal,
   })
-  if (!response.ok) throw new AIError(response.status, await response.text())
-  const json = await response.json()
+  if (!response.ok) throw new AIError(response.status, redactRequestSecrets(await response.text(), config))
+  const json = normalizeProviderCompletion(config, await response.json())
   if (json.usage) {
     const usage = {
       inputTokens: json.usage.prompt_tokens ?? 0,
@@ -427,7 +422,7 @@ export async function* streamChat(
     model: config.model,
     status: 'pending',
   }, {
-    sensitiveValues: [config.apiKey],
+    sensitiveValues: [config.apiKey, ...customHeaderValues(config)],
     baseUrl: config.baseUrl,
   })
 
@@ -445,6 +440,7 @@ export async function* streamChat(
       response = await fetch(req.url, {
         method: 'POST',
         headers: req.headers,
+        redirect: req.redirect,
         body: req.body,
         signal,
       })
@@ -465,11 +461,13 @@ export async function* streamChat(
     if (!response!.ok) {
       const errorText = await response!.text()
       const duration = Date.now() - startTime
-      updateLog(log.id, { status: 'error', statusCode: response!.status, duration, errorMessage: errorText.slice(0, 200) })
-      throw new AIError(response!.status, errorText)
+      const safeErrorText = redactRequestSecrets(errorText, config)
+      updateLog(log.id, { status: 'error', statusCode: response!.status, duration, errorMessage: safeErrorText.slice(0, 200) })
+      throw new AIError(response!.status, safeErrorText)
     }
 
-    reader = response!.body!.getReader()
+    response = normalizeProviderStream(config, response!)
+    reader = response.body!.getReader()
     const decoder = new TextDecoder()
     let buffer = ''
 
@@ -603,7 +601,7 @@ export async function chat(
   const startedAt = Date.now()
   const log = createLog(
     { type: 'chat', provider: config.provider, model: config.model, url: req.url, status: 'pending' },
-    { sensitiveValues: [config.apiKey], baseUrl: config.baseUrl },
+    { sensitiveValues: [config.apiKey, ...customHeaderValues(config)], baseUrl: config.baseUrl },
   )
   try {
     if (result?.beforeModelDispatch) await assertModelDispatchGuardV1(result, signal)
@@ -613,6 +611,7 @@ export async function chat(
     const response = await fetch(req.url, {
       method: 'POST',
       headers: req.headers,
+      redirect: req.redirect,
       body: req.body,
       signal,
     })
@@ -621,14 +620,15 @@ export async function chat(
     }
 
     if (!response.ok) {
-      const errorText = await response.text()
+      const errorText = redactRequestSecrets(await response.text(), config)
       throw new AIError(response!.status, errorText)
     }
 
-    let json
-    try { json = await response.json() } catch {
-      throw new AICompletionResponseErrorV1('invalid-json', '无法读取 chat/completions 响应。')
+    let payload
+    try { payload = await response.json() } catch {
+      throw new AICompletionResponseErrorV1('invalid-json', '模型服务响应不是有效 JSON。')
     }
+    const json = normalizeProviderCompletion(config, payload)
     const responseSummary = inspectCompletionResponseV1(json).summary
     updateLog(log.id, { statusCode: response.status, responseSummary })
     if (result?.captureProviderTokenUsage && json?.usage && typeof json.usage === 'object' && !Array.isArray(json.usage)) {

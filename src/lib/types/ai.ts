@@ -20,10 +20,18 @@ export type AIProvider =
   | 'ollama'
   | 'custom'
 
+export interface AIRequestHeader {
+  name: string
+  value: string
+}
+
 /** AI 配置 */
 export interface AIConfig {
   provider: AIProvider
   apiKey: string
+  customHeaders?: AIRequestHeader[]
+  customHeadersPresetNames?: string[]
+  apiFormat?: 'chat-completions' | 'anthropic-messages' | 'openai-responses'
   model: string
   baseUrl: string
   temperature: number

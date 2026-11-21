@@ -1,3 +1,4 @@
+import { transformProviderRequest, normalizeProviderCompletion } from '../lib/ai/provider-protocol'
 import { IS_MODEL_DISABLED_BUILD, MODEL_DISABLED_NOTICE } from '../lib/showcase/policy'
 import { streamCodex } from '../lib/ai/codex-transport'
 import { create } from 'zustand'
@@ -5,7 +6,8 @@ import type { AIConfig, AIProvider, AIConfigPreset, EmbeddingConfig } from '../l
 import { normalizeProviderModel, PROVIDER_PRESETS } from '../lib/types'
 import { createLog, updateLog } from '../lib/ai/logger'
 import { nanoid } from '../lib/utils/id'
-import { buildOpenAIEndpoint, normalizeOpenAIBaseUrl } from '../lib/ai/openai-endpoint'
+import { buildOpenAIEndpoint, normalizeOpenAIBaseUrl, providerApiFormat } from '../lib/ai/openai-endpoint'
+import { customHeaderValues, parseCustomHeaders, redactRequestSecrets } from '../lib/ai/request-headers'
 import { sameAICredentialAuthorityV1 } from '../lib/ai/credential-identity'
 import { createSessionCredentialV1, readSessionCredentialV1, type SessionCredentialV1 } from '../lib/ai/session-credential'
 import { isProviderQuotaRejectionV1 } from '../lib/ai/provider-rejection'
@@ -34,7 +36,10 @@ const STORAGE_KEY = 'storyforge-ai-config'
 const PRESETS_KEY = 'storyforge-ai-presets'
 const SESSION_API_KEY = 'storyforge-ai-api-key-session'
 const PRESET_SESSION_API_KEYS = 'storyforge-ai-preset-api-keys-session'
+const SESSION_HEADERS = 'storyforge-ai-headers-session'
+const PRESET_SESSION_HEADERS = 'storyforge-ai-preset-headers-session'
 const REMEMBER_API_KEY = 'storyforge-ai-api-key-remember'
+const ANDROID_CREDENTIAL_MIGRATION = 'storyforge-android-ai-credentials-v1'
 const EMBEDDING_KEY = 'storyforge-embedding-config'
 const EMBEDDING_SESSION_KEY = 'storyforge-embedding-key-session'
 export const TASK_ROUTES_KEY = 'storyforge-ai-task-routes'
@@ -104,9 +109,9 @@ function savePresets(presets: AIConfigPreset[]) {
   localStorage.setItem(PRESETS_KEY, JSON.stringify(presets.map(preset => ({ ...preset, config: normalizeConfigModel(preset.config) }))))
 }
 
-function loadPresetSessionApiKeys(): Record<string, unknown> {
+function loadPresetSessionApiKeys(storageKey = PRESET_SESSION_API_KEYS): Record<string, unknown> {
   try {
-    const raw = sessionStorage.getItem(PRESET_SESSION_API_KEYS)
+    const raw = sessionStorage.getItem(storageKey)
     if (!raw) return {}
     const parsed = JSON.parse(raw)
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return {}
@@ -116,17 +121,32 @@ function loadPresetSessionApiKeys(): Record<string, unknown> {
   }
 }
 
-function savePresetSessionApiKey(id: string, credential: SessionCredentialV1 | null): void {
-  const keys = loadPresetSessionApiKeys()
+function savePresetSessionApiKey(id: string, credential: SessionCredentialV1 | null, storageKey = PRESET_SESSION_API_KEYS): void {
+  const keys = loadPresetSessionApiKeys(storageKey)
   if (credential) Object.defineProperty(keys, id, { value: credential, enumerable: true, writable: true, configurable: true })
   else delete keys[id]
-  if (Object.keys(keys).length) sessionStorage.setItem(PRESET_SESSION_API_KEYS, JSON.stringify(keys))
-  else sessionStorage.removeItem(PRESET_SESSION_API_KEYS)
+  if (Object.keys(keys).length) sessionStorage.setItem(storageKey, JSON.stringify(keys))
+  else sessionStorage.removeItem(storageKey)
 }
 
 export function getAIConfigPresetSessionApiKey(id: string): string {
   const preset = useAIConfigStore.getState().presets.find(item => item.id === id)
   return preset ? readSessionCredentialV1(loadPresetSessionApiKeys()[id], preset.config, preset.sessionCredentialId) : ''
+}
+
+function readSessionHeaders(input: unknown, owner: AIConfig, referenceId: unknown): NonNullable<AIConfig['customHeaders']> {
+  const raw = readSessionCredentialV1(input, owner, referenceId)
+  try { return parseCustomHeaders(raw ? JSON.parse(raw) : []) } catch { return [] }
+}
+
+export function getAIConfigPresetHeadersV1(preset: AIConfigPreset): NonNullable<AIConfig['customHeaders']> {
+  return preset.config.customHeaders?.length ? parseCustomHeaders(preset.config.customHeaders)
+    : readSessionHeaders(loadPresetSessionApiKeys(PRESET_SESSION_HEADERS)[preset.id], preset.config, preset.sessionCredentialId)
+}
+
+function savePresetSessionHeaders(preset: AIConfigPreset, config: AIConfig, remember: boolean): void {
+  savePresetSessionApiKey(preset.id, !remember && config.customHeaders?.length
+    ? createSessionCredentialV1(config, preset.sessionCredentialId!, JSON.stringify(config.customHeaders)) : null, PRESET_SESSION_HEADERS)
 }
 
 export function getAIConfigPresetApiKeyV1(preset: AIConfigPreset): string {
@@ -154,7 +174,7 @@ function sameChatCredentialAuthority(left: AIConfig, right: AIConfig): boolean {
 export function resolveAIConfigPresetV1(preset: AIConfigPreset, current: AIConfig): AIConfig {
   const apiKey = getAIConfigPresetApiKeyV1(preset)
     || (sameChatCredentialAuthority(preset.config, current) ? current.apiKey : '')
-  return normalizeConfigModel({ ...preset.config, apiKey })
+  return normalizeConfigModel({ ...preset.config, apiKey, customHeaders: getAIConfigPresetHeadersV1(preset) })
 }
 
 function loadTaskRoutes(): AITaskRoutes {
@@ -290,6 +310,8 @@ function loadInitialConfig(): { config: AIConfig; rememberApiKey: boolean } {
     ...DEFAULT_CONFIG,
     ...fields,
     apiKey: rememberApiKey ? (fields.apiKey || '') : sessionKey,
+    customHeaders: rememberApiKey ? parseCustomHeaders(fields.customHeaders)
+      : readSessionHeaders(sessionStorage.getItem(SESSION_HEADERS), owner, _sessionCredentialId),
   })
   if ((fields.contextWindow !== undefined || fields.modelCapacity !== undefined || (fields.model && config.model !== fields.model)) && (rememberApiKey || !rawSession || sessionKey || !fields.apiKey)) {
     persistConfig(config, rememberApiKey)
@@ -305,6 +327,15 @@ function normalizeConfigModel(config: AIConfig): AIConfig {
   config = { ...config }
   delete config.contextWindow
   delete config.modelCapacity
+  if (config.provider !== 'custom') {
+    delete config.customHeaders
+    delete config.customHeadersPresetNames
+  } else {
+    if (config.customHeaders) config.customHeaders = parseCustomHeaders(config.customHeaders)
+    if (config.customHeadersPresetNames) config.customHeadersPresetNames = [...new Set(config.customHeadersPresetNames
+      .filter(name => typeof name === 'string' && /^[!#$%&'*+.^_`|~0-9a-z-]+$/i.test(name.trim()))
+      .map(name => name.trim().toLowerCase()))]
+  }
   if (config.provider === 'codex') return { ...config, apiKey: '', baseUrl: '/storyforge/local-codex/v1' }
   const model = normalizeProviderModel(config.provider, config.model)
   return model === config.model ? config : { ...config, model }
@@ -312,9 +343,12 @@ function normalizeConfigModel(config: AIConfig): AIConfig {
 
 function persistConfig(config: AIConfig, rememberApiKey: boolean): void {
   const referenceId = nanoid()
-  const persisted = { ...normalizeConfigModel(config), apiKey: rememberApiKey ? config.apiKey : '', _sessionCredentialId: referenceId }
+  const persisted = { ...presetConfig(normalizeConfigModel(config), rememberApiKey), _sessionCredentialId: referenceId }
   localStorage.setItem(STORAGE_KEY, JSON.stringify(persisted))
   localStorage.setItem(REMEMBER_API_KEY, String(rememberApiKey))
+  if (!rememberApiKey && config.customHeaders?.length) {
+    sessionStorage.setItem(SESSION_HEADERS, JSON.stringify(createSessionCredentialV1(config, referenceId, JSON.stringify(config.customHeaders))))
+  } else sessionStorage.removeItem(SESSION_HEADERS)
   if (rememberApiKey) {
     sessionStorage.removeItem(SESSION_API_KEY)
   } else if (config.apiKey) {
@@ -325,7 +359,7 @@ function persistConfig(config: AIConfig, rememberApiKey: boolean): void {
 }
 
 function presetConfig(config: AIConfig, rememberApiKey: boolean): AIConfig {
-  return rememberApiKey ? { ...config } : { ...config, apiKey: '' }
+  return rememberApiKey ? { ...config } : { ...config, apiKey: '', customHeaders: config.customHeaders ? [] : undefined }
 }
 
 export interface TestResult {
@@ -393,9 +427,12 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
   setConfig: (partial: Partial<AIConfig>) => {
     if (IS_MODEL_DISABLED_BUILD) return
     const previous = get().config
-    const newConfig = normalizeConfigModel({ ...previous, ...partial })
+    const newConfig = normalizeConfigModel({ ...previous, ...(partial.provider && partial.provider !== previous.provider ? { apiFormat: undefined } : {}), ...partial })
     const identityChanged = previous.provider !== newConfig.provider || previous.baseUrl !== newConfig.baseUrl
-    if (!Object.prototype.hasOwnProperty.call(partial, 'apiKey') && identityChanged && !sameChatCredentialAuthority(previous, newConfig)) newConfig.apiKey = ''
+    if (identityChanged && !sameChatCredentialAuthority(previous, newConfig)) {
+      if (!Object.prototype.hasOwnProperty.call(partial, 'apiKey')) newConfig.apiKey = ''
+      if (!Object.prototype.hasOwnProperty.call(partial, 'customHeaders')) delete newConfig.customHeaders
+    }
     persistConfig(newConfig, get().rememberApiKey)
     // 手动改动配置后，与已选预设脱钩（除非改动等于该预设）
     set({ config: newConfig, activePresetId: null })
@@ -406,7 +443,18 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
     const state = get(), config = { ...state.config }, embedding = { ...state.embedding }
     persistConfig(config, remember)
     persistEmbeddingConfig(embedding, remember)
-    set({ rememberApiKey: remember })
+    const presets = state.presets.map(preset => {
+      const headers = getAIConfigPresetHeadersV1(preset)
+      const apiKey = getAIConfigPresetApiKeyV1(preset)
+      const next = { ...preset, sessionCredentialId: preset.sessionCredentialId || nanoid(),
+        config: { ...preset.config, apiKey: remember ? apiKey : '', customHeaders: remember ? headers : [] } }
+      savePresetSessionApiKey(next.id, !remember && apiKey
+        ? createSessionCredentialV1(next.config, next.sessionCredentialId, apiKey) : null)
+      savePresetSessionHeaders(next, { ...next.config, customHeaders: headers }, remember)
+      return next
+    })
+    savePresets(presets)
+    set({ rememberApiKey: remember, presets })
   },
 
   saveAsPreset: (name: string) => {
@@ -421,6 +469,7 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
     }
     const presets = [...state.presets, preset]
     savePresets(presets)
+    savePresetSessionHeaders(preset, config, remember)
     savePresetSessionApiKey(id, remember || !config.apiKey ? null
       : createSessionCredentialV1(config, preset.sessionCredentialId!, config.apiKey))
     set({ presets, activePresetId: id, editingPresetId: id })
@@ -449,6 +498,7 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
     savePresets(presets)
     savePresetSessionApiKey(id, remember || !config.apiKey ? null
       : createSessionCredentialV1(config, referenceId, config.apiKey))
+    savePresetSessionHeaders(presets.find(preset => preset.id === id)!, config, remember)
     set({ presets, activePresetId: id, editingPresetId: id })
   },
 
@@ -466,6 +516,7 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
     savePresets(presets)
     saveTaskRoutes(taskRoutes)
     savePresetSessionApiKey(id, null)
+    savePresetSessionApiKey(id, null, PRESET_SESSION_HEADERS)
     set({
       presets,
       taskRoutes,
@@ -510,10 +561,11 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
     if (IS_MODEL_DISABLED_BUILD) return
     const state = get(), previous = { ...state.config }
     const preset = PROVIDER_PRESETS[provider] || {}
-    const owner = { ...previous, provider, ...preset }
+    const owner = { ...previous, provider, apiFormat: undefined, ...preset }
     const newConfig = normalizeConfigModel({
       ...owner,
       apiKey: sameChatCredentialAuthority(previous, owner) ? previous.apiKey : (preset.apiKey || ''),
+      customHeaders: sameChatCredentialAuthority(previous, owner) ? previous.customHeaders : undefined,
     })
     persistConfig(newConfig, state.rememberApiKey)
     set({ config: newConfig, activePresetId: null, editingPresetId: null })
@@ -535,13 +587,15 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
         return { ok: false, message: error instanceof Error ? error.message : 'Codex 连接失败', duration: Date.now() - startedAt }
       }
     }
-    const normalized = normalizeOpenAIBaseUrl(config.baseUrl)
+    const format = providerApiFormat(config)
+    const normalized = normalizeOpenAIBaseUrl(config.baseUrl, format)
     if (normalized.changed) {
       const newConfig = { ...config, baseUrl: normalized.baseUrl }
       persistConfig(newConfig, get().rememberApiKey)
       set({ config: newConfig, activePresetId: null })
     }
-    const url = buildOpenAIEndpoint(normalized.baseUrl, 'chat/completions')
+    const route = format === 'anthropic-messages' ? 'messages' : format === 'openai-responses' ? 'responses' : 'chat/completions'
+    const url = buildOpenAIEndpoint(normalized.baseUrl, route, format)
     const startTime = Date.now()
     const controller = new AbortController()
     // NVIDIA 的托管开发端点常有冷启动；连接探活只限制输出，不把首 token
@@ -557,35 +611,33 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
       model: config.model,
       status: 'pending',
     }, {
-      sensitiveValues: [config.apiKey],
+      sensitiveValues: [config.apiKey, ...customHeaderValues(config)],
       baseUrl: config.baseUrl,
     })
 
     try {
-      const response = await fetch(url, {
+      const endpoint = transformProviderRequest(config, {
+        model: config.model, messages: [{ role: 'user', content: '请回复“连接成功”' }],
+        max_tokens: config.provider === 'agnes' || format === 'openai-responses' ? 1024 : 32,
+      })
+      const response = await fetch(endpoint.url, {
         method: 'POST',
         signal: controller.signal,
-        headers: {
-          'Content-Type': 'application/json',
-          ...(config.apiKey ? { Authorization: `Bearer ${config.apiKey}` } : {}),
-        },
-        body: JSON.stringify({
-          model: config.model,
-          messages: [{ role: 'user', content: '请回复"连接成功"' }],
-          // Agnes may emit reasoning before its answer. A 32-token cap can
-          // produce HTTP 200 + empty content + finish_reason=length.
-          max_tokens: config.provider === 'agnes' ? 1024 : 32,
-        }),
+        headers: endpoint.headers,
+        redirect: endpoint.redirect,
+        body: endpoint.body,
       })
 
       const duration = Date.now() - startTime
       const bodyText = await response.text()
+      const safeBodyText = redactRequestSecrets(bodyText, config)
 
       if (response.ok) {
         let completion
         try { completion = JSON.parse(bodyText) } catch {
           throw new AICompletionResponseErrorV1('invalid-json', '连接测试收到 HTTP 200，但响应不是 JSON。')
         }
+        completion = normalizeProviderCompletion(config, completion)
         const responseSummary = inspectCompletionResponseV1(completion).summary
         updateLog(log.id, { statusCode: response.status, responseSummary })
         requireCompletionTextV1(completion)
@@ -602,16 +654,20 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
       // 解析错误信息
       let rawErrorMsg = `HTTP ${response.status}`
       try {
-        const parsed = JSON.parse(bodyText)
+        const parsed = JSON.parse(safeBodyText)
         // Gemini OpenAI compatibility can wrap its normal error object in a
         // one-element array. Normalize both shapes before classification.
         const errJson = Array.isArray(parsed) ? parsed[0] : parsed
-        if (errJson.error?.message) rawErrorMsg = errJson.error.message
-        else if (errJson.message) rawErrorMsg = errJson.message
-        else if (errJson.error_msg) rawErrorMsg = errJson.error_msg
-        else if (bodyText.trim()) rawErrorMsg = bodyText.slice(0, 500)
+        const errRecord = errJson && typeof errJson === 'object' ? errJson as Record<string, unknown> : {}
+        const nestedError = errRecord.error && typeof errRecord.error === 'object'
+          ? errRecord.error as Record<string, unknown>
+          : {}
+        const candidate = [nestedError.message, errRecord.message, errRecord.error_msg]
+          .find((value): value is string => typeof value === 'string' && value.length > 0)
+        if (candidate) rawErrorMsg = candidate
+        else if (safeBodyText.trim()) rawErrorMsg = safeBodyText.slice(0, 500)
       } catch {
-        if (bodyText.trim()) rawErrorMsg += ': ' + bodyText.slice(0, 500)
+        if (safeBodyText.trim()) rawErrorMsg += ': ' + safeBodyText.slice(0, 500)
       }
 
       // 常见英文错误 → 中文翻译映射
@@ -623,9 +679,10 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
       const localHint = ['custom', 'ollama'].includes(config.provider)
         ? '；本地 OpenAI 兼容服务的 Base URL 通常应填到 /v1，例如 LM Studio: http://主机:1234/v1，Ollama: http://localhost:11434/v1'
         : ''
-      const errorMsg = `${cnExplanation ? `${rawErrorMsg}（${cnExplanation}）` : rawErrorMsg}${urlHint}${localHint}`
+      const safeRawErrorMsg = redactRequestSecrets(rawErrorMsg, config)
+      const errorMsg = `${cnExplanation ? `${safeRawErrorMsg}（${cnExplanation}）` : safeRawErrorMsg}${urlHint}${localHint}`
 
-      updateLog(log.id, { status: 'error', statusCode: response.status, duration, errorMessage: errorMsg, responseBody: bodyText.slice(0, 500) })
+      updateLog(log.id, { status: 'error', statusCode: response.status, duration, errorMessage: errorMsg, responseBody: safeBodyText.slice(0, 500) })
       return { ok: false, message: `❌ ${errorMsg}`, statusCode: response.status, duration }
 
     } catch (err: unknown) {
@@ -638,7 +695,7 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
       } else if (error.name === 'AbortError') {
         errorMsg = '请求超时'
       } else {
-        errorMsg = error.message || '未知错误'
+        errorMsg = redactRequestSecrets(error.message || '未知错误', config)
       }
 
       updateLog(log.id, { status: 'error', duration, errorMessage: errorMsg })
@@ -648,3 +705,9 @@ export const useAIConfigStore = create<AIConfigStore>((set, get) => ({
     }
   },
 }))
+
+// Promote only owner-matched credentials once; a later explicit opt-out remains effective.
+if (!IS_MODEL_DISABLED_BUILD && import.meta.env.MODE === 'android' && localStorage.getItem(ANDROID_CREDENTIAL_MIGRATION) !== '1') {
+  useAIConfigStore.getState().setRememberApiKey(true)
+  localStorage.setItem(ANDROID_CREDENTIAL_MIGRATION, '1')
+}

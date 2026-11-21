@@ -9,6 +9,11 @@ public class ReleasePolicyTest {
             try { ReleasePolicy.versionCode(bad); fail(bad); } catch (IllegalArgumentException expected) { }
         }
     }
+    @Test public void forkUpdatesStayOnTheForkReleaseChannel() {
+        assertEquals("https://api.github.com/repos/qwerzxcva/storyforge/releases/latest", ReleasePolicy.API);
+        assertEquals("https://github.com/qwerzxcva/storyforge/releases/download/v4.0.8/StoryForge-4.0.8-android.apk", ReleasePolicy.assetUrl("4.0.8"));
+        assertFalse(ReleasePolicy.allowedDownload("https://github.com/yuanbw2025/storyforge/releases/download/v4.0.8/StoryForge-4.0.8-android.apk"));
+    }
     @Test public void installerDownloadsStayOnTheFixedHttpsChannel() {
         assertTrue(ReleasePolicy.allowedDownload(ReleasePolicy.assetUrl("4.0.1")));
         assertTrue(ReleasePolicy.allowedDownload("https://release-assets.githubusercontent.com/test"));

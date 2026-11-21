@@ -1,8 +1,13 @@
-import { buildOpenAIEndpoint } from './openai-endpoint'
+import type { AIConfig } from '../types'
+import { buildOpenAIEndpoint, providerApiFormat } from './openai-endpoint'
+import { buildAIRequestHeaders, hasCustomHeaders } from './request-headers'
 
 interface FetchOpenAIModelsOptions {
   baseUrl: string
   apiKey?: string
+  provider?: AIConfig['provider']
+  apiFormat?: AIConfig['apiFormat']
+  customHeaders?: AIConfig['customHeaders']
   timeoutMs?: number
   fetchImpl?: typeof fetch
 }
@@ -10,18 +15,23 @@ interface FetchOpenAIModelsOptions {
 export async function fetchOpenAIModels({
   baseUrl,
   apiKey = '',
+  provider = 'custom',
+  apiFormat,
+  customHeaders,
   timeoutMs = 10_000,
   fetchImpl = fetch,
 }: FetchOpenAIModelsOptions): Promise<string[]> {
+  const format = providerApiFormat({ provider, apiFormat })
   const controller = new AbortController()
   const timeoutId = globalThis.setTimeout(() => controller.abort(), timeoutMs)
 
   try {
-    const response = await fetchImpl(buildOpenAIEndpoint(baseUrl, 'models'), {
+    const response = await fetchImpl(buildOpenAIEndpoint(baseUrl, 'models', format), {
       method: 'GET',
       cache: 'no-store',
       signal: controller.signal,
-      headers: apiKey ? { Authorization: `Bearer ${apiKey}` } : undefined,
+      headers: buildAIRequestHeaders({ provider, apiFormat, apiKey, customHeaders }, false),
+      redirect: (hasCustomHeaders({ provider, customHeaders }) || format === 'anthropic-messages') ? 'error' : undefined,
     })
 
     if (!response.ok) {
@@ -30,7 +40,7 @@ export async function fetchOpenAIModels({
 
     const body: unknown = await response.json()
     if (!body || typeof body !== 'object' || !Array.isArray((body as { data?: unknown }).data)) {
-      throw new Error('模型列表响应格式无效，服务需兼容 OpenAI /v1/models')
+      throw new Error('模型列表响应格式无效；可手动填写模型名称')
     }
 
     const models = (body as { data: unknown[] }).data

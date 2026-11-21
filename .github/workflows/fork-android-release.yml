@@ -1,0 +1,240 @@
+name: Fork Android Release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fork-android-release
+  cancel-in-progress: false
+
+env:
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+  ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+
+jobs:
+  coverage-shards:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6, 7, 8]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: node scripts/run-coverage-shard.mjs "${{ matrix.shard }}" "${{ runner.temp }}/coverage-shard-${{ matrix.shard }}"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: fork-coverage-${{ matrix.shard }}
+          path: ${{ runner.temp }}/coverage-shard-${{ matrix.shard }}/
+          if-no-files-found: error
+          retention-days: 5
+
+  checks:
+    needs: coverage-shards
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: fork-coverage-*
+          path: ${{ runner.temp }}/coverage-input/
+      - name: Run the complete non-browser release gate
+        env:
+          STORYFORGE_COVERAGE_SHARDS: ${{ runner.temp }}/coverage-input
+        run: npm run ci
+
+  browser-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+    env:
+      PLAYWRIGHT_FROZEN_WORKSPACE: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - name: Verify production model and embedding proxies
+        if: matrix.shard == 1
+        run: PLAYWRIGHT_PRODUCTION_PREVIEW=1 npx playwright test tests/e2e/settings-proxy.spec.ts tests/e2e/codex-provider.spec.ts
+      - run: npm run ci:e2e -- -- --shard=${{ matrix.shard }}/4 --reporter=github,blob
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() }}
+        with:
+          name: fork-browser-${{ matrix.shard }}
+          path: |
+            test-results/
+            playwright-report/
+            blob-report/
+          if-no-files-found: ignore
+          retention-days: 14
+
+  android:
+    if: github.repository == 'qwerzxcva/storyforge' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      ANDROID_SIGNING_CERT_SHA256: ${{ vars.ANDROID_SIGNING_CERT_SHA256 }}
+      STORYFORGE_ANDROID_SOURCE_SHA: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd # v4
+        with:
+          packages: 'platform-tools platforms;android-36 build-tools;35.0.0'
+      - run: npm ci
+      - run: npm run test:clients
+      - run: npm run build:android:web
+      - name: Restore the permanent Fork signing identity
+        env:
+          ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/storyforge-fork-release.p12
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        shell: bash
+        run: |
+          test -n "$ANDROID_KEYSTORE_BASE64"
+          test -n "$ANDROID_KEYSTORE_PASSWORD"
+          test -n "$ANDROID_KEY_ALIAS"
+          test -n "$ANDROID_KEY_PASSWORD"
+          [[ "$ANDROID_SIGNING_CERT_SHA256" =~ ^[a-f0-9]{64}$ ]]
+          umask 077
+          printf '%s' "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$ANDROID_KEYSTORE_PATH"
+          printf 'ANDROID_KEYSTORE_PATH=%s\n' "$ANDROID_KEYSTORE_PATH" >> "$GITHUB_ENV"
+      - name: Build the signed release APK and native unit tests
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: node scripts/distribution/build-android.mjs --release
+      - name: Verify the exact signed application payload
+        shell: bash
+        run: |
+          version=$(node -p "require('./package.json').version")
+          mkdir -p release-test
+          cp "release/android/StoryForge-$version-android.apk" release-test/upgrade-test-new.apk
+          cp release-test/upgrade-test-new.apk release-test/upgrade-test-old.apk
+          python3 scripts/distribution/verify-android-source.py verify release-test/upgrade-test-new.apk --commit "$GITHUB_SHA" --tree "$(git rev-parse HEAD^{tree})" --version "$version" --web dist-android > release-test/source-check.json
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --print-certs release-test/upgrade-test-new.apk > release-test/signing-certificate.txt
+          grep -Fq "Signer #1 certificate SHA-256 digest: $ANDROID_SIGNING_CERT_SHA256" release-test/signing-certificate.txt
+      - name: Build the release-signed instrumentation runner
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        shell: bash
+        run: |
+          version=$(node -p "require('./package.json').version")
+          node scripts/desktop/build-upgrade-fixture.mjs
+          node scripts/desktop/build-upgrade-fixture.mjs . release/test-fixtures/native-upgrade-old.js "$version"
+          mkdir -p android/app/src/androidTest/assets
+          cp release/test-fixtures/native-upgrade*.js android/app/src/androidTest/assets/
+          cd android
+          ./gradlew -PclientTestBuildType=release :app:assembleReleaseAndroidTest --no-daemon
+          cp app/build/outputs/apk/androidTest/release/app-release-androidTest.apk ../release-test/upgrade-test-runner.apk
+      - name: Enable emulator acceleration
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Verify signed install, restart, same-version replacement and backup restore
+        uses: reactivecircus/android-emulator-runner@a421e43855164a8197daf9d8d40fe71c6996bb0d # v2
+        with:
+          api-level: 35
+          arch: x86_64
+          target: google_apis
+          disable-animations: true
+          script: PREVIOUS_CLIENT_VERSION=$(node -p "require('./package.json').version") bash scripts/distribution/test-release-apk-upgrade.sh
+      - name: Freeze the exact tested APK
+        shell: bash
+        run: |
+          version=$(node -p "require('./package.json').version")
+          python3 scripts/distribution/verify-android-source.py record-tested release-test/upgrade-test-new.apk --commit "$GITHUB_SHA" --tree "$(git rev-parse HEAD^{tree})" --version "$version" --preflight release-test/source-check.json --phases release-test > release-test/tested-release.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: fork-android-verified
+          path: |
+            release/android/*.apk
+            release-test/*.json
+            release-test/*.txt
+          if-no-files-found: error
+          retention-days: 30
+      - name: Remove the temporary runner signing file
+        if: always()
+        run: rm -f "$RUNNER_TEMP/storyforge-fork-release.p12"
+
+  publish:
+    needs: [checks, browser-checks, android]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: fork-android-verified
+          path: verified/
+      - name: Verify and publish only the accepted Android APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          version=$(node -p "require('./package.json').version")
+          apk="verified/release/android/StoryForge-$version-android.apk"
+          python3 scripts/distribution/verify-android-source.py check-tested "$apk" --commit "$GITHUB_SHA" --tree "$(git rev-parse HEAD^{tree})" --version "$version" --receipt verified/release-test/tested-release.json --phases verified/release-test
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "$GITHUB_SHA"
+          existing_tag=$(git ls-remote origin "refs/tags/v$version" "refs/tags/v$version^{}")
+          test -z "$existing_tag"
+          npm run check:release-metadata -- "v$version"
+          cd verified/release/android
+          sha256sum "StoryForge-$version-android.apk" > SHA256SUMS.txt
+          sha256sum --check SHA256SUMS.txt
+          cd ../../..
+          gh api --method POST "repos/$GITHUB_REPOSITORY/git/refs" -f "ref=refs/tags/v$version" -f "sha=$GITHUB_SHA"
+          gh release create "v$version" --verify-tag "$apk" verified/release/android/SHA256SUMS.txt verified/release-test/signing-certificate.txt verified/release-test/tested-release.json --target "$GITHUB_SHA" --title "StoryForge $version — Android Fork" --notes-file .github/release-notes/fork-android.md --latest
