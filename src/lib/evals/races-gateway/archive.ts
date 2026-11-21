@@ -1,11 +1,7 @@
-import { canonicalStringify, hashCanonicalValue } from '../../agent/run/hash'
-import { sha256Text } from '../../ai/chapter-memory/text-normalization'
-import type { ContextManifestV3 } from '../../types/agent-run'
-import type {
-  RacesGatewayEvidenceArchiveV1,
-  RacesGatewayFailureTranscriptV2,
-  RacesGatewayTranscriptArchiveV1,
-} from './types'
+import { canonicalStringify, hashCanonicalValue } from '../../agent/run/hash';
+import { sha256Text } from '../../ai/chapter-memory/text-normalization';
+import type { ContextManifestV3 } from '../../types/agent-run';
+import type { RacesGatewayEvidenceArchiveV1, RacesGatewayFailureTranscriptV2, RacesGatewayTranscriptArchiveV1 } from './types';
 
 export interface RacesGatewayTranscriptV1 {
   version: 1

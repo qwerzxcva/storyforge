@@ -3,9 +3,9 @@ import { db } from '../../src/lib/db/schema'
 import { seedAvgReadingPreview } from '../helpers/avg-reading-fixture'
 import { seedAvgNativeRelease } from '../helpers/avg-native-fixture'
 import type { ProductRuntimeSession } from '../../src/lib/types'
-import { createProductRuntimeInstance } from '../../src/lib/product/runtime-instances'
+import { createProductRuntimeInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
 import { branchProductRuntimeSession, commitNarrativeChoice, createPreviewProductRuntimeSession, deleteProductRuntimeSession,
-  readProductRuntimeState, readProductRuntimeStateVersion } from '../../src/lib/product/runtime-core'
+  readProductRuntimeState, readProductRuntimeStateVersion } from '../../src/lib/legacy-compat/product/runtime-core'
 import { reachAvgPresentationBeat } from '../../src/lib/avg/runtime-commands'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 

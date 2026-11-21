@@ -1,12 +1,8 @@
-import { cleanupOwnedEvalWorkspacesV1, withEvalWorkspaceRunLeaseV1, type EvalWorkspaceRunLeaseV1 } from '../workspace-ownership'
-import type { AIConfig, ChatMessage } from '../../types'
-import { hashCanonicalValue } from '../../agent/run/hash'
-import { computeCostUsd } from '../../ai/usage-log'
-import {
-  H86_STORY_ARC_DEVELOPMENT_FIXTURES_V1,
-  H86_STORY_ARC_FIXTURE_SET_VERSION_V1,
-  type H86StoryArcFixtureV1,
-} from './story-arc-main-path-fixtures'
+import { cleanupOwnedEvalWorkspacesV1, withEvalWorkspaceRunLeaseV1, type EvalWorkspaceRunLeaseV1 } from '../workspace-ownership';
+import type { AIConfig, ChatMessage } from '../../types';
+import { hashCanonicalValue } from '../../agent/run/hash';
+import { computeCostUsd } from '../../ai/usage-log';
+import { H86_STORY_ARC_DEVELOPMENT_FIXTURES_V1, H86_STORY_ARC_FIXTURE_SET_VERSION_V1, type H86StoryArcFixtureV1 } from './story-arc-main-path-fixtures';
 
 export const H86_STORY_ARC_CHECKPOINT_VERSION_V1 = 1 as const
 export const H86_STORY_ARC_STORAGE_KEY_V1 = 'storyforge:h86-story-arc-main-path-v1'

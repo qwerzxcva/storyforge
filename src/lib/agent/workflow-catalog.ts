@@ -1,11 +1,6 @@
-import type { AgentRunWorkflowKind } from '../types/agent-run'
-import { affirmativeAuthorActionsV1 } from './author-intent'
-import {
-  getAgentSkillV1,
-  resolveAgentSkillV1,
-  type AgentSkillId,
-  type DomainAgentId,
-} from './skill-registry'
+import type { AgentRunWorkflowKind } from '../types/agent-run';
+import { affirmativeAuthorActionsV1 } from './author-intent';
+import { getAgentSkillV1, resolveAgentSkillV1, type AgentSkillId, type DomainAgentId } from './skill-registry';
 
 export type MasterWorkflowReasonCodeV1 =
   | 'single-explicit-domain'

@@ -1,16 +1,5 @@
-import {
-  applyNarrativeEffects,
-  evaluateNarrativeCondition,
-  parseNarrativeCondition,
-  parseNarrativeEffects,
-} from '../narrative/blueprint'
-import type {
-  FrozenProductNarrativeNode,
-  FrozenNarrativeBeat,
-  FrozenNarrativeChoice,
-  NarrativeChoiceEvaluation,
-  NarrativeContentGraphReport,
-} from '../types'
+import { applyNarrativeEffects, evaluateNarrativeCondition, parseNarrativeCondition, parseNarrativeEffects } from '../narrative/blueprint';
+import type { FrozenProductNarrativeNode, FrozenNarrativeBeat, FrozenNarrativeChoice, NarrativeChoiceEvaluation, NarrativeContentGraphReport } from '../types';
 
 function stronglyConnectedComponents(edges: ReadonlyMap<string, readonly string[]>): string[][] {
   let index = 0

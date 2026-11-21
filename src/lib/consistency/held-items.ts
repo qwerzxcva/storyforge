@@ -1,8 +1,8 @@
-import type { Chapter, ItemLedgerEntry, OutlineNode } from '../types'
-import type { ConsistencyFinding } from '../ai/adapters/consistency-audit-adapter'
-import { readOwnedRows, resolveScope } from '../workspace/scope'
-import type { WorkspaceScope } from '../types/world-ownership'
-import { resolveProjectionBoundary } from './projection-boundary'
+import type { Chapter, ItemLedgerEntry, OutlineNode } from '../types';
+import type { ConsistencyFinding } from '../ai/adapters/consistency-audit-adapter';
+import { readOwnedRows, resolveScope } from '../workspace/scope';
+import type { WorkspaceScope } from '../types/world-ownership';
+import { resolveProjectionBoundary } from './projection-boundary';
 
 export interface HeldItemProjection {
   itemName: string

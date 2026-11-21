@@ -1,4 +1,4 @@
-import { countWords } from '../utils/html'
+import { countWords } from '../utils/html';
 
 export interface ProseLengthExpectationV1 {
   version: 1

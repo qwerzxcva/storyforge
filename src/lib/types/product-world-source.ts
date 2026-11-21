@@ -1,4 +1,4 @@
-import type { ProductRuntimeCanonSnapshotV1, ProductRuntimeState } from './product-runtime'
+import type { ProductRuntimeCanonSnapshotV1, ProductRuntimeState } from './product-runtime';
 
 export const PRODUCT_WORLD_SOURCE_COMPILER_VERSION = 1 as const
 

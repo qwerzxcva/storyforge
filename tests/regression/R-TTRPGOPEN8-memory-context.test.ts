@@ -4,8 +4,8 @@ import { readyOpenTtrpgSessionV1, openEnvelopeV1, OPEN_HUMAN_VIEWER } from '../h
 import { recordTtrpgOpenNarrativeMemoryV1, completeTtrpgOpenSessionZeroV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { createTtrpgOpenMemoryContextProviderV1 } from '../../src/lib/ttrpg/open-memory-context-provider'
 import { readTtrpgOpenNarrativeMemoriesV1 } from '../../src/lib/ttrpg/open-memory-service'
-import { branchProductRuntimeSession, readProductRuntimeState, hashProductRuntimeStateV1 } from '../../src/lib/product/runtime-core'
-import { readTtrpgSessionParticipantsV2 } from '../../src/lib/ttrpg/participants'
+import { branchProductRuntimeSession, readProductRuntimeState, hashProductRuntimeStateV1 } from '../../src/lib/legacy-compat/product/runtime-core'
+import { readTtrpgSessionParticipantsV2 } from '../../src/lib/legacy-compat/ttrpg/participants'
 import { CONTEXT_SOURCE_BY_KEY } from '../../src/lib/registry/context-sources'
 import { getAgentSkillV1 } from '../../src/lib/agent/skill-registry'
 import { getAgentToolSchemaSnapshotV1 } from '../../src/lib/agent/tool-registry'
@@ -17,7 +17,7 @@ import { resumeTtrpgOpenChecksV1 } from '../../src/lib/ttrpg/open-checks-coordin
 import { createContextGatewayToolSessionV1 } from '../../src/lib/context-gateway/tool-session'
 import { createContextAccessPolicyForExecutionV1 } from '../../src/lib/context-gateway/skill-policy'
 import { resolveScope } from '../../src/lib/workspace/scope'
-import type { TtrpgOpenMemoryDraftV1 } from '../../src/lib/ttrpg/open-memory-contract'
+import type { TtrpgOpenMemoryDraftV1 } from '../../src/lib/legacy-compat/ttrpg/open-memory-contract'
 import type { FrozenResourceScopeV1, ContextResourceProviderV1 } from '../../src/lib/registry/types'
 
 const actor = createTtrpgOpenMemoryContextProviderV1('actor'), party = createTtrpgOpenMemoryContextProviderV1('party-narrator')

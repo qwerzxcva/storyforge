@@ -1,5 +1,5 @@
-import { db } from '../db/schema'
-import { cascadeRegisteredReferences } from '../workspace/lifecycle'
+import { db } from '../db/schema';
+import { cascadeRegisteredReferences } from '../workspace/lifecycle';
 
 /**
  * 删除重要地点前按 PROJECT_TABLES 清理已登记引用。

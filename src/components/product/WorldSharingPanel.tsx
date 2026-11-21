@@ -1,14 +1,11 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { AlertTriangle, CheckCircle2, Download, FileJson, Loader2, ShieldCheck, Share2, Upload } from 'lucide-react'
-import type { CommunityWorldLicense, Project, WorldRelease } from '../../lib/types'
-import {
-  createWorldPackage, downloadWorldPackage, importWorldPackage, inspectWorldPackage,
-  type WorldPackageManifest, type WorldPackageTrustReport, type WorldPackageUse,
-} from '../../lib/world-engine/world-package'
-import { exportOriginalWorldSourceWireV1, installWorldSourcePackageV1, listWorldSourceReceiptsV1 } from '../../lib/world-engine/source-receipt'
-import { downloadTextFile } from '../../lib/export/text-export'
-import { resolveWorkspaceScope } from '../../lib/workspace/ownership'
-import { listWorldReleases } from '../../lib/world-engine/releases'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { AlertTriangle, CheckCircle2, Download, FileJson, Loader2, ShieldCheck, Share2, Upload } from 'lucide-react';
+import type { CommunityWorldLicense, Project, WorldRelease } from '../../lib/types';
+import { createWorldPackage, downloadWorldPackage, importWorldPackage, inspectWorldPackage, type WorldPackageManifest, type WorldPackageTrustReport, type WorldPackageUse } from '../../lib/world-engine/world-package';
+import { exportOriginalWorldSourceWireV1, installWorldSourcePackageV1, listWorldSourceReceiptsV1 } from '../../lib/world-engine/source-receipt';
+import { downloadTextFile } from '../../lib/export/text-export';
+import { resolveWorkspaceScope } from '../../lib/workspace/ownership';
+import { listWorldReleases } from '../../lib/world-engine/releases';
 
 const LICENSE_OPTIONS: Array<{ value: CommunityWorldLicense; label: string }> = [
   { value: 'CC-BY-4.0', label: 'CC BY 4.0 · 署名' },

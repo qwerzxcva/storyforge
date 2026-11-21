@@ -4,30 +4,24 @@
  * 不改 DB schema：以 characters 为主卡，聚合 stateCards、章节、物品流水、
  * 角色基础地点与势力词条。旧的非角色状态卡保留在库中，但不再作为正式 UI 展示。
  */
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { liveQuery } from 'dexie'
-import {
-  ArrowRight, BookOpenCheck, Download, Edit3, MapPin, Package, Save, Shield, Sparkles, UserRound, X,
-} from 'lucide-react'
-import type { Character, Project, StateCard, StateField, WorkspaceScope } from '../../lib/types'
-import { readOwnedRows } from '../../lib/workspace/scope'
-import { inspectStateFields, stringifyFields, STATE_CATEGORY_LABELS } from '../../lib/types/state-card'
-import { useStateCardStore } from '../../stores/state-card'
-import { useCharacterStore } from '../../stores/character'
-import { useChapterStore } from '../../stores/chapter'
-import { useItemLedgerStore } from '../../stores/item-ledger'
-import { useCodexStore } from '../../stores/codex'
-import { aggregateInventory } from '../../lib/types/item-ledger'
-import { characterAxesLabel } from '../../lib/character/character-axes'
-import { CInput } from '../shared/CompositionInput'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-  useInitialRecordTarget,
-} from '../shared/initial-record-target'
-import { useActiveWork } from '../../hooks/useActiveWork'
-import { useBeforeUnload } from '../../hooks/useBeforeUnload'
-import { flushPendingEditsV1, registerPendingDraftFlusherV1 } from '../../lib/authoring/pending-edit-coordinator'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { liveQuery } from 'dexie';
+import { ArrowRight, BookOpenCheck, Download, Edit3, MapPin, Package, Save, Shield, Sparkles, UserRound, X } from 'lucide-react';
+import type { Character, Project, StateCard, StateField, WorkspaceScope } from '../../lib/types';
+import { readOwnedRows } from '../../lib/workspace/scope';
+import { inspectStateFields, stringifyFields, STATE_CATEGORY_LABELS } from '../../lib/types/state-card';
+import { useStateCardStore } from '../../stores/state-card';
+import { useCharacterStore } from '../../stores/character';
+import { useChapterStore } from '../../stores/chapter';
+import { useItemLedgerStore } from '../../stores/item-ledger';
+import { useCodexStore } from '../../stores/codex';
+import { aggregateInventory } from '../../lib/types/item-ledger';
+import { characterAxesLabel } from '../../lib/character/character-axes';
+import { CInput } from '../shared/CompositionInput';
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes, useInitialRecordTarget } from '../shared/initial-record-target';
+import { useActiveWork } from '../../hooks/useActiveWork';
+import { useBeforeUnload } from '../../hooks/useBeforeUnload';
+import { flushPendingEditsV1, registerPendingDraftFlusherV1 } from '../../lib/authoring/pending-edit-coordinator';
 import StateCardRepair from './StateCardRepair'
 
 interface Props {

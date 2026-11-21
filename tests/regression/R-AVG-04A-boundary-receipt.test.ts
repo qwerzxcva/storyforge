@@ -1,14 +1,14 @@
 import { describe, expect, it } from 'vitest'
 import type { FrozenRuntimeMediaAssetV2 } from '../../src/lib/types'
-import type { AvgVisualProductionRequirementV1 } from '../../src/lib/avg/media-production-contract'
-import { compileAvgForegroundRequirement, type AvgForegroundPolicyV2 } from '../../src/lib/avg/image-foreground-contract'
-import { AVG_FOREGROUND_BOUNDARY_UNMIX_ID_V2 } from '../../src/lib/avg/image-foreground-boundary-unmix'
+import type { AvgVisualProductionRequirementV1 } from '../../src/lib/legacy-compat/avg/media-production-contract'
+import { compileAvgForegroundRequirement, type AvgForegroundPolicyV2 } from '../../src/lib/legacy-compat/avg/image-foreground-contract'
+import { AVG_FOREGROUND_BOUNDARY_UNMIX_ID_V2 } from '../../src/lib/legacy-compat/avg/image-foreground-boundary-unmix'
 import { executeAvgForegroundWorkerRequestV2, hashAvgForegroundPixelsV2 } from '../../src/lib/avg/image-foreground-worker-protocol-v2'
-import { deriveAvgImageProcessingGeometryV1, type AvgImageProcessingRecipeV2 } from '../../src/lib/avg/image-processing-contract'
+import { deriveAvgImageProcessingGeometryV1, type AvgImageProcessingRecipeV2 } from '../../src/lib/legacy-compat/avg/image-processing-contract'
 import { AVG_IMAGE_PROCESSOR_V2, assertAvgImageProcessingReceiptV2, assertAvgProcessedImageArtifactFromDefinition,
   parseAvgForegroundProcessingObservationV1, parseAvgProcessedImagePayload, projectAvgForegroundCanvasRecipeV1,
   type AvgImageProcessingReceiptV2, type AvgProcessedImagePayloadV2 } from '../../src/lib/avg/image-processing-contract-v2'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { avgImageProcessingRecipeFixture } from '../helpers/avg-image-processing-fixture'
 
 // Mixed scalar/real numerical fixtures only: no encoded PNG, producer, DB or

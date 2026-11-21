@@ -1,15 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import {
-  abandonStyleLearningRunV1,
-  adoptStyleLearningCandidateV1,
-  generateStyleLearningCandidateV1,
-  readPendingStyleLearningCandidateV1,
-  readRecoverableStyleLearningRunV1,
-  rejectStyleLearningCandidateV1,
-  type StyleLearningCandidateV1,
-} from '../../lib/agent/run/style-learning-durable'
-import type { AIConfig } from '../../lib/types'
-import { resolveScopeLike } from '../../lib/workspace/scope'
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { abandonStyleLearningRunV1, adoptStyleLearningCandidateV1, generateStyleLearningCandidateV1, readPendingStyleLearningCandidateV1, readRecoverableStyleLearningRunV1, rejectStyleLearningCandidateV1, type StyleLearningCandidateV1 } from '../../lib/agent/run/style-learning-durable';
+import type { AIConfig } from '../../lib/types';
+import { resolveScopeLike } from '../../lib/workspace/scope';
 
 export interface StyleLearningLaneState {
   candidate: StyleLearningCandidateV1 | null

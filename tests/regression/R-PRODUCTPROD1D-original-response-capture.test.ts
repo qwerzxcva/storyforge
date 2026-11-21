@@ -1,5 +1,5 @@
 import { syntheticFrozenAllocationV1 } from '../helpers/model-capacity-fixture'
-import { createProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { createProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 /** Real owner/DB/Harness and explicit fake native transport; no actual provider or author data. */
 import { beforeEach, afterEach, expect, it, vi } from "vitest"
 import { db } from "../../src/lib/db/schema"

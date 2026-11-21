@@ -1,10 +1,7 @@
-import type { ChatMessage } from '../../types'
-import { usePromptStore } from '../../../stores/prompt'
-import { renderPrompt } from '../prompt-engine'
-import {
-  appendSimplifiedChineseOutputConstraint,
-  appendUserConstraint,
-} from './prompt-guards'
+import type { ChatMessage } from '../../types';
+import { usePromptStore } from '../../../stores/prompt';
+import { renderPrompt } from '../prompt-engine';
+import { appendSimplifiedChineseOutputConstraint, appendUserConstraint } from './prompt-guards';
 
 export interface RunOptions {
   parameterValues?: Record<string, unknown>

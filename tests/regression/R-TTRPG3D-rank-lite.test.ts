@@ -4,8 +4,8 @@ import {
   createRankLiteRulePackV1,
   rankLiteTierForPowerV2,
 } from '../../src/lib/ttrpg/rank-lite-rule-pack'
-import { consumeTtrpgAbilityV2, createTtrpgAbilityRuntimeStateV2, resetTtrpgAbilityUsageV2 } from '../../src/lib/ttrpg/ability-ledger'
-import { previewTtrpgCheckProbabilityV2 } from '../../src/lib/ttrpg/house-rule'
+import { consumeTtrpgAbilityV2, createTtrpgAbilityRuntimeStateV2, resetTtrpgAbilityUsageV2 } from '../../src/lib/legacy-compat/ttrpg/ability-ledger'
+import { previewTtrpgCheckProbabilityV2 } from '../../src/lib/legacy-compat/ttrpg/house-rule'
 
 describe('TTRPG-3D · Rank Lite complete first-party rules slice', () => {
   it('提供 D/C/B/A 四阶快速卡、完整车卡字段和合法的第一方商业规则包', () => {

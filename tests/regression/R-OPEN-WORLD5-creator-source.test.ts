@@ -9,8 +9,8 @@ import {
 import {
   freezeTextOpenWorldNovelSourceV1,
   prepareTextOpenWorldNovelSourceSnapshotV1,
-} from '../../src/lib/open-world/source-pin'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+} from '../../src/lib/legacy-compat/open-world/source-pin'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { createWorkspace } from '../../src/lib/workspace/create-workspace'
 import { stampNewRecord } from '../../src/lib/workspace/scope'
 import type { WorkspaceScope } from '../../src/lib/types'

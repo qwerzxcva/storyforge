@@ -1,7 +1,7 @@
 import * as lexical from '../../src/lib/context-gateway/lexical-query'
 import {afterEach, expect, it, vi} from 'vitest'
 import {createChatHistoryProjectionCacheV1} from '../../src/lib/character-interaction/history-context-cache'
-import {buildInteractionContextWindow} from '../../src/lib/character-interaction/runtime'
+import {buildInteractionContextWindow} from '../../src/lib/legacy-compat/character-interaction/runtime'
 import {chatHistorySelectionFixture} from '../helpers/chat-history-selection'
 
 afterEach(() => {vi.restoreAllMocks()})

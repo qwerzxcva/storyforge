@@ -1,6 +1,6 @@
 import {expect, it} from 'vitest'
-import {CHAT_HISTORY_CAPACITY_V1, assertChatHistoryCapacityV1} from '../../src/lib/character-interaction/history-capacity'
-import {createInitialInteractionState, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/character-interaction/runtime'
+import {CHAT_HISTORY_CAPACITY_V1, assertChatHistoryCapacityV1} from '../../src/lib/legacy-compat/character-interaction/history-capacity'
+import {createInitialInteractionState, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/legacy-compat/character-interaction/runtime'
 import {chatHistorySelectionFixture} from '../helpers/chat-history-selection'
 import {chatNarrativeFixture} from '../helpers/chat-narrative-fixture'
 

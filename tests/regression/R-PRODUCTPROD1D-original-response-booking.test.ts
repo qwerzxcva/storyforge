@@ -135,7 +135,7 @@ async function blocked() {
 }
 
 
-import { parseProductProductionCommandV1 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionCommandV1 } from '../../src/lib/legacy-compat/product-production/contracts'
 import { prepareProductProductionOriginalResponseBookingV1, assertProductProductionOriginalBookingCurrentV1 } from '../../src/lib/product-production/original-response-booking'
 import { bookProductProductionOriginalUsageLedgerV1 } from '../../src/lib/product-production/scheduler'
 

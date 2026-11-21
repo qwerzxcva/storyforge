@@ -1,14 +1,14 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest'
 import { audioRecipeV2, audioPcmV2, audioWaveV2 } from '../helpers/avg-audio-v2-fixture'
-import { parseAvgAudioProcessingRecipeV1, parseAvgAudioProcessingReceiptV1 } from '../../src/lib/avg/audio-processing-contract'
-import { parseAvgAudioProcessingRecipeV2, assertAvgAudioProcessingReceiptV2 } from '../../src/lib/avg/audio-processing-contract-v2'
-import { parseAvgAudioProcessingRecipe, parseAvgAudioProcessingReceipt, assertAvgAudioProcessingReceipt } from '../../src/lib/avg/audio-processing-versioned-contract'
-import { executeAvgAudioDspPcmV2, planAvgAudioDspLayoutV2 } from '../../src/lib/avg/audio-dsp-kernel-v2'
+import { parseAvgAudioProcessingRecipeV1, parseAvgAudioProcessingReceiptV1 } from '../../src/lib/legacy-compat/avg/audio-processing-contract'
+import { parseAvgAudioProcessingRecipeV2, assertAvgAudioProcessingReceiptV2 } from '../../src/lib/legacy-compat/avg/audio-processing-contract-v2'
+import { parseAvgAudioProcessingRecipe, parseAvgAudioProcessingReceipt, assertAvgAudioProcessingReceipt } from '../../src/lib/legacy-compat/avg/audio-processing-versioned-contract'
+import { executeAvgAudioDspPcmV2, planAvgAudioDspLayoutV2 } from '../../src/lib/legacy-compat/avg/audio-dsp-kernel-v2'
 import { processAvgAudioPcmWaveV2 } from '../../src/lib/avg/audio-processing-v2'
 import { processAvgAudioPcmWave } from '../../src/lib/avg/audio-processing-dispatch'
 import { inspectAvgVoiceWaveV1 } from '../../src/lib/avg/voice-wave'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { inspectAvgAudioProcessingWaveBytesV1 } from '../../src/lib/avg/audio-processing'
 
 describe('AVG explicit dynamics and rational resampling V2 numeric contract', () => {

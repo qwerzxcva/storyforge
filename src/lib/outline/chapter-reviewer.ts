@@ -1,8 +1,8 @@
-import type { OutlineReviewTarget } from './review-adoption'
-import { executeRegisteredAIEntryV1 } from '../agent/formal-ai-entry'
-import { useAIConfigStore } from '../../stores/ai-config'
-import type { OutlineNode } from '../types'
-import { wholeJSONContainerTextV1 } from '../ai/whole-json-container'
+import type { OutlineReviewTarget } from './review-adoption';
+import { executeRegisteredAIEntryV1 } from '../agent/formal-ai-entry';
+import { useAIConfigStore } from '../../stores/ai-config';
+import type { OutlineNode } from '../types';
+import { wholeJSONContainerTextV1 } from '../ai/whole-json-container';
 
 export type ChapterIssueType = 'logic' | 'consistency' | 'plot' | 'character' | 'timeline' | 'other'
 export type IssueSeverity = 'low' | 'medium' | 'high'

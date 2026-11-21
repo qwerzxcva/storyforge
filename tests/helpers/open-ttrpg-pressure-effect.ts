@@ -1,7 +1,7 @@
 import { settleOpenPaidTurnsV1 } from './open-ttrpg-paid-turns'
 /** Isolated real approval work fixture; no model transport or private configuration. */
 import { setupPressureFixtureV1 } from './open-ttrpg-pressure'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { rt } from './open-ttrpg-branch-recovery'
 import { OPEN_HUMAN_VIEWER } from './open-ttrpg-session'
 

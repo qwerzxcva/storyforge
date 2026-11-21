@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { freezeTextOpenWorldRuntimeModuleV1 } from '../../src/lib/open-world/runtime-package-production'
+import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { freezeTextOpenWorldRuntimeModuleV1 } from '../../src/lib/legacy-compat/open-world/runtime-package-production'
 import type { TextOpenWorldParsedModulesV1 } from '../../src/lib/types'
 
 const LEGACY_DIRECTOR_CANONICAL_JSON = [

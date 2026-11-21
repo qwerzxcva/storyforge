@@ -3,19 +3,19 @@ import { db } from '../../src/lib/db/schema'
 import { branchTextOpenWorldSessionFromCheckpointV1, createTextOpenWorldCheckpointV1 } from '../../src/lib/open-world/checkpoints'
 import { commitTextOpenWorldCommandV1 } from '../../src/lib/open-world/commands'
 import { verifyTextOpenWorldVNextSessionBindingV1 } from '../../src/lib/open-world/session-binding'
-import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import {
   parseProductRuntimePackageV1,
   verifyProductReleaseManifestV1,
-} from '../../src/lib/product-production/runtime-package'
-import { assertProductReleaseUnchanged, parseTextOpenWorldProductReleaseManifest } from '../../src/lib/product/releases'
-import { createTextOpenWorldInstance } from '../../src/lib/product/runtime-instances'
+} from '../../src/lib/legacy-compat/product-production/runtime-package'
+import { assertProductReleaseUnchanged, parseTextOpenWorldProductReleaseManifest } from '../../src/lib/legacy-compat/product/releases'
+import { createTextOpenWorldInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
 import {
   hashProductRuntimeStateV1,
   readProductRuntimeState,
   readProductRuntimeStateVersion,
-} from '../../src/lib/product/runtime-core'
+} from '../../src/lib/legacy-compat/product/runtime-core'
 import { assembleContext } from '../../src/lib/registry/assemble-context'
 import { EMPTY_PRODUCT_RUNTIME_STATE, type ProductRelease } from '../../src/lib/types'
 import { useTextOpenWorldPlayerStore } from '../../src/stores/text-open-world-player'

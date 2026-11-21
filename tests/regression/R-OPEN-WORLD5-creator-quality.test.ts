@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { gunzipSync } from 'node:zlib'
 import { importProjectJSON } from '../../src/lib/export/json-export'
 import { useAIConfigStore } from '../../src/stores/ai-config'
-import { putMediaBlobObject } from '../../src/lib/product-production/media-blob-store'
+import { putMediaBlobObject } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import {
@@ -27,15 +27,15 @@ import {
   parseTextOpenWorldCreatorCalibrationEvidenceV1,
   parseTextOpenWorldCreatorGrayboxEvidenceV1,
   parseTextOpenWorldCreatorUpdateVerificationEvidenceV1,
-} from '../../src/lib/open-world/creator-quality-contract'
+} from '../../src/lib/legacy-compat/open-world/creator-quality-contract'
 import * as calibration from '../../src/lib/open-world/creator-quality-calibration'
 import * as calibrationUsage from '../../src/lib/open-world/creator-calibration-usage'
-import type { TextOpenWorldCreatorCalibrationUsageSourceV1 } from '../../src/lib/open-world/creator-quality-contract'
+import type { TextOpenWorldCreatorCalibrationUsageSourceV1 } from '../../src/lib/legacy-compat/open-world/creator-quality-contract'
 import { readTextOpenWorldCreatorDerivedBuildAuthorityV1 } from '../../src/lib/open-world/creator-derived-authority'
 import {
   canonicalProductProductionJsonV2,
   hashProductProductionValueV2,
-} from '../../src/lib/product-production/hash'
+} from '../../src/lib/legacy-compat/product-production/hash'
 import type {
   ProductBuildArtifactRecordV1,
   ProductBuildQualityReportV1,

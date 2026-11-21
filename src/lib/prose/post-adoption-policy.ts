@@ -1,16 +1,10 @@
-import { db } from '../db/schema'
-import { propagateChapterEditStale } from '../consistency/impact-analysis'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { computeKnownCostUsd } from '../ai/usage-log'
-import type {
-  PostAdoptionBudgetV1,
-  PostAdoptionPolicyV1,
-  PostAdoptionTaskTypeV1,
-  Work,
-  WorkspaceScope,
-} from '../types/world-ownership'
-import { assertRecordInScope, readOwnedRows } from '../workspace/scope'
-import { updateWorkPostAdoptionPolicyV1 } from '../workspace/works'
+import { db } from '../db/schema';
+import { propagateChapterEditStale } from '../consistency/impact-analysis';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { computeKnownCostUsd } from '../ai/usage-log';
+import type { PostAdoptionBudgetV1, PostAdoptionPolicyV1, PostAdoptionTaskTypeV1, Work, WorkspaceScope } from '../types/world-ownership';
+import { assertRecordInScope, readOwnedRows } from '../workspace/scope';
+import { updateWorkPostAdoptionPolicyV1 } from '../workspace/works';
 
 export const DEFAULT_POST_ADOPTION_TASK_TYPES_V1 = Object.freeze([
   'organization',

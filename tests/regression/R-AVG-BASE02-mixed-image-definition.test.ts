@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import { avgVoicePolicyFixtureV3 } from '../helpers/avg-voice-production-fixture'
-import { encodeAvgStoredAssemblyBriefV3 } from '../../src/lib/avg/voice-assembly-storage'
+import { encodeAvgStoredAssemblyBriefV3 } from '../../src/lib/legacy-compat/avg/voice-assembly-storage'
 import { assertAvgImageProductionDefinitionV3, readAvgImageDefinitionV3 } from '../../src/lib/avg/media-production-definition'
-import { avgVisualProductionBudgetV2, avgVisualProductionDataClassesV2 } from '../../src/lib/avg/media-production-policy'
-import { avgMediaAssemblyGateIdsV2 } from '../../src/lib/avg/assembly-contract'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { avgVisualProductionBudgetV2, avgVisualProductionDataClassesV2 } from '../../src/lib/legacy-compat/avg/media-production-policy'
+import { avgMediaAssemblyGateIdsV2 } from '../../src/lib/legacy-compat/avg/assembly-contract'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 
 /** Policy/metadata only: no fake accepted Work, Build, producer or media. */
 async function mixed() {

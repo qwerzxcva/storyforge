@@ -4,12 +4,12 @@ import {
   executeTextOpenWorldActionV1,
   executeTextOpenWorldSystemActorStateActionV1,
 } from '../../src/lib/open-world/action-executor'
-import { createTextOpenWorldActorLifecycleCatalogV1, projectTextOpenWorldActorsV1 } from '../../src/lib/open-world/actors'
+import { createTextOpenWorldActorLifecycleCatalogV1, projectTextOpenWorldActorsV1 } from '../../src/lib/legacy-compat/open-world/actors'
 import { createTextOpenWorldActionRegistryV1 } from '../../src/lib/open-world/action-registry'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
-import { deriveTextOpenWorldContextsV1 } from '../../src/lib/open-world/session-projection'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
+import { deriveTextOpenWorldContextsV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import type { TextOpenWorldEffectDefinitionV1 } from '../../src/lib/types'
 import { createGovernedTextOpenWorldSessionFixtureV1 } from '../helpers/text-open-world-product-session'
 import { createTextOpenWorldVNextFixture, downgradeTextOpenWorldFixtureEconomyV1 } from '../helpers/text-open-world-vnext-fixture'
@@ -135,7 +135,7 @@ describe('Text Open World vNext · governed Actor lifecycle and service continui
 
   it('story-only角色只能由受治理系统剧情Action致死，死亡后同样不可对话', async () => {
     const runtimePackage = lifecycleFixture()
-    const initial = (await import('../../src/lib/open-world/session-projection')).createInitialTextOpenWorldSessionProjectionV1(runtimePackage)
+    const initial = (await import('../../src/lib/legacy-compat/open-world/session-projection')).createInitialTextOpenWorldSessionProjectionV1(runtimePackage)
     const forbiddenEffect: TextOpenWorldEffectDefinitionV1 = {
       key: 'effect.attack-story-witness', operation: 'change-actor-state',
       payload: { actorKey: 'actor.story-witness', alive: false, present: false, locationKey: null, cause: 'player-attack' },
@@ -185,7 +185,7 @@ describe('Text Open World vNext · governed Actor lifecycle and service continui
       key: 'actor.transient', tier: 'transient', name: '过客', biography: '一次事件中的临时角色。', portrayal: '匆忙。',
       factionKey: null, homeLocationKey: 'location.salt-port', protected: false, mortalityPolicy: 'despawn-on-resolution', serviceKeys: [], scheduleKey: null,
     })
-    const projection = (await import('../../src/lib/open-world/session-projection')).createInitialTextOpenWorldSessionProjectionV1(runtimePackage)
+    const projection = (await import('../../src/lib/legacy-compat/open-world/session-projection')).createInitialTextOpenWorldSessionProjectionV1(runtimePackage)
     const lifecycle = createTextOpenWorldActorLifecycleCatalogV1(runtimePackage)
     expect(() => lifecycle.preview({
       state: projection.state,
@@ -200,7 +200,7 @@ describe('Text Open World vNext · governed Actor lifecycle and service continui
     ;(revive.modules.actions.payload as any).effects.push({
       key: 'effect.revive-merchant', operation: 'change-actor-state', payload: { actorKey: 'actor.salt-merchant', alive: true, present: true, locationKey: null, cause: 'story' },
     })
-    const reviveProjection = (await import('../../src/lib/open-world/session-projection')).createInitialTextOpenWorldSessionProjectionV1(revive)
+    const reviveProjection = (await import('../../src/lib/legacy-compat/open-world/session-projection')).createInitialTextOpenWorldSessionProjectionV1(revive)
     const dead = structuredClone(reviveProjection.state)
     dead.actors['actor.salt-merchant'].alive = false
     dead.actors['actor.salt-merchant'].present = false

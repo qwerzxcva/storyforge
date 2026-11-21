@@ -21,14 +21,14 @@ import {
   TEXT_ADVENTURE_PRODUCTION_AGENT_IDS,
 } from '../../src/lib/agent/skill-registry'
 import { draftProductProductionBriefV3, suggestProductStartingPoints } from '../../src/lib/product-production/consultation'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import {
   createProductProductionPlanV3,
   textAdventureQualityReviewBatchArtifactKeyV1,
   textAdventureQualityReviewBatchTaskKeysV1,
   textAdventureQualityReviewTaskKeyV1,
   textAdventureProductionBudgetFloorV1,
-} from '../../src/lib/product-production/plan'
+} from '../../src/lib/legacy-compat/product-production/plan'
 import { productProductionTaskReuseSemanticsEqualV1 } from '../../src/lib/product-production/scheduler'
 import {
   textAdventureQualityReviewAuthorityViolationsV1,

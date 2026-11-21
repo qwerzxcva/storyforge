@@ -5,10 +5,10 @@ import { beforeEach, afterEach, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { openProductionFixtureV1 } from '../helpers/open-ttrpg-production'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
-import { createProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { createProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 import { readProductProductionDetailsV1, retryProductProductionBlockerV1 } from '../../src/lib/product-production/service'
 import { appendAgentRunEventV1, readAgentRunV1 } from '../../src/lib/agent/run/event-store'
-import { canonicalProductProductionJsonV2 as stable } from '../../src/lib/product-production/hash'
+import { canonicalProductProductionJsonV2 as stable } from '../../src/lib/legacy-compat/product-production/hash'
 import { runProductProductionSchedulerCycleV1, runProductProductionUntilBlockedV1, assertProductProductionBudgetLedgerV1,
   ProductProductionResultUnknownErrorV1, productProductionFailureNeedsProviderAccountingV1, type ProductProductionTaskExecutorV1 } from '../../src/lib/product-production/scheduler'
 

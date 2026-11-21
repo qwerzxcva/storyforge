@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import { parseTtrpgOpenKnowledgeEntryV1, parseTtrpgOpenKnowledgeV1, ttrpgOpenActorKnowsEvidenceV1,
-  projectTtrpgOpenPublicKnowledgeV1, projectTtrpgOpenKnowledgeForViewerV1, hashTtrpgOpenEvidenceFieldsV1 } from '../../src/lib/ttrpg/open-knowledge'
-import { evaluateTtrpgPredicateV1 } from '../../src/lib/ttrpg/predicate'
-import { ttrpgOpenPredicateContextV1 } from '../../src/lib/ttrpg/open-rule-plan'
+  projectTtrpgOpenPublicKnowledgeV1, projectTtrpgOpenKnowledgeForViewerV1, hashTtrpgOpenEvidenceFieldsV1 } from '../../src/lib/legacy-compat/ttrpg/open-knowledge'
+import { evaluateTtrpgPredicateV1 } from '../../src/lib/legacy-compat/ttrpg/predicate'
+import { ttrpgOpenPredicateContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-rule-plan'
 import { readyOpenTtrpgSessionV1 } from '../helpers/open-ttrpg-session'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { db } from '../../src/lib/db/schema'
 import { openCampaignFixture } from '../helpers/ttrpg-open-content'
-import type { TtrpgOpenAuthorizationV1 } from '../../src/lib/ttrpg/open-authorization'
+import type { TtrpgOpenAuthorizationV1 } from '../../src/lib/legacy-compat/ttrpg/open-authorization'
 const campaign = openCampaignFixture()
 const entry = { knowledgeKey: 'session.a.discovery.1', evidenceRef: 'evidence.door', sourceFactRefs: ['fact.harbor'],
   sourceResourceRefs: ['world.harbor'], acquisitionRef: { sessionKey: 'session.a', sequence: 7 }, audience: 'private' as const,

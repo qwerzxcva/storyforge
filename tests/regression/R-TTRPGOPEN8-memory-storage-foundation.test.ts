@@ -4,7 +4,7 @@ import { readyOpenTtrpgSessionV1 } from '../helpers/open-ttrpg-session'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import { CURRENT_BACKUP_VERSION, inspectProjectBackup, normalizeProjectBackup } from '../../src/lib/export/backup-trust'
 import { PROJECT_TABLES } from '../../src/lib/registry/project-tables'
-import { deleteProductRuntimeSession } from '../../src/lib/product/runtime-core'
+import { deleteProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
 import { recordTtrpgOpenNarrativeMemoryV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { openEnvelopeV1, OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
 

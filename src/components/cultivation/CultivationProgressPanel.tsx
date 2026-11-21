@@ -1,30 +1,22 @@
-import { useEffect, useMemo, useState } from 'react'
-import { BookOpen, Check, GitBranch, Loader2, Sparkles, Trash2, X } from 'lucide-react'
-import type { Project } from '../../lib/types'
-import { cultivationStageTiers, parseCultivationStages } from '../../lib/types'
-import { resolveCanonicalChapterSequence } from '../../lib/ai/chapter-memory/canonical-chapter-sequence'
-import {
-  abandonCultivationProgressExtractionRunV1,
-  adoptCultivationProgressExtractionCandidateV1,
-  generateCultivationProgressExtractionCandidateV1,
-  readPendingCultivationProgressExtractionCandidateV1,
-  readRecoverableCultivationProgressExtractionRunV1,
-  rejectCultivationProgressExtractionCandidateV1,
-  type CultivationProgressExtractionCandidateV1,
-} from '../../lib/agent/run/cultivation-progress-extraction-durable'
-import { htmlToPlainText } from '../../lib/utils/html'
-import { resolveRequestConfig } from '../../lib/ai/client'
-import { getAIConfigRequiredMessage, isAIConfigReady } from '../../lib/ai/config-readiness'
-import { resolveScopeLike } from '../../lib/workspace/scope'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { useChapterStore } from '../../stores/chapter'
-import { useCharacterStore } from '../../stores/character'
-import { useCultivationStore } from '../../stores/cultivation'
-import { useCultivationProgressStore } from '../../stores/cultivation-progress'
-import { useOutlineStore } from '../../stores/outline'
-import { useProjectStore } from '../../stores/project'
-import { useDialog } from '../shared/Dialog'
-import { useActiveWork } from '../../hooks/useActiveWork'
+import { useEffect, useMemo, useState } from 'react';
+import { BookOpen, Check, GitBranch, Loader2, Sparkles, Trash2, X } from 'lucide-react';
+import type { Project } from '../../lib/types';
+import { cultivationStageTiers, parseCultivationStages } from '../../lib/types';
+import { resolveCanonicalChapterSequence } from '../../lib/ai/chapter-memory/canonical-chapter-sequence';
+import { abandonCultivationProgressExtractionRunV1, adoptCultivationProgressExtractionCandidateV1, generateCultivationProgressExtractionCandidateV1, readPendingCultivationProgressExtractionCandidateV1, readRecoverableCultivationProgressExtractionRunV1, rejectCultivationProgressExtractionCandidateV1, type CultivationProgressExtractionCandidateV1 } from '../../lib/agent/run/cultivation-progress-extraction-durable';
+import { htmlToPlainText } from '../../lib/utils/html';
+import { resolveRequestConfig } from '../../lib/ai/client';
+import { getAIConfigRequiredMessage, isAIConfigReady } from '../../lib/ai/config-readiness';
+import { resolveScopeLike } from '../../lib/workspace/scope';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { useChapterStore } from '../../stores/chapter';
+import { useCharacterStore } from '../../stores/character';
+import { useCultivationStore } from '../../stores/cultivation';
+import { useCultivationProgressStore } from '../../stores/cultivation-progress';
+import { useOutlineStore } from '../../stores/outline';
+import { useProjectStore } from '../../stores/project';
+import { useDialog } from '../shared/Dialog';
+import { useActiveWork } from '../../hooks/useActiveWork';
 
 const TRANSITION_LABELS = {
   enter: '首次确认',

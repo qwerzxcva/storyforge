@@ -6,7 +6,7 @@ import { db } from '../../src/lib/db/schema'
 import { readyOpenTtrpgSessionV1,openEnvelopeV1,OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
 import { startTtrpgOpenEpochV1,changeTtrpgSituationV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { generateTtrpgOpenIntentCandidateV1 } from '../../src/lib/ttrpg/open-intent-harness'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import * as table from '../../src/lib/ttrpg/open-table-service'
 import TtrpgOpenIntentReview from '../../src/components/ttrpg/TtrpgOpenIntentReview'
 

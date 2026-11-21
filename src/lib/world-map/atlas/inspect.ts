@@ -1,4 +1,4 @@
-import type { AtlasGeometry, Point } from './geometry'
+import type { AtlasGeometry, Point } from './geometry';
 
 export function atlasRingContains([x, y]: Point, ring: Point[]) {
   let inside = false

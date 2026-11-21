@@ -34,14 +34,14 @@ import {
   compileMotionDramaPromptPackV1,
   verifyMotionDramaPromptPackV1,
 } from '../../src/lib/motion-drama/prompt-pack'
-import { assertMotionDramaPromptPackManifestV2 } from '../../src/lib/motion-drama/prompt-pack-contracts'
+import { assertMotionDramaPromptPackManifestV2 } from '../../src/lib/legacy-compat/motion-drama/prompt-pack-contracts'
 import { inspectMotionDramaQualityV1 } from '../../src/lib/motion-drama/quality'
 import {
   publishMotionDramaReleaseV1,
   readMotionDramaReleaseManifestV1,
 } from '../../src/lib/motion-drama/release'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
-import { collectUnreferencedMediaBlobObjects } from '../../src/lib/product-production/media-blob-store'
+import { collectUnreferencedMediaBlobObjects } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 
 const targetSpec: MotionDramaTargetSpecV1 = {
   format: 'motion-drama', language: 'zh-CN', episodeCount: 12, targetSecondsPerEpisode: 20,

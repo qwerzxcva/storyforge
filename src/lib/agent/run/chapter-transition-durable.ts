@@ -1,30 +1,11 @@
-import { db } from '../../db/schema'
-import {
-  getChapterDerivedMemoryStatus,
-  hashChapterText,
-} from '../../ai/chapter-memory/text-normalization'
-import type {
-  AgentConversation,
-  AgentEvent,
-  StateDiffItem,
-  WorkspaceScope,
-} from '../../types'
-import type { ContextManifestV1 } from '../../types/agent-run'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import { hashCanonicalValue } from './hash'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveScopeLike,
-  scopeTransactionTables,
-  stampNewRecord,
-} from '../../workspace/scope'
+import { db } from '../../db/schema';
+import { getChapterDerivedMemoryStatus, hashChapterText } from '../../ai/chapter-memory/text-normalization';
+import type { AgentConversation, AgentEvent, StateDiffItem, WorkspaceScope } from '../../types';
+import type { ContextManifestV1 } from '../../types/agent-run';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, type AgentRunSnapshotV1 } from './event-store';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { hashCanonicalValue } from './hash';
+import { assertRecordInScope, readOwnedRows, resolveScopeLike, scopeTransactionTables, stampNewRecord } from '../../workspace/scope';
 
 export const CHAPTER_TRANSITION_STEP_IDS_V1 = {
   retrieval: 'chapter-transition:retrieval',

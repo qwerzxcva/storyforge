@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import { parseAiTownStateV1 } from '../../src/lib/ai-town/runtime'
+import { parseAiTownStateV1 } from '../../src/lib/legacy-compat/ai-town/runtime'
 import { runAiTownOfflineBatchV1 } from '../../src/lib/ai-town/runtime-api'
-import { readProductRuntimeState, readProductRuntimeStateVersion } from '../../src/lib/product/runtime-api'
+import { readProductRuntimeState, readProductRuntimeStateVersion } from '../../src/lib/legacy-compat/product/runtime-api'
 import { seedAiTownRuntimeFixture } from '../helpers/ai-town-runtime'
 
 describe('R-AITOWN3 · AI 小镇长周期稳定性', () => {

@@ -1,25 +1,19 @@
-import { db } from '../db/schema'
-import type { Project, Work, World, AgentRunRecord } from '../types'
-import { effectiveWorkKind, effectiveNovelProfile } from '../workspace/work-kind'
-import { readWorkLibraryProjectionV1, switchActiveWork } from '../workspace/works'
-import { isShareableWorld } from '../world-engine/world-identity'
-import { worldModulePath } from '../../components/world-engine/navigation'
-import { flushPendingEditsV1 } from '../authoring/pending-edit-coordinator'
-import { useProjectStore } from '../../stores/project'
+import { db } from '../db/schema';
+import type { Project, Work, World, AgentRunRecord } from '../types';
+import { effectiveNovelProfile } from '../workspace/work-kind';
+import { readWorkLibraryProjectionV1, switchActiveWork } from '../workspace/works';
+import { isShareableWorld } from '../world-engine/world-identity';
+import { worldModulePath } from '../../components/world-engine/navigation';
+import { flushPendingEditsV1 } from '../authoring/pending-edit-coordinator';
+import { useProjectStore } from '../../stores/project';
+import { isWorkAvailableInBuild } from '../runtime/app-mode';
 
 export type HomeWork = {work: Work; project: Project; world: World}
 export const workLabel = (w: Work) => w.kind === 'novel' ? effectiveNovelProfile(w) === 'short' ? '短篇' : '长篇' : ({screenplay:'剧本',comic:'漫画','motion-drama':'漫剧素材',avg:'AVG',ttrpg:'跑团','ai-town':'AI 小镇','character-interaction':'角色聊天'}[w.kind])
 export function workPath(row: HomeWork, module = 'info'): string {
  const {work:w,project:p}=row
- if(w.kind==='comic')return `/comic/${module==='versions'?'versions':'source'}?work=${w.id}`
- if(w.kind==='character-interaction')return `/chat/${module==='versions'?'release':'vision'}?project=${p.id}&work=${w.id}`
- if(w.kind==='motion-drama')return `/motion/${module==='versions'?'versions':'source'}?work=${w.id}`
- if(w.kind==='ai-town')return `/town/${module==='versions'?'release':'vision'}?project=${p.id}&work=${w.id}`
- if(w.kind==='ttrpg')return `/ttrpg/${module==='versions'?'release':'vision'}?project=${p.id}&work=${w.id}`
- if(w.kind==='avg')return `/avg/${module==='versions'?'release':'vision'}?project=${p.id}`
+ if(!isWorkAvailableInBuild(w))return '/home/library'
  if(p.workspacePurpose==='world-engine')return worldModulePath(p.id!,module)
- if(effectiveWorkKind(w)==='screenplay')return `/script/${module==='versions'?'versions':'editor'}?work=${w.id}`
- if(w.kind==='novel'&&effectiveNovelProfile(w)==='short')return `/short/${module==='versions'?'versions':module==='info'?'intent':'editor'}?project=${p.id}`
  if(w.kind==='novel')return `/workspace/${p.id}?module=${module==='versions'?'version-history':module}`
  return `/home/detail?work=${w.id}`
 }
@@ -27,12 +21,13 @@ export async function openHomeWork(row: HomeWork): Promise<void> {
  await flushPendingEditsV1()
  const current=await db.works.get(row.work.id!)
  if(!current||current.code!==row.work.code||current.projectId!==row.project.id||current.worldId!==row.world.id)throw new Error('作品已经变化或被移除，请刷新后重试。')
+ if(!isWorkAvailableInBuild(current))throw new Error('Android 版仅支持长篇创作。旧作品仍可备份。')
  await switchActiveWork(current.projectId,current.id!)
  await useProjectStore.getState().loadProjects()
 }
 export async function readHomeCatalog(){
  const [projects,works,worlds]=await Promise.all([db.projects.toArray(),db.works.toArray(),db.worlds.toArray()])
- const rows:HomeWork[]=works.flatMap(work=>{const project=projects.find(p=>p.id===work.projectId),world=worlds.find(w=>w.id===work.worldId&&w.projectId===work.projectId);return project&&world?[{work,project,world}]:[]}).sort((a,b)=>b.work.updatedAt-a.work.updatedAt)
+ const rows:HomeWork[]=works.filter(work=>isWorkAvailableInBuild(work)).flatMap(work=>{const project=projects.find(p=>p.id===work.projectId),world=worlds.find(w=>w.id===work.worldId&&w.projectId===work.projectId);return project&&world?[{work,project,world}]:[]}).sort((a,b)=>b.work.updatedAt-a.work.updatedAt)
  for (const row of rows) row.work = await readWorkLibraryProjectionV1(row.work)
  return {projects,rows,works:rows.filter(r=>r.project.workspacePurpose==='independent-work'),worlds:worlds.filter(w=>isShareableWorld(w)&&projects.some(p=>p.id===w.projectId&&p.activeWorldId===w.id)).sort((a,b)=>b.updatedAt-a.updatedAt)}
 }
@@ -46,19 +41,12 @@ export function rememberHomeWork(row:HomeWork,path:string){
  try{localStorage.setItem(RESUME_KEY,JSON.stringify({workId:row.work.id,workCode:row.work.code,path}));window.dispatchEvent(new Event('storyforge-home-resume'))}catch{/* Navigation remains usable when storage is unavailable. */}
 }
 export function validWorkPath(row:HomeWork,path:string){
+ if(!isWorkAvailableInBuild(row.work))return false
  if(!path.startsWith('/')||path.startsWith('//'))return false
  const u=new URL(path,'https://storyforge.local')
  if(u.origin!=='https://storyforge.local')return false
  const w=row.work
- if(w.kind==='comic')return /^\/comic\/(source|facts|causal|brief|decisions|script|rhythm|layout|lettering|visual|references|media|review|preview|versions|settings)$/.test(u.pathname)&&u.searchParams.get('work')===String(w.id)
- if(w.kind==='ai-town')return /^\/town\//.test(u.pathname)&&u.searchParams.get('project')===String(w.projectId)&&u.searchParams.get('work')===String(w.id)
- if(w.kind==='ttrpg')return /^\/ttrpg\//.test(u.pathname)&&u.searchParams.get('project')===String(w.projectId)&&u.searchParams.get('work')===String(w.id)
- if(w.kind==='motion-drama')return /^\/motion\/(source|series|episodes|assets|beats|script|shots|frames|image|video|pack|review|versions|prompts|settings)$/.test(u.pathname)&&u.searchParams.get('work')===String(w.id)
- if(w.kind==='character-interaction')return /^\/chat\//.test(u.pathname)&&u.searchParams.get('project')===String(w.projectId)&&u.searchParams.get('work')===String(w.id)
- if(w.kind==='avg')return /^\/avg\//.test(u.pathname)&&u.searchParams.get('project')===String(w.projectId)
  if(w.kind==='novel'&&effectiveNovelProfile(w)==='long')return u.pathname===`/workspace/${w.projectId}`
- if(w.kind==='novel')return /^\/short\/(intent|story|chapters|editor|review|versions|derive)$/.test(u.pathname)&&u.searchParams.get('project')===String(w.projectId)
- if(w.kind==='screenplay')return /^\/script\/(source|brief|structure|scenes|editor|grounding|review|versions)$/.test(u.pathname)&&u.searchParams.get('work')===String(w.id)
  return false
 }
 export function readHomeResume(rows:HomeWork[]):{row:HomeWork;path:string}|null{

@@ -6,7 +6,7 @@ import { generateTtrpgOpenCompanionCandidateV1 } from '../../src/lib/ttrpg/open-
 import { operationInput } from '../helpers/open-ttrpg-branch-recovery'
 import { resumeTtrpgOpenOperationV1 } from '../../src/lib/ttrpg/open-operation-coordinator'
 import { readTtrpgOpenIntentCandidateV1 } from '../../src/lib/ttrpg/open-intent-candidate'
-import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/legacy-compat/product/runtime-core'
 const output = JSON.stringify({ goal: '调查河港', method: '观察岸边', targetRefs: [], declaredResources: [], declaredAssumptions: [], requestedOutcome: null })
 describe('R-TTRPGOPEN3 real companion role purpose and owned source', { timeout: 30000 }, () => {
   beforeEach(async () => { await db.delete();await db.open() });afterEach(() => db.close())

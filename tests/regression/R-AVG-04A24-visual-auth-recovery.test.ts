@@ -6,14 +6,14 @@ import { runProductProductionUntilBlockedV1 } from '../../src/lib/product-produc
 import { readProductProductionDetailsV1 } from '../../src/lib/product-production/service'
 import { restartAvgVisualPlanningFromDraftV5, startAvgAssemblyV1 } from '../../src/lib/avg/assembly-service'
 import { readAvgDraftV1 } from '../../src/lib/avg/draft-service'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 import { avgVersionedPlanningFixture } from '../helpers/avg-versioned-planning-fixture'
 import { avgImageProcessingRecipeFixture } from '../helpers/avg-image-processing-fixture'
-import type { AvgImageProcessingPlan, AvgImageProcessingPlanV1 } from '../../src/lib/avg/image-processing-contract'
+import type { AvgImageProcessingPlan, AvgImageProcessingPlanV1 } from '../../src/lib/legacy-compat/avg/image-processing-contract'
 import { AVG_FOREGROUND_SAM2_CHECKPOINT_SHA256_V4, AVG_FOREGROUND_SAM2_MATTING_ID_V4,
   AVG_FOREGROUND_SAM2_MATTING_METHOD_V4, AVG_FOREGROUND_SAM2_MODEL_REVISION_V4,
   AVG_FOREGROUND_SAM2_PROMPT_STRATEGY_V4, AVG_FOREGROUND_SAM2_MATTING_ID_V5,
-  AVG_FOREGROUND_SAM2_PROMPT_STRATEGY_V5, AVG_FOREGROUND_SAM2_QUALITY_GATE_V5, parseAvgForegroundPolicy } from '../../src/lib/avg/image-foreground-contract'
+  AVG_FOREGROUND_SAM2_PROMPT_STRATEGY_V5, AVG_FOREGROUND_SAM2_QUALITY_GATE_V5, parseAvgForegroundPolicy } from '../../src/lib/legacy-compat/avg/image-foreground-contract'
 import { readAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import * as executionBindings from '../../src/lib/agent/execution-binding'

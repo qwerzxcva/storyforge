@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { AVG_FOREGROUND_ESTIMATED_MAGENTA_ID_V3, matteAvgForegroundEstimatedMagentaV3 } from '../../src/lib/avg/image-foreground-estimated-magenta-v3'
-import { AVG_FOREGROUND_BOUNDARY_UNMIX_ID_V2 } from '../../src/lib/avg/image-foreground-boundary-unmix'
-import { parseAvgForegroundPolicy, type AvgForegroundPolicyV3 } from '../../src/lib/avg/image-foreground-contract'
+import { AVG_FOREGROUND_ESTIMATED_MAGENTA_ID_V3, matteAvgForegroundEstimatedMagentaV3 } from '../../src/lib/legacy-compat/avg/image-foreground-estimated-magenta-v3'
+import { AVG_FOREGROUND_BOUNDARY_UNMIX_ID_V2 } from '../../src/lib/legacy-compat/avg/image-foreground-boundary-unmix'
+import { parseAvgForegroundPolicy, type AvgForegroundPolicyV3 } from '../../src/lib/legacy-compat/avg/image-foreground-contract'
 import { executeAvgForegroundWorkerRequestV2, hashAvgForegroundPixelsV2, parseAvgForegroundPixelObservationV3 } from '../../src/lib/avg/image-foreground-worker-protocol-v2'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { avgImageProcessingRecipeFixture } from '../helpers/avg-image-processing-fixture'
-import { deriveAvgImageProcessingGeometryV1, type AvgImageProcessingRecipeV2 } from '../../src/lib/avg/image-processing-contract'
+import { deriveAvgImageProcessingGeometryV1, type AvgImageProcessingRecipeV2 } from '../../src/lib/legacy-compat/avg/image-processing-contract'
 import { AVG_IMAGE_PROCESSOR_V2, assertAvgImageProcessingReceiptV2, projectAvgForegroundCanvasRecipeV1,
   type AvgImageProcessingReceiptV2 } from '../../src/lib/avg/image-processing-contract-v2'
 

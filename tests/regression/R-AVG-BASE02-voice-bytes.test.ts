@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { sha256MediaData } from '../../src/lib/product-production/media-blob-store'
+import { sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import * as runtimeVerifier from '../../src/lib/product-production/media-runtime-verifier'
-import type { ProductMediaRuntimeMeasurementV1 } from '../../src/lib/product-production/quality-receipts'
+import type { ProductMediaRuntimeMeasurementV1 } from '../../src/lib/legacy-compat/product-production/quality-receipts'
 import { inspectAvgVoiceWaveV1 } from '../../src/lib/avg/voice-wave'
 import { inspectAvgVoiceBytesV1 } from '../../src/lib/avg/voice-decoder'
 

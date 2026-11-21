@@ -1,25 +1,16 @@
-import { useState, useRef, useEffect, useCallback, useMemo } from 'react'
-import { Plus, Trash2, ArrowRightLeft, ArrowRight, Users, GitFork, List, Sparkles, Check, X, AlertCircle } from 'lucide-react'
-import { useCharacterRelationStore } from '../../stores/character-relation'
-import { useCharacterStore } from '../../stores/character'
-import type { MatchedRelation } from '../../lib/ai/relation-extractor'
-import type { Project, RelationType } from '../../lib/types'
-import { CInput, CTextarea } from '../shared/CompositionInput'
-import { useToast } from '../shared/Toast'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { resolveScopeLike } from '../../lib/workspace/scope'
-import {
-  adoptCharacterRelationshipCandidateV1,
-  generateCharacterRelationshipCandidateV1,
-  readPendingCharacterRelationshipCandidateV1,
-  rejectCharacterRelationshipCandidateV1,
-} from '../../lib/agent/run/character-relationship-durable'
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import { Plus, Trash2, ArrowRightLeft, ArrowRight, Users, GitFork, List, Sparkles, Check, X, AlertCircle } from 'lucide-react';
+import { useCharacterRelationStore } from '../../stores/character-relation';
+import { useCharacterStore } from '../../stores/character';
+import type { MatchedRelation } from '../../lib/ai/relation-extractor';
+import type { Project, RelationType } from '../../lib/types';
+import { CInput, CTextarea } from '../shared/CompositionInput';
+import { useToast } from '../shared/Toast';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { resolveScopeLike } from '../../lib/workspace/scope';
+import { adoptCharacterRelationshipCandidateV1, generateCharacterRelationshipCandidateV1, readPendingCharacterRelationshipCandidateV1, rejectCharacterRelationshipCandidateV1 } from '../../lib/agent/run/character-relationship-durable';
 import RelationGraph from './RelationGraph'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-  useInitialRecordTarget,
-} from '../shared/initial-record-target'
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes, useInitialRecordTarget } from '../shared/initial-record-target';
 
 const RELATION_TYPES: { value: RelationType; label: string }[] = [
   { value: 'family', label: '👨‍👩‍👧 亲属' },

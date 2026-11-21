@@ -5,7 +5,7 @@ import { generateTtrpgOpenIntentCandidateV1, executeTtrpgOpenIntentRequestV1,
   readTtrpgOpenIntentCandidateV1 } from '../../src/lib/ttrpg/open-intent-harness'
 import { prepareTtrpgOpenIntentInputV1 } from '../../src/lib/ttrpg/open-intent-input'
 import { startTtrpgOpenEpochV1, changeTtrpgSafetyStatus } from '../../src/lib/ttrpg/runtime-commands'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { readAgentRunArtifactExactV1 } from '../../src/lib/memory/artifact-store'
 import type { ChatResult } from '../../src/lib/ai/client'

@@ -10,10 +10,10 @@ import {
   readAcceptedTextOpenWorldSourcePinBundleV1,
   validateTextOpenWorldSourcePinBundleV1,
   verifyTextOpenWorldSourcePinAvailabilityV1,
-} from '../../src/lib/open-world/source-pin'
+} from '../../src/lib/legacy-compat/open-world/source-pin'
 import { openWorldSemanticResourceCatalogV1 } from '../../src/lib/context-gateway/world-release-client'
 import { acceptProductBuildArtifact } from '../../src/lib/product-production/artifact-store'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { createWorkspace } from '../../src/lib/workspace/create-workspace'
 import { resolveWorkspaceOwnership } from '../../src/lib/workspace/ownership'
 import { stampNewRecord } from '../../src/lib/workspace/scope'

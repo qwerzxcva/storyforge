@@ -1,34 +1,17 @@
-import { chat } from '../../ai/client'
-import {
-  buildHistoryAgentMessagesV1,
-  parseHistoryAgentResultStrictV1,
-  readHistoryAgentPromptTemplateSnapshotV1,
-  readHistoryAgentPromptTemplateV1,
-} from '../../history/ai-plan'
-import {
-  formatHistoryAgentBaselineV1,
-  readHistoryAgentBaselineV1,
-  type HistoryAgentBaselineV1,
-  type HistoryAgentModeV1,
-  type HistoryAgentTargetKindV1,
-} from '../../history/agent-baseline'
-import { assembleContext } from '../../registry/assemble-context'
-import { adopt, hashAdoptFieldValueV1 } from '../../registry/adopt'
-import type { AIConfig, ChatMessage, WorkspaceScope } from '../../types'
-import { readOwnedRows } from '../../workspace/scope'
-import { createAgentSkillExecutionBindingV1 } from '../execution-binding'
-import { getAgentSkillV1 } from '../skill-registry'
-import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  staleAgentRunVerificationV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { canonicalStringify, hashCanonicalValue } from './hash'
-import { createVerificationReceiptV1 } from './verification-receipt'
+import { chat } from '../../ai/client';
+import { buildHistoryAgentMessagesV1, parseHistoryAgentResultStrictV1, readHistoryAgentPromptTemplateSnapshotV1, readHistoryAgentPromptTemplateV1 } from '../../history/ai-plan';
+import { formatHistoryAgentBaselineV1, readHistoryAgentBaselineV1, type HistoryAgentBaselineV1, type HistoryAgentModeV1, type HistoryAgentTargetKindV1 } from '../../history/agent-baseline';
+import { assembleContext } from '../../registry/assemble-context';
+import { adopt, hashAdoptFieldValueV1 } from '../../registry/adopt';
+import type { AIConfig, ChatMessage, WorkspaceScope } from '../../types';
+import { readOwnedRows } from '../../workspace/scope';
+import { createAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { getAgentSkillV1 } from '../skill-registry';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, staleAgentRunVerificationV1, type AgentRunSnapshotV1 } from './event-store';
+import { canonicalStringify, hashCanonicalValue } from './hash';
+import { createVerificationReceiptV1 } from './verification-receipt';
 
 export const HISTORY_AGENT_VERIFIER_SET_V1 = 'history-agent-terminal-v1' as const
 export const HISTORY_AGENT_CONTEXT_SOURCE_KEYS_V1 = ['worldview', 'historyAgentBaseline'] as const

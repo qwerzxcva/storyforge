@@ -5,16 +5,16 @@ import { readyOpenTtrpgSessionV1, OPEN_HUMAN_VIEWER, openEnvelopeV1 } from '../h
 import { readTtrpgOpenFactDeskV1, prepareTtrpgOpenFactDeskAssertionV1, prepareTtrpgOpenFactDeskRetirementV1, confirmTtrpgOpenFactDeskV1,
   startTtrpgOpenFactDeskConsultationV1, consultTtrpgOpenFactDeskV1, closeTtrpgOpenFactDeskV1 } from '../../src/lib/ttrpg/open-fact-desk'
 import { readTtrpgOpenEntityDeskV1, proposeTtrpgOpenEntityDeskV1, confirmTtrpgOpenEntityDeskV1, materializeTtrpgOpenEntityDeskV1 } from '../../src/lib/ttrpg/open-entity-desk'
-import { readProductRuntimeState, branchProductRuntimeSession, deleteProductRuntimeSession } from '../../src/lib/product/runtime-core'
-import { hashProductProductionValueV2 as hash } from '../../src/lib/product-production/hash'
-import type { TtrpgOpenOracleFactProposalV1 } from '../../src/lib/ttrpg/open-fact-ledger'
-import { ttrpgOpenSessionFactsV1 } from '../../src/lib/ttrpg/open-fact-ledger'
-import { evaluateTtrpgPredicateV1 } from '../../src/lib/ttrpg/predicate'
-import { ttrpgOpenPredicateContextV1 } from '../../src/lib/ttrpg/open-rule-plan'
+import { readProductRuntimeState, branchProductRuntimeSession, deleteProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
+import { hashProductProductionValueV2 as hash } from '../../src/lib/legacy-compat/product-production/hash'
+import type { TtrpgOpenOracleFactProposalV1 } from '../../src/lib/legacy-compat/ttrpg/open-fact-ledger'
+import { ttrpgOpenSessionFactsV1 } from '../../src/lib/legacy-compat/ttrpg/open-fact-ledger'
+import { evaluateTtrpgPredicateV1 } from '../../src/lib/legacy-compat/ttrpg/predicate'
+import { ttrpgOpenPredicateContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-rule-plan'
 import { completeTtrpgOpenSessionZeroV1, consultTtrpgOracleV1, closeTtrpgOpenEpochV1, startTtrpgOpenEpochV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { generateTtrpgOpenOracleCandidateV1 } from '../../src/lib/ttrpg/open-intent-harness'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
-import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/ttrpg/open-player-context'
+import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-player-context'
 
 const proposal: TtrpgOpenOracleFactProposalV1 = { kind: 'relation', subjectRef: 'keeper', predicateKey: 'knows', objectRef: 'harbor', canonicalValue: true,
   detail: '真人主持明确确认守灯人了解港口。', sourceFactRefs: ['fact.harbor'], audience: 'party', knownByActorKeys: ['hero', 'companion.1', 'companion.2'], supersedes: null, supersedeReason: null }

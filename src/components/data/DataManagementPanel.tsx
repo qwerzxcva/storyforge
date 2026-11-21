@@ -1,54 +1,26 @@
-import { useState, useRef, useEffect } from 'react'
-import {
-  Download, Upload, FileJson, FileText, FileType,
-  Loader2, CheckCircle, AlertCircle, FolderOpen,
-  History, Plus, Trash2, RotateCcw, HardDrive,
-  ShieldAlert, Stethoscope, RefreshCw, GitCompareArrows,
-} from 'lucide-react'
-import { exportProjectJSON, downloadJSON, importProjectJSON, type ProjectExportData } from '../../lib/export/json-export'
-import { readProjectJSONFile } from '../../lib/export/json-file'
-import { exportProjectMarkdown, exportProjectTXT, downloadTextFile } from '../../lib/export/text-export'
-import {
-  isFSASupported, ensureFolderPermission, folderPermissionGranted,
-  writeProjectSnapshotToFolder,
-} from '../../lib/storage/folder-backup'
-import { loadProjectFolderHandle } from '../../lib/storage/folder-handle-store'
-import { bindCreatedProjectStorageWorkspace } from '../../lib/storage/project-storage-workspace'
-import { useBackupStore } from '../../stores/backup'
+import { useState, useRef, useEffect } from 'react';
+import { Download, Upload, FileJson, FileText, FileType, Loader2, CheckCircle, AlertCircle, FolderOpen, History, Plus, Trash2, RotateCcw, HardDrive, ShieldAlert, Stethoscope, RefreshCw, GitCompareArrows } from 'lucide-react';
+import { exportProjectJSON, downloadJSON, importProjectJSON, type ProjectExportData } from '../../lib/export/json-export';
+import { readProjectJSONFile } from '../../lib/export/json-file';
+import { exportProjectMarkdown, exportProjectTXT, downloadTextFile } from '../../lib/export/text-export';
+import { isFSASupported, ensureFolderPermission, folderPermissionGranted, writeProjectSnapshotToFolder } from '../../lib/storage/folder-backup';
+import { loadProjectFolderHandle } from '../../lib/storage/folder-handle-store';
+import { bindCreatedProjectStorageWorkspace } from '../../lib/storage/project-storage-workspace';
+import { useBackupStore } from '../../stores/backup';
 import CloudBackupCard from './CloudBackupCard'
-import { useToast } from '../shared/Toast'
-import { useDialog } from '../shared/Dialog'
-import type {
-  Note,
-  Project,
-  Snapshot,
-  WorkspaceFileCandidateSetV1,
-  WorkspaceImpactPlanV1,
-  WorkspaceSelfCheckReportV1,
-} from '../../lib/types'
-import { buildLocalDiagnosticReport } from '../../lib/diagnostics/local-diagnostic-report'
-import { BACKUP_REFERENCE_REVIEW_TITLE, inspectProjectBackup, type BackupTrustReport } from '../../lib/export/backup-trust'
-import {
-  buildWorkspaceSelfCheckReportV1,
-  buildWorkspaceFileAdoptionCandidatesV1,
-  adoptWorkspaceFileChangesV1,
-  confirmMissingChapterFileDeletionsV1,
-  resolveWorkspaceConflictsUsingDatabaseV1,
-  restoreWorkspaceFromFolderV1,
-  exportWorkspacePackageFromProjectV1,
-  importWorkspacePackageV1,
-  synchronizeProjectChangesToFolderV1,
-} from '../../lib/memory/workspace-projection'
-import {
-  isMemoryEngineeringRuntimeEnabledV1,
-  setMemoryEngineeringRuntimeEnabledV1,
-} from '../../lib/memory/runtime'
-import { buildWorkspaceImpactPlanV1 } from '../../lib/memory/workspace-impact'
-import { useProjectStore } from '../../stores/project'
-import { useActiveWork } from '../../hooks/useActiveWork'
+import { useToast } from '../shared/Toast';
+import { useDialog } from '../shared/Dialog';
+import type { Note, Project, Snapshot, WorkspaceFileCandidateSetV1, WorkspaceImpactPlanV1, WorkspaceSelfCheckReportV1 } from '../../lib/types';
+import { buildLocalDiagnosticReport } from '../../lib/diagnostics/local-diagnostic-report';
+import { BACKUP_REFERENCE_REVIEW_TITLE, inspectProjectBackup, type BackupTrustReport } from '../../lib/export/backup-trust';
+import { buildWorkspaceSelfCheckReportV1, buildWorkspaceFileAdoptionCandidatesV1, adoptWorkspaceFileChangesV1, confirmMissingChapterFileDeletionsV1, resolveWorkspaceConflictsUsingDatabaseV1, restoreWorkspaceFromFolderV1, exportWorkspacePackageFromProjectV1, importWorkspacePackageV1, synchronizeProjectChangesToFolderV1 } from '../../lib/memory/workspace-projection';
+import { isMemoryEngineeringRuntimeEnabledV1, setMemoryEngineeringRuntimeEnabledV1 } from '../../lib/memory/runtime';
+import { buildWorkspaceImpactPlanV1 } from '../../lib/memory/workspace-impact';
+import { useProjectStore } from '../../stores/project';
+import { useActiveWork } from '../../hooks/useActiveWork';
 import AutoBackupStatusNotice from '../system/AutoBackupStatusNotice'
-import { resolveWorkspaceScope } from '../../lib/workspace/ownership'
-import { readOwnedRows } from '../../lib/workspace/scope'
+import { resolveWorkspaceScope } from '../../lib/workspace/ownership';
+import { readOwnedRows } from '../../lib/workspace/scope';
 
 type Tab = 'export' | 'backup'
 type ExportStatus = 'idle' | 'loading' | 'success' | 'error'

@@ -1,97 +1,38 @@
-import { assertCurrentProductEntryV1, evaluateCurrentProductEntryV1 } from '../../lib/product/product-catalog'
+import { assertCurrentProductEntryV1, evaluateCurrentProductEntryV1 } from '../../lib/product/product-catalog';
 import PromptControlEditor from './PromptControlEditor'
 import QualityNodeActions from './QualityNodeActions'
 import RevisionNodeSelection from './RevisionNodeSelection'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import {
-  Check,
-  ChevronDown,
-  ChevronRight,
-  CircleStop,
-  AlignCenterHorizontal,
-  AlignCenterVertical,
-  Copy,
-  Database,
-  GitBranch,
-  GripVertical,
-  History,
-  LayoutTemplate,
-  LayoutDashboard,
-  Loader2,
-  Map as MapIcon,
-  Pause,
-  Play,
-  Plus,
-  Save,
-  Star,
-  RotateCcw,
-  Users,
-  Trash2,
-  Workflow,
-  X,
-} from 'lucide-react'
-import { nanoid } from 'nanoid'
-import { liveQuery } from 'dexie'
-import { coordinatePendingEditV1, flushPendingEditsV1, registerPendingDraftFlusherV1 } from '../../lib/authoring/pending-edit-coordinator'
-import { useBeforeUnload } from '../../hooks/useBeforeUnload'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Check, ChevronDown, ChevronRight, CircleStop, AlignCenterHorizontal, AlignCenterVertical, Copy, Database, GitBranch, GripVertical, History, LayoutTemplate, LayoutDashboard, Loader2, Map as MapIcon, Pause, Play, Plus, Save, Star, RotateCcw, Users, Trash2, Workflow, X } from 'lucide-react';
+import { nanoid } from 'nanoid';
+import { liveQuery } from 'dexie';
+import { coordinatePendingEditV1, flushPendingEditsV1, registerPendingDraftFlusherV1 } from '../../lib/authoring/pending-edit-coordinator';
+import { useBeforeUnload } from '../../hooks/useBeforeUnload';
 import './node-authoring.css'
-import { authoringDomainActionBindingV1 } from '../../lib/node-authoring/domain-action-registry'
-import type { Project, NodeFlow, NodeRunRecord } from '../../lib/types'
-import {
-  AUTHORING_NODE_CATALOG,
-  AUTHORING_NODE_BY_ID,
-  defaultConfigForTemplate,
-} from '../../lib/node-authoring/catalog'
-import {
-  emptyAuthoringGraph,
-  type AuthoringNodeGraph,
-  type AuthoringNodeInstance,
-  type AuthoringNodeTemplate,
-  type AuthoringInputEnvelope,
-} from '../../lib/node-authoring/contracts'
-import { parseAuthoringGraph } from '../../lib/node-authoring/graph-codec'
-import { suggestAuthoringConnections } from '../../lib/node-authoring/compatibility'
-import { authoringExecutionSubgraph, topologicalAuthoringOrder, validateAuthoringGraph } from '../../lib/node-authoring/graph'
-import {
-  adoptAuthoringCandidate,
-  buildAuthoringExecutionPlan,
-  canRefreshAuthoringNodeLocally,
-  parseAuthoringExecutionPlan,
-  persistAdoptedAuthoringCandidate,
-  reviseAuthoringCandidate,
-  recoverInterruptedAuthoringRun,
-  readAuthoringFieldAdoptionViewsV1,
-  runAuthoringGraph,
-  type AuthoringFieldAdoptionViewV1,
-  type AuthoringCandidateMap,
-  type AuthoringRunSnapshotMap,
-} from '../../lib/node-authoring/executor'
+import { authoringDomainActionBindingV1 } from '../../lib/node-authoring/domain-action-registry';
+import type { Project, NodeFlow, NodeRunRecord } from '../../lib/types';
+import { AUTHORING_NODE_CATALOG, AUTHORING_NODE_BY_ID, defaultConfigForTemplate } from '../../lib/node-authoring/catalog';
+import { emptyAuthoringGraph, type AuthoringNodeGraph, type AuthoringNodeInstance, type AuthoringNodeTemplate, type AuthoringInputEnvelope } from '../../lib/node-authoring/contracts';
+import { parseAuthoringGraph } from '../../lib/node-authoring/graph-codec';
+import { suggestAuthoringConnections } from '../../lib/node-authoring/compatibility';
+import { authoringExecutionSubgraph, topologicalAuthoringOrder, validateAuthoringGraph } from '../../lib/node-authoring/graph';
+import { adoptAuthoringCandidate, buildAuthoringExecutionPlan, canRefreshAuthoringNodeLocally, parseAuthoringExecutionPlan, persistAdoptedAuthoringCandidate, reviseAuthoringCandidate, recoverInterruptedAuthoringRun, readAuthoringFieldAdoptionViewsV1, runAuthoringGraph, type AuthoringFieldAdoptionViewV1, type AuthoringCandidateMap, type AuthoringRunSnapshotMap } from '../../lib/node-authoring/executor';
 import CreativeArtifactSummary from '../agent/CreativeArtifactSummary'
-import { buildAuthoringOverviewGraph } from '../../lib/node-authoring/overview'
-import { buildAuthoringCreationChainGraph } from '../../lib/node-authoring/creation-chain'
-import { compareCandidateVariants } from '../../lib/node-authoring/candidate-diff'
-import { inspectAuthoringGraphFreshness, type AuthoringFreshnessMap } from '../../lib/node-authoring/freshness'
-import {
-  alignAuthoringNodes,
-  autoLayoutAuthoringGraph,
-  authoringGraphBounds,
-  compareAuthoringGraphs,
-  copyAuthoringSubgraph,
-  groupAuthoringNodes,
-} from '../../lib/node-authoring/productivity'
-import {
-  AUTHORING_OFFICIAL_TEMPLATES,
-  buildOfficialAuthoringTemplate,
-} from '../../lib/node-authoring/templates'
-import { useNodeFlowStore } from '../../stores/node-flow'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { CONTEXT_SOURCES } from '../../lib/registry/context-sources'
-import { buildRagLibrary } from '../../lib/retrieval/rag-library'
-import type { RagLibraryEntry } from '../../lib/types'
+import { buildAuthoringOverviewGraph } from '../../lib/node-authoring/overview';
+import { buildAuthoringCreationChainGraph } from '../../lib/node-authoring/creation-chain';
+import { compareCandidateVariants } from '../../lib/node-authoring/candidate-diff';
+import { inspectAuthoringGraphFreshness, type AuthoringFreshnessMap } from '../../lib/node-authoring/freshness';
+import { alignAuthoringNodes, autoLayoutAuthoringGraph, authoringGraphBounds, compareAuthoringGraphs, copyAuthoringSubgraph, groupAuthoringNodes } from '../../lib/node-authoring/productivity';
+import { AUTHORING_OFFICIAL_TEMPLATES, buildOfficialAuthoringTemplate } from '../../lib/node-authoring/templates';
+import { useNodeFlowStore } from '../../stores/node-flow';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { CONTEXT_SOURCES } from '../../lib/registry/context-sources';
+import { buildRagLibrary } from '../../lib/retrieval/rag-library';
+import type { RagLibraryEntry } from '../../lib/types';
 import RagEntrySelector from '../retrieval/RagEntrySelector'
-import { useDialog } from '../shared/Dialog'
-import { useToast } from '../shared/Toast'
-import { useActiveWork } from '../../hooks/useActiveWork'
+import { useDialog } from '../shared/Dialog';
+import { useToast } from '../shared/Toast';
+import { useActiveWork } from '../../hooks/useActiveWork';
 
 const NODE_WIDTH = 238
 const NODE_HEIGHT = 168
@@ -719,11 +660,7 @@ export default function NodeAuthoringWorkspace(props: { project: Project; worldG
       const id = await useNodeFlowStore.getState().createFlow(projectId, props.worldGroupId, {
         name: template.name,
         description: template.description,
-        graph: buildOfficialAuthoringTemplate(templateId, {
-          targetWordCount: activeWork && activeWork.targetWordCount >= 5_000 && activeWork.targetWordCount <= 25_000
-            ? activeWork.targetWordCount
-            : undefined,
-        }),
+        graph: buildOfficialAuthoringTemplate(templateId),
       })
       setSelectedFlowId(id)
       toast.success(`${template.name}已创建。`)
@@ -802,14 +739,10 @@ export default function NodeAuthoringWorkspace(props: { project: Project; worldG
   const removeNode = (id: string) => { changeGraph({ ...graph, nodes: graph.nodes.filter(node => node.id !== id), edges: graph.edges.filter(edge => edge.sourceNodeId !== id && edge.targetNodeId !== id) }); if (selectedNodeId === id) setSelectedNodeId(null); setSelectedNodeIds(current => current.filter(item => item !== id)) }
   const toggleFavorite = (id: string) => changeGraph({ ...graph, nodes: graph.nodes.map(node => node.id === id ? { ...node, favorite: !node.favorite } : node) })
   const applyOfficialTemplate = async (templateId: Parameters<typeof buildOfficialAuthoringTemplate>[0]) => {
-    if (!canAuthor) return
+    if (!canAuthor || !AUTHORING_OFFICIAL_TEMPLATES.some(template => template.id === templateId)) return
     if (isRunning || adoptingRef.current) return
     if (graph.nodes.length && !await dialog.confirm({ title: '替换当前节点图？', message: '现有节点和连线将被模板替换。已保存的作品内容与运行记录保留。', confirmText: '替换节点图', tone: 'danger' })) return
-    const nextGraph = buildOfficialAuthoringTemplate(templateId, {
-      targetWordCount: activeWork && activeWork.targetWordCount >= 5_000 && activeWork.targetWordCount <= 25_000
-        ? activeWork.targetWordCount
-        : undefined,
-    })
+    const nextGraph = buildOfficialAuthoringTemplate(templateId)
     const template = AUTHORING_OFFICIAL_TEMPLATES.find(item => item.id === templateId)!
     changeGraph(nextGraph)
     setSelectedNodeId(nextGraph.nodes[0]?.id ?? null)

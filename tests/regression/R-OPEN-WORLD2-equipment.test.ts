@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { createTextOpenWorldActionRegistryV1 } from '../../src/lib/open-world/action-registry'
-import { createTextOpenWorldEffectCatalogV1, validateTextOpenWorldEffectStateV1 } from '../../src/lib/open-world/effect-dsl'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
-import { createInitialTextOpenWorldSessionProjectionV1, deriveTextOpenWorldContextsV1 } from '../../src/lib/open-world/session-projection'
+import { createTextOpenWorldEffectCatalogV1, validateTextOpenWorldEffectStateV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
+import { createInitialTextOpenWorldSessionProjectionV1, deriveTextOpenWorldContextsV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
 import { createTextOpenWorldVNextFixture } from '../helpers/text-open-world-vnext-fixture'
 
 type Slot = 'weapon' | 'armor' | 'accessory'

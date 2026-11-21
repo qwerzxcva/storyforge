@@ -3,9 +3,9 @@ import { setupOracleRuntimeModelV1 } from './open-oracle-runtime-model'
 import { openEnvelopeV1 } from './open-ttrpg-session'
 import { generateTtrpgOpenOracleCandidateV2 } from '../../src/lib/ttrpg/open-intent-harness'
 import { reviewTtrpgOpenOracleCandidateV1, closeTtrpgOpenEpochV1, startTtrpgOpenEpochV1 } from '../../src/lib/ttrpg/runtime-commands'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
-import { createTtrpgOpenNormalizationRuntimeReferencePolicyV1 } from '../../src/lib/ttrpg/open-runtime-entity-references'
-import { TTRPG_OPEN_NORMALIZATION_INSTANCE_INPUT_V1 } from '../../src/lib/ttrpg/open-coordination'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
+import { createTtrpgOpenNormalizationRuntimeReferencePolicyV1 } from '../../src/lib/legacy-compat/ttrpg/open-runtime-entity-references'
+import { TTRPG_OPEN_NORMALIZATION_INSTANCE_INPUT_V1 } from '../../src/lib/legacy-compat/ttrpg/open-coordination'
 
 export async function setupNormalizationRuntimeSourceV1(audience: 'public' | 'party' | 'gm-only' = 'party', configure?: Parameters<typeof setupOracleRuntimeModelV1>[1], options: { selectedCharacterKeys?: string[]; interpretation?: string } = {}) {
   const s = await setupOracleRuntimeModelV1(audience, configure, undefined, { selectedCharacterKeys: options.selectedCharacterKeys })

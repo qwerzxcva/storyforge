@@ -3,7 +3,7 @@ import {
   confirmTextOpenWorldCreatorBriefV1,
   startTextOpenWorldCreatorBriefSessionV1,
 } from '../../src/lib/open-world/creator-brief'
-import { createTextOpenWorldCreatorSourceLocatorV1 } from '../../src/lib/open-world/creator-brief-persistence'
+import { createTextOpenWorldCreatorSourceLocatorV1 } from '../../src/lib/legacy-compat/open-world/creator-brief-persistence'
 import {
   confirmTextOpenWorldCreatorProductionPreflightV1,
   createTextOpenWorldCreatorProductionPreflightV1,
@@ -18,7 +18,7 @@ import {
 import {
   canonicalProductProductionJsonV2,
   hashProductProductionValueV2,
-} from '../../src/lib/product-production/hash'
+} from '../../src/lib/legacy-compat/product-production/hash'
 import type {
   AdaptationSourceSelectionV1,
   AIConfig,

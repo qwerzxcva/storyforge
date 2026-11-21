@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import type { ProductRuntimeEvent } from '../../src/lib/types'
-import { ttrpgOpenMemoryEventDigestV1 } from '../../src/lib/ttrpg/open-memory-event-digest'
-import { ttrpgOpenMemoryPrefixRootsV2 } from '../../src/lib/ttrpg/open-memory-prefix-proof'
-import { parseTtrpgOpenMemoryDraftV1 } from '../../src/lib/ttrpg/open-memory-contract'
+import { ttrpgOpenMemoryEventDigestV1 } from '../../src/lib/legacy-compat/ttrpg/open-memory-event-digest'
+import { ttrpgOpenMemoryPrefixRootsV2 } from '../../src/lib/legacy-compat/ttrpg/open-memory-prefix-proof'
+import { parseTtrpgOpenMemoryDraftV1 } from '../../src/lib/legacy-compat/ttrpg/open-memory-contract'
 
 function event(sequence: number, sessionId = 11, text = `source event ${sequence}`): ProductRuntimeEvent {
   return { sequence, sessionId, type: 'ttrpg.open.table-message.posted', payloadJson: JSON.stringify({ envelope: { sessionId }, text }) } as ProductRuntimeEvent

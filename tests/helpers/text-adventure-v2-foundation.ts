@@ -1,4 +1,4 @@
-import { parseProductRuntimePackageV1 } from '../../src/lib/product-production/runtime-package'
+import { parseProductRuntimePackageV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
 import type { ProductProductionWorldSourceCatalogV2 } from '../../src/lib/product-production/world-source'
 import type {
   AdventureContentV2,

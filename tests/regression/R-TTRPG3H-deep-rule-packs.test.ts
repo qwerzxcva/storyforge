@@ -14,12 +14,12 @@ import {
   resolveRulePackCheckV1,
   ruleCheckDifficultyOptionsV2,
   verifyRulePackCheckResolutionV2,
-} from "../../src/lib/ttrpg/rule-pack";
-import { previewTtrpgCheckProbabilityV2 } from "../../src/lib/ttrpg/house-rule";
+} from "../../src/lib/legacy-compat/ttrpg/rule-pack";
+import { previewTtrpgCheckProbabilityV2 } from "../../src/lib/legacy-compat/ttrpg/house-rule";
 import {
   compileTtrpgProductionBriefV2,
   resolveTtrpgProductionRulePackV2,
-} from "../../src/lib/ttrpg/production-brief";
+} from "../../src/lib/legacy-compat/ttrpg/production-brief";
 import { CURRENT_PRODUCT_RESOURCE_KEYS, currentProductSelection } from "../helpers/current-product-world";
 
 const scope: WorkspaceScope = { projectId: 1, worldId: 1, workId: 1 };

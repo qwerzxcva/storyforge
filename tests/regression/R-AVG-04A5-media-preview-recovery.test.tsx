@@ -3,7 +3,7 @@ import { act } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import MediaAssetPreview from '../../src/components/avg/MediaAssetPreview'
 import type { FrozenRuntimeMediaAssetV2 } from '../../src/lib/types'
-import type { AvgGeneratedReferenceSourceV2 } from '../../src/lib/avg/media-generated-reference-contract'
+import type { AvgGeneratedReferenceSourceV2 } from '../../src/lib/legacy-compat/avg/media-generated-reference-contract'
 
 const readers=vi.hoisted(()=>({raw:vi.fn(),processed:vi.fn(),retained:vi.fn(),historical:vi.fn(),generated:vi.fn()}))
 vi.mock('../../src/lib/avg/assembly-service',()=>({readAvgRawImageCandidateBytesV2:readers.raw,

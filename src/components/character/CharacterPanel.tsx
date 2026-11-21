@@ -1,35 +1,22 @@
-import { useState, useEffect } from 'react'
-import {
-  Check, Plus, Sparkles, ChevronDown, Loader2, Trash2,
-} from 'lucide-react'
-import { CInput } from '../shared/CompositionInput'
-import { useCharacterStore } from '../../stores/character'
-import { useWorldGroupStore } from '../../stores/world-group'
-import { useMasterCopilot, type PendingMasterCandidate } from '../agent/useMasterCopilot'
+import { useState, useEffect } from 'react';
+import { Check, Plus, Sparkles, ChevronDown, Loader2, Trash2 } from 'lucide-react';
+import { CInput } from '../shared/CompositionInput';
+import { useCharacterStore } from '../../stores/character';
+import { useWorldGroupStore } from '../../stores/world-group';
+import { useMasterCopilot, type PendingMasterCandidate } from '../agent/useMasterCopilot';
 import PromptRunPanel from '../shared/PromptRunPanel'
 import CandidateDraftEditor from '../agent/CandidateDraftEditor'
-import type {
-  Project, Character, CharacterMoralAxis, CharacterOrderAxis, CharacterRoleWeight,
-} from '../../lib/types'
+import type { Project, Character, CharacterMoralAxis, CharacterOrderAxis, CharacterRoleWeight } from '../../lib/types';
 import CharacterDimensionPicker from './CharacterDimensionPicker'
-import { CHARACTER_DIMENSIONS, type CharacterDimensionKey } from '../../lib/character/character-dimensions'
+import { CHARACTER_DIMENSIONS, type CharacterDimensionKey } from '../../lib/character/character-dimensions';
 import CharacterAxesPicker from './CharacterAxesPicker'
 import CharacterDetailCard from './CharacterDetailCard'
-import { formatCharacterGenerationRequestV1, parseCharacterCandidateDraft } from '../../lib/agent/character-copilot'
-import {
-  MORAL_AXIS_LABELS,
-  ORDER_AXIS_LABELS,
-  ROLE_WEIGHT_LABELS,
-  filterCharactersByRoleWeight,
-} from '../../lib/character/character-axes'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-  useInitialRecordTarget,
-} from '../shared/initial-record-target'
+import { formatCharacterGenerationRequestV1, parseCharacterCandidateDraft } from '../../lib/agent/character-copilot';
+import { MORAL_AXIS_LABELS, ORDER_AXIS_LABELS, ROLE_WEIGHT_LABELS, filterCharactersByRoleWeight } from '../../lib/character/character-axes';
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes, useInitialRecordTarget } from '../shared/initial-record-target';
 import HarnessEvidencePanel from '../agent/HarnessEvidencePanel'
 import CopilotGenerationStatus from '../agent/CopilotGenerationStatus'
-import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator'
+import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator';
 import CharacterReadStatus from './CharacterReadStatus'
 
 // ── 常量 ───────────────────────────────────────────────────────

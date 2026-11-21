@@ -1,21 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import {
-  AlertTriangle,
-  Check,
-  Database,
-  Loader2,
-  RefreshCw,
-  Sparkles,
-  X,
-} from 'lucide-react'
-import type {
-  ChapterOrganizationDomain,
-  ChapterOrganizationRun,
-  ChapterOrganizationSelection,
-} from '../../lib/agent/chapter-organization'
-import { readChapterOrganizationSelectionV1 } from '../../lib/agent/chapter-organization-selection'
-import { useBeforeUnload } from '../../hooks/useBeforeUnload'
-import { acknowledgePendingEditFailureV1, capturePendingEditFailureV1, registerPendingDraftFlusherV1, type PendingEditFailureTokenV1 } from '../../lib/authoring/pending-edit-coordinator'
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { AlertTriangle, Check, Database, Loader2, RefreshCw, Sparkles, X } from 'lucide-react';
+import type { ChapterOrganizationDomain, ChapterOrganizationRun, ChapterOrganizationSelection } from '../../lib/agent/chapter-organization';
+import { readChapterOrganizationSelectionV1 } from '../../lib/agent/chapter-organization-selection';
+import { useBeforeUnload } from '../../hooks/useBeforeUnload';
+import { acknowledgePendingEditFailureV1, capturePendingEditFailureV1, registerPendingDraftFlusherV1, type PendingEditFailureTokenV1 } from '../../lib/authoring/pending-edit-coordinator';
 
 interface Props {
   run: ChapterOrganizationRun

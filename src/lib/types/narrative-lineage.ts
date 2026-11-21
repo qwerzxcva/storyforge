@@ -1,4 +1,4 @@
-import type { NarrativeIdentityAliasV1, NarrativeOwnerV1 } from './narrative-ir'
+import type { NarrativeIdentityAliasV1, NarrativeOwnerV1 } from './narrative-ir';
 
 /** System-issued evidence for an explicit copy. It never grants visibility or
  * turns an unreviewed source into Canon. Numeric database IDs are excluded. */

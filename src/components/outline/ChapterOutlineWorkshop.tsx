@@ -1,57 +1,17 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import {
-  AlertTriangle,
-  Check,
-  ChevronRight,
-  GitCompareArrows,
-  Loader2,
-  RotateCcw,
-  Sparkles,
-  Square,
-  X,
-} from 'lucide-react'
-import { useAIStream } from '../../hooks/useAIStream'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { assembleContext } from '../../lib/registry/assemble-context'
-import {
-  prepareGenerationNode,
-  runGenerationNode,
-  type PreparedGenerationNode,
-} from '../../lib/generation/generation-node'
-import {
-  confirmWorkshopArtifact,
-  createOutlineWorkshopNode,
-  evaluateWorkshopQuality,
-  extractWorkshopSceneNarrative,
-  formatWorkshopCanonCatalog,
-  OUTLINE_WORKSHOP_STAGE_META,
-  OUTLINE_WORKSHOP_STAGES,
-  rewindWorkshopArtifacts,
-  type OutlineWorkshopArtifacts,
-  type OutlineWorkshopStage,
-  type WorkshopQualityEvaluation,
-} from '../../lib/outline/workshop'
-import { walkOutlineChaptersInCanonicalOrder } from '../../lib/outline/canonical-outline-walk'
-import {
-  formatCognitionCatalog,
-  readCognitionAuditSnapshot,
-  type CognitionAuditSnapshot,
-} from '../../lib/knowledge-ledger/knowledge-ledger'
-import {
-  readProjectHeldItems,
-  type HeldItemProjection,
-} from '../../lib/consistency/held-items'
-import {
-  readCanonAssertions,
-} from '../../lib/fact-ledger/setting-assertions'
-import { estimateTokens } from '../../lib/ai/context-budget'
-import type {
-  Character,
-  OutlineNode,
-  Project,
-  TemporalFact,
-} from '../../lib/types'
-import type { AssembleContextResult } from '../../lib/registry/types'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { AlertTriangle, Check, ChevronRight, GitCompareArrows, Loader2, RotateCcw, Sparkles, Square, X } from 'lucide-react';
+import { useAIStream } from '../../hooks/useAIStream';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { assembleContext } from '../../lib/registry/assemble-context';
+import { prepareGenerationNode, runGenerationNode, type PreparedGenerationNode } from '../../lib/generation/generation-node';
+import { confirmWorkshopArtifact, createOutlineWorkshopNode, evaluateWorkshopQuality, extractWorkshopSceneNarrative, formatWorkshopCanonCatalog, OUTLINE_WORKSHOP_STAGE_META, OUTLINE_WORKSHOP_STAGES, rewindWorkshopArtifacts, type OutlineWorkshopArtifacts, type OutlineWorkshopStage, type WorkshopQualityEvaluation } from '../../lib/outline/workshop';
+import { walkOutlineChaptersInCanonicalOrder } from '../../lib/outline/canonical-outline-walk';
+import { formatCognitionCatalog, readCognitionAuditSnapshot, type CognitionAuditSnapshot } from '../../lib/knowledge-ledger/knowledge-ledger';
+import { readProjectHeldItems, type HeldItemProjection } from '../../lib/consistency/held-items';
+import { readCanonAssertions } from '../../lib/fact-ledger/setting-assertions';
+import { estimateTokens } from '../../lib/ai/context-budget';
+import type { Character, OutlineNode, Project, TemporalFact } from '../../lib/types';
+import type { AssembleContextResult } from '../../lib/registry/types';
 import PromptPreviewGate from '../shared/PromptPreviewGate'
 
 interface Props {

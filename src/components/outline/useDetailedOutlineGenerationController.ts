@@ -1,45 +1,22 @@
-import { buildDetailedOutlineAuthoringPromptV1 } from '../../lib/agent/detailed-outline-authoring'
-import { useCallback, useEffect, useState } from 'react'
-import { useAIStream } from '../../hooks/useAIStream'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { createAISessionKey } from '../../stores/ai-generation-session'
-import { adopt } from '../../lib/registry/adopt'
-import { db } from '../../lib/db/schema'
-import { resolveScopeLike } from '../../lib/workspace/scope'
-import { hashCanonicalValue } from '../../lib/agent/run/hash'
-import {
-  buildDetailedOutlineCopilotPatchV1,
-  createDetailedOutlineCreativeArtifactV1,
-  detailedOutlinePostStateMatchesPatchV1,
-  revalidateDetailedOutlineCreativeDraftV1,
-} from '../../lib/agent/detailed-outline-copilot'
-import { updateAgentEventCandidate } from '../../lib/agent/conversations'
-import { creativeArtifactCanAdoptV1 } from '../../lib/agent/creative-reliability'
-import { resolveRequestConfig } from '../../lib/ai/client'
-import {
-  beginDetailedOutlineGenerationGatewayStepV1,
-  commitDetailedOutlineGenerationAdoptionV1,
-  createDetailedOutlineGenerationDurableRunV1,
-  finalizeDetailedOutlineGenerationGatewayStepV1,
-  failDetailedOutlineGenerationStepV1,
-  hashDetailedOutlineSourceSummaryV1,
-  persistDetailedOutlineGenerationCandidateV1,
-  readLatestDetailedOutlineGenerationCandidateV1,
-  recordDetailedOutlineGenerationCandidateV1,
-  rejectDetailedOutlineGenerationCandidateV1,
-  DETAILED_OUTLINE_GENERATION_CANDIDATE_TYPE_V1,
-  DETAILED_OUTLINE_GENERATION_STEP_ID_V1,
-  type DetailedOutlineGenerationCandidateV1,
-  type DetailedOutlineGenerationOperationV1,
-} from '../../lib/agent/run/detailed-outline-generation-durable'
-import type { DetailedOutline, WorkspaceScope } from '../../lib/types'
-import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator'
-import {
-  assertWorkspaceContentRevisionFreshV1,
-  captureWorkspaceContentRevisionV1,
-} from '../../lib/authoring/content-revision'
-import { prepareDetailedOutlineGatewayAssemblyV1 } from '../../lib/outline/detail-gateway-context'
-import { assertDetailedOutlineTargetsUnwrittenFutureV1 } from '../../lib/outline/future-boundary'
+import { buildDetailedOutlineAuthoringPromptV1 } from '../../lib/agent/detailed-outline-authoring';
+import { useCallback, useEffect, useState } from 'react';
+import { useAIStream } from '../../hooks/useAIStream';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { createAISessionKey } from '../../stores/ai-generation-session';
+import { adopt } from '../../lib/registry/adopt';
+import { db } from '../../lib/db/schema';
+import { resolveScopeLike } from '../../lib/workspace/scope';
+import { hashCanonicalValue } from '../../lib/agent/run/hash';
+import { buildDetailedOutlineCopilotPatchV1, createDetailedOutlineCreativeArtifactV1, detailedOutlinePostStateMatchesPatchV1, revalidateDetailedOutlineCreativeDraftV1 } from '../../lib/agent/detailed-outline-copilot';
+import { updateAgentEventCandidate } from '../../lib/agent/conversations';
+import { creativeArtifactCanAdoptV1 } from '../../lib/agent/creative-reliability';
+import { resolveRequestConfig } from '../../lib/ai/client';
+import { beginDetailedOutlineGenerationGatewayStepV1, commitDetailedOutlineGenerationAdoptionV1, createDetailedOutlineGenerationDurableRunV1, finalizeDetailedOutlineGenerationGatewayStepV1, failDetailedOutlineGenerationStepV1, hashDetailedOutlineSourceSummaryV1, persistDetailedOutlineGenerationCandidateV1, readLatestDetailedOutlineGenerationCandidateV1, recordDetailedOutlineGenerationCandidateV1, rejectDetailedOutlineGenerationCandidateV1, DETAILED_OUTLINE_GENERATION_CANDIDATE_TYPE_V1, DETAILED_OUTLINE_GENERATION_STEP_ID_V1, type DetailedOutlineGenerationCandidateV1, type DetailedOutlineGenerationOperationV1 } from '../../lib/agent/run/detailed-outline-generation-durable';
+import type { DetailedOutline, WorkspaceScope } from '../../lib/types';
+import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator';
+import { assertWorkspaceContentRevisionFreshV1, captureWorkspaceContentRevisionV1 } from '../../lib/authoring/content-revision';
+import { prepareDetailedOutlineGatewayAssemblyV1 } from '../../lib/outline/detail-gateway-context';
+import { assertDetailedOutlineTargetsUnwrittenFutureV1 } from '../../lib/outline/future-boundary';
 
 interface PendingDetailedOutlineCandidate {
   candidate: DetailedOutlineGenerationCandidateV1

@@ -217,7 +217,9 @@ describe('custom model request headers', () => {
       { label: 'test', dataUrl: 'data:image/png;base64,dGVzdA==', detail: 'low' },
     ], requestConfig))
     await expectRedacted(async () => {
-      for await (const _part of streamChat([{ role: 'user', content: 'hello' }], requestConfig)) { }
+      for await (const part of streamChat([{ role: 'user', content: 'hello' }], requestConfig)) {
+        expect(part).toBeDefined()
+      }
     })
   })
 

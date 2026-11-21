@@ -1,9 +1,9 @@
-import { hashCanonicalValue } from '../agent/run/hash'
-import { db } from '../db/schema'
-import type { WorkspaceScope, WorldReferenceCatalogEntryV1, WorldReferenceV1, WorldRelease } from '../types'
-import type { FrozenResourceScopeV1 } from '../registry/types'
-import { verifyPureWorldReleaseRecordV3, verifyWorldReleaseRecordV1 } from './release-codec'
-import { assertReleaseUnchanged, listWorldReleases, worldReleaseUidV1 } from './releases'
+import { hashCanonicalValue } from '../agent/run/hash';
+import { db } from '../db/schema';
+import type { WorkspaceScope, WorldReferenceCatalogEntryV1, WorldReferenceV1, WorldRelease } from '../types';
+import type { FrozenResourceScopeV1 } from '../registry/types';
+import { verifyPureWorldReleaseRecordV3, verifyWorldReleaseRecordV1 } from './release-codec';
+import { assertReleaseUnchanged, listWorldReleases, worldReleaseUidV1 } from './releases';
 
 const HASH = /^[a-f0-9]{64}$/
 

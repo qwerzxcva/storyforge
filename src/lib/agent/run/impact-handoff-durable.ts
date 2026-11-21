@@ -1,21 +1,12 @@
-import { canonicalPowerModule } from '../../workspace/module-alias'
-import { db } from '../../db/schema'
-import type { WorkspaceScope } from '../../types'
-import {
-  buildEditImpactGraphV1,
-  type EditImpactGraphV1,
-} from '../../consistency/impact-analysis'
-import type { ImpactHandoffV2 } from '../../consistency/impact-handoff'
-import { resolveImpactHandoffModuleV2 } from '../../consistency/impact-handoff'
-import {
-  buildImpactRemediationPlanV1,
-  type ImpactRemediationPlanV1,
-} from '../../consistency/impact-remediation-plan'
-import { assertRecordInScope, getTableSpec } from '../../workspace/scope'
-import {
-  readImpactAuthorReviewsV1,
-  type ImpactAuthorReviewRecordV1,
-} from './impact-review-durable'
+import { canonicalPowerModule } from '../../workspace/module-alias';
+import { db } from '../../db/schema';
+import type { WorkspaceScope } from '../../types';
+import { buildEditImpactGraphV1, type EditImpactGraphV1 } from '../../consistency/impact-analysis';
+import type { ImpactHandoffV2 } from '../../consistency/impact-handoff';
+import { resolveImpactHandoffModuleV2 } from '../../consistency/impact-handoff';
+import { buildImpactRemediationPlanV1, type ImpactRemediationPlanV1 } from '../../consistency/impact-remediation-plan';
+import { assertRecordInScope, getTableSpec } from '../../workspace/scope';
+import { readImpactAuthorReviewsV1, type ImpactAuthorReviewRecordV1 } from './impact-review-durable';
 
 export interface CurrentImpactHandoffStateV2 {
   graph: EditImpactGraphV1

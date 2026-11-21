@@ -1,12 +1,7 @@
-import { type WorldSourcePurposeProofV1 } from '../world-engine/source-purpose-contract'
-import type {
-  ContextAccessPolicyV1,
-  ContextResourceDepthV1,
-  ContextResourceKind,
-  WorldCapabilityArea,
-} from '../registry/types'
-import type { AgentContextTaskKind } from '../agent/context-policy'
-import type { UpperProductKindV1 } from './product-identity'
+import { type WorldSourcePurposeProofV1 } from '../world-engine/source-purpose-contract';
+import type { ContextAccessPolicyV1, ContextResourceDepthV1, ContextResourceKind, WorldCapabilityArea } from '../registry/types';
+import type { AgentContextTaskKind } from '../agent/context-policy';
+import type { UpperProductKindV1 } from './product-identity';
 
 export type { UpperProductKindV1 } from './product-identity'
 

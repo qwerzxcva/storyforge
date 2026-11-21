@@ -1,11 +1,10 @@
-import type { NarrativeDomainProjectionV1 } from '../types/narrative-projection'
-import type { NarrativeRecordV1, NarrativeEvidenceSourceV1 } from '../types/narrative-ir'
-import type { FactPredicateSpec } from '../types/temporal-fact'
-import type { WorldImpactEdgeV1, WorldImpactItemV1, WorldImpactPlanV1, WorldImpactRevisionVectorV1 } from '../types/world-impact'
-import { verifyNarrativeIRBundleV1 } from '../world-engine/narrative-ir'
-import { mapNarrativeReferencesV1 } from '../world-engine/narrative-ir-codec'
-import { canonicalNarrativeJsonV1 as json, compareUnicodeCodePointsV1 as compare, hashNarrativeValueV1 as hash,
-  hashNarrativeBytesV1, hashV1, narrativeFail } from '../world-engine/narrative-json'
+import type { NarrativeDomainProjectionV1 } from '../types/narrative-projection';
+import type { NarrativeRecordV1, NarrativeEvidenceSourceV1 } from '../types/narrative-ir';
+import type { FactPredicateSpec } from '../types/temporal-fact';
+import type { WorldImpactEdgeV1, WorldImpactItemV1, WorldImpactPlanV1, WorldImpactRevisionVectorV1 } from '../types/world-impact';
+import { verifyNarrativeIRBundleV1 } from '../world-engine/narrative-ir';
+import { mapNarrativeReferencesV1 } from '../world-engine/narrative-ir-codec';
+import { canonicalNarrativeJsonV1 as json, compareUnicodeCodePointsV1 as compare, hashNarrativeValueV1 as hash, hashNarrativeBytesV1, hashV1, narrativeFail } from '../world-engine/narrative-json';
 
 export interface WorldImpactSnapshotV1 {
   projection: NarrativeDomainProjectionV1

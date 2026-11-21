@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import { DECLARED_MAGENTA_ALPHA_MATTING_ID_V1, matteDeclaredMagentaCharacterBackdropV1,
-  matteEdgeConnectedCharacterBackdropV1 } from '../../src/lib/product-production/character-alpha-matting'
+  matteEdgeConnectedCharacterBackdropV1 } from '../../src/lib/legacy-compat/product-production/character-alpha-matting'
 import { assertAvgForegroundRequirementBindingV1, compileAvgForegroundRequirementV1, parseAvgForegroundPolicyV1,
   parseAvgImageProcessingRecipe, parseAvgImageProcessingRecipeV1, parseAvgImageProcessingRecipeV2,
   parseAvgImageProcessingPlan, parseAvgImageProcessingPlanV1, type AvgImageProcessingRecipeV1,
-  type AvgForegroundPolicyV1 } from '../../src/lib/avg/image-processing-contract'
-import type { AvgVisualProductionRequirementV1 } from '../../src/lib/avg/media-production-contract'
+  type AvgForegroundPolicyV1 } from '../../src/lib/legacy-compat/avg/image-processing-contract'
+import type { AvgVisualProductionRequirementV1 } from '../../src/lib/legacy-compat/avg/media-production-contract'
 
 const policy: AvgForegroundPolicyV1 = { schema: 'storyforge.avg.foreground-policy', version: 1,
   method: 'reserved-magenta', reservedColor: '#FF00FF', subjectUsesReservedColor: false,

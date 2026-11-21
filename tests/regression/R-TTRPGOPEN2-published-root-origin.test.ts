@@ -4,8 +4,8 @@ import {seedOpenBrowserProductionV1,runOpenBrowserProductionV1} from '../helpers
 import {publishProductProductionV1,recoverImportedProductProductionProofsV1} from '../../src/lib/product-production/service'
 import {exportProjectJSON,importProjectJSON} from '../../src/lib/export/json-export'
 import {readAgentRunV1} from '../../src/lib/agent/run/event-store'
-import {hashProductProductionValueV2 as hash} from '../../src/lib/product-production/hash'
-import {comparePublishedRootLedgerRebindingV1,assertPortablePublishedRootOriginV1,verifyImportedPublishedRootOriginV1,freezePublishedRootOriginForExportV1} from '../../src/lib/product-production/published-root-origin'
+import {hashProductProductionValueV2 as hash} from '../../src/lib/legacy-compat/product-production/hash'
+import {comparePublishedRootLedgerRebindingV1,assertPortablePublishedRootOriginV1,verifyImportedPublishedRootOriginV1,freezePublishedRootOriginForExportV1} from '../../src/lib/legacy-compat/product-production/published-root-origin'
 let backup: Awaited<ReturnType<typeof exportProjectJSON>>,key:string
 let f: {scope:{projectId:number;worldId:number;workId:number};productionId:number},buildId:number,rootId:number
 beforeAll(async()=>{
@@ -93,7 +93,7 @@ it.each(['legacy-v1','unproven-v2'] as const)('retains source data without inven
  const build=(await db.productBuilds.where('productionId').equals(source.productionId).first())!,id=JSON.parse(build.budgetLedgerJson).rootRunId
  let rootHash='f'.repeat(64)
  if(kind==='legacy-v1'){
-  const {createLegacyProductBuildRootTerminalReceiptV1}=await import('../../src/lib/product-production/receipts')
+  const {createLegacyProductBuildRootTerminalReceiptV1}=await import('../../src/lib/legacy-compat/product-production/receipts')
   const artifacts=(await db.productBuildArtifacts.where('buildId').equals(build.id!).toArray()).filter(row=>row.controlEpoch===build.controlEpoch&&['accepted','carried-forward'].includes(row.status))
   rootHash=await createLegacyProductBuildRootTerminalReceiptV1({planHash:build.planHash,manifestHash:build.manifestHash,packageHash:build.packageHash,qualityReportHash:build.qualityReportHash,controlEpoch:build.controlEpoch,budgetLedgerJson:build.budgetLedgerJson,artifacts})
  }

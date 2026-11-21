@@ -1,36 +1,17 @@
 import Dexie from 'dexie'
-import { chat } from '../../ai/client'
-import {
-  buildForeshadowSuggestionMessagesV1,
-  parseForeshadowSuggestionsStrictV1,
-  readForeshadowSuggestionPromptTemplateSnapshotV1,
-  type RunOptions,
-} from '../../ai/adapters/foreshadow-adapter'
-import {
-  adoptForeshadowSuggestionsAtomicV1,
-  buildForeshadowSuggestionFormalItemsV1,
-  formatForeshadowSuggestionBaselineV1,
-  readForeshadowSuggestionBaselineV1,
-  type ForeshadowSuggestionBaselineV1,
-  type ForeshadowSuggestionCandidateItemV1,
-  type ForeshadowSuggestionFormalItemV1,
-} from '../../foreshadow/suggestions'
-import { assembleContext } from '../../registry/assemble-context'
-import type { AIConfig, ChatMessage, WorkspaceScope } from '../../types'
-import { readOwnedRows } from '../../workspace/scope'
-import { createAgentSkillExecutionBindingV1 } from '../execution-binding'
-import { getAgentSkillV1 } from '../skill-registry'
-import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  staleAgentRunVerificationV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { canonicalStringify, hashCanonicalValue } from './hash'
-import { createVerificationReceiptV1 } from './verification-receipt'
+import { chat } from '../../ai/client';
+import { buildForeshadowSuggestionMessagesV1, parseForeshadowSuggestionsStrictV1, readForeshadowSuggestionPromptTemplateSnapshotV1, type RunOptions } from '../../ai/adapters/foreshadow-adapter';
+import { adoptForeshadowSuggestionsAtomicV1, buildForeshadowSuggestionFormalItemsV1, formatForeshadowSuggestionBaselineV1, readForeshadowSuggestionBaselineV1, type ForeshadowSuggestionBaselineV1, type ForeshadowSuggestionCandidateItemV1, type ForeshadowSuggestionFormalItemV1 } from '../../foreshadow/suggestions';
+import { assembleContext } from '../../registry/assemble-context';
+import type { AIConfig, ChatMessage, WorkspaceScope } from '../../types';
+import { readOwnedRows } from '../../workspace/scope';
+import { createAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { getAgentSkillV1 } from '../skill-registry';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, staleAgentRunVerificationV1, type AgentRunSnapshotV1 } from './event-store';
+import { canonicalStringify, hashCanonicalValue } from './hash';
+import { createVerificationReceiptV1 } from './verification-receipt';
 
 export const FORESHADOW_SUGGESTION_STEP_ID_V1 = 'outline:foreshadow-suggestions' as const
 export const FORESHADOW_SUGGESTION_VERIFIER_SET_V1 = 'foreshadow-suggestions-terminal-v1' as const

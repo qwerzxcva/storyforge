@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { compileTextAdventureInteractionV1 } from '../../src/lib/adventure/production-compiler'
-import { adventureNarrativeActionContext, availableAdventureActions, createInitialAdventureState } from '../../src/lib/adventure/runtime'
+import { adventureNarrativeActionContext, availableAdventureActions, createInitialAdventureState } from '../../src/lib/legacy-compat/adventure/runtime'
 import { createTextAdventureFoundationContentV2 } from '../helpers/text-adventure-v2-foundation'
 
 describe('文字冒险现场与行动引导', () => {

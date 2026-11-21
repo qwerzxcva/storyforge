@@ -1,12 +1,12 @@
 import Dexie from 'dexie'
-import { db } from '../../db/schema'
-import { adopt, adoptionTransactionTablesV1 } from '../../registry/adopt'
-import type { AdoptResult } from '../../registry/types'
-import { canonicalStringify } from '../../agent/run/hash'
-import type { Chapter, ChapterPlanReconciliation, DetailedOutline, OutlineNode, WorkspaceScope } from '../../types'
-import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, scopeTransactionTables } from '../../workspace/scope'
-import { hashChapterText, sha256Text } from './text-normalization'
-import { resolveCanonicalChapterSequence } from './canonical-chapter-sequence'
+import { db } from '../../db/schema';
+import { adopt, adoptionTransactionTablesV1 } from '../../registry/adopt';
+import type { AdoptResult } from '../../registry/types';
+import { canonicalStringify } from '../../agent/run/hash';
+import type { Chapter, ChapterPlanReconciliation, DetailedOutline, OutlineNode, WorkspaceScope } from '../../types';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, scopeTransactionTables } from '../../workspace/scope';
+import { hashChapterText, sha256Text } from './text-normalization';
+import { resolveCanonicalChapterSequence } from './canonical-chapter-sequence';
 
 export interface ChapterPlanSnapshot {
   currentPlan: string

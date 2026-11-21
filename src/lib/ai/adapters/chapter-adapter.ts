@@ -1,13 +1,10 @@
-import type { ChatMessage, PromptTemplate } from '../../types'
-import { usePromptStore } from '../../../stores/prompt'
-import { renderPrompt } from '../prompt-engine'
-import {
-  CONTINUITY_CORE_END,
-  CONTINUITY_CORE_START,
-} from '../chapter-memory/continuity-envelope'
-import { appendSimplifiedChineseOutputConstraint } from './prompt-guards'
-import { proseLengthExpectationV1 } from '../../prose/length-observation'
-import { SCENE_EXECUTION_GUIDANCE_V1 } from '../../prose/scene-craft'
+import type { ChatMessage, PromptTemplate } from '../../types';
+import { usePromptStore } from '../../../stores/prompt';
+import { renderPrompt } from '../prompt-engine';
+import { CONTINUITY_CORE_END, CONTINUITY_CORE_START } from '../chapter-memory/continuity-envelope';
+import { appendSimplifiedChineseOutputConstraint } from './prompt-guards';
+import { proseLengthExpectationV1 } from '../../prose/length-observation';
+import { SCENE_EXECUTION_GUIDANCE_V1 } from '../../prose/scene-craft';
 
 export interface RunOptions {
   parameterValues?: Record<string, unknown>

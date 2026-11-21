@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { freezeAvgImageRequestV1, parseAvgMediaReferencesV1 } from '../../src/lib/avg/media-reference-contract'
+import { freezeAvgImageRequestV1, parseAvgMediaReferencesV1 } from '../../src/lib/legacy-compat/avg/media-reference-contract'
 import type { ProductMediaRequestV1 } from '../../src/lib/product-production/media-adapters'
 
 const source=()=>({schema:'storyforge.avg.generated-reference-source',version:1,productionKey:'avg.original',requirementKey:'base.image',

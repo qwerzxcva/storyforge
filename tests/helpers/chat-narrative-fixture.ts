@@ -2,10 +2,10 @@ import {canonicalStringify} from '../../src/lib/agent/run/hash'
 import {CHAT_ACTION_REVIEW_CHECKS_V1, type ChatNarrativeActionV1, type ChatNarrativeActionReviewV1} from '../../src/lib/types/chat-narrative'
 import type { FrozenInteractionRuntimeV2 } from '../../src/lib/types/product-release'
 import type { ChatMessage, ProductRuntimePackageV1 } from '../../src/lib/types'
-import { readProductRuntimeStateVersion, startInteractionScene } from '../../src/lib/character-interaction/runtime-api'
+import { readProductRuntimeStateVersion, startInteractionScene } from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import { seedCurrentProductBuild } from './current-product-build'
 import { currentProductSelection, loadCurrentProductWorldSourceCatalogV1, seedCurrentProductWorld } from './current-product-world'
-import {chatNarrativeShellV1} from '../../src/lib/character-interaction/narrative-production'
+import {chatNarrativeShellV1} from '../../src/lib/legacy-compat/character-interaction/narrative-production'
 import {chatActionOutcomeFixture, chatActionChoiceFixture} from './chat-action-outcome'
 
 /** Keep expression/review fixtures focused on the rule they exercise while

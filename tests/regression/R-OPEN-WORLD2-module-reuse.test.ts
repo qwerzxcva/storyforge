@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
-import * as runtimePackage from '../../src/lib/open-world/runtime-package'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
+import * as runtimePackage from '../../src/lib/legacy-compat/open-world/runtime-package'
 import { createTextOpenWorldVNextFixture } from '../helpers/text-open-world-vnext-fixture'
 
 afterEach(() => vi.restoreAllMocks())

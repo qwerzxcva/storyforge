@@ -1,5 +1,5 @@
-import { nanoid } from 'nanoid'
-import type { AuthoringEdge, AuthoringNodeGraph, AuthoringNodeInstance } from './contracts'
+import { nanoid } from 'nanoid';
+import type { AuthoringEdge, AuthoringNodeGraph, AuthoringNodeInstance } from './contracts';
 
 const NODE_WIDTH = 238
 const NODE_HEIGHT = 168

@@ -1,4 +1,4 @@
-import type { AgentRunNodeProducerTupleV1 } from '../../types/agent-run'
+import type { AgentRunNodeProducerTupleV1 } from '../../types/agent-run';
 
 export class AgentRunSchemaError extends Error {
   readonly code: string

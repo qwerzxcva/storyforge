@@ -2,16 +2,16 @@ import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from 'vites
 import { db } from '../../src/lib/db/schema'
 import { cloneProductRuntimeMediaBindingV1, importProductRuntimeMediaAssetV1,
   prepareTextOpenWorldRuntimeMediaCloneV1, type PreparedTextOpenWorldRuntimeMediaCloneV1 } from '../../src/lib/product/runtime-media-library'
-import * as blobStore from '../../src/lib/product-production/media-blob-store'
-import { createTextOpenWorldInstance } from '../../src/lib/product/runtime-instances'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import * as blobStore from '../../src/lib/legacy-compat/product-production/media-blob-store'
+import { createTextOpenWorldInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { createTextOpenWorldCreatorReleaseFixtureV1 } from '../helpers/text-open-world-creator-release'
 import { seedQuality005LegacyNovelV1, snapshotQuality005RowsV1 } from '../helpers/quality005-legacy-novel'
 import { seedQuality005LegacyHybridV1 } from '../helpers/quality005-legacy-hybrid'
 import { seedQuality005LegacyMediaBranchV1, seedQuality005LegacyMediaCloneV1 } from '../helpers/quality005-legacy-media-branch'
 import { scopeTransactionTables } from '../../src/lib/workspace/scope'
-import { branchProductRuntimeSession, readProductRuntimeStateVersion } from '../../src/lib/product/runtime-core'
-import * as previewSource from '../../src/lib/product-production/preview-source'
+import { branchProductRuntimeSession, readProductRuntimeStateVersion } from '../../src/lib/legacy-compat/product/runtime-core'
+import * as previewSource from '../../src/lib/legacy-compat/product-production/preview-source'
 import * as workspaceScope from '../../src/lib/workspace/scope'
 
 const PNG = Uint8Array.from(atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII='), c => c.charCodeAt(0))

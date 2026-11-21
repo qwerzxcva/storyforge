@@ -3,32 +3,25 @@
  *
  * 集成三套质量检测：审校(F1)、去AI味(F2)、追读力(F3)
  */
-import { useEffect, useRef, useState } from 'react'
-import { liveQuery } from 'dexie'
-import { X, ShieldCheck, Bot, TrendingUp, Loader2, ScanSearch } from 'lucide-react'
-import { describeResolvedAIRequestSettingsV1, resolveRequestConfig, type ChatResult } from '../../lib/ai/client'
-import { executeRegisteredAIEntryV1 } from '../../lib/agent/formal-ai-entry'
-import { useReviewResultStore, selectChapterReview, type ReviewTab } from '../../stores/review-result'
-import {
-  type ConsistencyAuditMode,
-  type ConsistencyAuditResult,
-} from '../../lib/ai/adapters/consistency-audit-adapter'
-import {
-  toConsistencyAuditResult,
-  CONSISTENCY_AGENT_OUTPUT_BUDGET_V1,
-  type ConsistencyAgentRun,
-} from '../../lib/agent/consistency-agent'
-import { AgentTeamBudgetTracker } from '../../lib/agent/team-budget'
-import { runDurableConsistencyAuditV1 } from '../../lib/agent/run/consistency-audit-durable'
-import { resolveScopeLike } from '../../lib/workspace/scope'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { runWholeChapterQualityReviewV1, readLatestWholeChapterQualityReviewV1, type DurableQualityReviewV1 } from '../../lib/agent/run/quality-review-durable'
-import type { QualityReviewModeV1 } from '../../lib/prose/quality-review'
-import { captureWorkspaceContentRevisionV1 } from '../../lib/authoring/content-revision'
-import { db } from '../../lib/db/schema'
-import { createWholeChapterQualityCallV1, createQualityRevisionCallV1 } from '../../lib/prose/quality-transport'
-import { WholeQualityReportView, QualityRevisionScopeControls, QualityRevisionComparisonView } from './QualityReviewViews'
-import { runQualityRevisionV1, readLatestQualityRevisionV1, readLatestUnfinishedQualityRevisionV1, adoptQualityRevisionV1, rejectQualityRevisionV1, abandonQualityRevisionV1, type QualityRevisionViewV1, type QualityRevisionRecoveryV1 } from '../../lib/agent/run/quality-revision-durable'
+import { useEffect, useRef, useState } from 'react';
+import { liveQuery } from 'dexie';
+import { X, ShieldCheck, Bot, TrendingUp, Loader2, ScanSearch } from 'lucide-react';
+import { describeResolvedAIRequestSettingsV1, resolveRequestConfig, type ChatResult } from '../../lib/ai/client';
+import { executeRegisteredAIEntryV1 } from '../../lib/agent/formal-ai-entry';
+import { useReviewResultStore, selectChapterReview, type ReviewTab } from '../../stores/review-result';
+import { type ConsistencyAuditMode, type ConsistencyAuditResult } from '../../lib/ai/adapters/consistency-audit-adapter';
+import { toConsistencyAuditResult, CONSISTENCY_AGENT_OUTPUT_BUDGET_V1, type ConsistencyAgentRun } from '../../lib/agent/consistency-agent';
+import { AgentTeamBudgetTracker } from '../../lib/agent/team-budget';
+import { runDurableConsistencyAuditV1 } from '../../lib/agent/run/consistency-audit-durable';
+import { resolveScopeLike } from '../../lib/workspace/scope';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { runWholeChapterQualityReviewV1, readLatestWholeChapterQualityReviewV1, type DurableQualityReviewV1 } from '../../lib/agent/run/quality-review-durable';
+import type { QualityReviewModeV1 } from '../../lib/prose/quality-review';
+import { captureWorkspaceContentRevisionV1 } from '../../lib/authoring/content-revision';
+import { db } from '../../lib/db/schema';
+import { createWholeChapterQualityCallV1, createQualityRevisionCallV1 } from '../../lib/prose/quality-transport';
+import { WholeQualityReportView, QualityRevisionScopeControls, QualityRevisionComparisonView } from './QualityReviewViews';
+import { runQualityRevisionV1, readLatestQualityRevisionV1, readLatestUnfinishedQualityRevisionV1, adoptQualityRevisionV1, rejectQualityRevisionV1, abandonQualityRevisionV1, type QualityRevisionViewV1, type QualityRevisionRecoveryV1 } from '../../lib/agent/run/quality-revision-durable';
 
 interface Props {
   projectId: number

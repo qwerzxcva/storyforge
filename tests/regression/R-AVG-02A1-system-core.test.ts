@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { parseAvgSystemPlanV1, avgKnowledgePathV1, avgVariablePathV1 } from '../../src/lib/avg/system-contract'
+import { parseAvgSystemPlanV1, avgKnowledgePathV1, avgVariablePathV1 } from '../../src/lib/legacy-compat/avg/system-contract'
 import { compileAvgSystemPlanV1, simulateAvgSystemPlanV1 } from '../../src/lib/avg/system-compiler'
-import { assertAvgSystemStateV1, previewAvgSystemEffectsV1 } from '../../src/lib/avg/system-state'
+import { assertAvgSystemStateV1, previewAvgSystemEffectsV1 } from '../../src/lib/legacy-compat/avg/system-state'
 import { parseAvgProfessionalArtifactV1 } from '../../src/lib/avg/artifact-contract'
 import { assertAvgProfessionalArtifactAdmissionV1 } from '../../src/lib/avg/artifact-admission'
-import { parseAvgRuntimeModuleV1 } from '../../src/lib/avg/runtime-contract-v2'
+import { parseAvgRuntimeModuleV1 } from '../../src/lib/legacy-compat/avg/runtime-contract-v2'
 import { avgLinearSystemFixture, avgSystemFixture } from '../helpers/avg-system-fixture'
 
 describe('AVG-02A1 deterministic system core, independent of story production', () => {

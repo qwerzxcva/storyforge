@@ -7,7 +7,7 @@ import {useCharacterInteractionPlayerStore as player} from '../../src/stores/cha
 import {exportProjectJSON, importProjectJSON} from '../../src/lib/export/json-export'
 import {deleteWorkspace} from '../../src/lib/workspace/lifecycle'
 import {createFixtureProductReleaseManifestV1} from '../helpers/product-release-v1'
-import {hashProductProductionValueV2} from '../../src/lib/product-production/hash'
+import {hashProductProductionValueV2} from '../../src/lib/legacy-compat/product-production/hash'
 
 const bytes = (value: unknown) => new TextEncoder().encode(JSON.stringify(value)).buffer
 beforeEach(async () => {db.close(); await db.delete(); await db.open(); player.setState({scope: null, busy: false, selectedSessionId: null})})

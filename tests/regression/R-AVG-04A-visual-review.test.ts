@@ -1,12 +1,12 @@
 import { describe,expect,it } from 'vitest'
 import { avgVisualReviewFixture } from '../helpers/avg-visual-review-fixture'
 import { avgAuthorWorkspaceFixture } from '../helpers/avg-author-stage-fixture'
-import { composeAvgCharacterFamilyRequirementsV1 } from '../../src/lib/avg/character-family-contract'
+import { composeAvgCharacterFamilyRequirementsV1 } from '../../src/lib/legacy-compat/avg/character-family-contract'
 import { parseAvgProfessionalArtifactV1 } from '../../src/lib/avg/artifact-contract'
 import { assertAvgVisualReviewScopeV1,assertAvgVisualReviewSelectableV1,assertAvgVisualReviewRevisionV1,parseAvgAuthorVisualReviewV1 } from '../../src/lib/avg/visual-review'
 import { freezeAvgVisualProductionBatchV1 } from '../../src/lib/avg/media-source'
-import { avgVisualBatchArtifactKeysV1,parseAvgVisualProductionBatchV1 } from '../../src/lib/avg/media-production-contract'
-import { canonicalProductProductionJsonV2 } from '../../src/lib/product-production/hash'
+import { avgVisualBatchArtifactKeysV1,parseAvgVisualProductionBatchV1 } from '../../src/lib/legacy-compat/avg/media-production-contract'
+import { canonicalProductProductionJsonV2 } from '../../src/lib/legacy-compat/product-production/hash'
 
 const r=()=>composeAvgCharacterFamilyRequirementsV1({schema:'storyforge.avg.character-family-plan',version:1,familyKey:'keeper',revision:1,subjectKey:'keeper',name:'保管员',baseline:{assetKey:'baseline',assetVersion:1,contentHash:'b'.repeat(64),mimeType:'image/png',byteSize:24,license:'原创工程图'},
  stylePrompt:'固定机位工程图',identityInvariants:['身份与服装'],negativePrompt:'',forbiddenDepictions:[],allowedChange:'允许变化表情',width:576,height:324,resolutionTier:'1K',alpha:'not-required',variants:[{variantKey:'calm',name:'平静',mediaKind:'character-expression',changeDescription:'平静',sceneKey:'desk',lineKey:'line.desk'}]})[0]

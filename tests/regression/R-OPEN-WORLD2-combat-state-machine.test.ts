@@ -4,11 +4,11 @@ import {
   executeTextOpenWorldActionV1,
   executeTextOpenWorldSystemCombatTransitionV1,
 } from '../../src/lib/open-world/action-executor'
-import { createTextOpenWorldCombatStateMachineV1 } from '../../src/lib/open-world/combat-state-machine'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
-import { replayTextOpenWorldEventProtocolV1 } from '../../src/lib/open-world/event-contract'
-import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
-import { readProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/product/runtime-core'
+import { createTextOpenWorldCombatStateMachineV1 } from '../../src/lib/legacy-compat/open-world/combat-state-machine'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
+import { replayTextOpenWorldEventProtocolV1 } from '../../src/lib/legacy-compat/open-world/event-contract'
+import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
+import { readProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/legacy-compat/product/runtime-core'
 import type {
   ProductRuntimeEvent,
   TextOpenWorldRuntimePackageV1,

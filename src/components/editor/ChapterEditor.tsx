@@ -1,247 +1,98 @@
-import { getModelCapacityLimitsV1 } from '../../lib/ai/model-capacity'
-import { readStateCardFields, StateFieldsParseError } from '../../lib/types/state-card'
-import { prepareChapterPostAdoptionV1, runChapterPostAdoptionV1, type ChapterPostAdoptionTaskV1 } from '../../lib/prose/post-adoption-runner'
-import { lazy, Suspense, useState, useEffect, useCallback, useRef, useMemo } from 'react'
-import { useNavigate } from 'react-router'
-import { FileText, ClipboardList, RotateCcw } from 'lucide-react'
-import { useChapterStore } from '../../stores/chapter'
-import { useOutlineStore } from '../../stores/outline'
-import { useStateCardStore } from '../../stores/state-card'
-import { useCharacterStore } from '../../stores/character'
-import { useAIStream } from '../../hooks/useAIStream'
-import { createAISessionKey } from '../../stores/ai-generation-session'
-import { useAutoSave } from '../../hooks/useAutoSave'
-import { buildChapterStatusPatchV1, createChapterEditorDraftBufferV1, shouldPersistChapterEditorContentV1 } from '../../lib/authoring/chapter-editor-save'
-import { useBeforeUnload } from '../../hooks/useBeforeUnload'
-import { buildChapterContentRequestV1, buildContinueRequestV1, buildPolishPrompt, buildExpandPrompt, buildDeAIPrompt } from '../../lib/ai/adapters/chapter-adapter'
-import { propagateChapterEditStale, buildEditImpactGraphV1, type EditImpactGraphV1 } from '../../lib/consistency/impact-analysis'
-import {
-  buildImpactRemediationPlanV1,
-  type ImpactRemediationPlanV1,
-} from '../../lib/consistency/impact-remediation-plan'
-import {
-  buildImpactHandoffUrlV2,
-  buildImpactHandoffV2,
-} from '../../lib/consistency/impact-handoff'
-import { runChapterMemoryTask } from '../../lib/ai/chapter-memory/run-chapter-memory'
-import { prepareContinuityContext } from '../../lib/ai/chapter-memory/continuity-context'
-import { isPlanReconciliationReviewCurrent, saveChapterPlanReconciliationReview } from '../../lib/ai/chapter-memory/plan-reconciliation'
-import { findNextCanonicalChapter, findPreviousCanonicalChapter } from '../../lib/ai/chapter-memory/canonical-chapter-sequence'
-import { resolveRequestConfig, describeResolvedAIRequestSettingsV1, type AIRequestConfigResolution, type StreamResult } from '../../lib/ai/client'
-import { observeProseLengthV1, proseLengthExpectationV1 } from '../../lib/prose/length-observation'
-import { observeSeparatedProseFrameV1 } from '../../lib/prose/provider-frame-observation'
-import { executeRegisteredAIEntryV1 } from '../../lib/agent/formal-ai-entry'
-import { chapterOrganizationRequestOptionsV1, CHAPTER_ORGANIZATION_MODEL_PROMPT_VERSION_V4 } from '../../lib/agent/chapter-organization-model'
-import { recordAgentRunArtifactV1 } from '../../lib/memory/artifact-store'
-import { saveChapterOrganizationSelectionV1 } from '../../lib/agent/chapter-organization-selection'
-import { getAIConfigRequiredMessage, isAIConfigReady } from '../../lib/ai/config-readiness'
-import { db } from '../../lib/db/schema'
-import { assembleContext } from '../../lib/registry/assemble-context'
-import { prepareProseGatewayAssemblyV1, type ProseGatewayAssemblyV1 } from '../../lib/prose/gateway-context'
-import { resolveChapterDisplayMeta } from '../../lib/outline/chapter-display'
-import { pickBestChapterForOutline } from '../../lib/chapters/selectors'
-import {
-  buildFutureEvolutionPlanV1,
-  type FutureEvolutionPlanV1,
-} from '../../lib/outline/future-evolution'
-import { useCreativeRulesStore } from '../../stores/project-singletons'
-import { useStoryArcStore } from '../../stores/story-arc'
-import { useForeshadowStore } from '../../stores/foreshadow'
-import {
-  countWords,
-  htmlToPlainText,
-  normalizeProseForEditorV1,
-  plainTextToHtml,
-} from '../../lib/utils/html'
+import { getModelCapacityLimitsV1 } from '../../lib/ai/model-capacity';
+import { readStateCardFields, StateFieldsParseError } from '../../lib/types/state-card';
+import { prepareChapterPostAdoptionV1, runChapterPostAdoptionV1, type ChapterPostAdoptionTaskV1 } from '../../lib/prose/post-adoption-runner';
+import { lazy, Suspense, useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { useNavigate } from 'react-router';
+import { FileText, ClipboardList, RotateCcw } from 'lucide-react';
+import { useChapterStore } from '../../stores/chapter';
+import { useOutlineStore } from '../../stores/outline';
+import { useStateCardStore } from '../../stores/state-card';
+import { useCharacterStore } from '../../stores/character';
+import { useAIStream } from '../../hooks/useAIStream';
+import { createAISessionKey } from '../../stores/ai-generation-session';
+import { useAutoSave } from '../../hooks/useAutoSave';
+import { buildChapterStatusPatchV1, createChapterEditorDraftBufferV1, shouldPersistChapterEditorContentV1 } from '../../lib/authoring/chapter-editor-save';
+import { useBeforeUnload } from '../../hooks/useBeforeUnload';
+import { buildChapterContentRequestV1, buildContinueRequestV1, buildPolishPrompt, buildExpandPrompt, buildDeAIPrompt } from '../../lib/ai/adapters/chapter-adapter';
+import { propagateChapterEditStale, buildEditImpactGraphV1, type EditImpactGraphV1 } from '../../lib/consistency/impact-analysis';
+import { buildImpactRemediationPlanV1, type ImpactRemediationPlanV1 } from '../../lib/consistency/impact-remediation-plan';
+import { buildImpactHandoffUrlV2, buildImpactHandoffV2 } from '../../lib/consistency/impact-handoff';
+import { runChapterMemoryTask } from '../../lib/ai/chapter-memory/run-chapter-memory';
+import { prepareContinuityContext } from '../../lib/ai/chapter-memory/continuity-context';
+import { isPlanReconciliationReviewCurrent, saveChapterPlanReconciliationReview } from '../../lib/ai/chapter-memory/plan-reconciliation';
+import { findNextCanonicalChapter, findPreviousCanonicalChapter } from '../../lib/ai/chapter-memory/canonical-chapter-sequence';
+import { resolveRequestConfig, describeResolvedAIRequestSettingsV1, type AIRequestConfigResolution, type StreamResult } from '../../lib/ai/client';
+import { observeProseLengthV1, proseLengthExpectationV1 } from '../../lib/prose/length-observation';
+import { observeSeparatedProseFrameV1 } from '../../lib/prose/provider-frame-observation';
+import { executeRegisteredAIEntryV1 } from '../../lib/agent/formal-ai-entry';
+import { chapterOrganizationRequestOptionsV1, CHAPTER_ORGANIZATION_MODEL_PROMPT_VERSION_V4 } from '../../lib/agent/chapter-organization-model';
+import { recordAgentRunArtifactV1 } from '../../lib/memory/artifact-store';
+import { saveChapterOrganizationSelectionV1 } from '../../lib/agent/chapter-organization-selection';
+import { getAIConfigRequiredMessage, isAIConfigReady } from '../../lib/ai/config-readiness';
+import { db } from '../../lib/db/schema';
+import { assembleContext } from '../../lib/registry/assemble-context';
+import { prepareProseGatewayAssemblyV1, type ProseGatewayAssemblyV1 } from '../../lib/prose/gateway-context';
+import { resolveChapterDisplayMeta } from '../../lib/outline/chapter-display';
+import { pickBestChapterForOutline } from '../../lib/chapters/selectors';
+import { buildFutureEvolutionPlanV1, type FutureEvolutionPlanV1 } from '../../lib/outline/future-evolution';
+import { useCreativeRulesStore } from '../../stores/project-singletons';
+import { useStoryArcStore } from '../../stores/story-arc';
+import { useForeshadowStore } from '../../stores/foreshadow';
+import { countWords, htmlToPlainText, normalizeProseForEditorV1, plainTextToHtml } from '../../lib/utils/html';
 import AIStreamOutput from '../shared/AIStreamOutput'
 import ChapterPostAdoptionSettingsPanel from './ChapterPostAdoptionSettingsPanel'
 import ContextBudgetBar from '../shared/ContextBudgetBar'
-import { useDialog } from '../shared/Dialog'
-import { useReviewResultStore } from '../../stores/review-result'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { analyzeContextSegments, calculateBudget, estimateTokens, type ContextBudget } from '../../lib/ai/context-budget'
-import {
-  prepareGenerationNode,
-  runGenerationNode,
-  type PreparedGenerationNode,
-} from '../../lib/generation/generation-node'
-import {
-  createChapterGenerationNode,
-  InterruptedChapterGenerationErrorV1,
-  type ChapterGenerationCategory,
-  type ChapterGenerationOperation,
-} from '../../lib/generation/chapter-generation-node'
-import RichEditor, { type RichEditorHandle } from './RichEditor'
+import { useDialog } from '../shared/Dialog';
+import { useReviewResultStore } from '../../stores/review-result';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { analyzeContextSegments, calculateBudget, estimateTokens, type ContextBudget } from '../../lib/ai/context-budget';
+import { prepareGenerationNode, runGenerationNode, type PreparedGenerationNode } from '../../lib/generation/generation-node';
+import { createChapterGenerationNode, InterruptedChapterGenerationErrorV1, type ChapterGenerationCategory, type ChapterGenerationOperation } from '../../lib/generation/chapter-generation-node';
+import RichEditor, { type RichEditorHandle } from './RichEditor';
 import EmotionBeatCard from './EmotionBeatCard'
 import CoordinationView from './CoordinationView'
 import FloatingToolbar from './FloatingToolbar'
 import ChapterEditorHeader from './ChapterEditorHeader'
 import ChapterMemoryPanel from './ChapterMemoryPanel'
-import ChapterContextPreview, { type ContextPreviewOperation } from './ChapterContextPreview'
+import ChapterContextPreview, { type ContextPreviewOperation } from './ChapterContextPreview';
 import ChapterEditorToolbar from './ChapterEditorToolbar'
-import { type ReconciliationActionMap } from './ReconciliationTable'
+import { type ReconciliationActionMap } from './ReconciliationTable';
 import PromptPreviewGate from '../shared/PromptPreviewGate'
-import { useItemLedgerStore } from '../../stores/item-ledger'
-import { useLocationStore } from '../../stores/location'
-import { useCodexStore } from '../../stores/codex'
-import { useDetailedOutlineStore } from '../../stores/detailed-outline'
-import { useEmotionBeatStore } from '../../stores/emotion-beat'
-import { buildEditorEntityReferences } from '../../lib/editor/entity-reference'
-import type {
-  AgentSkillExecutionBindingV2,
-  ChatMessage,
-  Chapter,
-  ChapterStatus,
-  Project,
-  StateDiffItem,
-  WorkspaceScope,
-} from '../../lib/types'
-import { assertAgentSkillBindingMatchesAssemblyV2 } from '../../lib/agent/execution-binding'
-import {
-  adoptChapterOrganizationSelection,
-  isChapterOrganizationCurrent,
-  persistChapterOrganizationCandidate,
-  readLatestChapterOrganizationRun,
-  runChapterOrganization,
-  type ChapterOrganizationRun,
-  type ChapterOrganizationSelection,
-} from '../../lib/agent/chapter-organization'
-import {
-  beginChapterOrganizationDurableStepV1,
-  commitChapterOrganizationDurableAdoptionV1,
-  createChapterOrganizationDurableRunV1,
-  failChapterOrganizationDurableStepV1,
-  hashChapterOrganizationCandidateV1,
-  markChapterOrganizationStaleV1,
-  recordChapterOrganizationCandidateV1,
-  recoverChapterOrganizationCandidateV1,
-  CHAPTER_ORGANIZATION_DURABLE_STEP_ID_V1,
-  CHAPTER_ORGANIZATION_SOURCE_KEYS_V1,
-} from '../../lib/agent/run/chapter-organization-durable'
-import {
-  commitChapterTransitionStateAdoptionV1,
-  isChapterTransitionCandidateCurrentV1,
-  readLatestChapterTransitionCandidateV1,
-  recoverChapterTransitionCandidateV1,
-  verifyChapterTransitionRunV1,
-  type ChapterTransitionCandidateV1,
-} from '../../lib/agent/run/chapter-transition-durable'
-import {
-  authorizeChapterPostAdoptionV1,
-  beginChapterPostAdoptionOrganizationAdoptionV1,
-  chapterPostAdoptionChainStateV1,
-  commitChapterPostAdoptionOrganizationV1,
-  markChapterPostAdoptionOrganizationStaleV1,
-  rejectChapterPostAdoptionOrganizationAdoptionV1,
-  recoverChapterPostAdoptionOrganizationV1,
-  recoverChapterPostAdoptionConsistencyV1,
-  rejectChapterPostAdoptionAuthorizationV1,
-  readChapterPostAdoptionChainStatusV1,
-  readLatestChapterPostAdoptionRunV1,
-  verifyChapterPostAdoptionRunV1,
-  CHAPTER_POST_ADOPTION_STEP_IDS_V1,
-  type ChapterPostAdoptionDurableEvidenceV1,
-  type ChapterPostAdoptionChainStateV1,
-} from '../../lib/agent/run/chapter-post-adoption-durable'
-import { createContextManifestFromAssemblyV1 } from '../../lib/agent/run/context-manifest'
-import { readAgentRunV1, type AgentRunSnapshotV1 } from '../../lib/agent/run/event-store'
-import { buildChapterPostAdoptionResumePlanV1 } from '../../lib/agent/run/chapter-post-adoption-resume'
-import { hashChapterText, normalizeChapterText } from '../../lib/ai/chapter-memory/text-normalization'
-import { hashCanonicalValue } from '../../lib/agent/run/hash'
-import { flushPendingEditsV1, registerPendingDraftFlusherV1 } from '../../lib/authoring/pending-edit-coordinator'
-import {
-  assertWorkspaceContentRevisionFreshV1,
-  captureWorkspaceContentRevisionV1,
-  type WorkspaceContentRevisionVectorV1,
-} from '../../lib/authoring/content-revision'
-import {
-  adoptImpactPatchCandidateV1,
-  createImpactPatchCandidateV1,
-  readLatestImpactPatchCandidateV1,
-  rejectImpactPatchCandidateV1,
-  type ImpactPatchCandidateV1,
-} from '../../lib/agent/run/impact-patch-durable'
-import { executeImpactRemediationV1 } from '../../lib/agent/run/impact-remediation-durable'
-import { executeImpactPostCorrectionRemediationV1 } from '../../lib/agent/run/impact-post-correction-remediation-durable'
-import {
-  readImpactDownstreamScheduleV1,
-  type ImpactDownstreamScheduleV1,
-} from '../../lib/agent/run/impact-downstream-schedule'
-import {
-  executeImpactAuthorReviewV1,
-  readCurrentImpactAuthorReviewStateV1,
-  readImpactAuthorReviewsV1,
-  type ImpactAuthorReviewRecordV1,
-  type ImpactReviewDecisionV1,
-} from '../../lib/agent/run/impact-review-durable'
-import { replanImpactRemediationV1 } from '../../lib/consistency/impact-remediation-replan'
-import {
-  readCurrentImpactPostCorrectionReplanV1,
-  type ImpactPostCorrectionReplanResultV1,
-} from '../../lib/agent/run/impact-post-correction-replan-durable'
-import {
-  adoptImpactOutlineRegenerationCandidateV1,
-  generateImpactOutlineRegenerationCandidateV1,
-  readCompletedImpactOutlineRegenerationsV1,
-  readPendingImpactOutlineRegenerationCandidateV1,
-  rejectImpactOutlineRegenerationCandidateV1,
-  type ImpactOutlineRegenerationCandidateV1,
-} from '../../lib/agent/run/impact-outline-regeneration-durable'
-import {
-  adoptImpactStoryTimelineRegenerationCandidateV1,
-  generateImpactStoryTimelineRegenerationCandidateV1,
-  readCompletedImpactStoryTimelineRegenerationsV1,
-  readPendingImpactStoryTimelineRegenerationCandidateV1,
-  rejectImpactStoryTimelineRegenerationCandidateV1,
-  type ImpactStoryTimelineRegenerationCandidateV1,
-} from '../../lib/agent/run/impact-story-timeline-regeneration-durable'
-import { assertRecordInScope, resolveScopeLike } from '../../lib/workspace/scope'
-import {
-  readWorkPostAdoptionSettingsV1,
-  updateWorkPostAdoptionSettingsV1,
-  type ResolvedPostAdoptionSettingsV1,
-} from '../../lib/prose/post-adoption-policy'
-import {
-  beginProseGenerationGatewayStepV1,
-  commitProseGenerationAdoptionV1,
-  createProseGenerationDurableRunV1,
-  failProseGenerationStepV1,
-  finalizeProseGenerationGatewayStepV1,
-  hashProseGenerationCandidateV1,
-  isProseGenerationCandidateCurrentV1,
-  markProseGenerationStaleV1,
-  persistProseGenerationCandidateV1,
-  reviseProseGenerationCandidateV1,
-  readLatestProseGenerationCandidateV1,
-  recordProseGenerationCandidateV1,
-  rejectProseGenerationCandidateV1,
-  recoverProseGenerationCandidateV1,
-  recordInterruptedProseGenerationV1,
-  readLatestInterruptedProseGenerationV1,
-  readProseGenerationObservedUsageV1,
-  resolveProseGenerationExecutionBindingV2,
-  PROSE_GENERATION_STEP_ID_V1,
-  type ProseGenerationCandidateV1,
-} from '../../lib/agent/run/prose-generation-durable'
-import { AgentTeamBudgetTracker } from '../../lib/agent/team-budget'
-import {
-  isConsistencyAgentCurrent,
-  persistConsistencyAgentCandidate,
-  readLatestConsistencyAgentRun,
-  runBackgroundConsistencyAgent,
-  toConsistencyAuditResult,
-  type ConsistencyAgentRun,
-} from '../../lib/agent/consistency-agent'
-import {
-  CONSISTENCY_AUDIT_DURABLE_STEP_ID_V1,
-  refreshDurableConsistencyAuditFreshnessV1,
-} from '../../lib/agent/run/consistency-audit-durable'
-import {
-  buildChapterInformationBoundaryV1,
-  buildInformationBoundaryInstructionV1,
-  validateProseInformationBoundaryV1,
-  type InformationBoundaryManifestV1,
-} from '../../lib/agent/information-boundary'
+import { useItemLedgerStore } from '../../stores/item-ledger';
+import { useLocationStore } from '../../stores/location';
+import { useCodexStore } from '../../stores/codex';
+import { useDetailedOutlineStore } from '../../stores/detailed-outline';
+import { useEmotionBeatStore } from '../../stores/emotion-beat';
+import { buildEditorEntityReferences } from '../../lib/editor/entity-reference';
+import type { AgentSkillExecutionBindingV2, ChatMessage, Chapter, ChapterStatus, Project, StateDiffItem, WorkspaceScope } from '../../lib/types';
+import { assertAgentSkillBindingMatchesAssemblyV2 } from '../../lib/agent/execution-binding';
+import { adoptChapterOrganizationSelection, isChapterOrganizationCurrent, persistChapterOrganizationCandidate, readLatestChapterOrganizationRun, runChapterOrganization, type ChapterOrganizationRun, type ChapterOrganizationSelection } from '../../lib/agent/chapter-organization';
+import { beginChapterOrganizationDurableStepV1, commitChapterOrganizationDurableAdoptionV1, createChapterOrganizationDurableRunV1, failChapterOrganizationDurableStepV1, hashChapterOrganizationCandidateV1, markChapterOrganizationStaleV1, recordChapterOrganizationCandidateV1, recoverChapterOrganizationCandidateV1, CHAPTER_ORGANIZATION_DURABLE_STEP_ID_V1, CHAPTER_ORGANIZATION_SOURCE_KEYS_V1 } from '../../lib/agent/run/chapter-organization-durable';
+import { commitChapterTransitionStateAdoptionV1, isChapterTransitionCandidateCurrentV1, readLatestChapterTransitionCandidateV1, recoverChapterTransitionCandidateV1, verifyChapterTransitionRunV1, type ChapterTransitionCandidateV1 } from '../../lib/agent/run/chapter-transition-durable';
+import { authorizeChapterPostAdoptionV1, beginChapterPostAdoptionOrganizationAdoptionV1, chapterPostAdoptionChainStateV1, commitChapterPostAdoptionOrganizationV1, markChapterPostAdoptionOrganizationStaleV1, rejectChapterPostAdoptionOrganizationAdoptionV1, recoverChapterPostAdoptionOrganizationV1, recoverChapterPostAdoptionConsistencyV1, rejectChapterPostAdoptionAuthorizationV1, readChapterPostAdoptionChainStatusV1, readLatestChapterPostAdoptionRunV1, verifyChapterPostAdoptionRunV1, CHAPTER_POST_ADOPTION_STEP_IDS_V1, type ChapterPostAdoptionDurableEvidenceV1, type ChapterPostAdoptionChainStateV1 } from '../../lib/agent/run/chapter-post-adoption-durable';
+import { createContextManifestFromAssemblyV1 } from '../../lib/agent/run/context-manifest';
+import { readAgentRunV1, type AgentRunSnapshotV1 } from '../../lib/agent/run/event-store';
+import { buildChapterPostAdoptionResumePlanV1 } from '../../lib/agent/run/chapter-post-adoption-resume';
+import { hashChapterText, normalizeChapterText } from '../../lib/ai/chapter-memory/text-normalization';
+import { hashCanonicalValue } from '../../lib/agent/run/hash';
+import { flushPendingEditsV1, registerPendingDraftFlusherV1 } from '../../lib/authoring/pending-edit-coordinator';
+import { assertWorkspaceContentRevisionFreshV1, captureWorkspaceContentRevisionV1, type WorkspaceContentRevisionVectorV1 } from '../../lib/authoring/content-revision';
+import { adoptImpactPatchCandidateV1, createImpactPatchCandidateV1, readLatestImpactPatchCandidateV1, rejectImpactPatchCandidateV1, type ImpactPatchCandidateV1 } from '../../lib/agent/run/impact-patch-durable';
+import { executeImpactRemediationV1 } from '../../lib/agent/run/impact-remediation-durable';
+import { executeImpactPostCorrectionRemediationV1 } from '../../lib/agent/run/impact-post-correction-remediation-durable';
+import { readImpactDownstreamScheduleV1, type ImpactDownstreamScheduleV1 } from '../../lib/agent/run/impact-downstream-schedule';
+import { executeImpactAuthorReviewV1, readCurrentImpactAuthorReviewStateV1, readImpactAuthorReviewsV1, type ImpactAuthorReviewRecordV1, type ImpactReviewDecisionV1 } from '../../lib/agent/run/impact-review-durable';
+import { replanImpactRemediationV1 } from '../../lib/consistency/impact-remediation-replan';
+import { readCurrentImpactPostCorrectionReplanV1, type ImpactPostCorrectionReplanResultV1 } from '../../lib/agent/run/impact-post-correction-replan-durable';
+import { adoptImpactOutlineRegenerationCandidateV1, generateImpactOutlineRegenerationCandidateV1, readCompletedImpactOutlineRegenerationsV1, readPendingImpactOutlineRegenerationCandidateV1, rejectImpactOutlineRegenerationCandidateV1, type ImpactOutlineRegenerationCandidateV1 } from '../../lib/agent/run/impact-outline-regeneration-durable';
+import { adoptImpactStoryTimelineRegenerationCandidateV1, generateImpactStoryTimelineRegenerationCandidateV1, readCompletedImpactStoryTimelineRegenerationsV1, readPendingImpactStoryTimelineRegenerationCandidateV1, rejectImpactStoryTimelineRegenerationCandidateV1, type ImpactStoryTimelineRegenerationCandidateV1 } from '../../lib/agent/run/impact-story-timeline-regeneration-durable';
+import { assertRecordInScope, resolveScopeLike } from '../../lib/workspace/scope';
+import { readWorkPostAdoptionSettingsV1, updateWorkPostAdoptionSettingsV1, type ResolvedPostAdoptionSettingsV1 } from '../../lib/prose/post-adoption-policy';
+import { beginProseGenerationGatewayStepV1, commitProseGenerationAdoptionV1, createProseGenerationDurableRunV1, failProseGenerationStepV1, finalizeProseGenerationGatewayStepV1, hashProseGenerationCandidateV1, isProseGenerationCandidateCurrentV1, markProseGenerationStaleV1, persistProseGenerationCandidateV1, reviseProseGenerationCandidateV1, readLatestProseGenerationCandidateV1, recordProseGenerationCandidateV1, rejectProseGenerationCandidateV1, recoverProseGenerationCandidateV1, recordInterruptedProseGenerationV1, readLatestInterruptedProseGenerationV1, readProseGenerationObservedUsageV1, resolveProseGenerationExecutionBindingV2, PROSE_GENERATION_STEP_ID_V1, type ProseGenerationCandidateV1 } from '../../lib/agent/run/prose-generation-durable';
+import { AgentTeamBudgetTracker } from '../../lib/agent/team-budget';
+import { isConsistencyAgentCurrent, persistConsistencyAgentCandidate, readLatestConsistencyAgentRun, runBackgroundConsistencyAgent, toConsistencyAuditResult, type ConsistencyAgentRun } from '../../lib/agent/consistency-agent';
+import { CONSISTENCY_AUDIT_DURABLE_STEP_ID_V1, refreshDurableConsistencyAuditFreshnessV1 } from '../../lib/agent/run/consistency-audit-durable';
+import { buildChapterInformationBoundaryV1, buildInformationBoundaryInstructionV1, validateProseInformationBoundaryV1, type InformationBoundaryManifestV1 } from '../../lib/agent/information-boundary';
 
 const StateDiffModal = lazy(() => import('../state/StateDiffModal'))
 const OutlinePreview = lazy(() => import('../outline/OutlinePreview'))

@@ -1,17 +1,17 @@
 import { afterEach,beforeEach,describe,expect,it,vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { useAIConfigStore } from '../../src/stores/ai-config'
-import * as readiness from '../../src/lib/avg/visual-planning-brief-v5'
+import * as readiness from '../../src/lib/legacy-compat/avg/visual-planning-brief-v5'
 import * as capabilities from '../../src/lib/product-production/capabilities'
 import { avgVersionedPlanningFixture } from '../helpers/avg-versioned-planning-fixture'
 import { avgInventoryMediaFixture } from '../helpers/avg-inventory-media-fixture'
 import { avgV5WorkbenchPreparationFixture } from '../helpers/avg-v5-workbench-preparation-fixture'
 import { prepareAvgVisualPlanningSourceDraftV4,prepareAvgVisualPlanningSourceDraftV5 } from '../../src/lib/avg/visual-planning-scope-draft'
 import { prepareAvgMediaConsumerDeclarationsV1,prepareAvgMediaConsumerDeclarationsV2 } from '../../src/lib/avg/media-configuration'
-import { avgVisualPlanningTemplateRequirementsV2,parseAvgVisualPlanningScopeV2 } from '../../src/lib/avg/visual-planning-contract-v2'
+import { avgVisualPlanningTemplateRequirementsV2,parseAvgVisualPlanningScopeV2 } from '../../src/lib/legacy-compat/avg/visual-planning-contract-v2'
 import { prepareAvgVisualPlanningConfigurationV5,completeAvgVisualPlanningBriefV5,assertAvgVisualPlanningDraftMatchesV5,
   assertAvgVisualPlanningDraftMatchesV4 } from '../../src/lib/avg/visual-planning-workspace'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 import { prepareAvgAssemblyBriefV1,startAvgAssemblyV1,readAvgAssemblyWorkspaceV1,runAvgAssemblyV1 } from '../../src/lib/avg/assembly-service'
 import { createAvgAuthoringPresetV1 } from '../../src/lib/avg/authoring-presets'
 import { createAvgVisualFormTemplateV4 } from '../../src/lib/avg/visual-planning-form'
@@ -24,8 +24,8 @@ import { prepareAvgVisualImageProcessingV4,prepareAvgVisualImageProcessingV5 } f
 import { avgImageProcessingRecipeFixture } from '../helpers/avg-image-processing-fixture'
 import { avgV5RegisteredProposalsFixture,adoptAvgV5Sources,cycleAvgV5Until,avgV5Accepted } from '../helpers/avg-v5-registered-proposals-fixture'
 import { stageAvgVisualPlanningAuthorInputV4,stageAvgVisualPlanningAuthorInputV5,refuseAvgVisualPlanningBatchV5 } from '../../src/lib/avg/visual-planning-workspace'
-import { parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
-import { parseAvgVisualPlanningBriefV4 } from '../../src/lib/avg/visual-planning-brief'
+import { parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
+import { parseAvgVisualPlanningBriefV4 } from '../../src/lib/legacy-compat/avg/visual-planning-brief'
 
 beforeEach(async()=>{
   await db.delete();await db.open()

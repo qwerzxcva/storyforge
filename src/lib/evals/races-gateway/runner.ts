@@ -1,49 +1,27 @@
-import { hashCanonicalValue } from '../../agent/run/hash'
-import { getOrCreateAgentConversation } from '../../agent/conversations'
-import { executeMasterAgentPlan, type MasterAgentPlan } from '../../agent/orchestrator'
-import {
-  restoreMasterAgentCandidatesV1,
-  runDurableMasterAgentPlanV1,
-} from '../../agent/run/master-durable'
-import { commitMasterAgentCandidateAdoptionV1 } from '../../agent/run/master-adoption'
-import { parseWorldviewFieldCandidateDraft } from '../../agent/worldview-field-copilot'
-import { AgentTeamBudgetTracker } from '../../agent/team-budget'
-import { readAgentRunV1 } from '../../agent/run/event-store'
-import { classifyHarnessFailureV1 } from '../../agent/run/harness-failure'
-import {
-  parseStructuredOutputRunEvidenceV1,
-  structuredOutputFailureEvidenceV1,
-} from '../../agent/structured-output-pipeline'
-import {
-  readContextGatewayManifestV3ForAttemptV1,
-  verifyContextGatewayCandidateEvidenceV1,
-} from '../../context-gateway/attempt-evidence'
-import { db } from '../../db/schema'
-import { readAgentRunArtifactExactV1 } from '../../memory/artifact-store'
-import type { ContextSourceRefV1 } from '../../registry/types'
-import type { AIConfig, Character, WorkspaceScope, Worldview } from '../../types'
-import { resolveWorkspaceOwnership } from '../../workspace/ownership'
-import { stampNewRecord } from '../../workspace/scope'
-import { createOwnedEvalWorkspaceV1, cleanupOwnedEvalWorkspaceV1, cleanupOwnedEvalWorkspacesV1, withEvalWorkspaceRunLeaseV1, type EvalWorkspaceRunLeaseV1, type EvalWorkspaceOwnerV1 } from '../workspace-ownership'
-import { createWorldWork } from '../../workspace/works'
-import { RACES_GATEWAY_EVAL_FIXTURES_V1 } from './fixtures'
-import { RacesGatewayBlindGraderFailureV1 } from './protocol'
-import {
-  createRacesGatewayFailureTranscriptArchiveV2,
-  createRacesGatewayTranscriptArchiveV1,
-  readRacesGatewayTranscriptArchiveV1,
-} from './archive'
-import { scoreRacesGatewayEvalV1, RACES_GATEWAY_EVAL_THRESHOLDS_V1 } from './scoring'
-import {
-  RACES_GATEWAY_EVAL_STORAGE_KEY_V21,
-  RACES_GATEWAY_EVAL_VERSION_V21,
-  type RacesGatewayBlindGradeV1,
-  type RacesGatewayBlindGradeEvidenceV1,
-  type RacesGatewayEvalCheckpointV1,
-  type RacesGatewayEvalFixtureV1,
-  type RacesGatewayEvalProgressV1,
-  type RacesGatewayEvalResultV1,
-} from './types'
+import { hashCanonicalValue } from '../../agent/run/hash';
+import { getOrCreateAgentConversation } from '../../agent/conversations';
+import { executeMasterAgentPlan, type MasterAgentPlan } from '../../agent/orchestrator';
+import { restoreMasterAgentCandidatesV1, runDurableMasterAgentPlanV1 } from '../../agent/run/master-durable';
+import { commitMasterAgentCandidateAdoptionV1 } from '../../agent/run/master-adoption';
+import { parseWorldviewFieldCandidateDraft } from '../../agent/worldview-field-copilot';
+import { AgentTeamBudgetTracker } from '../../agent/team-budget';
+import { readAgentRunV1 } from '../../agent/run/event-store';
+import { classifyHarnessFailureV1 } from '../../agent/run/harness-failure';
+import { parseStructuredOutputRunEvidenceV1, structuredOutputFailureEvidenceV1 } from '../../agent/structured-output-pipeline';
+import { readContextGatewayManifestV3ForAttemptV1, verifyContextGatewayCandidateEvidenceV1 } from '../../context-gateway/attempt-evidence';
+import { db } from '../../db/schema';
+import { readAgentRunArtifactExactV1 } from '../../memory/artifact-store';
+import type { ContextSourceRefV1 } from '../../registry/types';
+import type { AIConfig, Character, WorkspaceScope, Worldview } from '../../types';
+import { resolveWorkspaceOwnership } from '../../workspace/ownership';
+import { stampNewRecord } from '../../workspace/scope';
+import { createOwnedEvalWorkspaceV1, cleanupOwnedEvalWorkspaceV1, cleanupOwnedEvalWorkspacesV1, withEvalWorkspaceRunLeaseV1, type EvalWorkspaceRunLeaseV1, type EvalWorkspaceOwnerV1 } from '../workspace-ownership';
+import { createWorldWork } from '../../workspace/works';
+import { RACES_GATEWAY_EVAL_FIXTURES_V1 } from './fixtures';
+import { RacesGatewayBlindGraderFailureV1 } from './protocol';
+import { createRacesGatewayFailureTranscriptArchiveV2, createRacesGatewayTranscriptArchiveV1, readRacesGatewayTranscriptArchiveV1 } from './archive';
+import { scoreRacesGatewayEvalV1, RACES_GATEWAY_EVAL_THRESHOLDS_V1 } from './scoring';
+import { RACES_GATEWAY_EVAL_STORAGE_KEY_V21, RACES_GATEWAY_EVAL_VERSION_V21, type RacesGatewayBlindGradeV1, type RacesGatewayBlindGradeEvidenceV1, type RacesGatewayEvalCheckpointV1, type RacesGatewayEvalFixtureV1, type RacesGatewayEvalProgressV1, type RacesGatewayEvalResultV1 } from './types';
 
 const EMPTY_HASH = '0'.repeat(64)
 const PROJECT_MARKER = '[RACE6-EVAL] isolated transcript/outcome workspace'

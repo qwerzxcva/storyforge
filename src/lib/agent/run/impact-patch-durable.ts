@@ -1,22 +1,18 @@
 import Dexie from 'dexie'
-import { db } from '../../db/schema'
-import { parseAgentEventPayload, type AgentEvent, type WorkspaceScope } from '../../types'
-import { appendAgentEvent, getOrCreateAgentConversation } from '../conversations'
-import { assembleContext } from '../../registry/assemble-context'
-import { adopt, adoptionTransactionTablesV1 } from '../../registry/adopt'
-import { buildEditImpactGraphV1, type EditImpactGraphV1 } from '../../consistency/impact-analysis'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import {
-  createAgentRunV1, appendAgentRunEventV1, readAgentRunV1, type AgentRunSnapshotV1,
-  withAgentRunMutationLockV1, agentRunScopeTransactionTablesV1,
-  readVerifiedAgentRunInTransactionV1, appendAgentRunEventWithSettlementInTransactionV1,
-} from './event-store'
-import { parseAgentRunEventV1 } from './event-schema'
-import { contentRevisionTableSpecsV1 } from '../../authoring/content-revision'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import { hashCanonicalValue } from './hash'
-import { hashChapterText } from '../../ai/chapter-memory/text-normalization'
-import { assertRecordInScope, readOwnedRows } from '../../workspace/scope'
+import { db } from '../../db/schema';
+import { parseAgentEventPayload, type AgentEvent, type WorkspaceScope } from '../../types';
+import { appendAgentEvent, getOrCreateAgentConversation } from '../conversations';
+import { assembleContext } from '../../registry/assemble-context';
+import { adopt, adoptionTransactionTablesV1 } from '../../registry/adopt';
+import { buildEditImpactGraphV1, type EditImpactGraphV1 } from '../../consistency/impact-analysis';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { createAgentRunV1, appendAgentRunEventV1, readAgentRunV1, type AgentRunSnapshotV1, withAgentRunMutationLockV1, agentRunScopeTransactionTablesV1, readVerifiedAgentRunInTransactionV1, appendAgentRunEventWithSettlementInTransactionV1 } from './event-store';
+import { parseAgentRunEventV1 } from './event-schema';
+import { contentRevisionTableSpecsV1 } from '../../authoring/content-revision';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { hashCanonicalValue } from './hash';
+import { hashChapterText } from '../../ai/chapter-memory/text-normalization';
+import { assertRecordInScope, readOwnedRows } from '../../workspace/scope';
 
 export const IMPACT_PATCH_RUN_VERSION_V1 = 1 as const
 export const IMPACT_PATCH_CANDIDATE_TYPE_V1 = 'impact-patch-candidate' as const

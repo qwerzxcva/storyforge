@@ -1,11 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { readyOpenTtrpgSessionV1, OPEN_HUMAN_VIEWER, openEnvelopeV1 } from '../helpers/open-ttrpg-session'
-import { loadTtrpgOpenMemoryReadStateV1 } from '../../src/lib/ttrpg/open-memory-read-state'
-import { replayTtrpgOpenReadEventsV1 } from '../../src/lib/ttrpg/open-read-replay'
+import { loadTtrpgOpenMemoryReadStateV1 } from '../../src/lib/legacy-compat/ttrpg/open-memory-read-state'
+import { replayTtrpgOpenReadEventsV1 } from '../../src/lib/legacy-compat/ttrpg/open-read-replay'
 import { recordTtrpgOpenNarrativeMemoryV1 } from '../../src/lib/ttrpg/runtime-commands'
-import * as core from '../../src/lib/product/runtime-core'
-import * as source from '../../src/lib/product-production/preview-source'
+import * as core from '../../src/lib/legacy-compat/product/runtime-core'
+import * as source from '../../src/lib/legacy-compat/product-production/preview-source'
 
 describe('R-TTRPGOPEN9 exact-input bounded pure replay reuse', { timeout: 30000 }, () => {
   beforeEach(async () => { await db.delete(); await db.open() })

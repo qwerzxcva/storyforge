@@ -1,8 +1,8 @@
 /** Scoped event operations reuse the story-arc Skill, candidate and adopt path. */
-import { parseAuthorStoryStagesV1 } from '../types/story-arc'
-import { canonicalStringify } from './run/hash'
-import { parseStructuredOutputV1 } from './structured-output-pipeline'
-import type { StoryArcCopilotCandidate, StoryArcCopilotSnapshot, StoryArcMutationRequestV1 } from './story-arc-copilot'
+import { parseAuthorStoryStagesV1 } from '../types/story-arc';
+import { canonicalStringify } from './run/hash';
+import { parseStructuredOutputV1 } from './structured-output-pipeline';
+import type { StoryArcCopilotCandidate, StoryArcCopilotSnapshot, StoryArcMutationRequestV1 } from './story-arc-copilot';
 
 export const STORY_ARC_STAGE_EVENT_LIMITS_V1 = Object.freeze({ additionalEvents: 5, eventChars: 400 })
 export interface StoryArcStageEventRequestV1 { version: 1; kind: 'append' | 'sort'; stageId: string }

@@ -11,8 +11,8 @@ import {
   createProductRuntimeCheckpoint,
   readProductRuntimeState,
   verifyProductRuntimeCheckpoint,
-} from '../../src/lib/product/runtime-api'
-import { appendProductRuntimeEvent } from '../../src/lib/product/runtime-core'
+} from '../../src/lib/legacy-compat/product/runtime-api'
+import { appendProductRuntimeEvent } from '../../src/lib/legacy-compat/product/runtime-core'
 import { seedCurrentProductBuild } from '../helpers/current-product-build'
 import {
   loadCurrentProductWorldSourceCatalogV1,

@@ -1,6 +1,6 @@
 /** Pure extraction of registered owner references. These roots confer retention, never read/write authority. */
-import type { ExactArtifactRootSpecV1 } from '../registry/types'
-import type { ExactRunArtifactIdentityV1, ExactRunArtifactKindV1 } from '../types'
+import type { ExactArtifactRootSpecV1 } from '../registry/types';
+import type { ExactRunArtifactIdentityV1, ExactRunArtifactKindV1 } from '../types';
 
 const KINDS = new Set<ExactRunArtifactKindV1>(['context-manifest', 'selector-result', 'context-packet', 'source-snapshot', 'tool-result', 'rendered-request', 'raw-response'])
 const HASH = /^[a-f0-9]{64}$/

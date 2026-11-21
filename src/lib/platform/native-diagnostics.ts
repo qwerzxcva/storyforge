@@ -1,6 +1,6 @@
-import { parseFailureEvent } from '../diagnostics/failure-summary'
-import { readRuntimeDiagnosticErrors, recordRuntimeDiagnosticEvent } from '../diagnostics/runtime-errors'
-import { diagnosticContextEnabled, previousOperationTrail } from '../diagnostics/operation-trail'
+import { parseFailureEvent } from '../diagnostics/failure-summary';
+import { readRuntimeDiagnosticErrors, recordRuntimeDiagnosticEvent } from '../diagnostics/runtime-errors';
+import { diagnosticContextEnabled, previousOperationTrail } from '../diagnostics/operation-trail';
 
 export async function nativeTelemetryAllowed(): Promise<boolean> {
   if (window.storyforgeClient) return window.storyforgeClient.telemetryAllowed ? window.storyforgeClient.telemetryAllowed() : false

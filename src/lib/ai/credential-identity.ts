@@ -1,5 +1,5 @@
-import type { AIConfig } from '../types'
-import { AI_PROXY_ENDPOINTS, EMBEDDING_PROXY_ENDPOINTS } from './proxy-endpoints'
+import type { AIConfig } from '../types';
+import { AI_PROXY_ENDPOINTS, EMBEDDING_PROXY_ENDPOINTS } from './proxy-endpoints';
 
 type CredentialAuthority = Pick<AIConfig, 'provider' | 'baseUrl'>
 

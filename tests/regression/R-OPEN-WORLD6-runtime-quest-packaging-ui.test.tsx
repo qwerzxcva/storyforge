@@ -3,13 +3,13 @@ import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import TextOpenWorldQuestLogPanel from '../../src/components/text-game/TextOpenWorldQuestLogPanel'
 import TextOpenWorldQuestPackagingPanel from '../../src/components/text-game/TextOpenWorldQuestPackagingPanel'
-import { createTextOpenWorldDirectorQuestInstanceV1 } from '../../src/lib/open-world/quests'
+import { createTextOpenWorldDirectorQuestInstanceV1 } from '../../src/lib/legacy-compat/open-world/quests'
 import type {
   TextOpenWorldRuntimeQuestPackagingPresentationV1,
   TextOpenWorldRuntimeQuestPackagingSlotV1,
 } from '../../src/lib/open-world/runtime-quest-packaging'
 import { projectTextOpenWorldRuntimeQuestPackagingSlotV1 } from '../../src/lib/open-world/runtime-quest-packaging'
-import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
+import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
 import { createTextOpenWorldVNextP9Fixture } from '../helpers/text-open-world-vnext-fixture'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true

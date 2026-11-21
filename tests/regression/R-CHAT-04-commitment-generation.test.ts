@@ -3,7 +3,7 @@ import {db} from '../../src/lib/db/schema'
 import * as skills from '../../src/lib/agent/skill-registry'
 import {supportsChatCommitmentPromptV2} from '../../src/lib/character-interaction/commitment-prompt'
 import {generateInteractionRuntimeCandidateV1, adoptInteractionRuntimeCandidateV1} from '../../src/lib/character-interaction/harness'
-import {readProductRuntimeState, readProductRuntimeStateVersion, requestChatNarrativeTrigger} from '../../src/lib/character-interaction/runtime-api'
+import {readProductRuntimeState, readProductRuntimeStateVersion, requestChatNarrativeTrigger} from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import {seedChatNarrativeRuntimeFixture, withChatActionChoiceFixture} from '../helpers/chat-narrative-fixture'
 import {chatPromiseActionFixture, chatCommitmentReviewOutputFixture} from '../helpers/chat-commitment-fixture'
 

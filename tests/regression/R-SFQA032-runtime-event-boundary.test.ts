@@ -3,7 +3,7 @@ import { db } from '../../src/lib/db/schema'
 import { moveAiTownPlayerV1 } from '../../src/lib/ai-town/runtime-api'
 import {
   appendProductRuntimeEvent, readProductRuntimeState, readProductRuntimeStateVersion, readSessionEvents,
-} from '../../src/lib/product/runtime-core'
+} from '../../src/lib/legacy-compat/product/runtime-core'
 import { PRODUCT_RUNTIME_EVENT_TYPES, type ProductRuntimeEventType } from '../../src/lib/types'
 import { seedAiTownRuntimeFixture } from '../helpers/ai-town-runtime'
 

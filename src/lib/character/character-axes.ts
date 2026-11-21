@@ -1,9 +1,4 @@
-import type {
-  Character,
-  CharacterMoralAxis,
-  CharacterOrderAxis,
-  CharacterRoleWeight,
-} from '../types'
+import type { Character, CharacterMoralAxis, CharacterOrderAxis, CharacterRoleWeight } from '../types';
 
 export const ROLE_WEIGHT_LABELS: Record<CharacterRoleWeight, string> = {
   main: '主要',

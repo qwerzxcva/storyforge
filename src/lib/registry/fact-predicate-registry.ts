@@ -7,7 +7,7 @@
  * 与三注册表的关系（§14.6 / §22.8 NS-4）：本表是 AdoptionSchema 的领域子注册——
  * 事实采纳时由它驱动「谓词归一 + factKind/cardinality/conflictPolicy + FK 客体类型校验」。
  */
-import type { FactPredicateSpec } from '../types/temporal-fact'
+import type { FactPredicateSpec } from '../types/temporal-fact';
 
 export const FACT_PREDICATE_REGISTRY: readonly FactPredicateSpec[] = Object.freeze([
   // —— state 谓词：单值、可被新值 supersede、带时序 ——

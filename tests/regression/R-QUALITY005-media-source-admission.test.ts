@@ -1,7 +1,7 @@
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { importTextOpenWorldCreatorMediaBlobV1, previewTextOpenWorldCreatorMediaV1 } from '../../src/lib/product-production/service'
-import { readMediaBlobObjectData } from '../../src/lib/product-production/media-blob-store'
+import { readMediaBlobObjectData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import * as transport from '../../src/lib/product-production/media-transport'
 import { createTextOpenWorldCreatorReleaseFixtureV1 } from '../helpers/text-open-world-creator-release'
 import { seedQuality005LegacyNovelV1, snapshotQuality005RowsV1 } from '../helpers/quality005-legacy-novel'

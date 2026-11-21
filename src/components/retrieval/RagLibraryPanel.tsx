@@ -1,29 +1,11 @@
-import { useEffect, useMemo, useState } from 'react'
-import {
-  ChevronDown,
-  Database,
-  FileSearch,
-  Loader2,
-  RefreshCw,
-  Search,
-  Trash2,
-} from 'lucide-react'
-import {
-  buildRagLibrary,
-  readRecentRagRecalls,
-  updateRagDocumentPolicy,
-  updateRagFieldPolicy,
-  type RecentRagRecall,
-} from '../../lib/retrieval/rag-library'
-import {
-  clearProjectRetrievalCache,
-  rebuildProjectNarrativeSummaries,
-  rebuildProjectRetrievalChunks,
-} from '../../lib/retrieval/retrieval'
-import type { Project, RagLibraryEntry } from '../../lib/types'
-import { useWorldGroupStore } from '../../stores/world-group'
-import { useDialog } from '../shared/Dialog'
-import { useToast } from '../shared/Toast'
+import { useEffect, useMemo, useState } from 'react';
+import { ChevronDown, Database, FileSearch, Loader2, RefreshCw, Search, Trash2 } from 'lucide-react';
+import { buildRagLibrary, readRecentRagRecalls, updateRagDocumentPolicy, updateRagFieldPolicy, type RecentRagRecall } from '../../lib/retrieval/rag-library';
+import { clearProjectRetrievalCache, rebuildProjectNarrativeSummaries, rebuildProjectRetrievalChunks } from '../../lib/retrieval/retrieval';
+import type { Project, RagLibraryEntry } from '../../lib/types';
+import { useWorldGroupStore } from '../../stores/world-group';
+import { useDialog } from '../shared/Dialog';
+import { useToast } from '../shared/Toast';
 
 interface DocumentGroup {
   id: string

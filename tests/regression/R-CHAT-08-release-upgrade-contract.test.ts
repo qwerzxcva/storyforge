@@ -1,10 +1,10 @@
 import {afterEach, beforeEach, expect, it} from 'vitest'
 import {db} from '../../src/lib/db/schema'
-import {compareChatReleaseUpgradeV1} from '../../src/lib/character-interaction/release-upgrade-contract'
+import {compareChatReleaseUpgradeV1} from '../../src/lib/legacy-compat/character-interaction/release-upgrade-contract'
 import {seedChatExperiencePackageFixture} from '../helpers/chat-experience-package-fixture'
 import {createFixtureProductReleaseManifestV1} from '../helpers/product-release-v1'
 import {hashCanonicalValue} from '../../src/lib/agent/run/hash'
-import {hashProductProductionValueV2} from '../../src/lib/product-production/hash'
+import {hashProductProductionValueV2} from '../../src/lib/legacy-compat/product-production/hash'
 import type {ProductReleaseManifestV1, ProductRuntimePackageV1} from '../../src/lib/types'
 
 beforeEach(async () => {db.close(); await db.delete(); await db.open()})

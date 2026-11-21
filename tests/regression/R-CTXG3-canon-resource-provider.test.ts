@@ -1,4 +1,5 @@
 import { beforeEach, afterEach, describe, expect, it } from 'vitest'
+import '../../src/lib/export/registry-import'
 import { db } from '../../src/lib/db/schema'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import { FIELD_BY_TARGET } from '../../src/lib/registry/field-registry'

@@ -1,17 +1,17 @@
-import { canonRowResourceKeysV1 } from '../context-gateway/canon-provider'
-import { workAuthoringIntentResourceKeyV1 } from '../context-gateway/work-intent-provider'
-import { db } from '../db/schema'
-import { assembleContextGatewayPacketV1, projectContextGatewayInputStateV1 } from '../agent/context-gateway-input'
-import { resolveAgentContextPolicy, type AgentContextProfile } from '../agent/context-policy'
-import { resolveAgentSkillV1 } from '../agent/skill-registry'
-import { executeContextGatewayV1, type ContextGatewayExecutionV1 } from '../context-gateway/execution'
-import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence'
-import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk'
-import type { AssembleContextResult } from '../registry/types'
-import type { AIConfig, Chapter, OutlineNode, WorkspaceScope } from '../types'
-import { parseStages } from '../types/story-arc'
-import { readStateCardFields } from '../types/state-card'
-import { readOwnedRows, resolveScope } from '../workspace/scope'
+import { canonRowResourceKeysV1 } from '../context-gateway/canon-provider';
+import { workAuthoringIntentResourceKeyV1 } from '../context-gateway/work-intent-provider';
+import { db } from '../db/schema';
+import { assembleContextGatewayPacketV1, projectContextGatewayInputStateV1 } from '../agent/context-gateway-input';
+import { resolveAgentContextPolicy, type AgentContextProfile } from '../agent/context-policy';
+import { resolveAgentSkillV1 } from '../agent/skill-registry';
+import { executeContextGatewayV1, type ContextGatewayExecutionV1 } from '../context-gateway/execution';
+import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence';
+import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk';
+import type { AssembleContextResult } from '../registry/types';
+import type { AIConfig, Chapter, OutlineNode, WorkspaceScope } from '../types';
+import { parseStages } from '../types/story-arc';
+import { readStateCardFields } from '../types/state-card';
+import { readOwnedRows, resolveScope } from '../workspace/scope';
 
 type StableRow = {
   id?: number

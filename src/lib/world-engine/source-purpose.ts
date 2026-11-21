@@ -1,8 +1,7 @@
-import { db } from '../db/schema'
-import { canonicalStringify } from '../agent/run/hash'
-import type { UpperProductKindV1 } from '../types/product-identity'
-import { fail, purposeHash, encodeDeclaration, readWorldSourcePurposeDeclarationV1, validateWorldSourcePurposeProofV1,
-  type WorldSourcePurposeProofV1, type WorldSourcePurposeInputV1, type PurposeOrigin } from './source-purpose-contract'
+import { db } from '../db/schema';
+import { canonicalStringify } from '../agent/run/hash';
+import type { UpperProductKindV1 } from '../types/product-identity';
+import { fail, purposeHash, encodeDeclaration, readWorldSourcePurposeDeclarationV1, validateWorldSourcePurposeProofV1, type WorldSourcePurposeProofV1, type WorldSourcePurposeInputV1, type PurposeOrigin } from './source-purpose-contract';
 
 export { parseWorldSourcePurposeProofV1, readWorldSourcePurposeDeclarationV1, validateWorldSourcePurposeProofV1,
   type WorldSourcePurposeProofV1 } from './source-purpose-contract'

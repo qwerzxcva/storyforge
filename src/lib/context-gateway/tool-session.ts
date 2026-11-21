@@ -1,17 +1,10 @@
-import { keepIntegrityReadAlive } from '../db/transaction-integrity'
-import { sha256 } from '@noble/hashes/sha2.js'
-import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash'
-import { CONTEXT_SOURCES } from '../registry/context-sources'
-import type {
-  ContextAccessPolicyV1,
-  ContextResourceDescriptorV1,
-  ContextResourceProviderV1,
-  ContextSource,
-  ContextSourceRefV1,
-  FrozenResourceScopeV1,
-} from '../registry/types'
-import { normalizeContextAccessPolicyV1 } from './contracts'
-import type { WorldQueryAccessV1 } from '../types/world-query'
+import { keepIntegrityReadAlive } from '../db/transaction-integrity';
+import { sha256 } from '@noble/hashes/sha2.js';
+import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash';
+import { CONTEXT_SOURCES } from '../registry/context-sources';
+import type { ContextAccessPolicyV1, ContextResourceDescriptorV1, ContextResourceProviderV1, ContextSource, ContextSourceRefV1, FrozenResourceScopeV1 } from '../registry/types';
+import { normalizeContextAccessPolicyV1 } from './contracts';
+import type { WorldQueryAccessV1 } from '../types/world-query';
 
 export const MAX_SOURCE_CAPABILITIES_PER_RESOURCE = 64
 

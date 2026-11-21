@@ -5,7 +5,7 @@ import {
   readAvgDraftV1,
   saveAvgDraftV1,
 } from "../../src/lib/avg/draft-service";
-import { DEFAULT_AVG_SETTINGS } from "../../src/lib/avg/authoring-contract";
+import { DEFAULT_AVG_SETTINGS } from "../../src/lib/legacy-compat/avg/authoring-contract";
 import { consultAvgV1 } from "../../src/lib/avg/consultation";
 import {
   exportProjectJSON,

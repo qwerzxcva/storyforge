@@ -1,5 +1,5 @@
 import {adoptInteractionRuntimeCandidateV1, generateInteractionRuntimeCandidateV1} from '../../src/lib/character-interaction/harness'
-import {commitInteractionPlayerMessage, endInteractionScene, readProductRuntimeStateVersion, requestChatNarrativeTrigger, startInteractionScene} from '../../src/lib/character-interaction/runtime-api'
+import {commitInteractionPlayerMessage, endInteractionScene, readProductRuntimeStateVersion, requestChatNarrativeTrigger, startInteractionScene} from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import {seedChatNarrativeRuntimeFixture, withChatActionChoiceFixture} from './chat-narrative-fixture'
 import {chatCommitmentReviewOutputFixture, chatPromiseActionFixture} from './chat-commitment-fixture'
 import {historyTerms, historyResolution} from './chat-commitment-history-fixture'

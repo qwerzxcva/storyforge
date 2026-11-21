@@ -1,6 +1,6 @@
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
-import { branchProductRuntimeSession, deleteProductRuntimeSession } from '../../src/lib/product/runtime-core'
+import { branchProductRuntimeSession, deleteProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
 /** Frozen release contracts exercise real DB/APIs; no normal production or provider claim. */
 import { beforeEach, afterEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
@@ -9,17 +9,17 @@ import { setupChecksFixtureV1 } from '../helpers/open-ttrpg-checks'
 import { seedOpenFixtureReleaseV1 } from '../helpers/open-ttrpg-release'
 import { configureOpenSeatsV1, openEnvelopeV1 } from '../helpers/open-ttrpg-session'
 import { rt } from '../helpers/open-ttrpg-branch-recovery'
-import { readProductRuntimeState, hashProductRuntimeStateV1, parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState, hashProductRuntimeStateV1, parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/legacy-compat/product/runtime-core'
 import { previewTtrpgOpenContinuationV1, createTtrpgOpenContinuationFromPlanV1 } from '../../src/lib/ttrpg/continuity'
 import { completeTtrpgOpenSessionZeroV1, startTtrpgOpenEpochV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { resumeTtrpgOpenChecksV1 } from '../../src/lib/ttrpg/open-checks-coordinator'
-import { verifyTtrpgOpenReleaseContinuationRuntimeV1 } from '../../src/lib/ttrpg/open-release-continuation-proof'
+import { verifyTtrpgOpenReleaseContinuationRuntimeV1 } from '../../src/lib/legacy-compat/ttrpg/open-release-continuation-proof'
 import { readTtrpgOpenTableV1 } from '../../src/lib/ttrpg/open-table-service'
 import { seedTtrpgWorldPatchReviewV1 } from '../helpers/open-ttrpg-world-patch'
-import { verifyProductRuntimeSessionSourceV1, verifyProductRuntimeSource } from '../../src/lib/product-production/preview-source'
-import { isTtrpgRuntimeContentV2 } from '../../src/lib/ttrpg/content-version'
+import { verifyProductRuntimeSessionSourceV1, verifyProductRuntimeSource } from '../../src/lib/legacy-compat/product-production/preview-source'
+import { isTtrpgRuntimeContentV2 } from '../../src/lib/legacy-compat/ttrpg/content-version'
 import { continueTtrpgOpenFactLedger, createTtrpgOpenFactBasisV1, verifyTtrpgOpenFactLedger, parseTtrpgOpenFactLedgerV1,
-  parseTtrpgOpenFactLedger, ttrpgOpenSessionFactsV1, projectTtrpgOpenSessionFactsForActorV1 } from '../../src/lib/ttrpg/open-fact-ledger'
+  parseTtrpgOpenFactLedger, ttrpgOpenSessionFactsV1, projectTtrpgOpenSessionFactsForActorV1 } from '../../src/lib/legacy-compat/ttrpg/open-fact-ledger'
 
 describe('R-TTRPGOPEN6 compatible immutable release continuation', { timeout: 60000 }, () => {
   beforeEach(async () => { await db.delete(); await db.open() }); afterEach(() => db.close())

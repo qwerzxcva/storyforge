@@ -1,134 +1,18 @@
-import type { WorkCoverDraftV1, WorkCoverAssetV1, WorkCoverAdoptionV1, WorkCoverResponseBufferV1 } from '../work-cover/types'
-import { IS_SHOWCASE, SHOWCASE_DATABASE } from '../showcase/policy'
-import { IS_ADVENTURE_WEB_PLAYER, adventureWebPlayerIdentity, adventureWebPlayerStorageName } from '../adventure/web-player-policy'
-import type { ExtensionPackage, ExtensionProfile, ExtensionRecord, ExtensionContract, ExtensionOperation } from '../extensions/types'
-import type { TtrpgAuthoringDraftV1 } from "../ttrpg/authoring-contract";
-import type { TtrpgNarrativeMemoryV1 } from '../ttrpg/narrative-memory'
-import type { ChatAuthoringDraftV1 } from '../character-interaction/authoring-contract'
-import type { AvgAuthoringDraftV1, AvgDraftMediaV1 } from '../avg/authoring-contract'
-import Dexie, { type Table } from 'dexie'
-import type { WorldNarrativeIndexCacheV1 } from '../types/narrative-index-cache'
-import type {
-  AdaptationProject,
-  AdaptationCausalEdgeV1,
-  AdaptationDecisionV1,
-  AdaptationSourceFactV1,
-  AdaptationSourceUnit,
-  AgentConversation,
-  AgentEvent,
-  AgentRunArtifactRecordV1,
-  AgentRunCheckpointRecord,
-  AgentRunEventRecord,
-  AgentRunRecord,
-  Chapter,
-  Character,
-  CharacterDrivenPlan,
-  CharacterRelation,
-  CodexCategory,
-  CodexEntry,
-  ComicMediaAsset,
-  ComicPage,
-  ComicPagePlanV1,
-  ComicPanel,
-  ComicReviewIssueV1,
-  ComicScriptBeatV1,
-  ComicVisualSubject,
-  CreationReleaseAssetV1,
-  CreationReleaseV1,
-  CreativeRules,
-  CultivationProgress,
-  CultivationSystem,
-  DetailedOutline,
-  EmotionBeatCard,
-  Foreshadow,
-  Geography,
-  HistoricalKeyword,
-  HistoricalTimelineEvent,
-  History,
-  ImportantLocation,
-  ImportFileBlob,
-  ImportJob,
-  ImportLog,
-  ImportSession,
-  InspirationWorkspace,
-  ItemLedgerEntry,
-  MediaBlobObjectRecordV1,
-  MotionDramaAssetBindingV1,
-  MotionDramaAssetSubjectV1,
-  MotionDramaAssetVersionV1,
-  MotionDramaEpisodeV1,
-  MotionDramaProductionV1,
-  MotionDramaPromptOverrideV1,
-  MotionDramaPromptPackV1,
-  MotionDramaReviewIssueV1,
-  MotionDramaScriptSceneV1,
-  MotionDramaSeriesBibleRecordV1,
-  MotionDramaShotReferenceV1,
-  MotionDramaShotV1,
-  NarrativeBeat,
-  NarrativeChoice,
-  NarrativeModule,
-  NarrativeNode,
-  NodeFlow,
-  NodeRunRecord,
-  Note,
-  OutlineNode,
-  OwnershipScopeChangeRecord,
-  PowerSystem,
-  ProductBuildArtifactRecordV1,
-  ProductBuildRecordV1,
-  ProductMediaAsset,
-  ProductMediaBlob,
-  ProductProductionBriefRecordV1,
-  ProductProductionCommandRecordV1,
-  ProductProductionRecordV1,
-  ProductQualityGateReceiptRecordV1,
-  ProductRelease,
-  ProductRuntimeCheckpoint,
-  ProductRuntimeEvent,
-  ProductRuntimeSession,
-  Project,
-  PromptTemplate,
-  PromptWorkflow,
-  Reference,
-  ReferenceAnalysisRun,
-  ReferenceAnalysisSource,
-  ReferenceChunkAnalysis,
-  ScreenplayScene,
-  ScreenplayBeatV1,
-  ScreenplayReviewIssueV1,
-  ScreenplaySceneCardV1,
-  Snapshot,
-  ShortNovelProductionV1,
-  StateCard,
-  StoryArc,
-  StoryCore,
-  StorylineCrossing,
-  StorylineProgress,
-  StoryTimelineEvent,
-  TtrpgRulePackRecordV1,
-  TtrpgRuntimeAssetRequestRecordV1,
-  TtrpgSessionParticipantRecordV2,
-  UserStyleProfile,
-  Work,
-  WorkCharacterBinding,
-  WorkspaceDocumentBindingV1,
-  World,
-  WorldDerivationV1,
-  WorldGroup,
-  WorldGroupLink,
-  WorldNode,
-  WorldRelease,
-  WorldSourceReceiptV1,
-  WorldRevision,
-  WorldRulesProfile,
-  Worldview,
-} from '../types'
-import type { AIUsageEntry } from '../ai/usage-log'
-import type { KnowledgeLedgerEntry } from '../types/knowledge-ledger'
-import type { NarrativeSummaryNode } from '../types/narrative-summary'
-import type { RetrievalChunk } from '../types/retrieval-chunk'
-import type { TemporalFact } from '../types/temporal-fact'
+import type { WorkCoverDraftV1, WorkCoverAssetV1, WorkCoverAdoptionV1, WorkCoverResponseBufferV1 } from '../work-cover/types';
+import { IS_SHOWCASE, SHOWCASE_DATABASE } from '../showcase/policy';
+import type { ExtensionPackage, ExtensionProfile, ExtensionRecord, ExtensionContract, ExtensionOperation } from '../legacy-compat/extensions/types';
+import type { TtrpgAuthoringDraftV1 } from "../legacy-compat/ttrpg/authoring-contract";
+import type { TtrpgNarrativeMemoryV1 } from '../legacy-compat/ttrpg/narrative-memory';
+import type { ChatAuthoringDraftV1 } from '../legacy-compat/character-interaction/authoring-contract';
+import type { AvgAuthoringDraftV1, AvgDraftMediaV1 } from '../legacy-compat/avg/authoring-contract';
+import Dexie, { type Table } from 'dexie';
+import type { WorldNarrativeIndexCacheV1 } from '../types/narrative-index-cache';
+import type { AdaptationProject, AdaptationCausalEdgeV1, AdaptationDecisionV1, AdaptationSourceFactV1, AdaptationSourceUnit, AgentConversation, AgentEvent, AgentRunArtifactRecordV1, AgentRunCheckpointRecord, AgentRunEventRecord, AgentRunRecord, Chapter, Character, CharacterDrivenPlan, CharacterRelation, CodexCategory, CodexEntry, ComicMediaAsset, ComicPage, ComicPagePlanV1, ComicPanel, ComicReviewIssueV1, ComicScriptBeatV1, ComicVisualSubject, CreationReleaseAssetV1, CreationReleaseV1, CreativeRules, CultivationProgress, CultivationSystem, DetailedOutline, EmotionBeatCard, Foreshadow, Geography, HistoricalKeyword, HistoricalTimelineEvent, History, ImportantLocation, ImportFileBlob, ImportJob, ImportLog, ImportSession, InspirationWorkspace, ItemLedgerEntry, MediaBlobObjectRecordV1, MotionDramaAssetBindingV1, MotionDramaAssetSubjectV1, MotionDramaAssetVersionV1, MotionDramaEpisodeV1, MotionDramaProductionV1, MotionDramaPromptOverrideV1, MotionDramaPromptPackV1, MotionDramaReviewIssueV1, MotionDramaScriptSceneV1, MotionDramaSeriesBibleRecordV1, MotionDramaShotReferenceV1, MotionDramaShotV1, NarrativeBeat, NarrativeChoice, NarrativeModule, NarrativeNode, NodeFlow, NodeRunRecord, Note, OutlineNode, OwnershipScopeChangeRecord, PowerSystem, ProductBuildArtifactRecordV1, ProductBuildRecordV1, ProductMediaAsset, ProductMediaBlob, ProductProductionBriefRecordV1, ProductProductionCommandRecordV1, ProductProductionRecordV1, ProductQualityGateReceiptRecordV1, ProductRelease, ProductRuntimeCheckpoint, ProductRuntimeEvent, ProductRuntimeSession, Project, PromptTemplate, PromptWorkflow, Reference, ReferenceAnalysisRun, ReferenceAnalysisSource, ReferenceChunkAnalysis, ScreenplayScene, ScreenplayBeatV1, ScreenplayReviewIssueV1, ScreenplaySceneCardV1, Snapshot, ShortNovelProductionV1, StateCard, StoryArc, StoryCore, StorylineCrossing, StorylineProgress, StoryTimelineEvent, TtrpgRulePackRecordV1, TtrpgRuntimeAssetRequestRecordV1, TtrpgSessionParticipantRecordV2, UserStyleProfile, Work, WorkCharacterBinding, WorkspaceDocumentBindingV1, World, WorldDerivationV1, WorldGroup, WorldGroupLink, WorldNode, WorldRelease, WorldSourceReceiptV1, WorldRevision, WorldRulesProfile, Worldview } from '../types';
+import type { AIUsageEntry } from '../ai/usage-log';
+import type { KnowledgeLedgerEntry } from '../types/knowledge-ledger';
+import type { NarrativeSummaryNode } from '../types/narrative-summary';
+import type { RetrievalChunk } from '../types/retrieval-chunk';
+import type { TemporalFact } from '../types/temporal-fact';
 
 export const STORYFORGE_DATABASE_NAME = 'storyforge-core'
 export const STORYFORGE_SCHEMA_VERSION = 16
@@ -464,7 +348,7 @@ export class StoryForgeDB extends Dexie {
   creationReleases!: Table<CreationReleaseV1, number>
   creationReleaseAssets!: Table<CreationReleaseAssetV1, number>
   avgDraftMedia!: Table<AvgDraftMediaV1, number>
-  aiTownAuthoringDrafts!: Table<import("../ai-town/authoring-contract").AiTownAuthoringDraftV1, number>
+  aiTownAuthoringDrafts!: Table<import("../legacy-compat/ai-town/authoring-contract").AiTownAuthoringDraftV1, number>
   ttrpgAuthoringDrafts!: Table<TtrpgAuthoringDraftV1, number>
   chatAuthoringDrafts!: Table<ChatAuthoringDraftV1, number>
   avgAuthoringDrafts!: Table<AvgAuthoringDraftV1, number>
@@ -504,6 +388,4 @@ export class StoryForgeDB extends Dexie {
   }
 }
 
-export const db = new StoryForgeDB(IS_ADVENTURE_WEB_PLAYER
-  ? adventureWebPlayerStorageName(adventureWebPlayerIdentity())
-  : IS_SHOWCASE ? SHOWCASE_DATABASE : STORYFORGE_DATABASE_NAME)
+export const db = new StoryForgeDB(IS_SHOWCASE ? SHOWCASE_DATABASE : STORYFORGE_DATABASE_NAME)

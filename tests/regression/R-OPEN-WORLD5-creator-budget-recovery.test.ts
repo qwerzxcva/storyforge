@@ -15,9 +15,9 @@ import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-
 import { resolveScope, stampNewRecord } from '../../src/lib/workspace/scope'
 import { previewTextOpenWorldCreatorBudgetRecoveryV1, authorizeTextOpenWorldCreatorBudgetRecoveryV1, setProductProductionPausedV1 } from '../../src/lib/product-production/service'
 import { carryForwardProductBuildArtifactsAcrossBuildsV1, verifyTextOpenWorldBudgetRecoveryPrefixV1, verifyProductBuildTerminalArtifactSetV1, verifyImportedTextOpenWorldHistoricalTasksV1 } from '../../src/lib/product-production/artifact-store'
-import { canonicalProductProductionJsonV2 as json, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
-import { parseProductProductionCommandV1 } from '../../src/lib/product-production/contracts'
+import { canonicalProductProductionJsonV2 as json, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
+import { parseProductProductionCommandV1 } from '../../src/lib/legacy-compat/product-production/contracts'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
 import { readTextOpenWorldProductionPlanAuthorityV1 } from '../../src/lib/open-world/production-authority'
 import {

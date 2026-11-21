@@ -4,17 +4,17 @@ import { setupNormalizationRuntimeModelV1 as setup, setupNormalizationRuntimeSou
 import { openEnvelopeV1 } from '../helpers/open-ttrpg-session'
 import { generateTtrpgOpenFactNormalizationCandidateV2, executeTtrpgOpenFactNormalizationRequestV1 } from '../../src/lib/ttrpg/open-intent-harness'
 import { prepareTtrpgOpenFactNormalizationInputV1, prepareTtrpgOpenOracleInputV2 } from '../../src/lib/ttrpg/open-intent-input'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { reviewTtrpgOpenOracleCandidateV1, commitTtrpgOpenOracleCandidateFactV1, closeTtrpgOpenEpochV1, startTtrpgOpenEpochV1,
   consultTtrpgOracleV1, commitTtrpgOpenOracleFactV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { readAgentRunArtifactExactV1 } from '../../src/lib/memory/artifact-store'
-import { ttrpgOpenPredicateContextV1 } from '../../src/lib/ttrpg/open-rule-plan'
-import { evaluateTtrpgPredicateV1 } from '../../src/lib/ttrpg/predicate'
-import { loadTtrpgOpenGmOracleContextV1 } from '../../src/lib/ttrpg/open-gm-oracle-context'
-import { reviewTtrpgOpenNormalizationRuntimeDeliveryV1 } from '../../src/lib/ttrpg/open-oracle-runtime-delivery'
+import { ttrpgOpenPredicateContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-rule-plan'
+import { evaluateTtrpgPredicateV1 } from '../../src/lib/legacy-compat/ttrpg/predicate'
+import { loadTtrpgOpenGmOracleContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-gm-oracle-context'
+import { reviewTtrpgOpenNormalizationRuntimeDeliveryV1 } from '../../src/lib/legacy-compat/ttrpg/open-oracle-runtime-delivery'
 import { readTtrpgOpenFactNormalizationCandidateV1 } from '../../src/lib/ttrpg/open-oracle-candidate'
-import { createTtrpgOpenNormalizationRuntimeReferencePolicyV1 } from '../../src/lib/ttrpg/open-runtime-entity-references'
+import { createTtrpgOpenNormalizationRuntimeReferencePolicyV1 } from '../../src/lib/legacy-compat/ttrpg/open-runtime-entity-references'
 
 describe('R-TTRPGOPEN13 actual accepted interpretation instance normalization', { timeout: 120000 }, () => {
   beforeEach(async () => { await db.delete(); await db.open() }); afterEach(() => { vi.restoreAllMocks(); db.close() })

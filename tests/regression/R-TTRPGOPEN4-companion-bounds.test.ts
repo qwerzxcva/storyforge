@@ -3,7 +3,7 @@ import {
   routeTtrpgOpenIntentV1,
   type TtrpgOpenIntentRoutingSnapshotV1,
   type TtrpgOpenIntentV1,
-} from '../../src/lib/ttrpg/open-intent'
+} from '../../src/lib/legacy-compat/ttrpg/open-intent'
 import { openCampaignFixture, openRuleFixture } from '../helpers/ttrpg-open-content'
 
 const HASH = 'd'.repeat(64)

@@ -1,12 +1,12 @@
 import {afterEach, beforeEach, expect, it} from 'vitest'
 import {db} from '../../src/lib/db/schema'
-import {buildInteractionContextWindow, createInitialInteractionState} from '../../src/lib/character-interaction/runtime'
+import {buildInteractionContextWindow, createInitialInteractionState} from '../../src/lib/legacy-compat/character-interaction/runtime'
 import {formatInteractionRuntimeContextV1} from '../../src/lib/character-interaction/context-format'
 import {selectChatCoordinatorContextV1, CHAT_COORDINATOR_SOURCE_TOKENS_V1} from '../../src/lib/character-interaction/coordinator-selection'
 import {estimateTokens} from '../../src/lib/ai/context-budget'
 import {generateInteractionRuntimeCandidateV1} from '../../src/lib/character-interaction/harness'
 import {readChatContextInspectionV1} from '../../src/lib/character-interaction/context-inspector'
-import {commitInteractionPlayerMessage, readProductRuntimeStateVersion, requestChatNarrativeTrigger} from '../../src/lib/character-interaction/runtime-api'
+import {commitInteractionPlayerMessage, readProductRuntimeStateVersion, requestChatNarrativeTrigger} from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import {chatActionReviewOutputFixture, chatNarrativeFixture, seedChatNarrativeRuntimeFixture, withChatActionChoiceFixture} from '../helpers/chat-narrative-fixture'
 
 beforeEach(async () => {db.close(); await db.delete(); await db.open()})

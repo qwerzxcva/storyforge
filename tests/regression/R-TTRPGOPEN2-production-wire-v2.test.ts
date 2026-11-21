@@ -5,7 +5,7 @@ import { createAgentSkillExecutionBindingV1 } from '../../src/lib/agent/executio
 import { sha256Text } from '../../src/lib/ai/chapter-memory/text-normalization'
 import { renderTtrpgOpenDesignWorldReadsV1 } from '../../src/lib/ttrpg/open-authoring-design-prompt'
 import { renderTtrpgOpenProductionWorldReadsV2, type TtrpgOpenWorldReadsInputV1 } from '../../src/lib/ttrpg/open-world-reads'
-import { TTRPG_OPEN_PRODUCTION_BINDINGS_V2, isTtrpgOpenProductionTaskV2 } from '../../src/lib/ttrpg/open-production-bindings'
+import { TTRPG_OPEN_PRODUCTION_BINDINGS_V2, isTtrpgOpenProductionTaskV2 } from '../../src/lib/legacy-compat/ttrpg/open-production-bindings'
 import { ttrpgOpenProductionOutputTypesV2, ttrpgOpenProductionSystemPromptV2 } from '../../src/lib/ttrpg/open-production-prompts'
 import { TTRPG_OPEN_LAYER_METADATA_KEYS_V1, parseTtrpgOpenSourceFactsArtifactV1,
   parseTtrpgOpenRuleSystemArtifactV1, parseTtrpgOpenSituationLayerArtifactV1 } from '../../src/lib/ttrpg/open-production-artifacts'

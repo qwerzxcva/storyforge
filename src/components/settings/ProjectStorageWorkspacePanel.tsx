@@ -1,17 +1,9 @@
-import { useEffect, useState } from 'react'
-import { FolderOpen, HardDrive, Loader2, RefreshCw, ShieldAlert, Unplug } from 'lucide-react'
-import type { Project } from '../../lib/types'
-import {
-  ensureFolderPermission,
-  folderPermissionGranted,
-  isFSASupported,
-  pickFolder,
-} from '../../lib/storage/folder-backup'
-import {
-  clearProjectFolderHandle,
-  loadProjectFolderHandle,
-} from '../../lib/storage/folder-handle-store'
-import { bindProjectStorageWorkspace } from '../../lib/storage/project-storage-workspace'
+import { useEffect, useState } from 'react';
+import { FolderOpen, HardDrive, Loader2, RefreshCw, ShieldAlert, Unplug } from 'lucide-react';
+import type { Project } from '../../lib/types';
+import { ensureFolderPermission, folderPermissionGranted, isFSASupported, pickFolder } from '../../lib/storage/folder-backup';
+import { clearProjectFolderHandle, loadProjectFolderHandle } from '../../lib/storage/folder-handle-store';
+import { bindProjectStorageWorkspace } from '../../lib/storage/project-storage-workspace';
 
 interface Props {
   project?: Project

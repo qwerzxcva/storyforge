@@ -1,7 +1,7 @@
-import { sha256 } from '@noble/hashes/sha2.js'
-import { canonicalStringify } from '../agent/run/hash'
-import type { WorldPackageManifest, WorldSourceDeclarationV1 } from '../types/world-sharing'
-import { inspectWorldPackageMetadata } from './world-package-metadata'
+import { sha256 } from '@noble/hashes/sha2.js';
+import { canonicalStringify } from '../agent/run/hash';
+import type { WorldPackageManifest, WorldSourceDeclarationV1 } from '../types/world-sharing';
+import { inspectWorldPackageMetadata } from './world-package-metadata';
 
 const SCHEMA = 'storyforge.world-source-declaration'
 const HASH = /^[a-f0-9]{64}$/

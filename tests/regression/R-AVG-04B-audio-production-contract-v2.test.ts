@@ -1,9 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { canonicalProductProductionJsonV2 } from '../../src/lib/product-production/hash'
+import { canonicalProductProductionJsonV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { parseAvgAudioProductionProcessingPlanV1, parseAvgAudioProductionProcessingPlanV2,
   parseAvgAudioProductionProcessingPlan, assertAvgAudioProcessingPlanTargetsV1, assertAvgAudioProcessingPlanTargets,
-  type AvgAudioProductionProcessingPlanV1, type AvgAudioProductionProcessingPlanV2 } from '../../src/lib/avg/audio-production-contract'
-import type { AvgAudioProcessingRecipeV2 } from '../../src/lib/avg/audio-processing-contract-v2'
+  type AvgAudioProductionProcessingPlanV1, type AvgAudioProductionProcessingPlanV2 } from '../../src/lib/legacy-compat/avg/audio-production-contract'
+import type { AvgAudioProcessingRecipeV2 } from '../../src/lib/legacy-compat/avg/audio-processing-contract-v2'
 
 const recipe1 = { schema: 'storyforge.avg.audio-processing-recipe' as const, version: 1 as const,
   gainMilliDb: -6000, maximumDurationMs: 1000, sampleRatePolicy: 'preserve' as const, channelPolicy: 'preserve' as const,

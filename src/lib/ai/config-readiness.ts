@@ -1,4 +1,4 @@
-import type { AIConfig, AIProvider } from '../types'
+import type { AIConfig, AIProvider } from '../types';
 
 const EMPTY_KEY_COMPATIBLE_PROVIDERS = new Set<AIProvider>(['ollama', 'custom', 'codex'])
 

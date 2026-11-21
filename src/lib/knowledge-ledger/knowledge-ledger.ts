@@ -1,16 +1,10 @@
-import type { Chapter, KnowledgeLedgerEntry, OutlineNode } from '../types'
-import type { ConsistencyFinding } from '../ai/adapters/consistency-audit-adapter'
-import { db } from '../db/schema'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveScopeLike,
-  type WorkspaceScopeLike,
-} from '../workspace/scope'
-import type { WorkspaceScope } from '../types/world-ownership'
-import { adopt } from '../registry/adopt'
-import { resolveProjectionBoundary } from '../consistency/projection-boundary'
+import type { Chapter, KnowledgeLedgerEntry, OutlineNode } from '../types';
+import type { ConsistencyFinding } from '../ai/adapters/consistency-audit-adapter';
+import { db } from '../db/schema';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, type WorkspaceScopeLike } from '../workspace/scope';
+import type { WorkspaceScope } from '../types/world-ownership';
+import { adopt } from '../registry/adopt';
+import { resolveProjectionBoundary } from '../consistency/projection-boundary';
 
 export const KNOWLEDGE_ACTIONS = ['learn', 'mislearn', 'forget', 'correct'] as const
 

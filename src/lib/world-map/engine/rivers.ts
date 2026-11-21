@@ -2,9 +2,8 @@
  * 河流生成
  * 从高处往低处流，累积水流量
  */
-
-import type { GridCells, River } from './types'
-import { getRiverName } from './name-pool'
+import type { GridCells, River } from './types';
+import { getRiverName } from './name-pool';
 
 const SEA_LEVEL = 20
 const MIN_FLUX = 20 // 形成河流的最小水流量

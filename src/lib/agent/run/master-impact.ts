@@ -1,9 +1,9 @@
-import { appendAgentEvent } from '../conversations'
-import { buildEditImpactGraphV1, type EditImpactGraphV1 } from '../../consistency/impact-analysis'
-import { readOwnedRows } from '../../workspace/scope'
-import type { AgentEvent, WorkspaceScope } from '../../types'
-import type { MasterAgentDurableCandidateV1 } from './master-durable'
-import type { AgentRunSnapshotV1 } from './event-store'
+import { appendAgentEvent } from '../conversations';
+import { buildEditImpactGraphV1, type EditImpactGraphV1 } from '../../consistency/impact-analysis';
+import { readOwnedRows } from '../../workspace/scope';
+import type { AgentEvent, WorkspaceScope } from '../../types';
+import type { MasterAgentDurableCandidateV1 } from './master-durable';
+import type { AgentRunSnapshotV1 } from './event-store';
 
 export const MASTER_AGENT_IMPACT_REPORT_VERSION_V1 = 1 as const
 

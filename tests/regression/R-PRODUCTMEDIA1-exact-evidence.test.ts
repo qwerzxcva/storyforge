@@ -5,12 +5,12 @@ import { setupAudioRuntimeV1,audioWavFixtureV1 } from '../helpers/open-audio-run
 import { createAgentRunV1,deleteAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { recordAgentRunArtifactV1,readAgentRunArtifactExactV1,inspectAgentRunArtifactAvailabilityV1,markAndSweepAgentRunArtifactsV1,pruneAgentRunArtifactsExplicitlyV1 } from '../../src/lib/memory/artifact-store'
 import { exportProjectJSON,importProjectJSON } from '../../src/lib/export/json-export'
-import { branchProductRuntimeSession,deleteProductRuntimeSession,readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { branchProductRuntimeSession,deleteProductRuntimeSession,readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { prepareTtrpgOpenAudioUploadV1,confirmTtrpgOpenAudioReviewV1 } from '../../src/lib/ttrpg/open-audio-service'
 import { REGISTRY_BY_NAME } from '../../src/lib/registry/project-tables'
 import { extractExactArtifactOwnerRootsV1 } from '../../src/lib/memory/artifact-roots'
 import { canonicalStringify } from '../../src/lib/agent/run/hash'
-import * as blobs from '../../src/lib/product-production/media-blob-store'
+import * as blobs from '../../src/lib/legacy-compat/product-production/media-blob-store'
 
 const contract=(projectId:number)=>({version:1,objective:'product media evidence fixture',workflowKind:'read-only-audit',runtimeBindingHash:'b'.repeat(64),scope:{projectId,worldGroupId:null},permissions:{contextSourceKeys:['chapterContent'],writeTargets:[]},budget:{maxModelCalls:1,maxToolCalls:0,maxInputTokens:1000,maxOutputTokens:100,maxAttemptsPerStep:1},acceptance:[{id:'result',kind:'output-present',required:true}],verificationPlan:[{id:'terminal',kind:'terminal',verifier:'media-evidence-fixture',criterionIds:['result']}],failurePolicy:{onProtocolError:'fail',onVerificationFailure:'fail',onStaleInput:'pause-for-author'}})
 describe('PRODUCTMEDIA-1 opt-in exact evidence ownership',{timeout:60000},()=>{

@@ -1,10 +1,10 @@
 import {seedChatBackgroundSourceFixture} from './chat-background-source'
 import {confirmChatSourceReviewV1, readChatDraftV1} from '../../src/lib/character-interaction/draft-service'
-import {parseChatAuthoringSettings} from '../../src/lib/character-interaction/authoring-contract'
+import {parseChatAuthoringSettings} from '../../src/lib/legacy-compat/character-interaction/authoring-contract'
 import {draftProductProductionBriefV3, suggestProductStartingPoints} from '../../src/lib/product-production/consultation'
 import {loadProductProductionWorldSourceCatalogV2} from '../../src/lib/product-production/world-source'
 import {characterChatBaselineInput} from './character-chat-baseline'
-import type {ChatRoleProfileCandidateV1} from '../../src/lib/character-interaction/role-profile'
+import type {ChatRoleProfileCandidateV1} from '../../src/lib/legacy-compat/character-interaction/role-profile'
 
 export async function seedChatRoleProfileFixture() {
   const f = await seedChatBackgroundSourceFixture()

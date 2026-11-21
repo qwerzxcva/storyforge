@@ -1,19 +1,15 @@
-import { getModelCapacityLimitsV1 } from '../../lib/ai/model-capacity'
-import { useState } from 'react'
-import { Check, Loader2, Sparkles, Trash2 } from 'lucide-react'
-import type { PendingMasterCandidate } from '../agent/useMasterCopilot'
-import { useMasterCopilot } from '../agent/useMasterCopilot'
+import { getModelCapacityLimitsV1 } from '../../lib/ai/model-capacity';
+import { useState } from 'react';
+import { Check, Loader2, Sparkles, Trash2 } from 'lucide-react';
+import type { PendingMasterCandidate } from '../agent/useMasterCopilot';
+import { useMasterCopilot } from '../agent/useMasterCopilot';
 import AIFieldModeTabs from '../shared/AIFieldModeTabs'
 import PromptRunPanel from '../shared/PromptRunPanel'
-import {
-  formatWorldviewFieldGenerationRequestV1,
-  WORLDVIEW_FIELD_DEFAULT_OUTPUT_TOKENS_V1,
-  type WorldviewAgentField,
-} from '../../lib/agent/worldview-field-copilot'
-import type { FieldGenerationMode } from '../../lib/ai/field-generation-context'
-import type { Project } from '../../lib/types'
+import { formatWorldviewFieldGenerationRequestV1, WORLDVIEW_FIELD_DEFAULT_OUTPUT_TOKENS_V1, type WorldviewAgentField } from '../../lib/agent/worldview-field-copilot';
+import type { FieldGenerationMode } from '../../lib/ai/field-generation-context';
+import type { Project } from '../../lib/types';
 import HarnessEvidencePanel from '../agent/HarnessEvidencePanel'
-import { useAIConfigStore } from '../../stores/ai-config'
+import { useAIConfigStore } from '../../stores/ai-config';
 import WorldviewFieldCandidateReview from './WorldviewFieldCandidateReview'
 import CopilotGenerationStatus from '../agent/CopilotGenerationStatus'
 

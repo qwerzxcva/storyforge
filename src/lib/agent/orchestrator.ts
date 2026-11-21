@@ -1,213 +1,62 @@
-import { INSPIRATION_PREPARATION_MODULES, inspirationPreparationModeFromRequest } from '../inspiration/preparation'
-import { INSPIRATION_PREPARATION_LABELS, isInspirationPreparationMode } from '../inspiration/preparation'
-import { CHARACTER_DIMENSIONS } from '../character/character-dimensions'
-import { useDetailedOutlineStore } from '../../stores/detailed-outline'
-import { prepareDetailedOutlineAuthoringV1, adoptDetailedOutlineAuthoringV1, type DetailedOutlineAuthoringSnapshotV1 } from './detailed-outline-authoring'
-import { createDetailedOutlineCreativeArtifactV1 } from './detailed-outline-copilot'
-import { buildLongformPlanningDialogueV1, buildPendingCandidateDiscussionV1, readAgentEvents as readPlanningConversationEvents } from './conversations'
-import { affirmativeAuthorActionsV1 } from './author-intent'
-import { prepareLongformStartProposalV1 } from './longform-start-plan'
+import { INSPIRATION_PREPARATION_MODULES, inspirationPreparationModeFromRequest } from '../inspiration/preparation';
+import { INSPIRATION_PREPARATION_LABELS, isInspirationPreparationMode } from '../inspiration/preparation';
+import { CHARACTER_DIMENSIONS } from '../character/character-dimensions';
+import { useDetailedOutlineStore } from '../../stores/detailed-outline';
+import { prepareDetailedOutlineAuthoringV1, adoptDetailedOutlineAuthoringV1, type DetailedOutlineAuthoringSnapshotV1 } from './detailed-outline-authoring';
+import { createDetailedOutlineCreativeArtifactV1 } from './detailed-outline-copilot';
+import { buildLongformPlanningDialogueV1, buildPendingCandidateDiscussionV1, readAgentEvents as readPlanningConversationEvents } from './conversations';
+import { affirmativeAuthorActionsV1 } from './author-intent';
+import { prepareLongformStartProposalV1 } from './longform-start-plan';
 import JSON5 from 'json5'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { AGENT_ROLE_CATEGORIES } from '../ai/task-routing'
-import { useChapterStore } from '../../stores/chapter'
-import { useCharacterStore } from '../../stores/character'
-import { useInspirationWorkspaceStore } from '../../stores/inspiration-workspace'
-import { useOutlineStore } from '../../stores/outline'
-import { useStoryArcStore } from '../../stores/story-arc'
-import { useWorldviewStore } from '../../stores/worldview'
-import { useCharacterDrivenPlanStore } from '../../stores/character-driven-plan'
-import { chat, resolveRequestConfig, type ChatResult } from '../ai/client'
-import { db } from '../db/schema'
-import {
-  adoptGenerationNodeOutput,
-  type GenerationNode,
-  type PreparedGenerationNode,
-} from '../generation/generation-node'
-import {
-  parseInspirationFragments,
-  parseInspirationVersions,
-  latestInspirationVersion,
-  MAX_INSPIRATION_FRAGMENTS,
-} from '../inspiration/workspace'
-import {
-  parseAgentEventPayload,
-  type AgentEvent,
-  type AIConfig,
-  type ChatMessage,
-  type InspirationResultMode,
-  type WorkspaceScope,
-} from '../types'
-import {
-  adoptCharacterCopilotCandidate,
-  parseCharacterCandidateDraft,
-  prepareCharacterCopilot,
-  type CharacterCopilotCandidate,
-  type CharacterRosterSnapshot,
-} from './character-copilot'
-import {
-  parseInspirationCandidateDraft,
-  prepareInspirationCopilot,
-  type InspirationCopilotResult,
-  type InspirationWorkspaceSnapshot,
-} from './inspiration-copilot'
-import {
-  adoptRestoredOutlineCandidate,
-  parseOutlineCandidateDraft,
-  prepareOutlineCopilot,
-  runOutlineCreativeReliabilityV1,
-  type OutlineCopilotMode,
-  type OutlineCopilotSnapshot,
-} from './outline-copilot'
-import {
-  adoptRestoredProseCandidate,
-  parseProseCandidateDraft,
-  prepareProseCopilot,
-  resolveProseChapterTargetV1,
-  runProseCreativeReliabilityV1,
-  type ProseCopilotOperation,
-  type ProseCopilotSnapshot,
-} from './prose-copilot'
-import {
-  adoptRestoredStoryCoreCandidate,
-  parseStoryCoreCandidateDraft,
-  prepareStoryCoreCopilot,
-  type StoryCoreCopilotSnapshot,
-  type StoryCoreField,
-} from './story-core-copilot'
-import {
-  adoptRestoredCreativeRulesCandidateV1,
-  parseCreativeRulesCandidateDraftV1,
-  prepareCreativeRulesCopilotV1,
-  type CreativeRulesCopilotSnapshotV1,
-  type CreativeRulesField,
-} from './creative-rules-copilot'
-import {
-  adoptRestoredWorldviewFieldCandidate,
-  parseWorldviewFieldCandidateDraft,
-  prepareWorldviewFieldCopilot,
-  type WorldviewAgentField,
-  type WorldviewFieldOperationV1,
-  type WorldviewFieldOutputBudgetV1,
-  type WorldviewFieldCopilotSnapshot,
-} from './worldview-field-copilot'
-import {
-  adoptRestoredStoryArcCandidate,
-  parseStoryArcMutationRequestV1,
-  prepareStoryArcCopilot,
-  runStoryArcCreativeReliabilityV1,
-  type StoryArcCopilotSnapshot,
-  type StoryArcRequestKind,
-  type StoryArcMutationRequestV1,
-} from './story-arc-copilot'
-import {
-  adoptRestoredCharacterDrivenCandidateV1,
-  parseCharacterDrivenCandidateDraftV1,
-  prepareCharacterDrivenCopilotV1,
-  type CharacterDrivenCopilotSnapshotV1,
-} from './character-driven-copilot'
-import {
-  adoptRestoredCharacterRevisionCandidateV1,
-  parseCharacterRevisionCandidateDraftV1,
-  parseCharacterRevisionTaskInputV1,
-  prepareCharacterRevisionCopilotV1,
-  serializeCharacterRevisionCandidateV1,
-  type CharacterRevisionCopilotSnapshotV1,
-  type CharacterRevisionTaskInputV1,
-} from './character-revision-copilot'
-import {
-  adoptRestoredCharacterSupplementCandidateV1,
-  parseCharacterSupplementCandidateDraftV1,
-  parseCharacterSupplementTaskInputV1,
-  prepareCharacterSupplementCopilotV1,
-  serializeCharacterSupplementCandidateV1,
-  type CharacterSupplementCopilotSnapshotV1,
-  type CharacterSupplementTaskInputV1,
-} from './character-supplement-copilot'
-import {
-  adoptRestoredCharacterLifecycleCandidateV1,
-  parseCharacterLifecycleCandidateV1,
-  parseCharacterLifecycleTaskInputV1,
-  prepareCharacterLifecycleCopilotV1,
-  serializeCharacterLifecycleCandidateV1,
-  type CharacterLifecycleSnapshotV1,
-  type CharacterLifecycleTaskInputV1,
-} from './character-lifecycle-copilot'
-import {
-  adoptRestoredStorylineProgressCandidateV1,
-  parseStorylineProgressCandidateDraftV1,
-  prepareStorylineProgressCopilotV1,
-  type StorylineProgressCopilotSnapshotV1,
-} from './storyline-progress-copilot'
-import type {
-  AgentContextEvidence,
-} from './context-policy'
-import type { AssembleContextResult } from '../registry/types'
-import type { ContextGatewayExecutionV1 } from '../context-gateway/execution'
-import type { AgentSkillExecutionBindingV1 } from '../types/agent-run'
-import { executeAgentTool } from './tool-registry'
-import { validateDomainCandidateCanon } from './canon-validator'
-import { runBudgetedGenerationNode } from './team-execution'
-import {
-  AgentTeamBudgetExceededError,
-  AgentTeamBudgetTracker,
-  type AgentTeamBudgetEvidence,
-} from './team-budget'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveScope,
-} from '../workspace/scope'
-import {
-  DOMAIN_AGENT_IDS,
-  resolveAgentSkillV1,
-  type AgentSkillId,
-  type DomainAgentId,
-} from './skill-registry'
-import {
-  classifyRequestedDomainIdsV1,
-  getMasterWorkflowV1,
-  hasMasterFanOutPairV1,
-  isMasterFanOutEnabledV1,
-  selectMasterFanOutBatchV1,
-  selectAgentSkillIdV1,
-  selectMasterWorkflowV1,
-  type MasterWorkflowSelectionV1,
-} from './workflow-catalog'
-import { createAgentSkillExecutionBindingV1 } from './execution-binding'
-import { hashCanonicalValue } from './run/hash'
-import { readAgentRunV1 } from './run/event-store'
-import {
-  assertWorkspaceContentRevisionFreshV1,
-  captureWorkspaceContentRevisionV1,
-  type WorkspaceContentRevisionVectorV1,
-} from '../authoring/content-revision'
-import type {
-  MasterCandidateModelIdentityV1,
-  MasterCandidateSemanticReviewArtifactV1,
-} from './master-candidate-semantic-review'
-import {
-  creativeArtifactCanAdoptV1,
-  type CreativeAssumptionV1,
-  type CreativeArtifactV1,
-} from './creative-reliability'
-import {
-  mergeProvisionalAssumptionsV1,
-  type NarrativeBriefV1,
-} from './narrative-brief'
-import type { InformationBoundaryManifestV1 } from './information-boundary'
-import type { StructuredOutputRunEvidenceV1 } from './structured-output-pipeline'
-import { usePromptStore } from '../../stores/prompt'
-import {
-  freezePromptExecutionOptionsV1,
-  parsePromptExecutionOptionsV1,
-  promptExecutionRequestForModuleV1,
-  verifyPromptExecutionOptionsV1,
-  type GovernedPromptModuleKeyV1,
-  type PromptExecutionEvidenceV1,
-  type PromptExecutionOptionsV1,
-  type PromptExecutionRequestV1,
-} from './prompt-execution'
+import { useAIConfigStore } from '../../stores/ai-config';
+import { AGENT_ROLE_CATEGORIES } from '../ai/task-routing';
+import { useChapterStore } from '../../stores/chapter';
+import { useCharacterStore } from '../../stores/character';
+import { useInspirationWorkspaceStore } from '../../stores/inspiration-workspace';
+import { useOutlineStore } from '../../stores/outline';
+import { useStoryArcStore } from '../../stores/story-arc';
+import { useWorldviewStore } from '../../stores/worldview';
+import { useCharacterDrivenPlanStore } from '../../stores/character-driven-plan';
+import { chat, resolveRequestConfig, type ChatResult } from '../ai/client';
+import { db } from '../db/schema';
+import { adoptGenerationNodeOutput, type GenerationNode, type PreparedGenerationNode } from '../generation/generation-node';
+import { parseInspirationFragments, parseInspirationVersions, latestInspirationVersion, MAX_INSPIRATION_FRAGMENTS } from '../inspiration/workspace';
+import { parseAgentEventPayload, type AgentEvent, type AIConfig, type ChatMessage, type InspirationResultMode, type WorkspaceScope } from '../types';
+import { adoptCharacterCopilotCandidate, parseCharacterCandidateDraft, prepareCharacterCopilot, type CharacterCopilotCandidate, type CharacterRosterSnapshot } from './character-copilot';
+import { parseInspirationCandidateDraft, prepareInspirationCopilot, type InspirationCopilotResult, type InspirationWorkspaceSnapshot } from './inspiration-copilot';
+import { adoptRestoredOutlineCandidate, parseOutlineCandidateDraft, prepareOutlineCopilot, runOutlineCreativeReliabilityV1, type OutlineCopilotMode, type OutlineCopilotSnapshot } from './outline-copilot';
+import { adoptRestoredProseCandidate, parseProseCandidateDraft, prepareProseCopilot, resolveProseChapterTargetV1, runProseCreativeReliabilityV1, type ProseCopilotOperation, type ProseCopilotSnapshot } from './prose-copilot';
+import { adoptRestoredStoryCoreCandidate, parseStoryCoreCandidateDraft, prepareStoryCoreCopilot, type StoryCoreCopilotSnapshot, type StoryCoreField } from './story-core-copilot';
+import { adoptRestoredCreativeRulesCandidateV1, parseCreativeRulesCandidateDraftV1, prepareCreativeRulesCopilotV1, type CreativeRulesCopilotSnapshotV1, type CreativeRulesField } from './creative-rules-copilot';
+import { adoptRestoredWorldviewFieldCandidate, parseWorldviewFieldCandidateDraft, prepareWorldviewFieldCopilot, type WorldviewAgentField, type WorldviewFieldOperationV1, type WorldviewFieldOutputBudgetV1, type WorldviewFieldCopilotSnapshot } from './worldview-field-copilot';
+import { adoptRestoredStoryArcCandidate, parseStoryArcMutationRequestV1, prepareStoryArcCopilot, runStoryArcCreativeReliabilityV1, type StoryArcCopilotSnapshot, type StoryArcRequestKind, type StoryArcMutationRequestV1 } from './story-arc-copilot';
+import { adoptRestoredCharacterDrivenCandidateV1, parseCharacterDrivenCandidateDraftV1, prepareCharacterDrivenCopilotV1, type CharacterDrivenCopilotSnapshotV1 } from './character-driven-copilot';
+import { adoptRestoredCharacterRevisionCandidateV1, parseCharacterRevisionCandidateDraftV1, parseCharacterRevisionTaskInputV1, prepareCharacterRevisionCopilotV1, serializeCharacterRevisionCandidateV1, type CharacterRevisionCopilotSnapshotV1, type CharacterRevisionTaskInputV1 } from './character-revision-copilot';
+import { adoptRestoredCharacterSupplementCandidateV1, parseCharacterSupplementCandidateDraftV1, parseCharacterSupplementTaskInputV1, prepareCharacterSupplementCopilotV1, serializeCharacterSupplementCandidateV1, type CharacterSupplementCopilotSnapshotV1, type CharacterSupplementTaskInputV1 } from './character-supplement-copilot';
+import { adoptRestoredCharacterLifecycleCandidateV1, parseCharacterLifecycleCandidateV1, parseCharacterLifecycleTaskInputV1, prepareCharacterLifecycleCopilotV1, serializeCharacterLifecycleCandidateV1, type CharacterLifecycleSnapshotV1, type CharacterLifecycleTaskInputV1 } from './character-lifecycle-copilot';
+import { adoptRestoredStorylineProgressCandidateV1, parseStorylineProgressCandidateDraftV1, prepareStorylineProgressCopilotV1, type StorylineProgressCopilotSnapshotV1 } from './storyline-progress-copilot';
+import type { AgentContextEvidence } from './context-policy';
+import type { AssembleContextResult } from '../registry/types';
+import type { ContextGatewayExecutionV1 } from '../context-gateway/execution';
+import type { AgentSkillExecutionBindingV1 } from '../types/agent-run';
+import { executeAgentTool } from './tool-registry';
+import { validateDomainCandidateCanon } from './canon-validator';
+import { runBudgetedGenerationNode } from './team-execution';
+import { AgentTeamBudgetExceededError, AgentTeamBudgetTracker, type AgentTeamBudgetEvidence } from './team-budget';
+import { assertRecordInScope, readOwnedRows, resolveScope } from '../workspace/scope';
+import { DOMAIN_AGENT_IDS, resolveAgentSkillV1, type AgentSkillId, type DomainAgentId } from './skill-registry';
+import { classifyRequestedDomainIdsV1, getMasterWorkflowV1, hasMasterFanOutPairV1, isMasterFanOutEnabledV1, selectMasterFanOutBatchV1, selectAgentSkillIdV1, selectMasterWorkflowV1, type MasterWorkflowSelectionV1 } from './workflow-catalog';
+import { createAgentSkillExecutionBindingV1 } from './execution-binding';
+import { hashCanonicalValue } from './run/hash';
+import { readAgentRunV1 } from './run/event-store';
+import { assertWorkspaceContentRevisionFreshV1, captureWorkspaceContentRevisionV1, type WorkspaceContentRevisionVectorV1 } from '../authoring/content-revision';
+import type { MasterCandidateModelIdentityV1, MasterCandidateSemanticReviewArtifactV1 } from './master-candidate-semantic-review';
+import { creativeArtifactCanAdoptV1, type CreativeAssumptionV1, type CreativeArtifactV1 } from './creative-reliability';
+import { mergeProvisionalAssumptionsV1, type NarrativeBriefV1 } from './narrative-brief';
+import type { InformationBoundaryManifestV1 } from './information-boundary';
+import type { StructuredOutputRunEvidenceV1 } from './structured-output-pipeline';
+import { usePromptStore } from '../../stores/prompt';
+import { freezePromptExecutionOptionsV1, parsePromptExecutionOptionsV1, promptExecutionRequestForModuleV1, verifyPromptExecutionOptionsV1, type GovernedPromptModuleKeyV1, type PromptExecutionEvidenceV1, type PromptExecutionOptionsV1, type PromptExecutionRequestV1 } from './prompt-execution';
 
 export { DOMAIN_AGENT_IDS }
 export type { DomainAgentId }

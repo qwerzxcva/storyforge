@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { compileTtrpgFrozenWorldPredicateIndexV1 } from '../../src/lib/ttrpg/frozen-facts'
+import { compileTtrpgFrozenWorldPredicateIndexV1 } from '../../src/lib/legacy-compat/ttrpg/frozen-facts'
 import {
   evaluateTtrpgPredicateV1,
   parseTtrpgPredicateV1,
   serializeTtrpgPredicateV1,
-} from '../../src/lib/ttrpg/predicate'
-import type { TtrpgPredicateEvaluationContextV1 } from '../../src/lib/ttrpg/predicate'
-import type { TtrpgOpenFrozenFactV1, TtrpgPredicateV1 } from '../../src/lib/ttrpg/open-contract'
+} from '../../src/lib/legacy-compat/ttrpg/predicate'
+import type { TtrpgPredicateEvaluationContextV1 } from '../../src/lib/legacy-compat/ttrpg/predicate'
+import type { TtrpgOpenFrozenFactV1, TtrpgPredicateV1 } from '../../src/lib/legacy-compat/ttrpg/open-contract'
 
 const HASH = 'b'.repeat(64)
 

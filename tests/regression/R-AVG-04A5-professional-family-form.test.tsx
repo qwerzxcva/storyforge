@@ -9,7 +9,7 @@ import { createMistHarborWorld } from '../../src/lib/world-engine/mist-harbor-pr
 import { importAvgMediaV1, saveAvgAuthorWorkspaceV1 } from '../../src/lib/avg/editor-service'
 import { deterministicRegionMapPngV1 } from '../../src/lib/product-production/production-executor'
 import { readAvgAssemblyWorkspaceV1, prepareAvgAssemblyBriefV1, startAvgAssemblyV1 } from '../../src/lib/avg/assembly-service'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 import { parseAvgAuthorWorkspaceV1 } from '../../src/lib/avg/author-workspace-contract'
 import { avgProfessionalFamilyScopeFixtureV4 } from '../helpers/avg-professional-family-scope-fixture'
 import { avgVisualFormReferenceV4, replaceAvgVisualFormReferenceV4 } from '../../src/lib/avg/visual-planning-form'

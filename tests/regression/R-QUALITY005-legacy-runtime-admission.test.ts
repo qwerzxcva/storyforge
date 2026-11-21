@@ -12,12 +12,12 @@ import {
   prepareReleasedProductRuntimeSessionRecordV1,
   insertPreparedProductRuntimeSessionV1,
   parseProductRuntimeState,
-} from '../../src/lib/product/runtime-core'
-import { createTextOpenWorldInstance } from '../../src/lib/product/runtime-instances'
+} from '../../src/lib/legacy-compat/product/runtime-core'
+import { createTextOpenWorldInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
 import { generateTextOpenWorldRuntimeIntentV1 } from '../../src/lib/open-world/runtime-intent'
 import { resumeTextOpenWorldSystemWorkV1 } from '../../src/lib/open-world/action-executor'
 import { projectTextOpenWorldPlayerVersionCompatibilityV1 } from '../../src/lib/open-world/player-version-compatibility'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { createTextOpenWorldCreatorReleaseFixtureV1 } from '../helpers/text-open-world-creator-release'
 import { seedQuality005LegacyNovelV1, snapshotQuality005RowsV1 } from '../helpers/quality005-legacy-novel'
 import { seedQuality005LegacyChoiceV1 } from '../helpers/quality005-legacy-choice'

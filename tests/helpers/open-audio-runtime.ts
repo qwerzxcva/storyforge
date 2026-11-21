@@ -1,12 +1,12 @@
 /** Isolated real commands with a small generated silent WAV. No provider or human-play evidence. */
 import { seedOpenTtrpgSessionV1, configureOpenSeatsV1, openEnvelopeV1, OPEN_HUMAN_VIEWER } from './open-ttrpg-session'
-import { readTtrpgSessionParticipantsV2, configureTtrpgSessionParticipantV2 } from '../../src/lib/ttrpg/participants'
+import { readTtrpgSessionParticipantsV2, configureTtrpgSessionParticipantV2 } from '../../src/lib/legacy-compat/ttrpg/participants'
 import { completeTtrpgOpenSessionZeroV1, startTtrpgOpenRunV1, changeTtrpgSituationV1, startTtrpgOpenEpochV1,
   startTtrpgOpenOperationV1, recordTtrpgOpenHumanNarrationV1 } from '../../src/lib/ttrpg/runtime-commands'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { approve, operationInput, rt } from './open-ttrpg-branch-recovery'
 import { resumeTtrpgOpenPlayV1 } from '../../src/lib/ttrpg/open-play-coordinator'
-import type { TtrpgOpenAudioRequestV1 } from '../../src/lib/ttrpg/open-audio-contract'
+import type { TtrpgOpenAudioRequestV1 } from '../../src/lib/legacy-compat/ttrpg/open-audio-contract'
 
 export function audioWavFixtureV1(durationMs = 250): Blob {
   const frames = Math.round(8000 * durationMs / 1000), bytes = new ArrayBuffer(44 + frames * 2), v = new DataView(bytes)

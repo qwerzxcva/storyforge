@@ -6,12 +6,12 @@ import {
   recoverLatestTextOpenWorldCreatorBriefSessionV1,
   saveTextOpenWorldCreatorBriefDraftV1,
 } from '../../src/lib/open-world/creator-brief'
-import { textOpenWorldCreatorLocatorFromBriefRowV1 } from '../../src/lib/open-world/creator-brief-persistence'
-import { readTextOpenWorldCreatorExecutionBriefV1 } from '../../src/lib/open-world/creator-production-start'
+import { textOpenWorldCreatorLocatorFromBriefRowV1 } from '../../src/lib/legacy-compat/open-world/creator-brief-persistence'
+import { readTextOpenWorldCreatorExecutionBriefV1 } from '../../src/lib/legacy-compat/open-world/creator-production-start'
 import { createTextOpenWorldSourceLockExecutorV1 } from '../../src/lib/open-world/production-executor'
-import { validateTextOpenWorldSourcePinBundleV1 } from '../../src/lib/open-world/source-pin'
+import { validateTextOpenWorldSourcePinBundleV1 } from '../../src/lib/legacy-compat/open-world/source-pin'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
-import { parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 import { runProductProductionSchedulerCycleV1 } from '../../src/lib/product-production/scheduler'
 import { runAuthorizedProductProductionV1, startProductProductionPreviewV1 } from '../../src/lib/product-production/service'
 import * as capabilities from '../../src/lib/product-production/capabilities'

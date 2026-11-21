@@ -1,5 +1,5 @@
-import { hashCanonicalValue } from '../agent/run/hash'
-import type { CreationProductKindV1, CreationReleaseV1 } from '../types'
+import { hashCanonicalValue } from '../agent/run/hash';
+import type { CreationProductKindV1, CreationReleaseV1 } from '../types';
 
 export const CREATION_RELEASE_SCHEMAS_V1 = Object.freeze({
   'short-novel': 'storyforge.short-novel-release',

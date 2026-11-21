@@ -1,17 +1,12 @@
-import { db } from '../db/schema'
-import { parseInspirationFragments } from '../inspiration/workspace'
-import { assembleContext } from '../registry/assemble-context'
-import { CONTEXT_SOURCE_BY_KEY } from '../registry/context-sources'
-import type { AssembleContextInput } from '../registry/types'
-import { AGENT_SEARCH_KINDS } from './read-sources'
-import { CONTEXT_GATEWAY_READ_TOOLS_V1 } from './context-gateway-tools'
-import type {
-  AgentToolDefinition,
-  AgentToolExecutionContext,
-  AgentToolJsonSchema,
-  AgentToolResult,
-} from './types'
-import { assertRecordInScope, readOwnedRows, resolveReadScope } from '../workspace/scope'
+import { db } from '../db/schema';
+import { parseInspirationFragments } from '../inspiration/workspace';
+import { assembleContext } from '../registry/assemble-context';
+import { CONTEXT_SOURCE_BY_KEY } from '../registry/context-sources';
+import type { AssembleContextInput } from '../registry/types';
+import { AGENT_SEARCH_KINDS } from './read-sources';
+import { CONTEXT_GATEWAY_READ_TOOLS_V1 } from './context-gateway-tools';
+import type { AgentToolDefinition, AgentToolExecutionContext, AgentToolJsonSchema, AgentToolResult } from './types';
+import { assertRecordInScope, readOwnedRows, resolveReadScope } from '../workspace/scope';
 
 type ArgRules = {
   allowed: readonly string[]

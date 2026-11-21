@@ -1,32 +1,19 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Download, LoaderCircle, Play, RefreshCw, RotateCcw } from 'lucide-react'
-import { type ChatResult } from '../../lib/ai/client'
-import { isAIConfigReady } from '../../lib/ai/config-readiness'
-import { supportsVerifiedJsonObjectResponseV1 } from '../../lib/ai/provider-capabilities'
-import { fetchOpenAIModels } from '../../lib/ai/model-list'
-import { executeRegisteredAIEntryV1 } from '../../lib/agent/formal-ai-entry'
-import { hashCanonicalValue } from '../../lib/agent/run/hash'
-import {
-  buildRacesGatewayBlindGraderMessagesV1,
-  RACES_GATEWAY_BLIND_GRADE_JSON_SCHEMA_V21,
-  RACES_GATEWAY_BLIND_GRADER_PROMPT_VERSION_V21,
-  RACES_GATEWAY_GRADER_TIMEOUT_MS_V21,
-  RacesGatewayBlindGraderFailureV1,
-  RACES_GATEWAY_GRADER_PREFLIGHT_INPUT_V3,
-} from '../../lib/evals/races-gateway/protocol'
-import { parseRacesGatewayBlindGradeCompletionV2 } from '../../lib/evals/races-gateway/scoring'
-import {
-  clearRacesGatewayEvalCheckpointV1,
-  exportRacesGatewayEvalCheckpointV1,
-  loadRacesGatewayEvalCheckpointV1,
-  runRacesGatewayEvalV1,
-  verifyRacesGatewayEvalCheckpointV1,
-} from '../../lib/evals/races-gateway/runner'
-import { RACES_GATEWAY_EVAL_FIXTURES_V1 } from '../../lib/evals/races-gateway/fixtures'
-import type { RacesGatewayEvalCheckpointV1 } from '../../lib/evals/races-gateway/types'
-import { PROVIDER_MODELS, type AIConfigPreset } from '../../lib/types'
-import { resolveAIConfigPresetV1, useAIConfigStore } from '../../stores/ai-config'
-import { useDialog } from '../shared/Dialog'
+import { useEffect, useMemo, useState } from 'react';
+import { Download, LoaderCircle, Play, RefreshCw, RotateCcw } from 'lucide-react';
+import { type ChatResult } from '../../lib/ai/client';
+import { isAIConfigReady } from '../../lib/ai/config-readiness';
+import { supportsVerifiedJsonObjectResponseV1 } from '../../lib/ai/provider-capabilities';
+import { fetchOpenAIModels } from '../../lib/ai/model-list';
+import { executeRegisteredAIEntryV1 } from '../../lib/agent/formal-ai-entry';
+import { hashCanonicalValue } from '../../lib/agent/run/hash';
+import { buildRacesGatewayBlindGraderMessagesV1, RACES_GATEWAY_BLIND_GRADE_JSON_SCHEMA_V21, RACES_GATEWAY_BLIND_GRADER_PROMPT_VERSION_V21, RACES_GATEWAY_GRADER_TIMEOUT_MS_V21, RacesGatewayBlindGraderFailureV1, RACES_GATEWAY_GRADER_PREFLIGHT_INPUT_V3 } from '../../lib/evals/races-gateway/protocol';
+import { parseRacesGatewayBlindGradeCompletionV2 } from '../../lib/evals/races-gateway/scoring';
+import { clearRacesGatewayEvalCheckpointV1, exportRacesGatewayEvalCheckpointV1, loadRacesGatewayEvalCheckpointV1, runRacesGatewayEvalV1, verifyRacesGatewayEvalCheckpointV1 } from '../../lib/evals/races-gateway/runner';
+import { RACES_GATEWAY_EVAL_FIXTURES_V1 } from '../../lib/evals/races-gateway/fixtures';
+import type { RacesGatewayEvalCheckpointV1 } from '../../lib/evals/races-gateway/types';
+import { PROVIDER_MODELS, type AIConfigPreset } from '../../lib/types';
+import { resolveAIConfigPresetV1, useAIConfigStore } from '../../stores/ai-config';
+import { useDialog } from '../shared/Dialog';
 
 function rate(value: number): string {
   return `${(value * 100).toFixed(1)}%`

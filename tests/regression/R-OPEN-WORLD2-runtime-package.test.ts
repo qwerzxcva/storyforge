@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { DEFAULT_TEXT_OPEN_WORLD_CALIBRATION_V1 } from '../../src/lib/open-world/product-config'
-import { parseTextOpenWorldRuntimePackageV1 } from '../../src/lib/open-world/runtime-package'
+import { DEFAULT_TEXT_OPEN_WORLD_CALIBRATION_V1 } from '../../src/lib/legacy-compat/open-world/product-config'
+import { parseTextOpenWorldRuntimePackageV1 } from '../../src/lib/legacy-compat/open-world/runtime-package'
 import { TEXT_OPEN_WORLD_RUNTIME_MODULE_KEYS_V1, type TextOpenWorldRuntimePackageV1 } from '../../src/lib/types'
 
 const HASH_A = 'a'.repeat(64)

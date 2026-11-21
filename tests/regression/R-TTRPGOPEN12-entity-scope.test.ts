@@ -3,11 +3,11 @@ import { db } from '../../src/lib/db/schema'
 import { setupOpenEntityPlanningV1 } from '../helpers/open-entity-runtime'
 import { setupOpenEntityModelV1 } from '../helpers/open-entity-model'
 import { openEnvelopeV1 } from '../helpers/open-ttrpg-session'
-import { loadTtrpgOpenEntityContextV1 } from '../../src/lib/ttrpg/open-entity-context'
+import { loadTtrpgOpenEntityContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-entity-context'
 import { prepareTtrpgOpenEntityInputV1 } from '../../src/lib/ttrpg/open-intent-input'
 import { executeTtrpgOpenEntityRequestV1, recoverTtrpgOpenRuntimeCandidateV1 } from '../../src/lib/ttrpg/open-intent-harness'
-import type { TtrpgOpenEntityModelSelectionV1 } from '../../src/lib/ttrpg/open-entity-model-contract'
-import { readProductRuntimeState, branchProductRuntimeSession } from '../../src/lib/product/runtime-core'
+import type { TtrpgOpenEntityModelSelectionV1 } from '../../src/lib/legacy-compat/ttrpg/open-entity-model-contract'
+import { readProductRuntimeState, branchProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
 
 describe('R-TTRPGOPEN12 entity request privacy scopes and independent explicit attempts', { timeout: 90000 }, () => {
   beforeEach(async () => { await db.delete(); await db.open() }); afterEach(() => db.close())

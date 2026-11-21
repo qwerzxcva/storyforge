@@ -14,9 +14,9 @@ import {
 import {
   acceptTextOpenWorldSourcePinBundleV1,
   freezeTextOpenWorldWorldReleaseSourceV1,
-} from '../../src/lib/open-world/source-pin'
+} from '../../src/lib/legacy-compat/open-world/source-pin'
 import { openWorldSemanticResourceCatalogV1 } from '../../src/lib/context-gateway/world-release-client'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import type {
   StoryCore,
   ProductProductionPlanTaskV3,

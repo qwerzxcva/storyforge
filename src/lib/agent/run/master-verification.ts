@@ -1,26 +1,13 @@
-import { db } from '../../db/schema'
-import type {
-  AnyAgentRunEventV1,
-  VerificationReceiptV1,
-  WorkspaceScope,
-} from '../../types'
-import {
-  appendAgentRunEventV1,
-  readAgentRunV1,
-} from './event-store'
-import {
-  restoreMasterAgentCandidatesV1,
-  type MasterAgentDurableCandidateV1,
-} from './master-durable'
-import {
-  isMasterAgentCandidateBusinessStateMatchingV1,
-  type MasterAgentCandidateAdoptionRefV1,
-} from './master-adoption'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import { hashCanonicalValue } from './hash'
-import { isMasterAgentRunWorkflowKindV1 } from '../workflow-catalog'
-import { readFreshMasterCandidateStepReceiptV1 } from './master-step-verification'
-import { maybeInjectHarnessFaultV1 } from '../dev-fault-injection'
+import { db } from '../../db/schema';
+import type { AnyAgentRunEventV1, VerificationReceiptV1, WorkspaceScope } from '../../types';
+import { appendAgentRunEventV1, readAgentRunV1 } from './event-store';
+import { restoreMasterAgentCandidatesV1, type MasterAgentDurableCandidateV1 } from './master-durable';
+import { isMasterAgentCandidateBusinessStateMatchingV1, type MasterAgentCandidateAdoptionRefV1 } from './master-adoption';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { hashCanonicalValue } from './hash';
+import { isMasterAgentRunWorkflowKindV1 } from '../workflow-catalog';
+import { readFreshMasterCandidateStepReceiptV1 } from './master-step-verification';
+import { maybeInjectHarnessFaultV1 } from '../dev-fault-injection';
 
 export const MASTER_AGENT_VERIFIER_SET_VERSION_V1 = 'master-terminal-v1'
 

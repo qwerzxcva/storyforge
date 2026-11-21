@@ -1,7 +1,7 @@
 import {expect, it} from 'vitest'
 import actualFailure from '../fixtures/character-chat-history-followup.json'
 import {sha256Text} from '../../src/lib/ai/chapter-memory/text-normalization'
-import {buildInteractionContextWindow, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/character-interaction/runtime'
+import {buildInteractionContextWindow, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/legacy-compat/character-interaction/runtime'
 import {formatInteractionRuntimeContextV1} from '../../src/lib/character-interaction/context-format'
 import {selectChatCoordinatorContextV1} from '../../src/lib/character-interaction/coordinator-selection'
 import {chatActionContextVersionsV1} from '../../src/lib/character-interaction/context-selection'

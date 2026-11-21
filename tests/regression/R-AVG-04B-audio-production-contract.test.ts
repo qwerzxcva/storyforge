@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import { parseAvgAudioProductionProcessingPlanV1, assertAvgAudioProcessingPlanTargetsV1,
-  type AvgAudioProductionProcessingPlanV1 } from '../../src/lib/avg/audio-production-contract'
+  type AvgAudioProductionProcessingPlanV1 } from '../../src/lib/legacy-compat/avg/audio-production-contract'
 import { parseAvgAuthorVoiceChoiceV2, parseAvgAuthorSoundChoiceV2 } from '../../src/lib/avg/processed-audio-choice-contract'
 import { parseAvgAuthorVoiceChoiceV1 } from '../../src/lib/avg/voice-choice-contract'
 import { parseAvgAuthorSoundChoiceV1 } from '../../src/lib/avg/sound-choice-contract'
-import { parseAvgSoundPlanV1 } from '../../src/lib/avg/sound-plan-contract'
+import { parseAvgSoundPlanV1 } from '../../src/lib/legacy-compat/avg/sound-plan-contract'
 import { avgSoundPlanningFixtureV1 } from '../helpers/avg-sound-planning-fixture'
 import { avgVoiceConfigurationFixtureV1 } from '../helpers/avg-voice-production-fixture'
 

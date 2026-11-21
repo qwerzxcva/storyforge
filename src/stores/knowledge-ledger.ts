@@ -1,18 +1,7 @@
-import { create } from 'zustand'
-import type { Chapter, Character, KnowledgeLedgerEntry } from '../lib/types'
-import {
-  adoptKnowledgeCandidates,
-  confirmKnowledgeCandidate,
-  listKnowledgeEvents,
-  rejectKnowledgeCandidate,
-  type KnowledgeCandidateInput,
-} from '../lib/knowledge-ledger/knowledge-ledger'
-import {
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveScopeLike,
-  type WorkspaceScopeLike,
-} from '../lib/workspace/scope'
+import { create } from 'zustand';
+import type { Chapter, Character, KnowledgeLedgerEntry } from '../lib/types';
+import { adoptKnowledgeCandidates, confirmKnowledgeCandidate, listKnowledgeEvents, rejectKnowledgeCandidate, type KnowledgeCandidateInput } from '../lib/knowledge-ledger/knowledge-ledger';
+import { readOwnedRows, resolveReadScopeLike, resolveScopeLike, type WorkspaceScopeLike } from '../lib/workspace/scope';
 
 interface KnowledgeLedgerStore {
   events: KnowledgeLedgerEntry[]

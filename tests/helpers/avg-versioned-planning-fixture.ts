@@ -1,7 +1,7 @@
 import { avgProfessionalFamilyScopeFixtureV4 } from './avg-professional-family-scope-fixture'
-import type { AvgMediaReferenceV1 } from '../../src/lib/avg/media-reference-contract'
-import type { AvgMediaReferenceV2 } from '../../src/lib/avg/media-reference-contract-v2'
-import type { AvgMediaBriefV1, AvgVisualBibleV1 } from '../../src/lib/avg/visual-planning-contract'
+import type { AvgMediaReferenceV1 } from '../../src/lib/legacy-compat/avg/media-reference-contract'
+import type { AvgMediaReferenceV2 } from '../../src/lib/legacy-compat/avg/media-reference-contract-v2'
+import type { AvgMediaBriefV1, AvgVisualBibleV1 } from '../../src/lib/legacy-compat/avg/visual-planning-contract'
 
 /** Pure author intent, no Blob, credentials, model, Run or adoption. */
 export function avgVersionedPlanningFixture() {

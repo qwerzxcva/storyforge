@@ -1,14 +1,14 @@
-import { PROJECT_TABLES } from '../registry/project-tables'
-import { isPortableResourceUidV1 } from '../context-gateway/resource-uid'
-import { isWorkCode } from '../memory/identity'
-import { isPublicWorldCode } from '../workspace/identity'
-import { assertRecordInScope, resolveReadScope } from '../workspace/scope'
-import { db } from '../db/schema'
-import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence'
-import type { Chapter, OutlineNode, WorkspaceScope } from '../types'
-import { NARRATIVE_KINDS_V1, type NarrativeIdentityAliasV1, type NarrativeOwnerV1, type NarrativeSourceIdentityV1, type SemanticKindV1 } from '../types/narrative-ir'
-import type { NarrativeSequenceV1 } from '../types/narrative-time'
-import { canonicalNarrativeJsonV1, enumV1, hashV1, keyV1, narrativeFail, nullableV1, objectV1, type DecoderV1 } from './narrative-json'
+import { PROJECT_TABLES } from '../registry/project-tables';
+import { isPortableResourceUidV1 } from '../context-gateway/resource-uid';
+import { isWorkCode } from '../memory/identity';
+import { isPublicWorldCode } from '../workspace/identity';
+import { assertRecordInScope, resolveReadScope } from '../workspace/scope';
+import { db } from '../db/schema';
+import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence';
+import type { Chapter, OutlineNode, WorkspaceScope } from '../types';
+import { NARRATIVE_KINDS_V1, type NarrativeIdentityAliasV1, type NarrativeOwnerV1, type NarrativeSourceIdentityV1, type SemanticKindV1 } from '../types/narrative-ir';
+import type { NarrativeSequenceV1 } from '../types/narrative-time';
+import { canonicalNarrativeJsonV1, enumV1, hashV1, keyV1, narrativeFail, nullableV1, objectV1, type DecoderV1 } from './narrative-json';
 
 const workOwnerDecoder = objectV1<Extract<NarrativeOwnerV1, { kind: 'work' }>>({ kind: enumV1(['work']), workCode: keyV1 })
 const worldOwnerDecoder = objectV1<Extract<NarrativeOwnerV1, { kind: 'world' }>>({

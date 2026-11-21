@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import TextOpenWorldRuntimeAIFailureNotice from '../../src/components/text-game/TextOpenWorldRuntimeAIFailureNotice'
 import TextOpenWorldRuntimeAIStatusPanel from '../../src/components/text-game/TextOpenWorldRuntimeAIStatusPanel'
-import type { TextOpenWorldRuntimeAIFailureV1 } from '../../src/lib/open-world/runtime-ai-error'
+import type { TextOpenWorldRuntimeAIFailureV1 } from '../../src/lib/legacy-compat/open-world/runtime-ai-error'
 import type { TextOpenWorldRuntimeAIObservabilityV1 } from '../../src/lib/open-world/runtime-ai-observability'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true

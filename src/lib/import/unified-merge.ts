@@ -4,14 +4,10 @@
  * 全部是纯函数：无 I/O、无全局状态、无 side effect，易单测。
  * 从 pipeline.ts 抽出。
  */
-
-import type { UnifiedParseResult } from '../types'
-import type { ImportSession } from '../types'
-import type { CodexImportCategoryOption } from './codex-classification'
-import {
-  mergeCodexImportCandidates,
-  normalizeCodexImportCandidates,
-} from './codex-classification'
+import type { UnifiedParseResult } from '../types';
+import type { ImportSession } from '../types';
+import type { CodexImportCategoryOption } from './codex-classification';
+import { mergeCodexImportCandidates, normalizeCodexImportCandidates } from './codex-classification';
 
 const CHARACTER_LIKE_SYSTEM_WORDS = /精灵|器灵|人格|助手|伙伴|化身|宿主|管理员|管家/
 

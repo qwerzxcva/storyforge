@@ -8,8 +8,8 @@ import {
 import {
   canonicalProductProductionJsonV2,
   hashProductProductionValueV2,
-} from '../../src/lib/product-production/hash'
-import { sha256MediaData } from '../../src/lib/product-production/media-blob-store'
+} from '../../src/lib/legacy-compat/product-production/hash'
+import { sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import type { ProductBuildArtifactRecordV1, ProductProductionPlanV3 } from '../../src/lib/types'
 import { seedCurrentProductWorld } from '../helpers/current-product-world'
 

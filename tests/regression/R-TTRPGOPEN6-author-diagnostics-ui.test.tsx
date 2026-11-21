@@ -7,7 +7,7 @@ import { setupGateHintFixtureV1 } from '../helpers/open-ttrpg-gate-recovery'
 import { readyOpenTtrpgSessionV1, openEnvelopeV1 } from '../helpers/open-ttrpg-session'
 import { resumeTtrpgOpenChecksV1 } from '../../src/lib/ttrpg/open-checks-coordinator'
 import { changeTtrpgSafetyStatus } from '../../src/lib/ttrpg/runtime-commands'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import * as textExport from '../../src/lib/export/text-export'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true

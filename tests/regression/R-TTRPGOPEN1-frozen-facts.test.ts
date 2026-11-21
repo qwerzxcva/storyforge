@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import {
   compileTtrpgFrozenWorldPredicateIndexV1,
   lookupTtrpgFrozenWorldPredicateV1,
   parseTtrpgFrozenWorldPredicateIndexV1,
-} from '../../src/lib/ttrpg/frozen-facts'
-import type { TtrpgOpenFrozenFactV1 } from '../../src/lib/ttrpg/open-contract'
+} from '../../src/lib/legacy-compat/ttrpg/frozen-facts'
+import type { TtrpgOpenFrozenFactV1 } from '../../src/lib/legacy-compat/ttrpg/open-contract'
 
 const HASH = 'a'.repeat(64)
 

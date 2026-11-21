@@ -4,7 +4,7 @@ import { createRoot,type Root } from 'react-dom/client'
 import { db } from '../../src/lib/db/schema'
 import ImageProcessingPlanPanel from '../../src/components/avg/ImageProcessingPlanPanel'
 import { avgV5FormalFixture } from '../helpers/avg-v5-formal-fixture'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
 import { readAvgAssemblyWorkspaceV1,saveAvgImageProcessingDraftV1 } from '../../src/lib/avg/assembly-service'
 import { parseAvgAuthorWorkspaceV1 } from '../../src/lib/avg/author-workspace-contract'
@@ -13,14 +13,14 @@ import { readAvgDraftV1 } from '../../src/lib/avg/draft-service'
 import { compileAvgVisualPlanningProposalV1,freezeAvgVisualPlanningScopeV1 } from '../../src/lib/avg/media-source'
 import { avgVersionedPlanningFixture } from '../helpers/avg-versioned-planning-fixture'
 import { prepareNativeAvgAssembly } from '../helpers/avg-production-assembly-fixture'
-import { DECLARED_MAGENTA_ALPHA_MATTING_ID_V1 } from '../../src/lib/product-production/character-alpha-matting'
-import { AVG_RESERVED_MAGENTA_INVARIANT_V1,AVG_RESERVED_MAGENTA_FORBIDDEN_V1 } from '../../src/lib/avg/image-foreground-contract'
-import type { AvgImageProcessingPlanV2 } from '../../src/lib/avg/image-processing-contract'
-import { AVG_FOREGROUND_BOUNDARY_UNMIX_ID_V2 } from '../../src/lib/avg/image-foreground-boundary-unmix'
+import { DECLARED_MAGENTA_ALPHA_MATTING_ID_V1 } from '../../src/lib/legacy-compat/product-production/character-alpha-matting'
+import { AVG_RESERVED_MAGENTA_INVARIANT_V1,AVG_RESERVED_MAGENTA_FORBIDDEN_V1 } from '../../src/lib/legacy-compat/avg/image-foreground-contract'
+import type { AvgImageProcessingPlanV2 } from '../../src/lib/legacy-compat/avg/image-processing-contract'
+import { AVG_FOREGROUND_BOUNDARY_UNMIX_ID_V2 } from '../../src/lib/legacy-compat/avg/image-foreground-boundary-unmix'
 import { AVG_FOREGROUND_SAM2_CHECKPOINT_SHA256_V4, AVG_FOREGROUND_SAM2_MATTING_ID_V4,
   AVG_FOREGROUND_SAM2_MODEL_REVISION_V4, AVG_FOREGROUND_SAM2_PROMPT_STRATEGY_V4,
   AVG_FOREGROUND_SAM2_MATTING_ID_V5, AVG_FOREGROUND_SAM2_PROMPT_STRATEGY_V5, AVG_FOREGROUND_SAM2_QUALITY_GATE_V5,
-  AVG_FOREGROUND_SAM2_MATTING_ID_V6, AVG_FOREGROUND_SAM2_QUALITY_GATE_V6, AVG_FOREGROUND_SAM2_NEUTRAL_RULE_V6 } from '../../src/lib/avg/image-foreground-contract'
+  AVG_FOREGROUND_SAM2_MATTING_ID_V6, AVG_FOREGROUND_SAM2_QUALITY_GATE_V6, AVG_FOREGROUND_SAM2_NEUTRAL_RULE_V6 } from '../../src/lib/legacy-compat/avg/image-foreground-contract'
 
 const roots:Root[]=[]
 beforeEach(async()=>{await db.delete();await db.open();vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT',true)

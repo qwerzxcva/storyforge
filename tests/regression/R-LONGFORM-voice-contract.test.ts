@@ -3,11 +3,13 @@ import { assertVoiceTransport, speechText, voiceEndpoint, DEFAULT_COMPANION } fr
 
 describe('长篇语音有限边界', () => {
   it('只开放登记的临时输入与只读输出，不允许其他调用方', () => {
-    for (const id of ['longform.voice.input', 'longform.voice.output', 'chat.voice.input', 'chat.voice.output']) {
+    for (const id of ['longform.voice.input', 'longform.voice.output']) {
       expect(() => assertVoiceTransport(id, 'src/lib/longform-voice/session.ts')).not.toThrow()
       expect(() => assertVoiceTransport(id, 'src/components/fake.tsx')).toThrow('未登记')
     }
-    expect(() => assertVoiceTransport('prose.chapter.generate', 'src/lib/longform-voice/session.ts')).toThrow()
+    for (const id of ['chat.voice.input', 'chat.voice.output', 'prose.chapter.generate']) {
+      expect(() => assertVoiceTransport(id, 'src/lib/longform-voice/session.ts')).toThrow()
+    }
   })
   it.each(['http://remote.example/v1', 'https://secret@example.org/v1', 'https://example.org/v1?key=secret', 'file:///tmp/a'])('拒绝不安全或混入凭据的地址 %s', (baseUrl) => {
     expect(() => voiceEndpoint({ ...DEFAULT_COMPANION.input, baseUrl, model: 'asr' }, 'transcriptions')).toThrow()

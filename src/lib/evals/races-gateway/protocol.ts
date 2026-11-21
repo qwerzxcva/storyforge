@@ -1,5 +1,5 @@
-import type { ChatMessage } from '../../types'
-import type { RacesGatewayBlindGradeFailureEvidenceV1 } from './types'
+import type { ChatMessage } from '../../types';
+import type { RacesGatewayBlindGradeFailureEvidenceV1 } from './types';
 
 export const RACES_GATEWAY_BLIND_GRADER_PROMPT_VERSION_V21 =
   'races-gateway-blind-grader-v21' as const

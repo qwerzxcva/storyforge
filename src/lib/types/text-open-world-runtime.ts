@@ -1,4 +1,4 @@
-import type { TextOpenWorldCalibrationConfigV1 } from '../open-world/product-config'
+import type { TextOpenWorldCalibrationConfigV1 } from '../legacy-compat/open-world/product-config';
 
 export const TEXT_OPEN_WORLD_RUNTIME_MODULE_KEYS_V1 = [
   'narrative',

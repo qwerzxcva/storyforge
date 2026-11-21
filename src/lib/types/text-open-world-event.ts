@@ -1,5 +1,5 @@
-import type { TextOpenWorldEffectPlanV1, TextOpenWorldEffectReceiptV1 } from './text-open-world-effect'
-import type { TextOpenWorldLongTermMemoryKindV1 } from './text-open-world-session'
+import type { TextOpenWorldEffectPlanV1, TextOpenWorldEffectReceiptV1 } from './text-open-world-effect';
+import type { TextOpenWorldLongTermMemoryKindV1 } from './text-open-world-session';
 
 export type TextOpenWorldCommandOutcomeV1 = 'success' | 'failure' | 'degraded'
 

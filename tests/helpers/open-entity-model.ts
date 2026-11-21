@@ -1,6 +1,6 @@
 import { setupOpenEntityPlanningV1 } from './open-entity-runtime'
-import { loadTtrpgOpenEntityContextV1 } from '../../src/lib/ttrpg/open-entity-context'
-import type { TtrpgOpenEntityModelSelectionV1 } from '../../src/lib/ttrpg/open-entity-model-contract'
+import { loadTtrpgOpenEntityContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-entity-context'
+import type { TtrpgOpenEntityModelSelectionV1 } from '../../src/lib/legacy-compat/ttrpg/open-entity-model-contract'
 import { OPEN_HUMAN_VIEWER } from './open-ttrpg-session'
 
 export async function setupOpenEntityModelV1(audience: 'party' | 'private' | 'gm-only' = 'party', configure?: Parameters<typeof setupOpenEntityPlanningV1>[0]) {

@@ -1,6 +1,6 @@
 import { buildUpperProductModulesV1 } from '../../src/lib/product-production/product-adapters'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { parseProductRuntimePackageV1 } from '../../src/lib/product-production/runtime-package'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { parseProductRuntimePackageV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
 import type { ProductProductionWorldSourceCatalogV2 } from '../../src/lib/product-production/world-source'
 import {
   buildProductWorldSourceBundleV1,
@@ -9,7 +9,7 @@ import {
 import {
   compileTtrpgProductionBriefV2,
   resolveTtrpgProductionRulePackV2,
-} from '../../src/lib/ttrpg/production-brief'
+} from '../../src/lib/legacy-compat/ttrpg/production-brief'
 import { compileProductionTtrpgCampaignV2 } from '../../src/lib/ttrpg/production-compiler'
 import type {
   ProductRuntimePackageV1,

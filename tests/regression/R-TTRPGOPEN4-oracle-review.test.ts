@@ -4,12 +4,12 @@ import { readyOpenTtrpgSessionV1, openEnvelopeV1, OPEN_HUMAN_VIEWER } from '../h
 import { startTtrpgOpenEpochV1, consultTtrpgOracleV1, reviewTtrpgOpenOracleCandidateV1, commitTtrpgOpenOracleCandidateFactV1,
   completeTtrpgOpenSessionZeroV1, retireTtrpgOpenSessionFactV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { generateTtrpgOpenOracleCandidateV1 } from '../../src/lib/ttrpg/open-intent-harness'
-import { readProductRuntimeState, readProductRuntimeStateVersion, branchProductRuntimeSession, applyProductRuntimeEvent } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState, readProductRuntimeStateVersion, branchProductRuntimeSession, applyProductRuntimeEvent } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
-import type { TtrpgOpenOracleFactProposalV1 } from '../../src/lib/ttrpg/open-fact-ledger'
+import type { TtrpgOpenOracleFactProposalV1 } from '../../src/lib/legacy-compat/ttrpg/open-fact-ledger'
 import * as adoption from '../../src/lib/ttrpg/open-oracle-adoption'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
-import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/ttrpg/open-player-context'
+import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-player-context'
 
 const fact: TtrpgOpenOracleFactProposalV1 = { kind: 'relation', subjectRef: 'keeper', predicateKey: 'knows', objectRef: 'harbor', canonicalValue: true,
   detail: '守灯人知道港口情况。', sourceFactRefs: ['fact.harbor'], audience: 'party', knownByActorKeys: ['hero','companion.1','companion.2'], supersedes: null, supersedeReason: null }

@@ -10,10 +10,10 @@ import * as processing from '../../src/lib/avg/image-processing'
 import { readAvgRawImageCandidateBytesV5,readAvgProcessedImageCandidateBytesV5,readAvgHistoricalImageCandidatesV5 } from '../../src/lib/avg/media-candidate-preview-v5'
 import { readAvgRawImageCandidateBytesV2,readAvgProcessedImageCandidateBytesV1 } from '../../src/lib/avg/assembly-service'
 import { readProductProductionDetailsV1,stopProductProductionV1 } from '../../src/lib/product-production/service'
-import { parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 import { exportProjectJSON,importProjectJSON } from '../../src/lib/export/json-export'
 import { deleteWork } from '../../src/lib/workspace/lifecycle'
-import { sha256MediaData } from '../../src/lib/product-production/media-blob-store'
+import { sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 
 beforeEach(async()=>{
   await db.delete();await db.open()

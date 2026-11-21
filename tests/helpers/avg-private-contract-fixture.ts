@@ -1,11 +1,11 @@
 import { createPortableFixtureLineage } from './product-release-v1'
-import type { AvgRuntimeModuleV1, AvgMediaBindingV1 } from '../../src/lib/avg/runtime-contract-v2'
+import type { AvgRuntimeModuleV1, AvgMediaBindingV1 } from '../../src/lib/legacy-compat/avg/runtime-contract-v2'
 import type { AvgSceneScriptV1, AvgProfessionalArtifactV1 } from '../../src/lib/avg/artifact-contract'
 import type { ProductRuntimePackageV2 } from '../../src/lib/types'
 import { fixture } from './avg-carrier-fixture'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { createProductReleaseManifestV2, productReleaseIdentityHashV2 } from '../../src/lib/product-production/runtime-package'
-import { createProductBuildPreviewManifestV2 } from '../../src/lib/product-production/preview-manifest'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { createProductReleaseManifestV2, productReleaseIdentityHashV2 } from '../../src/lib/legacy-compat/product-production/runtime-package'
+import { createProductBuildPreviewManifestV2 } from '../../src/lib/legacy-compat/product-production/preview-manifest'
 import { productReleaseUidV1 } from '../../src/lib/product/source-contracts'
 
 export const AVG_SCRIPT: AvgSceneScriptV1 = {

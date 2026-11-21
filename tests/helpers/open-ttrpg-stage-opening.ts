@@ -1,6 +1,6 @@
 /** Frozen protocol fixture; never claimed as normal model production or human acceptance. */
 import { db } from '../../src/lib/db/schema'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { setupChecksFixtureV1 } from './open-ttrpg-checks'
 import { operationInput, rt } from './open-ttrpg-branch-recovery'
 import { closeTtrpgOpenStageV1, recordTtrpgOpenHumanNarrationV1 } from '../../src/lib/ttrpg/runtime-commands'

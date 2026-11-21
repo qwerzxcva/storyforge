@@ -1,6 +1,6 @@
-import type { WorldReleaseManifestV4 } from '../types/narrative-release'
-import { WORLD_SEMANTIC_REGISTRY_V4 } from '../world-engine/semantic-registry-v4'
-import { worldQueryFailV1 } from './world-query-contract'
+import type { WorldReleaseManifestV4 } from '../types/narrative-release';
+import { WORLD_SEMANTIC_REGISTRY_V4 } from '../world-engine/semantic-registry-v4';
+import { worldQueryFailV1 } from './world-query-contract';
 
 /** Query metadata interpretation, independent of the immutable v4 IR compiler.
  * These labels are author directory metadata, never evidence or disclosure to

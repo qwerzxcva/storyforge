@@ -1,5 +1,5 @@
 import {expect, it} from 'vitest'
-import {buildInteractionContextWindow, interactionRetrievalView, rebaseInteractionStateForBranch} from '../../src/lib/character-interaction/runtime'
+import {buildInteractionContextWindow, interactionRetrievalView, rebaseInteractionStateForBranch} from '../../src/lib/legacy-compat/character-interaction/runtime'
 import {formatInteractionRuntimeContextV1} from '../../src/lib/character-interaction/context-format'
 import {buildChatHistoryCoordinatorProjectionV1} from '../../src/lib/character-interaction/history-coordinator-context'
 import {chatRelationshipHistoryRowsV1, chatRelationshipHistoryKeyV1} from '../../src/lib/character-interaction/relationship-history-context'

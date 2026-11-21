@@ -7,7 +7,7 @@ import {useCharacterInteractionPlayerStore as store} from '../../src/stores/char
 import {readChatNarrativeOptionsPreviewV1} from '../../src/lib/character-interaction/narrative-options-preview'
 import {db} from '../../src/lib/db/schema'
 import {adoptInteractionRuntimeCandidateV1, cancelInteractionRuntimeRunV1, generateInteractionRuntimeCandidateV1, readInteractionRuntimeCandidateV1} from '../../src/lib/character-interaction/harness'
-import {readProductRuntimeState, readProductRuntimeStateVersion, requestChatNarrativeTrigger, commitInteractionPlayerMessage, branchProductRuntimeSession} from '../../src/lib/character-interaction/runtime-api'
+import {readProductRuntimeState, readProductRuntimeStateVersion, requestChatNarrativeTrigger, commitInteractionPlayerMessage, branchProductRuntimeSession} from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import {readPendingChatNarrativeRunsV1} from '../../src/lib/character-interaction/narrative-turn'
 import {exportProjectJSON, importProjectJSON} from '../../src/lib/export/json-export'
 

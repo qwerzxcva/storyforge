@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { useAIConfigStore } from '../../src/stores/ai-config'
-import * as readiness from '../../src/lib/avg/sound-production-brief'
+import * as readiness from '../../src/lib/legacy-compat/avg/sound-production-brief'
 import * as verifier from '../../src/lib/product-production/media-runtime-verifier'
 import * as configuration from '../../src/lib/avg/sound-configuration'
 import { readAvgConfirmedSoundChoicesV1, readAvgSystemPlanForCompilationV1 } from '../../src/lib/avg/author-artifacts'

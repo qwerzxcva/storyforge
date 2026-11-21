@@ -4,17 +4,17 @@ import { setupPublicSituationAdoptionV1 } from '../helpers/open-public-situation
 import { openEnvelopeV1, OPEN_HUMAN_VIEWER, configureOpenSeatsV1 } from '../helpers/open-ttrpg-session'
 import { acceptTtrpgOpenPublicSituationV1, activateTtrpgOpenSessionSituationV1, completeTtrpgOpenSessionZeroV1, startTtrpgOpenEpochV1,
   startTtrpgOpenOperationV1, confirmTtrpgOpenOperationV1, ttrpgOpenOperationCommandIdV1, shareTtrpgOpenKnowledgeV1 } from '../../src/lib/ttrpg/runtime-commands'
-import { readProductRuntimeState, branchProductRuntimeSession } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState, branchProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
 import { finishTtrpgOpenPublicSituationDraftV1 } from '../../src/lib/ttrpg/open-public-situation-stop'
-import { createCompleteTtrpgCharacterSheetV2 } from '../../src/lib/ttrpg/character-sheet'
-import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/ttrpg/open-player-context'
+import { createCompleteTtrpgCharacterSheetV2 } from '../../src/lib/legacy-compat/ttrpg/character-sheet'
+import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-player-context'
 import { readTtrpgOpenTableV1, readTtrpgOpenManualActionCatalogV1 } from '../../src/lib/ttrpg/open-table-service'
-import { createTtrpgOpenDiscoveryPlanV1 } from '../../src/lib/ttrpg/open-knowledge-discovery'
+import { createTtrpgOpenDiscoveryPlanV1 } from '../../src/lib/legacy-compat/ttrpg/open-knowledge-discovery'
 import { resumeTtrpgOpenOperationV1 } from '../../src/lib/ttrpg/open-operation-coordinator'
 import { resumeTtrpgOpenPressureV1 } from '../../src/lib/ttrpg/open-pressure-coordinator'
 import { resumeTtrpgOpenSituationsV1 } from '../../src/lib/ttrpg/open-situation-coordinator'
-import { nextTtrpgOpenOperationStepV1 } from '../../src/lib/ttrpg/open-operation'
-import { hashTtrpgOpenKnowledgeShareConfirmationV1 } from '../../src/lib/ttrpg/open-knowledge-share'
+import { nextTtrpgOpenOperationStepV1 } from '../../src/lib/legacy-compat/ttrpg/open-operation'
+import { hashTtrpgOpenKnowledgeShareConfirmationV1 } from '../../src/lib/legacy-compat/ttrpg/open-knowledge-share'
 
 const HINT = 'ORIGINAL-PARTY-ONLY-HINT', CLUE = 'ORIGINAL-PARTY-ONLY-CLUE'
 describe('R-TTRPGOPEN10 original common request recipient fence', { timeout: 180000 }, () => {

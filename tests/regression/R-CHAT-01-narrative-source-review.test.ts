@@ -4,15 +4,15 @@ import {seedNarrativeRelationReleaseV4} from '../helpers/narrative-release-fixtu
 import {characterChatBaselineInput} from '../helpers/character-chat-baseline'
 import {createChatDraftV2, selectChatWorldV1, saveChatDraftV1, loadChatSourceProjectionV1,
   confirmChatSourceReviewV1} from '../../src/lib/character-interaction/draft-service'
-import {DEFAULT_CHAT_SETTINGS_V2, parseChatAuthoringSettings} from '../../src/lib/character-interaction/authoring-contract'
+import {DEFAULT_CHAT_SETTINGS_V2, parseChatAuthoringSettings} from '../../src/lib/legacy-compat/character-interaction/authoring-contract'
 import {loadChatBackgroundOptionsV1} from '../../src/lib/character-interaction/background-source'
 import {chatProjectionResourcesV1, createChatSourceProjectionDraftV1, readPreparedChatSourceProjectionViewV1,
-  type ChatSourceReviewV1} from '../../src/lib/character-interaction/source-projection'
+  type ChatSourceReviewV1} from '../../src/lib/legacy-compat/character-interaction/source-projection'
 import {loadProductProductionConsultationSourceV2, loadProductProductionWorldSourceCatalogV2} from '../../src/lib/product-production/world-source'
 import {draftProductProductionBriefV3, suggestProductStartingPoints} from '../../src/lib/product-production/consultation'
-import {createProductProductionSourcePlanV1} from '../../src/lib/product-production/source-contracts'
+import {createProductProductionSourcePlanV1} from '../../src/lib/legacy-compat/product-production/source-contracts'
 import {compileInteractionModulesV1} from '../../src/lib/product-production/product-module-compilers'
-import {createInitialInteractionState} from '../../src/lib/character-interaction/runtime'
+import {createInitialInteractionState} from '../../src/lib/legacy-compat/character-interaction/runtime'
 
 beforeEach(async () => {db.close(); await db.delete(); await db.open()})
 afterEach(() => db.close())

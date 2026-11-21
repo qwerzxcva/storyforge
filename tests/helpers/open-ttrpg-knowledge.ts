@@ -1,6 +1,6 @@
 /** Isolated real API fixture, no model transport or private config. */
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
-import { parseTtrpgRuntimeStateV2 } from '../../src/lib/ttrpg/open-runtime-contract'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
+import { parseTtrpgRuntimeStateV2 } from '../../src/lib/legacy-compat/ttrpg/open-runtime-contract'
 import { startTtrpgOpenEpochV1, startTtrpgOpenOperationV1, confirmTtrpgOpenOperationV1, changeTtrpgSituationV1,
   ttrpgOpenOperationCommandIdV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { openEnvelopeV1, readyOpenTtrpgSessionV1, OPEN_HUMAN_VIEWER } from './open-ttrpg-session'

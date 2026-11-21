@@ -1,5 +1,7 @@
 # AVG 三条生产流程的商业对标与研发路线研究
 
+> Android fork scope: world engine, longform, and longform nodes. Links marked “historical source” document retired implementations; they do not indicate available production or runtime features.
+
 > 版本：1.5.1 · 日期：2026-10-13 · 权威层级：L4 研究与代码核对证据。
 > 产品：AVG/Galgame。关联：总纲 §6、E-AVG-01。
 > 代码核对基线：`516a98bff7cb03eab2414aecfcd0ce92102cbf9e`，已迁到包含 origin/main `45c541e9` 的独立工作树；相较最初核对提交，AVG 代码未变。
@@ -58,19 +60,19 @@ Git 归档中的 `AVG-1-VISUAL-NARRATIVE-DESIGN.md` 已经明确背景、多人�
 
 | 闭包位置 | 当前证据 | 后续判断 |
 |---|---|---|
-| 作者入口 | [AvgPage](../../src/pages/AvgPage.tsx)、[navigation](../../src/components/avg/navigation.ts)：作品库、世界、制作台、版本、游玩；S2 草稿可无世界保存 | 保留现有入口，在制作台内增强场景工作流 |
-| 产品定向 | [authoring-contract](../../src/lib/avg/authoring-contract.ts)：身份、开场、体验、时长、结局、路线/变量描述、画幅、视听等级 | 目前适合轻量意图表达；需要专业剧本、演出和资产范围的结构化约束 |
-| 会谈读取 | [consultation](../../src/lib/avg/consultation.ts) 与 `avg.consult.v1`：读取 `avg.authoring`；提示明确尚未读取世界原文 | 会谈已有候选确认；后续世界适配评估须经正式网关，不能仅加强提示词后声称已懂世界 |
-| 世界来源 | [AVG_WORLD_REQUIREMENT_ADAPTER_V1](../../src/lib/product/world-requirement-adapters.ts)、production Context Gateway | 复用现有来源、权限、版本与渐进读取体系 |
-| 候选及正式采纳 | [FIELD_REGISTRY](../../src/lib/registry/field-registry.ts) 已登记 Production Brief、Plan、Artifact 等写口；[adoption](../../src/lib/product-production/adoption.ts) 管发布采纳 | 新 AVG 产物应接该边界，禁止另建 AI/DB 写入口 |
-| 内容生产 | [createProductProductionPlanV3](../../src/lib/product-production/plan.ts)：AVG 仍走通用设计、叙事、产品模块和媒资需求路径 | 缺少与 AVG 对应的专业分工和中间产物；不能把文字冒险专属生产图原样复制过来 |
-| 默认组装 | [production-executor](../../src/lib/product-production/production-executor.ts) 的 RuntimePackage 组装按素材类型生成基础 Cue | 引用绑定已经存在，逐场景导演设计仍需增强 |
-| 演出运行 | [AVG 类型](../../src/lib/types/avg.ts)、[applyAvgCue](../../src/lib/avg/runtime.ts)、[cue-timeline](../../src/lib/avg/cue-timeline.ts)：白名单 Cue、舞台状态、快照；等待按 Cue 顺序累加 | 增强语音/文字/动画之间的调度和确定性恢复语义 |
-| 作者返修 | [prepareAvgRevisionV1 / runAvgRevisionV1](../../src/lib/avg/revision-production.ts)：作者修订进入新版本，保护身份、来源、旧 Build 和素材归属 | 已有可靠入口；当前修订仍以整包方案为主，应定位场景及受影响产物 |
-| 媒资生命周期 | [editor-service](../../src/lib/avg/editor-service.ts)、[PROJECT_TABLES](../../src/lib/registry/project-tables.ts)：AVG 草稿素材、共享 Blob、备份与重映射 | 保留完整生命周期；新增表之前先证明现有 Artifact 无法承载 |
-| 媒资检查 | [media-quality-policy](../../src/lib/product-production/media-quality-policy.ts)、runtime verifier：尺寸、alpha、音频响度/峰值/循环及 hash 证据 | 技术可用已有门；人物一致、构图、情绪和声音表现还需实际内容评审 |
-| 玩家路径 | [AvgGamePlayer](../../src/components/text-game/AvgGamePlayer.tsx)：目录、详情、舞台、历史、快进、自动、检查点、独立存档 | 日常阅读基础已有；作品封面、路线回放、鉴赏、分通道声音和演出体验可继续完善 |
-| 分发 | [ProductDistributionBundleV2](../../src/lib/product-platform/distribution-bundle.ts) 已有冻结 release 与媒资的自包含分发基础 | AVG 作者备份、可导入分发包、独立离线播放器、Steam 发行是不同交付；最后两项仍需专项验证 |
+| 作者入口 | [AvgPage — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/pages/AvgPage.tsx)、[navigation — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/components/avg/navigation.ts)：作品库、世界、制作台、版本、游玩；S2 草稿可无世界保存 | 保留现有入口，在制作台内增强场景工作流 |
+| 产品定向 | [authoring-contract — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/avg/authoring-contract.ts)：身份、开场、体验、时长、结局、路线/变量描述、画幅、视听等级 | 目前适合轻量意图表达；需要专业剧本、演出和资产范围的结构化约束 |
+| 会谈读取 | [consultation — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/avg/consultation.ts) 与 `avg.consult.v1`：读取 `avg.authoring`；提示明确尚未读取世界原文 | 会谈已有候选确认；后续世界适配评估须经正式网关，不能仅加强提示词后声称已懂世界 |
+| 世界来源 | [AVG_WORLD_REQUIREMENT_ADAPTER_V1 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/product/world-requirement-adapters.ts)、production Context Gateway | 复用现有来源、权限、版本与渐进读取体系 |
+| 候选及正式采纳 | [FIELD_REGISTRY](../../src/lib/registry/field-registry.ts) 已登记 Production Brief、Plan、Artifact 等写口；[adoption — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/product-production/adoption.ts) 管发布采纳 | 新 AVG 产物应接该边界，禁止另建 AI/DB 写入口 |
+| 内容生产 | [createProductProductionPlanV3 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/product-production/plan.ts)：AVG 仍走通用设计、叙事、产品模块和媒资需求路径 | 缺少与 AVG 对应的专业分工和中间产物；不能把文字冒险专属生产图原样复制过来 |
+| 默认组装 | [production-executor — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/product-production/production-executor.ts) 的 RuntimePackage 组装按素材类型生成基础 Cue | 引用绑定已经存在，逐场景导演设计仍需增强 |
+| 演出运行 | [AVG 类型](../../src/lib/types/avg.ts)、[applyAvgCue — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/avg/runtime.ts)、[cue-timeline — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/avg/cue-timeline.ts)：白名单 Cue、舞台状态、快照；等待按 Cue 顺序累加 | 增强语音/文字/动画之间的调度和确定性恢复语义 |
+| 作者返修 | [prepareAvgRevisionV1 / runAvgRevisionV1 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/avg/revision-production.ts)：作者修订进入新版本，保护身份、来源、旧 Build 和素材归属 | 已有可靠入口；当前修订仍以整包方案为主，应定位场景及受影响产物 |
+| 媒资生命周期 | [editor-service — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/avg/editor-service.ts)、[PROJECT_TABLES](../../src/lib/registry/project-tables.ts)：AVG 草稿素材、共享 Blob、备份与重映射 | 保留完整生命周期；新增表之前先证明现有 Artifact 无法承载 |
+| 媒资检查 | [media-quality-policy — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/product-production/media-quality-policy.ts)、runtime verifier：尺寸、alpha、音频响度/峰值/循环及 hash 证据 | 技术可用已有门；人物一致、构图、情绪和声音表现还需实际内容评审 |
+| 玩家路径 | [AvgGamePlayer — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/components/text-game/AvgGamePlayer.tsx)：目录、详情、舞台、历史、快进、自动、检查点、独立存档 | 日常阅读基础已有；作品封面、路线回放、鉴赏、分通道声音和演出体验可继续完善 |
+| 分发 | [ProductDistributionBundleV2 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/product-platform/distribution-bundle.ts) 已有冻结 release 与媒资的自包含分发基础 | AVG 作者备份、可导入分发包、独立离线播放器、Steam 发行是不同交付；最后两项仍需专项验证 |
 | 测试 | [AVG E2E](../../tests/e2e/avg-integration.spec.ts)、R-AVG2～5 与生产/媒资回归 | 证明相应路径有测试；其中会谈拦截和预写 fixture 不能证明真实模型文学/视听质量 |
 
 最应优先处理的五个具体差距：
@@ -81,10 +83,10 @@ Git 归档中的 `AVG-1-VISUAL-NARRATIVE-DESIGN.md` 已经明确背景、多人�
 4. **角色表情和作品包装可继续提升。** show-actor 用完整 asset 替换角色状态；分层表情与身体组合尚不能由资源类别名称推定已实现。目录详情仍使用通用书本图形和场景/对白/Cue 数量，需要作品封面、简介、真实时长、内容提示及重玩价值。
 5. **S2、生产能力和商业证据需要对齐。** 播放类型已有 voice，S2 音频等级目前只有 none/music-sfx；商业候选的 intent/adapter 标志不等于逐作品体验、费用、权利和外部分发已验收。
 
-进一步核对 [ProductMediaRequestV1、assertRequest 与实际 adapter 请求](../../src/lib/product-production/media-adapters.ts) 后，还存在两项必须在立项前区分的能力边界：
+进一步核对 [ProductMediaRequestV1、assertRequest 与实际 adapter 请求 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/product-production/media-adapters.ts) 后，还存在两项必须在立项前区分的能力边界：
 
 - **角色参考文字与参考图片实传不同。** 当前 AVG 使用的通用生成请求没有参考图片字节/引用输入，已实现图片 adapter 的请求体主要是文本 Prompt 和尺寸等参数。不能以角色锚点元数据推定已经实现参考图编辑、换表情或稳定复现人物。授权导入的同一角色素材是现有路径；自动生成一致变体需要新合同和实际传输/质量证据。其它产品的专用媒体流程不构成本路径的证明。
-- **播放导入语音与自动配音生产不同。** 通用 ProductMediaClassV1 只有 image/music/sfx，assertRequest 的 sfx 类型只接受 sfx/ambience；[executeAudioTask](../../src/lib/product-production/production-executor.ts) 将非 bgm 需求归入 sfx。当前播放器的 voice 槽不能证明该生成链已经支持 TTS、说话人控制和逐句配音。需要专用语音能力合同，或在切片中明确使用授权导入的配音。
+- **播放导入语音与自动配音生产不同。** 通用 ProductMediaClassV1 只有 image/music/sfx，assertRequest 的 sfx 类型只接受 sfx/ambience；[executeAudioTask — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/product-production/production-executor.ts) 将非 bgm 需求归入 sfx。当前播放器的 voice 槽不能证明该生成链已经支持 TTS、说话人控制和逐句配音。需要专用语音能力合同，或在切片中明确使用授权导入的配音。
 
 以上是本次源码核对结果，未扩大为缺陷修复任务。实现时应为这些场景取得定向反例证据。
 

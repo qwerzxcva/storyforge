@@ -1,13 +1,10 @@
-import ResizableInputArea, { type AreaControlV1 } from '../shared/ResizableInputArea'
-import { inputAreaLayoutV1 } from '../../lib/input-area-layout'
-import { Trash2 } from 'lucide-react'
-import type { ReactNode } from 'react'
-import { useWorldSettingsLayout, WorldSettingsToolbar } from '../longform/WorldSettingsLayout'
-import {
-  CONFLICT_PRIORITY_LABELS,
-  isEntryEmpty,
-} from '../../lib/types/world-rules'
-import type { ConflictPriority, WorldRuleEntry } from '../../lib/types/world-rules'
+import ResizableInputArea, { type AreaControlV1 } from '../shared/ResizableInputArea';
+import { inputAreaLayoutV1 } from '../../lib/input-area-layout';
+import { Trash2 } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { useWorldSettingsLayout, WorldSettingsToolbar } from '../longform/WorldSettingsLayout';
+import { CONFLICT_PRIORITY_LABELS, isEntryEmpty } from '../../lib/types/world-rules';
+import type { ConflictPriority, WorldRuleEntry } from '../../lib/types/world-rules';
 
 interface Props {
   resizableInputs?: boolean

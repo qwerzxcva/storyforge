@@ -1,13 +1,13 @@
 import { beforeEach, afterEach, describe, it, expect } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { seedOpenTtrpgSessionV1, configureOpenSeatsV1, openEnvelopeV1, OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
-import { configureTtrpgSessionParticipantV2, readTtrpgSessionParticipantsV2 } from '../../src/lib/ttrpg/participants'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
+import { configureTtrpgSessionParticipantV2, readTtrpgSessionParticipantsV2 } from '../../src/lib/legacy-compat/ttrpg/participants'
 import { completeTtrpgOpenSessionZeroV1, startTtrpgOpenRunV1 } from '../../src/lib/ttrpg/runtime-commands'
-import { parseTtrpgOpenAuthorizationV1, type TtrpgOpenAuthorizationV1 } from '../../src/lib/ttrpg/open-authorization'
+import { parseTtrpgOpenAuthorizationV1, type TtrpgOpenAuthorizationV1 } from '../../src/lib/legacy-compat/ttrpg/open-authorization'
 import { createTtrpgOpenAudioScopeV1, assertTtrpgOpenAudioScopeAuthorityV1, parseTtrpgOpenAudioScopeV1,
-  parseTtrpgOpenScopedAudioEventV1, projectTtrpgOpenScopedAudioV1, projectTtrpgOpenAudioTransitionsV1, type TtrpgOpenScopedAudioEventV1 } from '../../src/lib/ttrpg/open-audio-scope'
-import type { TtrpgAudioAudienceV1 } from '../../src/lib/ttrpg/open-audio-runtime'
+  parseTtrpgOpenScopedAudioEventV1, projectTtrpgOpenScopedAudioV1, projectTtrpgOpenAudioTransitionsV1, type TtrpgOpenScopedAudioEventV1 } from '../../src/lib/legacy-compat/ttrpg/open-audio-scope'
+import type { TtrpgAudioAudienceV1 } from '../../src/lib/legacy-compat/ttrpg/open-audio-runtime'
 
 async function setup(humanGm = true, publicAllowed = true) {
   const f = await seedOpenTtrpgSessionV1('P10 pure audio scope foundation', pkg => {

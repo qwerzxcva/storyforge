@@ -1,6 +1,6 @@
 import { avgSystemFixture } from './avg-system-fixture'
-import type { AvgSystemPlanV2 } from '../../src/lib/avg/system-contract'
-import type { AvgInventoryPlanV1 } from '../../src/lib/avg/inventory-contract'
+import type { AvgSystemPlanV2 } from '../../src/lib/legacy-compat/avg/system-contract'
+import type { AvgInventoryPlanV1 } from '../../src/lib/legacy-compat/avg/inventory-contract'
 
 export function avgInventoryFixture(): AvgSystemPlanV2 {
   const item = (key: string, name: string, unique = true): AvgInventoryPlanV1['items'][number] => ({ key, category: 'item', name, description: '原创工程测试物件。', unique, maxQuantity: unique ? 1 : 3,

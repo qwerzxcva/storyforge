@@ -1,9 +1,9 @@
 import {afterEach, beforeEach, expect, it} from 'vitest'
 import {db} from '../../src/lib/db/schema'
 import type {ProductProductionCommandV1, ProductProductionPlanTaskV3, ProductProductionPlanV3} from '../../src/lib/types'
-import {createChatMediaReviewSourceV1} from '../../src/lib/character-interaction/media-selection'
-import {canonicalProductProductionJsonV2, hashProductProductionValueV2} from '../../src/lib/product-production/hash'
-import {parseProductProductionCommandV1} from '../../src/lib/product-production/contracts'
+import {createChatMediaReviewSourceV1} from '../../src/lib/legacy-compat/character-interaction/media-selection'
+import {canonicalProductProductionJsonV2, hashProductProductionValueV2} from '../../src/lib/legacy-compat/product-production/hash'
+import {parseProductProductionCommandV1} from '../../src/lib/legacy-compat/product-production/contracts'
 import {executeProductProductionCommand} from '../../src/lib/product-production/commands'
 import {readCurrentChatMediaReviewV1, createChatMediaAuthorConfirmationV1, readChatMediaAuthorConfirmationV1,
   CHAT_MEDIA_REVIEW_ARTIFACT, CHAT_MEDIA_AUTHOR_GATE, CHAT_MEDIA_SELECTION_ARTIFACT} from '../../src/lib/product-production/chat-media-authority'

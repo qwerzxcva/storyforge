@@ -1,4 +1,4 @@
-import type { PromptParameter } from '../types/prompt'
+import type { PromptParameter } from '../types/prompt';
 
 export const VOLUME_OUTLINE_PARAMETERS: PromptParameter[] = [
   {

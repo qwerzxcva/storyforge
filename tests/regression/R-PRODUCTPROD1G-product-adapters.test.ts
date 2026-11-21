@@ -11,17 +11,17 @@ import {
   buildUpperProductModulesV1,
   listUpperProductProductionAdaptersV1,
 } from '../../src/lib/product-production/product-adapters'
-import { parseProductRuntimePackageV1 } from '../../src/lib/product-production/runtime-package'
-import { createInitialInteractionState } from '../../src/lib/character-interaction/runtime'
-import { adventureNarrativeActionContext, applyAdventureEffects, availableAdventureActions, createInitialAdventureState } from '../../src/lib/adventure/runtime'
+import { parseProductRuntimePackageV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
+import { createInitialInteractionState } from '../../src/lib/legacy-compat/character-interaction/runtime'
+import { adventureNarrativeActionContext, applyAdventureEffects, availableAdventureActions, createInitialAdventureState } from '../../src/lib/legacy-compat/adventure/runtime'
 import { db } from '../../src/lib/db/schema'
-import { createProductBuildPreviewManifestV1 } from '../../src/lib/product-production/preview-manifest'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { createProductBuildPreviewManifestV1 } from '../../src/lib/legacy-compat/product-production/preview-manifest'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { createConfiguredProductProductionExecutorV1 } from '../../src/lib/product-production/production-executor'
-import { createProductRuntimeInstanceFromSource } from '../../src/lib/product/runtime-instances'
+import { createProductRuntimeInstanceFromSource } from '../../src/lib/legacy-compat/product/runtime-instances'
 import { createWorldRevision, publishWorldRevision } from '../../src/lib/world-engine/releases'
 import { createWorkspace } from '../../src/lib/workspace/create-workspace'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-api'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-api'
 import {
   CURRENT_PRODUCT_RESOURCE_KEYS,
   CURRENT_PRODUCT_SOURCE_CATALOG,

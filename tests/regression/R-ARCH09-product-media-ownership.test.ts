@@ -2,14 +2,14 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { deleteProductRuntimeSession } from '../../src/lib/avg/runtime-api'
 import { importProductRuntimeMediaAssetV1 } from '../../src/lib/product/runtime-media-library'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import {
   collectUnreferencedMediaBlobObjects,
   putMediaBlobObject,
   sha256MediaData,
-} from '../../src/lib/product-production/media-blob-store'
+} from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import { readProductReleaseMediaBytes } from '../../src/lib/product-production/release-media'
-import { parseProductRuntimePackageV1 } from '../../src/lib/product-production/runtime-package'
+import { parseProductRuntimePackageV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
 import type {
   FrozenRuntimeMediaAssetV2,
   ProductRuntimePackageV1,

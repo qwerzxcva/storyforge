@@ -1,7 +1,7 @@
 import {beforeEach, afterEach, it, expect} from 'vitest'
 import {db} from '../../src/lib/db/schema'
 import {createChatDraftV1, readChatDraftV1} from '../../src/lib/character-interaction/draft-service'
-import {DEFAULT_CHAT_SETTINGS} from '../../src/lib/character-interaction/authoring-contract'
+import {DEFAULT_CHAT_SETTINGS} from '../../src/lib/legacy-compat/character-interaction/authoring-contract'
 import {generateChatConsultationV2, adoptChatConsultationV2, readLatestChatConsultationV2, cancelChatConsultationV2} from '../../src/lib/character-interaction/consultation-harness'
 import {exportProjectJSON, importProjectJSON} from '../../src/lib/export/json-export'
 

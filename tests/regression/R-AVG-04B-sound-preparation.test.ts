@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { useAIConfigStore } from '../../src/stores/ai-config'
-import * as readiness from '../../src/lib/avg/sound-production-brief'
+import * as readiness from '../../src/lib/legacy-compat/avg/sound-production-brief'
 import { avgSoundPlanningFixtureV1 } from '../helpers/avg-sound-planning-fixture'
 import { avgSoundLibraryFixtureV1, avgSoundWireFixtureV1 } from '../helpers/avg-sound-provider-fixture'
 import { prepareNativeAvgAssembly } from '../helpers/avg-production-assembly-fixture'
@@ -11,8 +11,8 @@ import { prepareAvgAssemblyBriefV1, startAvgAssemblyV1, runAvgAssemblyV1 } from 
 import { readProductProductionDetailsV1, evaluateProductProductionAuthorizationReadinessV1, inspectProductProductionCapabilityReadinessV1 } from '../../src/lib/product-production/service'
 import { parseAvgAuthorWorkspaceV1 } from '../../src/lib/avg/author-workspace-contract'
 import { saveAvgAuthorWorkspaceV1 } from '../../src/lib/avg/editor-service'
-import { avgSoundProductionBudgetV1 } from '../../src/lib/avg/sound-production-policy'
-import { parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { avgSoundProductionBudgetV1 } from '../../src/lib/legacy-compat/avg/sound-production-policy'
+import { parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 
 beforeEach(async () => {
   await db.delete(); await db.open()

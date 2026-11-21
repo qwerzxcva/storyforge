@@ -3,7 +3,7 @@ import { db } from '../../src/lib/db/schema'
 import {
   createTextOpenWorldSourcePinCandidateArtifactsV1,
   validateTextOpenWorldSourcePinBundleV1,
-} from '../../src/lib/open-world/source-pin'
+} from '../../src/lib/legacy-compat/open-world/source-pin'
 import { acceptProductBuildArtifact, acceptTextOpenWorldSourcePinBundleArtifactsV1 } from '../../src/lib/product-production/artifact-store'
 import type { TextOpenWorldSourcePinBundleV1 } from '../../src/lib/types'
 import { seedQuality005LegacyNovelV1, snapshotQuality005RowsV1 } from '../helpers/quality005-legacy-novel'

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
-import { createProductBuildRootTerminalReceiptV1, createLegacyProductBuildRootTerminalReceiptV1 } from '../../src/lib/product-production/receipts'
+import { createProductBuildRootTerminalReceiptV1, createLegacyProductBuildRootTerminalReceiptV1 } from '../../src/lib/legacy-compat/product-production/receipts'
 import { createProductBuildRootBudgetEvidenceV1, verifyProductBuildRootBudgetEvidenceV1,
-  type ProductBuildBudgetRunReferenceV1 } from '../../src/lib/product-production/root-budget-evidence'
+  type ProductBuildBudgetRunReferenceV1 } from '../../src/lib/legacy-compat/product-production/root-budget-evidence'
 
 const h = (c: string) => c.repeat(64)
 const usage = { modelCalls: 1, inputTokens: 10, outputTokens: 20, mediaCalls: 0,

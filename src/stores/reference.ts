@@ -1,13 +1,10 @@
-import { create } from 'zustand'
-import Dexie, { type Transaction } from 'dexie'
-import { db } from '../lib/db/schema'
-import type { Reference, CreateReferenceInput, ReferenceChunkAnalysis, WorkspaceScope, ImportSession } from '../lib/types'
-import {
-  deleteReferenceWithAnalysis,
-  getReferenceAnalysisRunChunks,
-} from '../lib/reference-analysis/lifecycle'
-import { assertRecordInScope, readOwnedRows, resolveScope, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope'
-import { coordinatePendingEditV1 } from '../lib/authoring/pending-edit-coordinator'
+import { create } from 'zustand';
+import Dexie, { type Transaction } from 'dexie';
+import { db } from '../lib/db/schema';
+import type { Reference, CreateReferenceInput, ReferenceChunkAnalysis, WorkspaceScope, ImportSession } from '../lib/types';
+import { deleteReferenceWithAnalysis, getReferenceAnalysisRunChunks } from '../lib/reference-analysis/lifecycle';
+import { assertRecordInScope, readOwnedRows, resolveScope, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope';
+import { coordinatePendingEditV1 } from '../lib/authoring/pending-edit-coordinator';
 
 interface ReferenceStore {
   references: Reference[]

@@ -1,7 +1,7 @@
-import { seedRandom } from '../engine/random'
-import type { AtlasGeometry, Point } from './geometry'
-import type { AtlasLayers } from './layers'
-import { along, atlasSurfacePaths, line, watercourse } from './paths'
+import { seedRandom } from '../engine/random';
+import type { AtlasGeometry, Point } from './geometry';
+import type { AtlasLayers } from './layers';
+import { along, atlasSurfacePaths, line, watercourse } from './paths';
 
 type Brush = CanvasRenderingContext2D
 const paper = '#ebddb9', pen = '#584833', water = '#96a798'

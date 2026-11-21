@@ -7,8 +7,8 @@ import {
   deriveTextOpenWorldPassiveStaticModifiersV2,
   settleTextOpenWorldCombatStatusesAfterTurnV2,
   validateTextOpenWorldCombatStatusStateV2,
-} from '../../src/lib/open-world/combat-status'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
+} from '../../src/lib/legacy-compat/open-world/combat-status'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
 import type {
   TextOpenWorldCombatRuntimeStateV2,
   TextOpenWorldProgressionModuleV2,

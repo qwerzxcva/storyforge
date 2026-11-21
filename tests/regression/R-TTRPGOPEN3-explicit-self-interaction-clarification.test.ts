@@ -4,10 +4,10 @@ import { seedOpenInteractionV1 } from '../helpers/open-ttrpg-interaction'
 import { openEnvelopeV1 } from '../helpers/open-ttrpg-session'
 import { generateTtrpgOpenIntentCandidateV1, generateTtrpgOpenCompanionCandidateV1 } from '../../src/lib/ttrpg/open-intent-harness'
 import { startTtrpgOpenEpochV1, clarifyTtrpgOpenIntentCandidateV2, startTtrpgOpenIntentCandidateOperationV1 } from '../../src/lib/ttrpg/runtime-commands'
-import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/legacy-compat/product/runtime-core'
 import { inspectTtrpgOpenIntentRoutingV2 } from '../../src/lib/ttrpg/open-intent-clarification'
-import { routeTtrpgOpenIntentV1, routeTtrpgOpenIntentV2 } from '../../src/lib/ttrpg/open-intent'
-import { ttrpgOpenPredicateContextV1 } from '../../src/lib/ttrpg/open-rule-plan'
+import { routeTtrpgOpenIntentV1, routeTtrpgOpenIntentV2 } from '../../src/lib/legacy-compat/ttrpg/open-intent'
+import { ttrpgOpenPredicateContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-rule-plan'
 
 describe('R-TTRPGOPEN3 explicitly selected own interaction target', { timeout: 60000 }, () => {
   beforeEach(async () => { await db.delete(); await db.open() })

@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import * as runtimeCore from '../../src/lib/product/runtime-core'
-import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/ttrpg/open-player-context'
+import * as runtimeCore from '../../src/lib/legacy-compat/product/runtime-core'
+import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-player-context'
 import { readyOpenTtrpgSessionV1 } from '../helpers/open-ttrpg-session'
 describe('R-TTRPGOPEN1 exact actor read model', () => {
   beforeEach(async () => { await db.delete(); await db.open() })

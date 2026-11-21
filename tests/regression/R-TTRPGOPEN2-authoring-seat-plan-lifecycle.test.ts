@@ -4,15 +4,15 @@ import { createSavedOpenDesignFixtureV1, openDesignResponseFixtureV1 } from '../
 import { createFreshOpenDraftFixtureV1 } from '../helpers/open-ttrpg-fresh-authoring'
 import { withOpenAuthoringSeatPlanFixtureV1 } from '../helpers/ttrpg-open-seat-plan'
 import { readTtrpgDraft, saveTtrpgDraft, prepareTtrpgBrief } from '../../src/lib/ttrpg/authoring-service'
-import { settingsFromTtrpgDraft, isTtrpgAuthoringSettingsV2 } from '../../src/lib/ttrpg/authoring-contract'
+import { settingsFromTtrpgDraft, isTtrpgAuthoringSettingsV2 } from '../../src/lib/legacy-compat/ttrpg/authoring-contract'
 import { parseTtrpgOpenRuleSystemArtifactV1 } from '../../src/lib/ttrpg/open-production-artifacts'
 import { prepareTtrpgOpenAuthoringDesignSourceV1, generateTtrpgOpenAuthoringDesignCandidateV1,
   adoptTtrpgOpenAuthoringDesignV1 } from '../../src/lib/ttrpg/open-authoring-design'
 import { openProductionCompilerFixtureV1 } from '../helpers/open-ttrpg-production-artifacts'
 import { compileProductionTtrpgOpenCampaignV2 } from '../../src/lib/ttrpg/open-production-compiler'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 import { deleteWork } from '../../src/lib/workspace/lifecycle'
 
 describe('R-TTRPGOPEN2 reserved identity existing draft/source/adopt/production lifecycle', () => {

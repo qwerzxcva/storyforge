@@ -1,76 +1,27 @@
-import { affirmativeAuthorActionsV1, parseAuthorOrdinalV1 } from './author-intent'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { chat, resolveRequestConfig, type ChatResult } from '../ai/client'
-import { db } from '../db/schema'
-import type {
-  GenerationGateIssue,
-  GenerationNode,
-  PreparedGenerationNode,
-} from '../generation/generation-node'
-import { prepareGenerationNode } from '../generation/generation-node'
-import {
-  adoptGeneratedOutlineItems,
-  type AdoptGeneratedOutlineItemsResult,
-  type GeneratedOutlineItem,
-} from '../outline/adopt-generation'
-import { buildOutlineGenerationPlan } from '../outline/generation-plan'
-import type { OutlineGenerationRequest } from '../outline/generation-request'
-import {
-  prepareOutlineGatewayAssemblyV1,
-} from '../outline/gateway-context'
-import type { AssembleContextResult } from '../registry/types'
-import {
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveScope,
-  scopeTransactionTables,
-} from '../workspace/scope'
-import type {
-  AIConfig,
-  ChatMessage,
-  OutlineNode,
-  Project,
-  Work,
-  WorkspaceScope,
-} from '../types'
-import {
-  attachAgentContextInputStateV1,
-  evidenceFromContextResult,
-  type AgentContextEvidence,
-  type AgentContextProfile,
-} from './context-policy'
-import type { AgentContextCompressionRuntimeV1 } from './context-compression'
-import {
-  getDefaultAgentSkillV1,
-  buildAgentSkillInputGuidanceV1,
-  resolveAgentSkillV1,
-  type AgentSkillExecutionModeV1,
-  type AgentSkillId,
-} from './skill-registry'
-import { parseStructuredOutputV1 } from './structured-output-pipeline'
-import {
-  buildNarrativeBriefV1,
-  formatNarrativeBriefForPromptV1,
-  type NarrativeBriefV1,
-} from './narrative-brief'
-import {
-  createCreativeIssueV1,
-  runCreativeExecutionV1,
-  type CreativeExecutionResultV1,
-  type CreativeParseOutcomeV1,
-  type CreativeRawModelResultV1,
-} from './creative-execution'
-import type { CreativeAssumptionV1, CreativeQualityModeV1 } from './creative-reliability'
-import {
-  parseCreativeArtifactV1,
-  type CreativeArtifactV1,
-} from './creative-reliability'
-import type { AgentTeamBudgetTracker } from './team-budget'
-import {
-  contextGatewayInputStateSourceKeysV1,
-  projectContextGatewayInputStateV1,
-} from './context-gateway-input'
-import type { ContextGatewayExecutionV1 } from '../context-gateway/execution'
+import { affirmativeAuthorActionsV1, parseAuthorOrdinalV1 } from './author-intent';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { chat, resolveRequestConfig, type ChatResult } from '../ai/client';
+import { db } from '../db/schema';
+import type { GenerationGateIssue, GenerationNode, PreparedGenerationNode } from '../generation/generation-node';
+import { prepareGenerationNode } from '../generation/generation-node';
+import { adoptGeneratedOutlineItems, type AdoptGeneratedOutlineItemsResult, type GeneratedOutlineItem } from '../outline/adopt-generation';
+import { buildOutlineGenerationPlan } from '../outline/generation-plan';
+import type { OutlineGenerationRequest } from '../outline/generation-request';
+import { prepareOutlineGatewayAssemblyV1 } from '../outline/gateway-context';
+import type { AssembleContextResult } from '../registry/types';
+import { readOwnedRows, resolveReadScopeLike, resolveScope, scopeTransactionTables } from '../workspace/scope';
+import type { AIConfig, ChatMessage, OutlineNode, Project, Work, WorkspaceScope } from '../types';
+import { attachAgentContextInputStateV1, evidenceFromContextResult, type AgentContextEvidence, type AgentContextProfile } from './context-policy';
+import type { AgentContextCompressionRuntimeV1 } from './context-compression';
+import { getDefaultAgentSkillV1, buildAgentSkillInputGuidanceV1, resolveAgentSkillV1, type AgentSkillExecutionModeV1, type AgentSkillId } from './skill-registry';
+import { parseStructuredOutputV1 } from './structured-output-pipeline';
+import { buildNarrativeBriefV1, formatNarrativeBriefForPromptV1, type NarrativeBriefV1 } from './narrative-brief';
+import { createCreativeIssueV1, runCreativeExecutionV1, type CreativeExecutionResultV1, type CreativeParseOutcomeV1, type CreativeRawModelResultV1 } from './creative-execution';
+import type { CreativeAssumptionV1, CreativeQualityModeV1 } from './creative-reliability';
+import { parseCreativeArtifactV1, type CreativeArtifactV1 } from './creative-reliability';
+import type { AgentTeamBudgetTracker } from './team-budget';
+import { contextGatewayInputStateSourceKeysV1, projectContextGatewayInputStateV1 } from './context-gateway-input';
+import type { ContextGatewayExecutionV1 } from '../context-gateway/execution';
 
 export const OUTLINE_COPILOT_SOURCE_KEYS = getDefaultAgentSkillV1('outline').contextSourceKeys
 

@@ -7,7 +7,7 @@ import {
   generateTextOpenWorldRuntimeExpressionV1,
   TEXT_OPEN_WORLD_RUNTIME_EXPRESSION_STEP_ID_V1,
 } from '../../src/lib/open-world/runtime-expression'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import type { TextOpenWorldFeedbackReceiptV1 } from '../../src/lib/types'
 import { createGovernedTextOpenWorldSessionFixtureV1 } from '../helpers/text-open-world-product-session'
 import { createTextOpenWorldVNextP9Fixture } from '../helpers/text-open-world-vnext-fixture'

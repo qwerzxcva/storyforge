@@ -1,3 +1,9 @@
+## World engine and longform Android fork
+
+- Retain world authoring, world sealing and resource export, longform writing, and longform node authoring. Retired products no longer provide production or runtime entry points.
+- Preserve historical database schemas, full-backup import/export validation, and read-only access to historical creation versions from longform works.
+- Preserve the registered AI candidate/adoption boundary and World/Work ownership rules. Node authoring continues to share the longform domain actions.
+
 ## Android AI configuration fixes
 
 - Keep API keys and custom request headers across Android restarts by default. The Remember on this device switch remains available; disabling it restores session-only storage. Saved values are stored locally without encryption and are not included in Android system backups.

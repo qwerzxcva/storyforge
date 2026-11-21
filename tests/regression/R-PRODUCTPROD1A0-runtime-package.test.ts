@@ -2,11 +2,11 @@ import { describe, expect, it } from 'vitest'
 import {
   parseProductRuntimePackageV1,
   verifyProductReleaseManifestV1,
-} from '../../src/lib/product-production/runtime-package'
+} from '../../src/lib/legacy-compat/product-production/runtime-package'
 import {
   canonicalProductProductionJsonV2,
   hashProductProductionValueV2,
-} from '../../src/lib/product-production/hash'
+} from '../../src/lib/legacy-compat/product-production/hash'
 import type { ProductRuntimePackageV1, ProductWorldSourceSelectionV1 } from '../../src/lib/types'
 import { currentProductSelection } from '../helpers/current-product-world'
 import { createFixtureProductReleaseManifestV1 } from '../helpers/product-release-v1'

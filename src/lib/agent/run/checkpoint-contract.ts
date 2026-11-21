@@ -1,4 +1,4 @@
-import { failSchema, readString } from './schema-utils'
+import { failSchema, readString } from './schema-utils';
 
 /**
  * A resume payload is durable JSON, not an unbounded blob channel. The same

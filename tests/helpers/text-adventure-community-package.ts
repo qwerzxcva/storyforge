@@ -13,14 +13,14 @@ import {
   TEXT_ADVENTURE_HUMAN_PLAYTEST_POLICY_ID_V1,
   type ProductQualityGateReceiptV1,
   type TextAdventureHumanPlaytestSessionEvidenceV1,
-} from '../../src/lib/product-production/quality-receipts'
+} from '../../src/lib/legacy-compat/product-production/quality-receipts'
 import {
   canonicalProductProductionJsonV2,
   hashProductProductionValueV2,
-} from '../../src/lib/product-production/hash'
+} from '../../src/lib/legacy-compat/product-production/hash'
 import { evaluateProductRuntimeProductQualityV1 } from '../../src/lib/product-production/product-quality'
-import { parseProductRuntimePackageV1 } from '../../src/lib/product-production/runtime-package'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { parseProductRuntimePackageV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 import type {
   ProductBuildManifestV1,
   ProductBuildQualityReportV1,

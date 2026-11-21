@@ -1,33 +1,15 @@
-import type {
-  NarrativeModuleKind,
-  NarrativeNodeKind,
-} from "./narrative-blueprint";
-import type {
-  FrozenNarrativeBeat,
-  FrozenNarrativeChoice,
-} from "./product-release";
-import type {
-  NarrativeChoiceHistoryEntry,
-} from "./text-game";
+import type { NarrativeModuleKind, NarrativeNodeKind } from "./narrative-blueprint";
+import type { FrozenNarrativeBeat, FrozenNarrativeChoice } from "./product-release";
+import type { NarrativeChoiceHistoryEntry } from "./text-game";
 import type { InteractionRelationshipRule } from "./character-interaction";
-import type {ChatMemoryReviewReceiptV1} from './chat-memory';
+import type { ChatMemoryReviewReceiptV1 } from './chat-memory';
 import type { AdventureRuntimeState } from "./adventure";
 import type { AvgRuntimePresentationState } from "./avg";
 import type { OpenWorldEvolutionState } from "./open-world-evolution";
 import type { OpenWorldRuntimeState } from "./open-world";
 import type { AiTownRuntimeStateV1 } from "./ai-town";
 import type { TextOpenWorldSessionProjectionV1 } from "./text-open-world-session";
-import type {
-  TtrpgAbilityRuntimeStateV2,
-  TtrpgDegreeV2,
-  TtrpgDiceRollTraceV2,
-  TtrpgEffectLedgerStateV2,
-  TtrpgCharacterSheetV2,
-  TtrpgInventoryStateV2,
-  TtrpgItemInstanceV2,
-  TtrpgResolutionRequestV2,
-  TtrpgUsagePoolStateV2,
-} from "./ttrpg-product";
+import type { TtrpgAbilityRuntimeStateV2, TtrpgDegreeV2, TtrpgDiceRollTraceV2, TtrpgEffectLedgerStateV2, TtrpgCharacterSheetV2, TtrpgInventoryStateV2, TtrpgItemInstanceV2, TtrpgResolutionRequestV2, TtrpgUsagePoolStateV2 } from "./ttrpg-product";
 import { PRODUCTION_PRODUCT_KINDS_V1 } from "./product-identity";
 
 /** Every persisted runtime instance belongs to one declared upper product. */
@@ -338,8 +320,8 @@ export interface TtrpgRuntimeProductStateV1 {
   /** Author-confirmed AI/human GM prose bound to one already-resolved rule action. */
   gmNarrations: TtrpgRuntimeGmNarrationV1[];
   /** AI KP decisions are product-owned and replayable; absent only in pre-director snapshots. */
-  privateGuidance?: import("../ttrpg/private-guidance-model").TtrpgPrivateGuidanceReceiptV1[];
-  directorDecisions?: import("../ttrpg/director-model").TtrpgDirectorReceiptV1[];
+  privateGuidance?: import("../legacy-compat/ttrpg/private-guidance-model").TtrpgPrivateGuidanceReceiptV1[];
+  directorDecisions?: import("../legacy-compat/ttrpg/director-model").TtrpgDirectorReceiptV1[];
   questProgress: Array<{
     questKey: string;
     requiredConclusionKeys: string[];
@@ -1110,8 +1092,8 @@ export interface ProductNarrativeRuntimeState {
 
 export interface ProductRuntimeState {
   /** Omitted for legacy sources so their serialized state/hash is unchanged. */
-  avgReading?: import('../avg/reading-contract').AvgReadingRuntimeStateV1;
-  avgRules?: import('../avg/executable-module').AvgRuntimeRulesStateV1;
+  avgReading?: import('../legacy-compat/avg/reading-contract').AvgReadingRuntimeStateV1;
+  avgRules?: import('../legacy-compat/avg/executable-module').AvgRuntimeRulesStateV1;
   version: 1;
   clock: number;
   entities: Record<string, RuntimeEntityState>;

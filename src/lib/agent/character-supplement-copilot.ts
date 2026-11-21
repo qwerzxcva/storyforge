@@ -1,48 +1,23 @@
-import { useAIConfigStore } from '../../stores/ai-config'
-import { chat, resolveRequestConfig } from '../ai/client'
-import { appendSimplifiedChineseOutputConstraint } from '../ai/adapters/prompt-guards'
-import { CHARACTER_DIMENSIONS, type CharacterDimensionKey } from '../character/character-dimensions'
-import { db } from '../db/schema'
-import {
-  prepareGenerationNode,
-  type GenerationGateIssue,
-  type GenerationNode,
-  type PreparedGenerationNode,
-} from '../generation/generation-node'
-import { adopt } from '../registry/adopt'
-import type { AssembleContextResult } from '../registry/types'
-import type { AIConfig, Character, ChatMessage, WorkspaceScope } from '../types'
-import {
-  readOwnedRows,
-  resolveReadScopeLike,
-} from '../workspace/scope'
-import {
-  attachAgentContextInputStateV1,
-  evidenceFromContextResult,
-  resolveAgentContextPolicy,
-  type AgentContextEvidence,
-  type AgentContextProfile,
-} from './context-policy'
-import type { AgentContextCompressionRuntimeV1 } from './context-compression'
-import {
-  buildAgentSkillInputGuidanceV1,
-  resolveAgentSkillV1,
-  type AgentSkillId,
-} from './skill-registry'
-import {
-  executeContextGatewayV1,
-  type ContextGatewayExecutionV1,
-} from '../context-gateway/execution'
-import { isContextGatewayRequiredForWriteTargetV1 } from '../context-gateway/skill-policy'
-import {
-  assembleContextGatewayPacketV1,
-  contextGatewayInputStateSourceKeysV1,
-  projectContextGatewayInputStateV1,
-} from './context-gateway-input'
-import type { MasterCandidateModelIdentityV1 } from './master-candidate-semantic-review'
-import { hashCanonicalValue } from './run/hash'
-import { CANON_RESOURCE_PROVIDER_V1 } from '../context-gateway/canon-provider'
-import { parseStructuredOutputV1 } from './structured-output-pipeline'
+import { useAIConfigStore } from '../../stores/ai-config';
+import { chat, resolveRequestConfig } from '../ai/client';
+import { appendSimplifiedChineseOutputConstraint } from '../ai/adapters/prompt-guards';
+import { CHARACTER_DIMENSIONS, type CharacterDimensionKey } from '../character/character-dimensions';
+import { db } from '../db/schema';
+import { prepareGenerationNode, type GenerationGateIssue, type GenerationNode, type PreparedGenerationNode } from '../generation/generation-node';
+import { adopt } from '../registry/adopt';
+import type { AssembleContextResult } from '../registry/types';
+import type { AIConfig, Character, ChatMessage, WorkspaceScope } from '../types';
+import { readOwnedRows, resolveReadScopeLike } from '../workspace/scope';
+import { attachAgentContextInputStateV1, evidenceFromContextResult, resolveAgentContextPolicy, type AgentContextEvidence, type AgentContextProfile } from './context-policy';
+import type { AgentContextCompressionRuntimeV1 } from './context-compression';
+import { buildAgentSkillInputGuidanceV1, resolveAgentSkillV1, type AgentSkillId } from './skill-registry';
+import { executeContextGatewayV1, type ContextGatewayExecutionV1 } from '../context-gateway/execution';
+import { isContextGatewayRequiredForWriteTargetV1 } from '../context-gateway/skill-policy';
+import { assembleContextGatewayPacketV1, contextGatewayInputStateSourceKeysV1, projectContextGatewayInputStateV1 } from './context-gateway-input';
+import type { MasterCandidateModelIdentityV1 } from './master-candidate-semantic-review';
+import { hashCanonicalValue } from './run/hash';
+import { CANON_RESOURCE_PROVIDER_V1 } from '../context-gateway/canon-provider';
+import { parseStructuredOutputV1 } from './structured-output-pipeline';
 
 const MAX_CANDIDATE_CHARS = 240_000
 const MAX_FIELD_CHARS = 20_000

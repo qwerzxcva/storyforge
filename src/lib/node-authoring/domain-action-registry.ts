@@ -1,4 +1,4 @@
-import type { AuthoringNodeTemplate } from './contracts'
+import type { AuthoringNodeTemplate } from './contracts';
 
 export type AuthoringDomainActionIdV1 =
   | 'worldview-field-copilot'

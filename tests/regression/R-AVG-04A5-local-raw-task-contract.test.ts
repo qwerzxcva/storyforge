@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import { avgVisualPlanningFixtureV4 } from '../helpers/avg-visual-planning-fixture'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 import { evaluateProductProductionAuthorizationReadinessV1, inspectProductProductionCapabilityReadinessV1 } from '../../src/lib/product-production/service'
-import { buildAvgVisualPlanningPlanV4, AVG_VISUAL_REQUIREMENTS_ARTIFACT_V4 } from '../../src/lib/avg/visual-planning-plan'
-import { avgVisualPlanningTargetKeysV4, type AvgVisualProposalReuseSourceV4 } from '../../src/lib/avg/visual-planning-reuse-contract'
-import { avgVisualPlanningBudgetV4, avgVisualPlanningGateIdsV4 } from '../../src/lib/avg/visual-planning-policy'
+import { buildAvgVisualPlanningPlanV4, AVG_VISUAL_REQUIREMENTS_ARTIFACT_V4 } from '../../src/lib/legacy-compat/avg/visual-planning-plan'
+import { avgVisualPlanningTargetKeysV4, type AvgVisualProposalReuseSourceV4 } from '../../src/lib/legacy-compat/avg/visual-planning-reuse-contract'
+import { avgVisualPlanningBudgetV4, avgVisualPlanningGateIdsV4 } from '../../src/lib/legacy-compat/avg/visual-planning-policy'
 
 const hash='a'.repeat(64)
 function semanticSource(artifactKey:string):AvgVisualProposalReuseSourceV4{return {schema:'storyforge.avg.visual-proposal-reuse-source',version:1,

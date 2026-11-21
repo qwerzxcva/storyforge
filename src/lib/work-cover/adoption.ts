@@ -1,14 +1,14 @@
 import Dexie from 'dexie'
-import { db } from '../db/schema'
-import type { AdoptInput, AdoptResult } from '../registry/types'
-import { adopt } from '../registry/adopt'
-import { assertRecordInScope, resolveScope, scopeTransactionTables } from '../workspace/scope'
-import type { WorkspaceScope } from '../types'
-import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash'
-import { binaryDataUrlV1, readVerifiedMediaBlobV1, sha256BinaryV1 } from '../media/blob-store'
-import { assertLongformCoverWorkV1, coverRecordInScopeV1 } from './drafts'
-import { assertWorkCoverCandidateHashV1, assertWorkCoverPortableRowV1, parseWorkCoverImageCandidateV1 } from './contracts'
-import type { WorkCoverAdoptionV1 } from './types'
+import { db } from '../db/schema';
+import type { AdoptInput, AdoptResult } from '../registry/types';
+import { adopt } from '../registry/adopt';
+import { assertRecordInScope, resolveScope, scopeTransactionTables } from '../workspace/scope';
+import type { WorkspaceScope } from '../types';
+import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash';
+import { binaryDataUrlV1, readVerifiedMediaBlobV1, sha256BinaryV1 } from '../media/blob-store';
+import { assertLongformCoverWorkV1, coverRecordInScopeV1 } from './drafts';
+import { assertWorkCoverCandidateHashV1, assertWorkCoverPortableRowV1, parseWorkCoverImageCandidateV1 } from './contracts';
+import type { WorkCoverAdoptionV1 } from './types';
 
 export interface WorkCoverIdentityV1 {
   rendererId: 'identity-v1'

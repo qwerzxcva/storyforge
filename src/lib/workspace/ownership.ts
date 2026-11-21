@@ -1,7 +1,7 @@
-import { db } from '../db/schema'
-import { isWorkspaceUid, isWorkCode } from '../memory/identity'
-import type { Project, Work, WorkspaceScope, World } from '../types'
-import { isCurrentWorldCode } from './identity'
+import { db } from '../db/schema';
+import { isWorkspaceUid, isWorkCode } from '../memory/identity';
+import type { Project, Work, WorkspaceScope, World } from '../types';
+import { isCurrentWorldCode } from './identity';
 
 export interface WorkspaceOwnershipResolution {
   scope: WorkspaceScope

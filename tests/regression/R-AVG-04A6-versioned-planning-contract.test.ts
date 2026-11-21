@@ -3,18 +3,18 @@ import { avgVersionedPlanningFixture } from '../helpers/avg-versioned-planning-f
 import { compileAvgVisualPlanningProposalV1,freezeAvgVisualPlanningScopeV1 } from '../../src/lib/avg/media-source'
 import { assertAvgVisualPlanningProposalV2,compileAvgVisualPlanningProposalV2,freezeAvgVisualPlanningScopeV2,
   freezeAvgVisualProductionBatchV2,validateAvgVisualProductionBatchSourceV2 } from '../../src/lib/avg/media-production-v2'
-import { parseAvgVisualPlanningScopeV1 } from '../../src/lib/avg/visual-planning-contract'
-import { parseAvgVisualPlanningScopeV2 } from '../../src/lib/avg/visual-planning-contract-v2'
-import { parseAvgVisualProductionBatchV1 } from '../../src/lib/avg/media-production-contract'
-import { parseAvgVisualProductionBatchV2 } from '../../src/lib/avg/media-production-contract-v2'
+import { parseAvgVisualPlanningScopeV1 } from '../../src/lib/legacy-compat/avg/visual-planning-contract'
+import { parseAvgVisualPlanningScopeV2 } from '../../src/lib/legacy-compat/avg/visual-planning-contract-v2'
+import { parseAvgVisualProductionBatchV1 } from '../../src/lib/legacy-compat/avg/media-production-contract'
+import { parseAvgVisualProductionBatchV2 } from '../../src/lib/legacy-compat/avg/media-production-contract-v2'
 import { composeAvgCharacterFamilyRequirementsV2,hashAvgCharacterFamilyProposalV2,parseAvgCharacterFamilyPlanV2,
   type AvgCharacterFamilyPlanV2 } from '../../src/lib/avg/character-family-contract-v2'
-import { parseAvgCharacterFamilyPlanV1 } from '../../src/lib/avg/character-family-contract'
+import { parseAvgCharacterFamilyPlanV1 } from '../../src/lib/legacy-compat/avg/character-family-contract'
 import { prepareAvgRawImageRequestFromBatchV2 } from '../../src/lib/avg/media-production-v2'
 import { prepareAvgRawImageRequestFromBatchV1 } from '../../src/lib/avg/media-raw-contract'
-import { avgImageReferenceCapabilityV2,assertAvgImageRequestV1 } from '../../src/lib/avg/media-reference-contract'
-import { assertAvgImageRequestV2 } from '../../src/lib/avg/media-reference-contract-v2'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { avgImageReferenceCapabilityV2,assertAvgImageRequestV1 } from '../../src/lib/legacy-compat/avg/media-reference-contract'
+import { assertAvgImageRequestV2 } from '../../src/lib/legacy-compat/avg/media-reference-contract-v2'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import type { ProviderCapabilityRequirementV1 } from '../../src/lib/types'
 
 async function fixture(){const s=avgVersionedPlanningFixture();return {...s,scope:await freezeAvgVisualPlanningScopeV2(s.versioned,s.source)}}

@@ -4,7 +4,7 @@ import { prepareTtrpgOpenPublicSituationInputV1 } from '../../src/lib/ttrpg/open
 import { executeTtrpgOpenPublicSituationRequestV1 } from '../../src/lib/ttrpg/open-intent-harness'
 import { readTtrpgOpenRuntimeCandidateForKernelV1 } from '../../src/lib/ttrpg/open-runtime-candidate'
 import { readAgentRunArtifactExactV1 } from '../../src/lib/memory/artifact-store'
-import type { TtrpgOpenPublicSituationKernelV1 } from '../../src/lib/ttrpg/open-public-situation-kernel'
+import type { TtrpgOpenPublicSituationKernelV1 } from '../../src/lib/legacy-compat/ttrpg/open-public-situation-kernel'
 import { publicSituationOutputV1 } from './open-public-situation-generation'
 import { hashCanonicalValue } from '../../src/lib/agent/run/hash'
 

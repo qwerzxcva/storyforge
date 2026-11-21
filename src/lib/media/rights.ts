@@ -1,4 +1,4 @@
-import type { MediaRightsV1 } from '../types'
+import type { MediaRightsV1 } from '../types';
 
 export function assertMediaRightsV1(rights: MediaRightsV1): void {
   if (!rights || rights.version !== 1 || !['author-upload', 'provider-generated'].includes(rights.source)) throw new Error('[media] 媒体来源类型非法')

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { createProductBuildRootTerminalReceiptV1, createLegacyProductBuildRootTerminalReceiptV1 } from '../../src/lib/product-production/receipts'
-import { parseProductBuildRootBudgetEvidenceV1 } from '../../src/lib/product-production/root-budget-evidence'
+import { createProductBuildRootTerminalReceiptV1, createLegacyProductBuildRootTerminalReceiptV1 } from '../../src/lib/legacy-compat/product-production/receipts'
+import { parseProductBuildRootBudgetEvidenceV1 } from '../../src/lib/legacy-compat/product-production/root-budget-evidence'
 import type { TextOpenWorldCreatorDerivedBuildAuthorityV1 } from '../../src/lib/open-world/creator-derived-authority'
 import type { ProductBuildTerminalCasReadSetV1 } from '../../src/lib/product-production/artifact-store'
 import {

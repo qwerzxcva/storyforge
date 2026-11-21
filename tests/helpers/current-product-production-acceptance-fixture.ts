@@ -14,11 +14,11 @@ import type {
 } from '../../src/lib/types'
 import { sanitizeSvg } from '../../src/lib/utils/sanitize-svg'
 import { assertRecordInScope, resolveScope } from '../../src/lib/workspace/scope'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { putMediaBlobObject } from '../../src/lib/product-production/media-blob-store'
-import { parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
-import { parseProductRuntimePackageV1 } from '../../src/lib/product-production/runtime-package'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { putMediaBlobObject } from '../../src/lib/legacy-compat/product-production/media-blob-store'
+import { parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
+import { parseProductRuntimePackageV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
 import {
   runProductProductionUntilBlockedV1,
   type ProductProductionTaskExecutionInputV1,

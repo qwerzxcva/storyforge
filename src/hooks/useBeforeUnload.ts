@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 
 /**
  * 在页面即将关闭/刷新时弹出浏览器确认对话框

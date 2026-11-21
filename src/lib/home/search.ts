@@ -1,9 +1,9 @@
-import { FIELD_REGISTRY } from '../registry/field-registry'
-import { db } from '../db/schema'
-import { readHomeCatalog, workPath, type HomeWork } from './catalog'
-import { readOwnedRows } from '../workspace/scope'
-import type { Chapter, Character, Worldview } from '../types'
-import { htmlToPlainText } from '../utils/html'
+import { FIELD_REGISTRY } from '../registry/field-registry';
+import { db } from '../db/schema';
+import { readHomeCatalog, workPath, type HomeWork } from './catalog';
+import { readOwnedRows } from '../workspace/scope';
+import type { Chapter, Character, Worldview } from '../types';
+import { htmlToPlainText } from '../utils/html';
 export type HomeSearchHit={key:string;kind:string;title:string;excerpt:string;row?:HomeWork;path:string}
 export async function searchHome(query:string,kind='all',workId?:number){
  const needle=query.trim().toLocaleLowerCase();if(!needle)return {items:[] as HomeSearchHit[],truncated:false}

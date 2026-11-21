@@ -1,26 +1,18 @@
 /**
  * 世界总览面板 — 管理多个世界组 + 世界关系
  */
-import { useState, useEffect, useRef } from 'react'
-import { db } from '../../lib/db/schema'
-import { Plus, Trash2, GripVertical, ChevronRight, Sparkles, Loader2, Check, Pencil } from 'lucide-react'
-import { useWorldGroupStore } from '../../stores/world-group'
-import { useAIConfigStore } from '../../stores/ai-config'
-import {
-  abandonWorldSuggestRunV1,
-  adoptWorldSuggestCandidateV1,
-  generateWorldSuggestCandidateV1,
-  readPendingWorldSuggestCandidateV1,
-  readRecoverableWorldSuggestRunV1,
-  rejectWorldSuggestCandidateV1,
-  type WorldSuggestCandidateV1,
-} from '../../lib/agent/run/world-suggest-durable'
-import { resolveScopeLike } from '../../lib/workspace/scope'
-import { WORLD_GROUP_TYPE_LABELS, WORLD_LINK_TYPE_LABELS } from '../../lib/types/world-group'
-import type { Project, WorkspaceScope, WorldGroup, WorldGroupType, WorldGroupLinkType } from '../../lib/types'
+import { useState, useEffect, useRef } from 'react';
+import { db } from '../../lib/db/schema';
+import { Plus, Trash2, GripVertical, ChevronRight, Sparkles, Loader2, Check, Pencil } from 'lucide-react';
+import { useWorldGroupStore } from '../../stores/world-group';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { abandonWorldSuggestRunV1, adoptWorldSuggestCandidateV1, generateWorldSuggestCandidateV1, readPendingWorldSuggestCandidateV1, readRecoverableWorldSuggestRunV1, rejectWorldSuggestCandidateV1, type WorldSuggestCandidateV1 } from '../../lib/agent/run/world-suggest-durable';
+import { resolveScopeLike } from '../../lib/workspace/scope';
+import { WORLD_GROUP_TYPE_LABELS, WORLD_LINK_TYPE_LABELS } from '../../lib/types/world-group';
+import type { Project, WorkspaceScope, WorldGroup, WorldGroupType, WorldGroupLinkType } from '../../lib/types';
 import WorldGroupDetail from './WorldGroupDetail'
-import { WORLD_SUGGEST_FIELDS_V1 } from '../../lib/ai/world-group-ai'
-import { FIELD_BY_TARGET } from '../../lib/registry/field-registry'
+import { WORLD_SUGGEST_FIELDS_V1 } from '../../lib/ai/world-group-ai';
+import { FIELD_BY_TARGET } from '../../lib/registry/field-registry';
 import WorldRelationGraph from './WorldRelationGraph'
 
 interface Props {

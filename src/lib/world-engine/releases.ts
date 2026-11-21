@@ -1,35 +1,25 @@
-import { db } from '../db/schema'
-import { PROJECT_TABLES } from '../registry/project-tables'
-import { WORLD_CAPABILITY_AREAS_V3 as WORLD_CAPABILITY_AREAS, WORLD_SEMANTIC_REGISTRY_V3 as V3_TABLES, type WorldSemanticTableV3 } from './semantic-registry-v3'
-import type {
-  WorldRelease,
-  WorldReleaseManifestV3,
-  WorldSemanticSnapshotV1,
-  WorldRevision,
-  WorkspaceScope,
-} from '../types'
-import type { WorldReleaseSection } from '../registry/types'
-import { resolveScope, scopeTransactionTables } from '../workspace/scope'
-import {
-  deriveStrictExportProjectSnapshot,
-  deriveStrictExportProjectSnapshotInCurrentTransaction,
-  type StrictProjectExportSnapshot,
-} from '../export/registry-export'
-import { isShareableWorld } from './world-identity'
-import { effectiveWorkKind } from '../workspace/work-kind'
-import { verifyWorldReleaseManifestV1, verifyWorldReleaseRecordV1 } from './release-codec'
-import { canonicalWorldReleaseJsonV1, hashWorldReleaseValueV1 } from './release-hash'
-import { isWorkCode, isWorkspaceUid } from '../memory/identity'
-import { NARRATIVE_DOMAIN_FIELDS_V1 } from '../narrative-domain/codec'
+import { db } from '../db/schema';
+import { PROJECT_TABLES } from '../registry/project-tables';
+import { WORLD_CAPABILITY_AREAS_V3 as WORLD_CAPABILITY_AREAS, WORLD_SEMANTIC_REGISTRY_V3 as V3_TABLES, type WorldSemanticTableV3 } from './semantic-registry-v3';
+import type { WorldRelease, WorldReleaseManifestV3, WorldSemanticSnapshotV1, WorldRevision, WorkspaceScope } from '../types';
+import type { WorldReleaseSection } from '../registry/types';
+import { resolveScope, scopeTransactionTables } from '../workspace/scope';
+import { deriveStrictExportProjectSnapshot, deriveStrictExportProjectSnapshotInCurrentTransaction, type StrictProjectExportSnapshot } from '../export/registry-export';
+import { isShareableWorld } from './world-identity';
+import { effectiveWorkKind } from '../workspace/work-kind';
+import { verifyWorldReleaseManifestV1, verifyWorldReleaseRecordV1 } from './release-codec';
+import { canonicalWorldReleaseJsonV1, hashWorldReleaseValueV1 } from './release-hash';
+import { isWorkCode, isWorkspaceUid } from '../memory/identity';
+import { NARRATIVE_DOMAIN_FIELDS_V1 } from '../narrative-domain/codec';
 import Dexie from 'dexie'
-import { readWorldPublicationAuthorityV1 } from './publication-origin'
-import { worldRevisionOriginV1 } from './publication-origin-contract'
-import { captureWorldReleaseInputV4, captureWorldReleaseInputInTransactionV4, narrativeReleaseCaptureTablesV4, type WorldReleaseInputV4 } from './narrative-release-capture'
-import { compileNarrativeReleaseInWorkerV1 } from './narrative-release-worker'
-import { verifyWorldReleaseContentV4 } from './narrative-release-v4'
-import type { NarrativeDomainCompilerV4, WorldReleaseCompiledV4 } from '../types/narrative-release'
-import { WORLD_SEMANTIC_REGISTRY_V4 } from './semantic-registry-v4'
-import { canonicalNarrativeJsonV1 } from './narrative-json'
+import { readWorldPublicationAuthorityV1 } from './publication-origin';
+import { worldRevisionOriginV1 } from './publication-origin-contract';
+import { captureWorldReleaseInputV4, captureWorldReleaseInputInTransactionV4, narrativeReleaseCaptureTablesV4, type WorldReleaseInputV4 } from './narrative-release-capture';
+import { compileNarrativeReleaseInWorkerV1 } from './narrative-release-worker';
+import { verifyWorldReleaseContentV4 } from './narrative-release-v4';
+import type { NarrativeDomainCompilerV4, WorldReleaseCompiledV4 } from '../types/narrative-release';
+import { WORLD_SEMANTIC_REGISTRY_V4 } from './semantic-registry-v4';
+import { canonicalNarrativeJsonV1 } from './narrative-json';
 
 export const WORLD_RELEASE_SECTIONS: ReadonlyArray<{
   key: WorldReleaseSection

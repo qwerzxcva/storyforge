@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { gunzipSync } from 'node:zlib'
 import { db } from '../../src/lib/db/schema'
-import { commitNarrativeChoice } from '../../src/lib/product/runtime-core'
+import { commitNarrativeChoice } from '../../src/lib/legacy-compat/product/runtime-core'
 import type { ProductRuntimeEvent, ProductRuntimeSession } from '../../src/lib/types'
 import { seedQuality005LegacyNovelV1 } from './quality005-legacy-novel'
 

@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { readyOpenTtrpgSessionV1, OPEN_HUMAN_VIEWER, openEnvelopeV1 } from '../helpers/open-ttrpg-session'
-import { createTtrpgOpenPublicSituationContextProviderV1, TTRPG_OPEN_PUBLIC_SITUATION_SOURCE_V1 } from '../../src/lib/ttrpg/open-public-situation-context'
+import { createTtrpgOpenPublicSituationContextProviderV1, TTRPG_OPEN_PUBLIC_SITUATION_SOURCE_V1 } from '../../src/lib/legacy-compat/ttrpg/open-public-situation-context'
 import { getAgentSkillV1 } from '../../src/lib/agent/skill-registry'
 import { getAgentToolSchemaSnapshotV1 } from '../../src/lib/agent/tool-registry'
 import { AGENT_TOOL_SCHEMA_HASH_V1 } from '../../src/lib/agent/execution-binding'

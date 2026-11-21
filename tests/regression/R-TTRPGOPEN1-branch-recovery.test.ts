@@ -3,13 +3,13 @@ import { beforeEach, afterEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { readyOpenTtrpgSessionV1, openEnvelopeV1, OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
 import { readProductRuntimeState,
-  replayProductRuntimeEvents, parseProductRuntimeState } from '../../src/lib/product/runtime-core'
+  replayProductRuntimeEvents, parseProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { startTtrpgOpenEpochV1, startTtrpgOpenOperationV1, confirmTtrpgOpenOperationV1,
   applyTtrpgOpenOperationEffectV1, advanceTtrpgWorldTurnV1, completeTtrpgOpenOperationStepV1,
   startTtrpgOpenInheritedOperationV1,
   selectTtrpgOpenOperationEffectV1, closeTtrpgOpenEpochV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { settleOpenPaidTurnsV1 } from '../helpers/open-ttrpg-paid-turns'
-import { DEGREES } from '../../src/lib/ttrpg/open-contract-parse'
+import { DEGREES } from '../../src/lib/legacy-compat/ttrpg/open-contract-parse'
 import { rt, operationInput, approve, parentAtCut, forkAndStart } from '../helpers/open-ttrpg-branch-recovery'
 
 async function discloseChoice(sessionId: number,operationKey: string) {

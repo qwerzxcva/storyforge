@@ -2,8 +2,7 @@
  * 高度图生成
  * 支持 10 种地形模板，通过 Hill/Range 等工具组合生成自然地形
  */
-
-import type { GridCells, HeightmapTemplate } from './types'
+import type { GridCells, HeightmapTemplate } from './types';
 
 /**
  * 生成高度图

@@ -1,4 +1,4 @@
-import type { DetailedOutline, EmotionBeatCard, ScenePace } from '../types'
+import type { DetailedOutline, EmotionBeatCard, ScenePace } from '../types';
 
 export interface ConflictWarning {
   type: 'emotion' | 'structure' | 'location'

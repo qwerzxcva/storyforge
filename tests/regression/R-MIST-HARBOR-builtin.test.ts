@@ -8,7 +8,7 @@ import {
   mistHarborAvg,
 } from '../../src/lib/mist-harbor/production'
 import { compileMistHarbor } from '../../src/lib/mist-harbor/compiler'
-import { parseAnyProductReleaseManifest } from '../../src/lib/product/releases'
+import { parseAnyProductReleaseManifest } from '../../src/lib/legacy-compat/product/releases'
 
 beforeEach(async () => {
   await db.delete()
@@ -57,7 +57,7 @@ it('publishes both products with real source evidence and all 17 portable images
   const { exportProjectJSON, importProjectJSON } = await import('../../src/lib/export/json-export')
   const { deleteWorkspace } = await import('../../src/lib/workspace/lifecycle')
   const { readVerifiedMediaBlobObjectData } = await import(
-    '../../src/lib/product-production/media-blob-store'
+    '../../src/lib/legacy-compat/product-production/media-blob-store'
   )
   const backup = await exportProjectJSON(avg.scope.projectId)
   await deleteWorkspace(avg.scope.projectId)
@@ -75,7 +75,7 @@ it('publishes both products with real source evidence and all 17 portable images
 }, 120000)
 
 it('plays every adventure ending, enforces evidence gates and restores a portable saved release', async () => {
-  const { createTextAdventureInstance } = await import('../../src/lib/product/runtime-instances')
+  const { createTextAdventureInstance } = await import('../../src/lib/legacy-compat/product/runtime-instances')
   const {
     commitAdventureAction,
     commitAdventureNarrativeChoice,

@@ -5,7 +5,7 @@ import {
   readAiTownDraft,
   saveAiTownDraft,
 } from "../../src/lib/ai-town/authoring-service";
-import { defaultAiTownSettings } from "../../src/lib/ai-town/authoring-contract";
+import { defaultAiTownSettings } from "../../src/lib/legacy-compat/ai-town/authoring-contract";
 import { consultAiTownV1 } from "../../src/lib/ai-town/consultation";
 import {
   exportProjectJSON,

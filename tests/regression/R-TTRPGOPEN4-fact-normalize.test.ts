@@ -3,12 +3,12 @@ import { db } from '../../src/lib/db/schema'
 import { readyOpenTtrpgSessionV1,openEnvelopeV1,OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
 import { startTtrpgOpenEpochV1,closeTtrpgOpenEpochV1,consultTtrpgOracleV1,reviewTtrpgOpenOracleCandidateV1,completeTtrpgOpenSessionZeroV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { generateTtrpgOpenOracleCandidateV1,generateTtrpgOpenFactNormalizationCandidateV1,executeTtrpgOpenFactNormalizationRequestV1 } from '../../src/lib/ttrpg/open-intent-harness'
-import { readProductRuntimeState,readProductRuntimeStateVersion,branchProductRuntimeSession } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState,readProductRuntimeStateVersion,branchProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readTtrpgOpenFactNormalizationCandidateV1 } from '../../src/lib/ttrpg/open-oracle-candidate'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { prepareTtrpgOpenFactNormalizationInputV1,prepareTtrpgOpenOracleInputV1,prepareTtrpgOpenIntentInputV1 } from '../../src/lib/ttrpg/open-intent-input'
 import { exportProjectJSON,importProjectJSON } from '../../src/lib/export/json-export'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 
 const fact = { kind: 'relation',subjectRef: 'keeper',predicateKey: 'promised',objectRef: 'harbor',canonicalValue: '提供地图',detail: '守灯人承诺提供地图。',
   sourceFactRefs: ['fact.harbor'],audience: 'party',knownByActorKeys: ['hero','companion.1','companion.2'],supersedes: null,supersedeReason: null }

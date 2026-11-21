@@ -1,27 +1,16 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { ChevronLeft, ChevronRight, Search, Replace, RotateCcw, ShieldCheck, X } from 'lucide-react'
-import { useBackupStore } from '../../stores/backup'
-import { useChapterStore } from '../../stores/chapter'
-import { useCharacterStore } from '../../stores/character'
-import { useDialog } from '../shared/Dialog'
-import { useToast } from '../shared/Toast'
-import {
-  buildChapterSearchTargets,
-  findChapterMatches,
-  type ChapterMatchPreview,
-  type FindReplaceOptions,
-} from '../../lib/editor/find-replace'
-import {
-  countPlannedReplacements,
-  executeFindReplace,
-  undoFindReplace,
-  type ReplaceMode,
-  type FindReplaceUndoPatch,
-} from '../../lib/editor/find-replace-operation'
-import type { Chapter, OutlineNode } from '../../lib/types'
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { ChevronLeft, ChevronRight, Search, Replace, RotateCcw, ShieldCheck, X } from 'lucide-react';
+import { useBackupStore } from '../../stores/backup';
+import { useChapterStore } from '../../stores/chapter';
+import { useCharacterStore } from '../../stores/character';
+import { useDialog } from '../shared/Dialog';
+import { useToast } from '../shared/Toast';
+import { buildChapterSearchTargets, findChapterMatches, type ChapterMatchPreview, type FindReplaceOptions } from '../../lib/editor/find-replace';
+import { countPlannedReplacements, executeFindReplace, undoFindReplace, type ReplaceMode, type FindReplaceUndoPatch } from '../../lib/editor/find-replace-operation';
+import type { Chapter, OutlineNode } from '../../lib/types';
 import EntityRenamePanel from './EntityRenamePanel'
 import RegisteredTextReplacePanel from './RegisteredTextReplacePanel'
-import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator'
+import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator';
 
 type SearchScope = 'chapter' | 'book'
 

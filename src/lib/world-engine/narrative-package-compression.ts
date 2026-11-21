@@ -1,5 +1,5 @@
-import { assertNarrativeJsonV1, canonicalNarrativeJsonV1, hashNarrativeBytesV1, hashV1, narrativeFail, objectV1, enumV1, textV1, uintV1 } from './narrative-json'
-import type { PackedNarrativeJsonV1 } from './narrative-package-packing'
+import { assertNarrativeJsonV1, canonicalNarrativeJsonV1, hashNarrativeBytesV1, hashV1, narrativeFail, objectV1, enumV1, textV1, uintV1 } from './narrative-json';
+import type { PackedNarrativeJsonV1 } from './narrative-package-packing';
 
 /** An optional bounded transport around the dictionary. Canon and index
  * identities are independent of platform gzip implementation bytes. */

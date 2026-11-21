@@ -1,4 +1,4 @@
-import type { AvgSystemPlanV1 } from '../../src/lib/avg/system-contract'
+import type { AvgSystemPlanV1 } from '../../src/lib/legacy-compat/avg/system-contract'
 
 /** Original engineering fixture. No story generator, provider or commercial assets. */
 export function avgSystemFixture(): AvgSystemPlanV1 {

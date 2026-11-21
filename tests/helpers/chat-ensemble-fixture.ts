@@ -1,6 +1,6 @@
 import type {ProductRuntimePackageV1} from '../../src/lib/types'
-import {chatNarrativeShellV1} from '../../src/lib/character-interaction/narrative-production'
-import {readProductRuntimeStateVersion, startInteractionScene} from '../../src/lib/character-interaction/runtime-api'
+import {chatNarrativeShellV1} from '../../src/lib/legacy-compat/character-interaction/narrative-production'
+import {readProductRuntimeStateVersion, startInteractionScene} from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import {chatNarrativeFixture} from './chat-narrative-fixture'
 import {seedCurrentProductWorld, loadCurrentProductWorldSourceCatalogV1, currentProductSelection} from './current-product-world'
 import {seedCurrentProductBuild} from './current-product-build'

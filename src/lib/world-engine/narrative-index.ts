@@ -1,12 +1,12 @@
-import type { FactPredicateSpec } from '../types/temporal-fact'
-import type { NarrativeDomainProjectionV1 } from './narrative-domain-projection'
-import type { NarrativeIndexV1, NarrativeIndexEdgeKindV1 } from '../types/narrative-index'
-import { NARRATIVE_INDEX_RECIPE_V1 } from '../types/narrative-index'
-import { NARRATIVE_KINDS_V1, type NarrativeRecordV1, type SemanticRefV1, type VisibilityV1 } from '../types/narrative-ir'
-import { verifyNarrativeIRBundleV1 } from './narrative-ir'
-import { forEachNarrativeReferenceV1 } from './narrative-ir-codec'
-import { intersectNarrativeVisibilityV1 } from '../narrative-domain/visibility'
-import { assertUnicodeV1, canonicalNarrativeJsonV1, equalNarrativeJsonV1, compareUnicodeCodePointsV1, hashNarrativeBytesV1, hashNarrativeTextPartsV1, hashNarrativeValueV1, hashV1, narrativeFail } from './narrative-json'
+import type { FactPredicateSpec } from '../types/temporal-fact';
+import type { NarrativeDomainProjectionV1 } from './narrative-domain-projection';
+import type { NarrativeIndexV1, NarrativeIndexEdgeKindV1 } from '../types/narrative-index';
+import { NARRATIVE_INDEX_RECIPE_V1 } from '../types/narrative-index';
+import { NARRATIVE_KINDS_V1, type NarrativeRecordV1, type SemanticRefV1, type VisibilityV1 } from '../types/narrative-ir';
+import { verifyNarrativeIRBundleV1 } from './narrative-ir';
+import { forEachNarrativeReferenceV1 } from './narrative-ir-codec';
+import { intersectNarrativeVisibilityV1 } from '../narrative-domain/visibility';
+import { assertUnicodeV1, canonicalNarrativeJsonV1, equalNarrativeJsonV1, compareUnicodeCodePointsV1, hashNarrativeBytesV1, hashNarrativeTextPartsV1, hashNarrativeValueV1, hashV1, narrativeFail } from './narrative-json';
 
 const numberSet = (values: Iterable<number>): number[] => [...(values instanceof Set ? values : new Set(values))].sort((a, b) => a - b)
 /** Compiler-owned posting membership is usually appended in source/record

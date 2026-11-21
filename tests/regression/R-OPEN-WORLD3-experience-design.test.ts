@@ -19,8 +19,8 @@ import { afterAll, beforeEach, describe, expect, it } from 'vitest'
 import { estimateTokens } from '../../src/lib/ai/context-budget'
 import { unpackTextOpenWorldItemSourceChoicesV1, unpackTextOpenWorldRewardDemandsV1 } from '../../src/lib/open-world/item-source-production'
 import { db } from '../../src/lib/db/schema'
-import { createTextOpenWorldActorLifecycleCatalogV1, createTextOpenWorldActorScheduleCatalogV1, projectTextOpenWorldActorsV1 } from '../../src/lib/open-world/actors'
-import { createTextOpenWorldEconomyCatalogV1 } from '../../src/lib/open-world/economy'
+import { createTextOpenWorldActorLifecycleCatalogV1, createTextOpenWorldActorScheduleCatalogV1, projectTextOpenWorldActorsV1 } from '../../src/lib/legacy-compat/open-world/actors'
+import { createTextOpenWorldEconomyCatalogV1 } from '../../src/lib/legacy-compat/open-world/economy'
 import { createContextManifestV1 } from '../../src/lib/agent/run/context-manifest'
 import { sha256Text } from '../../src/lib/ai/chapter-memory/text-normalization'
 import { buildTextOpenWorldObjectiveFulfillmentDemandsV1, parseTextOpenWorldQuestFulfillmentSelectionsV1 } from '../../src/lib/open-world/objective-fulfillment-production'
@@ -37,10 +37,10 @@ import {
 import { prepareTextOpenWorldProductBuildEpochCarryV1, readAcceptedBuildArtifacts } from '../../src/lib/product-production/artifact-store'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
 import { draftProductProductionBriefV3, suggestProductStartingPoints } from '../../src/lib/product-production/consultation'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
-import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { putMediaBlobObject } from '../../src/lib/product-production/media-blob-store'
-import { parseConfirmedProductBriefV1, parseProductProductionSourcePlanV1 } from '../../src/lib/product-production/source-contracts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
+import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { putMediaBlobObject } from '../../src/lib/legacy-compat/product-production/media-blob-store'
+import { parseConfirmedProductBriefV1, parseProductProductionSourcePlanV1 } from '../../src/lib/legacy-compat/product-production/source-contracts'
 import {
   recoverImportedProductProductionProofsV1,
   ProductProductionDraftRejectedErrorV1,
@@ -55,8 +55,8 @@ import type {
 } from '../../src/lib/types/product-production'
 import type { AnyAgentRunEventV1, ProductProductionBriefV3, WorkspaceScope } from '../../src/lib/types'
 import { startProductProductionPreviewV1 } from '../../src/lib/product-production/service'
-import { verifyProductBuildPreviewManifestV1 } from '../../src/lib/product-production/preview-manifest'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { verifyProductBuildPreviewManifestV1 } from '../../src/lib/legacy-compat/product-production/preview-manifest'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import { cascadeDeleteProject } from '../../src/lib/registry/lifecycle'
 import { resolveWorkspaceOwnership } from '../../src/lib/workspace/ownership'
@@ -249,7 +249,7 @@ import type {
 } from '../../src/lib/types'
 import {
   createTextOpenWorldProductionPlanV1,
-} from '../../src/lib/open-world/production-contract'
+} from '../../src/lib/legacy-compat/open-world/production-contract'
 import {
   createTextOpenWorldSourceCurationExecutorV1,
   type TextOpenWorldSourceCurationModelRunnerV1,
@@ -258,30 +258,30 @@ import {
   createTextOpenWorldProductionExecutorV1,
   createTextOpenWorldSourceLockExecutorV1,
 } from '../../src/lib/open-world/production-executor'
-import { readTextOpenWorldCreatorExecutionBriefV1 } from '../../src/lib/open-world/creator-production-start'
+import { readTextOpenWorldCreatorExecutionBriefV1 } from '../../src/lib/legacy-compat/open-world/creator-production-start'
 import { loadCurrentProductWorldSourceCatalogV1, seedCurrentProductWorld } from '../helpers/current-product-world'
 import { seedSaltRidgeWorldV1 } from '../helpers/salt-ridge-world'
 import { seedAuthorizedTextOpenWorldCreatorBuildV1 } from '../helpers/text-open-world-creator-build'
 import {
   createTextOpenWorldReleaseQaExecutorV1,
   createTextOpenWorldRuntimePackageExecutorV1,
-} from '../../src/lib/open-world/runtime-package-production'
+} from '../../src/lib/legacy-compat/open-world/runtime-package-production'
 import {
   parseProductRuntimePackageV1,
-} from '../../src/lib/product-production/runtime-package'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
-import { levelForTextOpenWorldExperienceV1 } from '../../src/lib/open-world/progression'
+} from '../../src/lib/legacy-compat/product-production/runtime-package'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
+import { levelForTextOpenWorldExperienceV1 } from '../../src/lib/legacy-compat/open-world/progression'
 import { projectTextOpenWorldPlayerMapScreenV1 } from '../../src/lib/open-world/player-map'
 import { createTextOpenWorldActionRegistryV1 } from '../../src/lib/open-world/action-registry'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
-import { createTextOpenWorldQuestTransitionCatalogV1 } from '../../src/lib/open-world/quest-state-machine'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
+import { createTextOpenWorldQuestTransitionCatalogV1 } from '../../src/lib/legacy-compat/open-world/quest-state-machine'
 import { projectTextOpenWorldQuestHistoryV1 } from '../../src/lib/open-world/quest-history'
-import { createTextOpenWorldDirectorQuestInstanceV1 } from '../../src/lib/open-world/quests'
+import { createTextOpenWorldDirectorQuestInstanceV1 } from '../../src/lib/legacy-compat/open-world/quests'
 import {
   applyTextOpenWorldSessionEventV1,
   createInitialTextOpenWorldSessionProjectionV1,
   deriveTextOpenWorldContextsV1,
-} from '../../src/lib/open-world/session-projection'
+} from '../../src/lib/legacy-compat/open-world/session-projection'
 
 /** Domain-stage unit tests intentionally seed accepted upstream fixtures
  * without manufacturing durable scheduler Runs. Production code must use the

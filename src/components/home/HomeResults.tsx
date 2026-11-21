@@ -1,27 +1,10 @@
-import type { ReactNode } from 'react'
-import { workLabel, workPath, type HomeWork } from '../../lib/home/catalog'
-import type { HomeOpen } from './HomeTools'
-import type { HomeData } from './useHomeData'
-
-const PRODUCT_LABELS: Record<string, string> = {
-  ttrpg: '跑团',
-  'character-interaction': '角色聊天',
-  'ai-town': 'AI 小镇',
-  avg: 'AVG',
-  'text-adventure': '文字冒险',
-  'open-world': '文字开放世界',
-}
-
-const PRODUCT_RESULT_ROUTES = new Map<HomeData['products'][number]['productType'], string>([
-  ['ttrpg', 'ttrpg/release'],
-  ['character-interaction', 'chat/release'],
-  ['ai-town', 'town/release'],
-  ['avg', 'avg/release'],
-  ['text-open-world', 'openworld/runtime'],
-])
+import type { ReactNode } from 'react';
+import { workLabel, workPath, type HomeWork } from '../../lib/home/catalog';
+import type { HomeOpen } from './HomeTools';
+import type { HomeData } from './useHomeData';
 
 export function HomeResults({ data, open, renderWorkCard }: {
-  data: Pick<HomeData, 'releases' | 'products' | 'rows' | 'works'>
+  data: Pick<HomeData, 'releases' | 'rows' | 'works'>
   open: HomeOpen
   renderWorkCard: (row: HomeWork) => ReactNode
 }) {
@@ -31,7 +14,7 @@ export function HomeResults({ data, open, renderWorkCard }: {
     <>
       <section className="lf-paper">
         <h3>已发布的创作版本</h3>
-        <p>这里只列出真实发布记录。进入所属产品查看该作品的版本、阅读与导出。</p>
+        <p>这里只列出真实发布记录。进入作品版本页阅读和导出。</p>
         {data.releases.map(release => {
           const row = data.rows.find(work => work.work.id === release.workId)!
           return (
@@ -46,25 +29,6 @@ export function HomeResults({ data, open, renderWorkCard }: {
           )
         })}
         {!data.releases.length && <p>尚无独立作品发布版本。</p>}
-      </section>
-      <section className="lf-paper">
-        <h3>互动产品发布记录</h3>
-        {data.products.map(release => {
-          const route = PRODUCT_RESULT_ROUTES.get(release.productType) ?? 'adventure/runtime'
-          const path = `/${route}?project=${release.projectId}&work=${release.workId}`
-          const row = data.rows.find(work => work.work.id === release.workId)
-          return (
-            <article className="home-task" key={release.id}>
-              <div>
-                <h4>{release.label} · v{release.version}</h4>
-                <p>{PRODUCT_LABELS[release.productType] || release.productType} · {new Date(release.createdAt).toLocaleString()}</p>
-                <small>发布校验 {release.contentHash.slice(0, 16)}</small>
-              </div>
-              <button className="lf-action" onClick={() => void open(path, row)}>进入所属产品</button>
-            </article>
-          )
-        })}
-        {!data.products.length && <p>尚无互动产品发布记录。</p>}
       </section>
       <section className="lf-paper">
         <h3>已完成的长篇</h3>

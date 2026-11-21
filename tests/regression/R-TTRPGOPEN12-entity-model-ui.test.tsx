@@ -5,7 +5,7 @@ import { db } from '../../src/lib/db/schema'
 import TtrpgOpenEntityModelPanel from '../../src/components/ttrpg/TtrpgOpenEntityModelPanel'
 import { setupOpenEntityModelV1 } from '../helpers/open-entity-model'
 import { readTtrpgOpenEntityModelDeskV1, requestTtrpgOpenEntityModelDeskV1 } from '../../src/lib/ttrpg/open-entity-model-desk'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
 describe('R-TTRPGOPEN12 actual entity model review component', { timeout: 60000 }, () => {

@@ -2,17 +2,17 @@ import { afterAll, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { createTextOpenWorldActionRegistryV1 } from '../../src/lib/open-world/action-registry'
 import { executeTextOpenWorldActionV1 } from '../../src/lib/open-world/action-executor'
-import { createTextOpenWorldCombatActionCatalogV1 } from '../../src/lib/open-world/combat-actions'
-import { createTextOpenWorldCombatStateMachineV1 } from '../../src/lib/open-world/combat-state-machine'
-import { beginTextOpenWorldCombatantTurnV2 } from '../../src/lib/open-world/combat-status'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
+import { createTextOpenWorldCombatActionCatalogV1 } from '../../src/lib/legacy-compat/open-world/combat-actions'
+import { createTextOpenWorldCombatStateMachineV1 } from '../../src/lib/legacy-compat/open-world/combat-state-machine'
+import { beginTextOpenWorldCombatantTurnV2 } from '../../src/lib/legacy-compat/open-world/combat-status'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
 import { projectTextOpenWorldPlayerCombatV1 } from '../../src/lib/open-world/player-combat'
 import {
   createInitialTextOpenWorldSessionProjectionV1,
   deriveTextOpenWorldContextsV1,
-} from '../../src/lib/open-world/session-projection'
-import { readProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/product/runtime-core'
+} from '../../src/lib/legacy-compat/open-world/session-projection'
+import { readProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/legacy-compat/product/runtime-core'
 import type {
   ProductRuntimeEvent,
   TextOpenWorldCombatRuntimeStateV2,

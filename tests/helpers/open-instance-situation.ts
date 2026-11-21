@@ -2,8 +2,8 @@
 import { setupOpenEntityPlanningV1 } from './open-entity-runtime'
 import { OPEN_HUMAN_VIEWER } from './open-ttrpg-session'
 import { readTtrpgOpenEntityDeskV1, proposeTtrpgOpenEntityDeskV1, confirmTtrpgOpenEntityDeskV1, materializeTtrpgOpenEntityDeskV1, closeTtrpgOpenEntityDeskV1 } from '../../src/lib/ttrpg/open-entity-desk'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
-import { createCompleteTtrpgCharacterSheetV2 } from '../../src/lib/ttrpg/character-sheet'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
+import { createCompleteTtrpgCharacterSheetV2 } from '../../src/lib/legacy-compat/ttrpg/character-sheet'
 
 export async function setupInstanceSituationV1(humanGm = true) {
   const s = await setupOpenEntityPlanningV1(pkg => {

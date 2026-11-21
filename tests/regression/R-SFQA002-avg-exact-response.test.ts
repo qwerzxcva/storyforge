@@ -3,15 +3,15 @@ import { db } from '../../src/lib/db/schema'
 import { useAIConfigStore } from '../../src/stores/ai-config'
 import { avgImageResponseEvidenceV1 } from '../../src/lib/avg/media-production-executor'
 import { parseAvgHeldImageQueueFailureV4 } from '../../src/lib/avg/visual-held-image-failure'
-import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { sha256MediaData } from '../../src/lib/product-production/media-blob-store'
+import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import type { MediaTransportResponseV1 } from '../../src/lib/product-production/media-adapters'
 import { readAgentRunArtifactExactV1 } from '../../src/lib/memory/artifact-store'
 import { prepareNativeAvgAssembly } from '../helpers/avg-production-assembly-fixture'
 import { readAvgDraftV1 } from '../../src/lib/avg/draft-service'
 import { saveAvgVisualBatchDraftV1, prepareAvgAssemblyBriefV1, startAvgAssemblyV1,
   stageAvgWorkspaceInputV1, confirmAvgWorkspaceInputV1, runAvgAssemblyV1 } from '../../src/lib/avg/assembly-service'
-import type { AvgVisualProductionRequirementV1 } from '../../src/lib/avg/media-production-contract'
+import type { AvgVisualProductionRequirementV1 } from '../../src/lib/legacy-compat/avg/media-production-contract'
 import { deterministicRegionMapPngV1 } from '../../src/lib/product-production/production-executor'
 
 const response: MediaTransportResponseV1 = {

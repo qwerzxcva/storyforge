@@ -1,6 +1,6 @@
 import type { ProductModuleCompilerInputV1 } from '../../src/lib/product-production/product-module-compilers'
 import type { ProductProductionWorldSourceCatalogV2 } from '../../src/lib/product-production/world-source'
-import { DEFAULT_CHAT_SETTINGS } from '../../src/lib/character-interaction/authoring-contract'
+import { DEFAULT_CHAT_SETTINGS } from '../../src/lib/legacy-compat/character-interaction/authoring-contract'
 
 /** Deliberately small compiler input, not a production or real-model acceptance fixture. */
 export function characterChatBaselineInput(): ProductModuleCompilerInputV1 & {

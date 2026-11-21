@@ -1,9 +1,9 @@
-import type { AIConfig, ChatMessage, PromptTemplate } from '../types'
-import { renderPrompt } from '../ai/prompt-engine'
-import { estimateChatRequestOptionsTokens, type ChatRequestOptions } from '../ai/client'
-import { trimMessagesToFit } from '../ai/context-budget'
-import { freezeModelCapacityV1, modelInputBudgetV1 } from '../ai/model-capacity'
-import { formatCodexImportCatalog, type CodexImportCategoryOption } from './codex-classification'
+import type { AIConfig, ChatMessage, PromptTemplate } from '../types';
+import { renderPrompt } from '../ai/prompt-engine';
+import { estimateChatRequestOptionsTokens, type ChatRequestOptions } from '../ai/client';
+import { trimMessagesToFit } from '../ai/context-budget';
+import { freezeModelCapacityV1, modelInputBudgetV1 } from '../ai/model-capacity';
+import { formatCodexImportCatalog, type CodexImportCategoryOption } from './codex-classification';
 
 /** The real document-parse frame, also available to opt-in new-plan previews.
  * Source/context/catalog are supplied whole; this function never assembles or clips them. */

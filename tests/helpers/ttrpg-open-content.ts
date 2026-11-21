@@ -1,9 +1,9 @@
 import type { RulePackV1, TtrpgCharacterTemplateV1 } from '../../src/lib/types'
-import type { RulePackV2, TtrpgCampaignContentV2, TtrpgOpenAuthoringV1, TtrpgOpenFactPolicyV1 } from '../../src/lib/ttrpg/open-contract'
-import { OPEN_FACT_PREDICATES } from '../../src/lib/ttrpg/open-contract'
+import type { RulePackV2, TtrpgCampaignContentV2, TtrpgOpenAuthoringV1, TtrpgOpenFactPolicyV1 } from '../../src/lib/legacy-compat/ttrpg/open-contract'
+import { OPEN_FACT_PREDICATES } from '../../src/lib/legacy-compat/ttrpg/open-contract'
 import { STORYFORGE_RULE_PACK_V1 } from '../../src/lib/ttrpg/storyforge-rule-pack'
-import { createCompleteTtrpgCharacterSheetV2 } from '../../src/lib/ttrpg/character-sheet'
-import { evaluateRuleNumberExpressionV1 } from '../../src/lib/ttrpg/rule-pack'
+import { createCompleteTtrpgCharacterSheetV2 } from '../../src/lib/legacy-compat/ttrpg/character-sheet'
+import { evaluateRuleNumberExpressionV1 } from '../../src/lib/legacy-compat/ttrpg/rule-pack'
 
 const HASH = 'a'.repeat(64)
 export function openRuleFixture(): RulePackV2 {

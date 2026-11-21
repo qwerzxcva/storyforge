@@ -1,7 +1,7 @@
-import { db } from '../db/schema'
-import { resolveScopeLike, scopeTransactionTables } from '../workspace/scope'
-import type { WorkspaceScope } from '../types'
-import { isShareableWorld } from './world-identity'
+import { db } from '../db/schema';
+import { resolveScopeLike, scopeTransactionTables } from '../workspace/scope';
+import type { WorkspaceScope } from '../types';
+import { isShareableWorld } from './world-identity';
 
 /** World identity metadata belongs to the World root, never its narrative Work. */
 export async function updateWorldDraftMetadata(scope:WorkspaceScope, input:{name:string;description:string}, expectedUpdatedAt:number):Promise<void> {

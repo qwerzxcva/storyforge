@@ -4,10 +4,10 @@ import { encodeFixtureRasterV1, installRasterDecoderForVitestV1 } from './raster
 import { saveWorkCoverDraftV1 } from '../../src/lib/work-cover/drafts'
 import { uploadWorkCoverAssetV1 } from '../../src/lib/work-cover/assets'
 import { adoptWorkCoverV1, prepareWorkCoverAdoptionV1 } from '../../src/lib/work-cover/adoption'
-import { defaultAiTownSettings, serializeAiTownSettings } from '../../src/lib/ai-town/authoring-contract'
-import { defaultTtrpgSettings, serializeTtrpgSettings } from '../../src/lib/ttrpg/authoring-contract'
-import {DEFAULT_CHAT_SETTINGS} from '../../src/lib/character-interaction/authoring-contract'
-import {DEFAULT_AVG_SETTINGS} from '../../src/lib/avg/authoring-contract'
+import { defaultAiTownSettings, serializeAiTownSettings } from '../../src/lib/legacy-compat/ai-town/authoring-contract'
+import { defaultTtrpgSettings, serializeTtrpgSettings } from '../../src/lib/legacy-compat/ttrpg/authoring-contract'
+import {DEFAULT_CHAT_SETTINGS} from '../../src/lib/legacy-compat/character-interaction/authoring-contract'
+import {DEFAULT_AVG_SETTINGS} from '../../src/lib/legacy-compat/avg/authoring-contract'
 /**
  * 全量项目种子 · 测试共享 helper
  *
@@ -58,10 +58,10 @@ import type {
   ScreenplayTargetSpecV1,
   WorkspaceScope,
 } from '../../src/lib/types'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { createFixtureProductReleaseManifestV1 } from './product-release-v1'
 import { PRODUCT_BROWSER_PERFORMANCE_POLICY_V1 } from '../../src/lib/product-production/browser-performance'
-import { recordProductBrowserPerformanceMeasurementV1 } from '../../src/lib/product-production/quality-receipts'
+import { recordProductBrowserPerformanceMeasurementV1 } from '../../src/lib/legacy-compat/product-production/quality-receipts'
 import { createStoryForgeRulePackV1 } from '../../src/lib/ttrpg/storyforge-rule-pack'
 import { createWorldRevision, publishWorldRevision } from '../../src/lib/world-engine/releases'
 import { stampCurrentFixtureResourceUidsV1 } from './current-resource-identity'
@@ -87,8 +87,8 @@ import { openRuntimePackageFixture } from './ttrpg-open-package'
 import { seedCurrentProductBuild } from './current-product-build'
 import { configureOpenSeatsV1, openEnvelopeV1, OPEN_HUMAN_VIEWER } from './open-ttrpg-session'
 import { completeTtrpgOpenSessionZeroV1, startTtrpgOpenRunV1, recordTtrpgOpenNarrativeMemoryV1 } from '../../src/lib/ttrpg/runtime-commands'
-import { hashTtrpgFrozenPredicateIndexV1 } from '../../src/lib/ttrpg/content-version'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { hashTtrpgFrozenPredicateIndexV1 } from '../../src/lib/legacy-compat/ttrpg/content-version'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 
 const now = 1_700_000_000_000 // 固定时间戳,保证派生/手写两版导出可逐字段比对
 

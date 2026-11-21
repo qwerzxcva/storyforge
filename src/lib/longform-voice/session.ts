@@ -1,7 +1,4 @@
-import {
-  assertVoiceTransport, speechText, voiceEndpoint, VOICE_MAX_BYTES, VOICE_MAX_RECORDING_MS,
-  type CompanionPreferences, type VoiceService,
-} from './contract'
+import { assertVoiceTransport, speechText, voiceEndpoint, VOICE_MAX_BYTES, VOICE_MAX_RECORDING_MS, type CompanionPreferences, type VoiceService } from './contract';
 
 export type VoicePhase = 'idle' | 'requesting' | 'listening' | 'transcribing' | 'preparing' | 'speaking'
 export interface VoiceSnapshot { phase: VoicePhase; preview: string; error: string; paused?: boolean }
@@ -54,9 +51,9 @@ export class VoiceSession {
   constructor(
     private readonly changed: (state: VoiceSnapshot) => void,
     private readonly transcript: (text: string) => void,
-    private readonly boundary: 'longform' | 'character-chat' = 'longform',
+    boundary: 'longform' = 'longform',
   ) {
-    if (boundary !== 'longform' && boundary !== 'character-chat') throw new Error('未登记的语音产品边界')
+    if (boundary !== 'longform') throw new Error('未登记的语音产品边界')
   }
 
   private update(patch: Partial<VoiceSnapshot>) {
@@ -165,15 +162,13 @@ export class VoiceSession {
     if (this.disposed) return
     this.activate()
     const generation = this.generation
-    if (this.boundary === 'character-chat') assertVoiceTransport('chat.voice.input', 'src/lib/longform-voice/session.ts')
-    else assertVoiceTransport('longform.voice.input', 'src/lib/longform-voice/session.ts')
+    assertVoiceTransport('longform.voice.input', 'src/lib/longform-voice/session.ts')
     this.update({ phase: 'requesting' })
     this.deadline(30_000, () => this.fail(new Error('等待麦克风权限超时；需要时请再次点击说话。'), generation))
     try {
-      if (this.boundary === 'character-chat' && config.inputMode !== 'browser') throw new Error('角色聊天当前仅支持浏览器语音输入，请继续打字或选择浏览器识别。')
       if (config.inputMode === 'browser') {
         const Constructor = browserRecognition()
-        if (!Constructor) throw new Error(this.boundary === 'character-chat' ? '此浏览器不支持语音识别，可以继续打字。' : '此浏览器不支持语音识别。可在助手设置中配置语音服务，或继续打字。')
+        if (!Constructor) throw new Error('此浏览器不支持语音识别。可在助手设置中配置语音服务，或继续打字。')
         const recognition = new Constructor()
         this.recognition = recognition
         recognition.lang = 'zh-CN'
@@ -195,7 +190,7 @@ export class VoiceSession {
           error === 'not-allowed' || error === 'service-not-allowed'
             ? '语音识别权限未开放，请检查浏览器权限。'
             : error === 'no-speech' ? '没有听到语音，请靠近麦克风再试。'
-              : error === 'network' ? (this.boundary === 'character-chat' ? '浏览器识别服务连接失败。请检查网络，或继续打字。' : '浏览器识别服务连接失败。可切换模型服务或继续打字。')
+              : error === 'network' ? '浏览器识别服务连接失败。可切换模型服务或继续打字。'
                 : '浏览器语音识别中断，请重试或继续打字。',
         ), generation)
         recognition.onend = () => this.accept(finalText, generation)
@@ -299,18 +294,15 @@ export class VoiceSession {
     if (this.disposed) return
     this.activate()
     const generation = this.generation
-    if (this.boundary === 'character-chat') assertVoiceTransport('chat.voice.output', 'src/lib/longform-voice/session.ts')
-    else assertVoiceTransport('longform.voice.output', 'src/lib/longform-voice/session.ts')
+    assertVoiceTransport('longform.voice.output', 'src/lib/longform-voice/session.ts')
     const input = speechText(text)
     if (!input) { this.update({ error: '这条消息没有可朗读的文字。' }); return }
     this.update({ phase: 'preparing' })
     try {
-      if (this.boundary === 'character-chat' && config.outputMode !== 'browser') throw new Error('角色聊天当前仅支持浏览器朗读，请选择设备音色。')
       if (config.outputMode === 'browser') {
-        if (!window.speechSynthesis || !window.SpeechSynthesisUtterance) throw new Error(this.boundary === 'character-chat' ? '此浏览器不支持朗读，可以继续阅读文字。' : '此浏览器不支持朗读。可在助手设置中配置语音合成服务。')
+        if (!window.speechSynthesis || !window.SpeechSynthesisUtterance) throw new Error('此浏览器不支持朗读。可在助手设置中配置语音合成服务。')
         const chunks = input.match(/[^。！？\n]{1,150}[。！？\n]?/g) ?? [input]
         const voice = window.speechSynthesis.getVoices().find((item) => item.voiceURI === config.browserVoice)
-        if (this.boundary === 'character-chat' && config.browserVoice && !voice) throw new Error('此设备已找不到所选音色，请重新选择。')
         const next = (index: number) => {
           if (!this.current(generation)) return
           if (this.snapshot.paused) {this.resumeContinuation = () => next(index); return}

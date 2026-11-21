@@ -1,11 +1,5 @@
-import type {
-  IntervalV1, NarrativeTimeComparisonV1, NarrativeTimeContextV1, NarrativeTimeV1,
-  TimePointV1,
-} from '../types/narrative-time'
-import {
-  arrayV1, canonicalNarrativeJsonV1, enumV1, integerTextV1, keyV1, narrativeFail,
-  nullableV1, objectV1, textV1, uintV1, uniqueKeysV1, type DecoderV1,
-} from './narrative-json'
+import type { IntervalV1, NarrativeTimeComparisonV1, NarrativeTimeContextV1, NarrativeTimeV1, TimePointV1 } from '../types/narrative-time';
+import { arrayV1, canonicalNarrativeJsonV1, enumV1, integerTextV1, keyV1, narrativeFail, nullableV1, objectV1, textV1, uintV1, uniqueKeysV1, type DecoderV1 } from './narrative-json';
 
 export const timePointDecoderV1: DecoderV1<TimePointV1> = (value, path) => {
   const kind = (value as TimePointV1 | null)?.kind

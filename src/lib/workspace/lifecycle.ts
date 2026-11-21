@@ -5,14 +5,14 @@
  * touch World-owned rows, while deleting a World requires explicit confirmation
  * before removing its Works and all dependent content.
  */
-import { db } from '../db/schema'
-import { PROJECT_TABLES, REGISTRY_BY_NAME } from '../registry/project-tables'
-import { transactionTablesFor, cascadeDeleteProject } from '../registry/lifecycle'
-import { resolveWorkspaceOwnership } from './ownership'
-import { markAndSweepAgentRunArtifactsV1 } from '../memory/artifact-retention-store'
-import { remapNarrativeDomainReferencesV1 } from '../narrative-domain/lifecycle'
-import { clearRegisteredArrayReferences, registeredArrayReferencesTo } from '../registry/array-references'
-import type { Work } from '../types'
+import { db } from '../db/schema';
+import { PROJECT_TABLES, REGISTRY_BY_NAME } from '../registry/project-tables';
+import { transactionTablesFor, cascadeDeleteProject } from '../registry/lifecycle';
+import { resolveWorkspaceOwnership } from './ownership';
+import { markAndSweepAgentRunArtifactsV1 } from '../memory/artifact-retention-store';
+import { remapNarrativeDomainReferencesV1 } from '../narrative-domain/lifecycle';
+import { clearRegisteredArrayReferences, registeredArrayReferencesTo } from '../registry/array-references';
+import type { Work } from '../types';
 
 function ownerField(spec: typeof PROJECT_TABLES[number]): { owner: 'world' | 'work'; field: string } | null {
   const locator = spec.domainOwner?.locator

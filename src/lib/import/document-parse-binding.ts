@@ -1,6 +1,6 @@
-import { hashCanonicalValue } from '../agent/run/hash'
-import type { ImportTarget } from '../types/import-session'
-import type { WorkspaceScope } from '../types/world-ownership'
+import { hashCanonicalValue } from '../agent/run/hash';
+import type { ImportTarget } from '../types/import-session';
+import type { WorkspaceScope } from '../types/world-ownership';
 
 /** Structural view shared with local privacy classification. These are the
  * original import binding fields; no migration or target inference occurs. */

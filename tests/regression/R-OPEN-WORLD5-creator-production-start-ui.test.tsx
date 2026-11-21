@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import ProductProductionStudio from '../../src/components/product/ProductProductionStudio'
 import { TextOpenWorldCreatorProductionStart } from '../../src/components/text-game/TextOpenWorldCreatorProductionStart'
 import type { TextOpenWorldCreatorBriefSessionV1 } from '../../src/lib/open-world/creator-brief'
-import type { TextOpenWorldCreatorStartPreparationV1 } from '../../src/lib/open-world/creator-production-start'
+import type { TextOpenWorldCreatorStartPreparationV1 } from '../../src/lib/legacy-compat/open-world/creator-production-start'
 import type {
   ProductProductionDetailsV1,
   ProductProductionProgressV1,
@@ -43,7 +43,7 @@ vi.mock('../../src/lib/open-world/source-admission', async importOriginal => {
 })
 
 vi.mock('../../src/lib/open-world/creator-brief-persistence', async importOriginal => {
-  const actual = await importOriginal<typeof import('../../src/lib/open-world/creator-brief-persistence')>()
+  const actual = await importOriginal<typeof import('../../src/lib/legacy-compat/open-world/creator-brief-persistence')>()
   return {
     ...actual,
     createTextOpenWorldCreatorSourceLocatorV1: vi.fn(() => ({
@@ -74,7 +74,7 @@ vi.mock('../../src/lib/product-production/service', async importOriginal => {
 })
 
 vi.mock('../../src/lib/product-production/quality-receipts', async importOriginal => {
-  const actual = await importOriginal<typeof import('../../src/lib/product-production/quality-receipts')>()
+  const actual = await importOriginal<typeof import('../../src/lib/legacy-compat/product-production/quality-receipts')>()
   return {
     ...actual,
     listCompletedProductBuildPlaythroughsV1: vi.fn(async () => []),

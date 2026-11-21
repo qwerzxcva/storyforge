@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react'
-import { useGistStore } from '../stores/gist'
+import { useEffect, useRef } from 'react';
+import { useGistStore } from '../stores/gist';
 
 /** 云自动备份间隔（毫秒）— 10 分钟（比本地快照稀疏，省 GitHub API） */
 export const GIST_AUTO_INTERVAL = 10 * 60 * 1000

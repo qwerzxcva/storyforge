@@ -8,7 +8,7 @@ import {
   createInitialAiTownStateV1,
   parseAiTownRuntimeContentV1,
   parseAiTownStateV1,
-} from '../../src/lib/ai-town/runtime'
+} from '../../src/lib/legacy-compat/ai-town/runtime'
 import {
   moveAiTownPlayerV1,
   performAiTownActionV1,
@@ -19,8 +19,8 @@ import {
   runAiTownOfflineBatchV1,
 } from '../../src/lib/ai-town/runtime-api'
 import { db } from '../../src/lib/db/schema'
-import { readProductRuntimeState, readProductRuntimeStateVersion } from '../../src/lib/product/runtime-api'
-import { commitInteractionPlayerMessage, startInteractionScene } from '../../src/lib/character-interaction/runtime-api'
+import { readProductRuntimeState, readProductRuntimeStateVersion } from '../../src/lib/legacy-compat/product/runtime-api'
+import { commitInteractionPlayerMessage, startInteractionScene } from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import {
   adoptInteractionRuntimeCandidateV1,
   generateInteractionRuntimeCandidateV1,

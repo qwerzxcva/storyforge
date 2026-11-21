@@ -2,11 +2,11 @@ import { beforeEach, afterEach, describe, it, expect, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { setupCommonOracleDeskV1 as setup } from '../helpers/open-common-oracle-desk'
 import { openEnvelopeV1 } from '../helpers/open-ttrpg-session'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readTtrpgOpenCommonOracleDeskV1 as read, requestTtrpgOpenCommonOracleDeskV1 as request,
   resumeTtrpgOpenCommonOracleDeskV1 as resume, reviewTtrpgOpenCommonOracleDeskV1 as review, repairTtrpgOpenCommonOracleDeskV1 as repair,
   finishTtrpgOpenCommonOracleDeskV1 as finish, closeTtrpgOpenCommonOracleDeskV1 as close, archiveTtrpgOpenCommonOracleDeskV1 as archive } from '../../src/lib/ttrpg/open-common-oracle-desk'
-import * as source from '../../src/lib/ttrpg/open-common-oracle-context'
+import * as source from '../../src/lib/legacy-compat/ttrpg/open-common-oracle-context'
 import * as events from '../../src/lib/agent/run/event-store'
 import { changeTtrpgSafetyStatus, commitTtrpgOpenCommonOracleCandidateFactV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'

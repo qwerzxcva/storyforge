@@ -3,7 +3,7 @@ import { uniqueTextOpenWorldObjectiveInteractionLocationV1 } from '../../src/lib
 import { projectTextOpenWorldPlayerQuestLogV1 } from '../../src/lib/open-world/player-quest-log'
 import { createTextOpenWorldActionRegistryV1 } from '../../src/lib/open-world/action-registry'
 import { projectTextOpenWorldScenesV1 } from '../../src/lib/open-world/scene-projection'
-import { createInitialTextOpenWorldSessionProjectionV1, deriveTextOpenWorldContextsV1 } from '../../src/lib/open-world/session-projection'
+import { createInitialTextOpenWorldSessionProjectionV1, deriveTextOpenWorldContextsV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
 import { createTextOpenWorldVNextP9Fixture } from '../helpers/text-open-world-vnext-fixture'
 
 const objectiveKey = 'objective.main.1'

@@ -1,4 +1,4 @@
-import { assertWorkCoverPortableRowV1 } from '../work-cover/contracts'
+import { assertWorkCoverPortableRowV1 } from '../work-cover/contracts';
 /**
  * PROJECT_TABLES 注册表·单一事实源
  *
@@ -11,17 +11,17 @@ import { assertWorkCoverPortableRowV1 } from '../work-cover/contracts'
  * 禁止在该注册表之外手写第二份表清单。
  * 治理依据:docs/DATA-GOVERNANCE.md。
  */
-import { db } from '../db/schema'
-import { assertWorldRevisionOriginRowV1 } from '../world-engine/publication-origin-contract'
-import { assertWorldSourceReceiptBindingV1, assertWorldSourceReceiptRowV1 } from '../world-engine/source-receipt-contract'
-import { NARRATIVE_SOURCE_FKS_V1 } from '../types/narrative-domain'
-import type { NarrativeDomainFieldsV1 } from '../types/narrative-domain'
-import type { DomainOwnershipSpec, TableSpec, WorkspaceMemoryClassificationV1 } from './types'
-import { parseSystemFictionElementsV1 } from '../prose/system-fiction-contract'
-import { normalizeDetailedScenes } from '../types/detailed-outline'
-import { readLocationTagsV1 } from '../types/location'
-import { assertChapterContentV1 } from '../types/outline'
-import { assertPortableRuntimeMediaAccounting } from '../ttrpg/runtime-media-attempt-accounting'
+import { db } from '../db/schema';
+import { assertWorldRevisionOriginRowV1 } from '../world-engine/publication-origin-contract';
+import { assertWorldSourceReceiptBindingV1, assertWorldSourceReceiptRowV1 } from '../world-engine/source-receipt-contract';
+import { NARRATIVE_SOURCE_FKS_V1 } from '../types/narrative-domain';
+import type { NarrativeDomainFieldsV1 } from '../types/narrative-domain';
+import type { DomainOwnershipSpec, TableSpec, WorkspaceMemoryClassificationV1 } from './types';
+import { parseSystemFictionElementsV1 } from '../prose/system-fiction-contract';
+import { normalizeDetailedScenes } from '../types/detailed-outline';
+import { readLocationTagsV1 } from '../types/location';
+import { assertChapterContentV1 } from '../types/outline';
+import { assertPortableRuntimeMediaAccounting } from '../legacy-compat/ttrpg/runtime-media-attempt-accounting';
 
 const WORKSPACE_DOMAIN_OWNER = {
   allowed: ['workspace'], defaultOwner: 'workspace', locator: { kind: 'workspace' },

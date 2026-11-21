@@ -5,7 +5,7 @@ import {
   generateAiTownDirectorCandidateV1,
 } from '../../src/lib/ai-town/director-harness'
 import { advanceAiTownTimeV1, resolveAiTownEventSeedV1, runAiTownOfflineBatchV1 } from '../../src/lib/ai-town/runtime-api'
-import { readProductRuntimeState, readProductRuntimeStateVersion } from '../../src/lib/product/runtime-api'
+import { readProductRuntimeState, readProductRuntimeStateVersion } from '../../src/lib/legacy-compat/product/runtime-api'
 import { CONTEXT_SOURCES } from '../../src/lib/registry/context-sources'
 import { seedAiTownRuntimeFixture } from '../helpers/ai-town-runtime'
 import { seedCurrentWorkspace } from '../helpers/current-workspace'

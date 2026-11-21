@@ -1,9 +1,9 @@
-import { usePromptStore } from '../../stores/prompt'
-import { renderPrompt } from '../ai/prompt-engine'
-import type { ChatMessage } from '../types'
-import { parseStructuredOutputV1 } from '../agent/structured-output-pipeline'
+import { usePromptStore } from '../../stores/prompt';
+import { renderPrompt } from '../ai/prompt-engine';
+import type { ChatMessage } from '../types';
+import { parseStructuredOutputV1 } from '../agent/structured-output-pipeline';
 
-import { INSPIRATION_PREPARATION_MODES, INSPIRATION_PREPARATION_MODULES, type InspirationPreparationMode } from './preparation-contract'
+import { INSPIRATION_PREPARATION_MODES, INSPIRATION_PREPARATION_MODULES, type InspirationPreparationMode } from './preparation-contract';
 export { INSPIRATION_PREPARATION_MODES, INSPIRATION_PREPARATION_LABELS, INSPIRATION_PREPARATION_MODULES, type InspirationPreparationMode } from './preparation-contract'
 export interface InspirationPreparationResult {
   summary: string

@@ -1,5 +1,5 @@
-import { db } from '../db/schema'
-import type { KnowledgeEventStatus } from '../types'
+import { db } from '../db/schema';
+import type { KnowledgeEventStatus } from '../types';
 
 function reviewStatus(status: KnowledgeEventStatus, next: KnowledgeEventStatus): KnowledgeEventStatus {
   return status === 'rejected' ? status : next

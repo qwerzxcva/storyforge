@@ -2,7 +2,7 @@ import { describe,expect,it,vi } from 'vitest'
 import { agnesImage21FlashAdapterV1,agnesImage25FlashAdapterV1,type ProductMediaRequestV1 } from '../../src/lib/product-production/media-adapters'
 import { configuredAgnesImageEndpointHashV1,configuredAgnesImageEndpointHashV2,inspectConfiguredAgnesImageCapabilityV1,
   inspectConfiguredAgnesImageCapabilityV2,resolveConfiguredAgnesImageCapabilityV1,resolveConfiguredAgnesImageCapabilityV2 } from '../../src/lib/product-production/media-transport'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import type { AIConfig,ProviderCapabilityRequirementV1 } from '../../src/lib/types'
 
 const config:AIConfig={provider:'agnes',apiKey:'test-only-private-image-route',baseUrl:'https://image.fixture.invalid/v1',model:'agnes-3.0-flash',temperature:0.7,maxTokens:0}

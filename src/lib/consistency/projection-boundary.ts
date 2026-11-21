@@ -1,5 +1,5 @@
-import type { Chapter, OutlineNode } from '../types'
-import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk'
+import type { Chapter, OutlineNode } from '../types';
+import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk';
 
 export interface ProjectionBoundary {
   targetOrder: number | null

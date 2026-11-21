@@ -1,9 +1,9 @@
 import {expect, it} from 'vitest'
 import {canonicalStringify} from '../../src/lib/agent/run/hash'
 import type {ChatNarrativeActionV1, ChatNarrativeActionReviewV1} from '../../src/lib/types/chat-narrative'
-import {createInitialInteractionState, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/character-interaction/runtime'
-import {applyReviewedChatNarrativeActionV1, parseChatNarrativeActionReviewV1, previewChatNarrativeActionV1, requestChatNarrativeTriggerV1} from '../../src/lib/character-interaction/narrative-actions'
-import {assertChatCommitmentReviewVersionV1} from '../../src/lib/character-interaction/narrative-commitments'
+import {createInitialInteractionState, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/legacy-compat/character-interaction/runtime'
+import {applyReviewedChatNarrativeActionV1, parseChatNarrativeActionReviewV1, previewChatNarrativeActionV1, requestChatNarrativeTriggerV1} from '../../src/lib/legacy-compat/character-interaction/narrative-actions'
+import {assertChatCommitmentReviewVersionV1} from '../../src/lib/legacy-compat/character-interaction/narrative-commitments'
 import {bindChatNarrativeOptionsReviewV1, selectedChatNarrativeOptionV1} from '../../src/lib/character-interaction/narrative-options'
 import {chatActionReviewOutputFixture, chatNarrativeFixture} from '../helpers/chat-narrative-fixture'
 

@@ -1,7 +1,7 @@
 import { afterAll, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
-import { createProductRuntimeInstance } from '../../src/lib/product/runtime-instances'
+import { createProductRuntimeInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
 import { verifyStoredProductBuildRootBudgetEvidenceV1 } from '../../src/lib/product-production/root-budget-evidence-store'
 import { createTextOpenWorldCreatorReleaseFixtureV1 } from '../helpers/text-open-world-creator-release'

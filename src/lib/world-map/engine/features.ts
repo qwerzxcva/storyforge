@@ -2,8 +2,7 @@
  * 地理特征检测
  * 用 Flood-fill 识别海洋、岛屿、湖泊等连通区域
  */
-
-import type { GridCells, Feature } from './types'
+import type { GridCells, Feature } from './types';
 
 /** 水域阈值：高度 < 20 为水域 */
 const SEA_LEVEL = 20

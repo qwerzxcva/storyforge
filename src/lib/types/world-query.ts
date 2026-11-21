@@ -1,8 +1,8 @@
-import type { NarrativeRecordV1, SemanticKindV1, TypedValueV1 } from './narrative-ir'
-import type { NarrativeIndexEdgeKindV1 } from './narrative-index'
-import type { IntervalV1, TimePointV1 } from './narrative-time'
-import type { WorldReferenceV1 } from './world-product-contracts'
-import type { ContextResourceKind, ContextResourceProviderV1, FrozenResourceScopeV1 } from '../registry/types'
+import type { NarrativeRecordV1, SemanticKindV1, TypedValueV1 } from './narrative-ir';
+import type { NarrativeIndexEdgeKindV1 } from './narrative-index';
+import type { IntervalV1, TimePointV1 } from './narrative-time';
+import type { WorldReferenceV1 } from './world-product-contracts';
+import type { ContextResourceKind, ContextResourceProviderV1, FrozenResourceScopeV1 } from '../registry/types';
 
 /** Same portable release identity as V1; V2 explicitly commits the v4 index.
  * The local locator still has no part in the reference hash. */

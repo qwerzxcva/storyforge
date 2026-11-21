@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { sha256MediaData } from '../../src/lib/product-production/media-blob-store'
-import { parseAvgSoundPlanV1, parseAvgAudioProcessingRecipeV1, assertAvgAudioProcessingReceiptV1 } from '../../src/lib/avg/sound-plan-contract'
-import { parseAvgAudioProcessingReceiptV1, type AvgAudioProcessingRecipeV1, type AvgAudioProcessingReceiptV1 } from '../../src/lib/avg/audio-processing-contract'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
+import { parseAvgSoundPlanV1, parseAvgAudioProcessingRecipeV1, assertAvgAudioProcessingReceiptV1 } from '../../src/lib/legacy-compat/avg/sound-plan-contract'
+import { parseAvgAudioProcessingReceiptV1, type AvgAudioProcessingRecipeV1, type AvgAudioProcessingReceiptV1 } from '../../src/lib/legacy-compat/avg/audio-processing-contract'
 import { processAvgAudioPcmWaveV1, assertAvgAudioProcessingWaveBytesV1, inspectAvgAudioProcessingWaveBytesV1 } from '../../src/lib/avg/audio-processing'
 import { inspectAvgVoiceWaveV1 } from '../../src/lib/avg/voice-wave'
 

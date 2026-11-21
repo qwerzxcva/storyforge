@@ -1,19 +1,11 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Check, Landmark, Loader2, ScanSearch, X } from 'lucide-react'
-import type { FactStatus, Project, WorkspaceScope } from '../../lib/types'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { useFactLedgerStore } from '../../stores/fact-ledger'
-import { getFactPredicate, isConstitutionPredicate } from '../../lib/registry/fact-predicate-registry'
-import {
-  abandonConstitutionExtractionRunV1,
-  adoptConstitutionExtractionCandidateV1,
-  generateConstitutionExtractionCandidateV1,
-  readPendingConstitutionExtractionCandidateV1,
-  readRecoverableConstitutionExtractionRunV1,
-  rejectConstitutionExtractionCandidateV1,
-  type ConstitutionExtractionCandidateV1,
-} from '../../lib/agent/run/constitution-extraction-durable'
-import { resolveScopeLike } from '../../lib/workspace/scope'
+import { useEffect, useMemo, useState } from 'react';
+import { Check, Landmark, Loader2, ScanSearch, X } from 'lucide-react';
+import type { FactStatus, Project, WorkspaceScope } from '../../lib/types';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { useFactLedgerStore } from '../../stores/fact-ledger';
+import { getFactPredicate, isConstitutionPredicate } from '../../lib/registry/fact-predicate-registry';
+import { abandonConstitutionExtractionRunV1, adoptConstitutionExtractionCandidateV1, generateConstitutionExtractionCandidateV1, readPendingConstitutionExtractionCandidateV1, readRecoverableConstitutionExtractionRunV1, rejectConstitutionExtractionCandidateV1, type ConstitutionExtractionCandidateV1 } from '../../lib/agent/run/constitution-extraction-durable';
+import { resolveScopeLike } from '../../lib/workspace/scope';
 
 type ConstitutionTab = 'candidate' | 'confirmed' | 'exceptions' | 'rejected'
 const EXCEPTIONS: FactStatus[] = ['stale', 'source-missing', 'invalid-range']

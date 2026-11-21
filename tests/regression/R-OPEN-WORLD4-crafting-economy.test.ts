@@ -6,8 +6,8 @@ import {
   projectTextOpenWorldPlayerCraftingEconomyV1,
   type TextOpenWorldPlayerCraftingEconomyExecuteRequestV1,
 } from '../../src/lib/open-world/player-crafting-economy'
-import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import type { TextOpenWorldRuntimePackageV1 } from '../../src/lib/types'
 import { createGovernedTextOpenWorldSessionFixtureV1 } from '../helpers/text-open-world-product-session'
 import {

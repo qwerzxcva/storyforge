@@ -4,12 +4,12 @@
  * 从大纲摘要 + 章节正文中提取角色关系，
  * 返回结构化的关系数组供 UI 预览和写入。
  */
-import { db } from '../db/schema'
-import type { Character, ChatMessage, RelationType } from '../types'
-import { usePromptStore } from '../../stores/prompt'
-import { renderPrompt } from './prompt-engine'
-import { characterAxesLabel } from '../character/character-axes'
-import { readOwnedRows, resolveReadScopeLike } from '../workspace/scope'
+import { db } from '../db/schema';
+import type { Character, ChatMessage, RelationType } from '../types';
+import { usePromptStore } from '../../stores/prompt';
+import { renderPrompt } from './prompt-engine';
+import { characterAxesLabel } from '../character/character-axes';
+import { readOwnedRows, resolveReadScopeLike } from '../workspace/scope';
 
 /** AI 返回的原始关系条目 */
 export interface ExtractedRelation {

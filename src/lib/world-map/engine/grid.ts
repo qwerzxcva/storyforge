@@ -4,7 +4,7 @@
  */
 
 import Delaunator from 'delaunator'
-import type { GridCells, GridVertices } from './types'
+import type { GridCells, GridVertices } from './types';
 
 /** 生成抖动的网格点（基于泊松盘分布的近似） */
 export function generatePoints(

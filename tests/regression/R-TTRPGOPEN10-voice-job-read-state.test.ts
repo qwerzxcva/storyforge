@@ -8,7 +8,7 @@ import { loadTtrpgOpenVoiceJobReadStateForKernelV1 } from '../../src/lib/ttrpg/o
 import { canonicalStringify, hashCanonicalValue } from '../../src/lib/agent/run/hash'
 import { appendAgentRunEventV1, readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { changeTtrpgSafetyStatus } from '../../src/lib/ttrpg/runtime-commands'
-import { branchProductRuntimeSession, deleteProductRuntimeSession, readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { branchProductRuntimeSession, deleteProductRuntimeSession, readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import * as executionInput from '../../src/lib/ttrpg/open-voice-execution-input'
 import * as assembly from '../../src/lib/registry/assemble-context'

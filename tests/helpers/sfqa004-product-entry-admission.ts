@@ -9,13 +9,13 @@ import { sha256Text } from '../../src/lib/ai/chapter-memory/text-normalization'
 import { authorizeSFQA050ProductionV1 } from './sfqa050-provider-dispatch-binding'
 import { openProductionCompilerFixtureV1 } from './open-ttrpg-production-artifacts'
 import { createChatDraftV3, readChatDraftV1, saveChatDraftV1 } from '../../src/lib/character-interaction/draft-service'
-import { parseChatAuthoringSettings } from '../../src/lib/character-interaction/authoring-contract'
+import { parseChatAuthoringSettings } from '../../src/lib/legacy-compat/character-interaction/authoring-contract'
 import { createAvgDraftV1, readAvgDraftV1, saveAvgDraftV1 } from '../../src/lib/avg/draft-service'
-import { parseAvgAuthoringSettingsV1 } from '../../src/lib/avg/authoring-contract'
+import { parseAvgAuthoringSettingsV1 } from '../../src/lib/legacy-compat/avg/authoring-contract'
 import { createAiTownDraft, readAiTownDraft, saveAiTownDraft } from '../../src/lib/ai-town/authoring-service'
-import { settingsFromAiTownDraft } from '../../src/lib/ai-town/authoring-contract'
+import { settingsFromAiTownDraft } from '../../src/lib/legacy-compat/ai-town/authoring-contract'
 import { createTtrpgDraft, readTtrpgDraft, saveTtrpgDraft } from '../../src/lib/ttrpg/authoring-service'
-import { settingsFromTtrpgDraft } from '../../src/lib/ttrpg/authoring-contract'
+import { settingsFromTtrpgDraft } from '../../src/lib/legacy-compat/ttrpg/authoring-contract'
 
 export const SFQA004_UPPER_ENTRIES = [
   ['ttrpg', 'upper.ttrpg'],

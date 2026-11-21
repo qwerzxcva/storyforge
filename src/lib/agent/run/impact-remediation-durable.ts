@@ -1,29 +1,16 @@
-import { db } from '../../db/schema'
-import type { AgentRunRecord, WorkspaceScope } from '../../types'
-import { assembleContext } from '../../registry/assemble-context'
-import { buildEditImpactGraphV1 } from '../../consistency/impact-analysis'
-import {
-  buildImpactRemediationPlanV1,
-  type ImpactRemediationPlanV1,
-} from '../../consistency/impact-remediation-plan'
-import {
-  rebuildChapterChunks,
-  rebuildProjectNarrativeSummaries,
-} from '../../retrieval/retrieval'
-import { hashChapterText } from '../../ai/chapter-memory/text-normalization'
-import { assertRecordInScope, readOwnedRows } from '../../workspace/scope'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunChildV1,
-  readAgentRunV1,
-  readCurrentAgentRunParentV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import { hashCanonicalValue } from './hash'
-import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint'
+import { db } from '../../db/schema';
+import type { AgentRunRecord, WorkspaceScope } from '../../types';
+import { assembleContext } from '../../registry/assemble-context';
+import { buildEditImpactGraphV1 } from '../../consistency/impact-analysis';
+import { buildImpactRemediationPlanV1, type ImpactRemediationPlanV1 } from '../../consistency/impact-remediation-plan';
+import { rebuildChapterChunks, rebuildProjectNarrativeSummaries } from '../../retrieval/retrieval';
+import { hashChapterText } from '../../ai/chapter-memory/text-normalization';
+import { assertRecordInScope, readOwnedRows } from '../../workspace/scope';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunChildV1, readAgentRunV1, readCurrentAgentRunParentV1, type AgentRunSnapshotV1 } from './event-store';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { hashCanonicalValue } from './hash';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
 
 export const IMPACT_REMEDIATION_STEP_ID_V1 = 'impact-remediation:deterministic' as const
 export const IMPACT_REMEDIATION_VERIFIER_SET_V1 = 'impact-remediation-terminal-v1' as const

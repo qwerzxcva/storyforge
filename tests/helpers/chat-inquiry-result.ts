@@ -1,6 +1,6 @@
 import {type ChatNarrativeActionV1, type ChatSituationDraftV1} from '../../src/lib/types/chat-narrative'
 import {generateInteractionRuntimeCandidateV1, adoptInteractionRuntimeCandidateV1} from '../../src/lib/character-interaction/harness'
-import {commitInteractionPlayerMessage, requestChatNarrativeTrigger, readProductRuntimeState, readProductRuntimeStateVersion} from '../../src/lib/character-interaction/runtime-api'
+import {commitInteractionPlayerMessage, requestChatNarrativeTrigger, readProductRuntimeState, readProductRuntimeStateVersion} from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import {seedChatNarrativeRuntimeFixture, chatActionReviewOutputFixture, withChatActionChoiceFixture} from './chat-narrative-fixture'
 
 export {inquiryReassurance, inquiryQuestion, inquiryAnswer, inquiryTruth, inquiryPurpose, chatInquiryReviewFixture} from './chat-inquiry-output'

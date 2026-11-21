@@ -2,16 +2,16 @@
  * 当前表生命周期派生 API。所有事务表集合从 PROJECT_TABLES 派生，
  * 禁止在 Store 或 service 中维护第二份手写清单。
  */
-import Dexie, { type Collection, type Table } from 'dexie'
-import { db } from '../db/schema'
-import { removeCodexEntryReferences } from '../codex/references'
-import { clearCultivationSystemReferences } from '../cultivation/lifecycle'
-import { PROJECT_TABLES, REGISTRY_BY_NAME } from './project-tables'
-import { markAndSweepAgentRunArtifactsV1 } from '../memory/artifact-retention-store'
-import type { TableSpec } from './types'
-import { remapNarrativeDomainReferencesV1 } from '../narrative-domain/lifecycle'
-import { readOwnedRows } from '../workspace/scope'
-import { clearRegisteredArrayReferences, includeReferenceOwnerTables, registeredArrayReferencesTo } from './array-references'
+import Dexie, { type Collection, type Table } from 'dexie';
+import { db } from '../db/schema';
+import { removeCodexEntryReferences } from '../codex/references';
+import { clearCultivationSystemReferences } from '../cultivation/lifecycle';
+import { PROJECT_TABLES, REGISTRY_BY_NAME } from './project-tables';
+import { markAndSweepAgentRunArtifactsV1 } from '../memory/artifact-retention-store';
+import type { TableSpec } from './types';
+import { remapNarrativeDomainReferencesV1 } from '../narrative-domain/lifecycle';
+import { readOwnedRows } from '../workspace/scope';
+import { clearRegisteredArrayReferences, includeReferenceOwnerTables, registeredArrayReferencesTo } from './array-references';
 
 // ─────────────────────────────────────────────────────────────
 // 派生选择器

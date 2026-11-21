@@ -2,7 +2,7 @@
 import { setup, start } from './open-ttrpg-knowledge'
 import { operationInput } from './open-ttrpg-branch-recovery'
 import { OPEN_HUMAN_VIEWER, openEnvelopeV1 } from './open-ttrpg-session'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { resumeTtrpgOpenPlayV1 } from '../../src/lib/ttrpg/open-play-coordinator'
 import { recordTtrpgOpenHumanNarrationV1, closeTtrpgOpenEpochV1 } from '../../src/lib/ttrpg/runtime-commands'
 

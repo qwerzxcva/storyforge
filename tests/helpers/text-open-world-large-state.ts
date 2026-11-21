@@ -2,9 +2,9 @@ import { db } from '../../src/lib/db/schema'
 import {
   createTextOpenWorldDirectorQuestInstanceV1,
   createTextOpenWorldQuestInstanceKeyV1,
-} from '../../src/lib/open-world/quests'
-import { parseTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
-import { hashStateJson, parseProductRuntimeState } from '../../src/lib/product/runtime-core'
+} from '../../src/lib/legacy-compat/open-world/quests'
+import { parseTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
+import { hashStateJson, parseProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import type {
   ProductRuntimeState,
   TextOpenWorldRuntimePackageV1,

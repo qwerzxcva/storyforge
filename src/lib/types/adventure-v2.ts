@@ -1,15 +1,4 @@
-import type {
-  AdventureAbilityDefinition,
-  AdventureConditionDefinition,
-  AdventureContentV1,
-  AdventureItemDefinition,
-  AdventureLocationDefinition,
-  AdventureObjectDefinition,
-  AdventureQuestDefinition,
-  AdventureQuestObjectiveDefinition,
-  AdventureRequirement,
-  AdventureResourceDefinition,
-} from './adventure'
+import type { AdventureAbilityDefinition, AdventureConditionDefinition, AdventureContentV1, AdventureItemDefinition, AdventureLocationDefinition, AdventureObjectDefinition, AdventureQuestDefinition, AdventureQuestObjectiveDefinition, AdventureRequirement, AdventureResourceDefinition } from './adventure';
 
 /**
  * TEXTADV-2 is a product-owned semantic layer over the deterministic

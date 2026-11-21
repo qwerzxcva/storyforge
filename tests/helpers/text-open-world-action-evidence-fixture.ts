@@ -1,5 +1,5 @@
 import type { TextOpenWorldRuntimePackageV1 } from '../../src/lib/types'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
 import { createTextOpenWorldVNextP9Fixture } from './text-open-world-vnext-fixture'
 
 // An isolated authored fixture, never the live sample or a player receipt.

@@ -1,5 +1,5 @@
-import type { ChatMessage } from '../types'
-import type { ImpactRemediationItemV1 } from './impact-remediation-plan'
+import type { ChatMessage } from '../types';
+import type { ImpactRemediationItemV1 } from './impact-remediation-plan';
 
 export const IMPACT_OUTLINE_REGENERATION_PROMPT_VERSION_V1 = 'impact-outline-regeneration-v1' as const
 

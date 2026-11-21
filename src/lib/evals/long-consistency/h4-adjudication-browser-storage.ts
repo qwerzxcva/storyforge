@@ -1,13 +1,6 @@
-import type { EvalSplit } from './types'
-import {
-  exportH4SubtypeAdjudicationCheckpointV1,
-  importH4SubtypeAdjudicationCheckpointV1,
-  type H4SubtypeAdjudicationCheckpointV1,
-} from './h4-adjudication'
-import {
-  scoreH4SubtypeAdjudicationCheckpointV1,
-  type H4SubtypeAdjudicationSealedScoreV1,
-} from './h4-adjudication-scoring'
+import type { EvalSplit } from './types';
+import { exportH4SubtypeAdjudicationCheckpointV1, importH4SubtypeAdjudicationCheckpointV1, type H4SubtypeAdjudicationCheckpointV1 } from './h4-adjudication';
+import { scoreH4SubtypeAdjudicationCheckpointV1, type H4SubtypeAdjudicationSealedScoreV1 } from './h4-adjudication-scoring';
 
 export const H4_SUBTYPE_ADJUDICATION_BROWSER_STORAGE_PREFIX_V1 =
   'storyforge-h4-subtype-adjudication-checkpoint-v1'

@@ -2,7 +2,7 @@
  * 情感节拍卡 AI 适配器
  * 根据章节大纲 + 上下文生成情感节拍规划
  */
-import type { ChatMessage } from '../../types'
+import type { ChatMessage } from '../../types';
 
 const EMOTION_BEAT_SYSTEM_PROMPT = `你是一位资深小说编辑，擅长分析和规划章节的情感节奏。
 你的任务是为即将创作的章节生成一份「情感节拍卡」，帮助作者在写作前理清叙事节奏。

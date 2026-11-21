@@ -1,7 +1,7 @@
-import type { NarrativeDomainProjectionV1 } from './narrative-projection'
-import type { NarrativeIndexV1 } from './narrative-index'
-import type { WorldSemanticSnapshotV1 } from './world-release'
-import type { NarrativeLineageV1 } from './narrative-lineage'
+import type { NarrativeDomainProjectionV1 } from './narrative-projection';
+import type { NarrativeIndexV1 } from './narrative-index';
+import type { WorldSemanticSnapshotV1 } from './world-release';
+import type { NarrativeLineageV1 } from './narrative-lineage';
 
 export const NARRATIVE_DOMAIN_COMPILERS_V4 = ['narrative-domain-v1', 'narrative-domain-v2'] as const
 export type NarrativeDomainCompilerV4 = typeof NARRATIVE_DOMAIN_COMPILERS_V4[number]

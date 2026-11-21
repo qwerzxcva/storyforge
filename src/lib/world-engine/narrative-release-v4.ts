@@ -1,24 +1,23 @@
-import { initializeNarrativeSha256V1 } from '../narrative-domain/sha256'
-import type { WorldReleaseCompiledV4, WorldReleaseManifestV4, WorldReleaseSemanticContentV4 } from '../types/narrative-release'
-import { NARRATIVE_DOMAIN_COMPILERS_V4 } from '../types/narrative-release'
-import type { WorldSemanticSnapshotV1 } from '../types/world-release'
-import type { NarrativeDomainCaptureV1, NarrativeDomainRowV1 } from './narrative-domain-capture'
-import type { NarrativeIndexV1 } from '../types/narrative-index'
-import { NARRATIVE_INDEX_RECIPE_V1 } from '../types/narrative-index'
-import { WORLD_SEMANTIC_REGISTRY_V4 } from './semantic-registry-v4'
-import { projectNarrativeDomainCaptureV1 } from './narrative-domain-projection'
-import { compileNarrativeIndexV1, verifyNarrativeIndexV1 } from './narrative-index'
-import { assertWorldSemanticSnapshotV1 } from './semantic-snapshot'
-import { remapNarrativeDomainFieldV1 } from '../narrative-domain/references'
-import { NARRATIVE_DOMAIN_FIELDS_V1 } from '../narrative-domain/codec'
-import { assertNarrativeDomainReferenceRowsV1 } from '../narrative-domain/integrity'
-import { parseWorldPortals } from '../utils/world-portals'
-import { isPortableResourceUidV1 } from '../context-gateway/resource-uid'
-import { isPublicWorldCode } from '../workspace/identity'
-import { isWorkspaceUid, isWorkCode } from '../memory/identity'
-import { attachNarrativeLineageV1, verifyNarrativeLineageV1 } from './narrative-lineage'
-import { assertNarrativeJsonV1, freezeAndHashNarrativeJsonV1, canonicalNarrativeJsonV1, canonicalNarrativeJsonWithHashV1, parseCanonicalNarrativeObjectV1, splitCanonicalNarrativeObjectV1, matchesCanonicalNarrativeJsonV1, equalNarrativeJsonV1, compareUnicodeCodePointsV1, hashNarrativeBytesV1, hashNarrativeValueV1, hashV1, narrativeFail,
-  keyV1, objectV1, enumV1, uniqueKeysV1 } from './narrative-json'
+import { initializeNarrativeSha256V1 } from '../narrative-domain/sha256';
+import type { WorldReleaseCompiledV4, WorldReleaseManifestV4, WorldReleaseSemanticContentV4 } from '../types/narrative-release';
+import { NARRATIVE_DOMAIN_COMPILERS_V4 } from '../types/narrative-release';
+import type { WorldSemanticSnapshotV1 } from '../types/world-release';
+import type { NarrativeDomainCaptureV1, NarrativeDomainRowV1 } from './narrative-domain-capture';
+import type { NarrativeIndexV1 } from '../types/narrative-index';
+import { NARRATIVE_INDEX_RECIPE_V1 } from '../types/narrative-index';
+import { WORLD_SEMANTIC_REGISTRY_V4 } from './semantic-registry-v4';
+import { projectNarrativeDomainCaptureV1 } from './narrative-domain-projection';
+import { compileNarrativeIndexV1, verifyNarrativeIndexV1 } from './narrative-index';
+import { assertWorldSemanticSnapshotV1 } from './semantic-snapshot';
+import { remapNarrativeDomainFieldV1 } from '../narrative-domain/references';
+import { NARRATIVE_DOMAIN_FIELDS_V1 } from '../narrative-domain/codec';
+import { assertNarrativeDomainReferenceRowsV1 } from '../narrative-domain/integrity';
+import { parseWorldPortals } from '../utils/world-portals';
+import { isPortableResourceUidV1 } from '../context-gateway/resource-uid';
+import { isPublicWorldCode } from '../workspace/identity';
+import { isWorkspaceUid, isWorkCode } from '../memory/identity';
+import { attachNarrativeLineageV1, verifyNarrativeLineageV1 } from './narrative-lineage';
+import { assertNarrativeJsonV1, freezeAndHashNarrativeJsonV1, canonicalNarrativeJsonV1, canonicalNarrativeJsonWithHashV1, parseCanonicalNarrativeObjectV1, splitCanonicalNarrativeObjectV1, matchesCanonicalNarrativeJsonV1, equalNarrativeJsonV1, compareUnicodeCodePointsV1, hashNarrativeBytesV1, hashNarrativeValueV1, hashV1, narrativeFail, keyV1, objectV1, enumV1, uniqueKeysV1 } from './narrative-json';
 
 /** v4 publishPolicy includes legitimate prior facts. The historical v3 status
  * filter is deliberately not reused or widened. Unconfirmed proposals stay out. */

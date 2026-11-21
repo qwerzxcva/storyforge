@@ -2,21 +2,17 @@
  * NS-4 · 事实库面板 — 审阅事实账本候选、确认升 Canon / 否决。
  * 所有变更走 useFactLedgerStore（→ lib/fact-ledger 单一入口），面板不裸写 db。
  */
-import { useEffect, useMemo, useState } from 'react'
-import { Check, X, Database, Download, Upload } from 'lucide-react'
-import type { Project } from '../../lib/types'
-import { useFactLedgerStore } from '../../stores/fact-ledger'
-import { getFactPredicate } from '../../lib/registry/fact-predicate-registry'
-import type { FactStatus } from '../../lib/types/temporal-fact'
-import { exportFactMemoryMarkdown } from '../../lib/fact-ledger/human-readable-io'
+import { useEffect, useMemo, useState } from 'react';
+import { Check, X, Database, Download, Upload } from 'lucide-react';
+import type { Project } from '../../lib/types';
+import { useFactLedgerStore } from '../../stores/fact-ledger';
+import { getFactPredicate } from '../../lib/registry/fact-predicate-registry';
+import type { FactStatus } from '../../lib/types/temporal-fact';
+import { exportFactMemoryMarkdown } from '../../lib/fact-ledger/human-readable-io';
 import KnowledgeLedgerPanel from './KnowledgeLedgerPanel'
 import WorldConstitutionPanel from './WorldConstitutionPanel'
 import NarrativeAnnotationPanel from './NarrativeAnnotationPanel'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-  useInitialRecordTarget,
-} from '../shared/initial-record-target'
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes, useInitialRecordTarget } from '../shared/initial-record-target';
 
 type FactTab = FactStatus | 'exceptions'
 

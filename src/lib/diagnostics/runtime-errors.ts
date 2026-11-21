@@ -1,7 +1,7 @@
-import { parseFailureEvent, safeErrorFrames, safeErrorName, type FailureEvent } from './failure-summary'
-import { APP_BUILD_ID } from '../version'
-import { diagnosticCode } from './diagnostic-context'
-import { diagnosticContextEnabled, installOperationTrail, readOperationTrail } from './operation-trail'
+import { parseFailureEvent, safeErrorFrames, safeErrorName, type FailureEvent } from './failure-summary';
+import { APP_BUILD_ID } from '../version';
+import { diagnosticCode } from './diagnostic-context';
+import { diagnosticContextEnabled, installOperationTrail, readOperationTrail } from './operation-trail';
 
 export type RuntimeDiagnosticError = FailureEvent
 export const RUNTIME_DIAGNOSTICS_KEY = 'storyforge-runtime-diagnostics-v1'

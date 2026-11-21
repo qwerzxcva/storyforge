@@ -1,17 +1,11 @@
-import { db } from '../db/schema'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { buildEditImpactGraphV1 } from '../consistency/impact-analysis'
-import { buildImpactRemediationPlanV1 } from '../consistency/impact-remediation-plan'
-import { PROJECT_TABLES } from '../registry/project-tables'
-import type {
-  WorkspaceFileAdoptionCandidateV1,
-  WorkspaceFileCandidateSetV1,
-  WorkspaceImpactExecutionV1,
-  WorkspaceImpactItemV1,
-  WorkspaceImpactPlanV1,
-} from '../types'
-import type { Chapter } from '../types'
-import { resolveWorkspaceOwnership } from '../workspace/ownership'
+import { db } from '../db/schema';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { buildEditImpactGraphV1 } from '../consistency/impact-analysis';
+import { buildImpactRemediationPlanV1 } from '../consistency/impact-remediation-plan';
+import { PROJECT_TABLES } from '../registry/project-tables';
+import type { WorkspaceFileAdoptionCandidateV1, WorkspaceFileCandidateSetV1, WorkspaceImpactExecutionV1, WorkspaceImpactItemV1, WorkspaceImpactPlanV1 } from '../types';
+import type { Chapter } from '../types';
+import { resolveWorkspaceOwnership } from '../workspace/ownership';
 
 function executionForImpact(action: string, mode: string): WorkspaceImpactExecutionV1 {
   if (mode === 'deterministic') return 'deterministic-rebuild'

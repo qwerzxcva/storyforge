@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { createTextOpenWorldSkillCatalogV1 } from '../../src/lib/open-world/skills'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
+import { createTextOpenWorldSkillCatalogV1 } from '../../src/lib/legacy-compat/open-world/skills'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
 import {
   createTextOpenWorldVNextFixture,
   downgradeTextOpenWorldFixtureCombatActionsV1,

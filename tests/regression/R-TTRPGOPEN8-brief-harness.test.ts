@@ -5,10 +5,10 @@ import { startTtrpgOpenEpochV1, recordTtrpgOpenNarrativeMemoryV1 } from '../../s
 import { prepareTtrpgOpenBriefInputV1 } from '../../src/lib/ttrpg/open-intent-input'
 import { executeTtrpgOpenBriefRequestV1 } from '../../src/lib/ttrpg/open-intent-harness'
 import { readTtrpgOpenBriefCandidateV1, verifyTtrpgOpenBriefCandidateProofV1 } from '../../src/lib/ttrpg/open-brief-candidate'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { readAgentRunArtifactExactV1 } from '../../src/lib/memory/artifact-store'
-import { assertTtrpgOpenFrozenContextSourcesV1 } from '../../src/lib/ttrpg/open-model-purpose-contract'
+import { assertTtrpgOpenFrozenContextSourcesV1 } from '../../src/lib/legacy-compat/ttrpg/open-model-purpose-contract'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 
 const rawInput = '回顾全队在旧港的经历，并明确标记尚属推测的部分。'

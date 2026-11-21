@@ -6,7 +6,7 @@ import TtrpgOpenNormalizationModelPanel from '../../src/components/ttrpg/TtrpgOp
 import TtrpgOpenSemanticModelPanel from '../../src/components/ttrpg/TtrpgOpenSemanticModelPanel'
 import { setupNormalizationRuntimeSourceV1 } from '../helpers/open-normalization-runtime-model'
 import { OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import * as harness from '../../src/lib/ttrpg/open-intent-harness'
 import * as desk from '../../src/lib/ttrpg/open-normalization-model-desk'
 import * as commands from '../../src/lib/ttrpg/runtime-commands'

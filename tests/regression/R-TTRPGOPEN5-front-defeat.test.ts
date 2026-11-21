@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest'
 import {
   evaluateTtrpgFrontDefeatV1,
   parseTtrpgPressureFrontV1,
-} from '../../src/lib/ttrpg/pressure-runtime'
-import type { TtrpgPredicateEvaluationContextV1 } from '../../src/lib/ttrpg/predicate'
+} from '../../src/lib/legacy-compat/ttrpg/pressure-runtime'
+import type { TtrpgPredicateEvaluationContextV1 } from '../../src/lib/legacy-compat/ttrpg/predicate'
 import { openCampaignFixture } from '../helpers/ttrpg-open-content'
 
 function context(

@@ -5,19 +5,19 @@ import { createTextOpenWorldActionRegistryV1 } from '../../src/lib/open-world/ac
 import {
   createTextOpenWorldEffectCatalogV1,
   validateTextOpenWorldEffectStateV1,
-} from '../../src/lib/open-world/effect-dsl'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
+} from '../../src/lib/legacy-compat/open-world/effect-dsl'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
 import {
   createInitialTextOpenWorldSessionProjectionV1,
   deriveTextOpenWorldContextsV1,
   parseTextOpenWorldSessionProjectionV1,
-} from '../../src/lib/open-world/session-projection'
-import { createTextOpenWorldInstance } from '../../src/lib/product/runtime-instances'
+} from '../../src/lib/legacy-compat/open-world/session-projection'
+import { createTextOpenWorldInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
 import {
   hashProductRuntimeStateV1,
   readProductRuntimeState,
   replayProductRuntimeEvents,
-} from '../../src/lib/product/runtime-core'
+} from '../../src/lib/legacy-compat/product/runtime-core'
 import type {
   ProductRuntimeSession,
   TextOpenWorldActionAvailabilityV1,

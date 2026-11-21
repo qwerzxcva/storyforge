@@ -7,11 +7,11 @@ import { acceptProductBuildArtifact } from '../../src/lib/product-production/art
 import {
   canonicalProductProductionJsonV2,
   hashProductProductionValueV2,
-} from '../../src/lib/product-production/hash'
+} from '../../src/lib/legacy-compat/product-production/hash'
 import {
   hashProductProductionTaskCandidateV1,
   hashProductProductionTaskReceiptV1,
-} from '../../src/lib/product-production/task-evidence'
+} from '../../src/lib/legacy-compat/product-production/task-evidence'
 import type {
   ProductProductionPlanTaskV3,
   ProductProductionPlanV3,

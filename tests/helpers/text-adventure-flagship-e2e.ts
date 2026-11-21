@@ -2,8 +2,8 @@ import { db } from '../../src/lib/db/schema'
 import {
   canonicalProductProductionJsonV2,
   hashProductProductionValueV2,
-} from '../../src/lib/product-production/hash'
-import { parseProductRuntimePackageV1 } from '../../src/lib/product-production/runtime-package'
+} from '../../src/lib/legacy-compat/product-production/hash'
+import { parseProductRuntimePackageV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
 import { stampNewRecord } from '../../src/lib/workspace/scope'
 import type {
   ProductBuildArtifactRecordV1,

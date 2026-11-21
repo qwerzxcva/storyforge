@@ -1,7 +1,7 @@
 /** Native/fake IndexedDB fixture with a real first-turn condition consequence. */
 import { setupPressureFixtureV1 } from './open-ttrpg-pressure'
 import { settleOpenPaidTurnsV1 } from './open-ttrpg-paid-turns'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { rt } from './open-ttrpg-branch-recovery'
 export async function setupPerTurnConsequenceFixtureV1() {
   const x = await setupPressureFixtureV1({ turns: 3,maximum: 2,effect: true,isolateSituations: true },pkg => {

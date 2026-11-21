@@ -1,34 +1,14 @@
-import { useEffect, useMemo, useState } from 'react'
-import {
-  Anchor,
-  FileSearch,
-  Loader2,
-  ShieldCheck,
-  Sparkles,
-} from 'lucide-react'
-import type { CharacterDrivenPlan, Project, WorkspaceScope } from '../../lib/types'
-import { parseCharacterDrivenPlanArcs } from '../../lib/types'
-import { useCharacterStore } from '../../stores/character'
-import { useOutlineStore } from '../../stores/outline'
-import {
-  buildCharacterRevisionSnapshot,
-  effectiveProtectedThrough,
-  type CharacterRevisionChangeType,
-  type CharacterRevisionPlan,
-  type CharacterRevisionScopeInput,
-  type CharacterRevisionSnapshot,
-  type CharacterRevisionStrategy,
-} from '../../lib/story-planning/character-revision'
-import {
-  decideCharacterRevisionCandidateV1,
-  parseCharacterRevisionCandidateDraftV1,
-  serializeCharacterRevisionCandidateV1,
-  type CharacterRevisionCandidateV1,
-  type CharacterRevisionCopilotSnapshotV1,
-} from '../../lib/agent/character-revision-copilot'
-import type { MasterCopilotController } from '../agent/useMasterCopilot'
+import { useEffect, useMemo, useState } from 'react';
+import { Anchor, FileSearch, Loader2, ShieldCheck, Sparkles } from 'lucide-react';
+import type { CharacterDrivenPlan, Project, WorkspaceScope } from '../../lib/types';
+import { parseCharacterDrivenPlanArcs } from '../../lib/types';
+import { useCharacterStore } from '../../stores/character';
+import { useOutlineStore } from '../../stores/outline';
+import { buildCharacterRevisionSnapshot, effectiveProtectedThrough, type CharacterRevisionChangeType, type CharacterRevisionPlan, type CharacterRevisionScopeInput, type CharacterRevisionSnapshot, type CharacterRevisionStrategy } from '../../lib/story-planning/character-revision';
+import { decideCharacterRevisionCandidateV1, parseCharacterRevisionCandidateDraftV1, serializeCharacterRevisionCandidateV1, type CharacterRevisionCandidateV1, type CharacterRevisionCopilotSnapshotV1 } from '../../lib/agent/character-revision-copilot';
+import type { MasterCopilotController } from '../agent/useMasterCopilot';
 import AutoResizeTextarea from '../shared/AutoResizeTextarea'
-import { useDialog } from '../shared/Dialog'
+import { useDialog } from '../shared/Dialog';
 import CharacterRevisionResult from './CharacterRevisionResult'
 
 interface Props {

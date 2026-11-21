@@ -3,7 +3,7 @@ import { loadTtrpgGmRuntimeViewV1 } from '../../src/lib/ttrpg/gm-context'
 import { seedCurrentProductWorld, loadCurrentProductWorldSourceCatalogV1 } from './current-product-world'
 import { createCurrentTtrpgRuntimePackageFixture } from './current-ttrpg-runtime-package'
 import { seedCurrentProductBuild } from './current-product-build'
-import { configureTtrpgSessionParticipantV2, readTtrpgSessionParticipantsV2 } from '../../src/lib/ttrpg/participants'
+import { configureTtrpgSessionParticipantV2, readTtrpgSessionParticipantsV2 } from '../../src/lib/legacy-compat/ttrpg/participants'
 import { completeTtrpgSessionZero, openTtrpgCampaignScene, readProductRuntimeState, readProductRuntimeStateVersion, resolveTtrpgRuleAction } from '../../src/lib/ttrpg/runtime-api'
 import type { WorldRelease } from '../../src/lib/types'
 

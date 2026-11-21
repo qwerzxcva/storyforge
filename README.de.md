@@ -1,5 +1,7 @@
 # StoryForge · 故事熔炉
 
+> Android fork scope: world engine, longform, and longform nodes. Links marked “historical source” document retired implementations; they do not indicate available production or runtime features.
+
 **Schreibe Geschichten. Tauche in sie ein.**
 
 <!-- readme-languages:start -->
@@ -131,7 +133,7 @@ Spielpaket und enthaltene Medien liegen im Repository. Richte deine eigene Model
 
 Starte den aktuellen `main`-Stand, öffne **TTRPG** (`跑团`) und wähle das Abenteuer unter dem Produktionsbereich. Alternativ öffnest du `/storyforge/play`. Konfiguriere das Modell und wähle eine Figur. Du kannst allein mit KI-Begleitern oder durch Weiterreichen desselben Geräts spielen. Fortschritt, Wiederaufnahme und Kontrollpunkte werden lokal gespeichert. Öffentlicher Online-Mehrspielermodus ist nicht bereitgestellt; Geheimnisse auf einem gemeinsam genutzten Gerät sind gegenüber dessen Besitzer nicht geschützt.
 
-[Spielanleitung](./examples/ttrpg/README.md) · [Produktions- und Spielnachweise](./examples/ttrpg/fog-harbor/production-status.md)
+[Spielanleitung — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/examples/ttrpg/README.md) · [Produktions- und Spielnachweise — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/examples/ttrpg/fog-harbor/production-status.md)
 
 </details>
 
@@ -211,7 +213,7 @@ Offizielle Knotenaktionen verwenden dieselben Skills, Daten und Übernahmeprozes
 
 Der eigene Ablauf zielt auf **5.000–25.000 chinesische Schriftzeichen in 3–8 Kapiteln**: Briefing, Entwurf, Kapitelkarten, Schreiben, Prüfung, Überarbeitung und Veröffentlichung. Prüfungen berücksichtigen tatsächliche Textlänge, Kapitelstruktur, fehlenden Text und offene Vorschläge. Befunde verweisen auf Kapitel und Belegstellen. Die Prüfung ist an den Manuskript-Hash gebunden und muss nach Änderungen aktualisiert werden. Überarbeitungen betreffen gezielte Kapitel; blockierende Befunde verhindern die Veröffentlichung. Jede akzeptierte Ausgabe wird unveränderlich gespeichert, frühere Ausgaben bleiben erhalten.
 
-[Produktion und Abschlusskriterien](./src/lib/short-novel/service.ts) · [Eigene persistente KI-Abläufe](./src/lib/agent/run/short-novel-durable.ts)
+[Produktion und Abschlusskriterien — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/short-novel/service.ts) · [Eigene persistente KI-Abläufe — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/agent/run/short-novel-durable.ts)
 
 ### Drehbuch: nachvollziehbare Adaption und strukturierte Szenen
 
@@ -219,7 +221,7 @@ Ausgewählte Romanquellen werden eingefroren und mit Fakten, Kausalität, Adapti
 
 Quellentreue und dramaturgische Wirkung werden getrennt geprüft. Änderungen nennen Szene und erwartete Revision; gesperrte Szenen müssen zuerst entsperrt werden, veraltete Änderungsvorschläge werden blockiert. Veröffentlichungen frieren Quellen, Entscheidungen und Szenen ein. Spätere Romanänderungen verändern ein veröffentlichtes Drehbuch nicht automatisch.
 
-[Produktion und Revisionen](./src/lib/screenplay/production.ts) · [Veröffentlichungen](./src/lib/screenplay/release.ts) · [Renderer](./src/lib/screenplay/renderers.ts)
+[Produktion und Revisionen — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/screenplay/production.ts) · [Veröffentlichungen — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/screenplay/release.ts) · [Renderer — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/screenplay/renderers.ts)
 
 ### Comic: Erzählung, Bilder und Lettering als eigene Ebenen
 
@@ -229,7 +231,7 @@ Zuerst entstehen Handlungsschritte, Seitenplan und Panels, anschließend Bilder 
 
 **Aktuelle Grenze:** Der generische OpenAI-kompatible Bildadapter sendet ausschließlich Text und unterstützt laut Fähigkeitsdeklaration weder Referenzbilder noch feste Seeds oder Inpainting. Eine Referenz im Prompt zu erwähnen gilt nicht als Bildübertragung. Visuelle Produktion benötigt einen eingerichteten Bilddienst oder geeignete eigene Medien sowie menschliche Auswahl und Kontinuitätsprüfung.
 
-[Produktion](./src/lib/comic/production.ts) · [Mediennachweise](./src/lib/comic/media-service.ts) · [Lettering](./src/lib/comic/renderers.ts) · [Qualitätsprüfungen](./src/lib/comic/qa.ts)
+[Produktion — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/production.ts) · [Mediennachweise — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/media-service.ts) · [Lettering — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/renderers.ts) · [Qualitätsprüfungen — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/qa.ts)
 
 Die aktuellen technischen Abläufe sind auf `main` umgesetzt. Anbieterleistung und Inhaltsqualität werden weiterhin bewertet: [Fähigkeitsstand und Grenzen](./docs/roadmap/CAPABILITY-BASELINE.md).
 
@@ -247,12 +249,12 @@ Eine Ableitung erfasst Quellwerk, Revision, Ausschnitt und Hash. Produktspezifis
 
 | Produkt | Umgesetzter Mechanismus | Aktuelle Grenze |
 |---|---|---|
-| [TTRPG / KI-Spielleitung](./src/lib/ttrpg/information-boundary.ts) | Code prüft Regeln, Würfel und Folgen; getrennte Spielleitungs-/Spieler-/NSC-Kontexte, empfängerbezogene Geheimnisse, Ereignisse und Kontrollpunkte | Fog Harbor mit realen Modellläufen belegt; kein öffentlicher Online-Mehrspielermodus |
-| [Figurenchat](./src/lib/character-interaction/runtime.ts) | Eingefrorene Profile, Sprachregeln, Szenenziele, Verpflichtungen/Geheimnisse/Konflikte als Erinnerung sowie Vertrauen/Nähe/Vorsicht/Respekt | Langfristige Figurenqualität in Bewertung |
-| [Afterstory KI-Stadt](./src/lib/ai-town/runtime.ts) | Sechs Tagesabschnitte, Orte und Wege, Wissen, Erinnerung, Beziehungen, leichte Verwaltung und Nachholen von Offline-Zeit | 14-Tage-Wiederholung validiert; langfristige Modell- und echte Medienqualität noch in Bewertung |
-| [Textabenteuer](./src/lib/adventure/runtime.ts) | Voraussetzungen, Inventar, Ressourcen, Fähigkeiten, Aufgaben und Folgen durch Code geprüft | Jede vollständige Geschichte braucht eigene Validierung |
-| [AVG](./src/lib/avg/runtime.ts) | Deklarative Signale, Hintergrund-/Figuren-/Audioebenen, Medienprüfung und Bühnenschnappschüsse | Vollständige audiovisuelle Auslieferung in Validierung |
-| [Textuelle offene Welt](./src/lib/open-world/runtime.ts) | Regionen, Reisen, Ressourcen, Fraktionen, Zeitpläne und zeitabhängige regionale Veränderungen | Vollständige Produktion und Langzeitspiel in Entwicklung |
+| [TTRPG / KI-Spielleitung — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/ttrpg/information-boundary.ts) | Code prüft Regeln, Würfel und Folgen; getrennte Spielleitungs-/Spieler-/NSC-Kontexte, empfängerbezogene Geheimnisse, Ereignisse und Kontrollpunkte | Fog Harbor mit realen Modellläufen belegt; kein öffentlicher Online-Mehrspielermodus |
+| [Figurenchat — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/character-interaction/runtime.ts) | Eingefrorene Profile, Sprachregeln, Szenenziele, Verpflichtungen/Geheimnisse/Konflikte als Erinnerung sowie Vertrauen/Nähe/Vorsicht/Respekt | Langfristige Figurenqualität in Bewertung |
+| [Afterstory KI-Stadt — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/ai-town/runtime.ts) | Sechs Tagesabschnitte, Orte und Wege, Wissen, Erinnerung, Beziehungen, leichte Verwaltung und Nachholen von Offline-Zeit | 14-Tage-Wiederholung validiert; langfristige Modell- und echte Medienqualität noch in Bewertung |
+| [Textabenteuer — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/adventure/runtime.ts) | Voraussetzungen, Inventar, Ressourcen, Fähigkeiten, Aufgaben und Folgen durch Code geprüft | Jede vollständige Geschichte braucht eigene Validierung |
+| [AVG — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/avg/runtime.ts) | Deklarative Signale, Hintergrund-/Figuren-/Audioebenen, Medienprüfung und Bühnenschnappschüsse | Vollständige audiovisuelle Auslieferung in Validierung |
+| [Textuelle offene Welt — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/runtime.ts) | Regionen, Reisen, Ressourcen, Fraktionen, Zeitpläne und zeitabhängige regionale Veränderungen | Vollständige Produktion und Langzeitspiel in Entwicklung |
 
 Online-Community und kommerzielle Dienste sind für spätere Phasen vorgesehen.
 

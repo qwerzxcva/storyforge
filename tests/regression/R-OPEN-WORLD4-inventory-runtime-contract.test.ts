@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import { createTextOpenWorldActionRegistryV1 } from '../../src/lib/open-world/action-registry'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
 import {
   createTextOpenWorldInventoryCatalogV1,
   deriveTextOpenWorldRemovableInventoryQuantitiesV1,
-} from '../../src/lib/open-world/inventory'
+} from '../../src/lib/legacy-compat/open-world/inventory'
 import {
   compileTextOpenWorldQuestFinalizeItemRuntimeContractV1,
 } from '../../src/lib/open-world/quest-finalize-production'
@@ -12,8 +12,8 @@ import {
   applyTextOpenWorldSessionEventV1,
   createInitialTextOpenWorldSessionProjectionV1,
   deriveTextOpenWorldContextsV1,
-} from '../../src/lib/open-world/session-projection'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
+} from '../../src/lib/legacy-compat/open-world/session-projection'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
 import type {
   ProductRuntimeEvent,
   TextOpenWorldEffectDefinitionV1,

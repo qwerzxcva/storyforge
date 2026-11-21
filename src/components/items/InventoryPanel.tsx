@@ -4,39 +4,24 @@
  * AI 从已写章节正文中提取各角色的物品获得/消耗，
  * 聚合为「当前持有数量 + 获得/消耗历程」，支持按角色切换查看。
  */
-import { useState, useEffect, useMemo } from 'react'
-import { Package, Sparkles, Loader2, Trash2, ChevronDown, ChevronRight, Plus, ArrowUpCircle, ArrowDownCircle, RotateCcw, AlertTriangle } from 'lucide-react'
-import { useItemLedgerStore } from '../../stores/item-ledger'
-import { useChapterStore } from '../../stores/chapter'
-import { useCharacterStore } from '../../stores/character'
-import { useOutlineStore } from '../../stores/outline'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { resolveRequestConfig } from '../../lib/ai/client'
-import { getAIConfigRequiredMessage, isAIConfigReady } from '../../lib/ai/config-readiness'
-import { aggregateInventory, ITEM_LEDGER_ACTION_LABELS } from '../../lib/types/item-ledger'
-import type { CharacterRoleWeight } from '../../lib/types/character'
-import type { Project, ItemLedgerAction } from '../../lib/types'
-import {
-  listInventoryExtractionChapters,
-  type InventoryExtractionMode,
-} from '../../lib/inventory/extraction-range'
-import { resolveScopeLike } from '../../lib/workspace/scope'
+import { useState, useEffect, useMemo } from 'react';
+import { Package, Sparkles, Loader2, Trash2, ChevronDown, ChevronRight, Plus, ArrowUpCircle, ArrowDownCircle, RotateCcw, AlertTriangle } from 'lucide-react';
+import { useItemLedgerStore } from '../../stores/item-ledger';
+import { useChapterStore } from '../../stores/chapter';
+import { useCharacterStore } from '../../stores/character';
+import { useOutlineStore } from '../../stores/outline';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { resolveRequestConfig } from '../../lib/ai/client';
+import { getAIConfigRequiredMessage, isAIConfigReady } from '../../lib/ai/config-readiness';
+import { aggregateInventory, ITEM_LEDGER_ACTION_LABELS } from '../../lib/types/item-ledger';
+import type { CharacterRoleWeight } from '../../lib/types/character';
+import type { Project, ItemLedgerAction } from '../../lib/types';
+import { listInventoryExtractionChapters, type InventoryExtractionMode } from '../../lib/inventory/extraction-range';
+import { resolveScopeLike } from '../../lib/workspace/scope';
 import ExtractionReviewPanel from '../shared/ExtractionReviewPanel'
-import { readExtractionPanelRecovery } from '../shared/readExtractionPanelRecovery'
-import {
-  abandonInventoryExtractionV1,
-  adoptInventoryExtractionCandidateV1,
-  generateInventoryExtractionCandidateV1,
-  readPendingInventoryExtractionCandidateV1,
-  readRecoverableInventoryExtractionV1,
-  resumeInventoryExtractionCandidateV1,
-  type InventoryExtractionCandidateItemV1,
-} from '../../lib/agent/run/inventory-extraction-durable'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-  useInitialRecordTarget,
-} from '../shared/initial-record-target'
+import { readExtractionPanelRecovery } from '../shared/readExtractionPanelRecovery';
+import { abandonInventoryExtractionV1, adoptInventoryExtractionCandidateV1, generateInventoryExtractionCandidateV1, readPendingInventoryExtractionCandidateV1, readRecoverableInventoryExtractionV1, resumeInventoryExtractionCandidateV1, type InventoryExtractionCandidateItemV1 } from '../../lib/agent/run/inventory-extraction-durable';
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes, useInitialRecordTarget } from '../shared/initial-record-target';
 
 interface Props {
   project: Project

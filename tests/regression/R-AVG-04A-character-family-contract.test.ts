@@ -1,10 +1,10 @@
 import { describe,expect,it } from 'vitest'
 import { avgAuthorWorkspaceFixture } from '../helpers/avg-author-stage-fixture'
 import { composeAvgCharacterFamilyRequirementsV1, hashAvgCharacterFamilyProposalV1, parseAvgCharacterFamilyPlanV1,
-  parseAvgCharacterFamilyBatchV1, type AvgCharacterFamilyPlanV1 } from '../../src/lib/avg/character-family-contract'
+  parseAvgCharacterFamilyBatchV1, type AvgCharacterFamilyPlanV1 } from '../../src/lib/legacy-compat/avg/character-family-contract'
 import { freezeAvgVisualProductionBatchV1, validateAvgVisualProductionBatchSourceV1 } from '../../src/lib/avg/media-source'
-import { parseAvgVisualProductionBatchV1 } from '../../src/lib/avg/media-production-contract'
-import { canonicalProductProductionJsonV2 } from '../../src/lib/product-production/hash'
+import { parseAvgVisualProductionBatchV1 } from '../../src/lib/legacy-compat/avg/media-production-contract'
+import { canonicalProductProductionJsonV2 } from '../../src/lib/legacy-compat/product-production/hash'
 
 const plan=():AvgCharacterFamilyPlanV1=>({schema:'storyforge.avg.character-family-plan',version:1,familyKey:'keeper',revision:1,subjectKey:'keeper',name:'保管员',
   baseline:{assetKey:'original.keeper',assetVersion:1,contentHash:'a'.repeat(64),mimeType:'image/png',byteSize:100,license:'author-owned-engineering'},stylePrompt:'原创工程校准',identityInvariants:['脸与服装保持'],negativePrompt:'',forbiddenDepictions:[],allowedChange:'仅允许表情变化',

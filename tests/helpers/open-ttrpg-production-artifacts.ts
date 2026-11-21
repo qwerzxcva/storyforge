@@ -4,9 +4,9 @@ import { TTRPG_OPEN_LAYER_METADATA_KEYS_V1 } from '../../src/lib/ttrpg/open-prod
 import { resolveProductSourceReadBoundaryV1 } from '../../src/lib/product/source-contracts'
 import { listWorldSemanticResourceDescriptorsV1 } from '../../src/lib/context-gateway/world-release-client'
 import type { ProductProductionBriefV3, WorkspaceScope } from '../../src/lib/types'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { projectTtrpgRulePackMechanicalCoreV1 } from '../../src/lib/ttrpg/rule-pack-v2'
-import { createCompleteTtrpgCharacterSheetV2 } from '../../src/lib/ttrpg/character-sheet'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { projectTtrpgRulePackMechanicalCoreV1 } from '../../src/lib/legacy-compat/ttrpg/rule-pack-v2'
+import { createCompleteTtrpgCharacterSheetV2 } from '../../src/lib/legacy-compat/ttrpg/character-sheet'
 
 
 export async function openProductionCompilerFixtureV1(publishable = false, basis?: { brief: ProductProductionBriefV3; productionId: number; scope: WorkspaceScope; preferAuthorSituations?: boolean }) {

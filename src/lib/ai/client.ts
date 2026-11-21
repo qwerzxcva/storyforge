@@ -1,19 +1,19 @@
-import { transformProviderRequest, normalizeProviderCompletion, normalizeProviderStream } from './provider-protocol'
-import { inheritModelCapacityV1, prepareModelCapacityV1, freezeModelCapacityV1, modelInputBudgetV1 } from './model-capacity'
-import { assertGenerationAvailable } from '../showcase/policy'
-import { streamCodex, CODEX_BASE_URL, assertModelDispatchGuardV1, modelDispatchWasCancelledV1, ModelDispatchGuardRejectedV1, type CodexRequestRefV1 } from './codex-transport'
-import type { CodexTerminalFailureV1 } from './codex-terminal-failure'
-import type { AIConfig, ChatMessage } from '../types'
-import { AIError, CodexRequestError } from '../types'
-import { createLog, updateLog, type TokenUsage } from './logger'
-import { recordUsage } from './usage-log'
-import { estimateTokens, trimMessagesToFit } from './context-budget'
-import { getAIConfigPresetApiKeyV1, getAIConfigPresetHeadersV1, useAIConfigStore } from '../../stores/ai-config'
-import { customHeaderValues, redactRequestSecrets } from './request-headers'
-import { resolveAIConfigForTask, type AITaskKind } from './task-routing'
-import { AICompletionResponseErrorV1, inspectCompletionResponseV1, requireCompletionTextV1 } from './completion-response'
-import { allowsSamplingTemperature, targetsOfficialProvider } from './provider-model-lifecycle'
-import { supportsAgnesThinkingModeV1 } from './agnes-parameters'
+import { transformProviderRequest, normalizeProviderCompletion, normalizeProviderStream } from './provider-protocol';
+import { inheritModelCapacityV1, prepareModelCapacityV1, freezeModelCapacityV1, modelInputBudgetV1 } from './model-capacity';
+import { assertGenerationAvailable } from '../showcase/policy';
+import { streamCodex, CODEX_BASE_URL, assertModelDispatchGuardV1, modelDispatchWasCancelledV1, ModelDispatchGuardRejectedV1, type CodexRequestRefV1 } from './codex-transport';
+import type { CodexTerminalFailureV1 } from './codex-terminal-failure';
+import type { AIConfig, ChatMessage } from '../types';
+import { AIError, CodexRequestError } from '../types';
+import { createLog, updateLog, type TokenUsage } from './logger';
+import { recordUsage } from './usage-log';
+import { estimateTokens, trimMessagesToFit } from './context-budget';
+import { getAIConfigPresetApiKeyV1, getAIConfigPresetHeadersV1, useAIConfigStore } from '../../stores/ai-config';
+import { customHeaderValues, redactRequestSecrets } from './request-headers';
+import { resolveAIConfigForTask, type AITaskKind } from './task-routing';
+import { AICompletionResponseErrorV1, inspectCompletionResponseV1, requireCompletionTextV1 } from './completion-response';
+import { allowsSamplingTemperature, targetsOfficialProvider } from './provider-model-lifecycle';
+import { supportsAgnesThinkingModeV1 } from './agnes-parameters';
 
 /** 调用元信息（用于消耗统计分类） */
 export interface AICallMeta {

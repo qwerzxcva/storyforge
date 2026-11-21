@@ -1,10 +1,10 @@
 import { setupOracleRuntimePolicyV1 as setup } from '../helpers/open-oracle-runtime-model'
 import { beforeEach, afterEach, describe, it, expect } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { createTtrpgOpenOracleRuntimeReferencePolicyV1, assertTtrpgOpenOracleRuntimeReferenceJournalV1,
-  parseTtrpgOpenOracleRuntimeReferencePolicyV1, verifyTtrpgOpenOracleRuntimeReferencePolicyHashV1, createTtrpgOpenRuntimeEntityReferencesV1 } from '../../src/lib/ttrpg/open-runtime-entity-references'
-import { hashProductProductionValueV2 as hash } from '../../src/lib/product-production/hash'
+  parseTtrpgOpenOracleRuntimeReferencePolicyV1, verifyTtrpgOpenOracleRuntimeReferencePolicyHashV1, createTtrpgOpenRuntimeEntityReferencesV1 } from '../../src/lib/legacy-compat/ttrpg/open-runtime-entity-references'
+import { hashProductProductionValueV2 as hash } from '../../src/lib/legacy-compat/product-production/hash'
 
 describe('R-TTRPGOPEN13 versioned Oracle runtime scope foundation, not a model execution grant', () => {
   beforeEach(async () => { await db.delete(); await db.open() }); afterEach(() => db.close())

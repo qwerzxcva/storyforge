@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { ProductRuntimePackageV1 } from "../../src/lib/types";
 import { validateNarrativeContentGraph } from "../../src/lib/product/narrative-content";
-import { validateTtrpgOpenNarrativeEnvelopeV1 } from "../../src/lib/ttrpg/open-narrative-envelope";
+import { validateTtrpgOpenNarrativeEnvelopeV1 } from "../../src/lib/legacy-compat/ttrpg/open-narrative-envelope";
 
 function opening(): ProductRuntimePackageV1["narrative"] {
   return {

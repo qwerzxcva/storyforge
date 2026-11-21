@@ -1,30 +1,23 @@
-import { inputAreaLayoutV1, worldviewInputAreaFieldV1 } from '../../lib/input-area-layout'
-import { useScopedWorldviewReadback } from '../../hooks/useScopedWorldviewReadback'
+import { inputAreaLayoutV1, worldviewInputAreaFieldV1 } from '../../lib/input-area-layout';
+import { useScopedWorldviewReadback } from '../../hooks/useScopedWorldviewReadback';
 import WorldviewReadBoundary from './WorldviewReadBoundary'
-import { useState, useEffect } from 'react'
-import { EMPTY_DIVINE_DESIGN } from '../../lib/types/worldview'
-import { useWorldviewStore, type WorldviewAuthorPatch } from '../../stores/worldview'
-import { useWorldGroupStore } from '../../stores/world-group'
+import { useState, useEffect } from 'react';
+import { EMPTY_DIVINE_DESIGN } from '../../lib/types/worldview';
+import { useWorldviewStore, type WorldviewAuthorPatch } from '../../stores/worldview';
+import { useWorldGroupStore } from '../../stores/world-group';
 import WorldGroupSwitcher from '../world-group/WorldGroupSwitcher'
-import { InlineTextarea } from '../shared/InlineEdit'
+import { InlineTextarea } from '../shared/InlineEdit';
 import CodexPanel from '../codex/CodexPanel'
 import CodexSearchBar from '../codex/CodexSearchBar'
-import { useMasterCopilot, type PendingMasterCandidate } from '../agent/useMasterCopilot'
+import { useMasterCopilot, type PendingMasterCandidate } from '../agent/useMasterCopilot';
 import WorldviewAgentControls from './WorldviewAgentControls'
-import { useWorldSettingsLayout, WorldSettingsToolbar } from '../longform/WorldSettingsLayout'
-import WorldviewOriginSidebar, {
-  WORLDVIEW_ORIGIN_FIELDS,
-  type WorldviewOriginFieldKey,
-} from './WorldviewOriginSidebar'
+import { useWorldSettingsLayout, WorldSettingsToolbar } from '../longform/WorldSettingsLayout';
+import WorldviewOriginSidebar, { WORLDVIEW_ORIGIN_FIELDS, type WorldviewOriginFieldKey } from './WorldviewOriginSidebar';
 import PowerSystemDetails from './PowerSystemDetails'
 import CultivationSystemsPanel from './CultivationSystemsPanel'
-import type { Project, DivineDesign } from '../../lib/types'
-import type { WorldviewAgentField } from '../../lib/agent/worldview-field-copilot'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-  useInitialRecordTarget,
-} from '../shared/initial-record-target'
+import type { Project, DivineDesign } from '../../lib/types';
+import type { WorldviewAgentField } from '../../lib/agent/worldview-field-copilot';
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes, useInitialRecordTarget } from '../shared/initial-record-target';
 
 const AGENT_FIELD_BY_ORIGIN_KEY: Record<WorldviewOriginFieldKey, WorldviewAgentField> = {
   origin: 'worldOrigin',

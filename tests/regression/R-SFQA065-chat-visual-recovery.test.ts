@@ -10,15 +10,15 @@ import * as runtimeMedia from '../../src/lib/product/runtime-media-library'
 import { db } from '../../src/lib/db/schema'
 import {
   commitChatNarrativeAction, readProductRuntimeState, readProductRuntimeStateVersion, requestChatNarrativeTrigger, startInteractionScene,
-} from '../../src/lib/character-interaction/runtime-api'
+} from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import {
   generateChatRuntimeVisualsV1, latestChatVisualJobsV1, readChatRuntimeVisualJobsV1,
 } from '../../src/lib/character-interaction/runtime-visuals'
 import { readResumableInteractionRunsV1 } from '../../src/lib/character-interaction/runtime-run-recovery'
 import { resolveProductMediaProviderAdapterV1, type RedactedMediaTransportRequestV1 } from '../../src/lib/product-production/media-adapters'
-import { readProductMediaBlobData } from '../../src/lib/product-production/media-blob-store'
+import { readProductMediaBlobData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import type { ResolvedProductMediaCapabilityV1 } from '../../src/lib/product-production/media-transport'
-import { createCharacterInteractionInstance } from '../../src/lib/product/runtime-instances'
+import { createCharacterInteractionInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
 import { AIError } from '../../src/lib/types'
 import type { ChatNarrativeActionV1 } from '../../src/lib/types/chat-narrative'
 import { seedChatMediaPlayerFixture } from '../helpers/chat-media-fixture'

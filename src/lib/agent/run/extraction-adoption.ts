@@ -1,12 +1,9 @@
-import Dexie, { type Table, type Transaction } from 'dexie'
-import { db } from '../../db/schema'
-import type { WorkspaceScope } from '../../types'
-import { parseAgentRunEventV1 } from './event-schema'
-import {
-  appendAgentRunEventWithSettlementInTransactionV1,
-  readVerifiedAgentRunInTransactionV1, withAgentRunMutationLockV1, type AgentRunSnapshotV1,
-} from './event-store'
-import { hashCanonicalValue } from './hash'
+import Dexie, { type Table, type Transaction } from 'dexie';
+import { db } from '../../db/schema';
+import type { WorkspaceScope } from '../../types';
+import { parseAgentRunEventV1 } from './event-schema';
+import { appendAgentRunEventWithSettlementInTransactionV1, readVerifiedAgentRunInTransactionV1, withAgentRunMutationLockV1, type AgentRunSnapshotV1 } from './event-store';
+import { hashCanonicalValue } from './hash';
 
 export class ExtractionEvidenceStaleError extends Error {}
 

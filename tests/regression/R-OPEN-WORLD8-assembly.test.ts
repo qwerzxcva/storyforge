@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { TEXT_OPEN_WORLD_PRODUCTION_TASK_CONTRACTS_V1 } from '../../src/lib/open-world/production-contract'
-import { assertTextOpenWorldAssemblyInputsV1, freezeTextOpenWorldResponsibilitySnapshotV1, validateTextOpenWorldResponsibilitySnapshotV1 } from '../../src/lib/open-world/responsibility-assembly'
+import { TEXT_OPEN_WORLD_PRODUCTION_TASK_CONTRACTS_V1 } from '../../src/lib/legacy-compat/open-world/production-contract'
+import { assertTextOpenWorldAssemblyInputsV1, freezeTextOpenWorldResponsibilitySnapshotV1, validateTextOpenWorldResponsibilitySnapshotV1 } from '../../src/lib/legacy-compat/open-world/responsibility-assembly'
 import type { ProductProductionTaskExecutionInputV1 } from '../../src/lib/product-production/scheduler'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 const hash = 'a'.repeat(64)
 function execution() {
   const task = TEXT_OPEN_WORLD_PRODUCTION_TASK_CONTRACTS_V1.find(row => row.taskKey === 'v3.runtime-package')!

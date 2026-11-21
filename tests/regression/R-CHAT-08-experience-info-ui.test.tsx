@@ -2,7 +2,7 @@ import {afterEach, beforeEach, expect, it, vi} from 'vitest'
 import {act, createElement, useState} from 'react'
 import {createRoot, type Root} from 'react-dom/client'
 import ExperienceInfo, {ExperienceInfoForm} from '../../src/components/character-interaction/ExperienceInfo'
-import type {ChatExperienceInfoV1} from '../../src/lib/character-interaction/experience-info'
+import type {ChatExperienceInfoV1} from '../../src/lib/legacy-compat/character-interaction/experience-info'
 
 let host: HTMLDivElement, root: Root
 beforeEach(() => {vi.stubGlobal('IS_REACT_ACT_ENVIRONMENT', true); host = document.createElement('div'); document.body.append(host); root = createRoot(host)})

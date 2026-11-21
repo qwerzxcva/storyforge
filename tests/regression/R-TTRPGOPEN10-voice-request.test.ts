@@ -6,11 +6,11 @@ import { rt, operationInput } from '../helpers/open-ttrpg-branch-recovery'
 import { prepareTtrpgOpenVoiceScriptV1, reserveTtrpgOpenVoiceRequestV1, readTtrpgOpenVoiceRequestDeskV1,
   cancelTtrpgOpenVoiceRequestV1 } from '../../src/lib/ttrpg/open-audio-service'
 import { TTRPG_OPEN_VOICE_RESERVE_DECISION_V1 as reserveDecision, TTRPG_OPEN_VOICE_CANCEL_DECISION_V1 as cancelDecision,
-  parseTtrpgOpenVoicePartV1 } from '../../src/lib/ttrpg/open-voice-request-contract'
+  parseTtrpgOpenVoicePartV1 } from '../../src/lib/legacy-compat/ttrpg/open-voice-request-contract'
 import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents, branchProductRuntimeSession,
-  deleteProductRuntimeSession, hashProductRuntimeStateV1 } from '../../src/lib/product/runtime-core'
-import { projectTtrpgOpenMechanicalBasisV1 } from '../../src/lib/ttrpg/open-rule-plan'
-import { readTtrpgOpenRunOriginV1, parseTtrpgOpenRunOriginV1 } from '../../src/lib/ttrpg/open-run-portability'
+  deleteProductRuntimeSession, hashProductRuntimeStateV1 } from '../../src/lib/legacy-compat/product/runtime-core'
+import { projectTtrpgOpenMechanicalBasisV1 } from '../../src/lib/legacy-compat/ttrpg/open-rule-plan'
+import { readTtrpgOpenRunOriginV1, parseTtrpgOpenRunOriginV1 } from '../../src/lib/legacy-compat/ttrpg/open-run-portability'
 import { hashCanonicalValue } from '../../src/lib/agent/run/hash'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'

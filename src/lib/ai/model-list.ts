@@ -1,6 +1,6 @@
-import type { AIConfig } from '../types'
-import { buildOpenAIEndpoint, providerApiFormat } from './openai-endpoint'
-import { buildAIRequestHeaders, hasCustomHeaders } from './request-headers'
+import type { AIConfig } from '../types';
+import { buildOpenAIEndpoint, providerApiFormat } from './openai-endpoint';
+import { buildAIRequestHeaders, hasCustomHeaders } from './request-headers';
 
 interface FetchOpenAIModelsOptions {
   baseUrl: string

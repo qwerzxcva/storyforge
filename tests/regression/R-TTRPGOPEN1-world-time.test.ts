@@ -4,7 +4,7 @@ import {
   canAdvanceTtrpgWorldTurnV1,
   createTtrpgWorldTimeV1,
   TTRPG_WORLD_TIME_REASONS,
-} from '../../src/lib/ttrpg/world-time'
+} from '../../src/lib/legacy-compat/ttrpg/world-time'
 
 describe('R-TTRPGOPEN1 world time', () => {
   it('allows exactly the E7 worldTurn reasons and rejects Oracle consultation', () => {

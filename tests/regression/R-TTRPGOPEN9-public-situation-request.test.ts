@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { hashTtrpgOpenPublicSituationRequestBasisV1, parseTtrpgOpenPublicSituationRequestBasisV1 } from '../../src/lib/ttrpg/open-public-situation-request'
+import { hashTtrpgOpenPublicSituationRequestBasisV1, parseTtrpgOpenPublicSituationRequestBasisV1 } from '../../src/lib/legacy-compat/ttrpg/open-public-situation-request'
 import { sha256Text } from '../../src/lib/ai/chapter-memory/text-normalization'
 const hash = 'a'.repeat(64)
 async function request() {

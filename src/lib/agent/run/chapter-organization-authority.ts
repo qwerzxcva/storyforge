@@ -1,4 +1,4 @@
-import { getAgentSkillV1, resolveAgentSkillContextSourceKeysV1 } from '../skill-registry'
+import { getAgentSkillV1, resolveAgentSkillContextSourceKeysV1 } from '../skill-registry';
 
 /** The manual action and the post-adoption chain share one registered Skill.
  * New runs freeze these values; historical contracts are never rewritten. */

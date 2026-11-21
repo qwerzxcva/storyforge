@@ -1,16 +1,7 @@
-import {
-  NARRATIVE_KINDS_V1, type EvidenceSpanV1, type NarrativeEnvelopeV1, type NarrativeIdentityAliasV1,
-  type NarrativeIRBundleV1, type NarrativePayloadsV1, type NarrativeRecordV1, type NarrativeScopeV1,
-  type SemanticKindV1, type SemanticRefV1, type TypedValueV1, type VisibilityV1,
-} from '../types/narrative-ir'
-import {
-  arrayV1, assertNarrativeJsonV1, canonicalNarrativeJsonV1, compareUnicodeCodePointsV1, enumV1, hashV1, keyV1,
-  narrativeFail, nullableV1, objectV1, pointerV1, textV1, uintV1, uniqueKeysV1, type DecoderV1,
-} from './narrative-json'
-import {
-  narrativeOwnerKeyV1, narrativeResourceIdentitySpecV1, ownerDecoderV1, parseNarrativeSemanticIdV1, sourceIdentityDecoderV1,
-} from './narrative-identity'
-import { narrativeTimeDecoderV1, parseNarrativeTimeContextV1 } from './narrative-time'
+import { NARRATIVE_KINDS_V1, type EvidenceSpanV1, type NarrativeEnvelopeV1, type NarrativeIdentityAliasV1, type NarrativeIRBundleV1, type NarrativePayloadsV1, type NarrativeRecordV1, type NarrativeScopeV1, type SemanticKindV1, type SemanticRefV1, type TypedValueV1, type VisibilityV1 } from '../types/narrative-ir';
+import { arrayV1, assertNarrativeJsonV1, canonicalNarrativeJsonV1, compareUnicodeCodePointsV1, enumV1, hashV1, keyV1, narrativeFail, nullableV1, objectV1, pointerV1, textV1, uintV1, uniqueKeysV1, type DecoderV1 } from './narrative-json';
+import { narrativeOwnerKeyV1, narrativeResourceIdentitySpecV1, ownerDecoderV1, parseNarrativeSemanticIdV1, sourceIdentityDecoderV1 } from './narrative-identity';
+import { narrativeTimeDecoderV1, parseNarrativeTimeContextV1 } from './narrative-time';
 
 const scopeDecoder = objectV1<NarrativeScopeV1>({
   owner: ownerDecoderV1, worldGroupKey: nullableV1(keyV1), branchKey: keyV1, revisionVectorHash: hashV1,

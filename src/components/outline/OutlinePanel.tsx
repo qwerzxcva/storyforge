@@ -1,44 +1,41 @@
-import { adoptOutlineReview, freezeOutlineReviewTarget, type OutlineReviewTarget } from '../../lib/outline/review-adoption'
-import { registerPendingDraftFlusherV1, flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator'
-import { useState, useEffect, useMemo, useCallback, useRef } from 'react'
-import { useOutlineStore } from '../../stores/outline'
-import { useWorldGroupStore } from '../../stores/world-group'
-import { useStoryArcStore } from '../../stores/story-arc'  // 添加导入
-import { useAIStream } from '../../hooks/useAIStream'
-import { createAISessionKey } from '../../stores/ai-generation-session'
-import { prepareOutlineGatewayAssemblyV1 } from '../../lib/outline/gateway-context'
-import {
-  parseChapterOutlineOutput, parseVolumeOutlineOutput,
-  type ParsedVolume, type ParsedChapter,
-} from '../../lib/ai/parse-outline-output'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { getDescendantChapters, getTopLevelVolumes } from '../../lib/outline/selectors'
-import { normalizeOutlineNode } from '../../lib/outline/normalize'
+import { adoptOutlineReview, freezeOutlineReviewTarget, type OutlineReviewTarget } from '../../lib/outline/review-adoption';
+import { registerPendingDraftFlusherV1, flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import { useOutlineStore } from '../../stores/outline';
+import { useWorldGroupStore } from '../../stores/world-group';
+import { useStoryArcStore } from '../../stores/story-arc'; // 添加导入
+import { useAIStream } from '../../hooks/useAIStream';
+import { createAISessionKey } from '../../stores/ai-generation-session';
+import { prepareOutlineGatewayAssemblyV1 } from '../../lib/outline/gateway-context';
+import { parseChapterOutlineOutput, parseVolumeOutlineOutput, type ParsedVolume, type ParsedChapter } from '../../lib/ai/parse-outline-output';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { getDescendantChapters, getTopLevelVolumes } from '../../lib/outline/selectors';
+import { normalizeOutlineNode } from '../../lib/outline/normalize';
 import PromptRunPanel from '../shared/PromptRunPanel'
 import PanelLayout from '../shared/PanelLayout'
-import { CInput } from '../shared/CompositionInput'
-import { useDialog } from '../shared/Dialog'
-import { useToast } from '../shared/Toast'
-import type { Project, StoryStructure } from '../../lib/types'
-import { STORY_STRUCTURES } from '../../lib/types/outline'
+import { CInput } from '../shared/CompositionInput';
+import { useDialog } from '../shared/Dialog';
+import { useToast } from '../shared/Toast';
+import type { Project, StoryStructure } from '../../lib/types';
+import { STORY_STRUCTURES } from '../../lib/types/outline';
 import OutlineVolumeSidebar from './OutlineVolumeSidebar'
 import OutlineVolumeDetail from './OutlineVolumeDetail'
 import OutlineGenerationRequestPanel from './OutlineGenerationRequestPanel'
 import OutlineGenerationResultPanel from './OutlineGenerationResultPanel'
 import ChunkedGenerationPanel from './ChunkedGenerationPanel'
 import ChapterReviewDialog from './ChapterReviewDialog'
-import { useChunkedGeneration } from './useChunkedGeneration'
-import { useOutlineBatchGeneration } from './useOutlineBatchGeneration'
-import { useOutlineGenerationController } from './useOutlineGenerationController'
-import { useOutlineChapterCountEstimate } from './useOutlineChapterCountEstimate'
-import { useOutlineDragScroll } from './useOutlineDragScroll'
-import { useOutlineChapterDrag } from './useOutlineChapterDrag'
-import { decodeGenerationOperation, type OutlineGenerationRequest } from '../../lib/outline/generation-request'
-import { useInitialRecordTarget } from '../shared/initial-record-target'
-import type { GenerationMode, ChunkedGenerationConfig } from '../../lib/outline/generation-modes'
-import { reviewChapterOutlines, rewriteChapterOutline, toReviewChapters, type ChapterReviewResult, type ChapterReviewIssue, type RewriteResult } from '../../lib/outline/chapter-reviewer'
-import { useActiveWork } from '../../hooks/useActiveWork'
-import { useBeforeUnload } from '../../hooks/useBeforeUnload'
+import { useChunkedGeneration } from './useChunkedGeneration';
+import { useOutlineBatchGeneration } from './useOutlineBatchGeneration';
+import { useOutlineGenerationController } from './useOutlineGenerationController';
+import { useOutlineChapterCountEstimate } from './useOutlineChapterCountEstimate';
+import { useOutlineDragScroll } from './useOutlineDragScroll';
+import { useOutlineChapterDrag } from './useOutlineChapterDrag';
+import { decodeGenerationOperation, type OutlineGenerationRequest } from '../../lib/outline/generation-request';
+import { useInitialRecordTarget } from '../shared/initial-record-target';
+import type { GenerationMode, ChunkedGenerationConfig } from '../../lib/outline/generation-modes';
+import { reviewChapterOutlines, rewriteChapterOutline, toReviewChapters, type ChapterReviewResult, type ChapterReviewIssue, type RewriteResult } from '../../lib/outline/chapter-reviewer';
+import { useActiveWork } from '../../hooks/useActiveWork';
+import { useBeforeUnload } from '../../hooks/useBeforeUnload';
 
 interface Props {
   project: Project

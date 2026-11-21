@@ -2,7 +2,7 @@ import { act, createElement } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import TextOpenWorldCharacterPanel from '../../src/components/text-game/TextOpenWorldCharacterPanel'
-import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
+import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
 import type {
   TextOpenWorldActionModuleV1,
   TextOpenWorldActorModuleV1,

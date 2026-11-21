@@ -2,8 +2,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import RegionCompositeRecipeEditor from '../../src/components/avg/RegionCompositeRecipeEditor'
-import type { AvgImageRegionCompositeRecipeV3 } from '../../src/lib/avg/image-region-composite-contract'
-import type { AvgVisualRawReuseSourceV5 } from '../../src/lib/avg/visual-image-reuse-contract'
+import type { AvgImageRegionCompositeRecipeV3 } from '../../src/lib/legacy-compat/avg/image-region-composite-contract'
+import type { AvgVisualRawReuseSourceV5 } from '../../src/lib/legacy-compat/avg/visual-image-reuse-contract'
 import { avgRegionProcessedFixture } from '../helpers/avg-region-processed-fixture'
 
 // UI-only source tokens and deferred reads, not producer/adoption evidence.

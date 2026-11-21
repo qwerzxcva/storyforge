@@ -6,9 +6,9 @@ import { settleOpenPaidTurnsV1 } from '../helpers/open-ttrpg-paid-turns'
 import { generateTtrpgOpenCompanionCandidateV1 } from '../../src/lib/ttrpg/open-intent-harness'
 import { changeTtrpgSituationV1, startTtrpgOpenEpochV1, startTtrpgOpenIntentCandidateOperationV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { readTtrpgOpenTableV1, confirmTtrpgOpenTableRiskV1, resumeTtrpgOpenTableV1, recordTtrpgOpenTableHumanNarrationV1, finishTtrpgOpenTableWindowV1, readTtrpgOpenManualActionCatalogV1, proposeTtrpgOpenManualActionV1 } from '../../src/lib/ttrpg/open-table-service'
-import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/legacy-compat/product/runtime-core'
 import { resolveTtrpgOpenRuleMechanicalV1 } from '../../src/lib/ttrpg/open-rule-resolution'
-import * as plans from '../../src/lib/ttrpg/open-rule-plan'
+import * as plans from '../../src/lib/legacy-compat/ttrpg/open-rule-plan'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 const lift = { key: 'fixture.ally-lift', name: '协助振奋', description: '下一次本人检定 +1', maximumStacks: 1, checkModifier: 1, defaultDurationRounds: 1, stacking: 'replace' as const }
 async function approve(input: Parameters<typeof readTtrpgOpenTableV1>[0]) {

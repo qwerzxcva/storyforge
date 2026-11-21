@@ -4,7 +4,7 @@ import { readyOpenTtrpgSessionV1, openEnvelopeV1, OPEN_HUMAN_VIEWER } from '../h
 import { startTtrpgOpenEpochV1, startTtrpgOpenIntentCandidateOperationV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { generateTtrpgOpenIntentCandidateV1 } from '../../src/lib/ttrpg/open-intent-harness'
 import { rejectTtrpgOpenTableIntentV1, readTtrpgOpenTableV1, finishTtrpgOpenTableWindowV1 } from '../../src/lib/ttrpg/open-table-service'
-import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/legacy-compat/product/runtime-core'
 import * as runStore from '../../src/lib/agent/run/event-store'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
 describe('R-TTRPGOPEN3 actual player rejection and original cost evidence', () => {

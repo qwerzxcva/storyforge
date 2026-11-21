@@ -1,33 +1,19 @@
-import { db } from '../../db/schema'
-import { chat } from '../../ai/client'
-import {
-  buildInventoryExtractPromptFromContext,
-  parseInventoryEvents,
-  readInventoryExtractPromptTemplateSnapshotV1,
-  type ExtractedItemEvent,
-} from '../../ai/adapters/inventory-extract-adapter'
-import { splitExtractionText, uniqueBy } from '../../ai/structured-extraction'
-import type { AIConfig, Chapter, ChatMessage, OutlineNode, WorkspaceScope } from '../../types'
-import { assembleContext } from '../../registry/assemble-context'
-import { adoptionTransactionTablesV1, replaceAdoptedCollection } from '../../registry/adopt'
-import { readOwnedRows, scopeTransactionTables } from '../../workspace/scope'
-import { selectInventoryExtractionChapters, type InventoryExtractionMode } from '../../inventory/extraction-range'
-import { getAgentSkillV1 } from '../skill-registry'
-import { createAgentSkillExecutionBindingV1 } from '../execution-binding'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  staleAgentRunVerificationV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import {
-  acceptExtractionReceiptV1, ExtractionEvidenceStaleError, hashExtractionValueV1 as hashCanonicalValue,
-  withExtractionSourceTransactionV1,
-} from './extraction-adoption'
+import { db } from '../../db/schema';
+import { chat } from '../../ai/client';
+import { buildInventoryExtractPromptFromContext, parseInventoryEvents, readInventoryExtractPromptTemplateSnapshotV1, type ExtractedItemEvent } from '../../ai/adapters/inventory-extract-adapter';
+import { splitExtractionText, uniqueBy } from '../../ai/structured-extraction';
+import type { AIConfig, Chapter, ChatMessage, OutlineNode, WorkspaceScope } from '../../types';
+import { assembleContext } from '../../registry/assemble-context';
+import { adoptionTransactionTablesV1, replaceAdoptedCollection } from '../../registry/adopt';
+import { readOwnedRows, scopeTransactionTables } from '../../workspace/scope';
+import { selectInventoryExtractionChapters, type InventoryExtractionMode } from '../../inventory/extraction-range';
+import { getAgentSkillV1 } from '../skill-registry';
+import { createAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, staleAgentRunVerificationV1, type AgentRunSnapshotV1 } from './event-store';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { acceptExtractionReceiptV1, ExtractionEvidenceStaleError, hashExtractionValueV1 as hashCanonicalValue, withExtractionSourceTransactionV1 } from './extraction-adoption';
 
 export const INVENTORY_EXTRACTION_STEP_ID_V1 = 'prose:inventory-extraction' as const
 export const INVENTORY_EXTRACTION_VERIFIER_SET_V1 = 'inventory-extraction-terminal-v1' as const

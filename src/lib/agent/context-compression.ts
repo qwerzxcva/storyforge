@@ -1,18 +1,13 @@
 import JSON5 from 'json5'
-import { chat, resolveRequestConfig, type AICallMeta, type ChatRequestOptions } from '../ai/client'
-import { estimateTokens } from '../ai/context-budget'
-import { supportsVerifiedJsonObjectResponseForModelV1 } from '../ai/provider-capabilities'
-import { sha256Text } from '../ai/chapter-memory/text-normalization'
-import type { AIConfig, ChatMessage } from '../types'
-import type {
-  ContextCompressionEvidenceV1,
-  ContextSourceTransformInput,
-  ContextSourceTransformResult,
-  ContextSourceTransformer,
-} from '../registry/types'
-import { hashCanonicalValue } from './run/hash'
-import type { AgentSkillContextCompressionPolicyV1 } from './skill-registry'
-import type { AgentTeamBudgetTracker } from './team-budget'
+import { chat, resolveRequestConfig, type AICallMeta, type ChatRequestOptions } from '../ai/client';
+import { estimateTokens } from '../ai/context-budget';
+import { supportsVerifiedJsonObjectResponseForModelV1 } from '../ai/provider-capabilities';
+import { sha256Text } from '../ai/chapter-memory/text-normalization';
+import type { AIConfig, ChatMessage } from '../types';
+import type { ContextCompressionEvidenceV1, ContextSourceTransformInput, ContextSourceTransformResult, ContextSourceTransformer } from '../registry/types';
+import { hashCanonicalValue } from './run/hash';
+import type { AgentSkillContextCompressionPolicyV1 } from './skill-registry';
+import type { AgentTeamBudgetTracker } from './team-budget';
 
 export const AGENT_CONTEXT_COMPRESSION_PROMPT_VERSION = 'agent-context-compression-v1' as const
 

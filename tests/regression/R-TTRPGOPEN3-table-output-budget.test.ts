@@ -2,7 +2,7 @@ import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { readyOpenTtrpgSessionV1, OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
 import { requestTtrpgOpenTableCandidateV1 } from '../../src/lib/ttrpg/open-table-service'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import * as harness from '../../src/lib/ttrpg/open-intent-harness'
 import type { AIConfig } from '../../src/lib/types'
 

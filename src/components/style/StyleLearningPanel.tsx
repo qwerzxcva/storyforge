@@ -1,21 +1,16 @@
-import { useState, useEffect, useMemo, useRef } from 'react'
-import { Sparkles, Brain, Loader2, Check, AlertCircle, Power, RotateCcw, Trash2, X } from 'lucide-react'
-import { useChapterStore } from '../../stores/chapter'
-import { useUserStyleStore } from '../../stores/user-style'
-import { useAIConfigStore } from '../../stores/ai-config'
-import {
-  parseStyleRevisionPairs,
-} from '../../lib/style/style-learning'
-import { countWords, htmlToPlainText } from '../../lib/utils/html'
-import type { Project, ChapterStatus } from '../../lib/types'
-import {
-  STYLE_LEARNING_CHAPTER_CHARS_V1,
-  STYLE_LEARNING_MAX_CHAPTERS_V1,
-} from '../../lib/style/learning-agent'
+import { useState, useEffect, useMemo, useRef } from 'react';
+import { Sparkles, Brain, Loader2, Check, AlertCircle, Power, RotateCcw, Trash2, X } from 'lucide-react';
+import { useChapterStore } from '../../stores/chapter';
+import { useUserStyleStore } from '../../stores/user-style';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { parseStyleRevisionPairs } from '../../lib/style/style-learning';
+import { countWords, htmlToPlainText } from '../../lib/utils/html';
+import type { Project, ChapterStatus } from '../../lib/types';
+import { STYLE_LEARNING_CHAPTER_CHARS_V1, STYLE_LEARNING_MAX_CHAPTERS_V1 } from '../../lib/style/learning-agent';
 import StyleCalibrationPanel from './StyleCalibrationPanel'
 import StyleRevisionPairsPanel from './StyleRevisionPairsPanel'
-import { useStyleLearningAI } from './useStyleLearningAI'
-import { useDialog } from '../shared/Dialog'
+import { useStyleLearningAI } from './useStyleLearningAI';
+import { useDialog } from '../shared/Dialog';
 
 interface Props {
   project: Project

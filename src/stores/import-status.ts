@@ -6,9 +6,8 @@
  *
  * 日志只保留最近 200 条在内存里给 UI 实时展示；DB 那份 importLogs 表归档用。
  */
-
-import { create } from 'zustand'
-import type { ImportLogLevel } from '../lib/types/import-session'
+import { create } from 'zustand';
+import type { ImportLogLevel } from '../lib/types/import-session';
 
 /** 主状态机 */
 export type PipelinePhase =

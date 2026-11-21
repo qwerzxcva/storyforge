@@ -2,8 +2,8 @@ import { seedAvgNativePreview } from './avg-native-fixture'
 import { avgInventoryFixture } from './avg-inventory-fixture'
 import { avgInventoryMediaFixture } from './avg-inventory-media-fixture'
 import { avgReadingAudioFixture, avgReadingFixture } from './avg-reading-fixture'
-import { sha256MediaData } from '../../src/lib/product-production/media-blob-store'
-import { createProductRuntimeInstance } from '../../src/lib/product/runtime-instances'
+import { sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
+import { createProductRuntimeInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
 
 /** Player-resource probe only: controlled Preview seam, actual original image
  * and PCM bytes. Formal planner/workbench production has its own browser test. */

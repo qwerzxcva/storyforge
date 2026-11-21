@@ -1,7 +1,4 @@
-import type {
-  CreativeArtifactStatusV1,
-  CreativeArtifactV1,
-} from '../../agent/creative-reliability'
+import type { CreativeArtifactStatusV1, CreativeArtifactV1 } from '../../agent/creative-reliability';
 
 export const CREATIVE_RELIABILITY_EVAL_VARIANTS_V1 = [
   'baseline-direct',

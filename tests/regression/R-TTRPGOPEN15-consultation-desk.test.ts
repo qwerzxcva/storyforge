@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readyOpenTtrpgSessionV1, OPEN_HUMAN_VIEWER, openEnvelopeV1 } from '../helpers/open-ttrpg-session'
 import { readTtrpgOpenConsultationDeskV1, startTtrpgOpenConsultationDeskV1, consultTtrpgOpenConsultationDeskV1, closeTtrpgOpenConsultationDeskV1 } from '../../src/lib/ttrpg/open-consultation-desk'
 import { changeTtrpgSafetyStatus, startTtrpgOpenEpochV1 } from '../../src/lib/ttrpg/runtime-commands'

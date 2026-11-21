@@ -1,18 +1,13 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Check, Loader2, RefreshCw, X } from 'lucide-react'
-import {
-  CHARACTER_NARRATIVE_STATUSES,
-  parseCharacterLifecycleCandidateV1,
-  serializeCharacterLifecycleCandidateV1,
-  type CharacterLifecycleCandidateV1,
-} from '../../lib/agent/character-lifecycle-copilot'
-import type { Character, CharacterNarrativeStatus, Project } from '../../lib/types'
-import { useChapterStore } from '../../stores/chapter'
-import { useStoryArcStore } from '../../stores/story-arc'
-import { useOutlineStore } from '../../stores/outline'
-import { useMasterCopilot } from '../agent/useMasterCopilot'
+import { useEffect, useMemo, useState } from 'react';
+import { Check, Loader2, RefreshCw, X } from 'lucide-react';
+import { CHARACTER_NARRATIVE_STATUSES, parseCharacterLifecycleCandidateV1, serializeCharacterLifecycleCandidateV1, type CharacterLifecycleCandidateV1 } from '../../lib/agent/character-lifecycle-copilot';
+import type { Character, CharacterNarrativeStatus, Project } from '../../lib/types';
+import { useChapterStore } from '../../stores/chapter';
+import { useStoryArcStore } from '../../stores/story-arc';
+import { useOutlineStore } from '../../stores/outline';
+import { useMasterCopilot } from '../agent/useMasterCopilot';
 import HarnessEvidencePanel from '../agent/HarnessEvidencePanel'
-import { CInput, CTextarea } from '../shared/CompositionInput'
+import { CInput, CTextarea } from '../shared/CompositionInput';
 
 const STATUS_LABELS: Record<CharacterNarrativeStatus, string> = {
   planned: '计划登场',

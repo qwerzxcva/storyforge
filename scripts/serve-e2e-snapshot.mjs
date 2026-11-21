@@ -31,14 +31,7 @@ const snapshotEntries = [
   'scripts/avg-local-music/library-source.json',
   'scripts/avg-local-music/publisher-library-source.json',
   'data',
-  'showcase/short-novel',
-  'showcase/screenplay',
-  'showcase/motion-drama',
-  // The example readers need source text, full comic pages and downloadable archives.
-  ...['before-rain-stops', 'borrowed-flame', 'before-the-gun', 'moon-buys-bread'].flatMap(slug => [
-    `showcase/comic/${slug}/source-novel.md`,
-    `showcase/comic/${slug}/art/final`,
-  ]),
+  'showcase/longform-sources',
   'index.html',
   'ui-preview',
   'package.json',

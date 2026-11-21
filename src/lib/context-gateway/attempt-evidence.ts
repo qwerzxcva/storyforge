@@ -1,40 +1,16 @@
-import { keepIntegrityReadAlive } from '../db/transaction-integrity'
-import { lookupContextResourceMetadataV1 } from './resource-metadata'
-import { estimateTokens } from '../ai/context-budget'
-import { sha256Text } from '../ai/chapter-memory/text-normalization'
-import {
-  appendAgentRunEventV1,
-  readAgentRunByOwnerV1,
-  type AgentRunSnapshotV1,
-} from '../agent/run/event-store'
-import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash'
-import {
-  createContextManifestV3,
-  parseContextManifestV3,
-  sortArtifactRefsV3,
-  verifyContextManifestIntegrityV2,
-  verifyContextManifestIntegrityV3,
-} from '../agent/run/context-manifest'
-import {
-  inspectAgentRunArtifactAvailabilityV1,
-  readAgentRunArtifactExactV1,
-  recordAgentRunArtifactV1,
-} from '../memory/artifact-store'
-import type {
-  ContextManifestArtifactRefV3,
-  ContextManifestV2,
-  ContextManifestV3,
-} from '../types/agent-run'
-import type {
-  ContextPacketV1,
-  ContextSourceRefV1,
-  ContextSufficiencyReportV1,
-  RetrievalDecisionV1,
-  RetrievalTraceV1,
-} from '../registry/types'
-import type { WorkspaceScope } from '../types'
-import type { ContextSelectorResultV1 } from './selector'
-import type { ContextGatewayToolSessionV1 } from './tool-session'
+import { keepIntegrityReadAlive } from '../db/transaction-integrity';
+import { lookupContextResourceMetadataV1 } from './resource-metadata';
+import { estimateTokens } from '../ai/context-budget';
+import { sha256Text } from '../ai/chapter-memory/text-normalization';
+import { appendAgentRunEventV1, readAgentRunByOwnerV1, type AgentRunSnapshotV1 } from '../agent/run/event-store';
+import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash';
+import { createContextManifestV3, parseContextManifestV3, sortArtifactRefsV3, verifyContextManifestIntegrityV2, verifyContextManifestIntegrityV3 } from '../agent/run/context-manifest';
+import { inspectAgentRunArtifactAvailabilityV1, readAgentRunArtifactExactV1, recordAgentRunArtifactV1 } from '../memory/artifact-store';
+import type { ContextManifestArtifactRefV3, ContextManifestV2, ContextManifestV3 } from '../types/agent-run';
+import type { ContextPacketV1, ContextSourceRefV1, ContextSufficiencyReportV1, RetrievalDecisionV1, RetrievalTraceV1 } from '../registry/types';
+import type { WorkspaceScope } from '../types';
+import type { ContextSelectorResultV1 } from './selector';
+import type { ContextGatewayToolSessionV1 } from './tool-session';
 
 const HASH = /^[a-f0-9]{64}$/
 

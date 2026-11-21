@@ -1,12 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import { defaultTtrpgSettingsV2, parseTtrpgAuthoringSettingsV2 } from '../../src/lib/ttrpg/authoring-contract-v2'
-import { defaultTtrpgSettings, settingsFromTtrpgDraft } from '../../src/lib/ttrpg/authoring-contract'
+import { defaultTtrpgSettingsV2, parseTtrpgAuthoringSettingsV2 } from '../../src/lib/legacy-compat/ttrpg/authoring-contract-v2'
+import { defaultTtrpgSettings, settingsFromTtrpgDraft } from '../../src/lib/legacy-compat/ttrpg/authoring-contract'
 import { createTtrpgDraft, readTtrpgDraft, saveTtrpgDraft } from '../../src/lib/ttrpg/authoring-service'
 import { parseTtrpgOpenAuthoringEditV1, reviewTtrpgOpenAuthoringEditV1, initializeTtrpgOpenAuthoringPoliciesV1,
   MAX_TTRPG_OPEN_AUTHORING_EDIT_BYTES_V1 } from '../../src/lib/ttrpg/open-authoring-edit'
 import { openCampaignFixture } from '../helpers/ttrpg-open-content'
-import type { TtrpgOpenAuthoringV1 } from '../../src/lib/ttrpg/open-contract'
+import type { TtrpgOpenAuthoringV1 } from '../../src/lib/legacy-compat/ttrpg/open-contract'
 
 export function authoringEditFixtureV1(): TtrpgOpenAuthoringV1 {
   const campaign = openCampaignFixture()

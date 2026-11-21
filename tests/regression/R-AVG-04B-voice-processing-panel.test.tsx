@@ -3,7 +3,7 @@ import { act } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import VoiceProcessingDraftPanel from '../../src/components/avg/VoiceProcessingDraftPanel'
 import { avgVoiceAssemblyFixtureV3 } from '../helpers/avg-voice-production-fixture'
-import type { AvgAudioProductionProcessingPlanV1 } from '../../src/lib/avg/audio-production-contract'
+import type { AvgAudioProductionProcessingPlanV1 } from '../../src/lib/legacy-compat/avg/audio-production-contract'
 
 let root: Root, host: HTMLDivElement
 beforeEach(() => {

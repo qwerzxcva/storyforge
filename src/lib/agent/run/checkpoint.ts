@@ -1,30 +1,12 @@
 import Dexie from 'dexie'
-import { db } from '../../db/schema'
-import type {
-  AgentRunCheckpointRecord,
-  AgentRunProjectionV1,
-  AnyAgentRunEventV1,
-  WorkspaceScope,
-} from '../../types'
-import { scopeTransactionTables } from '../../workspace/scope'
-import { parseAgentRunEventV1 } from './event-schema'
-import {
-  AgentRunStoreError,
-  agentRunScopeTransactionTablesV1,
-  appendPrivilegedAgentRunEventInTransactionV1,
-  readVerifiedAgentRunInTransactionV1,
-  withAgentRunMutationLockV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { canonicalStringify, hashCanonicalValue } from './hash'
-import {
-  hashAgentRunProjectionBodyV1,
-  replayAgentRunEventsV1,
-} from './projection'
-import {
-  AGENT_RUN_MAXIMUM_RESUME_PAYLOAD_BYTES_V1,
-  agentRunUtf8ByteLengthV1,
-} from './checkpoint-contract'
+import { db } from '../../db/schema';
+import type { AgentRunCheckpointRecord, AgentRunProjectionV1, AnyAgentRunEventV1, WorkspaceScope } from '../../types';
+import { scopeTransactionTables } from '../../workspace/scope';
+import { parseAgentRunEventV1 } from './event-schema';
+import { AgentRunStoreError, agentRunScopeTransactionTablesV1, appendPrivilegedAgentRunEventInTransactionV1, readVerifiedAgentRunInTransactionV1, withAgentRunMutationLockV1, type AgentRunSnapshotV1 } from './event-store';
+import { canonicalStringify, hashCanonicalValue } from './hash';
+import { hashAgentRunProjectionBodyV1, replayAgentRunEventsV1 } from './projection';
+import { AGENT_RUN_MAXIMUM_RESUME_PAYLOAD_BYTES_V1, agentRunUtf8ByteLengthV1 } from './checkpoint-contract';
 
 interface CheckpointHashBodyV1 {
   version: 1

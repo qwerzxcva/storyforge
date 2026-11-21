@@ -1,21 +1,9 @@
-import { useEffect, useMemo, useState } from 'react'
-import {
-  BookMarked,
-  ChevronDown,
-  ChevronRight,
-  Globe,
-  ListTree,
-  Microscope,
-  Trash2,
-  Users2,
-} from 'lucide-react'
-import type { Reference, ReferenceType } from '../../lib/types'
-import { InlineInput, InlineTextarea } from '../shared/InlineEdit'
+import { useEffect, useMemo, useState } from 'react';
+import { BookMarked, ChevronDown, ChevronRight, Globe, ListTree, Microscope, Trash2, Users2 } from 'lucide-react';
+import type { Reference, ReferenceType } from '../../lib/types';
+import { InlineInput, InlineTextarea } from '../shared/InlineEdit';
 import ReferenceDeepAnalysisTab from './ReferenceDeepAnalysisTab'
-import {
-  REFERENCE_GLYPH_COLORS,
-  REFERENCE_TYPE_CONFIG,
-} from './reference-view'
+import { REFERENCE_GLYPH_COLORS, REFERENCE_TYPE_CONFIG } from './reference-view';
 
 const WORLDVIEW_LABELS: Record<string, string> = {
   worldOrigin: '世界来源',

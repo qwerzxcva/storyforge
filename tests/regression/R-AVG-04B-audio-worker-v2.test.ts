@@ -1,11 +1,11 @@
 // @vitest-environment node
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { audioRecipeV2, audioPcmV2, audioWaveV2 } from '../helpers/avg-audio-v2-fixture'
-import * as bytes from '../../src/lib/product-production/media-blob-store'
+import * as bytes from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import { executeAvgAudioDspWorkerRequestV2, type AvgAudioDspWorkerRequestV2, type AvgAudioDspWorkerReplyV2 } from '../../src/lib/avg/audio-dsp-worker-protocol-v2'
 import { runAvgAudioDspWorkersV2, AVG_AUDIO_DSP_DEADLINE_MS_V2 } from '../../src/lib/avg/audio-dsp-worker-client-v2'
 import { processAvgAudioPcmWaveV2, processAvgAudioPcmWaveWithWorkerV2, assertAvgAudioProcessingWaveBytesV2 } from '../../src/lib/avg/audio-processing-v2'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 
 class ControlledDspWorker {
   static instances: ControlledDspWorker[] = []

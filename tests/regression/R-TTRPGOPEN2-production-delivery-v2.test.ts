@@ -2,16 +2,16 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { openProductionFixtureV1 } from '../helpers/open-ttrpg-production'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
-import { createProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { createProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 import { runProductProductionSchedulerCycleV1, runProductProductionUntilBlockedV1,
   ProductProductionResultUnknownErrorV1 } from '../../src/lib/product-production/scheduler'
 import { createConfiguredProductProductionExecutorV1 } from '../../src/lib/product-production/production-executor'
-import * as sources from '../../src/lib/product-production/source-contracts'
+import * as sources from '../../src/lib/legacy-compat/product-production/source-contracts'
 import { readAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { estimateTokens } from '../../src/lib/ai/context-budget'
-import { estimateTtrpgOpenProductionTextV3 } from '../../src/lib/ttrpg/open-production-wire-budget'
+import { estimateTtrpgOpenProductionTextV3 } from '../../src/lib/legacy-compat/ttrpg/open-production-wire-budget'
 import { ttrpgOpenProductionSystemPromptV1, ttrpgOpenProductionSystemPromptV2, ttrpgOpenProductionSystemPromptV3 } from '../../src/lib/ttrpg/open-production-prompts'
-import { TTRPG_OPEN_PRODUCTION_SKILL_IDS_V1, type TtrpgOpenProductionTaskKeyV2 } from '../../src/lib/ttrpg/open-production-bindings'
+import { TTRPG_OPEN_PRODUCTION_SKILL_IDS_V1, type TtrpgOpenProductionTaskKeyV2 } from '../../src/lib/legacy-compat/ttrpg/open-production-bindings'
 
 async function authorized(input: { inputPerTask?: number; legacy?: boolean; profile?: 2 | 3 } = {}) {
   const data = await openProductionFixtureV1(), { scope, productionId, brief } = data

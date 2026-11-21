@@ -3,12 +3,12 @@ import {
   assembleTtrpgContextWithBudgetV1,
   parseTtrpgContextBudgetReceiptV1,
   TtrpgContextBudgetErrorV1,
-} from '../../src/lib/ttrpg/context-budget'
+} from '../../src/lib/legacy-compat/ttrpg/context-budget'
 import {
   parseTtrpgContextTriggerV1,
   selectTtrpgContextInjectionsV1,
-} from '../../src/lib/ttrpg/context-trigger'
-import type { TtrpgPredicateEvaluationContextV1 } from '../../src/lib/ttrpg/predicate'
+} from '../../src/lib/legacy-compat/ttrpg/context-trigger'
+import type { TtrpgPredicateEvaluationContextV1 } from '../../src/lib/legacy-compat/ttrpg/predicate'
 import { openCampaignFixture } from '../helpers/ttrpg-open-content'
 
 const triggerSource = 'ttrpgRuntime'

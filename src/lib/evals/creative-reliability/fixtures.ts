@@ -1,4 +1,4 @@
-import type { CreativeReliabilityEvalSplitV1 } from './types'
+import type { CreativeReliabilityEvalSplitV1 } from './types';
 
 export const CREATIVE_RELIABILITY_FIXTURE_SET_VERSION_V1 =
   'crel-story-arc-zh-development-6-heldout-6-v1'

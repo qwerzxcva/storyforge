@@ -1,12 +1,12 @@
-import { DEFAULT_ATLAS_LAYERS, type AtlasLayers } from './layers'
-import { stamp } from './symbols'
-import { terrainWash } from './relief'
-import { line, along, watercourse, atlasSurfacePaths } from './paths'
-import { drawSketchTerrain } from './sketch'
-import { continuousTerrain } from './continuous'
-import { paintedSurface } from './painted-surface'
-import { seedRandom } from '../engine/random'
-import type { AtlasGeometry, Point } from './geometry'
+import { DEFAULT_ATLAS_LAYERS, type AtlasLayers } from './layers';
+import { stamp } from './symbols';
+import { terrainWash } from './relief';
+import { line, along, watercourse, atlasSurfacePaths } from './paths';
+import { drawSketchTerrain } from './sketch';
+import { continuousTerrain } from './continuous';
+import { paintedSurface } from './painted-surface';
+import { seedRandom } from '../engine/random';
+import type { AtlasGeometry, Point } from './geometry';
 
 type Brush = CanvasRenderingContext2D
 type Random = () => number

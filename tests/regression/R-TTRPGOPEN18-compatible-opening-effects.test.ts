@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import { openCampaignFixture, openRuleFixture } from '../helpers/ttrpg-open-content'
-import type { TtrpgOpenAuthoringV1, TtrpgOpenEffectPlanTemplateV1 } from '../../src/lib/ttrpg/open-contract'
-import type { TtrpgRuntimeContentV2 } from '../../src/lib/ttrpg/content-version'
-import { parseTtrpgOpenAuthoringV1 } from '../../src/lib/ttrpg/open-content-authoring'
+import type { TtrpgOpenAuthoringV1, TtrpgOpenEffectPlanTemplateV1 } from '../../src/lib/legacy-compat/ttrpg/open-contract'
+import type { TtrpgRuntimeContentV2 } from '../../src/lib/legacy-compat/ttrpg/content-version'
+import { parseTtrpgOpenAuthoringV1 } from '../../src/lib/legacy-compat/ttrpg/open-content-authoring'
 import { appendedTtrpgCompatibleOpeningEffectPlanKeysV2, assertTtrpgCompatibleOpeningAuthoringV1,
   cloneTtrpgCompatibleOpeningTemplateV1, cloneTtrpgCompatibleOpeningTemplateWithEffectsV2,
   parseTtrpgCompatibleOpeningRevision, parseTtrpgCompatibleOpeningRevisionV1, ttrpgCompatibleOpeningAuthoringBaseV1,
-} from '../../src/lib/ttrpg/open-compatible-opening-contract'
-import { assertTtrpgOpenReleaseCompatibilityV1 } from '../../src/lib/ttrpg/open-release-compatibility'
+} from '../../src/lib/legacy-compat/ttrpg/open-compatible-opening-contract'
+import { assertTtrpgOpenReleaseCompatibilityV1 } from '../../src/lib/legacy-compat/ttrpg/open-release-compatibility'
 
 function fixture() {
   const campaign = openCampaignFixture(), original = campaign.situationTemplates[0]

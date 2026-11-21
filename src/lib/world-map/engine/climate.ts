@@ -1,8 +1,7 @@
 /**
  * 气候系统：温度、降水量、生态群落
  */
-
-import type { GridCells, BiomeDef } from './types'
+import type { GridCells, BiomeDef } from './types';
 
 /** 生态群落定义 — 标准等高线地形图配色 */
 export const BIOMES: BiomeDef[] = [

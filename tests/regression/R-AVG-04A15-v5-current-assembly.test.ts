@@ -8,7 +8,7 @@ import { configureAvgChosenMediaDraftV2,stageAvgWorkspaceInputV1,confirmAvgWorks
 import { readAvgDraftV1 } from '../../src/lib/avg/draft-service'
 import { parseAvgAuthorWorkspaceV1 } from '../../src/lib/avg/author-workspace-contract'
 import { saveAvgAuthorWorkspaceV1 } from '../../src/lib/avg/editor-service'
-import { verifyStoredProductBuildPreview } from '../../src/lib/product-production/preview-manifest'
+import { verifyStoredProductBuildPreview } from '../../src/lib/legacy-compat/product-production/preview-manifest'
 import { verifyFrozenAvgAuthorInputsV1 } from '../../src/lib/avg/author-artifacts'
 import { startProductProductionPreviewV1,recoverImportedProductProductionProofsV1 } from '../../src/lib/product-production/service'
 import { exportProjectJSON,importProjectJSON } from '../../src/lib/export/json-export'

@@ -16,7 +16,7 @@ import {
 import {
   defaultAiTownSettings,
   settingsFromAiTownDraft,
-} from '../../src/lib/ai-town/authoring-contract'
+} from '../../src/lib/legacy-compat/ai-town/authoring-contract'
 
 const network = vi.fn(() => { throw new Error('No network is authorized in SFQA-112') })
 let host: HTMLDivElement | null = null

@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { defaultTtrpgSettingsV2, parseTtrpgAuthoringSettingsV2 } from '../../src/lib/ttrpg/authoring-contract-v2'
-import { parseTtrpgSettings, serializeTtrpgSettings } from '../../src/lib/ttrpg/authoring-contract'
+import { defaultTtrpgSettingsV2, parseTtrpgAuthoringSettingsV2 } from '../../src/lib/legacy-compat/ttrpg/authoring-contract-v2'
+import { parseTtrpgSettings, serializeTtrpgSettings } from '../../src/lib/legacy-compat/ttrpg/authoring-contract'
 import { parseTtrpgOpenAuthoringSeatPlanV1, proposeTtrpgOpenAuthoringSeatPlanV1,
-  assertTtrpgOpenAuthoringSeatPlanCurrentV1, assertTtrpgOpenAuthoringSeatPlanSystemV1 } from '../../src/lib/ttrpg/open-authoring-seat-plan'
+  assertTtrpgOpenAuthoringSeatPlanCurrentV1, assertTtrpgOpenAuthoringSeatPlanSystemV1 } from '../../src/lib/legacy-compat/ttrpg/open-authoring-seat-plan'
 import { openCampaignFixture } from '../helpers/ttrpg-open-content'
 
 function setup() {

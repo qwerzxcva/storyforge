@@ -1,16 +1,16 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import { readProductRuntimeState, readProductRuntimeStateVersion, branchProductRuntimeSession, parseProductRuntimeState, replayProductRuntimeEvents, applyProductRuntimeEvent, deleteProductRuntimeSession } from '../../src/lib/product/runtime-core'
-import { parseTtrpgRuntimeStateV2 } from '../../src/lib/ttrpg/open-runtime-contract'
+import { readProductRuntimeState, readProductRuntimeStateVersion, branchProductRuntimeSession, parseProductRuntimeState, replayProductRuntimeEvents, applyProductRuntimeEvent, deleteProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
+import { parseTtrpgRuntimeStateV2 } from '../../src/lib/legacy-compat/ttrpg/open-runtime-contract'
 import { consultTtrpgOracleV1, startTtrpgOpenEpochV1, closeTtrpgOpenEpochV1, completeTtrpgOpenSessionZeroV1, changeTtrpgSafetyStatus, startTtrpgOpenOperationV1, confirmTtrpgOpenOperationV1, ttrpgOpenOperationCommandIdV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { resumeTtrpgOpenOperationV1 } from '../../src/lib/ttrpg/open-operation-coordinator'
-import { verifyTtrpgOracleOutcomeV1 } from '../../src/lib/ttrpg/oracle'
+import { verifyTtrpgOracleOutcomeV1 } from '../../src/lib/legacy-compat/ttrpg/oracle'
 import { openEnvelopeV1, readyOpenTtrpgSessionV1, OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
-import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/ttrpg/open-player-context'
+import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-player-context'
 import { TTRPG_OPEN_ORACLE_HISTORY_PROVIDER_V1 } from '../../src/lib/ttrpg/open-context-provider'
 import { createContextGatewayToolSessionV1 } from '../../src/lib/context-gateway/tool-session'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
-import { verifyTtrpgOpenOracleJournalV1 } from '../../src/lib/ttrpg/open-oracle-contract'
+import { verifyTtrpgOpenOracleJournalV1 } from '../../src/lib/legacy-compat/ttrpg/open-oracle-contract'
 
 const rt = (state: Awaited<ReturnType<typeof readProductRuntimeState>>) => parseTtrpgRuntimeStateV2(state.ttrpg)!
 async function setup(configure?: Parameters<typeof readyOpenTtrpgSessionV1>[1]) {

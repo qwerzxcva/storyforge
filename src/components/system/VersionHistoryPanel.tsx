@@ -1,12 +1,10 @@
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router'
-import {
-  History, Plus, Trash2, RotateCcw, FileText, Clock, Sparkles, Hand,
-} from 'lucide-react'
-import { useBackupStore } from '../../stores/backup'
-import type { Project } from '../../lib/types'
-import { useDialog } from '../shared/Dialog'
-import { useToast } from '../shared/Toast'
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import { History, Plus, Trash2, RotateCcw, FileText, Clock, Sparkles, Hand } from 'lucide-react';
+import { useBackupStore } from '../../stores/backup';
+import type { Project } from '../../lib/types';
+import { useDialog } from '../shared/Dialog';
+import { useToast } from '../shared/Toast';
 import AutoBackupStatusNotice from './AutoBackupStatusNotice'
 
 interface Props {

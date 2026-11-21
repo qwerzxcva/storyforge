@@ -5,7 +5,7 @@ import { approve, operationInput, rt } from './open-ttrpg-branch-recovery'
 import { readTtrpgOpenEntityDeskV1, proposeTtrpgOpenEntityDeskV1, confirmTtrpgOpenEntityDeskV1, materializeTtrpgOpenEntityDeskV1 } from '../../src/lib/ttrpg/open-entity-desk'
 import { changeTtrpgSituationV1, startTtrpgOpenEpochV1, closeTtrpgOpenEpochV1, startTtrpgOpenOperationV1, confirmTtrpgOpenOperationV1, recordTtrpgOpenHumanNarrationV1, consultTtrpgOracleV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { resumeTtrpgOpenPlayV1 } from '../../src/lib/ttrpg/open-play-coordinator'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 
 export async function identityKnowledgeWindowV1(sessionId: number, viewerKey: string, rawInput = '核对本人观察或明确转述') {
   const run = rt(await readProductRuntimeState(sessionId)).openRun!, active = run.coordination.epochs.find(row => row.epochKey === run.coordination.activeEpochKey)

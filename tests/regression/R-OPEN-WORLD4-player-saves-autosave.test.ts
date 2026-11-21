@@ -6,7 +6,7 @@ import {
   reconcileTextOpenWorldAutomaticSavesV1,
   type TextOpenWorldSaveOwnerV1,
 } from '../../src/lib/open-world/player-saves'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { createGovernedTextOpenWorldSessionFixtureV1 } from '../helpers/text-open-world-product-session'
 import { createTextOpenWorldVNextFixture } from '../helpers/text-open-world-vnext-fixture'
 

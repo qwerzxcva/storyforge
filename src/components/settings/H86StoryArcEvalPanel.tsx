@@ -1,29 +1,13 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { ClipboardCopy, Download, FileJson, LoaderCircle, Play, RotateCcw, Upload } from 'lucide-react'
-import { isAIConfigReady } from '../../lib/ai/config-readiness'
-import {
-  H86_GENERATOR_PAIR_VERSION_V1,
-  H86_VERIFIER_PROMPT_VERSION_V1,
-  clearH86CheckpointV1,
-  exportH86CheckpointV1,
-  importH86CheckpointV1,
-  loadH86CheckpointV1,
-  persistH86CheckpointV1,
-  runH86StoryArcMainPathEvalV1,
-  type H86CheckpointV1,
-} from '../../lib/evals/agent-harness/story-arc-main-path'
-import {
-  cleanupStrandedH86WorkspacesV1,
-  createH86BrowserRunDependenciesV1,
-} from '../../lib/evals/agent-harness/story-arc-main-path-browser'
-import { clearH86HumanReviewV1 } from '../../lib/evals/agent-harness/story-arc-human-review'
-import type { AIConfigPreset } from '../../lib/types'
-import { APP_BUILD_ID } from '../../lib/version'
-import {
-  resolveAIConfigPresetV1,
-  useAIConfigStore,
-} from '../../stores/ai-config'
-import { useDialog } from '../shared/Dialog'
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { ClipboardCopy, Download, FileJson, LoaderCircle, Play, RotateCcw, Upload } from 'lucide-react';
+import { isAIConfigReady } from '../../lib/ai/config-readiness';
+import { H86_GENERATOR_PAIR_VERSION_V1, H86_VERIFIER_PROMPT_VERSION_V1, clearH86CheckpointV1, exportH86CheckpointV1, importH86CheckpointV1, loadH86CheckpointV1, persistH86CheckpointV1, runH86StoryArcMainPathEvalV1, type H86CheckpointV1 } from '../../lib/evals/agent-harness/story-arc-main-path';
+import { cleanupStrandedH86WorkspacesV1, createH86BrowserRunDependenciesV1 } from '../../lib/evals/agent-harness/story-arc-main-path-browser';
+import { clearH86HumanReviewV1 } from '../../lib/evals/agent-harness/story-arc-human-review';
+import type { AIConfigPreset } from '../../lib/types';
+import { APP_BUILD_ID } from '../../lib/version';
+import { resolveAIConfigPresetV1, useAIConfigStore } from '../../stores/ai-config';
+import { useDialog } from '../shared/Dialog';
 import H86HumanReviewPanel from './H86HumanReviewPanel'
 
 function downloadJson(raw: string, filename: string): void {

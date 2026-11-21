@@ -1,6 +1,6 @@
 import {expect, it} from 'vitest'
 import {chatPlayerRelationshipHistoryV1} from '../../src/lib/character-interaction/relationship-player-history'
-import {rebaseInteractionStateForBranch} from '../../src/lib/character-interaction/runtime'
+import {rebaseInteractionStateForBranch} from '../../src/lib/legacy-compat/character-interaction/runtime'
 import {chatRelationshipHistoryFixture} from '../helpers/chat-relationship-history'
 
 it('projects both original exchanges and current attitude without changing runtime or relying on retrieval selection', () => {

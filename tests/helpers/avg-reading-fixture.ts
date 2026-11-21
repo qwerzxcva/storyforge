@@ -1,6 +1,6 @@
-import type { AvgReadingPlanV1 } from '../../src/lib/avg/reading-contract'
+import type { AvgReadingPlanV1 } from '../../src/lib/legacy-compat/avg/reading-contract'
 import type { FrozenRuntimeMediaAssetV2 } from '../../src/lib/types'
-import { sha256MediaData } from '../../src/lib/product-production/media-blob-store'
+import { sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import { avgSystemFixture } from './avg-system-fixture'
 import { seedAvgNativePreview } from './avg-native-fixture'
 

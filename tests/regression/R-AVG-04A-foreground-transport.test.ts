@@ -1,12 +1,12 @@
 import { describe,it,expect,vi } from 'vitest'
 import type { MediaProviderTransportV1 } from '../../src/lib/product-production/media-adapters'
-import { compileAvgForegroundRequirementV1 } from '../../src/lib/avg/image-foreground-contract'
-import { AVG_RESERVED_MAGENTA_INVARIANT_V1,AVG_RESERVED_MAGENTA_FORBIDDEN_V1 } from '../../src/lib/avg/image-foreground-contract'
+import { compileAvgForegroundRequirementV1 } from '../../src/lib/legacy-compat/avg/image-foreground-contract'
+import { AVG_RESERVED_MAGENTA_INVARIANT_V1,AVG_RESERVED_MAGENTA_FORBIDDEN_V1 } from '../../src/lib/legacy-compat/avg/image-foreground-contract'
 import { prepareAvgRawImageRequestFromBatchV1 } from '../../src/lib/avg/media-raw-contract'
 import { prepareAvgRawImageRequestFromBatchV2 } from '../../src/lib/avg/media-request-v2'
 import { createAvgReferenceImageAdapterV1,createAvgReferenceImageAdapterV2 } from '../../src/lib/avg/media-reference-adapter'
-import { sha256MediaData } from '../../src/lib/product-production/media-blob-store'
-import { DECLARED_MAGENTA_ALPHA_MATTING_ID_V1 } from '../../src/lib/product-production/character-alpha-matting'
+import { sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
+import { DECLARED_MAGENTA_ALPHA_MATTING_ID_V1 } from '../../src/lib/legacy-compat/product-production/character-alpha-matting'
 
 const base64='iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScLbtAAAAABJRU5ErkJggg=='
 const bytes=Uint8Array.from(atob(base64),c=>c.charCodeAt(0)).buffer

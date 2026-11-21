@@ -1,6 +1,6 @@
-import type { WorldReleaseSemanticContentV4 } from '../types/narrative-release'
-import type { NarrativeCompilationResultV1, NarrativeIncrementalBaseV1 } from './narrative-incremental'
-import { canonicalNarrativeJsonV1, hashNarrativeValueV1 } from './narrative-json'
+import type { WorldReleaseSemanticContentV4 } from '../types/narrative-release';
+import type { NarrativeCompilationResultV1, NarrativeIncrementalBaseV1 } from './narrative-incremental';
+import { canonicalNarrativeJsonV1, hashNarrativeValueV1 } from './narrative-json';
 
 export const NARRATIVE_COMPILE_WORKER_BUDGET_V1 = Object.freeze({ inputBytes: 32 * 1024 * 1024, timeoutMs: 60_000 })
 export type NarrativeCompileProgressV1 = 'worker-started' | 'inline-fallback'

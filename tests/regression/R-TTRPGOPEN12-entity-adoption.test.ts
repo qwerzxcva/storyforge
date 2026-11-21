@@ -6,19 +6,19 @@ import { prepareTtrpgOpenEntityInputV1 } from '../../src/lib/ttrpg/open-intent-i
 import { executeTtrpgOpenEntityRequestV1 } from '../../src/lib/ttrpg/open-intent-harness'
 import { acceptTtrpgOpenEntityCandidateV1, confirmTtrpgOpenEntityOperationV1, materializeTtrpgOpenEntityV1,
   ttrpgOpenOperationCommandIdV1, changeTtrpgSafetyStatus, disposeTtrpgOpenEntityOperationV1, closeTtrpgOpenEpochV1 } from '../../src/lib/ttrpg/runtime-commands'
-import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents, branchProductRuntimeSession, deleteProductRuntimeSession } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents, branchProductRuntimeSession, deleteProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
-import { parseTtrpgOpenEntityPlanV1, parseTtrpgOpenEntityPlanV2 } from '../../src/lib/ttrpg/open-entity-contract'
+import { parseTtrpgOpenEntityPlanV1, parseTtrpgOpenEntityPlanV2 } from '../../src/lib/legacy-compat/ttrpg/open-entity-contract'
 import { reconcileTtrpgOpenEntityRunV1 } from '../../src/lib/ttrpg/open-entity-adoption'
 import { finishTtrpgOpenEntityDraftV1 } from '../../src/lib/ttrpg/open-entity-stop'
-import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/ttrpg/open-player-context'
+import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-player-context'
 import { readTtrpgOpenEntityDeskV1 } from '../../src/lib/ttrpg/open-entity-desk'
 import { completeTtrpgOpenSessionZeroV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import { deleteAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { inspectAgentRunArtifactAvailabilityV1, markAndSweepAgentRunArtifactsV1, pruneAgentRunArtifactsExplicitlyV1 } from '../../src/lib/memory/artifact-store'
-import { verifyTtrpgOpenEntityStateV1, verifyTtrpgOpenEntityPlanHashesV1 } from '../../src/lib/ttrpg/open-entity-proof'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { verifyTtrpgOpenEntityStateV1, verifyTtrpgOpenEntityPlanHashesV1 } from '../../src/lib/legacy-compat/ttrpg/open-entity-proof'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 
 async function candidate(audience: 'party' | 'private' | 'gm-only' = 'party', sharedTemplate = false, empty = false) {
   const s = await setupOpenEntityModelV1(audience)

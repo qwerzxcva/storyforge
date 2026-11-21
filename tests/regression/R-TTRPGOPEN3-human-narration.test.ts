@@ -1,6 +1,6 @@
-import { branchProductRuntimeSession } from '../../src/lib/product/runtime-core'
+import { branchProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
-import { assertTtrpgOpenHumanHostV1 } from '../../src/lib/ttrpg/open-authorization'
+import { assertTtrpgOpenHumanHostV1 } from '../../src/lib/legacy-compat/ttrpg/open-authorization'
 import * as artifacts from '../../src/lib/memory/artifact-store'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { cancelTtrpgOpenPreparedRequestV1 } from '../../src/lib/ttrpg/open-request-cancellation'
@@ -14,9 +14,9 @@ import { resumeTtrpgOpenPlayV1 } from '../../src/lib/ttrpg/open-play-coordinator
 import { recordTtrpgOpenHumanNarrationV1, acceptTtrpgOpenKpNarrationV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { generateTtrpgOpenKpCandidateV1, executeTtrpgOpenKpRequestV1 } from '../../src/lib/ttrpg/open-intent-harness'
 import { prepareTtrpgOpenKpInputV1 } from '../../src/lib/ttrpg/open-intent-input'
-import { loadTtrpgOpenKpContextV1 } from '../../src/lib/ttrpg/open-kp-context'
-import { parseTtrpgOpenNarrationReceiptV1 } from '../../src/lib/ttrpg/open-kp-receipt'
-import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/product/runtime-core'
+import { loadTtrpgOpenKpContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-kp-context'
+import { parseTtrpgOpenNarrationReceiptV1 } from '../../src/lib/legacy-compat/ttrpg/open-kp-receipt'
+import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/legacy-compat/product/runtime-core'
 async function setup() {
   const f = await setupChecksFixtureV1({ ai: true });await resumeTtrpgOpenPlayV1(f.command)
   const input = { ...await openEnvelopeV1(f.command.sessionId, 'kp'), scope: f.f.scope, viewerKey: f.command.viewerKey,

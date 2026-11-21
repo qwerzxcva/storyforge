@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { avgSoundPlanningFixtureV1 } from '../helpers/avg-sound-planning-fixture'
 import { parseAvgProfessionalArtifactV1, prepareAvgProfessionalArtifactV1 } from '../../src/lib/avg/artifact-contract'
-import { parseAvgSoundPlanV1 } from '../../src/lib/avg/sound-plan-contract'
-import { parseAvgSoundPlanningScopeV1 } from '../../src/lib/avg/sound-scope-contract'
+import { parseAvgSoundPlanV1 } from '../../src/lib/legacy-compat/avg/sound-plan-contract'
+import { parseAvgSoundPlanningScopeV1 } from '../../src/lib/legacy-compat/avg/sound-scope-contract'
 import { compileAvgSoundRequirementsV1 } from '../../src/lib/avg/sound-requirements'
 import { freezeAvgSoundPlanningScopeV1, validateAvgSoundPlanningSourcesV1 } from '../../src/lib/avg/sound-source'
 

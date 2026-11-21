@@ -1,9 +1,9 @@
 import { setupCommonOracleSourceV1 } from './open-common-oracle-source'
 import { openEnvelopeV1 } from './open-ttrpg-session'
 import { closeTtrpgOpenEntityDeskV1 } from '../../src/lib/ttrpg/open-entity-desk'
-import { loadTtrpgOpenCommonOracleContextV1 } from '../../src/lib/ttrpg/open-common-oracle-context'
+import { loadTtrpgOpenCommonOracleContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-common-oracle-context'
 import { startTtrpgOpenCommonOracleWindowV1 } from '../../src/lib/ttrpg/open-common-oracle-window'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 
 export async function setupCommonOracleModelV1(audience: 'public' | 'party' = 'party', modelIdentity = { provider: 'test-adapter', model: 'injected' }) {
   const s = await setupCommonOracleSourceV1(audience, false, pkg => {

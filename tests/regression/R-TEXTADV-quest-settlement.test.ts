@@ -7,7 +7,7 @@ import {
   parseTextAdventureQuestScriptArtifact,
   type TextAdventureQuestScriptArtifactV3,
 } from '../../src/lib/adventure/quest-settlement'
-import { adventureRequirementSatisfied, applyAdventureEffects, createInitialAdventureState } from '../../src/lib/adventure/runtime'
+import { adventureRequirementSatisfied, applyAdventureEffects, createInitialAdventureState } from '../../src/lib/legacy-compat/adventure/runtime'
 import { createTextAdventureFoundationContentV2 } from '../helpers/text-adventure-v2-foundation'
 
 function fixture() {

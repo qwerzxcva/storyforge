@@ -1,36 +1,36 @@
 import Dexie from 'dexie'
-import { db } from '../../db/schema'
-import type { AgentRunContractV3, AgentRunRecord, ChatMessage, WorkspaceScope } from '../../types'
-import type { AIRequestConfigResolution, StreamResult } from '../../ai/client'
-import { describeResolvedAIRequestSettingsV1, resolveRequestConfig } from '../../ai/client'
-import { useAIConfigStore } from '../../../stores/ai-config'
-import { htmlToPlainText, countWords } from '../../utils/html'
-import { hashChapterText, sha256Text } from '../../ai/chapter-memory/text-normalization'
-import { normalizeRichEditorHTMLV1 } from '../../editor/rich-editor-schema'
-import { assertRecordInScope, readOwnedRows } from '../../workspace/scope'
-import { captureWorkspaceContentRevisionV1, assertWorkspaceContentRevisionFreshV1 } from '../../authoring/content-revision'
-import { prepareProseGatewayAssemblyV1 } from '../../prose/gateway-context'
-import { buildQualityRevisionRequestV1, freezeQualityRevisionPlanV1, qualityRevisionProtectionErrorV1, QUALITY_REVISION_PROMPT_VERSION_V1, type QualityRevisionPlanV1 } from '../../prose/quality-revision'
-import { previewQualityRevisionHTMLV1 } from '../../prose/quality-revision-html'
-import { buildQualityRecheckRequestV1, parseQualityRecheckV1 } from '../../prose/quality-recheck'
-import { QUALITY_RECHECK_STEP_V1, type QualityRevisionEvidenceV1 } from '../../prose/quality-revision-evidence'
-import type { QualityReviewModeV1 } from '../../prose/quality-review'
-import { proseRenderedRequestV1 } from '../../prose/request-evidence'
-import { prepareQualityResolutionV1 } from '../../prose/quality-request-budget'
-import { getAgentSkillV1, resolveAgentSkillContextSourceKeysV1 } from '../skill-registry'
-import { createAgentSkillExecutionBindingV2 } from '../execution-binding'
-import { freezeFormalAIEntryBindingV1 } from '../formal-ai-entry'
-import { createAgentRunV1, appendAgentRunEventV1, readAgentRunV1, type AgentRunSnapshotV1 } from './event-store'
-import { hashCanonicalValue } from './hash'
-import { createContextManifestFromAssemblyV1, createContextManifestV2FromV1 } from './context-manifest'
-import { recordContextGatewayPreflightEvidenceV1, finalizeContextGatewayAttemptEvidenceV1 } from '../../context-gateway/attempt-evidence'
-import { recordAgentRunArtifactV1 } from '../../memory/artifact-store'
-import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint'
-import { AgentTeamBudgetTracker } from '../team-budget'
-import { estimateTokens } from '../../ai/context-budget'
-import { buildChapterInformationBoundaryV1, validateProseInformationBoundaryV1 } from '../information-boundary'
-import { readLatestWholeChapterQualityReviewV1 } from './quality-review-durable'
-import { beginProseGenerationGatewayStepV1, buildProseGenerationRunContractV3, persistProseGenerationCandidateV1, recordProseGenerationCandidateV1, hashProseGenerationCandidateV1, readLatestProseGenerationCandidateV1, commitProseGenerationAdoptionV1, rejectProseGenerationCandidateV1, isProseGenerationCandidateCurrentV1, type ProseGenerationCandidateV1 } from './prose-generation-durable'
+import { db } from '../../db/schema';
+import type { AgentRunContractV3, AgentRunRecord, ChatMessage, WorkspaceScope } from '../../types';
+import type { AIRequestConfigResolution, StreamResult } from '../../ai/client';
+import { describeResolvedAIRequestSettingsV1, resolveRequestConfig } from '../../ai/client';
+import { useAIConfigStore } from '../../../stores/ai-config';
+import { htmlToPlainText, countWords } from '../../utils/html';
+import { hashChapterText, sha256Text } from '../../ai/chapter-memory/text-normalization';
+import { normalizeRichEditorHTMLV1 } from '../../editor/rich-editor-schema';
+import { assertRecordInScope, readOwnedRows } from '../../workspace/scope';
+import { captureWorkspaceContentRevisionV1, assertWorkspaceContentRevisionFreshV1 } from '../../authoring/content-revision';
+import { prepareProseGatewayAssemblyV1 } from '../../prose/gateway-context';
+import { buildQualityRevisionRequestV1, freezeQualityRevisionPlanV1, qualityRevisionProtectionErrorV1, QUALITY_REVISION_PROMPT_VERSION_V1, type QualityRevisionPlanV1 } from '../../prose/quality-revision';
+import { previewQualityRevisionHTMLV1 } from '../../prose/quality-revision-html';
+import { buildQualityRecheckRequestV1, parseQualityRecheckV1 } from '../../prose/quality-recheck';
+import { QUALITY_RECHECK_STEP_V1, type QualityRevisionEvidenceV1 } from '../../prose/quality-revision-evidence';
+import type { QualityReviewModeV1 } from '../../prose/quality-review';
+import { proseRenderedRequestV1 } from '../../prose/request-evidence';
+import { prepareQualityResolutionV1 } from '../../prose/quality-request-budget';
+import { getAgentSkillV1, resolveAgentSkillContextSourceKeysV1 } from '../skill-registry';
+import { createAgentSkillExecutionBindingV2 } from '../execution-binding';
+import { freezeFormalAIEntryBindingV1 } from '../formal-ai-entry';
+import { createAgentRunV1, appendAgentRunEventV1, readAgentRunV1, type AgentRunSnapshotV1 } from './event-store';
+import { hashCanonicalValue } from './hash';
+import { createContextManifestFromAssemblyV1, createContextManifestV2FromV1 } from './context-manifest';
+import { recordContextGatewayPreflightEvidenceV1, finalizeContextGatewayAttemptEvidenceV1 } from '../../context-gateway/attempt-evidence';
+import { recordAgentRunArtifactV1 } from '../../memory/artifact-store';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { AgentTeamBudgetTracker } from '../team-budget';
+import { estimateTokens } from '../../ai/context-budget';
+import { buildChapterInformationBoundaryV1, validateProseInformationBoundaryV1 } from '../information-boundary';
+import { readLatestWholeChapterQualityReviewV1 } from './quality-review-durable';
+import { beginProseGenerationGatewayStepV1, buildProseGenerationRunContractV3, persistProseGenerationCandidateV1, recordProseGenerationCandidateV1, hashProseGenerationCandidateV1, readLatestProseGenerationCandidateV1, commitProseGenerationAdoptionV1, rejectProseGenerationCandidateV1, isProseGenerationCandidateCurrentV1, type ProseGenerationCandidateV1 } from './prose-generation-durable';
 
 type Call = (messages: ChatMessage[], resolution: AIRequestConfigResolution, result: StreamResult) => Promise<string>
 export interface QualityRevisionDraftV1 { version: 'quality-revision-draft-v1'; plan: QualityRevisionPlanV1; sourceHtml: string; contentHtml: string; outputText: string; rawPatches: string }

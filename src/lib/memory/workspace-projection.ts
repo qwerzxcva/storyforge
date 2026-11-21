@@ -1,57 +1,31 @@
-import { bytesToHex } from '@noble/hashes/utils.js'
-import { marked } from 'marked'
+import { bytesToHex } from '@noble/hashes/utils.js';
+import { marked } from 'marked';
 import TurndownService from 'turndown'
-import { parse as parseYaml, stringify as stringifyYaml } from 'yaml'
-import { db } from '../db/schema'
-import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash'
-import { sha256Text } from '../ai/chapter-memory/text-normalization'
-import { PROJECT_TABLES } from '../registry/project-tables'
-import { adopt, hashAdoptRecordFieldsV1 } from '../registry/adopt'
-import type { WorkspaceProjectionSpecV1 } from '../registry/types'
-import { countWords, htmlToPlainText } from '../utils/html'
-import { exportProjectJSON, importProjectJSON, type ProjectExportData } from '../export/json-export'
-import { assertTrustedProjectBackup } from '../export/backup-trust'
-import { verifyPortableAgentRunProjectionV1, verifyPortableCompletedAgentRunEvidenceV1,
-  expectedNodeProducerImportRetirementReasonV1 } from '../agent/run/ledger-portability'
-import { toAgentRunProjectionBodyV1 } from '../agent/run/projection'
-import { parseAgentRunContract } from '../agent/run/contract'
-import { cascadeDeleteProject, transactionTablesFor } from '../registry/lifecycle'
-import { cascadeDeleteChapterRecords, type ChapterDeletionPreconditionsV1 } from '../chapters/lifecycle'
-import { scopeTransactionTables } from '../workspace/scope'
-import { propagateChapterEditStale } from '../consistency/impact-analysis'
-import { buildWorkspaceImpactPlanV1 } from './workspace-impact'
-import { buildMemoryArtifactIndexV1 } from './settlement'
-import { buildMemorySettlementReceiptFromFrozenLedgerV1, hashMemoryArtifactIndexV1,
-  memoryRunExportIdV1 } from './settlement-core'
-import type {
-  Chapter,
-  CreativeRules,
-  Project,
-  StoryCore,
-  Work,
-  WorkspaceDocumentBindingV1,
-  WorkspaceDocumentChangeKindV1,
-  WorkspaceDocumentIdentityV1,
-  WorkspaceFileAdoptionCandidateV1,
-  WorkspaceFileCandidateSetV1,
-  WorkspaceManifestV1,
-  WorkspacePackageV1,
-  WorkspaceSelfCheckActionV1,
-  WorkspaceSelfCheckItemV1,
-  WorkspaceSelfCheckPlanV1,
-  WorkspaceSelfCheckReportV1,
-  WorkspaceSyncReceiptV1,
-  World,
-} from '../types'
-import type { WorkspaceScope } from '../types/world-ownership'
-import { resolveWorkspaceOwnership } from '../workspace/ownership'
-import {
-  generateDocumentId,
-  isWorkspaceUid,
-  isWorkspaceDocumentId,
-  isWorkCode,
-} from './identity'
-import { isCurrentWorldCode } from '../workspace/identity'
+import { parse as parseYaml, stringify as stringifyYaml } from 'yaml';
+import { db } from '../db/schema';
+import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash';
+import { sha256Text } from '../ai/chapter-memory/text-normalization';
+import { PROJECT_TABLES } from '../registry/project-tables';
+import { adopt, hashAdoptRecordFieldsV1 } from '../registry/adopt';
+import type { WorkspaceProjectionSpecV1 } from '../registry/types';
+import { countWords, htmlToPlainText } from '../utils/html';
+import { exportProjectJSON, importProjectJSON, type ProjectExportData } from '../export/json-export';
+import { assertTrustedProjectBackup } from '../export/backup-trust';
+import { verifyPortableAgentRunProjectionV1, verifyPortableCompletedAgentRunEvidenceV1, expectedNodeProducerImportRetirementReasonV1 } from '../agent/run/ledger-portability';
+import { toAgentRunProjectionBodyV1 } from '../agent/run/projection';
+import { parseAgentRunContract } from '../agent/run/contract';
+import { cascadeDeleteProject, transactionTablesFor } from '../registry/lifecycle';
+import { cascadeDeleteChapterRecords, type ChapterDeletionPreconditionsV1 } from '../chapters/lifecycle';
+import { scopeTransactionTables } from '../workspace/scope';
+import { propagateChapterEditStale } from '../consistency/impact-analysis';
+import { buildWorkspaceImpactPlanV1 } from './workspace-impact';
+import { buildMemoryArtifactIndexV1 } from './settlement';
+import { buildMemorySettlementReceiptFromFrozenLedgerV1, hashMemoryArtifactIndexV1, memoryRunExportIdV1 } from './settlement-core';
+import type { Chapter, CreativeRules, Project, StoryCore, Work, WorkspaceDocumentBindingV1, WorkspaceDocumentChangeKindV1, WorkspaceDocumentIdentityV1, WorkspaceFileAdoptionCandidateV1, WorkspaceFileCandidateSetV1, WorkspaceManifestV1, WorkspacePackageV1, WorkspaceSelfCheckActionV1, WorkspaceSelfCheckItemV1, WorkspaceSelfCheckPlanV1, WorkspaceSelfCheckReportV1, WorkspaceSyncReceiptV1, World } from '../types';
+import type { WorkspaceScope } from '../types/world-ownership';
+import { resolveWorkspaceOwnership } from '../workspace/ownership';
+import { generateDocumentId, isWorkspaceUid, isWorkspaceDocumentId, isWorkCode } from './identity';
+import { isCurrentWorldCode } from '../workspace/identity';
 
 const turndown = new TurndownService({
   bulletListMarker: '-',

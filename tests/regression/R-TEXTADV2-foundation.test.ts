@@ -9,7 +9,7 @@ import {
   parseAdventureContent,
   qualifiedAdventureEndings,
   validateAdventureContent,
-} from '../../src/lib/adventure/runtime'
+} from '../../src/lib/legacy-compat/adventure/runtime'
 import { analyzeTextAdventureRouteQualityV1 } from '../../src/lib/adventure/quality-analysis'
 import {
   allocateAdventureSkillPoint,
@@ -23,10 +23,10 @@ import {
   verifyProductRuntimeCheckpoint,
 } from '../../src/lib/adventure/runtime-api'
 import { db } from '../../src/lib/db/schema'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { evaluateProductRuntimeProductQualityV1 } from '../../src/lib/product-production/product-quality'
-import { parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/product/runtime-api'
-import { createProductRuntimeInstanceFromSource } from '../../src/lib/product/runtime-instances'
+import { parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/legacy-compat/product/runtime-api'
+import { createProductRuntimeInstanceFromSource } from '../../src/lib/legacy-compat/product/runtime-instances'
 import { seedCurrentProductBuild } from '../helpers/current-product-build'
 import { createCurrentProductBriefFixture, createCurrentRuntimePackageFixture } from '../helpers/current-runtime-package'
 import {

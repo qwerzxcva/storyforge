@@ -8,7 +8,7 @@ import {
   readMediaBlobObjectData,
   recoverInterruptedMediaBlobObjects,
   discardUnreferencedMediaBlobObjectsV1,
-} from '../../src/lib/product-production/media-blob-store'
+} from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import { resolveWorkspaceOwnership } from '../../src/lib/workspace/ownership'
 import { seedCurrentProject } from '../helpers/current-workspace'
 import { createAvgDraftV1 } from '../../src/lib/avg/draft-service'

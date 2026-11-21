@@ -5,39 +5,21 @@
  * 启用/权重/token 策略写回源记录。节点执行仍通过 CONTEXT_SOURCES.ragSelection 读取。
  */
 import Dexie from 'dexie'
-import { estimateTokens } from '../ai/context-budget'
-import { db } from '../db/schema'
-import {
-  type RagDocumentMetadata,
-  type RagDocumentPolicy,
-  type RagFieldPolicy,
-  type RagLibraryEntry,
-  type RagSelectionTraceCollector,
-} from '../types'
-import type { ContextResourceDescriptorV1 } from '../registry/types'
-import type { WorkspaceScope } from '../types/world-ownership'
-import type { RagAnnotationTargetSelectionV1, RagAnnotationTargetStateV1 } from '../types/rag-library'
-import { deriveNarrativeTargetStateV1 } from './narrative-target-state'
-import { isRagSelectionEnabledV1, ragSourceFieldPolicyKeysV1 } from './rag-policy'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveScope,
-  scopeTransactionTables,
-  type WorkspaceScopeLike,
-} from '../workspace/scope'
-import { REGISTRY_BY_NAME } from '../registry/project-tables'
-import { FIELD_BY_TARGET } from '../registry/field-registry'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { canonicalNarrativeJsonV1 } from '../world-engine/narrative-json'
-import { ContextResourceIdentityError, isPortableResourceUidV1 } from '../context-gateway/resource-uid'
-import {
-  CANON_RESOURCE_PROVIDER_V1,
-  CanonResourceProviderError,
-  logicalFieldKeyFromResourceKeyV1,
-  readCanonicalDescriptorV1,
-} from '../context-gateway/canon-provider'
+import { estimateTokens } from '../ai/context-budget';
+import { db } from '../db/schema';
+import { type RagDocumentMetadata, type RagDocumentPolicy, type RagFieldPolicy, type RagLibraryEntry, type RagSelectionTraceCollector } from '../types';
+import type { ContextResourceDescriptorV1 } from '../registry/types';
+import type { WorkspaceScope } from '../types/world-ownership';
+import type { RagAnnotationTargetSelectionV1, RagAnnotationTargetStateV1 } from '../types/rag-library';
+import { deriveNarrativeTargetStateV1 } from './narrative-target-state';
+import { isRagSelectionEnabledV1, ragSourceFieldPolicyKeysV1 } from './rag-policy';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScope, scopeTransactionTables, type WorkspaceScopeLike } from '../workspace/scope';
+import { REGISTRY_BY_NAME } from '../registry/project-tables';
+import { FIELD_BY_TARGET } from '../registry/field-registry';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { canonicalNarrativeJsonV1 } from '../world-engine/narrative-json';
+import { ContextResourceIdentityError, isPortableResourceUidV1 } from '../context-gateway/resource-uid';
+import { CANON_RESOURCE_PROVIDER_V1, CanonResourceProviderError, logicalFieldKeyFromResourceKeyV1, readCanonicalDescriptorV1 } from '../context-gateway/canon-provider';
 
 type RagRow = RagDocumentMetadata & {
   id?: number

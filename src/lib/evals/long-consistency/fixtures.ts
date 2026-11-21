@@ -1,4 +1,4 @@
-import type { LongConsistencyFixture } from './types'
+import type { LongConsistencyFixture } from './types';
 
 /**
  * 把"上一章建立的关键事实"放在 previousChapterText 的【最前】，后接足够长的无关收尾，

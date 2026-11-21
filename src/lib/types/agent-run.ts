@@ -1,9 +1,5 @@
-import type {
-  ContextCompressionEvidenceV1,
-  ContextSufficiencyReportV1,
-  RetrievalTraceV1,
-} from '../registry/types'
-import type { ExactRunArtifactKindV1 } from './memory-engineering'
+import type { ContextCompressionEvidenceV1, ContextSufficiencyReportV1, RetrievalTraceV1 } from '../registry/types';
+import type { ExactRunArtifactKindV1 } from './memory-engineering';
 
 export type AgentRunWorkflowKind =
   | 'direct-generation'

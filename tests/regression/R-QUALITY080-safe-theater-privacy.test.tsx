@@ -3,9 +3,9 @@ import { createRoot, type Root } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import TtrpgCampaignGuide from '../../src/components/ttrpg/TtrpgCampaignGuide'
-import { parseProductRuntimePackageV1 } from '../../src/lib/product-production/runtime-package'
+import { parseProductRuntimePackageV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
 import { createTtrpgViewerProjectionV1 } from '../../src/lib/ttrpg/viewer-projection'
-import { createCompleteTtrpgCharacterSheetV2 } from '../../src/lib/ttrpg/character-sheet'
+import { createCompleteTtrpgCharacterSheetV2 } from '../../src/lib/legacy-compat/ttrpg/character-sheet'
 import {
   completeTtrpgSessionZero,
   openTtrpgCampaignScene,
@@ -22,11 +22,11 @@ import { seedCurrentProductWorld, loadCurrentProductWorldSourceCatalogV1 } from 
 import { createCurrentTtrpgRuntimePackageFixture } from '../helpers/current-ttrpg-runtime-package'
 import { seedCurrentProductBuild } from '../helpers/current-product-build'
 import { createFixtureProductReleaseManifestV1 } from '../helpers/product-release-v1'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { startCommunityTtrpgGameV1 } from '../../src/lib/ttrpg/community-games'
-import { configureTtrpgSessionParticipantV2, readTtrpgSessionParticipantsV2 } from '../../src/lib/ttrpg/participants'
+import { configureTtrpgSessionParticipantV2, readTtrpgSessionParticipantsV2 } from '../../src/lib/legacy-compat/ttrpg/participants'
 import { adoptTtrpgPrivateGuidanceV1, captureTtrpgPrivateGuidanceViewV1, generateTtrpgPrivateGuidanceV1 } from '../../src/lib/ttrpg/private-guidance'
-import * as runtimeSource from '../../src/lib/product-production/preview-source'
+import * as runtimeSource from '../../src/lib/legacy-compat/product-production/preview-source'
 
 const PRIVATE_KNOWLEDGE = 'QUALITY080_ONLY_SELF_PRIVATE_KNOWLEDGE'
 const PRIVATE_SAFETY = 'QUALITY080_ONLY_SELF_SAFETY_NOTE'

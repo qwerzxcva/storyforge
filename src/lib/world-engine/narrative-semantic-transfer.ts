@@ -1,10 +1,10 @@
-import type { Project, World, Work } from '../types'
-import type { WorldSemanticSnapshotV1 } from '../types/world-release'
-import type { NarrativeDomainCaptureV1 } from './narrative-domain-capture'
-import { deriveRegisteredSemanticRowsV1 } from '../export/registry-export'
-import { WORLD_SEMANTIC_REGISTRY_V4 } from './semantic-registry-v4'
-import { isWorldReleaseSourceEligibleV4 } from './narrative-release-v4'
-import { compareUnicodeCodePointsV1, narrativeFail } from './narrative-json'
+import type { Project, World, Work } from '../types';
+import type { WorldSemanticSnapshotV1 } from '../types/world-release';
+import type { NarrativeDomainCaptureV1 } from './narrative-domain-capture';
+import { deriveRegisteredSemanticRowsV1 } from '../export/registry-export';
+import { WORLD_SEMANTIC_REGISTRY_V4 } from './semantic-registry-v4';
+import { isWorldReleaseSourceEligibleV4 } from './narrative-release-v4';
+import { compareUnicodeCodePointsV1, narrativeFail } from './narrative-json';
 
 /** Portable source content, not a release. It can represent an independent
  * Work before an explicit copy creates a public World namespace. */

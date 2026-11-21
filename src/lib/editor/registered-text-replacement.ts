@@ -1,14 +1,14 @@
-import { db } from '../db/schema'
-import { FIELD_REGISTRY } from '../registry/field-registry'
-import { REGISTRY_BY_NAME } from '../registry/project-tables'
-import { transactionTablesFor } from '../registry/lifecycle'
-import { adopt } from '../registry/adopt'
-import { assertRecordInScope, readOwnedRows, resolveScope } from '../workspace/scope'
-import type { WorkspaceScope } from '../types'
-import type { FieldSpec } from '../registry/types'
-import type { CodexCategory, CodexFieldDef } from '../types/codex'
-import { canonicalStringify } from '../agent/run/hash'
-import { replaceChapterContent, replacePlainTextV1, type FindReplaceOptions } from './find-replace'
+import { db } from '../db/schema';
+import { FIELD_REGISTRY } from '../registry/field-registry';
+import { REGISTRY_BY_NAME } from '../registry/project-tables';
+import { transactionTablesFor } from '../registry/lifecycle';
+import { adopt } from '../registry/adopt';
+import { assertRecordInScope, readOwnedRows, resolveScope } from '../workspace/scope';
+import type { WorkspaceScope } from '../types';
+import type { FieldSpec } from '../registry/types';
+import type { CodexCategory, CodexFieldDef } from '../types/codex';
+import { canonicalStringify } from '../agent/run/hash';
+import { replaceChapterContent, replacePlainTextV1, type FindReplaceOptions } from './find-replace';
 
 type RecordData = Record<string, unknown>
 export const TEXT_REPLACEMENT_TARGETS = [...new Set(FIELD_REGISTRY.filter(field => field.textReplacement).map(field => field.target))]

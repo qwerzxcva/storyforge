@@ -5,11 +5,11 @@ import { prepareNativeAvgAssembly, startNativeAvgAssembly } from '../helpers/avg
 import { readAvgDraftV1 } from '../../src/lib/avg/draft-service'
 import { saveAvgSoundProductionDraftV1, clearAvgSoundProductionDraftV1, validateAvgSoundDraftSourcesV1 } from '../../src/lib/avg/sound-draft-service'
 import { parseAvgAuthorWorkspaceV1 } from '../../src/lib/avg/author-workspace-contract'
-import { canonicalProductProductionJsonV2 } from '../../src/lib/product-production/hash'
+import { canonicalProductProductionJsonV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { saveAvgAuthorWorkspaceV1 } from '../../src/lib/avg/editor-service'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import { deleteWork } from '../../src/lib/workspace/lifecycle'
-import { avgSoundPreparationEnabledV1, avgSoundProductionExecutionReadyV1 } from '../../src/lib/avg/sound-production-brief'
+import { avgSoundPreparationEnabledV1, avgSoundProductionExecutionReadyV1 } from '../../src/lib/legacy-compat/avg/sound-production-brief'
 
 beforeEach(async () => { await db.delete(); await db.open(); vi.stubGlobal('fetch', vi.fn(async () => { throw new Error('Draft save cannot perform HTTP') })) })
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); vi.unstubAllEnvs(); db.close() })

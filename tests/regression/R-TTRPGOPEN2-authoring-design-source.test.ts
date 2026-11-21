@@ -4,7 +4,7 @@ import { createFreshOpenDraftFixtureV1 } from '../helpers/open-ttrpg-fresh-autho
 import { readTtrpgDraft, saveTtrpgDraft, saveTtrpgSourceSelection, prepareTtrpgOpenProductionBriefV3 } from '../../src/lib/ttrpg/authoring-service'
 import { suggestProductStartingPoints } from '../../src/lib/product-production/consultation'
 import { assertTtrpgOpenAuthoringDesignSourceCurrentV1, prepareTtrpgOpenAuthoringDesignSourceV1 } from '../../src/lib/ttrpg/open-authoring-design'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import * as provenance from '../../src/lib/ttrpg/open-source-provenance'
 import { assembleContext } from '../../src/lib/registry/assemble-context'
 import { readTtrpgOpenAuthoringDesignContextV1 } from '../../src/lib/ttrpg/open-authoring-design-context'

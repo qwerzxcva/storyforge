@@ -1,4 +1,4 @@
-import type { TableSpec } from '../registry/types'
+import type { TableSpec } from '../registry/types';
 
 type StructureSpec = Pick<TableSpec, 'name' | 'exportIdField' | 'tree' | 'exportRemap'>
 

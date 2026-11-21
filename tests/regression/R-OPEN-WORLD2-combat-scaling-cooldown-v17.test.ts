@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { createTextOpenWorldCombatActionCatalogV1 } from '../../src/lib/open-world/combat-actions'
-import { createTextOpenWorldCombatStateMachineV1 } from '../../src/lib/open-world/combat-state-machine'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
-import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
-import { createTextOpenWorldSkillCatalogV1 } from '../../src/lib/open-world/skills'
+import { createTextOpenWorldCombatActionCatalogV1 } from '../../src/lib/legacy-compat/open-world/combat-actions'
+import { createTextOpenWorldCombatStateMachineV1 } from '../../src/lib/legacy-compat/open-world/combat-state-machine'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
+import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
+import { createTextOpenWorldSkillCatalogV1 } from '../../src/lib/legacy-compat/open-world/skills'
 import type {
   TextOpenWorldEffectStateV1,
   TextOpenWorldRandomEvidenceV1,

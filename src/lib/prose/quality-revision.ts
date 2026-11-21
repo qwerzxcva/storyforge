@@ -1,7 +1,7 @@
-import type { ChatMessage, WorkspaceScope } from '../types'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { verifyWholeChapterQualityReviewV1, type QualityReviewArtifactV1 } from './quality-review'
-import { SCENE_REVISION_GUIDANCE_V1 } from './scene-craft'
+import type { ChatMessage, WorkspaceScope } from '../types';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { verifyWholeChapterQualityReviewV1, type QualityReviewArtifactV1 } from './quality-review';
+import { SCENE_REVISION_GUIDANCE_V1 } from './scene-craft';
 
 export const QUALITY_REVISION_PROMPT_VERSION_V1 = 'quality-revision-patches-v7'
 

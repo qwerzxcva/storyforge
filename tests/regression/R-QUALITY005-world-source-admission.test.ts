@@ -8,7 +8,7 @@ import {
 import {
   createTextOpenWorldCreatorSourceLocatorV1,
   textOpenWorldCreatorSourceBindingFromSelectionV1,
-} from '../../src/lib/open-world/creator-brief-persistence'
+} from '../../src/lib/legacy-compat/open-world/creator-brief-persistence'
 import {
   inspectTextOpenWorldCreatorNovelSourceV1,
   inspectTextOpenWorldCreatorWorldSourceV1,

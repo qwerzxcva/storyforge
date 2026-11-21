@@ -1,7 +1,7 @@
 /** Test continuation through real paid-turn owners; no authority or state writes here. */
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
-import { parseTtrpgRuntimeStateV2 } from '../../src/lib/ttrpg/open-runtime-contract'
-import { nextTtrpgOpenOperationStepV1 } from '../../src/lib/ttrpg/open-operation'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
+import { parseTtrpgRuntimeStateV2 } from '../../src/lib/legacy-compat/ttrpg/open-runtime-contract'
+import { nextTtrpgOpenOperationStepV1 } from '../../src/lib/legacy-compat/ttrpg/open-operation'
 import { resumeTtrpgOpenOperationV1 } from '../../src/lib/ttrpg/open-operation-coordinator'
 import { resumeTtrpgOpenPressureV1 } from '../../src/lib/ttrpg/open-pressure-coordinator'
 import { resumeTtrpgOpenSituationsV1 } from '../../src/lib/ttrpg/open-situation-coordinator'

@@ -1,12 +1,12 @@
 import {expect, it} from 'vitest'
 import {canonicalStringify} from '../../src/lib/agent/run/hash'
-import {buildInteractionContextWindow, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/character-interaction/runtime'
-import {requestChatNarrativeTriggerV1} from '../../src/lib/character-interaction/narrative-actions'
+import {buildInteractionContextWindow, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/legacy-compat/character-interaction/runtime'
+import {requestChatNarrativeTriggerV1} from '../../src/lib/legacy-compat/character-interaction/narrative-actions'
 import {applyReviewedChatControlHandoffV1, assertChatControlHandoffContextV1, CHAT_CONTROL_HANDOFF_REVIEW_CHECKS_V1,
-  parseChatControlHandoffReviewV1, parseChatControlHandoffV1, previewChatControlHandoffV1, readChatControlHandoffBasisV1} from '../../src/lib/character-interaction/control-handoff-contract'
+  parseChatControlHandoffReviewV1, parseChatControlHandoffV1, previewChatControlHandoffV1, readChatControlHandoffBasisV1} from '../../src/lib/legacy-compat/character-interaction/control-handoff-contract'
 import {assertChatControlHandoffBindingsV1, chatNarrativeOutcomeSchemaV1, parseChatNarrativeOutcomeWireV1} from '../../src/lib/character-interaction/control-handoff-wire'
-import {CHAT_TURN_END_CONTROL_CHECKS_V1} from '../../src/lib/character-interaction/turn-end-control'
-import {validateImportedChatNarrativeEvidenceEventV1, validateImportedChatNarrativeEvidenceStateV1} from '../../src/lib/character-interaction/narrative-evidence-import'
+import {CHAT_TURN_END_CONTROL_CHECKS_V1} from '../../src/lib/legacy-compat/character-interaction/turn-end-control'
+import {validateImportedChatNarrativeEvidenceEventV1, validateImportedChatNarrativeEvidenceStateV1} from '../../src/lib/legacy-compat/character-interaction/narrative-evidence-import'
 import {chatTurnEndControlFixture} from '../helpers/chat-turn-end-control'
 
 it('ends only the current turn without another bubble, action, goal pause or story consequence', () => {

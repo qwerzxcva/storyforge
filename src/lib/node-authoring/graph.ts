@@ -1,11 +1,6 @@
-import { AUTHORING_NODE_BY_ID } from './catalog'
-import { authoringPortsCompatible } from './compatibility'
-import type {
-  AuthoringEdge,
-  AuthoringNodeGraph,
-  AuthoringNodeInstance,
-  AuthoringPortDefinition,
-} from './contracts'
+import { AUTHORING_NODE_BY_ID } from './catalog';
+import { authoringPortsCompatible } from './compatibility';
+import type { AuthoringEdge, AuthoringNodeGraph, AuthoringNodeInstance, AuthoringPortDefinition } from './contracts';
 
 export interface AuthoringGraphIssue {
   code: string

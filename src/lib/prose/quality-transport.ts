@@ -1,8 +1,8 @@
-import type { ChatMessage } from '../types'
-import type { AIRequestConfigResolution, ChatResult, StreamResult } from '../ai/client'
-import { executeRegisteredAIEntryV1 } from '../agent/formal-ai-entry'
-import type { QualityReviewModeV1 } from './quality-review'
-import { wholeChapterQualityRequestOptionsV1 } from './quality-review-request-options'
+import type { ChatMessage } from '../types';
+import type { AIRequestConfigResolution, ChatResult, StreamResult } from '../ai/client';
+import { executeRegisteredAIEntryV1 } from '../agent/formal-ai-entry';
+import type { QualityReviewModeV1 } from './quality-review';
+import { wholeChapterQualityRequestOptionsV1 } from './quality-review-request-options';
 
 export type QualityModelCallV1 = (messages: ChatMessage[], resolution: AIRequestConfigResolution, evidence: StreamResult) => Promise<string>
 

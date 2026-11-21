@@ -8,7 +8,7 @@ import {createAdaptation,listActiveSourceUnits} from '../../src/lib/adaptation/s
 import {defaultComicTargetSpec,readComicAuthorDraft,saveComicAuthorDraft,updateComicTargetSpecV1} from '../../src/lib/comic/authoring'
 import {claimComicImageRequestV1} from '../../src/lib/comic/image-request-guard'
 import {generateComicProfessionalCandidateV1,adoptComicProfessionalCandidateV1,readPendingComicProfessionalCandidateV1} from '../../src/lib/comic/durable-production'
-import {assertComicLetteringV1} from '../../src/lib/comic/contracts'
+import {assertComicLetteringV1} from '../../src/lib/legacy-compat/comic/contracts'
 import {renderComicPageSvgV1} from '../../src/lib/comic/renderers'
 const targetSpec={...defaultComicTargetSpec(),targetPagesPerChapter:1}
 async function fixture() {

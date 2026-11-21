@@ -1,6 +1,6 @@
 import { encodeAvgStraightPngV1 } from '../../src/lib/avg/image-straight-png'
 import { hashAvgRegionBytesV1 } from '../../src/lib/avg/image-region-composite-pixels'
-import type { AvgImageRegionCompositeRecipeV3 } from '../../src/lib/avg/image-region-composite-contract'
+import type { AvgImageRegionCompositeRecipeV3 } from '../../src/lib/legacy-compat/avg/image-region-composite-contract'
 
 export async function avgRegionCompositeByteFixture() {
   const baseRgba = new Uint8ClampedArray(64 * 64 * 4), sourceRgba = new Uint8ClampedArray(baseRgba.length)

@@ -3,8 +3,8 @@ import {
   evaluateTtrpgSituationMaintenanceV1,
   evaluateTtrpgSituationProgressV1,
   instantiateTtrpgSituationV1,
-} from '../../src/lib/ttrpg/situation-engine'
-import type { TtrpgPredicateEvaluationContextV1 } from '../../src/lib/ttrpg/predicate'
+} from '../../src/lib/legacy-compat/ttrpg/situation-engine'
+import type { TtrpgPredicateEvaluationContextV1 } from '../../src/lib/legacy-compat/ttrpg/predicate'
 import { openCampaignFixture } from '../helpers/ttrpg-open-content'
 
 function situation(campaign: ReturnType<typeof openCampaignFixture>, key: string, due = 3) {

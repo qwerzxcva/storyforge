@@ -1,5 +1,5 @@
 import {chatHistorySelectionFixture} from './chat-history-selection'
-import {parseInteractionState} from '../../src/lib/character-interaction/runtime'
+import {parseInteractionState} from '../../src/lib/legacy-compat/character-interaction/runtime'
 
 /** Read-pressure fixture. Dialogue and causes are historical engineering data,
  * not a model-authored story or evidence of relationship quality. */

@@ -2,7 +2,7 @@ import { createAvgAuthoringPresetV1 } from '../../src/lib/avg/authoring-presets'
 import { prepareNativeAvgAssembly } from './avg-production-assembly-fixture'
 import { readAvgDraftV1 } from '../../src/lib/avg/draft-service'
 import { importAvgMediaV1 } from '../../src/lib/avg/editor-service'
-import type { AvgCharacterFamilyPlanV1 } from '../../src/lib/avg/character-family-contract'
+import type { AvgCharacterFamilyPlanV1 } from '../../src/lib/legacy-compat/avg/character-family-contract'
 
 const png=Uint8Array.from(atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScLbtAAAAABJRU5ErkJggg=='),c=>c.charCodeAt(0)).buffer
 export const AVG_FAMILY_FOREGROUND_DECLARATION_FIXTURE='工程作者明确纯品红仅作背景、主体不使用该色，并允许本地分离与共同画布；结果仍待实际视觉评审，不签艺术通过。'

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { compileTtrpgCampaignDraftV1 } from '../../src/lib/ttrpg/campaign'
+import { compileTtrpgCampaignDraftV1 } from '../../src/lib/legacy-compat/ttrpg/campaign'
 import {
   assertTtrpgCreatorPackageLoadAllowedV1,
   createSignedTtrpgCreatorTrustManifestV1,

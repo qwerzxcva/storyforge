@@ -1,12 +1,12 @@
 import {afterEach, beforeEach, expect, it} from 'vitest'
 import {db} from '../../src/lib/db/schema'
-import {DEFAULT_CHAT_SETTINGS_V3, parseChatAuthoringSettings} from '../../src/lib/character-interaction/authoring-contract'
-import {compileChatVisualIntentV1, createChatVisualRequirementsV1, parseChatVisualIntentV1, type ChatVisualIntentV1} from '../../src/lib/character-interaction/visual-intent'
+import {DEFAULT_CHAT_SETTINGS_V3, parseChatAuthoringSettings} from '../../src/lib/legacy-compat/character-interaction/authoring-contract'
+import {compileChatVisualIntentV1, createChatVisualRequirementsV1, parseChatVisualIntentV1, type ChatVisualIntentV1} from '../../src/lib/legacy-compat/character-interaction/visual-intent'
 import {createChatDraftV3, readChatDraftV1, saveChatDraftV1} from '../../src/lib/character-interaction/draft-service'
 import {exportProjectJSON, importProjectJSON} from '../../src/lib/export/json-export'
 import {chatNarrativeFixture} from '../helpers/chat-narrative-fixture'
 import {seedChatNarrativeProductionFixture} from '../helpers/chat-narrative-production-fixture'
-import {validateChatNarrativeProductionSourceV1} from '../../src/lib/character-interaction/narrative-production'
+import {validateChatNarrativeProductionSourceV1} from '../../src/lib/legacy-compat/character-interaction/narrative-production'
 
 beforeEach(async () => {db.close(); await db.delete(); await db.open()})
 afterEach(() => db.close())

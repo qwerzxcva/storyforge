@@ -4,11 +4,11 @@ import {
   productReleaseIdentityHashV1,
   parseProductRuntimePackageV1,
   type ProductTtrpgProtocol2ReaderV1,
-} from '../../src/lib/product-production/runtime-package'
+} from '../../src/lib/legacy-compat/product-production/runtime-package'
 import type {
   ProductRuntimePackageWithTtrpgV2, ProductReleaseManifestWithTtrpgV2,
-} from '../../src/lib/ttrpg/content-version'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+} from '../../src/lib/legacy-compat/ttrpg/content-version'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import type {
   ConfirmedProductBriefV1,
   ProductReleaseManifestV1,

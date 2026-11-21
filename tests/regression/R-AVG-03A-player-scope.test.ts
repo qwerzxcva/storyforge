@@ -1,7 +1,7 @@
 import { afterEach,beforeEach,describe,expect,it,vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { seedAvgNativePreview } from '../helpers/avg-native-fixture'
-import { createProductRuntimeInstance } from '../../src/lib/product/runtime-instances'
+import { createProductRuntimeInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
 import { useAvgGamePlayerStore } from '../../src/stores/avg-game-player'
 import * as runtimeApi from '../../src/lib/avg/runtime-api'
 

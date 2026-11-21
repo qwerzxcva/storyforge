@@ -1,5 +1,5 @@
-import type { ChatMessage } from '../../types'
-import { formatQualityReviewAnchorsV1, qualityReviewAnchorsV1 } from '../../prose/quality-review'
+import type { ChatMessage } from '../../types';
+import { formatQualityReviewAnchorsV1, qualityReviewAnchorsV1 } from '../../prose/quality-review';
 
 export type ConsistencyAuditMode = 'fast' | 'deep'
 export type ConsistencySeverity = 'hard' | 'risk' | 'unknown'

@@ -1,9 +1,9 @@
 import { db } from '../../src/lib/db/schema'
-import { createProductRuntimeInstanceFromSource } from '../../src/lib/product/runtime-instances'
+import { createProductRuntimeInstanceFromSource } from '../../src/lib/legacy-compat/product/runtime-instances'
 import {
   hashProductRuntimeStateV1,
   parseProductRuntimeState,
-} from '../../src/lib/product/runtime-api'
+} from '../../src/lib/legacy-compat/product/runtime-api'
 import type { ProductRuntimeState } from '../../src/lib/types'
 import { createCurrentProductBuildPreviewFixture } from './current-product-runtime-internal'
 import {

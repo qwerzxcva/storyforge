@@ -2,9 +2,9 @@ import { resumeTtrpgOpenPressureV1 } from '../../src/lib/ttrpg/open-pressure-coo
 import { resumeTtrpgOpenSituationsV1 } from '../../src/lib/ttrpg/open-situation-coordinator'
 /** Internal protocol fixture usable in fake and real isolated IndexedDB; no test-framework dependency. */
 import { readyOpenTtrpgSessionV1, openEnvelopeV1, OPEN_HUMAN_VIEWER } from './open-ttrpg-session'
-import { readProductRuntimeState, readProductRuntimeStateVersion, branchProductRuntimeSession } from '../../src/lib/product/runtime-core'
-import { parseTtrpgRuntimeStateV2 } from '../../src/lib/ttrpg/open-runtime-contract'
-import { nextTtrpgOpenOperationStepV1 } from '../../src/lib/ttrpg/open-operation'
+import { readProductRuntimeState, readProductRuntimeStateVersion, branchProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
+import { parseTtrpgRuntimeStateV2 } from '../../src/lib/legacy-compat/ttrpg/open-runtime-contract'
+import { nextTtrpgOpenOperationStepV1 } from '../../src/lib/legacy-compat/ttrpg/open-operation'
 import { startTtrpgOpenEpochV1, startTtrpgOpenOperationV1, confirmTtrpgOpenOperationV1, ttrpgOpenOperationCommandIdV1,
   resolveTtrpgOpenOperationRuleV1, applyTtrpgOpenOperationEffectV1, advanceTtrpgWorldTurnV1, completeTtrpgOpenOperationStepV1,
   completeTtrpgOpenSessionZeroV1, inheritTtrpgOpenSourceV1, startTtrpgOpenInheritedOperationV1 } from '../../src/lib/ttrpg/runtime-commands'

@@ -1,6 +1,6 @@
-import { PROVIDER_PRESETS, type AIConfig, type AIProvider } from '../types/ai'
-import { AI_PROXY_ENDPOINTS } from './proxy-endpoints'
-import { normalizeOpenAIBaseUrl } from './openai-endpoint'
+import { PROVIDER_PRESETS, type AIConfig, type AIProvider } from '../types/ai';
+import { AI_PROXY_ENDPOINTS } from './proxy-endpoints';
+import { normalizeOpenAIBaseUrl } from './openai-endpoint';
 
 type ModelTarget = Pick<AIConfig, 'provider' | 'baseUrl' | 'model'>
 

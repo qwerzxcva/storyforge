@@ -2,10 +2,10 @@ import { beforeEach,afterEach,describe,it,expect,vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { setupCommonOracleDeskV1 } from '../helpers/open-common-oracle-desk'
 import { openEnvelopeV1 } from '../helpers/open-ttrpg-session'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { requestTtrpgOpenCommonOracleDeskV1,readTtrpgOpenCommonOracleDeskV1 } from '../../src/lib/ttrpg/open-common-oracle-desk'
 import * as window from '../../src/lib/ttrpg/open-common-oracle-window'
-import { parseTtrpgOpenCommonOracleRequestBasisV1,hashTtrpgOpenCommonOracleRequestBasisV1 } from '../../src/lib/ttrpg/open-common-oracle-request'
+import { parseTtrpgOpenCommonOracleRequestBasisV1,hashTtrpgOpenCommonOracleRequestBasisV1 } from '../../src/lib/legacy-compat/ttrpg/open-common-oracle-request'
 import { hashCanonicalValue } from '../../src/lib/agent/run/hash'
 
 describe('R-TTRPGOPEN14 versioned complete common-fact input budgets',{ timeout: 120000 },() => {

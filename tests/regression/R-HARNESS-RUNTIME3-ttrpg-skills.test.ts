@@ -7,7 +7,7 @@ import {
   readProductRuntimeStateVersion,
   resolveTtrpgRuleAction,
 } from '../../src/lib/ttrpg/runtime-api'
-import { createDeterministicGmSynthesisFrameV2 } from '../../src/lib/ttrpg/action-feedback'
+import { createDeterministicGmSynthesisFrameV2 } from '../../src/lib/legacy-compat/ttrpg/action-feedback'
 import {
   adoptTtrpgGmActorActionCandidateV1,
   generateTtrpgGmActorActionCandidateV1,
@@ -24,7 +24,7 @@ import { loadTtrpgGmRuntimeViewV1 } from '../../src/lib/ttrpg/gm-context'
 import {
   configureTtrpgSessionParticipantV2,
   readTtrpgSessionParticipantsV2,
-} from '../../src/lib/ttrpg/participants'
+} from '../../src/lib/legacy-compat/ttrpg/participants'
 import {
   adoptTtrpgPlayerActionCandidateV1,
   generateTtrpgPlayerActionCandidateV1,

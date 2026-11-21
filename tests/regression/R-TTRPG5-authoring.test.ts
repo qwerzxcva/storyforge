@@ -10,7 +10,7 @@ import {
 import {
   defaultTtrpgSettings,
   settingsFromTtrpgDraft,
-} from "../../src/lib/ttrpg/authoring-contract";
+} from "../../src/lib/legacy-compat/ttrpg/authoring-contract";
 import { createMistHarborWorld } from "../../src/lib/world-engine/mist-harbor-preset";
 import {
   exportProjectJSON,

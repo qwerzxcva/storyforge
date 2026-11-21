@@ -3,7 +3,7 @@ import {
   DEFAULT_TEXT_OPEN_WORLD_CALIBRATION_V1,
   parseTextOpenWorldCalibrationConfigV1,
   TEXT_OPEN_WORLD_CALIBRATION_DECISION_IDS_V1,
-} from '../../src/lib/open-world/product-config'
+} from '../../src/lib/legacy-compat/open-world/product-config'
 
 describe('Text Open World vNext · frozen first-release calibration', () => {
   it('把五项剩余校准集中为可解析配置而不是散落在Prompt', () => {

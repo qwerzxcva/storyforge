@@ -1,15 +1,15 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { chatNarrativeFixture } from '../helpers/chat-narrative-fixture'
-import { buildInteractionContextWindow, createInitialInteractionState, interactionVisibilityView, parseInteractionState, rebaseInteractionStateForBranch } from '../../src/lib/character-interaction/runtime'
-import { parseProductRuntimePackageV1 } from '../../src/lib/product-production/runtime-package'
+import { buildInteractionContextWindow, createInitialInteractionState, interactionVisibilityView, parseInteractionState, rebaseInteractionStateForBranch } from '../../src/lib/legacy-compat/character-interaction/runtime'
+import { parseProductRuntimePackageV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
 import { db } from '../../src/lib/db/schema'
 import { assembleContext } from '../../src/lib/registry/assemble-context'
-import { branchProductRuntimeSession, createProductRuntimeCheckpoint, readProductRuntimeState, readProductRuntimeStateVersion, startInteractionScene } from '../../src/lib/character-interaction/runtime-api'
+import { branchProductRuntimeSession, createProductRuntimeCheckpoint, readProductRuntimeState, readProductRuntimeStateVersion, startInteractionScene } from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import { seedCurrentProductWorld, currentProductSelection, loadCurrentProductWorldSourceCatalogV1 } from '../helpers/current-product-world'
 import { seedCurrentProductBuild } from '../helpers/current-product-build'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import type { ProductRuntimePackageV1 } from '../../src/lib/types'
-import {chatNarrativeShellV1} from '../../src/lib/character-interaction/narrative-production'
+import {chatNarrativeShellV1} from '../../src/lib/legacy-compat/character-interaction/narrative-production'
 
 it('keeps determined truth, mistaken beliefs, goals and future possibilities in separate role views', () => {
   const fixture = chatNarrativeFixture()

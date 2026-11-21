@@ -2,7 +2,7 @@ import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { commitAdventureAction } from '../../src/lib/adventure/runtime-commands'
 import { commitInteractionPlayerMessage, startInteractionScene } from '../../src/lib/character-interaction/runtime-commands'
-import { readProductRuntimeState, readProductRuntimeStateVersion, verifyFormalRuntimeSourceV1 } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState, readProductRuntimeStateVersion, verifyFormalRuntimeSourceV1 } from '../../src/lib/legacy-compat/product/runtime-core'
 import { generateAdventureRuntimeCandidateV1 } from '../../src/lib/adventure/harness'
 import { generateInteractionRuntimeCandidateV1, adoptInteractionRuntimeCandidateV1 } from '../../src/lib/character-interaction/harness'
 import { seedQuality005LegacyHybridV1 } from '../helpers/quality005-legacy-hybrid'
@@ -10,7 +10,7 @@ import { snapshotQuality005RowsV1 } from '../helpers/quality005-legacy-novel'
 import { seedQuality005LegacyInteractionCandidateV1 } from '../helpers/quality005-legacy-interaction-candidate'
 import { createGovernedTextOpenWorldSessionFixtureV1 } from '../helpers/text-open-world-product-session'
 import { createTextOpenWorldVNextFixture } from '../helpers/text-open-world-vnext-fixture'
-import { availableAdventureActions } from '../../src/lib/adventure/runtime'
+import { availableAdventureActions } from '../../src/lib/legacy-compat/adventure/runtime'
 
 const SOURCE_REQUIRED = /WorldRelease|世界.*封存|派生.*世界|来源.*只读/
 

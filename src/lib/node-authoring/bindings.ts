@@ -1,17 +1,17 @@
-import { assembleContext } from '../registry/assemble-context'
-import { AUTHORING_NODE_BY_ID } from './catalog'
-import { buildRagLibrary, makeRagEntryKey } from '../retrieval/rag-library'
-import { createRagSelectionTrace, type RagLibraryEntry } from '../types/rag-library'
-import type { AuthoringCandidate, AuthoringNodeGraph, AuthoringNodeInstance } from './contracts'
-import type { WorkspaceScope } from '../types/world-ownership'
-import type { Chapter, OutlineNode } from '../types'
-import { readOwnedRows, resolveScopeLike } from '../workspace/scope'
-import { REGISTRY_BY_NAME } from '../registry/project-tables'
-import { FIELD_BY_TARGET } from '../registry/field-registry'
-import type { AdoptResult } from '../registry/types'
-import { isPortableResourceUidV1 } from '../context-gateway/resource-uid'
+import { assembleContext } from '../registry/assemble-context';
+import { AUTHORING_NODE_BY_ID } from './catalog';
+import { buildRagLibrary, makeRagEntryKey } from '../retrieval/rag-library';
+import { createRagSelectionTrace, type RagLibraryEntry } from '../types/rag-library';
+import type { AuthoringCandidate, AuthoringNodeGraph, AuthoringNodeInstance } from './contracts';
+import type { WorkspaceScope } from '../types/world-ownership';
+import type { Chapter, OutlineNode } from '../types';
+import { readOwnedRows, resolveScopeLike } from '../workspace/scope';
+import { REGISTRY_BY_NAME } from '../registry/project-tables';
+import { FIELD_BY_TARGET } from '../registry/field-registry';
+import type { AdoptResult } from '../registry/types';
+import { isPortableResourceUidV1 } from '../context-gateway/resource-uid';
 
-import { readFactNodeSource, readOrganizationNodeSource, type AuthoringCanonicalChapterContext } from './chapter-source'
+import { readFactNodeSource, readOrganizationNodeSource, type AuthoringCanonicalChapterContext } from './chapter-source';
 
 /**
  * FLOW-3 Canon binding adapter.

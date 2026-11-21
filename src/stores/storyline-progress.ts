@@ -1,6 +1,6 @@
-import { create } from 'zustand'
-import type { StorylineCrossing, StorylineProgress, WorkspaceScope } from '../lib/types'
-import { readOwnedRows, resolveReadScopeLike, type WorkspaceScopeLike } from '../lib/workspace/scope'
+import { create } from 'zustand';
+import type { StorylineCrossing, StorylineProgress, WorkspaceScope } from '../lib/types';
+import { readOwnedRows, resolveReadScopeLike, type WorkspaceScopeLike } from '../lib/workspace/scope';
 
 interface StorylineProgressStore {
   progress: StorylineProgress[]

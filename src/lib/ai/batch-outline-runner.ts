@@ -1,27 +1,15 @@
-import { useAIConfigStore } from '../../stores/ai-config'
-import {
-  prepareGenerationNode,
-  runGenerationNode,
-} from '../generation/generation-node'
-import {
-  createOutlineGenerationTraceV1,
-  type OutlineGenerationCandidateV1,
-} from '../outline/harness'
-import { createOutlineGenerationNode } from '../outline/generation-node'
-import type { RunOptions } from './adapters/outline-adapter'
-import { chat } from './client'
-import {
-  parseChapterOutlineOutput,
-  type ParsedChapter,
-} from './parse-outline-output'
-import type { AssembleContextResult } from '../registry/types'
-import type { ChatMessage, OutlineNode, Project, Work } from '../types'
-import type { OutlineGenerationTraceV1 } from '../outline/harness'
-import {
-  assertWorkspaceContentRevisionFreshV1,
-  captureWorkspaceContentRevisionV1,
-} from '../authoring/content-revision'
-import { resolveScopeLike } from '../workspace/scope'
+import { useAIConfigStore } from '../../stores/ai-config';
+import { prepareGenerationNode, runGenerationNode } from '../generation/generation-node';
+import { createOutlineGenerationTraceV1, type OutlineGenerationCandidateV1 } from '../outline/harness';
+import { createOutlineGenerationNode } from '../outline/generation-node';
+import type { RunOptions } from './adapters/outline-adapter';
+import { chat } from './client';
+import { parseChapterOutlineOutput, type ParsedChapter } from './parse-outline-output';
+import type { AssembleContextResult } from '../registry/types';
+import type { ChatMessage, OutlineNode, Project, Work } from '../types';
+import type { OutlineGenerationTraceV1 } from '../outline/harness';
+import { assertWorkspaceContentRevisionFreshV1, captureWorkspaceContentRevisionV1 } from '../authoring/content-revision';
+import { resolveScopeLike } from '../workspace/scope';
 
 export interface BatchOutlineProgress {
   currentVolumeIndex: number

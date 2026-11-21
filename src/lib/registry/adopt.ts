@@ -1,27 +1,18 @@
 /** 当前架构唯一的结构化采纳入口。只接受 FIELD_REGISTRY 的规范字段与规范类型。 */
 import Dexie from 'dexie'
-import type { Table, Transaction } from 'dexie'
-import {assertChatPlanAdoptionV1} from '../character-interaction/consultation-plan'
-import { db } from '../db/schema'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveScope,
-  scopeTransactionTables,
-  stampNewRecord,
-} from '../workspace/scope'
-import type { WorkspaceScope } from '../types/world-ownership'
-import { hashChapterText, sha256Text, CHAPTER_TEXT_NORMALIZATION_VERSION } from '../ai/chapter-memory/text-normalization'
-import { PROJECT_TABLES, REGISTRY_BY_NAME } from './project-tables'
-import { FIELD_BY_TARGET } from './field-registry'
-import { ADOPTION_BY_TARGET } from './adoption-schema'
-import type { AdoptInput, AdoptResult, CollectionAdoptionSpec, FieldSpec, TableSpec } from './types'
-import { normalizeCharacterAxes } from '../character/character-axes'
-import {
-  refreshSettingAssertionSourceStatus,
-} from '../fact-ledger/setting-assertions'
-import type { CanonAssertionSourceTable } from './canon-assertion-source-registry'
-import { assertRegisteredTreeParentV1, RegisteredTreeRelationError } from './tree-relations'
+import type { Table, Transaction } from 'dexie';
+import { db } from '../db/schema';
+import { assertRecordInScope, readOwnedRows, resolveScope, scopeTransactionTables, stampNewRecord } from '../workspace/scope';
+import type { WorkspaceScope } from '../types/world-ownership';
+import { hashChapterText, sha256Text, CHAPTER_TEXT_NORMALIZATION_VERSION } from '../ai/chapter-memory/text-normalization';
+import { PROJECT_TABLES, REGISTRY_BY_NAME } from './project-tables';
+import { FIELD_BY_TARGET } from './field-registry';
+import { ADOPTION_BY_TARGET } from './adoption-schema';
+import type { AdoptInput, AdoptResult, CollectionAdoptionSpec, FieldSpec, TableSpec } from './types';
+import { normalizeCharacterAxes } from '../character/character-axes';
+import { refreshSettingAssertionSourceStatus } from '../fact-ledger/setting-assertions';
+import type { CanonAssertionSourceTable } from './canon-assertion-source-registry';
+import { assertRegisteredTreeParentV1, RegisteredTreeRelationError } from './tree-relations';
 
 const CANON_SOURCE_TABLES = new Set<CanonAssertionSourceTable>([
   'worldviews',
@@ -146,25 +137,12 @@ export async function adopt(input: AdoptInput, owner?: CallerOwnedAdoptionV1): P
     return result
   }
 
-  if (input.target === 'chatAuthoringDrafts' && payloads.some(payload => payload && Object.prototype.hasOwnProperty.call(payload, 'settingsJson'))) {
-    if (Array.isArray(input.data) || input.recordId == null || input.mode !== 'replace' || input.compareAndSet) throw new Error('角色聊天方案须通过同事务的指定记录确认写入')
-    if (!Dexie.currentTransaction) return db.transaction('rw', scopeTransactionTables(db.chatAuthoringDrafts), () => adopt(input))
-  }
   const scope = await awaitCallerAdoptionRead(owner, () => resolveScope(input))
   assertCallerAdoptionTransaction(owner)
   const scopedInput: AdoptInput = { ...input, projectId: scope.projectId, scope }
   if (input.compareAndSet && input.recordId == null) {
     result.skipped.push({ reason: 'compareAndSet 必须指定 recordId', data: input.data })
     return result
-  }
-
-  if (ADOPTION_BY_TARGET.get(input.target)?.writePolicy === 'extension-record-v1') {
-    const extensionPolicy = await Dexie.waitFor(import('../extensions/ai-registry'))
-    return extensionPolicy.adoptExtensionPayload(scopedInput)
-  }
-  if (ADOPTION_BY_TARGET.get(input.target)?.writePolicy === 'ttrpg-open-authoring-design-v1') {
-    const policy = await Dexie.waitFor(import('../ttrpg/open-authoring-design-adoption'))
-    return policy.adoptTtrpgOpenAuthoringDesignPayloadV1(scopedInput)
   }
 
   if (scopedInput.recordId != null) {
@@ -373,7 +351,6 @@ async function adoptCollectionRecord(
     }
     let patch = normalizedPatch
     if (!patch || Object.keys(patch).length === 0) return
-    if (input.target === 'chatAuthoringDrafts' && Object.prototype.hasOwnProperty.call(patch, 'settingsJson')) assertChatPlanAdoptionV1(target.settingsJson, patch.settingsJson)
     if (input.target === 'characters') patch = normalizeCharacterAxes(patch, target)
 
     if (input.mode === 'append') {

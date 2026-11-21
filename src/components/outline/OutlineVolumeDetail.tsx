@@ -1,15 +1,12 @@
-import { useMemo } from 'react'
-import { Plus, Sparkles, Trash2, Search, RefreshCw } from 'lucide-react'
-import type { OutlineNode, StoryStructure, WorldGroup } from '../../lib/types'
+import { useMemo } from 'react';
+import { Plus, Sparkles, Trash2, Search, RefreshCw } from 'lucide-react';
+import type { OutlineNode, StoryStructure, WorldGroup } from '../../lib/types';
 import AcknowledgedTextField from '../shared/AcknowledgedTextField'
-import { useDragReorder } from './useDragReorder'
+import { useDragReorder } from './useDragReorder';
 import OutlineStructureMenu from './OutlineStructureMenu'
-import { OutlineChapterRow, OutlineStoryBlockSection } from './OutlineChapterTree'
-import type { ChapterDragPayload, GetActiveChapterDrag } from './chapter-drag'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-} from '../shared/initial-record-target'
+import { OutlineChapterRow, OutlineStoryBlockSection } from './OutlineChapterTree';
+import type { ChapterDragPayload, GetActiveChapterDrag } from './chapter-drag';
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes } from '../shared/initial-record-target';
 
 interface Props {
   volume: OutlineNode | null

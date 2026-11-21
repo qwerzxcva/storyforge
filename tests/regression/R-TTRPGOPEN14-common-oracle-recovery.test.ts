@@ -6,7 +6,7 @@ import { prepareTtrpgOpenCommonOracleInputV1 } from '../../src/lib/ttrpg/open-in
 import { generateTtrpgOpenCommonOracleCandidateV1 } from '../../src/lib/ttrpg/open-intent-harness'
 import { repairTtrpgOpenCommonOracleResponseReceiptV1, abandonTtrpgOpenCommonOracleWaitV1 } from '../../src/lib/ttrpg/open-situation-request-recovery'
 import { finishTtrpgOpenCommonOracleDraftV1 } from '../../src/lib/ttrpg/open-runtime-draft-stop'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import * as events from '../../src/lib/agent/run/event-store'
 import { changeTtrpgSafetyStatus } from '../../src/lib/ttrpg/runtime-commands'

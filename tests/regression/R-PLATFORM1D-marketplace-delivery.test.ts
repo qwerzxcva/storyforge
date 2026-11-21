@@ -19,8 +19,8 @@ import {
   exportProductDistributionBundleV2,
   importMarketplaceProductDistributionV2,
 } from '../../src/lib/product-platform/distribution-bundle'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { assertProductReleaseUnchanged } from '../../src/lib/product/releases'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { assertProductReleaseUnchanged } from '../../src/lib/legacy-compat/product/releases'
 import type { ProductRuntimePackageV1, WorkspaceScope } from '../../src/lib/types'
 import { resolveWorkspaceOwnership } from '../../src/lib/workspace/ownership'
 import { createWorldRevision, publishWorldRevision } from '../../src/lib/world-engine/releases'

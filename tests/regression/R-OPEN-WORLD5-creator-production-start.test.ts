@@ -7,7 +7,7 @@ import {
   startTextOpenWorldCreatorBriefSessionV1,
   type TextOpenWorldCreatorBriefSessionV1,
 } from '../../src/lib/open-world/creator-brief'
-import { createTextOpenWorldCreatorSourceLocatorV1 } from '../../src/lib/open-world/creator-brief-persistence'
+import { createTextOpenWorldCreatorSourceLocatorV1 } from '../../src/lib/legacy-compat/open-world/creator-brief-persistence'
 import {
   confirmTextOpenWorldCreatorProductionPreflightV1,
   createTextOpenWorldCreatorProductionPreflightV1,
@@ -15,7 +15,7 @@ import {
 import {
   parseTextOpenWorldCreatorProductionSourcePlanV1,
   readTextOpenWorldCreatorExecutionBriefV1,
-} from '../../src/lib/open-world/creator-production-start'
+} from '../../src/lib/legacy-compat/open-world/creator-production-start'
 import { createTextOpenWorldProductionExecutorV1 } from '../../src/lib/open-world/production-executor'
 import { readTextOpenWorldProductionPlanAuthorityV1 } from '../../src/lib/open-world/production-authority'
 import {
@@ -34,8 +34,8 @@ import {
 } from '../../src/lib/product-production/service'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
 import { resolveConfiguredTextCapabilityV1 } from '../../src/lib/product-production/capabilities'
-import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 import {
   ProductProductionDraftRejectedErrorV1,
   ProductProductionResultUnknownErrorV1,
@@ -59,7 +59,7 @@ import { createWorldPackage } from '../../src/lib/world-engine/world-package'
 import { installWorldSourcePackageV1 } from '../../src/lib/world-engine/source-receipt'
 import { readWorldSourcePurposeDeclarationV1 } from '../../src/lib/world-engine/source-purpose'
 import { publishWorldRevision } from '../../src/lib/world-engine/releases'
-import { validateTextOpenWorldSourcePinBundleV1, validateTextOpenWorldSourcePinV1, validateTextOpenWorldSourcePinUnitV1 } from '../../src/lib/open-world/source-pin'
+import { validateTextOpenWorldSourcePinBundleV1, validateTextOpenWorldSourcePinV1, validateTextOpenWorldSourcePinUnitV1 } from '../../src/lib/legacy-compat/open-world/source-pin'
 import { readQuality005LegacyLargeSourceV1 } from '../helpers/quality005-legacy-large-source'
 
 const AI_CONFIG: AIConfig = {

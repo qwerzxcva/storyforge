@@ -5,16 +5,16 @@ import { OPEN_HUMAN_VIEWER, openEnvelopeV1 } from '../helpers/open-ttrpg-session
 import { prepareTtrpgOpenIdentityKnowledgeV1, confirmTtrpgOpenIdentityKnowledgeReviewV1 } from '../../src/lib/ttrpg/open-identity-knowledge-service'
 import { loadTtrpgOpenLearnedIdentityContextV1 } from '../../src/lib/ttrpg/open-identity-knowledge-context'
 import { CONTEXT_SOURCE_BY_KEY } from '../../src/lib/registry/context-sources'
-import { TTRPG_OPEN_LEARNED_IDENTITY_SOURCE_V1, assertTtrpgOpenFrozenContextSourcesV1 } from '../../src/lib/ttrpg/open-model-purpose-contract'
+import { TTRPG_OPEN_LEARNED_IDENTITY_SOURCE_V1, assertTtrpgOpenFrozenContextSourcesV1 } from '../../src/lib/legacy-compat/ttrpg/open-model-purpose-contract'
 import { getAgentSkillV1 } from '../../src/lib/agent/skill-registry'
-import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/ttrpg/open-player-context'
+import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-player-context'
 import { generateTtrpgOpenCompanionCandidateV1, generateTtrpgOpenIntentCandidateV1 } from '../../src/lib/ttrpg/open-intent-harness'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
-import { readProductRuntimeState, branchProductRuntimeSession, deleteProductRuntimeSession, hashProductRuntimeStateV1 } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState, branchProductRuntimeSession, deleteProductRuntimeSession, hashProductRuntimeStateV1 } from '../../src/lib/legacy-compat/product/runtime-core'
 import { completeTtrpgOpenSessionZeroV1, startTtrpgOpenIntentCandidateOperationV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
-import { readTtrpgSessionParticipantsV2 } from '../../src/lib/ttrpg/participants'
-import { ttrpgOpenActorKnowsEvidenceV1 } from '../../src/lib/ttrpg/open-knowledge'
+import { readTtrpgSessionParticipantsV2 } from '../../src/lib/legacy-compat/ttrpg/participants'
+import { ttrpgOpenActorKnowsEvidenceV1 } from '../../src/lib/legacy-compat/ttrpg/open-knowledge'
 
 async function setup() {
   const s = await setupIdentityKnowledgeRuntimeV1(false, true)

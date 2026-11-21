@@ -1,40 +1,32 @@
 import Dexie from 'dexie'
-import {
-  chat, resolveRequestConfig, describeResolvedAIRequestSettingsV1,
-} from '../ai/client'
-import { db } from '../db/schema'
-import type { WorkspaceScope, NodeRunRecord, AgentRunRecord, AgentRunEventRecord, AgentRunCheckpointRecord,
-  AgentRunArtifactRecordV1, ExactRunArtifactKindV1 } from '../types'
-import type { AgentRunEventPayloadByTypeV1, AgentRunEventTypeV1 } from '../types/agent-run'
-import type { AssembleContextResult } from '../registry/types'
-import type { ContextGatewayExecutionV1 } from '../context-gateway/execution'
-import { finalizeContextGatewayAttemptEvidenceV1, recordContextGatewayPreflightEvidenceV1, verifyContextGatewayCandidateEvidenceV1,
-  type ContextGatewayPreflightEvidenceV1 } from '../context-gateway/attempt-evidence'
-import { createAgentSkillExecutionBindingV2, projectFrozenAgentSkillDefinitionV1 } from '../agent/execution-binding'
-import { getAgentSkillV1 } from '../agent/skill-registry'
-import { executeFrozenFormalAIEntryV1, freezeFormalAIEntryBindingV1, assertFormalAIEntrySnapshotIntegrityV1 } from '../agent/formal-ai-entry'
-import {
-  createAgentRunV1, appendAgentRunEventV1, readAgentRunV1, type AgentRunSnapshotV1,
-} from '../agent/run/event-store'
-import { createContextManifestFromAssemblyV1, createContextManifestV2FromV1 } from '../agent/run/context-manifest'
-import {
-  recordCreationModelRequestV1, recordCreationModelResponseV1, recordUnavailableCreationResponseV1,
-} from '../agent/run/creation-response-evidence'
-import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from '../agent/run/checkpoint'
-import { readAgentRunArtifactExactV1, recordAgentRunArtifactV1 } from '../memory/artifact-store'
-import { parseCreativeArtifactV1, type CreativeArtifactV1, type CreativeQualityModeV1 } from '../agent/creative-reliability'
-import { createCreativeIssueV1 } from '../agent/creative-execution'
-import { computeKnownCostUsd } from '../ai/usage-log'
-import { parseWorldviewFieldCandidateDraft, type WorldviewFieldCopilotCandidate } from '../agent/worldview-field-copilot'
-import { parseStoryCoreCandidateDraft, type StoryCoreCopilotCandidate } from '../agent/story-core-copilot'
-import type { ContextManifestV2 } from '../types/agent-run'
-import type { AuthoringBindingRead } from './bindings'
-import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash'
-import { assertRecordInScope } from '../workspace/scope'
-import type { AuthoringNodeInstance, AuthoringNodeGraph, AuthoringCandidateDomain } from './contracts'
-import { parseAuthoringGraph } from './graph-codec'
-import { authoringExecutionSubgraph } from './graph'
-import { AUTHORING_NODE_BY_ID } from './catalog'
+import { chat, resolveRequestConfig, describeResolvedAIRequestSettingsV1 } from '../ai/client';
+import { db } from '../db/schema';
+import type { WorkspaceScope, NodeRunRecord, AgentRunRecord, AgentRunEventRecord, AgentRunCheckpointRecord, AgentRunArtifactRecordV1, ExactRunArtifactKindV1 } from '../types';
+import type { AgentRunEventPayloadByTypeV1, AgentRunEventTypeV1 } from '../types/agent-run';
+import type { AssembleContextResult } from '../registry/types';
+import type { ContextGatewayExecutionV1 } from '../context-gateway/execution';
+import { finalizeContextGatewayAttemptEvidenceV1, recordContextGatewayPreflightEvidenceV1, verifyContextGatewayCandidateEvidenceV1, type ContextGatewayPreflightEvidenceV1 } from '../context-gateway/attempt-evidence';
+import { createAgentSkillExecutionBindingV2, projectFrozenAgentSkillDefinitionV1 } from '../agent/execution-binding';
+import { getAgentSkillV1 } from '../agent/skill-registry';
+import { executeFrozenFormalAIEntryV1, freezeFormalAIEntryBindingV1, assertFormalAIEntrySnapshotIntegrityV1 } from '../agent/formal-ai-entry';
+import { createAgentRunV1, appendAgentRunEventV1, readAgentRunV1, type AgentRunSnapshotV1 } from '../agent/run/event-store';
+import { createContextManifestFromAssemblyV1, createContextManifestV2FromV1 } from '../agent/run/context-manifest';
+import { recordCreationModelRequestV1, recordCreationModelResponseV1, recordUnavailableCreationResponseV1 } from '../agent/run/creation-response-evidence';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from '../agent/run/checkpoint';
+import { readAgentRunArtifactExactV1, recordAgentRunArtifactV1 } from '../memory/artifact-store';
+import { parseCreativeArtifactV1, type CreativeArtifactV1, type CreativeQualityModeV1 } from '../agent/creative-reliability';
+import { createCreativeIssueV1 } from '../agent/creative-execution';
+import { computeKnownCostUsd } from '../ai/usage-log';
+import { parseWorldviewFieldCandidateDraft, type WorldviewFieldCopilotCandidate } from '../agent/worldview-field-copilot';
+import { parseStoryCoreCandidateDraft, type StoryCoreCopilotCandidate } from '../agent/story-core-copilot';
+import type { ContextManifestV2 } from '../types/agent-run';
+import type { AuthoringBindingRead } from './bindings';
+import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash';
+import { assertRecordInScope } from '../workspace/scope';
+import type { AuthoringNodeInstance, AuthoringNodeGraph, AuthoringCandidateDomain } from './contracts';
+import { parseAuthoringGraph } from './graph-codec';
+import { authoringExecutionSubgraph } from './graph';
+import { AUTHORING_NODE_BY_ID } from './catalog';
 
 type FieldProducerInput = {
   scope: WorkspaceScope

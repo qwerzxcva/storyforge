@@ -3,7 +3,7 @@ import { createRoot, type Root } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import TtrpgProductionWizard from '../../src/components/ttrpg/TtrpgProductionWizard'
 import TtrpgOpenRuleImport from '../../src/components/ttrpg/TtrpgOpenRuleImport'
-import { defaultTtrpgSettingsV2 } from '../../src/lib/ttrpg/authoring-contract-v2'
+import { defaultTtrpgSettingsV2 } from '../../src/lib/legacy-compat/ttrpg/authoring-contract-v2'
 import { createStoryForgeOpenRulePackV2 } from '../../src/lib/ttrpg/storyforge-open-rule-pack'
 import type { TtrpgRulePackRecordV1, WorkspaceScope } from '../../src/lib/types'
 

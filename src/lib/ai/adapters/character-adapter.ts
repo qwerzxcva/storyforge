@@ -1,7 +1,7 @@
-import type { ChatMessage } from '../../types'
-import { usePromptStore } from '../../../stores/prompt'
-import { renderPrompt } from '../prompt-engine'
-import { composeFieldGenerationHint, type FieldGenerationMode } from '../field-generation-context'
+import type { ChatMessage } from '../../types';
+import { usePromptStore } from '../../../stores/prompt';
+import { renderPrompt } from '../prompt-engine';
+import { composeFieldGenerationHint, type FieldGenerationMode } from '../field-generation-context';
 
 export interface RunOptions {
   parameterValues?: Record<string, unknown>

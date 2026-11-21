@@ -1,8 +1,8 @@
 import {expect, it} from 'vitest'
-import {createInitialInteractionState, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/character-interaction/runtime'
-import {applyReviewedChatNarrativeActionV1, parseChatNarrativeActionReviewV1, requestChatNarrativeTriggerV1} from '../../src/lib/character-interaction/narrative-actions'
+import {createInitialInteractionState, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/legacy-compat/character-interaction/runtime'
+import {applyReviewedChatNarrativeActionV1, parseChatNarrativeActionReviewV1, requestChatNarrativeTriggerV1} from '../../src/lib/legacy-compat/character-interaction/narrative-actions'
 import {bindChatNarrativeOptionsReviewV1, selectedChatNarrativeOptionV1} from '../../src/lib/character-interaction/narrative-options'
-import {assertChatMemoryReconciliationReviewVersionV1, pendingChatMemoryCorrectionsV1, parseChatMemoryReconciliationChecksV1} from '../../src/lib/character-interaction/memory-reconciliation'
+import {assertChatMemoryReconciliationReviewVersionV1, pendingChatMemoryCorrectionsV1, parseChatMemoryReconciliationChecksV1} from '../../src/lib/legacy-compat/character-interaction/memory-reconciliation'
 import {chatActionReviewFixture, chatNarrativeFixture} from '../helpers/chat-narrative-fixture'
 import type {ChatNarrativeActionV1, ChatNarrativeActionReviewV1} from '../../src/lib/types/chat-narrative'
 

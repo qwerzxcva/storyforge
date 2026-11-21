@@ -1,18 +1,11 @@
-import type { UseAIStreamReturn } from '../../hooks/useAIStream'
-import type { GenerationNode } from '../generation/generation-node'
-import type { AssembleContextResult } from '../registry/types'
-import type { OutlineNode, Project, Work } from '../types'
-import type { RunOptions } from '../ai/adapters/outline-adapter'
-import {
-  parseChapterOutlineOutput,
-  parseVolumeOutlineOutput,
-} from '../ai/parse-outline-output'
-import { buildOutlineGenerationPlan } from './generation-plan'
-import {
-  encodeGenerationOperation,
-  outlineGenerationModuleKey,
-  type OutlineGenerationRequest,
-} from './generation-request'
+import type { UseAIStreamReturn } from '../../hooks/useAIStream';
+import type { GenerationNode } from '../generation/generation-node';
+import type { AssembleContextResult } from '../registry/types';
+import type { OutlineNode, Project, Work } from '../types';
+import type { RunOptions } from '../ai/adapters/outline-adapter';
+import { parseChapterOutlineOutput, parseVolumeOutlineOutput } from '../ai/parse-outline-output';
+import { buildOutlineGenerationPlan } from './generation-plan';
+import { encodeGenerationOperation, outlineGenerationModuleKey, type OutlineGenerationRequest } from './generation-request';
 
 type OutlineGenerationAI = Pick<UseAIStreamReturn, 'start'>
 

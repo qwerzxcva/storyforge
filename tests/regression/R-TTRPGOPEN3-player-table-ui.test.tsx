@@ -5,9 +5,9 @@ import { db } from '../../src/lib/db/schema'
 import TtrpgOpenPlayTable from '../../src/components/ttrpg/TtrpgOpenPlayTable'
 import TtrpgPlayTable from '../../src/components/ttrpg/TtrpgPlayTable'
 import { readyOpenTtrpgSessionV1, OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import * as table from '../../src/lib/ttrpg/open-table-service'
-import { TtrpgOpenReadConflictV1 } from '../../src/lib/ttrpg/open-read-conflict'
+import { TtrpgOpenReadConflictV1 } from '../../src/lib/legacy-compat/ttrpg/open-read-conflict'
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 describe('R-TTRPGOPEN3 real player desk identity and preview boundary', () => {
   let host: HTMLDivElement, root: Root

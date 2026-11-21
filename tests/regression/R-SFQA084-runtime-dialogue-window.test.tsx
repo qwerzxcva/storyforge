@@ -9,7 +9,7 @@ import { generateTextOpenWorldRuntimeDialogueV1 } from '../../src/lib/open-world
 import { generateTextOpenWorldRuntimeIntentV1 } from '../../src/lib/open-world/runtime-intent'
 import { generateAndCommitTextOpenWorldRuntimeMemoryV1 } from '../../src/lib/open-world/runtime-memory'
 import { projectTextOpenWorldScenesV1 } from '../../src/lib/open-world/scene-projection'
-import { deriveTextOpenWorldContextsV1, parseTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
+import { deriveTextOpenWorldContextsV1, parseTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
 import { createGovernedTextOpenWorldSessionFixtureV1 } from '../helpers/text-open-world-product-session'
 import { createTextOpenWorldVNextP9Fixture } from '../helpers/text-open-world-vnext-fixture'
 

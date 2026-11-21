@@ -1,12 +1,12 @@
-import { AUTHORING_NODE_CATALOG, defaultConfigForTemplate } from './catalog'
-import { authoringDomainActionBindingV1 } from './domain-action-registry'
-import { emptyAuthoringGraph, type AuthoringNodeGraph, type AuthoringNodeTemplate } from './contracts'
-import { validateAuthoringGraph } from './graph'
-import { compileWorkflowGraph } from '../workflow/graph'
-import type { PromptWorkflow, SaveTarget } from '../types/workflow'
-import { db } from '../db/schema'
-import { resolveScope, scopeTransactionTables, stampNewRecord } from '../workspace/scope'
-import { canonicalStringify } from '../agent/run/hash'
+import { AUTHORING_NODE_CATALOG, defaultConfigForTemplate } from './catalog';
+import { authoringDomainActionBindingV1 } from './domain-action-registry';
+import { emptyAuthoringGraph, type AuthoringNodeGraph, type AuthoringNodeTemplate } from './contracts';
+import { validateAuthoringGraph } from './graph';
+import { compileWorkflowGraph } from '../workflow/graph';
+import type { PromptWorkflow, SaveTarget } from '../types/workflow';
+import { db } from '../db/schema';
+import { resolveScope, scopeTransactionTables, stampNewRecord } from '../workspace/scope';
+import { canonicalStringify } from '../agent/run/hash';
 
 function sameTarget(template: AuthoringNodeTemplate, target: SaveTarget | undefined): boolean {
   if (!target) return true

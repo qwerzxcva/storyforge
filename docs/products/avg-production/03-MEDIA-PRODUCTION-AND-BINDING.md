@@ -1,5 +1,7 @@
 # AVG 媒资需求、真实生产与自动绑定
 
+> Android fork scope: world engine, longform, and longform nodes. Links marked “historical source” document retired implementations; they do not indicate available production or runtime features.
+
 > L2 · 版本：1.138.0 · 生效：2026-10-26 · 受 [AVG 产品契约](../AVG.md)约束。
 > 目标合同覆盖从用途/参考到实际字节及消费者；当前只有 Prompt/文本锚点的路径不能宣称参考生图或配音已实现。
 
@@ -99,7 +101,7 @@
 | 费用 | candidate receipt 保留 usage/costUsd；estimate 的现金可以为 null | null 为未知；需要实际账号/路由/计费证据，授权无总上限不使未知变零 |
 | 配音 | 公共 V1 媒体类别是 image/music/sfx | voice 的文本/演法/真实 clip 和能力/权利回执仍待 BASE-02，不借 BGM 冒充 |
 
-依据为 [`media-adapters.ts`](../../../src/lib/product-production/media-adapters.ts) 的请求/响应合同及 [`media-transport.ts`](../../../src/lib/product-production/media-transport.ts) 的连接检查；本轮未读取凭据或调用 provider。Agnes [官网](https://agnes-ai.com/)的公开功能宣传不构成所需参数、当前账号可用性、实际费用或 AVG 家族质量证据；具体端点/模型应在 BASE-01 的小批次前重新冻结，不静默替换作者路由。
+依据为 [`media-adapters.ts` — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/product-production/media-adapters.ts) 的请求/响应合同及 [`media-transport.ts` — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/product-production/media-transport.ts) 的连接检查；本轮未读取凭据或调用 provider。Agnes [官网](https://agnes-ai.com/)的公开功能宣传不构成所需参数、当前账号可用性、实际费用或 AVG 家族质量证据；具体端点/模型应在 BASE-01 的小批次前重新冻结，不静默替换作者路由。
 
 ### 3.2 当前接入增量（2026-10-16）
 

@@ -1,12 +1,12 @@
 // @vitest-environment node
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { createHash } from 'node:crypto'
-import * as bytes from '../../src/lib/product-production/media-blob-store'
+import * as bytes from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import { runAvgAudioGainWorkerV1, AVG_AUDIO_WORKER_TIMEOUT_MS_V1 } from '../../src/lib/avg/audio-gain-worker-client'
 import { executeAvgAudioGainWorkerRequestV1, parseAvgAudioGainWorkerReplyV1,
   type AvgAudioGainWorkerRequestV1, type AvgAudioGainWorkerReplyV1 } from '../../src/lib/avg/audio-gain-worker-protocol'
 import { processAvgAudioPcmWaveV1, processAvgAudioPcmWaveWithWorkerV1 } from '../../src/lib/avg/audio-processing'
-import type { AvgAudioProcessingRecipeV1 } from '../../src/lib/avg/audio-processing-contract'
+import type { AvgAudioProcessingRecipeV1 } from '../../src/lib/legacy-compat/avg/audio-processing-contract'
 
 const hash = (data: ArrayBuffer) => createHash('sha256').update(new Uint8Array(data)).digest('hex')
 function input() { return { pcm: new Int16Array([1000, -1000, 2000, -2000]).buffer, channelCount: 2, sampleCount: 2,

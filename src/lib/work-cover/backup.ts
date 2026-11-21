@@ -1,6 +1,6 @@
-import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash'
-import { sha256BinaryV1 } from '../media/blob-store'
-import { assertWorkCoverCandidateHashV1, assertWorkCoverPortableRowV1, parseWorkCoverImageCandidateV1 } from './contracts'
+import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash';
+import { sha256BinaryV1 } from '../media/blob-store';
+import { assertWorkCoverCandidateHashV1, assertWorkCoverPortableRowV1, parseWorkCoverImageCandidateV1 } from './contracts';
 
 type Row = Record<string, unknown>
 function fail(): never { throw new Error('[work-cover] 备份封面 owner、引用或不可变证据不一致') }

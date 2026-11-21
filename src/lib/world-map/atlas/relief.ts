@@ -1,5 +1,5 @@
-import type { AtlasGeometry } from './geometry'
-import { seedRandom } from '../engine/random'
+import type { AtlasGeometry } from './geometry';
+import { seedRandom } from '../engine/random';
 
 // A small continuous height field avoids cell outlines. Draughting marks are
 // applied above this wash so rivers and settlements remain independently readable.

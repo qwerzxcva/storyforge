@@ -6,12 +6,12 @@ import {setupVoiceCandidateFixtureV1} from '../helpers/open-voice-candidate'
 import * as api from '../../src/lib/ttrpg/open-audio-service'
 import * as ledger from '../../src/lib/agent/run/event-store'
 import * as artifacts from '../../src/lib/memory/artifact-store'
-import {readProductRuntimeState} from '../../src/lib/product/runtime-core'
+import {readProductRuntimeState} from '../../src/lib/legacy-compat/product/runtime-core'
 import {dispatchTtrpgOpenLocalVoiceForKernelV1} from '../../src/lib/ttrpg/open-voice-execution'
 import {parseTtrpgOpenVoiceQualityRejectionV1} from '../../src/lib/ttrpg/open-voice-rejection-contract'
 import {parseTtrpgOpenVoiceQualityReviewV1} from '../../src/lib/ttrpg/open-voice-review-contract'
-import {loadTtrpgOpenPlayerContextV1} from '../../src/lib/ttrpg/open-player-context'
-import {loadTtrpgOpenBriefContextV1} from '../../src/lib/ttrpg/open-brief-context'
+import {loadTtrpgOpenPlayerContextV1} from '../../src/lib/legacy-compat/ttrpg/open-player-context'
+import {loadTtrpgOpenBriefContextV1} from '../../src/lib/legacy-compat/ttrpg/open-brief-context'
 
 describe('R-TTRPGOPEN10 durable original voice rejection',{timeout:120000},()=>{
   beforeEach(async()=>{await db.delete();await db.open()})

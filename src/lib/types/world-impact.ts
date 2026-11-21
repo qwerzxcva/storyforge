@@ -1,4 +1,4 @@
-import type { NarrativeOwnerV1 } from './narrative-ir'
+import type { NarrativeOwnerV1 } from './narrative-ir';
 
 export interface WorldImpactRevisionVectorV1 {
   semanticRootHash: string

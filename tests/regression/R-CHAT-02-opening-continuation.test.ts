@@ -7,8 +7,8 @@ import {chatOpeningReferencePromptV3} from '../../src/lib/character-interaction/
 import {chatOpeningReviewPromptV1} from '../../src/lib/character-interaction/situation-production-review'
 import {chatOpeningContinuationProductionPromptV1, chatOpeningContinuationReviewPromptV1} from '../../src/lib/character-interaction/opening-continuation'
 import {readChatOpeningProductionVersionV1} from '../../src/lib/character-interaction/opening-production-binding'
-import {createProductProductionPlanV3} from '../../src/lib/product-production/plan'
-import {hashProductProductionValueV2} from '../../src/lib/product-production/hash'
+import {createProductProductionPlanV3} from '../../src/lib/legacy-compat/product-production/plan'
+import {hashProductProductionValueV2} from '../../src/lib/legacy-compat/product-production/hash'
 import type {ProductProductionTaskExecutionInputV1} from '../../src/lib/product-production/scheduler'
 import {seedChatNarrativeProductionFixture} from '../helpers/chat-narrative-production-fixture'
 

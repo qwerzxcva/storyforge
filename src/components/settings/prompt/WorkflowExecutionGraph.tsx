@@ -1,10 +1,6 @@
-import type { PromptWorkflow } from '../../../lib/types/workflow'
-import {
-  WORKFLOW_NODE_HEIGHT,
-  WORKFLOW_NODE_WIDTH,
-  workflowGraphFor,
-} from '../../../lib/workflow/graph'
-import type { StepResult } from './WorkflowStepCard'
+import type { PromptWorkflow } from '../../../lib/types/workflow';
+import { WORKFLOW_NODE_HEIGHT, WORKFLOW_NODE_WIDTH, workflowGraphFor } from '../../../lib/workflow/graph';
+import type { StepResult } from './WorkflowStepCard';
 
 interface Props {
   workflow: PromptWorkflow

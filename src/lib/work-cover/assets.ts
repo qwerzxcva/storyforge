@@ -1,9 +1,9 @@
-import { db } from '../db/schema'
-import { prepareMediaBlobV1, putPreparedMediaBlobV1 } from '../media/blob-store'
-import { assertRecordInScope, resolveScope, scopeTransactionTables } from '../workspace/scope'
-import type { WorkspaceScope } from '../types'
-import type { WorkCoverAssetV1 } from './types'
-import { assertLongformCoverWorkV1, coverRecordInScopeV1 } from './drafts'
+import { db } from '../db/schema';
+import { prepareMediaBlobV1, putPreparedMediaBlobV1 } from '../media/blob-store';
+import { assertRecordInScope, resolveScope, scopeTransactionTables } from '../workspace/scope';
+import type { WorkspaceScope } from '../types';
+import type { WorkCoverAssetV1 } from './types';
+import { assertLongformCoverWorkV1, coverRecordInScopeV1 } from './drafts';
 
 /** Uploads have the same Work-owned asset/CAS path, with no synthetic model Run. */
 export async function uploadWorkCoverAssetV1(input: {

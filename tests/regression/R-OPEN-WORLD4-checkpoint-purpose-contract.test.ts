@@ -7,7 +7,7 @@ import {
   createProductRuntimeCheckpoint,
   parseProductRuntimeCheckpointV1,
   verifyProductRuntimeCheckpoint,
-} from '../../src/lib/product/runtime-core'
+} from '../../src/lib/legacy-compat/product/runtime-core'
 import type { ProductRuntimeCheckpointPurposeV1 } from '../../src/lib/types'
 import { createCurrentTtrpgRuntimeTestBedV1 } from '../helpers/current-product-runtime'
 

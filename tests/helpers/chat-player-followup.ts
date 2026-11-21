@@ -1,6 +1,6 @@
 import {canonicalStringify} from '../../src/lib/agent/run/hash'
 import {seedChatNarrativeRuntimeFixture, chatActionReviewFixture} from './chat-narrative-fixture'
-import {commitChatNarrativeAction, readProductRuntimeStateVersion, requestChatNarrativeTrigger} from '../../src/lib/character-interaction/runtime-api'
+import {commitChatNarrativeAction, readProductRuntimeStateVersion, requestChatNarrativeTrigger} from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import {CHAT_SITUATION_REVIEW_CHECKS_V1, type ChatNarrativeActionV1, type ChatSituationDraftV1} from '../../src/lib/types/chat-narrative'
 
 export const followupPlayerText = '那可以看看雨停后门口有没有积水吗？我先留在屋里。'

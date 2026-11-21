@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
 import { projectTextOpenWorldPlayerNotificationsV1 } from '../../src/lib/open-world/player-notifications'
 import { projectTextOpenWorldPlayerWorldRecordV1 } from '../../src/lib/open-world/player-world-record'
 import {
   applyTextOpenWorldSessionEventV1,
   createInitialTextOpenWorldSessionProjectionV1,
-} from '../../src/lib/open-world/session-projection'
+} from '../../src/lib/legacy-compat/open-world/session-projection'
 import type { ProductRuntimeEvent, TextOpenWorldParsedModulesV1 } from '../../src/lib/types'
 import { createTextOpenWorldVNextFixture } from '../helpers/text-open-world-vnext-fixture'
 

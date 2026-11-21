@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import * as readiness from '../../src/lib/avg/sound-production-brief'
+import * as readiness from '../../src/lib/legacy-compat/avg/sound-production-brief'
 import { classifyAvgAuthorPrototypeBriefV1, isAvgAuthorPrototypeBriefV1, assertAvgSoundPrototypeWriteEnabledV1 } from '../../src/lib/avg/prototype-contract'
 import { avgSoundProductionFixtureV1 } from '../helpers/avg-sound-production-fixture'
 

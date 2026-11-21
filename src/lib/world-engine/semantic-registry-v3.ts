@@ -1,4 +1,4 @@
-import type { WorldCapabilityArea } from '../registry/types'
+import type { WorldCapabilityArea } from '../registry/types';
 
 /** Historical wire contract captured from PROJECT_TABLES at f52f5d4d.
  * This is not the current registry. Never extend it for v4 or new domains:

@@ -1,4 +1,4 @@
-import type { Chapter, ChapterStatus } from '../types'
+import type { Chapter, ChapterStatus } from '../types';
 
 export interface ChapterEditorDraftV1 {
   chapterId: number

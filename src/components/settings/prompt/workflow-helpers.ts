@@ -8,13 +8,9 @@
  *
  * 对 UI 组件不做任何行为改变。
  */
-
-import type { SaveTarget } from '../../../lib/types/workflow'
-import type { WorkflowUpstreamInput } from '../../../lib/workflow/graph'
-import {
-  formatWorkflowUpstreamContext,
-  groupWorkflowInputsByVariable,
-} from '../../../lib/workflow/graph'
+import type { SaveTarget } from '../../../lib/types/workflow';
+import type { WorkflowUpstreamInput } from '../../../lib/workflow/graph';
+import { formatWorkflowUpstreamContext, groupWorkflowInputsByVariable } from '../../../lib/workflow/graph';
 
 /**
  * FB-1 修复 · 工作流步骤上下文整形(纯函数,可单测)。

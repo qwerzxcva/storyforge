@@ -1,8 +1,8 @@
 import type { AgentRunContractV1 } from '../../src/lib/types'
 import { readyOpenTtrpgSessionV1, openEnvelopeV1, OPEN_HUMAN_VIEWER } from './open-ttrpg-session'
 import { startTtrpgOpenEpochV1, reserveTtrpgOpenModelCallV1 } from '../../src/lib/ttrpg/runtime-commands'
-import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/ttrpg/open-player-context'
-import { ttrpgOpenCallBindingHashV1 } from '../../src/lib/ttrpg/open-model-call-evidence'
+import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-player-context'
+import { ttrpgOpenCallBindingHashV1 } from '../../src/lib/legacy-compat/ttrpg/open-model-call-evidence'
 import { createAgentRunV1, appendAgentRunEventV1, type AgentRunSnapshotV1 } from '../../src/lib/agent/run/event-store'
 import { getAgentSkillV1 } from '../../src/lib/agent/skill-registry'
 import { createAgentSkillExecutionBindingV1 } from '../../src/lib/agent/execution-binding'
@@ -17,7 +17,7 @@ export async function preparedOpenTtrpgCallV1(options: { enabled?: boolean; miss
   await startTtrpgOpenEpochV1({ ...await openEnvelopeV1(fixture.sessionId, 'call.epoch'), viewerKey: OPEN_HUMAN_VIEWER,
     triggerKind: 'submit-action', rawInput: '调查河港' })
   const context = await loadTtrpgOpenPlayerContextV1({ scope: fixture.scope, sessionId: fixture.sessionId, actorKey: 'hero' })
-  const { readProductRuntimeState } = await import('../../src/lib/product/runtime-core')
+  const { readProductRuntimeState } = await import('../../src/lib/legacy-compat/product/runtime-core')
   const runtime = (await readProductRuntimeState(fixture.sessionId)).ttrpg!
   const epochKey = runtime.openRun!.coordination.activeEpochKey!
   const stepId = 'ttrpg.open.intent'

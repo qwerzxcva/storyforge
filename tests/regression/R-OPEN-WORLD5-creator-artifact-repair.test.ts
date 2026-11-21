@@ -11,13 +11,13 @@ import {
 import {
   canonicalProductProductionJsonV2,
   hashProductProductionValueV2,
-} from '../../src/lib/product-production/hash'
+} from '../../src/lib/legacy-compat/product-production/hash'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
 import { runProductProductionSchedulerCycleV1 } from '../../src/lib/product-production/scheduler'
 import { setProductProductionPausedV1 } from '../../src/lib/product-production/service'
 import { prepareTextOpenWorldProductBuildEpochCarryV1 } from '../../src/lib/product-production/artifact-store'
 import { readAgentRunV1 } from '../../src/lib/agent/run/event-store'
-import { createProductBuildRootTerminalReceiptV1 } from '../../src/lib/product-production/receipts'
+import { createProductBuildRootTerminalReceiptV1 } from '../../src/lib/legacy-compat/product-production/receipts'
 import type {
   ProductBuildArtifactRecordV1,
   ProductProductionPlanTaskV3,

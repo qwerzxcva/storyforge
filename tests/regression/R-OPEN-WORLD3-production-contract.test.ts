@@ -11,13 +11,13 @@ import {
   textOpenWorldProductionArtifactKindForKeyV1,
   textOpenWorldProductionStageTaskKeysV1,
   validateTextOpenWorldProductionTaskContractsV1,
-} from '../../src/lib/open-world/production-contract'
+} from '../../src/lib/legacy-compat/open-world/production-contract'
 import { AGENT_RUN_MAXIMUM_RESUME_PAYLOAD_BYTES_V1 } from '../../src/lib/agent/run/checkpoint-contract'
 import { inspectTextOpenWorldProductionPlanAuthorityV1 } from '../../src/lib/open-world/production-authority'
 import { textOpenWorldProductionResourceProfileV1 } from '../../src/lib/open-world/production-budget'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { createProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { createProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 import {
   inspectProductProductionBuildRecoveryPolicyV1,
   resolveProductProductionTaskRecoveryPolicyV1,

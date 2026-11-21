@@ -1,4 +1,4 @@
-import type { BuiltInCodexKey } from '../types/codex'
+import type { BuiltInCodexKey } from '../types/codex';
 
 export const FULL_INSPIRATION_CONTENT_GUIDANCE = `【完整框架的内容方法】
 作者选了完整反推，可以给相连的世界、故事萌芽与初始人物，但保留作者原创专名、物件、画面、活动和已经明确的限制。参考只启发方法，不能把原作人物和情节改名搬入；没有检索不能冒称考证。

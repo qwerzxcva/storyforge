@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import { parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import type { ProductProductionPlanV3 } from '../../src/lib/types'
 import type { ProductProductionSchedulerProjectionV1 } from '../../src/lib/product-production/scheduler'
 import type { TextOpenWorldArtifactGovernanceProjectionV1 } from '../../src/lib/open-world/creator-artifact-governance'
@@ -9,9 +9,9 @@ import {
   createTextOpenWorldResponsibilityMatrixV1,
   textOpenWorldArtifactResponsibilityV1,
   textOpenWorldTaskResponsibilityV1,
-} from '../../src/lib/open-world/responsibility-contract'
+} from '../../src/lib/legacy-compat/open-world/responsibility-contract'
 import { projectTextOpenWorldResponsibilitiesV1 } from '../../src/lib/open-world/responsibility-progress'
-import { textOpenWorldProductionTaskDescendantsV1 } from '../../src/lib/open-world/production-contract'
+import { textOpenWorldProductionTaskDescendantsV1 } from '../../src/lib/legacy-compat/open-world/production-contract'
 import { seedCurrentProductWorld } from '../helpers/current-product-world'
 import { seedAuthorizedTextOpenWorldCreatorBuildV1 } from '../helpers/text-open-world-creator-build'
 

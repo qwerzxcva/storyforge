@@ -5,7 +5,7 @@ import { db } from '../../src/lib/db/schema'
 import TtrpgOpenAudioPanel from '../../src/components/ttrpg/TtrpgOpenAudioPanel'
 import { setupAudioRuntimeV1, audioWavFixtureV1 } from '../helpers/open-audio-runtime'
 import * as audio from '../../src/lib/ttrpg/open-audio-service'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true

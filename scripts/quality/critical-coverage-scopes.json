@@ -9,20 +9,19 @@
     "src/lib/agent/run/verification-receipt.ts",
     "src/lib/agent/run/creation-response-evidence.ts"
   ],
-  "production": [
-    "src/lib/product-production/artifact-store.ts",
-    "src/lib/product-production/commands.ts",
-    "src/lib/product-production/plan.ts",
-    "src/lib/product-production/recovery-policy.ts",
-    "src/lib/product-production/scheduler.ts",
-    "src/lib/product-production/task-evidence.ts"
-  ],
   "runtime": [
-    "src/lib/product/runtime-core.ts",
-    "src/lib/product/runtime-instances.ts",
-    "src/lib/product/runtime-branch-lineage.ts",
-    "src/lib/product/runtime-source-authority.ts",
-    "src/lib/product/runtime-source-manifest.ts",
-    "src/lib/product/runtime-media-library.ts"
+    "src/lib/legacy-compat/product/runtime-core.ts",
+    "src/lib/legacy-compat/product/runtime-instances.ts",
+    "src/lib/legacy-compat/product/runtime-source-manifest.ts"
+  ],
+  "longform": [
+    "src/lib/generation/chapter-generation-node.ts",
+    "src/lib/node-authoring/domain-execution.ts",
+    "src/lib/node-authoring/field-adoption.ts",
+    "src/lib/longform/legacy-creation-history.ts"
+  ],
+  "compatibility": [
+    "src/lib/legacy-compat/product-production/plan.ts",
+    "src/lib/legacy-compat/product-production/task-evidence.ts"
   ]
 }

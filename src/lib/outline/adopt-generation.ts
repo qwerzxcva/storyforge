@@ -1,5 +1,5 @@
-import { adopt } from '../registry/adopt'
-import type { WorkspaceScope } from '../types'
+import { adopt } from '../registry/adopt';
+import type { WorkspaceScope } from '../types';
 
 export interface GeneratedOutlineItem {
   title: string

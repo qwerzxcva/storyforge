@@ -1,4 +1,4 @@
-import { feedbackStoreSchema, type FeedbackRecord } from './followup-contract'
+import { feedbackStoreSchema, type FeedbackRecord } from './followup-contract';
 
 export const FEEDBACK_FOLLOWUP_KEY = 'storyforge_feedback_followup_v1'
 export const FEEDBACK_FOLLOWUP_EVENT = 'storyforge-feedback-followup-change'

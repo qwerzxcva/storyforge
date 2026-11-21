@@ -1,7 +1,7 @@
 import { readyOpenTtrpgSessionV1, openEnvelopeV1, OPEN_HUMAN_VIEWER } from './open-ttrpg-session'
 import { startTtrpgOpenEpochV1 } from '../../src/lib/ttrpg/runtime-commands'
-import { loadTtrpgOpenSituationKernelInputV1 } from '../../src/lib/ttrpg/open-generated-situation-context'
-import type { TtrpgOpenSituationProposalBasisV1 } from '../../src/lib/ttrpg/open-generated-situation-contract'
+import { loadTtrpgOpenSituationKernelInputV1 } from '../../src/lib/legacy-compat/ttrpg/open-generated-situation-context'
+import type { TtrpgOpenSituationProposalBasisV1 } from '../../src/lib/legacy-compat/ttrpg/open-generated-situation-contract'
 
 export const SITUATION_GENERATION_INPUT_V1 = '结合港口、守灯人和英雄身份拟定一个新局势'
 export function situationGenerationOutputV1(basis: TtrpgOpenSituationProposalBasisV1) {

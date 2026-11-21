@@ -7,11 +7,11 @@ import { dispatchTtrpgOpenLocalVoiceForKernelV1 } from '../../src/lib/ttrpg/open
 import * as checkpoints from '../../src/lib/agent/run/checkpoint'
 import * as ledger from '../../src/lib/agent/run/event-store'
 import * as artifacts from '../../src/lib/memory/artifact-store'
-import { readProductRuntimeState,branchProductRuntimeSession,deleteProductRuntimeSession } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState,branchProductRuntimeSession,deleteProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
 import { exportProjectJSON,importProjectJSON } from '../../src/lib/export/json-export'
 import { canonicalStringify } from '../../src/lib/agent/run/hash'
 import * as output from '../../src/lib/ttrpg/open-voice-result'
-import { configureTtrpgSessionParticipantV2,readTtrpgSessionParticipantsV2 } from '../../src/lib/ttrpg/participants'
+import { configureTtrpgSessionParticipantV2,readTtrpgSessionParticipantsV2 } from '../../src/lib/legacy-compat/ttrpg/participants'
 
 // Real isolated owner/Run commands with synthetic PCM/protocol metadata. No
 // weights, actual inference, audition or independent-human evidence.

@@ -1,8 +1,8 @@
 import {seedChatSourceUnitsFixture, sourceUnitsReviewFixture} from './chat-source-units'
 import {saveChatDraftV1, confirmChatSourceReviewV1} from '../../src/lib/character-interaction/draft-service'
-import {parseChatAuthoringSettings} from '../../src/lib/character-interaction/authoring-contract'
-import type {ChatSourceUnitPermissionV1, ChatSourceUnitAuthorizationReviewV1} from '../../src/lib/character-interaction/source-unit-authorization'
-import type {ChatSourceUnitsCandidateV1} from '../../src/lib/character-interaction/source-units'
+import {parseChatAuthoringSettings} from '../../src/lib/legacy-compat/character-interaction/authoring-contract'
+import type {ChatSourceUnitPermissionV1, ChatSourceUnitAuthorizationReviewV1} from '../../src/lib/legacy-compat/character-interaction/source-unit-authorization'
+import type {ChatSourceUnitsCandidateV1} from '../../src/lib/legacy-compat/character-interaction/source-units'
 
 export async function seedChatSourceUnitConfirmationFixture() {
   const f = await seedChatSourceUnitsFixture()

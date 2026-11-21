@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import * as configuredCapabilities from '../../src/lib/product-production/capabilities'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import {
   ProductProductionDraftRejectedErrorV1,
   ProductProductionResultUnknownErrorV1,

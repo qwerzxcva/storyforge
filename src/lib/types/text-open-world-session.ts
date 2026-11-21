@@ -1,9 +1,9 @@
-import type { TextOpenWorldActionProjectionContextV1 } from './text-open-world-action'
-import type { TextOpenWorldConditionEvaluationContextV1 } from './text-open-world-condition'
-import type { TextOpenWorldEffectStateV1 } from './text-open-world-effect'
-import type { TextOpenWorldRandomEvidenceV1, TextOpenWorldRulesetStampV1 } from './text-open-world-event'
-import type { TextOpenWorldCombatTransitionIntentV1 } from './text-open-world-effect'
-import type { TextOpenWorldRuntimePackageV1 } from './text-open-world-runtime'
+import type { TextOpenWorldActionProjectionContextV1 } from './text-open-world-action';
+import type { TextOpenWorldConditionEvaluationContextV1 } from './text-open-world-condition';
+import type { TextOpenWorldEffectStateV1 } from './text-open-world-effect';
+import type { TextOpenWorldRandomEvidenceV1, TextOpenWorldRulesetStampV1 } from './text-open-world-event';
+import type { TextOpenWorldCombatTransitionIntentV1 } from './text-open-world-effect';
+import type { TextOpenWorldRuntimePackageV1 } from './text-open-world-runtime';
 
 export type TextOpenWorldDerivedPlayerStatKeyV1 =
   | 'maximumHealth' | 'attack' | 'defense' | 'criticalChance' | 'initiative' | 'maximumSkillResource'

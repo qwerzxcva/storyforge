@@ -1,54 +1,15 @@
-import { parseChapterOutlineOutput } from '../ai/parse-outline-output'
+import { parseChapterOutlineOutput } from '../ai/parse-outline-output';
 import Dexie from 'dexie'
-import {
-  appendAgentRunEventV1,
-  createVerificationReceiptV1,
-  hashCanonicalValue,
-  readAgentRunV1,
-  type AgentRunSnapshotV1,
-  type GenerationNodeDurableTraceV1,
-} from '../agent/run'
-import {
-  appendAgentEvent,
-  readAgentEvents,
-} from '../agent/conversations'
-import { db } from '../db/schema'
-import {
-  parseAgentEventPayload,
-  type AgentEvent,
-  type AgentRunRecord,
-  type WorkspaceScope,
-} from '../types'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveScope,
-  resolveScopeLike,
-  type WorkspaceScopeLike,
-  scopeTransactionTables,
-} from '../workspace/scope'
-import type { OutlineNode } from '../types'
-import {
-  assertWorkspaceContentRevisionFreshV1,
-  assertOutlineBatchContentRevisionFreshV1,
-  contentRevisionTableSpecsV1,
-  proveOutlineBatchAppendV1,
-  OUTLINE_BATCH_APPEND_PAYLOAD_TYPE_V1,
-  parseWorkspaceContentRevisionV1,
-  verifyWorkspaceContentRevisionV1,
-  type WorkspaceContentRevisionVectorV1,
-} from '../authoring/content-revision'
-import {
-  adoptGeneratedOutlineItems,
-  adoptGeneratedOutlineSummary,
-  type GeneratedOutlineItem,
-} from './adopt-generation'
-import {
-  decodeGenerationOperation,
-  encodeGenerationOperation,
-  type OutlineGenerationRequest,
-} from './generation-request'
-import { assertOutlineRequestTargetsUnwrittenFutureV1 } from './future-boundary'
+import { appendAgentRunEventV1, createVerificationReceiptV1, hashCanonicalValue, readAgentRunV1, type AgentRunSnapshotV1, type GenerationNodeDurableTraceV1 } from '../agent/run';
+import { appendAgentEvent, readAgentEvents } from '../agent/conversations';
+import { db } from '../db/schema';
+import { parseAgentEventPayload, type AgentEvent, type AgentRunRecord, type WorkspaceScope } from '../types';
+import { assertRecordInScope, readOwnedRows, resolveScope, resolveScopeLike, type WorkspaceScopeLike, scopeTransactionTables } from '../workspace/scope';
+import type { OutlineNode } from '../types';
+import { assertWorkspaceContentRevisionFreshV1, assertOutlineBatchContentRevisionFreshV1, contentRevisionTableSpecsV1, proveOutlineBatchAppendV1, OUTLINE_BATCH_APPEND_PAYLOAD_TYPE_V1, parseWorkspaceContentRevisionV1, verifyWorkspaceContentRevisionV1, type WorkspaceContentRevisionVectorV1 } from '../authoring/content-revision';
+import { adoptGeneratedOutlineItems, adoptGeneratedOutlineSummary, type GeneratedOutlineItem } from './adopt-generation';
+import { decodeGenerationOperation, encodeGenerationOperation, type OutlineGenerationRequest } from './generation-request';
+import { assertOutlineRequestTargetsUnwrittenFutureV1 } from './future-boundary';
 
 export const OUTLINE_GENERATION_CONVERSATION_PURPOSE = 'outline-generation-v1'
 export const OUTLINE_GENERATION_CANDIDATE_PAYLOAD_TYPE = 'outline-generation-candidate'

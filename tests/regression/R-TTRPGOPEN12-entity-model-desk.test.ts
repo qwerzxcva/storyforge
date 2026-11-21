@@ -2,7 +2,7 @@ import { beforeEach, afterEach, describe, it, expect, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { setupOpenEntityModelV1 } from '../helpers/open-entity-model'
 import { openEnvelopeV1 } from '../helpers/open-ttrpg-session'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readTtrpgOpenEntityModelDeskV1, requestTtrpgOpenEntityModelDeskV1, resumeTtrpgOpenEntityModelDeskV1,
   acceptTtrpgOpenEntityModelDeskV1, repairTtrpgOpenEntityModelDeskV1, finishTtrpgOpenEntityModelDeskV1,
   closeTtrpgOpenEntityModelWindowDeskV1 } from '../../src/lib/ttrpg/open-entity-model-desk'

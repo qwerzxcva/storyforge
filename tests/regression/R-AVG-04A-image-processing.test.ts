@@ -1,7 +1,7 @@
 import { describe,expect,it } from 'vitest'
 import { avgImageProcessingRecipeFixture,avgImageProcessingReceiptFixture } from '../helpers/avg-image-processing-fixture'
-import { parseAvgImageProcessingRecipeV1,parseAvgImageProcessingPlanV1,deriveAvgImageProcessingGeometryV1,assertAvgImageProcessingReceiptV1 } from '../../src/lib/avg/image-processing-contract'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { parseAvgImageProcessingRecipeV1,parseAvgImageProcessingPlanV1,deriveAvgImageProcessingGeometryV1,assertAvgImageProcessingReceiptV1 } from '../../src/lib/legacy-compat/avg/image-processing-contract'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 
 describe('AVG explicit local image processing geometry and receipt',()=>{
  it('fits a portrait into a fixed stage canvas with explicit padding and anchor, without stretching',()=>{

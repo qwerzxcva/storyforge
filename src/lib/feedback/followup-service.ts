@@ -1,6 +1,6 @@
-import { CLIENT_SUPPORT_URL } from './client-support'
-import { feedbackProgressSchema, type FeedbackRecord } from './followup-contract'
-import { changeFeedback, feedbackSnapshot } from './followup-storage'
+import { CLIENT_SUPPORT_URL } from './client-support';
+import { feedbackProgressSchema, type FeedbackRecord } from './followup-contract';
+import { changeFeedback, feedbackSnapshot } from './followup-storage';
 
 const lifetime = 90 * 86400_000
 let refreshing: Promise<void> | undefined

@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
-import * as rootReceipts from '../../src/lib/product-production/receipts'
+import * as rootReceipts from '../../src/lib/legacy-compat/product-production/receipts'
 import {
   projectTextOpenWorldArtifactGovernanceV1,
   type TextOpenWorldArtifactBuildEvidenceV1,
@@ -8,7 +8,7 @@ import {
 import {
   canonicalProductProductionJsonV2,
   hashProductProductionValueV2,
-} from '../../src/lib/product-production/hash'
+} from '../../src/lib/legacy-compat/product-production/hash'
 import {
   hashProductProductionCarriedCandidateV1,
   hashProductProductionCarriedReceiptV1,
@@ -18,8 +18,8 @@ import {
   hashProductProductionTaskCandidateV1,
   hashProductProductionTaskReceiptV1,
   parseProductProductionPortableTaskLedgerV1,
-} from '../../src/lib/product-production/task-evidence'
-import { createLegacyProductBuildRootTerminalReceiptV1 } from '../../src/lib/product-production/receipts'
+} from '../../src/lib/legacy-compat/product-production/task-evidence'
+import { createLegacyProductBuildRootTerminalReceiptV1 } from '../../src/lib/legacy-compat/product-production/receipts'
 import type {
   ProductBuildArtifactKindV1,
   ProductBuildArtifactRecordV1,
@@ -34,12 +34,12 @@ import type {
   ProductProductionTaskExecutionResultV1,
 } from '../../src/lib/product-production/scheduler'
 import { countWords } from '../../src/lib/utils/html'
-import { createTextOpenWorldProductionPlanV1 } from '../../src/lib/open-world/production-contract'
+import { createTextOpenWorldProductionPlanV1 } from '../../src/lib/legacy-compat/open-world/production-contract'
 import {
   inspectTextOpenWorldProductionPlanAuthorityV1,
   type TextOpenWorldProductionPlanAuthorityV1,
 } from '../../src/lib/open-world/production-authority'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 import {
   CURRENT_PRODUCT_RESOURCE_KEYS,
   currentProductSelection,

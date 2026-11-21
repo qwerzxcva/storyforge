@@ -4,13 +4,13 @@ import * as skills from '../../src/lib/agent/skill-registry'
 import * as harness from '../../src/lib/character-interaction/harness'
 import {advanceChatNarrativeTurnV1, createChatNarrativeSituationV1, readChatNarrativeTurnResumeV1, resumeChatNarrativeTurnV1} from '../../src/lib/character-interaction/narrative-turn'
 import {chatNewTurnAllowanceV1, chatPreparedTurnAllowanceV1, chatSituationAndActionAllowanceV1} from '../../src/lib/character-interaction/narrative-budget'
-import {readProductRuntimeState, readProductRuntimeStateVersion, requestChatNarrativeTrigger} from '../../src/lib/character-interaction/runtime-api'
+import {readProductRuntimeState, readProductRuntimeStateVersion, requestChatNarrativeTrigger} from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import {chatActionReviewOutputFixture, seedChatNarrativeRuntimeFixture} from '../helpers/chat-narrative-fixture'
 import {CHAT_SITUATION_REVIEW_CHECKS_V1} from '../../src/lib/types/chat-narrative'
 import type {ChatNarrativeActionV1, ChatSituationDraftV1} from '../../src/lib/types/chat-narrative'
 import {chatActionOutcomeFixture, chatActionChoiceFixture} from '../helpers/chat-action-outcome'
 import {chatNextActionLimitV1} from '../../src/lib/character-interaction/narrative-pacing'
-import {DEFAULT_CHAT_NARRATIVE_SETUP_V1} from '../../src/lib/character-interaction/narrative-setup'
+import {DEFAULT_CHAT_NARRATIVE_SETUP_V1} from '../../src/lib/legacy-compat/character-interaction/narrative-setup'
 
 const originalSkill = skills.getAgentSkillV1, generate = harness.generateInteractionRuntimeCandidateV1
 const config = {provider: 'openai' as const, model: 'fixture', apiKey: 'fixture', temperature: .2, maxTokens: 4000}

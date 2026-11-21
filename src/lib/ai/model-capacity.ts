@@ -1,10 +1,10 @@
-import { providerApiFormat } from './provider-protocol'
-import { sha256 } from '@noble/hashes/sha2.js'
-import { bytesToHex } from '@noble/hashes/utils.js'
-import type { AIConfig } from '../types'
-import { targetsOfficialProvider } from './provider-model-lifecycle'
-import { normalizeOpenAIBaseUrl } from './openai-endpoint'
-import { buildAIRequestHeaders } from './request-headers'
+import { providerApiFormat } from './provider-protocol';
+import { sha256 } from '@noble/hashes/sha2.js';
+import { bytesToHex } from '@noble/hashes/utils.js';
+import type { AIConfig } from '../types';
+import { targetsOfficialProvider } from './provider-model-lifecycle';
+import { normalizeOpenAIBaseUrl } from './openai-endpoint';
+import { buildAIRequestHeaders } from './request-headers';
 
 /** Private connection identities are hashed; receipts never contain endpoints or credentials. */
 export interface ModelCapacityV1 {

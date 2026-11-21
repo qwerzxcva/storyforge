@@ -1,17 +1,13 @@
 /** 三注册表的当前共享类型；实际表数据只在 project-tables.ts 登记。 */
-import type { Table } from 'dexie'
-import type { AIProvider } from '../types/ai'
-import type { ContextLayer, ContextSegment } from '../ai/context-budget'
-import type { PreparedContinuityContext } from '../ai/chapter-memory/continuity-context'
-import type { InspirationResultMode } from '../types/inspiration-workspace'
-import type { RagAnnotationTargetSelectionV1, RagSelectionTraceCollector } from '../types/rag-library'
-import type { WorkspaceScope } from '../types/world-ownership'
-import type { NarrativeDomainFieldsV1 } from '../types/narrative-domain'
-import type {
-  ExactRunArtifactKindV1,
-  WorkspaceDocumentCodecV1,
-  WorkspaceDocumentEditPolicyV1,
-} from '../types/memory-engineering'
+import type { Table } from 'dexie';
+import type { AIProvider } from '../types/ai';
+import type { ContextLayer, ContextSegment } from '../ai/context-budget';
+import type { PreparedContinuityContext } from '../ai/chapter-memory/continuity-context';
+import type { InspirationResultMode } from '../types/inspiration-workspace';
+import type { RagAnnotationTargetSelectionV1, RagSelectionTraceCollector } from '../types/rag-library';
+import type { WorkspaceScope } from '../types/world-ownership';
+import type { NarrativeDomainFieldsV1 } from '../types/narrative-domain';
+import type { ExactRunArtifactKindV1, WorkspaceDocumentCodecV1, WorkspaceDocumentEditPolicyV1 } from '../types/memory-engineering';
 
 /**
  * 表的归属方式 —— 决定删项目时如何定位该表的记录。
@@ -576,7 +572,7 @@ export interface AdoptInput {
   workCoverAdoption?: { draftId: number; operationKey: string }
   /** Author-operated, registry-allowlisted exact text edits; never set from model payloads. */
   preserveAuthorText?: boolean
-  extensionSnapshot?: import('../extensions/types').ExtensionRegistrySnapshot
+  extensionSnapshot?: import('../legacy-compat/extensions/types').ExtensionRegistrySnapshot
   projectId: number
   /** Explicit logical read/write boundary. */
   scope?: WorkspaceScope
@@ -669,7 +665,7 @@ export interface ConsistencyAuditSourceReadV1 {
 
 export interface AssembleContextInput {
   captureConsistencyAuditSource?: (source: ConsistencyAuditSourceReadV1) => void
-  extensionSnapshot?: import('../extensions/types').ExtensionRegistrySnapshot
+  extensionSnapshot?: import('../legacy-compat/extensions/types').ExtensionRegistrySnapshot
   projectId: number
   /** Explicit logical read boundary; callers should always provide current WorkspaceScope. */
   scope?: WorkspaceScope
@@ -754,11 +750,6 @@ export interface AssembleContextInput {
   /** Current explicit revision Run; used only to verify its source read. */
   chatActionRevisionCurrentRunId?: number
   /** S2 author-only source review: exact saved draft, projection and selected passages. */
-  chatConsultationRequest?: import('../character-interaction/consultation-context').ChatConsultationRequestV2
-  chatSourceReviewRequest?: import('../character-interaction/source-review-context').ChatSourceReviewRequestV1
-  chatSourceUnitsRequest?: import('../character-interaction/source-review-context').ChatSourceReviewRequestV1
-  chatSourceUnitsReviewRequest?: import('../character-interaction/source-units-context').ChatSourceUnitsReviewRequestV1
-  chatSourceUnitConfirmationRequest?: import('../character-interaction/source-unit-confirmation-context').ChatSourceUnitConfirmationRequestV1
   /** Character interaction: frozen product source + confirmed product Brief. */
   /** CM-1: 本次明确参与增量融合的碎片；由 inspirationWorkspace source 读取。 */
   inspirationFragmentIds?: string[]

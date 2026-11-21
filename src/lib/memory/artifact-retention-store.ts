@@ -1,15 +1,9 @@
 import Dexie from 'dexie'
-import { db } from '../db/schema'
-import type {
-  AgentRunArtifactRecordV1,
-  ExactRunArtifactIdentityV1,
-  ExactRunArtifactKindV1,
-  ExactRunArtifactPruneReceiptV1,
-  MemoryArtifactRefV1,
-} from '../types'
-import { planExactArtifactRetentionV1 } from './artifact-retention'
-import { canonicalStringify } from '../agent/run/hash'
-import { exactArtifactOwnerTablesV1, readRegisteredExactArtifactOwnerRefsV1 } from './artifact-root-registry'
+import { db } from '../db/schema';
+import type { AgentRunArtifactRecordV1, ExactRunArtifactIdentityV1, ExactRunArtifactKindV1, ExactRunArtifactPruneReceiptV1, MemoryArtifactRefV1 } from '../types';
+import { planExactArtifactRetentionV1 } from './artifact-retention';
+import { canonicalStringify } from '../agent/run/hash';
+import { exactArtifactOwnerTablesV1, readRegisteredExactArtifactOwnerRefsV1 } from './artifact-root-registry';
 
 const HASH = /^[a-f0-9]{64}$/
 const KINDS = new Set<ExactRunArtifactKindV1>([

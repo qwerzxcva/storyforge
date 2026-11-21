@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { setupOracleRuntimeDeskV1 } from '../helpers/open-oracle-runtime-model'
 import { OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readTtrpgOpenOracleModelDeskV1, requestTtrpgOpenOracleModelDeskV1, resumeTtrpgOpenOracleModelDeskV1,
   reviewTtrpgOpenOracleModelDeskV1, repairTtrpgOpenOracleModelDeskV1, finishTtrpgOpenOracleModelDeskV1, closeTtrpgOpenOracleModelWindowDeskV1 } from '../../src/lib/ttrpg/open-oracle-model-desk'
 import * as commands from '../../src/lib/ttrpg/runtime-commands'

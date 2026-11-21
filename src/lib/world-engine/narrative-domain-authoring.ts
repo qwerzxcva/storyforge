@@ -1,16 +1,15 @@
 import Dexie from 'dexie'
-import { db } from '../db/schema'
-import { REGISTRY_BY_NAME } from '../registry/project-tables'
-import { FIELD_BY_TARGET } from '../registry/field-registry'
-import { isPortableResourceUidV1 } from '../context-gateway/resource-uid'
-import type { WorkspaceScope } from '../types/world-ownership'
-import type { NarrativeOwnerV1 } from '../types/narrative-ir'
-import type { NarrativeDomainAuthorityV1, NarrativeDomainFieldsV1 } from '../types/narrative-domain'
-import { captureNarrativeDomainInTransactionV1, hashNarrativeDomainSourceV1, narrativeDomainCaptureTablesV1,
-  type NarrativeDomainCaptureV1, type NarrativeDomainRowV1 } from './narrative-domain-capture'
-import { mapNarrativeDomainReferencesV1, parseNarrativeDomainFieldV1, type NarrativeDomainFieldV1 } from '../narrative-domain/codec'
-import { compileNarrativeDomainEvidenceV1, resolveNarrativeDomainReferenceV1 } from './narrative-domain-evidence'
-import { canonicalNarrativeJsonV1, hashV1, narrativeFail } from './narrative-json'
+import { db } from '../db/schema';
+import { REGISTRY_BY_NAME } from '../registry/project-tables';
+import { FIELD_BY_TARGET } from '../registry/field-registry';
+import { isPortableResourceUidV1 } from '../context-gateway/resource-uid';
+import type { WorkspaceScope } from '../types/world-ownership';
+import type { NarrativeOwnerV1 } from '../types/narrative-ir';
+import type { NarrativeDomainAuthorityV1, NarrativeDomainFieldsV1 } from '../types/narrative-domain';
+import { captureNarrativeDomainInTransactionV1, hashNarrativeDomainSourceV1, narrativeDomainCaptureTablesV1, type NarrativeDomainCaptureV1, type NarrativeDomainRowV1 } from './narrative-domain-capture';
+import { mapNarrativeDomainReferencesV1, parseNarrativeDomainFieldV1, type NarrativeDomainFieldV1 } from '../narrative-domain/codec';
+import { compileNarrativeDomainEvidenceV1, resolveNarrativeDomainReferenceV1 } from './narrative-domain-evidence';
+import { canonicalNarrativeJsonV1, hashV1, narrativeFail } from './narrative-json';
 
 function assertNoConfirmationReceipt(value: unknown): void {
   if (Array.isArray(value)) { value.forEach(assertNoConfirmationReceipt); return }

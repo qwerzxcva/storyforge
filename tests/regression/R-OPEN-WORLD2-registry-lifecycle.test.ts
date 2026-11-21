@@ -4,15 +4,15 @@ import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-
 import { executeTextOpenWorldActionV1 } from '../../src/lib/open-world/action-executor'
 import { createTextOpenWorldCheckpointV1, inspectTextOpenWorldCheckpointV1 } from '../../src/lib/open-world/checkpoints'
 import { commitTextOpenWorldCommandV1 } from '../../src/lib/open-world/commands'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
 import { commitTextOpenWorldOutcomeBatchV1 } from '../../src/lib/open-world/events'
 import { verifyTextOpenWorldVNextSessionBindingV1 } from '../../src/lib/open-world/session-binding'
-import { assertProductReleaseUnchanged } from '../../src/lib/product/releases'
+import { assertProductReleaseUnchanged } from '../../src/lib/legacy-compat/product/releases'
 import {
   deleteProductRuntimeSession,
   readProductRuntimeState,
   readProductRuntimeStateVersion,
-} from '../../src/lib/product/runtime-core'
+} from '../../src/lib/legacy-compat/product/runtime-core'
 import { assembleContext } from '../../src/lib/registry/assemble-context'
 import { ADOPTION_EXTENSIONS } from '../../src/lib/registry/adoption-schema'
 import { FIELD_BY_TARGET } from '../../src/lib/registry/field-registry'

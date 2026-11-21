@@ -4,12 +4,12 @@ import type { MediaProviderTransportV1 } from '../../src/lib/product-production/
 import { exportProjectJSON } from '../../src/lib/export/json-export'
 import { createAvgDraftReferenceAdapterV2 } from '../../src/lib/avg/editor-service'
 import { readAvgAdoptedGeneratedImageV2 } from '../../src/lib/avg/media-generated-reference'
-import type { AvgGeneratedImageSource } from '../../src/lib/avg/media-generated-reference-contract'
-import { parseAvgMediaReferencesV2 } from '../../src/lib/avg/media-reference-contract-v2'
+import type { AvgGeneratedImageSource } from '../../src/lib/legacy-compat/avg/media-generated-reference-contract'
+import { parseAvgMediaReferencesV2 } from '../../src/lib/legacy-compat/avg/media-reference-contract-v2'
 import { avgVersionedPlanningFixture } from './avg-versioned-planning-fixture'
 import { compileAvgVisualPlanningProposalV2,freezeAvgVisualPlanningScopeV2,prepareAvgRawImageRequestFromBatchV2 } from '../../src/lib/avg/media-production-v2'
-import { avgImageReferenceCapabilityV2 } from '../../src/lib/avg/media-reference-contract'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { avgImageReferenceCapabilityV2 } from '../../src/lib/legacy-compat/avg/media-reference-contract'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 
 /** Controlled transport only. It receives real Work-owned source bytes from
  * the public resolver, through a separate pure five-target author-intent fixture

@@ -2,30 +2,26 @@
  * 故事线面板 — Phase B2
  * 展示/编辑全局故事线（主线+支线），支持 AI 生成
  */
-import { useState, useEffect, useRef } from 'react'
-import { ArrowUpDown, Check, Plus, Sparkles, Loader2, Trash2, GripVertical, X, ChevronDown, ChevronRight, ChevronUp } from 'lucide-react'
-import { useStoryArcStore, type StoryStageEditV1 } from '../../stores/story-arc'
-import { useMasterCopilot } from '../agent/useMasterCopilot'
-import { CInput } from '../shared/CompositionInput'
-import { CTextarea } from '../shared/CompositionInput'
-import { useDialog } from '../shared/Dialog'
+import { useState, useEffect, useRef } from 'react';
+import { ArrowUpDown, Check, Plus, Sparkles, Loader2, Trash2, GripVertical, X, ChevronDown, ChevronRight, ChevronUp } from 'lucide-react';
+import { useStoryArcStore, type StoryStageEditV1 } from '../../stores/story-arc';
+import { useMasterCopilot } from '../agent/useMasterCopilot';
+import { CInput } from '../shared/CompositionInput';
+import { CTextarea } from '../shared/CompositionInput';
+import { useDialog } from '../shared/Dialog';
 import AcknowledgedTextField from '../shared/AcknowledgedTextField'
-import { useBeforeUnload } from '../../hooks/useBeforeUnload'
-import { acknowledgePendingEditFailureV1, capturePendingEditFailureV1, flushPendingEditsV1, registerPendingDraftFlusherV1, type PendingEditFailureTokenV1 } from '../../lib/authoring/pending-edit-coordinator'
-import type { Project, StoryArc, StoryArcType } from '../../lib/types'
-import { inspectStages, type StoryStage } from '../../lib/types/story-arc'
-import { nanoid } from 'nanoid'
+import { useBeforeUnload } from '../../hooks/useBeforeUnload';
+import { acknowledgePendingEditFailureV1, capturePendingEditFailureV1, flushPendingEditsV1, registerPendingDraftFlusherV1, type PendingEditFailureTokenV1 } from '../../lib/authoring/pending-edit-coordinator';
+import type { Project, StoryArc, StoryArcType } from '../../lib/types';
+import { inspectStages, type StoryStage } from '../../lib/types/story-arc';
+import { nanoid } from 'nanoid';
 import StorylineProgressPanel from './StorylineProgressPanel'
 import CreativeArtifactSummary from '../agent/CreativeArtifactSummary'
-import { creativeArtifactCanAdoptV1 } from '../../lib/agent/creative-reliability'
+import { creativeArtifactCanAdoptV1 } from '../../lib/agent/creative-reliability';
 import HarnessEvidencePanel from '../agent/HarnessEvidencePanel'
-import type { StoryArcOperationV1, StoryArcCopilotSnapshot } from '../../lib/agent/story-arc-copilot'
-import { STORY_ARC_STAGE_EVENT_LIMITS_V1 } from '../../lib/agent/story-arc-stage-events'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-  useInitialRecordTarget,
-} from '../shared/initial-record-target'
+import type { StoryArcOperationV1, StoryArcCopilotSnapshot } from '../../lib/agent/story-arc-copilot';
+import { STORY_ARC_STAGE_EVENT_LIMITS_V1 } from '../../lib/agent/story-arc-stage-events';
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes, useInitialRecordTarget } from '../shared/initial-record-target';
 
 export interface StoryArcInitialRecordTarget {
   table: 'storyArcs' | 'storylineProgress' | 'storylineCrossings'

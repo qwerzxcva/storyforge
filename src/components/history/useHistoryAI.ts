@@ -1,16 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import type { AIConfig } from '../../lib/types'
-import type { HistoryAIMode, HistoryAITarget } from '../../lib/history/ai-plan'
-import {
-  abandonHistoryAgentRunV1,
-  adoptHistoryAgentCandidateV1,
-  generateHistoryAgentCandidateV1,
-  readPendingHistoryAgentCandidateV1,
-  readRecoverableHistoryAgentRunV1,
-  rejectHistoryAgentCandidateV1,
-  type HistoryAgentCandidateV1,
-} from '../../lib/agent/run/history-agent-durable'
-import { resolveScopeLike } from '../../lib/workspace/scope'
+import { useCallback, useEffect, useRef, useState } from 'react';
+import type { AIConfig } from '../../lib/types';
+import type { HistoryAIMode, HistoryAITarget } from '../../lib/history/ai-plan';
+import { abandonHistoryAgentRunV1, adoptHistoryAgentCandidateV1, generateHistoryAgentCandidateV1, readPendingHistoryAgentCandidateV1, readRecoverableHistoryAgentRunV1, rejectHistoryAgentCandidateV1, type HistoryAgentCandidateV1 } from '../../lib/agent/run/history-agent-durable';
+import { resolveScopeLike } from '../../lib/workspace/scope';
 
 export interface HistoryAgentLaneState {
   candidate: HistoryAgentCandidateV1 | null

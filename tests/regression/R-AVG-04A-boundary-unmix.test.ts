@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { DECLARED_MAGENTA_ALPHA_MATTING_ID_V1, matteDeclaredMagentaCharacterBackdropV1 } from '../../src/lib/product-production/character-alpha-matting'
+import { DECLARED_MAGENTA_ALPHA_MATTING_ID_V1, matteDeclaredMagentaCharacterBackdropV1 } from '../../src/lib/legacy-compat/product-production/character-alpha-matting'
 import { AVG_FOREGROUND_BOUNDARY_UNMIX_ID_V2, iterateAvgForegroundBoundaryUnmixV2,
-  matteAvgForegroundBoundaryUnmixV2 } from '../../src/lib/avg/image-foreground-boundary-unmix'
+  matteAvgForegroundBoundaryUnmixV2 } from '../../src/lib/legacy-compat/avg/image-foreground-boundary-unmix'
 
 function frame(color: readonly number[] = [200, 149, 99]) {
   const width = 100, height = 80, data = new Uint8ClampedArray(width * height * 4)

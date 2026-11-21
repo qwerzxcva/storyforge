@@ -1,16 +1,16 @@
 import { resumeTtrpgOpenSituationsV1 } from '../../src/lib/ttrpg/open-situation-coordinator'
-import { nextTtrpgOpenOperationStepV1 } from '../../src/lib/ttrpg/open-operation'
-import { ttrpgOpenTurnCycleMatchesV1 } from '../../src/lib/ttrpg/open-turn-settlement'
+import { nextTtrpgOpenOperationStepV1 } from '../../src/lib/legacy-compat/ttrpg/open-operation'
+import { ttrpgOpenTurnCycleMatchesV1 } from '../../src/lib/legacy-compat/ttrpg/open-turn-settlement'
 /** Real frozen E11 fixture shared with isolated browser recovery. */
 import { setupPressureFixtureV1 } from './open-ttrpg-pressure'
 import { rt } from './open-ttrpg-branch-recovery'
-import { ttrpgOpenScopedKeyV1 } from '../../src/lib/ttrpg/open-coordination'
+import { ttrpgOpenScopedKeyV1 } from '../../src/lib/legacy-compat/ttrpg/open-coordination'
 import { openEnvelopeV1, OPEN_HUMAN_VIEWER } from './open-ttrpg-session'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { changeTtrpgSituationV1, advanceTtrpgOpenSituationsV1, ttrpgOpenOperationCommandIdV1, telegraphTtrpgOpenFrontV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { resumeTtrpgOpenOperationV1 } from '../../src/lib/ttrpg/open-operation-coordinator'
 import { resumeTtrpgOpenPressureV1 } from '../../src/lib/ttrpg/open-pressure-coordinator'
-import { nextTtrpgOpenSituationCycleActionV1, ttrpgOpenSituationCycleActionKeyV1 } from '../../src/lib/ttrpg/open-situation-cycle'
+import { nextTtrpgOpenSituationCycleActionV1, ttrpgOpenSituationCycleActionKeyV1 } from '../../src/lib/legacy-compat/ttrpg/open-situation-cycle'
 export async function setupMaintenanceFixtureV1(options: { resolve?: boolean; queue?: boolean; effect?: boolean; rejectQueue?: boolean; clockMaximum?: number; clockEffect?: boolean; cost?: boolean; chain?: boolean; inaccessibleChain?: boolean } = {}) {
   const f = await setupPressureFixtureV1({ turns: 2, maximum: options.clockMaximum ?? 8, effect: options.clockEffect }, pkg => {
     const campaign = pkg.ttrpg!.campaign, original = campaign.situationTemplates[0]

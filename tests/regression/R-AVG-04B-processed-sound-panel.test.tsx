@@ -14,7 +14,7 @@ vi.mock('../../src/lib/avg/sound-workbench-service', () => ({ readAvgRawSoundCan
 vi.mock('../../src/lib/avg/assembly-service', () => ({ confirmAvgWorkspaceInputV1: vi.fn() }))
 vi.mock('../../src/lib/avg/sound-author-service', () => ({ configureAvgChosenSoundDraftV1: vi.fn() }))
 vi.mock('../../src/lib/avg/sound-production-brief', async (importOriginal) => ({
-  ...await importOriginal<typeof import('../../src/lib/avg/sound-production-brief')>(),
+  ...await importOriginal<typeof import('../../src/lib/legacy-compat/avg/sound-production-brief')>(),
   avgSoundProductionExecutionReadyV1: () => true,
 }))
 vi.mock('../../src/lib/avg/sound-production-plan', () => ({ AVG_SOUND_PROPOSAL_KEY_V1: 'avg.proposal.sound-plan', AVG_SOUND_PLAN_KEY_V1: 'avg.media.sound-plan', AVG_SOUND_COMPILED_KEY_V1: 'avg.media.compiled-sound-requirements' }))

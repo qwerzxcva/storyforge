@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { createTextOpenWorldActionRegistryV1 } from '../../src/lib/open-world/action-registry'
-import { createInitialTextOpenWorldSessionProjectionV1, deriveTextOpenWorldContextsV1 } from '../../src/lib/open-world/session-projection'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { createInitialTextOpenWorldSessionProjectionV1, deriveTextOpenWorldContextsV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { TEXT_OPEN_WORLD_RUNTIME_MODULE_KEYS_V1 } from '../../src/lib/types'
 import {
   createTextOpenWorldPlayerJourneyFixtureV1,

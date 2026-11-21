@@ -1,13 +1,9 @@
-import { useEffect, useState } from 'react'
-import { useBeforeUnload } from '../../hooks/useBeforeUnload'
-import { registerPendingDraftFlusherV1 } from '../../lib/authoring/pending-edit-coordinator'
-import { ChevronDown, ChevronUp, Plus, Settings2, Trash2, X } from 'lucide-react'
-import {
-  parseFieldSchema,
-  codexCategoryFormatIssueV1,
-  stringifyFieldSchema,
-} from '../../lib/types/codex'
-import type { CodexCategory, CodexFieldDef } from '../../lib/types/codex'
+import { useEffect, useState } from 'react';
+import { useBeforeUnload } from '../../hooks/useBeforeUnload';
+import { registerPendingDraftFlusherV1 } from '../../lib/authoring/pending-edit-coordinator';
+import { ChevronDown, ChevronUp, Plus, Settings2, Trash2, X } from 'lucide-react';
+import { parseFieldSchema, codexCategoryFormatIssueV1, stringifyFieldSchema } from '../../lib/types/codex';
+import type { CodexCategory, CodexFieldDef } from '../../lib/types/codex';
 
 const FIELD_TYPES: { value: CodexFieldDef['type']; label: string }[] = [
   { value: 'text', label: '单行文本' },

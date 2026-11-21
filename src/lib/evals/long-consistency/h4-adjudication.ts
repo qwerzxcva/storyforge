@@ -1,51 +1,14 @@
-import { sha256Text } from '../../ai/chapter-memory/text-normalization'
-import { canonicalStringify, hashCanonicalValue } from '../../agent/run/hash'
-import {
-  assertExactKeys,
-  assertUnique,
-  failSchema,
-  readArray,
-  readBoolean,
-  readEnum,
-  readHash,
-  readInteger,
-  readRecord,
-  readString,
-} from '../../agent/run/schema-utils'
-import type { ChatMessage } from '../../types'
-import { hasProviderUsageEvidenceV1, normalizeLongConsistencyCallUsageV1, parseLongConsistencyModelUsageV1, PROVIDER_USAGE_POLICY_V1 } from './model-usage'
-import {
-  LONG_CONSISTENCY_JUDGE_PROMPT_VERSION_V7,
-  type LongConsistencyAuditCallResultV1,
-} from './evidence-report'
-import {
-  H4_LONG_CONSISTENCY_FIXTURE_VERSION_V1,
-  getH4LongConsistencyFixturesV1,
-} from './h4-fixtures'
-import {
-  parseH4LongConsistencyRunBudgetV1,
-  parseH4LongConsistencyRunUsageV1,
-  parseH4LongConsistencyRunCheckpointV1,
-  verifyH4LongConsistencyRunCheckpointV1,
-  type H4LongConsistencyCompletedCaseV1,
-  type H4LongConsistencyRunBudgetV1,
-  type H4LongConsistencyRunCheckpointV1,
-  type H4LongConsistencyRunUsageV1,
-} from './h4-runner'
-import type {
-  LongConsistencyFixtureBindingV1,
-  LongConsistencyIssueV1,
-  LongConsistencyModelBindingV1,
-  LongConsistencyModelUsageV1,
-} from './report-types'
-import {
-  LONG_CONSISTENCY_SUBTYPES_V1,
-  LONG_CONSISTENCY_TAXONOMY_V1,
-  LONG_CONSISTENCY_TAXONOMY_VERSION_V1,
-  getLongConsistencyTaxonomyEntryV1,
-  type LongConsistencySubtypeV1,
-} from './taxonomy'
-import type { EvalSplit } from './types'
+import { sha256Text } from '../../ai/chapter-memory/text-normalization';
+import { canonicalStringify, hashCanonicalValue } from '../../agent/run/hash';
+import { assertExactKeys, assertUnique, failSchema, readArray, readBoolean, readEnum, readHash, readInteger, readRecord, readString } from '../../agent/run/schema-utils';
+import type { ChatMessage } from '../../types';
+import { hasProviderUsageEvidenceV1, normalizeLongConsistencyCallUsageV1, parseLongConsistencyModelUsageV1, PROVIDER_USAGE_POLICY_V1 } from './model-usage';
+import { LONG_CONSISTENCY_JUDGE_PROMPT_VERSION_V7, type LongConsistencyAuditCallResultV1 } from './evidence-report';
+import { H4_LONG_CONSISTENCY_FIXTURE_VERSION_V1, getH4LongConsistencyFixturesV1 } from './h4-fixtures';
+import { parseH4LongConsistencyRunBudgetV1, parseH4LongConsistencyRunUsageV1, parseH4LongConsistencyRunCheckpointV1, verifyH4LongConsistencyRunCheckpointV1, type H4LongConsistencyCompletedCaseV1, type H4LongConsistencyRunBudgetV1, type H4LongConsistencyRunCheckpointV1, type H4LongConsistencyRunUsageV1 } from './h4-runner';
+import type { LongConsistencyFixtureBindingV1, LongConsistencyIssueV1, LongConsistencyModelBindingV1, LongConsistencyModelUsageV1 } from './report-types';
+import { LONG_CONSISTENCY_SUBTYPES_V1, LONG_CONSISTENCY_TAXONOMY_V1, LONG_CONSISTENCY_TAXONOMY_VERSION_V1, getLongConsistencyTaxonomyEntryV1, type LongConsistencySubtypeV1 } from './taxonomy';
+import type { EvalSplit } from './types';
 
 export const H4_SUBTYPE_ADJUDICATION_PROMPT_VERSION_V1 =
   'h4-long-consistency-subtype-adjudication-v1'

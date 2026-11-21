@@ -4,11 +4,11 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import TextOpenWorldQuestLogPanel from '../../src/components/text-game/TextOpenWorldQuestLogPanel'
 import TextOpenWorldVNextPlayer from '../../src/components/text-game/TextOpenWorldVNextPlayer'
 import { createTextOpenWorldActionRegistryV1 } from '../../src/lib/open-world/action-registry'
-import { createTextOpenWorldDirectorQuestInstanceV1 } from '../../src/lib/open-world/quests'
+import { createTextOpenWorldDirectorQuestInstanceV1 } from '../../src/lib/legacy-compat/open-world/quests'
 import {
   createInitialTextOpenWorldSessionProjectionV1,
   deriveTextOpenWorldContextsV1,
-} from '../../src/lib/open-world/session-projection'
+} from '../../src/lib/legacy-compat/open-world/session-projection'
 import {
   EMPTY_PRODUCT_RUNTIME_STATE,
   type TextOpenWorldItemModuleV1,

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { assertTextOpenWorldMainlineRecognitionRuntimeContractV1 as validate } from '../../src/lib/open-world/mainline-recognition-runtime-contract'
+import { assertTextOpenWorldMainlineRecognitionRuntimeContractV1 as validate } from '../../src/lib/legacy-compat/open-world/mainline-recognition-runtime-contract'
 
 // Isolated runtime contract fixture; complete generated-package integration is
 // exercised separately by the Salt Ridge production DAG.

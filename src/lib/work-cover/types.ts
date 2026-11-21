@@ -1,5 +1,5 @@
-import type { WorkspaceScope } from '../types/world-ownership'
-import type { ExactRunArtifactIdentityV1 } from '../types/memory-engineering'
+import type { WorkspaceScope } from '../types/world-ownership';
+import type { ExactRunArtifactIdentityV1 } from '../types/memory-engineering';
 
 export interface WorkCoverBriefV1 {
   version: 1

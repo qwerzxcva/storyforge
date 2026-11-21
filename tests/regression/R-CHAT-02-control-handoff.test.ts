@@ -3,15 +3,15 @@ import {canonicalStringify} from '../../src/lib/agent/run/hash'
 import {formatInteractionRuntimeContextV1} from '../../src/lib/character-interaction/context-format'
 import {estimateTokens} from '../../src/lib/ai/context-budget'
 import type {CharacterInteractionRuntimeState, InteractionRuntimeMessage} from '../../src/lib/types'
-import {createInitialInteractionState, buildInteractionContextWindow, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/character-interaction/runtime'
-import {validateImportedChatNarrativeEvidenceStateV1, validateImportedChatNarrativeEvidenceEventV1} from '../../src/lib/character-interaction/narrative-evidence-import'
+import {createInitialInteractionState, buildInteractionContextWindow, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/legacy-compat/character-interaction/runtime'
+import {validateImportedChatNarrativeEvidenceStateV1, validateImportedChatNarrativeEvidenceEventV1} from '../../src/lib/legacy-compat/character-interaction/narrative-evidence-import'
 import {chatActionRequestOptionsV1} from '../../src/lib/character-interaction/action-output-contract'
 import {parseChatNarrativeOutcomeWireV1, assertChatControlHandoffBindingsV1} from '../../src/lib/character-interaction/control-handoff-wire'
-import {applyReviewedChatNarrativeActionV1, requestChatNarrativeTriggerV1} from '../../src/lib/character-interaction/narrative-actions'
+import {applyReviewedChatNarrativeActionV1, requestChatNarrativeTriggerV1} from '../../src/lib/legacy-compat/character-interaction/narrative-actions'
 import {chatActionReviewFixture, chatNarrativeFixture} from '../helpers/chat-narrative-fixture'
 import {applyReviewedChatControlHandoffV1, assertChatControlHandoffContextV1, CHAT_CONTROL_HANDOFF_REVIEW_CHECKS_V1,
   parseChatControlHandoffV1, parseChatControlHandoffReviewV1, previewChatControlHandoffV1,
-  type ChatControlHandoffV1, type ChatControlHandoffReviewV1} from '../../src/lib/character-interaction/control-handoff-contract'
+  type ChatControlHandoffV1, type ChatControlHandoffReviewV1} from '../../src/lib/legacy-compat/character-interaction/control-handoff-contract'
 
 const handoff: ChatControlHandoffV1 = {version: 1, kind: 'yield-to-player', reason: 'awaiting-player-decision',
   source: {messageId: 'permission', sequence: 3, excerpt: '查看你的包裹需要你明确同意'},

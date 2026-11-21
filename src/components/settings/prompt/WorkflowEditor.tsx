@@ -1,28 +1,14 @@
-import { useMemo, useState } from 'react'
-import { AlertTriangle, GitBranch, List, Plus, Save, Trash2, X } from 'lucide-react'
-import { nanoid } from 'nanoid'
-import { useWorkflowStore } from '../../../stores/workflow'
-import { usePromptStore } from '../../../stores/prompt'
-import { isRetiredPromptModuleKey } from '../../../lib/types/prompt'
-import type {
-  PromptWorkflow,
-  PromptWorkflowGraph,
-  PromptWorkflowStep,
-} from '../../../lib/types/workflow'
-import {
-  ALL_MODULE_KEYS_FOR_WORKFLOW,
-  SAVE_TARGET_PRESETS,
-  saveTargetToValue,
-  valueToSaveTarget,
-} from './workflow-helpers'
-import {
-  WORKFLOW_NODE_HEIGHT,
-  WORKFLOW_NODE_WIDTH,
-  validateWorkflowGraph,
-  workflowGraphFor,
-} from '../../../lib/workflow/graph'
-import { useDialog } from '../../shared/Dialog'
-import { useToast } from '../../shared/Toast'
+import { useMemo, useState } from 'react';
+import { AlertTriangle, GitBranch, List, Plus, Save, Trash2, X } from 'lucide-react';
+import { nanoid } from 'nanoid';
+import { useWorkflowStore } from '../../../stores/workflow';
+import { usePromptStore } from '../../../stores/prompt';
+import { isRetiredPromptModuleKey } from '../../../lib/types/prompt';
+import type { PromptWorkflow, PromptWorkflowGraph, PromptWorkflowStep } from '../../../lib/types/workflow';
+import { ALL_MODULE_KEYS_FOR_WORKFLOW, SAVE_TARGET_PRESETS, saveTargetToValue, valueToSaveTarget } from './workflow-helpers';
+import { WORKFLOW_NODE_HEIGHT, WORKFLOW_NODE_WIDTH, validateWorkflowGraph, workflowGraphFor } from '../../../lib/workflow/graph';
+import { useDialog } from '../../shared/Dialog';
+import { useToast } from '../../shared/Toast';
 import WorkflowCanvas from './WorkflowCanvas'
 
 type EditorMode = 'canvas' | 'details'

@@ -1,8 +1,8 @@
 import { db } from '../../src/lib/db/schema'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { classifyTextOpenWorldRuntimePackageShapeV1 } from '../../src/lib/product/releases'
-import { parseProductRuntimePackageV1 } from '../../src/lib/product-production/runtime-package'
-import { createTextOpenWorldInstance } from '../../src/lib/product/runtime-instances'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { classifyTextOpenWorldRuntimePackageShapeV1 } from '../../src/lib/legacy-compat/product/releases'
+import { parseProductRuntimePackageV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
+import { createTextOpenWorldInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
 import type {
   ProductProductionBriefV3,
   ProductRelease,

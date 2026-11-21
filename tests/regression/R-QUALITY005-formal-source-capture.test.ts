@@ -1,9 +1,9 @@
 import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { verifyFormalRuntimeSourceV1, preparePreviewProductRuntimeSessionRecordV1,
-  insertPreparedProductRuntimeSessionV1, parseProductRuntimeState } from '../../src/lib/product/runtime-core'
-import { createProductRuntimeInstanceFromSource } from '../../src/lib/product/runtime-instances'
-import * as previewSource from '../../src/lib/product-production/preview-source'
+  insertPreparedProductRuntimeSessionV1, parseProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
+import { createProductRuntimeInstanceFromSource } from '../../src/lib/legacy-compat/product/runtime-instances'
+import * as previewSource from '../../src/lib/legacy-compat/product-production/preview-source'
 import { createTextOpenWorldCreatorReleaseFixtureV1 } from '../helpers/text-open-world-creator-release'
 
 async function buildPreview() {

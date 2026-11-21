@@ -8,10 +8,10 @@
  *
  * 句柄持久化在 folder-handle-store.ts（独立 IndexedDB），与本模块配合。
  */
-import { exportProjectJSON, type ProjectExportData } from '../export/json-export'
-import { inspectProjectBackup } from '../export/backup-trust'
-import { db } from '../db/schema'
-import { isWorkspaceUid } from '../memory/identity'
+import { exportProjectJSON, type ProjectExportData } from '../export/json-export';
+import { inspectProjectBackup } from '../export/backup-trust';
+import { db } from '../db/schema';
+import { isWorkspaceUid } from '../memory/identity';
 
 interface WindowWithFSA extends Window {
   showDirectoryPicker?: (opts?: {

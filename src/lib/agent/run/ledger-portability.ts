@@ -1,33 +1,16 @@
 import Dexie from 'dexie'
-import { db } from '../../db/schema'
-import type {
-  AgentRunProjectionV1,
-  AgentRunCheckpointRecord,
-  AgentRunEventRecord,
-  AgentRunRecord,
-  AnyAgentRunEventV1,
-  ImportSession,
-} from '../../types'
-import { assertPortableDocumentImportOriginV1, identifyPrivateReferenceRunsV1 } from '../../import/document-parse-backup-privacy'
-import type { TableSpec } from '../../registry/types'
-import { extractExactArtifactOwnerRootsV1 } from '../../memory/artifact-roots'
-import type { ProjectExportData } from '../../export/json-export'
-import { parseAgentRunEventV1 } from './event-schema'
-import { readAgentRunNodeProducerTupleV1, readRecord } from './schema-utils'
-import { canonicalStringify, hashCanonicalValue } from './hash'
-import {
-  replayAgentRunEventsV1,
-  toAgentRunProjectionBodyV1,
-  completedAgentRunEvidencePrefixV1,
-} from './projection'
-import {
-  portableizeAgentRunContractV1,
-  rebindPortableAgentRunContractV1,
-} from './contract-portability'
-import {
-  AGENT_RUN_MAXIMUM_RESUME_PAYLOAD_BYTES_V1,
-  agentRunUtf8ByteLengthV1,
-} from './checkpoint-contract'
+import { db } from '../../db/schema';
+import type { AgentRunProjectionV1, AgentRunCheckpointRecord, AgentRunEventRecord, AgentRunRecord, AnyAgentRunEventV1, ImportSession } from '../../types';
+import { assertPortableDocumentImportOriginV1, identifyPrivateReferenceRunsV1 } from '../../import/document-parse-backup-privacy';
+import type { TableSpec } from '../../registry/types';
+import { extractExactArtifactOwnerRootsV1 } from '../../memory/artifact-roots';
+import type { ProjectExportData } from '../../export/json-export';
+import { parseAgentRunEventV1 } from './event-schema';
+import { readAgentRunNodeProducerTupleV1, readRecord } from './schema-utils';
+import { canonicalStringify, hashCanonicalValue } from './hash';
+import { replayAgentRunEventsV1, toAgentRunProjectionBodyV1, completedAgentRunEvidencePrefixV1 } from './projection';
+import { portableizeAgentRunContractV1, rebindPortableAgentRunContractV1 } from './contract-portability';
+import { AGENT_RUN_MAXIMUM_RESUME_PAYLOAD_BYTES_V1, agentRunUtf8ByteLengthV1 } from './checkpoint-contract';
 
 type IdMaps = ReadonlyMap<string, ReadonlyMap<number, number>>
 type ExportRow = Record<string, any>
@@ -334,10 +317,10 @@ export async function portableizeAgentRunLedgerExportV1(
       const { freezeTtrpgWorldContextBindingsForExportV1 } = await import('../../product/world-context-portability')
       const worldBindings = await freezeTtrpgWorldContextBindingsForExportV1(localRunId)
       if (worldBindings !== undefined) run.portableWorldContextBindingsJson = worldBindings
-      const { freezeTtrpgOpenRunOriginForExportV1 } = await import('../../ttrpg/open-run-portability')
+      const { freezeTtrpgOpenRunOriginForExportV1 } = await import('../../legacy-compat/ttrpg/open-run-portability')
       const runtimeOrigin = await freezeTtrpgOpenRunOriginForExportV1(localRunId, { contractHash: run.contractHash, lastSequence: run.lastSequence })
       if (runtimeOrigin !== undefined) run.portableRuntimeOriginJson = runtimeOrigin
-      const { freezePublishedRootOriginForExportV1 } = await import('../../product-production/published-root-origin')
+      const { freezePublishedRootOriginForExportV1 } = await import('../../legacy-compat/product-production/published-root-origin')
       const rootOrigin = await freezePublishedRootOriginForExportV1(localRunId)
       if (rootOrigin !== undefined) run.portablePublishedRootOriginJson = rootOrigin
     }
@@ -550,7 +533,7 @@ export async function finalizeImportedAgentRunLedgersV1(input: {
     }
     if (run.portablePublishedRootOriginJson !== undefined) {
       await Dexie.waitFor((async () => {
-        const { assertImportedPublishedRootOriginOwnerV1 } = await import('../../product-production/published-root-origin')
+        const { assertImportedPublishedRootOriginOwnerV1 } = await import('../../legacy-compat/product-production/published-root-origin')
         await assertImportedPublishedRootOriginOwnerV1(run)
       })())
     }
@@ -675,7 +658,7 @@ export async function finalizeImportedAgentRunLedgersV1(input: {
       updatedAt: appendedImportTerminalEvent ? Date.now() : run.updatedAt,
     })
     if (run.portableRuntimeOriginJson !== undefined) {
-      const { readTtrpgOpenRunOriginV1 } = await Dexie.waitFor(import('../../ttrpg/open-run-portability'))
+      const { readTtrpgOpenRunOriginV1 } = await Dexie.waitFor(import('../../legacy-compat/ttrpg/open-run-portability'))
       await readTtrpgOpenRunOriginV1(runId, 'archive')
     }
 

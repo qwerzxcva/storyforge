@@ -1,26 +1,15 @@
 import Dexie from 'dexie'
-import { db } from '../../db/schema'
-import type { AgentRunRecord, WorkspaceScope } from '../../types'
-import { assembleContext } from '../../registry/assemble-context'
-import {
-  buildEditImpactGraphV1,
-  type EditImpactGraphV1,
-} from '../../consistency/impact-analysis'
-import {
-  buildImpactRemediationPlanV1,
-  type ImpactRemediationPlanV1,
-} from '../../consistency/impact-remediation-plan'
-import { hashChapterText } from '../../ai/chapter-memory/text-normalization'
-import { assertRecordInScope, readOwnedRows } from '../../workspace/scope'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import { hashCanonicalValue } from './hash'
+import { db } from '../../db/schema';
+import type { AgentRunRecord, WorkspaceScope } from '../../types';
+import { assembleContext } from '../../registry/assemble-context';
+import { buildEditImpactGraphV1, type EditImpactGraphV1 } from '../../consistency/impact-analysis';
+import { buildImpactRemediationPlanV1, type ImpactRemediationPlanV1 } from '../../consistency/impact-remediation-plan';
+import { hashChapterText } from '../../ai/chapter-memory/text-normalization';
+import { assertRecordInScope, readOwnedRows } from '../../workspace/scope';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, type AgentRunSnapshotV1 } from './event-store';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { hashCanonicalValue } from './hash';
 
 export const IMPACT_REVIEW_STEP_ID_V1 = 'impact-remediation:author-review' as const
 export const IMPACT_REVIEW_VERIFIER_SET_V1 = 'impact-remediation-author-review-terminal-v1' as const

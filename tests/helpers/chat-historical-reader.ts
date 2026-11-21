@@ -1,5 +1,5 @@
 import {vi} from 'vitest'
-import * as runtime from '../../src/lib/character-interaction/runtime'
+import * as runtime from '../../src/lib/legacy-compat/character-interaction/runtime'
 import * as coordinator from '../../src/lib/character-interaction/coordinator-selection'
 import * as manifests from '../../src/lib/agent/run/context-manifest'
 import * as skills from '../../src/lib/agent/skill-registry'

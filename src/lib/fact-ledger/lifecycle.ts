@@ -1,5 +1,5 @@
-import { db } from '../db/schema'
-import type { FactStatus, TemporalFact } from '../types/temporal-fact'
+import { db } from '../db/schema';
+import type { FactStatus, TemporalFact } from '../types/temporal-fact';
 
 const now = () => Date.now()
 

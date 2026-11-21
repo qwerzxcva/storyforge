@@ -4,21 +4,21 @@ import path from 'node:path'
 import {
   assertDegreeEffectPlansDifferV2,
   parseTtrpgEffectPlanV2,
-} from '../../src/lib/ttrpg/effect-plan'
+} from '../../src/lib/legacy-compat/ttrpg/effect-plan'
 import { resolveTtrpgResolutionV2 } from '../../src/lib/ttrpg/resolution'
 import {
   createDormantTtrpgActionEconomyV2,
   spendTtrpgActionEconomyV2,
   startTtrpgActionEconomySceneV2,
-} from '../../src/lib/ttrpg/action-economy'
+} from '../../src/lib/legacy-compat/ttrpg/action-economy'
 import { createStoryForgeRulePackV1 } from '../../src/lib/ttrpg/storyforge-rule-pack'
 import { createD20FantasyRulePackV1 } from '../../src/lib/ttrpg/d20-fantasy-rule-pack'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import {
   applyTtrpgHouseRuleOverlayV2,
   parseTtrpgHouseRuleOverlayV2,
   previewTtrpgCheckProbabilityV2,
-} from '../../src/lib/ttrpg/house-rule'
+} from '../../src/lib/legacy-compat/ttrpg/house-rule'
 
 describe('TTRPG-3A · RulePack V2 generic resolver and EffectPlan DSL', () => {
   it('d100 共享合同覆盖规则导入、运行时、联机与正式 UI，没有各自维护上限', () => {

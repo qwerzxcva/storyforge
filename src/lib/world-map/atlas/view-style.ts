@@ -1,4 +1,4 @@
-import type { AtlasSymbolStyle } from './symbols'
+import type { AtlasSymbolStyle } from './symbols';
 
 export type AtlasViewStyle = 'sketch' | 'illustrated' | 'painted'
 

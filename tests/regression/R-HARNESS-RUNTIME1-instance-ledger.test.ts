@@ -1,4 +1,4 @@
-import {CHAT_MEMORY_CHECKS} from '../../src/lib/character-interaction/memory-review-contract'
+import {CHAT_MEMORY_CHECKS} from '../../src/lib/legacy-compat/character-interaction/memory-review-contract'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { appendAgentRunEventV1 } from '../../src/lib/agent/run/event-store'
 import {
@@ -14,7 +14,7 @@ import {
   readProductRuntimeState,
   readProductRuntimeStateVersion,
   startInteractionScene,
-} from '../../src/lib/character-interaction/runtime-api'
+} from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import type {
   ProductRuntimePackageV1,
   WorkspaceScope,

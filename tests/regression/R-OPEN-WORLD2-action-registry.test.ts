@@ -3,7 +3,7 @@ import { createTextOpenWorldActionRegistryV1 } from '../../src/lib/open-world/ac
 import {
   createInitialTextOpenWorldSessionProjectionV1,
   deriveTextOpenWorldContextsV1,
-} from '../../src/lib/open-world/session-projection'
+} from '../../src/lib/legacy-compat/open-world/session-projection'
 import type { TextOpenWorldActionProjectionContextV1 } from '../../src/lib/types'
 import {
   createTextOpenWorldVNextFixture,

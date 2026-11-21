@@ -1,6 +1,6 @@
 /** Isolated fresh Work fixture using only normal authoring/rule/world services. */
 import { createTtrpgDraft, saveTtrpgDraft, selectTtrpgWorld } from '../../src/lib/ttrpg/authoring-service'
-import { defaultTtrpgSettingsV2 } from '../../src/lib/ttrpg/authoring-contract-v2'
+import { defaultTtrpgSettingsV2 } from '../../src/lib/legacy-compat/ttrpg/authoring-contract-v2'
 import { saveTtrpgRulePackV1, saveTtrpgRulePackV2 } from '../../src/lib/ttrpg/rule-pack-library'
 import { createMistHarborWorld } from '../../src/lib/world-engine/mist-harbor-preset'
 import { createStoryForgeRulePackV1 } from '../../src/lib/ttrpg/storyforge-rule-pack'

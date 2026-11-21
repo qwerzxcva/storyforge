@@ -1,4 +1,4 @@
-import { isShowcaseAssetRequest, scopedStorage, SHOWCASE_NOTICE, SHOWCASE_STORAGE_PREFIX } from './policy'
+import { isShowcaseAssetRequest, scopedStorage, SHOWCASE_NOTICE, SHOWCASE_STORAGE_PREFIX } from './policy';
 
 /** Runs before importing any stores, router or application module. */
 export function installShowcaseBoundary(options: {

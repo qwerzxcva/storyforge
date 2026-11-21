@@ -1,47 +1,17 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { Download, LoaderCircle, Pause, Play, RotateCcw, Save, Upload } from 'lucide-react'
-import { isAIConfigReady } from '../../lib/ai/config-readiness'
-import { hashCanonicalValue } from '../../lib/agent/run/hash'
-import {
-  cleanupStrandedCreativeReliabilityWorkspacesV1,
-  createCreativeReliabilityBrowserDependenciesV1,
-} from '../../lib/evals/creative-reliability/browser'
-import {
-  claimCreativeReliabilityHeldoutRunV1,
-} from '../../lib/evals/creative-reliability/evidence'
-import {
-  CREATIVE_RELIABILITY_FIXTURE_SET_VERSION_V1,
-  getCreativeReliabilityFixturesV1,
-} from '../../lib/evals/creative-reliability/fixtures'
-import {
-  CREATIVE_RELIABILITY_VERIFIER_PROMPT_VERSION_V1,
-} from '../../lib/evals/creative-reliability/protocol'
-import {
-  applyCreativeReliabilityReviewsToCheckpointV1,
-  archiveCreativeReliabilityEvalCheckpointV1,
-  clearCreativeReliabilityEvalCheckpointV1,
-  exportCreativeReliabilityEvalCheckpointV1,
-  importCreativeReliabilityEvalCheckpointV1,
-  loadCreativeReliabilityEvalCheckpointArchivesV1,
-  loadCreativeReliabilityEvalCheckpointV1,
-  persistCreativeReliabilityEvalCheckpointV1,
-  runCreativeReliabilityEvalV1,
-  verifyCreativeReliabilityEvalCheckpointV1,
-  type CreativeReliabilityEvalCheckpointV1,
-} from '../../lib/evals/creative-reliability/runner'
-import type {
-  CreativeReliabilityBlindVerdictV1,
-  CreativeReliabilityEvalSplitV1,
-  CreativeReliabilityEvalVariantV1,
-  CreativeReliabilityHumanReviewV1,
-} from '../../lib/evals/creative-reliability/types'
-import type { AIConfigPreset } from '../../lib/types'
-import { APP_BUILD_ID } from '../../lib/version'
-import {
-  resolveAIConfigPresetV1,
-  useAIConfigStore,
-} from '../../stores/ai-config'
-import { useDialog } from '../shared/Dialog'
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Download, LoaderCircle, Pause, Play, RotateCcw, Save, Upload } from 'lucide-react';
+import { isAIConfigReady } from '../../lib/ai/config-readiness';
+import { hashCanonicalValue } from '../../lib/agent/run/hash';
+import { cleanupStrandedCreativeReliabilityWorkspacesV1, createCreativeReliabilityBrowserDependenciesV1 } from '../../lib/evals/creative-reliability/browser';
+import { claimCreativeReliabilityHeldoutRunV1 } from '../../lib/evals/creative-reliability/evidence';
+import { CREATIVE_RELIABILITY_FIXTURE_SET_VERSION_V1, getCreativeReliabilityFixturesV1 } from '../../lib/evals/creative-reliability/fixtures';
+import { CREATIVE_RELIABILITY_VERIFIER_PROMPT_VERSION_V1 } from '../../lib/evals/creative-reliability/protocol';
+import { applyCreativeReliabilityReviewsToCheckpointV1, archiveCreativeReliabilityEvalCheckpointV1, clearCreativeReliabilityEvalCheckpointV1, exportCreativeReliabilityEvalCheckpointV1, importCreativeReliabilityEvalCheckpointV1, loadCreativeReliabilityEvalCheckpointArchivesV1, loadCreativeReliabilityEvalCheckpointV1, persistCreativeReliabilityEvalCheckpointV1, runCreativeReliabilityEvalV1, verifyCreativeReliabilityEvalCheckpointV1, type CreativeReliabilityEvalCheckpointV1 } from '../../lib/evals/creative-reliability/runner';
+import type { CreativeReliabilityBlindVerdictV1, CreativeReliabilityEvalSplitV1, CreativeReliabilityEvalVariantV1, CreativeReliabilityHumanReviewV1 } from '../../lib/evals/creative-reliability/types';
+import type { AIConfigPreset } from '../../lib/types';
+import { APP_BUILD_ID } from '../../lib/version';
+import { resolveAIConfigPresetV1, useAIConfigStore } from '../../stores/ai-config';
+import { useDialog } from '../shared/Dialog';
 
 const GENERATOR_PAIR_VERSION = 'crel-story-arc-paired-v1'
 

@@ -3,7 +3,7 @@ import { avgSoundPublisherFixtureV2 } from './avg-sound-publisher-fixture'
 import { avgSoundHarnessFixtureV1, adoptAvgSoundSourcesV1, adoptAvgSoundArtifactV1, cycleAvgSoundUntilV1,
   acceptedAvgSoundArtifactV1, confirmAvgSoundCandidateV1 } from './avg-sound-harness-fixture'
 import { avgSoundAuthorReviewFixtureV3, avgSoundAuthorChoiceFixtureV1 } from './avg-sound-review-fixture'
-import { avgSoundProductionBudgetV1, avgSoundProductionGateIdsV1 } from '../../src/lib/avg/sound-production-policy'
+import { avgSoundProductionBudgetV1, avgSoundProductionGateIdsV1 } from '../../src/lib/legacy-compat/avg/sound-production-policy'
 import { configureAvgChosenSoundDraftV1, stageAvgWorkspaceInputV1 } from '../../src/lib/avg/assembly-service'
 import { readAvgDraftV1 } from '../../src/lib/avg/draft-service'
 

@@ -1,7 +1,7 @@
 import {expect, it} from 'vitest'
 import {chatNarrativeFixture, chatActionReviewFixture} from '../helpers/chat-narrative-fixture'
-import {createInitialInteractionState, interactionVisibilityView, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/character-interaction/runtime'
-import {applyChatNarrativeActionV1, applyReviewedChatNarrativeActionV1, requestChatNarrativeTriggerV1} from '../../src/lib/character-interaction/narrative-actions'
+import {createInitialInteractionState, interactionVisibilityView, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/legacy-compat/character-interaction/runtime'
+import {applyChatNarrativeActionV1, applyReviewedChatNarrativeActionV1, requestChatNarrativeTriggerV1} from '../../src/lib/legacy-compat/character-interaction/narrative-actions'
 import type {ChatNarrativeStateV1} from '../../src/lib/types/chat-narrative'
 
 import {chatFactEvidenceAction as action} from '../helpers/chat-fact-evidence'

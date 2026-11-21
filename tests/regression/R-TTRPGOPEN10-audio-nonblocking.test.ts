@@ -11,7 +11,7 @@ import {
   splitTtrpgVoiceTextV1,
   type TtrpgAudioCueV1,
   type TtrpgAudioCueAppliedEventV1,
-} from '../../src/lib/ttrpg/open-audio-runtime'
+} from '../../src/lib/legacy-compat/ttrpg/open-audio-runtime'
 
 function voiceCue(overrides: Partial<TtrpgAudioCueV1> = {}): TtrpgAudioCueV1 {
   const text = overrides.text ?? '潮声压过了灯室里的低语。'

@@ -1,4 +1,4 @@
-import type { AssembleContextSourceEvidence } from '../registry/types'
+import type { AssembleContextSourceEvidence } from '../registry/types';
 
 export const AGENT_CONTEXT_PROFILES = ['lean', 'balanced', 'full'] as const
 export type AgentContextProfile = typeof AGENT_CONTEXT_PROFILES[number]

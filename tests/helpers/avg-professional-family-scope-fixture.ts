@@ -1,6 +1,6 @@
 import { createAvgAuthoringPresetV1 } from '../../src/lib/avg/authoring-presets'
 import type { AvgVisualPlanningDraftV4 } from '../../src/lib/avg/visual-planning-workspace'
-import type { AvgVisualRequirementTemplateV1, AvgVisualDesignKindV1 } from '../../src/lib/avg/visual-planning-contract'
+import type { AvgVisualRequirementTemplateV1, AvgVisualDesignKindV1 } from '../../src/lib/legacy-compat/avg/visual-planning-contract'
 
 /** Author-owned engineering intent only, with no model/Run/Blob/acceptance.
  * Exact source identity and consumer declarations remain validated by code. */

@@ -9,7 +9,7 @@ import { commitTextOpenWorldCommandV1 } from '../../src/lib/open-world/commands'
 import {
   hashProductRuntimeStateV1,
   readProductRuntimeState,
-} from '../../src/lib/product/runtime-core'
+} from '../../src/lib/legacy-compat/product/runtime-core'
 import { EMPTY_PRODUCT_RUNTIME_STATE, type TextOpenWorldRuntimePackageV1 } from '../../src/lib/types'
 import { useTextOpenWorldPlayerStore } from '../../src/stores/text-open-world-player'
 import { createGovernedTextOpenWorldSessionFixtureV1 } from '../helpers/text-open-world-product-session'

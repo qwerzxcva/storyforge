@@ -2,9 +2,9 @@
  * 物品栏提取适配器 — Phase 25.5.2-b
  * 从章节正文中提取各角色的物品获得/消耗事件。
  */
-import type { ChatMessage, ItemLedgerAction } from '../../types'
-import { usePromptStore } from '../../../stores/prompt'
-import { renderPrompt } from '../prompt-engine'
+import type { ChatMessage, ItemLedgerAction } from '../../types';
+import { usePromptStore } from '../../../stores/prompt';
+import { renderPrompt } from '../prompt-engine';
 
 export interface ExtractedItemEvent {
   itemName: string

@@ -3,7 +3,7 @@ import { db } from '../../src/lib/db/schema'
 import {
   putMediaBlobObject, readMediaBlobObjectData,
   type MediaBlobCommitGuardV1,
-} from '../../src/lib/product-production/media-blob-store'
+} from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import { resolveWorkspaceOwnership } from '../../src/lib/workspace/ownership'
 import { seedCurrentProject } from '../helpers/current-workspace'
 import * as workspaceScope from '../../src/lib/workspace/scope'

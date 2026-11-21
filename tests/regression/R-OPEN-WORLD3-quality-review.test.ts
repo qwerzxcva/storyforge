@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { getAgentSkillV1 } from '../../src/lib/agent/skill-registry'
 import { CONTEXT_SOURCE_BY_KEY } from '../../src/lib/registry/context-sources'
-import { TEXT_OPEN_WORLD_PRODUCTION_TASK_CONTRACTS_V1 } from '../../src/lib/open-world/production-contract'
+import { TEXT_OPEN_WORLD_PRODUCTION_TASK_CONTRACTS_V1 } from '../../src/lib/legacy-compat/open-world/production-contract'
 
 describe('R-OPEN-WORLD3-quality-review · 确定性预检与双模型评审合同', () => {
   it('强制V1先行，并让双评审进入V3前的同一依赖闭包', () => {

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { selectAvgSceneMediaWindowV1 } from '../../src/lib/avg/scene-media-window'
 import { compileAvgExecutablePackageV2 } from '../../src/lib/avg/executable-compiler'
-import { EMPTY_AVG_STAGE } from '../../src/lib/avg/runtime'
+import { EMPTY_AVG_STAGE } from '../../src/lib/legacy-compat/avg/runtime'
 import { avgNativePackage, avgNativeScripts } from '../helpers/avg-native-fixture'
 import { avgSystemFixture } from '../helpers/avg-system-fixture'
 import { avgReadingAudioFixture, avgReadingFixture } from '../helpers/avg-reading-fixture'

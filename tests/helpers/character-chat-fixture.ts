@@ -1,5 +1,5 @@
 import type { ProductRuntimePackageV1, WorkspaceScope } from '../../src/lib/types';
-import { readProductRuntimeStateVersion, startInteractionScene, commitInteractionPlayerMessage } from '../../src/lib/character-interaction/runtime-api';
+import { readProductRuntimeStateVersion, startInteractionScene, commitInteractionPlayerMessage } from '../../src/lib/legacy-compat/character-interaction/runtime-api';
 import { seedCurrentProductBuild } from './current-product-build';
 import { currentProductSelection, loadCurrentProductWorldSourceCatalogV1, seedCurrentProductWorld } from './current-product-world';
 export async function seedChatRuntimeFixture(multi = false): Promise<{

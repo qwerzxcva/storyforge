@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { getAgentSkillV1 } from '../../src/lib/agent/skill-registry'
 import { CONTEXT_SOURCE_BY_KEY } from '../../src/lib/registry/context-sources'
-import { TEXT_OPEN_WORLD_PRODUCTION_TASK_CONTRACTS_V1 } from '../../src/lib/open-world/production-contract'
+import { TEXT_OPEN_WORLD_PRODUCTION_TASK_CONTRACTS_V1 } from '../../src/lib/legacy-compat/open-world/production-contract'
 
 describe('R-OPEN-WORLD3-system-finalize · P2表现与P10系统收口合同', () => {
   it('登记原子Context、正式Skill和完整P10输入输出边界', () => {

@@ -1,9 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readyOpenTtrpgSessionV1 } from '../helpers/open-ttrpg-session'
-import { ttrpgOpenPredicateContextV1 } from '../../src/lib/ttrpg/open-rule-plan'
-import { createTtrpgAbilityRuntimeStateV2, ttrpgAbilityStateKeyV2 } from '../../src/lib/ttrpg/ability-ledger'
+import { ttrpgOpenPredicateContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-rule-plan'
+import { createTtrpgAbilityRuntimeStateV2, ttrpgAbilityStateKeyV2 } from '../../src/lib/legacy-compat/ttrpg/ability-ledger'
 
 describe('R-TTRPGOPEN1 current ability availability', () => {
   beforeEach(async () => { await db.delete(); await db.open() })

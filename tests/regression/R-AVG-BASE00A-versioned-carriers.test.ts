@@ -3,19 +3,19 @@ import { db } from '../../src/lib/db/schema'
 import { createWorkspace } from '../../src/lib/workspace/create-workspace'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import { deleteWork } from '../../src/lib/workspace/lifecycle'
-import { assertProductReleaseUnchanged, parseAvgProductReleaseManifest } from '../../src/lib/product/releases'
-import { createReleasedProductRuntimeSession, createPreviewProductRuntimeSession } from '../../src/lib/product/runtime-core'
+import { assertProductReleaseUnchanged, parseAvgProductReleaseManifest } from '../../src/lib/legacy-compat/product/releases'
+import { createReleasedProductRuntimeSession, createPreviewProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
 import {
   parseProductRuntimePackage, parseProductRuntimePackageV1, parseProductRuntimePackageV2,
   parseProductReleaseManifest, parseProductReleaseManifestV1,
   verifyProductReleaseManifest,
-} from '../../src/lib/product-production/runtime-package'
+} from '../../src/lib/legacy-compat/product-production/runtime-package'
 import {
   createProductBuildPreviewManifestV1,
   parseProductBuildPreviewManifest, verifyProductBuildPreviewManifest,
-} from '../../src/lib/product-production/preview-manifest'
-import { verifyProductRuntimeSourceEnvelope, verifyProductRuntimeSource } from '../../src/lib/product-production/preview-source'
-import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+} from '../../src/lib/legacy-compat/product-production/preview-manifest'
+import { verifyProductRuntimeSourceEnvelope, verifyProductRuntimeSource } from '../../src/lib/legacy-compat/product-production/preview-source'
+import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { createFixtureProductReleaseManifestV1 } from '../helpers/product-release-v1'
 import { fixture, legacyPackage, seedRelease, seedBuild } from '../helpers/avg-carrier-fixture'
 

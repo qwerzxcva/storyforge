@@ -1,15 +1,4 @@
-import type {
-  MapGenConfig,
-  MapScaleResolution,
-  MapSpatialEntity,
-  MapSpatialRelation,
-  SpatialDirection,
-  SpatialDistanceTier,
-  SpatialDistanceUnit,
-  SpatialLayoutDiagnostics,
-  SpatialPlacement,
-  SpatialScaleTier,
-} from './engine/types'
+import type { MapGenConfig, MapScaleResolution, MapSpatialEntity, MapSpatialRelation, SpatialDirection, SpatialDistanceTier, SpatialDistanceUnit, SpatialLayoutDiagnostics, SpatialPlacement, SpatialScaleTier } from './engine/types';
 
 const DIRECTION_VECTORS: Record<SpatialDirection, readonly [number, number]> = {
   north: [0, -1],

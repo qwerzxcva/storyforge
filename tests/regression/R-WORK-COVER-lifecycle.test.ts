@@ -9,7 +9,7 @@ import { adoptWorkCoverV1, prepareWorkCoverAdoptionV1, renderWorkCoverV1 } from 
 import { adopt } from '../../src/lib/registry/adopt'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import { sha256BinaryV1 } from '../../src/lib/media/blob-store'
-import { collectUnreferencedMediaBlobObjects } from '../../src/lib/product-production/media-blob-store'
+import { collectUnreferencedMediaBlobObjects } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import { deleteWork } from '../../src/lib/workspace/lifecycle'
 import { updateWorkCover } from '../../src/lib/workspace/works'
 import { normalizeProjectBackup } from '../../src/lib/export/backup-trust'

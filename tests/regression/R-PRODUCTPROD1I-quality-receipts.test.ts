@@ -20,19 +20,19 @@ import {
   requirePassedProductMediaRuntimeGateV1,
   requirePassedTextAdventureHumanPlaytestGateV1,
   requirePassedTextAdventureHumanVisualReviewGateV1,
-} from '../../src/lib/product-production/quality-receipts'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
-import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { createProductBuildPreviewManifestV1 } from '../../src/lib/product-production/preview-manifest'
-import { parseProductRuntimePackageV1 } from '../../src/lib/product-production/runtime-package'
+} from '../../src/lib/legacy-compat/product-production/quality-receipts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
+import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { createProductBuildPreviewManifestV1 } from '../../src/lib/legacy-compat/product-production/preview-manifest'
+import { parseProductRuntimePackageV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
 import { buildUpperProductModulesV1 } from '../../src/lib/product-production/product-adapters'
 import { parseProductMediaRequirementsArtifactV2 } from '../../src/lib/product-production/production-executor'
-import { putMediaBlobObject } from '../../src/lib/product-production/media-blob-store'
-import { compileTextAdventureProductionBriefV1 } from '../../src/lib/adventure/production-brief'
+import { putMediaBlobObject } from '../../src/lib/legacy-compat/product-production/media-blob-store'
+import { compileTextAdventureProductionBriefV1 } from '../../src/lib/legacy-compat/adventure/production-brief'
 import { createWorkspace } from '../../src/lib/workspace/create-workspace'
 import { commitNarrativeChoice, readProductRuntimeStateVersion } from '../../src/lib/avg/runtime-api'
 import { commitAdventureAction, commitAdventureNarrativeChoice } from '../../src/lib/adventure/runtime-api'
-import { createProductRuntimeInstance } from '../../src/lib/product/runtime-instances'
+import { createProductRuntimeInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
 import { EMPTY_PRODUCT_RUNTIME_STATE } from '../../src/lib/types'
 import { CURRENT_PRODUCT_RESOURCE_KEYS, CURRENT_PRODUCT_SOURCE_CATALOG, currentProductSelection } from '../helpers/current-product-world'
 import {

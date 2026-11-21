@@ -1,4 +1,4 @@
-import { DIAGNOSTIC_ACTIONS, DIAGNOSTIC_AREAS, parseDiagnosticDetails, type DiagnosticStep } from './diagnostic-context'
+import { DIAGNOSTIC_ACTIONS, DIAGNOSTIC_AREAS, parseDiagnosticDetails, type DiagnosticStep } from './diagnostic-context';
 
 export const DIAGNOSTIC_CONTEXT_KEY = 'storyforge-diagnostic-context-v1'
 const TRAIL_KEY = 'storyforge-operation-trail-v1'

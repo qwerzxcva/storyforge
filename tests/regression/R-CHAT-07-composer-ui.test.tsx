@@ -2,7 +2,7 @@ import {act, createElement} from 'react'
 import {createRoot, type Root} from 'react-dom/client'
 import {afterEach, beforeEach, expect, it, vi} from 'vitest'
 import type {ChatComposerDraftV1} from '../../src/lib/types'
-import {ChatComposerConflictError} from '../../src/lib/character-interaction/composer-draft-contract'
+import {ChatComposerConflictError} from '../../src/lib/legacy-compat/character-interaction/composer-draft-contract'
 import {useChatComposerDraft} from '../../src/components/character-interaction/useChatComposerDraft'
 
 const mocks = vi.hoisted(() => ({read: vi.fn(), save: vi.fn()}))

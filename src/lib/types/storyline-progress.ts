@@ -1,4 +1,4 @@
-import type { NarrativeDomainMetadataV1, NarrativeDomainFieldsV1 } from './narrative-domain'
+import type { NarrativeDomainMetadataV1, NarrativeDomainFieldsV1 } from './narrative-domain';
 export const STORYLINE_PROGRESS_STATUSES = [
   'dormant',
   'active',

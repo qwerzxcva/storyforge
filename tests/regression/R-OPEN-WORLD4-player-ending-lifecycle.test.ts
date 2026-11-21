@@ -10,15 +10,15 @@ import {
   createTextOpenWorldCheckpointV1,
 } from '../../src/lib/open-world/checkpoints'
 import { commitTextOpenWorldCommandV1 } from '../../src/lib/open-world/commands'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
 import { commitTextOpenWorldOutcomeBatchV1 } from '../../src/lib/open-world/events'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
-import { parseTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
+import { parseTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
 import {
   branchProductRuntimeSession,
   hashProductRuntimeStateV1,
   readProductRuntimeState,
-} from '../../src/lib/product/runtime-core'
+} from '../../src/lib/legacy-compat/product/runtime-core'
 import type { ProductRuntimeEvent } from '../../src/lib/types'
 import {
   createTextOpenWorldPlayerJourneyFixtureV1,

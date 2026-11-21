@@ -6,7 +6,7 @@ import { readTtrpgOpenBriefDeskV1, requestTtrpgOpenBriefDeskV1, resumeTtrpgOpenB
   rejectTtrpgOpenBriefDeskV1, finishTtrpgOpenBriefDeskV1, cancelTtrpgOpenBriefDeskPreparedV1 } from '../../src/lib/ttrpg/open-brief-service'
 import { startTtrpgOpenEpochV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { prepareTtrpgOpenBriefInputV1 } from '../../src/lib/ttrpg/open-intent-input'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { validateRegistry } from '../../src/lib/registry/validate'
 
 const rawInput = '回顾旧港，保留原观察者与推测。'

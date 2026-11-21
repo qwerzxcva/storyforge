@@ -1,9 +1,9 @@
 import { avgSoundPlanningFixtureV1 } from './avg-sound-planning-fixture'
 import { prepareNativeAvgAssembly } from './avg-production-assembly-fixture'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 import { parseAvgSoundPlanningBriefV1, AVG_SOUND_TEXT_CAPABILITY_V1, AVG_SOUND_MUSIC_CAPABILITY_V1,
-  AVG_SOUND_TEXT_DATA_CLASS_V1, AVG_SOUND_MUSIC_DATA_CLASS_V1 } from '../../src/lib/avg/sound-production-brief'
-import { avgSoundProductionBudgetV1, avgSoundProductionGateIdsV1 } from '../../src/lib/avg/sound-production-policy'
+  AVG_SOUND_TEXT_DATA_CLASS_V1, AVG_SOUND_MUSIC_DATA_CLASS_V1 } from '../../src/lib/legacy-compat/avg/sound-production-brief'
+import { avgSoundProductionBudgetV1, avgSoundProductionGateIdsV1 } from '../../src/lib/legacy-compat/avg/sound-production-policy'
 
 /** Real isolated S2 supplies the outer Brief. The sound contract itself is not
  * started and this fixture grants no sound producer/Run/audio acceptance. */

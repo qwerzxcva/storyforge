@@ -1,14 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { setupIdentityKnowledgeRuntimeV1 } from '../helpers/open-identity-knowledge-runtime'
-import { loadTtrpgOpenPartyProjectionV1, loadTtrpgOpenCommonProjectionV1, loadTtrpgOpenKpPartyProjectionV1 } from '../../src/lib/ttrpg/open-player-context'
-import * as source from '../../src/lib/product-production/preview-source'
-import * as plan from '../../src/lib/ttrpg/open-rule-plan'
-import { configureTtrpgSessionParticipantV2, readTtrpgSessionParticipantsV2 } from '../../src/lib/ttrpg/participants'
-import { branchProductRuntimeSession, readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { loadTtrpgOpenPartyProjectionV1, loadTtrpgOpenCommonProjectionV1, loadTtrpgOpenKpPartyProjectionV1 } from '../../src/lib/legacy-compat/ttrpg/open-player-context'
+import * as source from '../../src/lib/legacy-compat/product-production/preview-source'
+import * as plan from '../../src/lib/legacy-compat/ttrpg/open-rule-plan'
+import { configureTtrpgSessionParticipantV2, readTtrpgSessionParticipantsV2 } from '../../src/lib/legacy-compat/ttrpg/participants'
+import { branchProductRuntimeSession, readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { completeTtrpgOpenSessionZeroV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { openEnvelopeV1, OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
-import { stableProductRuntimeJsonV1 as stable } from '../../src/lib/product/runtime-values'
+import { stableProductRuntimeJsonV1 as stable } from '../../src/lib/legacy-compat/product/runtime-values'
 
 describe('R-TTRPGOPEN9 one verified party snapshot with unchanged recipient projections', { timeout: 30000 }, () => {
   beforeEach(async () => { await db.delete(); await db.open() })

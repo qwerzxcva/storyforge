@@ -2,11 +2,11 @@ import { beforeEach, afterEach, describe, it, expect, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { readyOpenTtrpgSessionV1, OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
 import { publicSituationOutputV1 } from '../helpers/open-public-situation-generation'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readTtrpgOpenPublicSituationDeskV1, requestTtrpgOpenPublicSituationDeskV1, finalizeTtrpgOpenPublicSituationDeskV1,
   enableTtrpgOpenPublicSituationDeskV1, finishTtrpgOpenPublicSituationDeskV1 } from '../../src/lib/ttrpg/open-public-situation-desk'
 import { readTtrpgOpenSituationDeskV1, requestTtrpgOpenSituationDeskV1 } from '../../src/lib/ttrpg/open-situation-desk-service'
-import { loadTtrpgOpenPublicSituationKernelV1 } from '../../src/lib/ttrpg/open-public-situation-kernel'
+import { loadTtrpgOpenPublicSituationKernelV1 } from '../../src/lib/legacy-compat/ttrpg/open-public-situation-kernel'
 import { readTtrpgOpenTableV1, readTtrpgOpenTableContextTraceV1 } from '../../src/lib/ttrpg/open-table-service'
 
 async function setup() {

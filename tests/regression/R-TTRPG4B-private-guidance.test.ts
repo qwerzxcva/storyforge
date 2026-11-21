@@ -4,7 +4,7 @@ import { readyAiKpSession } from '../helpers/ready-ttrpg-session'
 import { adoptTtrpgPrivateGuidanceV1, captureTtrpgPrivateGuidanceViewV1, generateTtrpgPrivateGuidanceV1 } from '../../src/lib/ttrpg/private-guidance'
 import { createTtrpgViewerProjectionV1 } from '../../src/lib/ttrpg/viewer-projection'
 import { changeTtrpgSafetyStatus, readProductRuntimeStateVersion, readProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/ttrpg/runtime-api'
-import { readTtrpgSessionParticipantsV2 } from '../../src/lib/ttrpg/participants'
+import { readTtrpgSessionParticipantsV2 } from '../../src/lib/legacy-compat/ttrpg/participants'
 
 describe('R-TTRPG4B · role-private guidance', () => {
   beforeEach(async () => { await db.delete(); await db.open() })

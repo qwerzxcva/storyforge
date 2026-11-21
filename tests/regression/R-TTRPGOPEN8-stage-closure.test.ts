@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   assertTtrpgOpenStageClosureV1,
   evaluateTtrpgOpenStageClosureV1,
-} from '../../src/lib/ttrpg/open-gates'
+} from '../../src/lib/legacy-compat/ttrpg/open-gates'
 import { openCampaignFixture } from '../helpers/ttrpg-open-content'
 
 describe('R-TTRPGOPEN8 stage closure', () => {

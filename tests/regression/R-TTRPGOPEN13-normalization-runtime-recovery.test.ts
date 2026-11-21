@@ -8,9 +8,9 @@ import { finishTtrpgOpenNormalizationInstanceDraftV1, reconcileTtrpgOpenStoppedN
 import { repairTtrpgOpenNormalizationInstanceResponseReceiptV1, abandonTtrpgOpenNormalizationInstanceWaitV1 } from '../../src/lib/ttrpg/open-situation-request-recovery'
 import { reviewTtrpgOpenOracleCandidateV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { reconcileTtrpgOpenOracleFactRunV1 } from '../../src/lib/ttrpg/open-oracle-adoption'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
-import { ttrpgOpenCallBudgetV1 } from '../../src/lib/ttrpg/open-model-calls'
+import { ttrpgOpenCallBudgetV1 } from '../../src/lib/legacy-compat/ttrpg/open-model-calls'
 
 const decision = 'discard-this-normalization-instance-request-and-close-window' as const
 describe('R-TTRPGOPEN13 original instance normalization recovery without resending', { timeout: 120000 }, () => {

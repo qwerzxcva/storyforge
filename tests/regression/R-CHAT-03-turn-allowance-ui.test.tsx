@@ -3,8 +3,8 @@ import {act, createElement, type ComponentProps} from 'react'
 import {createRoot, type Root} from 'react-dom/client'
 import * as skills from '../../src/lib/agent/skill-registry'
 import NarrativeControls from '../../src/components/character-interaction/NarrativeControls'
-import {createInitialInteractionState} from '../../src/lib/character-interaction/runtime'
-import {requestChatNarrativeTriggerV1} from '../../src/lib/character-interaction/narrative-actions'
+import {createInitialInteractionState} from '../../src/lib/legacy-compat/character-interaction/runtime'
+import {requestChatNarrativeTriggerV1} from '../../src/lib/legacy-compat/character-interaction/narrative-actions'
 import {chatNarrativeFixture} from '../helpers/chat-narrative-fixture'
 
 const originalSkill = skills.getAgentSkillV1

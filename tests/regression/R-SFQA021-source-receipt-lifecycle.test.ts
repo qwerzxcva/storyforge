@@ -16,7 +16,7 @@ import { cascadeRegisteredReferences, deleteWorld } from '../../src/lib/workspac
 import { scopeTransactionTables } from '../../src/lib/workspace/scope'
 import { seedCurrentWorkspace, currentWorkFixtureRecordV1 } from '../helpers/current-workspace'
 import { generateWorldCode } from '../../src/lib/workspace/identity'
-import { putMediaBlobObject } from '../../src/lib/product-production/media-blob-store'
+import { putMediaBlobObject } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import { createSfqa021WorldSharingCarrierV1 as fixture } from '../helpers/sfqa021-world-sharing-carrier'
 
 beforeEach(async () => { await db.delete(); await db.open() })

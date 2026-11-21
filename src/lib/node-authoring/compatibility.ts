@@ -1,9 +1,4 @@
-import type {
-  AuthoringNodeTemplate,
-  AuthoringPortContract,
-  AuthoringPortDefinition,
-  AuthoringSemantic,
-} from './contracts'
+import type { AuthoringNodeTemplate, AuthoringPortContract, AuthoringPortDefinition, AuthoringSemantic } from './contracts';
 
 const CONTENT_SEMANTICS = new Set<AuthoringSemantic>([
   'text',

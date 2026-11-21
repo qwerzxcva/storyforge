@@ -3,7 +3,7 @@ import { avgSoundPlanningFixtureV1 } from '../helpers/avg-sound-planning-fixture
 import { applyAvgSoundChoicesToDraftV1 } from '../../src/lib/avg/sound-configuration'
 import { parseAvgAuthorSoundChoiceV1 } from '../../src/lib/avg/sound-choice-contract'
 import { applyAvgVoiceChoicesToDraftV1 } from '../../src/lib/avg/voice-configuration'
-import { applyAvgCue, EMPTY_AVG_STAGE } from '../../src/lib/avg/runtime'
+import { applyAvgCue, EMPTY_AVG_STAGE } from '../../src/lib/legacy-compat/avg/runtime'
 
 describe('AVG-04B reviewable sound configuration preparation', () => {
   it('binds exact music and sound-effect assets to native Cue channels, preserving existing voice, rules, script and draft', async () => {

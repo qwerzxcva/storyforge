@@ -5,8 +5,8 @@ import {db} from '../../src/lib/db/schema'
 import {useCharacterInteractionPlayerStore as store} from '../../src/stores/character-interaction-player'
 import {useChatMedia, type ChatMediaView} from '../../src/components/character-interaction/useChatMedia'
 import ChatMedia, {ChatImage, ChatMediaGallery} from '../../src/components/character-interaction/ChatMedia'
-import * as source from '../../src/lib/product-production/preview-source'
-import {readProductRuntimeState} from '../../src/lib/character-interaction/runtime-api'
+import * as source from '../../src/lib/legacy-compat/product-production/preview-source'
+import {readProductRuntimeState} from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import {seedChatMediaPlayerFixture} from '../helpers/chat-media-fixture'
 
 let host: HTMLDivElement, root: Root, view: ChatMediaView

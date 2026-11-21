@@ -9,8 +9,8 @@ import { prepareAvgCharacterFamilyProposalV1,saveAvgCharacterFamilyBatchDraftV1 
 import { setAvgCharacterFamilyReservedBackdropV1,buildAvgCharacterFamilyForegroundProcessingPlanV1 } from '../../src/lib/avg/character-family-foreground'
 import { projectAvgForegroundCanvasRecipeV1 } from '../../src/lib/avg/image-processing-contract-v2'
 import { avgFamilyForegroundFixture,AVG_FAMILY_FOREGROUND_DECLARATION_FIXTURE } from '../helpers/avg-family-foreground-fixture'
-import { AVG_RESERVED_MAGENTA_INVARIANT_V1 } from '../../src/lib/avg/image-foreground-contract'
-import { AVG_FOREGROUND_BOUNDARY_UNMIX_ID_V2 } from '../../src/lib/avg/image-foreground-boundary-unmix'
+import { AVG_RESERVED_MAGENTA_INVARIANT_V1 } from '../../src/lib/legacy-compat/avg/image-foreground-contract'
+import { AVG_FOREGROUND_BOUNDARY_UNMIX_ID_V2 } from '../../src/lib/legacy-compat/avg/image-foreground-boundary-unmix'
 
 vi.mock('../../src/components/avg/GeneratedReferencePicker',()=>({default:()=>null}))
 const roots:Root[]=[]

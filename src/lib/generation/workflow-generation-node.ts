@@ -1,6 +1,6 @@
-import type { UseAIStreamReturn } from '../../hooks/useAIStream'
-import type { ChatMessage } from '../types'
-import type { GenerationNode } from './generation-node'
+import type { UseAIStreamReturn } from '../../hooks/useAIStream';
+import type { ChatMessage } from '../types';
+import type { GenerationNode } from './generation-node';
 
 /**
  * PromptWorkflow 步骤到统一 GenerationNode 的实验适配器。

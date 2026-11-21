@@ -1,4 +1,4 @@
-import type { AIProvider } from '../types'
+import type { AIProvider } from '../types';
 
 export interface AIProxyEndpoint {
   proxy: string

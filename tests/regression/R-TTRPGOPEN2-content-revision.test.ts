@@ -1,13 +1,13 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { openContentRevisionFixtureV1 } from '../helpers/open-ttrpg-content-revision'
-import { parseProductProductionCommandV1 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionCommandV1 } from '../../src/lib/legacy-compat/product-production/contracts'
 import { recoveryInvalidatedTaskKeys } from '../../src/lib/product-production/scheduler'
 import { prepareTtrpgOpenContentRevisionV1 } from '../../src/lib/ttrpg/open-production-content-revision'
 import { validateProductProductionRecoveryDirectiveV1 } from '../../src/lib/product-production/context'
 import { publishProductProductionV1 } from '../../src/lib/product-production/service'
 import type { TtrpgOpenContentRevisionV1 } from '../../src/lib/types'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 beforeEach(async () => { await db.delete(); await db.open(); vi.stubGlobal('fetch', vi.fn(async () => { throw Error('No real provider in content revision fixture') })) })
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); db.close() })

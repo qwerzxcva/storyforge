@@ -1,10 +1,10 @@
 import { afterAll, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
-import { readProductRuntimeState, verifyFormalRuntimeSourceV1 } from '../../src/lib/product/runtime-core'
-import { validateTextOpenWorldSourcePinBundleV1 } from '../../src/lib/open-world/source-pin'
+import { readProductRuntimeState, verifyFormalRuntimeSourceV1 } from '../../src/lib/legacy-compat/product/runtime-core'
+import { validateTextOpenWorldSourcePinBundleV1 } from '../../src/lib/legacy-compat/open-world/source-pin'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
-import { textOpenWorldCreatorLocatorFromBriefRowV1 } from '../../src/lib/open-world/creator-brief-persistence'
+import { textOpenWorldCreatorLocatorFromBriefRowV1 } from '../../src/lib/legacy-compat/open-world/creator-brief-persistence'
 import { seedQuality005LegacyNovelV1, snapshotQuality005RowsV1 } from '../helpers/quality005-legacy-novel'
 
 describe('SFQA-005 · old bytes are readable evidence without new authorization', () => {

@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest'
 import {
   createTextOpenWorldCombatDefinitionCatalogV1,
   projectTextOpenWorldEncounterPreviewV1,
-} from '../../src/lib/open-world/combat-definitions'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
+} from '../../src/lib/legacy-compat/open-world/combat-definitions'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
 import {
   createTextOpenWorldVNextFixture,
   downgradeTextOpenWorldFixtureCombatV1,

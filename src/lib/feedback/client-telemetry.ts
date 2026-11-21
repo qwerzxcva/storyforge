@@ -1,9 +1,9 @@
-import { CLIENT_AGREEMENT_KEY, clientAgreementRequired, clientAgreementAccepted } from './client-legal'
-import { parseFailureEvent, type FailureEvent } from '../diagnostics/failure-summary'
-import { subscribeRuntimeDiagnostics } from '../diagnostics/runtime-errors'
-import { CLIENT_SUPPORT_URL, clientMetadata, type ClientMetadata } from './client-support'
-import { diagnosticDetailsSupported, diagnosticWireError } from './diagnostic-wire'
-import { setDiagnosticContextEnabled } from '../diagnostics/operation-trail'
+import { CLIENT_AGREEMENT_KEY, clientAgreementRequired, clientAgreementAccepted } from './client-legal';
+import { parseFailureEvent, type FailureEvent } from '../diagnostics/failure-summary';
+import { subscribeRuntimeDiagnostics } from '../diagnostics/runtime-errors';
+import { CLIENT_SUPPORT_URL, clientMetadata, type ClientMetadata } from './client-support';
+import { diagnosticDetailsSupported, diagnosticWireError } from './diagnostic-wire';
+import { setDiagnosticContextEnabled } from '../diagnostics/operation-trail';
 
 export const TELEMETRY_KEY = 'storyforge-client-observability-v1'
 const DAY = 86_400_000

@@ -3,7 +3,7 @@ import { db } from '../../src/lib/db/schema';
 import { seedChatRuntimeFixture } from '../helpers/character-chat-fixture';
 import { useCharacterInteractionPlayerStore as store } from '../../src/stores/character-interaction-player';
 import * as harness from '../../src/lib/character-interaction/harness';
-import { readProductRuntimeState } from '../../src/lib/character-interaction/runtime-api';
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/character-interaction/runtime-api';
 const generate = harness.generateInteractionRuntimeCandidateV1;
 beforeEach(async () => { db.close(); await db.delete(); await db.open(); store.setState({ busy: false, generatingRunId: null, scope: null, selectedSessionId: null }); });
 afterEach(() => { vi.restoreAllMocks(); db.close(); });
@@ -61,7 +61,7 @@ it('resumes the frozen director plan after a partial failure without repeating c
 });
 it('freezes per-role private knowledge, relationship initialization and the confirmed scene budget', async () => {
     const { compileInteractionModulesV1 } = await import('../../src/lib/product-production/product-module-compilers');
-    const { DEFAULT_CHAT_SETTINGS } = await import('../../src/lib/character-interaction/authoring-contract');
+    const { DEFAULT_CHAT_SETTINGS } = await import('../../src/lib/legacy-compat/character-interaction/authoring-contract');
     const input = { brief: { characterChat: { ...DEFAULT_CHAT_SETTINGS, mode: 'multi', maxTurns: 40, replyBudget: 95, characters: [{ sourceKey: 'role.a', voiceRules: '说话简短', privateKnowledge: '仅甲知道的信件', initialTrust: 32 }] }, source: { selection: { roleBindings: { participants: ['role.a', 'role.b'] } } }, intent: { productType: 'character-interaction', contentBoundaries: ['不替玩家发言'], openingSituation: '旧邮局', coreExperience: ['交谈'] }, scale: { targetPlayMinutes: 30 } }, sourceCatalog: { characters: [{ resourceKey: 'role.a', name: '甲', description: '信使' }, { resourceKey: 'role.b', name: '乙', description: '守卫' }] }, narrative: { nodes: [{ key: 'opening', kind: 'entry', title: '邮局', summary: '寻找信件' }, { key: 'end', kind: 'ending', title: '告别' }], beats: [], choices: [] } } as unknown as Parameters<typeof compileInteractionModulesV1>[0];
     const output = compileInteractionModulesV1(input);
     expect(output.sceneTemplates[0]).toMatchObject({ maxTurns: 40, directorBudget: 95 });

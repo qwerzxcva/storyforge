@@ -1,4 +1,4 @@
-import type { ProjectExportData } from './json-export'
+import type { ProjectExportData } from './json-export';
 
 const GIST_API = 'https://api.github.com/gists'
 

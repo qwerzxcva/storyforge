@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { createProductRuntimeHeadParsingV1 } from '../../src/lib/product/runtime-head-parsing'
+import { createProductRuntimeHeadParsingV1 } from '../../src/lib/legacy-compat/product/runtime-head-parsing'
 import { db } from '../../src/lib/db/schema'
-import { appendProductRuntimeEvent, hashStateJson, readProductRuntimeState, readVerifiedProductRuntimeHeadV1 } from '../../src/lib/product/runtime-core'
-import { deleteProductRuntimeSession } from '../../src/lib/product/runtime-api'
+import { appendProductRuntimeEvent, hashStateJson, readProductRuntimeState, readVerifiedProductRuntimeHeadV1 } from '../../src/lib/legacy-compat/product/runtime-core'
+import { deleteProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-api'
 import { createCurrentTtrpgRuntimeTestBedV1 } from '../helpers/current-product-runtime'
 
 function memo(limits?: { maxEntries: number; maxCodeUnits: number }) {

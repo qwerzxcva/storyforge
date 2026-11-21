@@ -1,5 +1,5 @@
-import { FICTION_DIMENSIONS, FICTION_DIMENSION_LABELS } from './import-session-data'
-import type { RagDocumentMetadata } from './rag-library'
+import { FICTION_DIMENSIONS, FICTION_DIMENSION_LABELS } from './import-session-data';
+import type { RagDocumentMetadata } from './rag-library';
 export type { FictionDimension } from './import-session-data'
 export { FICTION_DIMENSIONS, FICTION_DIMENSION_LABELS } from './import-session-data'
 

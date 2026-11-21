@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { avgSoundPlanningFixtureV1 } from '../helpers/avg-sound-planning-fixture'
 import { avgSoundAuthorReviewFixtureV3 } from '../helpers/avg-sound-review-fixture'
 import { compileAvgSoundRequirementsV1 } from '../../src/lib/avg/sound-requirements'
-import { parseAvgSoundPlanningBriefV1 } from '../../src/lib/avg/sound-production-brief'
+import { parseAvgSoundPlanningBriefV1 } from '../../src/lib/legacy-compat/avg/sound-production-brief'
 import { buildAvgRawSoundArtifactV1 } from '../../src/lib/avg/sound-raw-contract'
 import { assertAvgSoundReviewScopeV3, assertAvgSoundReviewSelectableV3,
   assertAvgSoundReviewMeasuredSelectableV3 } from '../../src/lib/avg/sound-review'

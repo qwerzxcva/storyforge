@@ -1,9 +1,9 @@
-import type { ChatMessage } from '../types'
-import type { AIRequestSettingsV1 } from '../ai/client'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { qualityReviewSystemGuidanceV1, parseWholeChapterQualityReviewV1, verifyWholeChapterQualityReviewV1, qualityReviewPromptVersionFromMessagesV1, qualityReviewAnchorsV1, formatQualityReviewAnchorsV1, type QualityReviewArtifactV1 } from './quality-review'
-import type { QualityRevisionPlanV1 } from './quality-revision'
-import { SCENE_RECHECK_GUIDANCE_V1 } from './scene-craft'
+import type { ChatMessage } from '../types';
+import type { AIRequestSettingsV1 } from '../ai/client';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { qualityReviewSystemGuidanceV1, parseWholeChapterQualityReviewV1, verifyWholeChapterQualityReviewV1, qualityReviewPromptVersionFromMessagesV1, qualityReviewAnchorsV1, formatQualityReviewAnchorsV1, type QualityReviewArtifactV1 } from './quality-review';
+import type { QualityRevisionPlanV1 } from './quality-revision';
+import { SCENE_RECHECK_GUIDANCE_V1 } from './scene-craft';
 
 export const QUALITY_RECHECK_PROMPT_VERSION_V1 = 'quality-revision-recheck-v10'
 const RECHECK_PROMPT_VERSIONS = ['quality-revision-recheck-v1', 'quality-revision-recheck-v2', 'quality-revision-recheck-v3', 'quality-revision-recheck-v4', 'quality-revision-recheck-v5', 'quality-revision-recheck-v6', 'quality-revision-recheck-v7', 'quality-revision-recheck-v8', 'quality-revision-recheck-v9', QUALITY_RECHECK_PROMPT_VERSION_V1] as const

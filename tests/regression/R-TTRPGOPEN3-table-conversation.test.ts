@@ -5,12 +5,12 @@ import { beforeEach,afterEach,describe,expect,it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { seedTableConversationV1 } from '../helpers/open-ttrpg-table-conversation'
 import { readTtrpgOpenTableConversationV1,sendTtrpgOpenTableMessageV1,changeTtrpgOpenTableSafetyV1 } from '../../src/lib/ttrpg/open-table-service'
-import { readProductRuntimeState,parseProductRuntimeState,replayProductRuntimeEvents,applyProductRuntimeEvent,branchProductRuntimeSession } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState,parseProductRuntimeState,replayProductRuntimeEvents,applyProductRuntimeEvent,branchProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
 import { rt } from '../helpers/open-ttrpg-branch-recovery'
 import { completeTtrpgOpenSessionZeroV1,postTtrpgOpenTableMessageV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { openEnvelopeV1 } from '../helpers/open-ttrpg-session'
 import { exportProjectJSON,importProjectJSON } from '../../src/lib/export/json-export'
-import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/ttrpg/open-player-context'
+import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-player-context'
 const request = (text: string,audience: 'party' | 'host-private' = 'party') => ({ kind: 'rules-question' as const,audience,text })
 async function replay(sessionId: number) {
   const row = (await db.productRuntimeSessions.get(sessionId))!

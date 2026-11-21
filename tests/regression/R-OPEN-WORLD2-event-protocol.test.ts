@@ -1,18 +1,18 @@
 import { afterAll, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { commitTextOpenWorldCommandV1 } from '../../src/lib/open-world/commands'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
 import {
   parseTextOpenWorldRandomResolvedEventPayloadV1,
   replayTextOpenWorldEventProtocolV1,
   resolveTextOpenWorldRandomEvidenceV1,
-} from '../../src/lib/open-world/event-contract'
+} from '../../src/lib/legacy-compat/open-world/event-contract'
 import { commitTextOpenWorldOutcomeBatchV1 } from '../../src/lib/open-world/events'
 import {
   appendProductRuntimeEvent,
   readProductRuntimeState,
   readProductRuntimeStateVersion,
-} from '../../src/lib/product/runtime-core'
+} from '../../src/lib/legacy-compat/product/runtime-core'
 import type {
   ProductRuntimeEvent,
   TextOpenWorldCommandEnvelopeV1,

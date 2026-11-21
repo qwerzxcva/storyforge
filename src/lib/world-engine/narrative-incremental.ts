@@ -1,11 +1,11 @@
-import type { WorldReleaseCompiledV4, WorldReleaseSemanticContentV4, WorldReleaseManifestV4 } from '../types/narrative-release'
-import type { WorldImpactPlanV1 } from '../types/world-impact'
-import type { NarrativeIndexReuseReceiptV1 } from './narrative-index'
-import { buildWorldImpactPlanV1 } from '../consistency/world-impact'
-import { prepareNarrativeReleaseContentV4, verifyWorldReleaseContentV4 } from './narrative-release-v4'
-import { compileNarrativeIndexIncrementalV1 } from './narrative-index'
-import { WORLD_SEMANTIC_REGISTRY_V4 } from './semantic-registry-v4'
-import { canonicalNarrativeJsonV1, hashNarrativeValueV1, narrativeFail } from './narrative-json'
+import type { WorldReleaseCompiledV4, WorldReleaseSemanticContentV4, WorldReleaseManifestV4 } from '../types/narrative-release';
+import type { WorldImpactPlanV1 } from '../types/world-impact';
+import type { NarrativeIndexReuseReceiptV1 } from './narrative-index';
+import { buildWorldImpactPlanV1 } from '../consistency/world-impact';
+import { prepareNarrativeReleaseContentV4, verifyWorldReleaseContentV4 } from './narrative-release-v4';
+import { compileNarrativeIndexIncrementalV1 } from './narrative-index';
+import { WORLD_SEMANTIC_REGISTRY_V4 } from './semantic-registry-v4';
+import { canonicalNarrativeJsonV1, hashNarrativeValueV1, narrativeFail } from './narrative-json';
 
 export interface NarrativeIncrementalBaseV1 { version: 1; manifestJson: string; contentHash: string }
 export interface NarrativeUpdateReceiptV1 {

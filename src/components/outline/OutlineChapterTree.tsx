@@ -1,20 +1,11 @@
-import { useEffect, useState } from 'react'
-import { ChevronDown, ChevronRight, CornerDownRight, GripVertical, LayoutList, Plus, Sparkles, Trash2 } from 'lucide-react'
+import { useEffect, useState } from 'react';
+import { ChevronDown, ChevronRight, CornerDownRight, GripVertical, LayoutList, Plus, Sparkles, Trash2 } from 'lucide-react';
 import AcknowledgedTextField from '../shared/AcknowledgedTextField'
-import { useToast } from '../shared/Toast'
-import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator'
-import { useDragReorder, type ItemDnD } from './useDragReorder'
-import {
-  OUTLINE_CHAPTER_DRAG_MIME,
-  chapterDropProps,
-  readChapterDragPayload,
-  type ChapterDragPayload,
-  type GetActiveChapterDrag,
-} from './chapter-drag'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-} from '../shared/initial-record-target'
+import { useToast } from '../shared/Toast';
+import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator';
+import { useDragReorder, type ItemDnD } from './useDragReorder';
+import { OUTLINE_CHAPTER_DRAG_MIME, chapterDropProps, readChapterDragPayload, type ChapterDragPayload, type GetActiveChapterDrag } from './chapter-drag';
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes } from '../shared/initial-record-target';
 
 interface ChapterRowProps {
   ch: { id?: number; title: string; summary: string }

@@ -2,7 +2,7 @@ import {afterEach, beforeEach, expect, it} from 'vitest'
 import {db} from '../../src/lib/db/schema'
 import {listChatStarterExperiencesV1, previewChatStarterExperienceV1, createChatStarterDraftV1} from '../../src/lib/character-interaction/starter-experiences'
 import {readChatDraftV1, saveChatDraftV1, loadChatSourceProjectionV1} from '../../src/lib/character-interaction/draft-service'
-import {parseChatAuthoringSettings} from '../../src/lib/character-interaction/authoring-contract'
+import {parseChatAuthoringSettings} from '../../src/lib/legacy-compat/character-interaction/authoring-contract'
 import {exportProjectJSON, importProjectJSON} from '../../src/lib/export/json-export'
 import {deleteWorkspace} from '../../src/lib/workspace/lifecycle'
 

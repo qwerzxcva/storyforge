@@ -1,15 +1,15 @@
 import { describe, expect, it } from 'vitest'
 import { AGENT_SKILLS, getAgentSkillV1, getDefaultAgentSkillV1, validateAgentSkillDefinitionsV1 } from '../../src/lib/agent/skill-registry'
 import { CONTEXT_SOURCE_BY_KEY } from '../../src/lib/registry/context-sources'
-import { AVG_SOUND_CONTEXT_V1 } from '../../src/lib/avg/sound-production-brief'
+import { AVG_SOUND_CONTEXT_V1 } from '../../src/lib/legacy-compat/avg/sound-production-brief'
 import { avgSoundPlanOutputExampleV1, avgSoundPlanningMethodV1 } from '../../src/lib/avg/sound-planning-role'
-import { parseAvgSoundPlanV1 } from '../../src/lib/avg/sound-plan-contract'
+import { parseAvgSoundPlanV1 } from '../../src/lib/legacy-compat/avg/sound-plan-contract'
 import { projectAvgSoundPlanningInputsV1, readAvgSoundPlanningContextV1 } from '../../src/lib/avg/sound-planning-context'
 import { freezeAvgSoundPlanningScopeV1 } from '../../src/lib/avg/sound-source'
 import { avgSoundProductionFixtureV1 } from '../helpers/avg-sound-production-fixture'
 import { startNativeAvgAssembly } from '../helpers/avg-production-assembly-fixture'
-import { buildAvgSoundProductionPlanV1 } from '../../src/lib/avg/sound-production-plan'
-import { productProductionTaskUsesWorldGatewayV1 } from '../../src/lib/product-production/source-contracts'
+import { buildAvgSoundProductionPlanV1 } from '../../src/lib/legacy-compat/avg/sound-production-plan'
+import { productProductionTaskUsesWorldGatewayV1 } from '../../src/lib/legacy-compat/product-production/source-contracts'
 
 describe('AVG registered sound planning projection and closed real execution authority', () => {
   it('registers exact Work-owned protected candidate-only roles without creating a second context/write engine', () => {

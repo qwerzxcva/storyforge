@@ -1,20 +1,19 @@
-import { db } from '../db/schema'
-import { estimateTokens } from '../ai/context-budget'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { sha256Text } from '../ai/chapter-memory/text-normalization'
-import type { ContextResourceDescriptorV1, ContextResourceKind, ContextResourceProviderV1, ContextSourceRefV1,
-  FrozenResourceScopeV1, ResourceListInputV1, ResourceSearchInputV1, WorldCapabilityArea } from '../registry/types'
-import { CONTEXT_RESOURCE_KINDS_V1 } from '../registry/types'
-import type { OpenAuthorWorldQueryInputV1, WorldQueryAccessV1, WorldQueryGrantV1, WorldQueryItemV1, WorldQueryProviderProtocolV1, WorldQueryV1 } from '../types/world-query'
-import type { NarrativeRecordV1 } from '../types/narrative-ir'
-import { readWorldNarrativeIndexV1, type WorldNarrativeIndexReadV1 } from '../world-engine/narrative-index-cache'
-import { referenceForVerifiedWorldReleaseV2, validatePortableWorldReferenceV2 } from '../world-engine/world-reference-v2'
-import { canonicalNarrativeJsonV1, hashNarrativeBytesV1, hashNarrativeValueV1 } from '../world-engine/narrative-json'
-import { parseWorldQueryGrantV1, worldQueryFailV1 } from './world-query-contract'
-import { createWorldQueryEvaluatorV1 } from './world-query-evaluator'
-import { frozenAuthorSourceTitlesV1 } from './world-query-source-titles'
-import { buildWorldQueryVisibilityV1 } from './world-query-visibility'
-import { WORLD_RELEASE_NORMALIZATION_VERSION_V1, WORLD_RELEASE_PROVIDER_ID_V1, WORLD_RELEASE_PROVIDER_VERSION_V1, WORLD_RELEASE_RESOURCE_KINDS_V1 } from './world-release-provider-contract'
+import { db } from '../db/schema';
+import { estimateTokens } from '../ai/context-budget';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { sha256Text } from '../ai/chapter-memory/text-normalization';
+import type { ContextResourceDescriptorV1, ContextResourceKind, ContextResourceProviderV1, ContextSourceRefV1, FrozenResourceScopeV1, ResourceListInputV1, ResourceSearchInputV1, WorldCapabilityArea } from '../registry/types';
+import { CONTEXT_RESOURCE_KINDS_V1 } from '../registry/types';
+import type { OpenAuthorWorldQueryInputV1, WorldQueryAccessV1, WorldQueryGrantV1, WorldQueryItemV1, WorldQueryProviderProtocolV1, WorldQueryV1 } from '../types/world-query';
+import type { NarrativeRecordV1 } from '../types/narrative-ir';
+import { readWorldNarrativeIndexV1, type WorldNarrativeIndexReadV1 } from '../world-engine/narrative-index-cache';
+import { referenceForVerifiedWorldReleaseV2, validatePortableWorldReferenceV2 } from '../world-engine/world-reference-v2';
+import { canonicalNarrativeJsonV1, hashNarrativeBytesV1, hashNarrativeValueV1 } from '../world-engine/narrative-json';
+import { parseWorldQueryGrantV1, worldQueryFailV1 } from './world-query-contract';
+import { createWorldQueryEvaluatorV1 } from './world-query-evaluator';
+import { frozenAuthorSourceTitlesV1 } from './world-query-source-titles';
+import { buildWorldQueryVisibilityV1 } from './world-query-visibility';
+import { WORLD_RELEASE_NORMALIZATION_VERSION_V1, WORLD_RELEASE_PROVIDER_ID_V1, WORLD_RELEASE_PROVIDER_VERSION_V1, WORLD_RELEASE_RESOURCE_KINDS_V1 } from './world-release-provider-contract';
 
 interface AuthorizationV1 {
   source: WorldNarrativeIndexReadV1

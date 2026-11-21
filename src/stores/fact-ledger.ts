@@ -2,20 +2,12 @@
  * NS-4 · 事实账本 store（事实库 UI 的数据层）。
  * 所有事实变更走 lib/fact-ledger 单一入口（adopt/confirm/reject），store 不裸散写业务逻辑。
  */
-import { create } from 'zustand'
-import type { TemporalFact } from '../lib/types/temporal-fact'
-import type { ExtractedFactCandidate } from '../lib/ai/adapters/fact-extract-adapter'
-import {
-  adoptFactCandidates,
-  confirmFactCandidate,
-  replaceConstitutionFactCandidate,
-  rejectFactCandidate,
-  listFacts,
-  type ConfirmFactResult,
-  type ReplaceConstitutionFactResult,
-} from '../lib/fact-ledger/fact-ledger'
-import { importFactCandidateDiff, type ImportFactCandidateDiffResult } from '../lib/fact-ledger/human-readable-io'
-import type { WorkspaceScope } from '../lib/types/world-ownership'
+import { create } from 'zustand';
+import type { TemporalFact } from '../lib/types/temporal-fact';
+import type { ExtractedFactCandidate } from '../lib/ai/adapters/fact-extract-adapter';
+import { adoptFactCandidates, confirmFactCandidate, replaceConstitutionFactCandidate, rejectFactCandidate, listFacts, type ConfirmFactResult, type ReplaceConstitutionFactResult } from '../lib/fact-ledger/fact-ledger';
+import { importFactCandidateDiff, type ImportFactCandidateDiffResult } from '../lib/fact-ledger/human-readable-io';
+import type { WorkspaceScope } from '../lib/types/world-ownership';
 
 interface FactLedgerStore {
   facts: TemporalFact[]

@@ -1,6 +1,6 @@
-import { CONTEXT_SOURCES } from '../registry/context-sources'
-import type { OpenAuthorWorldQueryInputV1, WorldQueryAccessV1, WorldQueryProviderProtocolV1, WorldQueryV1 } from '../types/world-query'
-import { worldQueryFailV1 } from './world-query-contract'
+import { CONTEXT_SOURCES } from '../registry/context-sources';
+import type { OpenAuthorWorldQueryInputV1, WorldQueryAccessV1, WorldQueryProviderProtocolV1, WorldQueryV1 } from '../types/world-query';
+import { worldQueryFailV1 } from './world-query-contract';
 
 function protocol() {
   return CONTEXT_SOURCES.find(source => source.key === 'worldRelease')?.resources?.worldQuery

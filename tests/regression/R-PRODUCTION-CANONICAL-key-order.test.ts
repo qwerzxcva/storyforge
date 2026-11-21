@@ -1,5 +1,5 @@
 import { describe,expect,it } from 'vitest'
-import { canonicalProductProductionJsonV2,hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { canonicalProductProductionJsonV2,hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { productionCanonicalKeyFixture } from '../helpers/production-canonical-key-fixture'
 
 describe('Production canonical JSON preserves its original Unicode byte contract',()=>{

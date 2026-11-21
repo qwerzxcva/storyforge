@@ -3,13 +3,13 @@ import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { readContextGatewayManifestV3ForAttemptV1 } from '../../src/lib/context-gateway/attempt-evidence'
 import { db } from '../../src/lib/db/schema'
 import { executeTextOpenWorldActionV1 } from '../../src/lib/open-world/action-executor'
-import { createTextOpenWorldDirectorCatalogV1 } from '../../src/lib/open-world/director'
+import { createTextOpenWorldDirectorCatalogV1 } from '../../src/lib/legacy-compat/open-world/director'
 import {
   TEXT_OPEN_WORLD_RUNTIME_DIRECTION_STEP_ID_V1,
   type TextOpenWorldRuntimeDirectionOutcomeV1,
 } from '../../src/lib/open-world/runtime-direction'
-import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
-import { readProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/product/runtime-core'
+import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
+import { readProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/legacy-compat/product/runtime-core'
 import type { ProductRuntimeEvent, TextOpenWorldRandomEvidenceV1 } from '../../src/lib/types'
 import { createGovernedTextOpenWorldSessionFixtureV1 } from '../helpers/text-open-world-product-session'
 import { createTextOpenWorldVNextP9Fixture } from '../helpers/text-open-world-vnext-fixture'

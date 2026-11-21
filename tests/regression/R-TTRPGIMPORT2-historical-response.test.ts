@@ -10,10 +10,10 @@ import { readTtrpgOpenIntentCandidateV1 } from '../../src/lib/ttrpg/open-intent-
 import { readTtrpgOpenHistoricalResponseV1, listTtrpgOpenHistoricalResponsesV1 } from '../../src/lib/ttrpg/open-imported-response'
 import { readTtrpgOpenTableV1, finishTtrpgOpenTableWindowV1, readTtrpgOpenManualActionCatalogV1, proposeTtrpgOpenManualActionV1,
   readTtrpgOpenTableHistoricalResponseV1, rejectTtrpgOpenTableIntentV1 } from '../../src/lib/ttrpg/open-table-service'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import { resolveScope } from '../../src/lib/workspace/scope'
-import { parseTtrpgRuntimeStateV2 } from '../../src/lib/ttrpg/open-runtime-contract'
+import { parseTtrpgRuntimeStateV2 } from '../../src/lib/legacy-compat/ttrpg/open-runtime-contract'
 import * as artifactStore from '../../src/lib/memory/artifact-store'
 import { OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
 const output = JSON.stringify({ goal: '检查河港 <img src=x onerror=alert(1)>', method: '复核现场', targetRefs: [], declaredResources: [], declaredAssumptions: [], requestedOutcome: null })

@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import { avgVoiceAssemblyFixtureV3 } from '../helpers/avg-voice-production-fixture'
-import { parseAvgAssemblyBrief } from '../../src/lib/avg/assembly-contract'
-import { buildAvgVoiceAssemblyPlanV3 } from '../../src/lib/avg/voice-assembly-plan'
-import { assertAvgVoiceAssemblyRequestsV3, avgVoiceAssemblyGateIdsV3, parseAvgAssemblyBriefV3 } from '../../src/lib/avg/voice-assembly-contract'
-import { parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { parseAvgAssemblyBrief } from '../../src/lib/legacy-compat/avg/assembly-contract'
+import { buildAvgVoiceAssemblyPlanV3 } from '../../src/lib/legacy-compat/avg/voice-assembly-plan'
+import { assertAvgVoiceAssemblyRequestsV3, avgVoiceAssemblyGateIdsV3, parseAvgAssemblyBriefV3 } from '../../src/lib/legacy-compat/avg/voice-assembly-contract'
+import { parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 
 const identity = { briefHash: 'a'.repeat(64), buildNumber: 1, controlEpoch: 0 }
 

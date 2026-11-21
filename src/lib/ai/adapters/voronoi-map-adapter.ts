@@ -2,20 +2,8 @@
  * Voronoi 地图 AI 适配器
  * AI 分析世界观设定 → 生成 MapGenConfig 参数（含地形模板 + 命名风格） → 引擎生成地图
  */
-
-import type { ChatMessage, Location, Worldview } from '../../types'
-import type {
-  MapGenConfig,
-  HeightmapTemplate,
-  NamingStyle,
-  MapSpatialEntity,
-  MapSpatialRelation,
-  SpatialEntityKind,
-  SpatialScaleTier,
-  SpatialDirection,
-  SpatialDistanceTier,
-  SpatialDistanceUnit,
-} from '../../world-map/engine'
+import type { ChatMessage, Location, Worldview } from '../../types';
+import type { MapGenConfig, HeightmapTemplate, NamingStyle, MapSpatialEntity, MapSpatialRelation, SpatialEntityKind, SpatialScaleTier, SpatialDirection, SpatialDistanceTier, SpatialDistanceUnit } from '../../world-map/engine';
 
 /** 合法值白名单 */
 const VALID_TEMPLATES: HeightmapTemplate[] = [

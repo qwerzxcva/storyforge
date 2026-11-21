@@ -1,10 +1,10 @@
 import type { ProviderCapabilityRequirementV1 } from '../../src/lib/types'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { AVG_IMAGE_REFERENCE_CAPABILITY_V1 } from '../../src/lib/avg/media-reference-contract'
-import { avgVoiceRouteBindingHashV1, type AvgAssemblyBriefV3 } from '../../src/lib/avg/voice-assembly-contract'
-import { hashAvgVoiceTextV1 } from '../../src/lib/avg/voice-production-contract'
-import { AVG_NATURAL_VOICE_INTENT_V1, hashAvgSpeechProtocolV1, type AvgSpeechProtocolV1 } from '../../src/lib/avg/voice-request-contract'
-import { compileAvgVoiceSpeechRequestV1 } from '../../src/lib/avg/voice-request-contract'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { AVG_IMAGE_REFERENCE_CAPABILITY_V1 } from '../../src/lib/legacy-compat/avg/media-reference-contract'
+import { avgVoiceRouteBindingHashV1, type AvgAssemblyBriefV3 } from '../../src/lib/legacy-compat/avg/voice-assembly-contract'
+import { hashAvgVoiceTextV1 } from '../../src/lib/legacy-compat/avg/voice-production-contract'
+import { AVG_NATURAL_VOICE_INTENT_V1, hashAvgSpeechProtocolV1, type AvgSpeechProtocolV1 } from '../../src/lib/legacy-compat/avg/voice-request-contract'
+import { compileAvgVoiceSpeechRequestV1 } from '../../src/lib/legacy-compat/avg/voice-request-contract'
 import type { AvgRawVoicePayloadV1 } from '../../src/lib/avg/voice-raw-contract'
 import { avgVoiceRightsReceiptV1, encodeAvgRawVoicePayloadV1 } from '../../src/lib/avg/voice-raw-contract'
 import type { FrozenRuntimeMediaAssetV2 } from '../../src/lib/types'
@@ -12,8 +12,8 @@ import type { AvgAuthorWorkspaceV1 } from '../../src/lib/avg/author-workspace-co
 import type { AvgAuthorVoiceChoiceV1 } from '../../src/lib/avg/voice-choice-contract'
 import { hashAvgVoiceSourceInputV1 } from '../../src/lib/avg/voice-production-source'
 import { avgSystemFixture } from './avg-system-fixture'
-import { avgVoiceProductionBudgetV3, avgVoiceProductionDataClassesV3, type AvgVoiceProductionPolicyInputV3 } from '../../src/lib/avg/voice-production-policy'
-import { avgVoiceAssemblyGateIdsV3 } from '../../src/lib/avg/voice-assembly-contract'
+import { avgVoiceProductionBudgetV3, avgVoiceProductionDataClassesV3, type AvgVoiceProductionPolicyInputV3 } from '../../src/lib/legacy-compat/avg/voice-production-policy'
+import { avgVoiceAssemblyGateIdsV3 } from '../../src/lib/legacy-compat/avg/voice-assembly-contract'
 
 /** Inert contract fixture: no accepted Work, real service/voice rights or Run. */
 export async function avgVoiceAssemblyFixtureV3(withImage = false) {

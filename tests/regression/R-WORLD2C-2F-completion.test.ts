@@ -14,11 +14,11 @@ import {
   importWorldPackage,
   inspectWorldPackage,
 } from '../../src/lib/world-engine/world-package'
-import { branchProductRuntimeSession, readProductRuntimeState } from '../../src/lib/product/runtime-api'
-import { appendProductRuntimeEvent } from '../../src/lib/product/runtime-core'
+import { branchProductRuntimeSession, readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-api'
+import { appendProductRuntimeEvent } from '../../src/lib/legacy-compat/product/runtime-core'
 import type { WorldReleaseManifestV3, WorkspaceScope } from '../../src/lib/types'
 import { createWorkspace as createWorkspaceRoot } from '../../src/lib/workspace/create-workspace'
-import { createProductRuntimeInstance, readBoundInstances } from '../../src/lib/product/runtime-instances'
+import { createProductRuntimeInstance, readBoundInstances } from '../../src/lib/legacy-compat/product/runtime-instances'
 import { createCurrentTtrpgRuntimeTestBedV1 } from '../helpers/current-product-runtime'
 import { deleteWork, deleteWorld } from '../../src/lib/workspace/lifecycle'
 import { resolveWorkspaceOwnership } from '../../src/lib/workspace/ownership'

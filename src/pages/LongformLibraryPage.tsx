@@ -1,26 +1,26 @@
-import { canonicalPowerModule } from '../lib/workspace/module-alias'
+import { canonicalPowerModule } from '../lib/workspace/module-alias';
 import ProjectStorageFolderField from '../components/shared/ProjectStorageFolderField'
-import { bindCreatedProjectStorageWorkspace } from '../lib/storage/project-storage-workspace'
+import { bindCreatedProjectStorageWorkspace } from '../lib/storage/project-storage-workspace';
 import ExampleLibrary from '../components/examples/ExampleLibrary'
-import { useDialog } from '../components/shared/Dialog'
-import { useEffect, useRef, useState } from 'react'
-import { ArrowRight, BookOpen, ImagePlus, MoreHorizontal, Plus, Search } from 'lucide-react'
-import { liveQuery } from 'dexie'
-import { useNavigate, useSearchParams } from 'react-router'
-import { db } from '../lib/db/schema'
-import type { Project, Work } from '../lib/types'
-import { readWorkLibraryProjectionV1, switchActiveWork } from '../lib/workspace/works'
-import { deleteWork } from '../lib/workspace/lifecycle'
-import { requireBackupBefore } from '../lib/safety/require-backup-before'
-import { createWorkspace } from '../lib/workspace/create-workspace'
-import { effectiveNovelProfile, effectiveWorkKind } from '../lib/workspace/work-kind'
-import { useProjectStore } from '../stores/project'
-import { LONGFORM_SECTIONS, LONGFORM_STEPS, sectionForModule, type LongformSection, type LongformMode } from '../components/longform/navigation'
-import type { SidebarModule } from '../components/layout/sidebar-tree'
+import { useDialog } from '../components/shared/Dialog';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowRight, BookOpen, ImagePlus, MoreHorizontal, Plus, Search } from 'lucide-react';
+import { liveQuery } from 'dexie';
+import { useNavigate, useSearchParams } from 'react-router';
+import { db } from '../lib/db/schema';
+import type { Project, Work } from '../lib/types';
+import { readWorkLibraryProjectionV1, switchActiveWork } from '../lib/workspace/works';
+import { deleteWork } from '../lib/workspace/lifecycle';
+import { requireBackupBefore } from '../lib/safety/require-backup-before';
+import { createWorkspace } from '../lib/workspace/create-workspace';
+import { effectiveNovelProfile, effectiveWorkKind } from '../lib/workspace/work-kind';
+import { useProjectStore } from '../stores/project';
+import { LONGFORM_SECTIONS, LONGFORM_STEPS, sectionForModule, type LongformSection, type LongformMode } from '../components/longform/navigation';
+import type { SidebarModule } from '../components/layout/sidebar-tree';
 import LongformBrowsePage from '../components/longform/LongformBrowsePage'
 import LongformLayout from '../components/longform/LongformLayout'
-import { useBeforeUnload } from '../hooks/useBeforeUnload'
-import type { WorkspaceScope } from '../lib/types'
+import { useBeforeUnload } from '../hooks/useBeforeUnload';
+import type { WorkspaceScope } from '../lib/types';
 import '../components/longform/longform-library.css'
 
 export default function LongformLibraryPage() {

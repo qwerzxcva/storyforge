@@ -2,7 +2,7 @@ import { act, createElement, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import TtrpgCampaignProposalSelector from '../../src/components/ttrpg/TtrpgCampaignProposalSelector'
-import { createAuthorGuidedTtrpgCampaignDesignV2 } from '../../src/lib/ttrpg/campaign-proposal'
+import { createAuthorGuidedTtrpgCampaignDesignV2 } from '../../src/lib/legacy-compat/ttrpg/campaign-proposal'
 import type { TtrpgCampaignDesignV2 } from '../../src/lib/types'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true

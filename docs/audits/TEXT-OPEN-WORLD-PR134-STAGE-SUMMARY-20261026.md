@@ -1,5 +1,7 @@
 # 文字开放世界叙事基座 · PR134 阶段总结与接续入口
 
+> Android fork scope: world engine, longform, and longform nodes. Links marked “historical source” document retired implementations; they do not indicate available production or runtime features.
+
 > 日期：2026-10-26 · 版本：1.0.0 · 层级：L4 阶段事实与交接说明
 > 范围：`E-OPENWORLD-01` / 产品化 W0～W8 / 《盐脊：共潮新约》真实样本
 > 本文用于下次开分支时恢复上下文；产品设计以[整体产品架构](../products/TEXT-OPEN-WORLD-PRODUCT-ARCHITECTURE.md)、[叙事生产规格](../products/TEXT-OPEN-WORLD-NARRATIVE-BASE-ARCHITECTURE.md)和[实施计划](../roadmap/TEXT-OPEN-WORLD-IMPLEMENTATION-PLAN.md)为准。
@@ -29,14 +31,14 @@ PR134 在既有专属 Creator、生产 DAG、vNext Runtime 和三注册表之上
 
 | 能力 | 本阶段结果 | 接续代码入口 |
 |---|---|---|
-| 三线制作总览 | 从正式任务和产物推导内容、系统、媒资责任及唯一 owner，展示状态、来源、消费者、失败和用量；执行 lane 不冒充内容所有权 | [production-contract.ts](../../src/lib/open-world/production-contract.ts)、[responsibility-workspace.ts](../../src/lib/open-world/responsibility-workspace.ts) |
-| 组装与局部返修 | V3 冻结三线来源快照；返修沿原依赖闭包创建后继 Build，保留无关产物与历史包；旧版本按原合同读取 | [responsibility-assembly.ts](../../src/lib/open-world/responsibility-assembly.ts)、[creator-artifact-repair.ts](../../src/lib/open-world/creator-artifact-repair.ts) |
-| 受治理作者修订 | P8F、物品、经济、NPC、P9 可按页读取当前签收来源；完整作者稿绑定 Context Hash、Plan、轮次和恢复回执后提交。作者稿不冒充模型输出 | [creator-artifact-edit-context.ts](../../src/lib/open-world/creator-artifact-edit-context.ts)、[creator-artifact-edit-dispatch.ts](../../src/lib/open-world/creator-artifact-edit-dispatch.ts) |
-| 制作恢复与账本 | 保留原始响应、已知用量、未知请求上界；正式 Resume 验证恢复链和读集，拒绝静默重发、伪造终态或失效来源 | [product-production/service.ts](../../src/lib/product-production/service.ts)、[production-executor.ts](../../src/lib/open-world/production-executor.ts) |
-| 玩法来源闭合 | 真实购买、学习、制作、交付、安装、任务认可和结局资格绑定确定性 Action/Effect 及原子回执；关键唯一物不靠重复奖励凑数，普通交付物有受限补领 | [quest-finalize-production.ts](../../src/lib/open-world/quest-finalize-production.ts)、[scene-scripts-production.ts](../../src/lib/open-world/scene-scripts-production.ts) |
-| 媒资与体验反馈 | 正式图片生成/导入、逐图人工回执和 Build 绑定入口；只读体验统计、分类反馈及导出。入口存在不代表本样本已完成逐图确认 | [creator-media.ts](../../src/lib/open-world/creator-media.ts)、[TextOpenWorldCreatorQualityStudio.tsx](../../src/components/text-game/TextOpenWorldCreatorQualityStudio.tsx) |
+| 三线制作总览 | 从正式任务和产物推导内容、系统、媒资责任及唯一 owner，展示状态、来源、消费者、失败和用量；执行 lane 不冒充内容所有权 | [production-contract.ts — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/production-contract.ts)、[responsibility-workspace.ts — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/responsibility-workspace.ts) |
+| 组装与局部返修 | V3 冻结三线来源快照；返修沿原依赖闭包创建后继 Build，保留无关产物与历史包；旧版本按原合同读取 | [responsibility-assembly.ts — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/responsibility-assembly.ts)、[creator-artifact-repair.ts — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/creator-artifact-repair.ts) |
+| 受治理作者修订 | P8F、物品、经济、NPC、P9 可按页读取当前签收来源；完整作者稿绑定 Context Hash、Plan、轮次和恢复回执后提交。作者稿不冒充模型输出 | [creator-artifact-edit-context.ts — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/creator-artifact-edit-context.ts)、[creator-artifact-edit-dispatch.ts — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/creator-artifact-edit-dispatch.ts) |
+| 制作恢复与账本 | 保留原始响应、已知用量、未知请求上界；正式 Resume 验证恢复链和读集，拒绝静默重发、伪造终态或失效来源 | [product-production/service.ts — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/product-production/service.ts)、[production-executor.ts — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/production-executor.ts) |
+| 玩法来源闭合 | 真实购买、学习、制作、交付、安装、任务认可和结局资格绑定确定性 Action/Effect 及原子回执；关键唯一物不靠重复奖励凑数，普通交付物有受限补领 | [quest-finalize-production.ts — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/quest-finalize-production.ts)、[scene-scripts-production.ts — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/scene-scripts-production.ts) |
+| 媒资与体验反馈 | 正式图片生成/导入、逐图人工回执和 Build 绑定入口；只读体验统计、分类反馈及导出。入口存在不代表本样本已完成逐图确认 | [creator-media.ts — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/creator-media.ts)、[TextOpenWorldCreatorQualityStudio.tsx — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/components/text-game/TextOpenWorldCreatorQualityStudio.tsx) |
 
-继续复用 `CONTEXT_SOURCES / assembleContext()`、`FIELD_REGISTRY / Adoption`、`PROJECT_TABLES`。本轮三线分类没有另建一套表、AI 权限或世界回写通道。生产主入口是 [TextOpenWorldCreatorWorkflow.tsx](../../src/components/text-game/TextOpenWorldCreatorWorkflow.tsx)，玩家主入口是 [TextOpenWorldPlayer.tsx](../../src/components/text-game/TextOpenWorldPlayer.tsx)。
+继续复用 `CONTEXT_SOURCES / assembleContext()`、`FIELD_REGISTRY / Adoption`、`PROJECT_TABLES`。本轮三线分类没有另建一套表、AI 权限或世界回写通道。生产主入口是 [TextOpenWorldCreatorWorkflow.tsx — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/components/text-game/TextOpenWorldCreatorWorkflow.tsx)，玩家主入口是 [TextOpenWorldPlayer.tsx — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/components/text-game/TextOpenWorldPlayer.tsx)。
 
 ## 3. 真实样本已经证明了什么
 
@@ -59,9 +61,9 @@ PR134 在既有专属 Creator、生产 DAG、vNext Runtime 和三注册表之上
 
 | 可见问题 | 修复与实际结果 | 代码定位 |
 |---|---|---|
-| 旧封存包兼容性比较误读活动控制轮次，Build18 最后组装失败 | 按旧 Manifest 的精确成员、Hash、签收回执和完整读集读取；同一 Build 正式 Resume 后封存248，保留旧失败记录，不回退到更旧包 | [compatibility-baseline.ts](../../src/lib/product-production/compatibility-baseline.ts) |
-| 主线4调查成功但缺目标确认入口 | P9 把可选战斗地点选成目标场景地点；新生产冻结完成兼容地点，旧包仅凭唯一正向交互证明提供只读兼容。原 Session6 完成至397，未改原包或 Manifest | [objective-scene-location.ts](../../src/lib/open-world/objective-scene-location.ts)、[scene-eligibility.ts](../../src/lib/open-world/scene-eligibility.ts) |
-| 上一场战斗胜利后不能开始第二场，出现 `TOW-PLAYER-OPERATION` | 战前检查点创建/读取只拒绝仍在进行的战斗，继续校验健康、地点、Hash 与事件；原存档第二场实际419开战、462胜利 | [player-combat.ts](../../src/lib/open-world/player-combat.ts)、[checkpoints.ts](../../src/lib/open-world/checkpoints.ts) |
+| 旧封存包兼容性比较误读活动控制轮次，Build18 最后组装失败 | 按旧 Manifest 的精确成员、Hash、签收回执和完整读集读取；同一 Build 正式 Resume 后封存248，保留旧失败记录，不回退到更旧包 | [compatibility-baseline.ts — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/product-production/compatibility-baseline.ts) |
+| 主线4调查成功但缺目标确认入口 | P9 把可选战斗地点选成目标场景地点；新生产冻结完成兼容地点，旧包仅凭唯一正向交互证明提供只读兼容。原 Session6 完成至397，未改原包或 Manifest | [objective-scene-location.ts — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/objective-scene-location.ts)、[scene-eligibility.ts — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/scene-eligibility.ts) |
+| 上一场战斗胜利后不能开始第二场，出现 `TOW-PLAYER-OPERATION` | 战前检查点创建/读取只拒绝仍在进行的战斗，继续校验健康、地点、Hash 与事件；原存档第二场实际419开战、462胜利 | [player-combat.ts — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/player-combat.ts)、[checkpoints.ts — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/checkpoints.ts) |
 
 最后玩法修复提交为 `1c7115d7a7ba4911b245db84aaad4407d7d67da2`。玩家投影与目录复用同时做了窄修；**确定性结算仍偏慢**，尚无已测得的最终根因或性能达标结论。
 

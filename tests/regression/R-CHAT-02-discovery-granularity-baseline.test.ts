@@ -1,9 +1,9 @@
 import {expect, it} from 'vitest'
 import {canonicalStringify} from '../../src/lib/agent/run/hash'
-import {createInitialInteractionState, interactionVisibilityView} from '../../src/lib/character-interaction/runtime'
-import {applyReviewedChatNarrativeActionV1, requestChatNarrativeTriggerV1} from '../../src/lib/character-interaction/narrative-actions'
-import {parseChatFactDiscoveriesV1} from '../../src/lib/character-interaction/narrative-discovery'
-import {applyChatSituationV1} from '../../src/lib/character-interaction/narrative-situations'
+import {createInitialInteractionState, interactionVisibilityView} from '../../src/lib/legacy-compat/character-interaction/runtime'
+import {applyReviewedChatNarrativeActionV1, requestChatNarrativeTriggerV1} from '../../src/lib/legacy-compat/character-interaction/narrative-actions'
+import {parseChatFactDiscoveriesV1} from '../../src/lib/legacy-compat/character-interaction/narrative-discovery'
+import {applyChatSituationV1} from '../../src/lib/legacy-compat/character-interaction/narrative-situations'
 import {chatNarrativeFixture, enableChatFactDiscoveryFixture, chatActionReviewFixture} from '../helpers/chat-narrative-fixture'
 import {CHAT_SITUATION_REVIEW_CHECKS_V1, type ChatNarrativeActionV1, type ChatSituationDraftV1} from '../../src/lib/types/chat-narrative'
 

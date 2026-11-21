@@ -17,12 +17,12 @@ import { executeContextGatewayV1, type ContextGatewayExecutionV1 } from '../../s
 import { getAgentSkillV1 } from '../../src/lib/agent/skill-registry'
 import { draftProductProductionBriefV3, suggestProductStartingPoints } from '../../src/lib/product-production/consultation'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
-import { createProductProductionPlanV3 } from '../../src/lib/product-production/plan'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { createProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { createProductProductionSourcePlanV1, executeProductProductionWorldGatewayV1,
-  parseProductProductionSourcePlanV1, parseConfirmedProductBriefV1 } from '../../src/lib/product-production/source-contracts'
+  parseProductProductionSourcePlanV1, parseConfirmedProductBriefV1 } from '../../src/lib/legacy-compat/product-production/source-contracts'
 import { loadProductProductionConsultationSourceV2 } from '../../src/lib/product-production/world-source'
-import { createProductReleaseManifestV1, productReleaseIdentityHashV1, verifyProductReleaseManifestV1 } from '../../src/lib/product-production/runtime-package'
+import { createProductReleaseManifestV1, productReleaseIdentityHashV1, verifyProductReleaseManifestV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
 import { aggregateProductSourceManifestFromExactRuns, createConfirmedProductBriefV1, createProductReleaseLineageV1,
   portableProductSourcePlan, productReleaseUidV1, resolveProductSourceReadBoundary, validateProductSourceManifest,
   validateProductSourcePlan, validateProductSourcePlanV1 } from '../../src/lib/product/source-contracts'
@@ -36,16 +36,16 @@ import { seedNarrativeRelationReleaseV4 } from '../helpers/narrative-release-fix
 import { openAuthorWorldQueryAccessV1, bindWorldQueryResourcesV1 } from '../../src/lib/context-gateway/world-query-client'
 import { WORLD_RELEASE_RESOURCE_KINDS_V1 } from '../../src/lib/context-gateway/world-release-provider-contract'
 import { sha256Text } from '../../src/lib/ai/chapter-memory/text-normalization'
-import { createProductRuntimeInstanceFromSource } from '../../src/lib/product/runtime-instances'
-import { verifyProductRuntimeSessionSourceV1 } from '../../src/lib/product-production/preview-source'
-import { createProductBuildPreviewManifestV1 } from '../../src/lib/product-production/preview-manifest'
+import { createProductRuntimeInstanceFromSource } from '../../src/lib/legacy-compat/product/runtime-instances'
+import { verifyProductRuntimeSessionSourceV1 } from '../../src/lib/legacy-compat/product-production/preview-source'
+import { createProductBuildPreviewManifestV1 } from '../../src/lib/legacy-compat/product-production/preview-manifest'
 import { createConfiguredProductProductionExecutorV1 } from '../../src/lib/product-production/production-executor'
-import { branchProductRuntimeSession } from '../../src/lib/product/runtime-core'
-import { deleteProductRuntimeSession, readProductRuntimeState } from '../../src/lib/product/runtime-core'
-import { parseProductRuntimePackageV2, createProductReleaseManifestV2, productReleaseIdentityHashV2 } from '../../src/lib/product-production/runtime-package'
+import { branchProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
+import { deleteProductRuntimeSession, readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
+import { parseProductRuntimePackageV2, createProductReleaseManifestV2, productReleaseIdentityHashV2 } from '../../src/lib/legacy-compat/product-production/runtime-package'
 import { seedAvgNativePreview } from '../helpers/avg-native-fixture'
 import { avgSystemFixture } from '../helpers/avg-system-fixture'
-import { assertProductRuntimeSourceSnapshotV2 } from '../../src/lib/product/runtime-source-manifest'
+import { assertProductRuntimeSourceSnapshotV2 } from '../../src/lib/legacy-compat/product/runtime-source-manifest'
 
 async function rehashPlan(plan: ProductSourcePlanV2) {
   const { planHash: _hash, ...body } = plan
