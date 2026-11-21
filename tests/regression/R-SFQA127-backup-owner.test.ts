@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
+import '../../src/lib/export/registry-import'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import { backupFilename, readStoryforgeBackups, writeProjectSnapshotToFolder } from '../../src/lib/storage/folder-backup'
 import { stampNewRecord } from '../../src/lib/workspace/scope'

@@ -17,6 +17,7 @@ import {
 import {
   writeProjectSnapshotToFolder, readStoryforgeBackups, backupFilename,
 } from '../../src/lib/storage/folder-backup'
+import '../../src/lib/export/registry-import'
 import { importProjectJSON } from '../../src/lib/export/json-export'
 import { bindCreatedProjectStorageWorkspace } from '../../src/lib/storage/project-storage-workspace'
 import { seedCurrentProject } from '../helpers/current-workspace'

@@ -1,6 +1,6 @@
 import { db } from '../db/schema';
 import type { Project } from '../types/project';
-import { LAST_FOLDER_KEY, saveFolderHandle, saveProjectFolderHandle } from './folder-handle-store';
+import { saveProjectStorageFolderHandle } from './folder-handle-store';
 
 /**
  * Make one user-selected directory the project's storage workspace.
@@ -13,8 +13,7 @@ export async function bindProjectStorageWorkspace(
   project: Pick<Project, 'id' | 'workspaceUid'>,
   handle: FileSystemDirectoryHandle,
 ): Promise<void> {
-  await saveProjectFolderHandle(project, handle)
-  await saveFolderHandle(LAST_FOLDER_KEY, handle)
+  await saveProjectStorageFolderHandle(project, handle)
 }
 
 /** Bind a directory selected before a project has finished being created. */

@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
+import '../../src/lib/export/registry-import'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import {
   AUTHORING_NODE_BY_ID,
@@ -70,8 +71,15 @@ describe('FLOW-3E · 大图效率、模板与可恢复执行', () => {
 
   afterEach(() => db.close())
 
-  it('六个官方模板都只由显式节点组成且合同可校验', () => {
-    expect(AUTHORING_OFFICIAL_TEMPLATES).toHaveLength(6)
+  it('五个保留的官方模板都只由显式节点组成且合同可校验，退役短篇模板不可构建', () => {
+    expect(AUTHORING_OFFICIAL_TEMPLATES.map(template => template.id)).toEqual([
+      'world-foundation',
+      'long-novel',
+      'character-driven',
+      'multi-line-narrative',
+      'chapter-continuation-review',
+    ])
+    expect(() => buildOfficialAuthoringTemplate('short-novel' as Parameters<typeof buildOfficialAuthoringTemplate>[0])).toThrow('未知官方节点模板：short-novel')
     for (const template of AUTHORING_OFFICIAL_TEMPLATES) {
       const graph = buildOfficialAuthoringTemplate(template.id)
       expect(parseAuthoringGraph(JSON.stringify(graph))).toMatchObject({ version: 2 })
@@ -79,6 +87,40 @@ describe('FLOW-3E · 大图效率、模板与可恢复执行', () => {
       expect(graph.nodes.every(node => AUTHORING_NODE_BY_ID.has(node.templateId))).toBe(true)
       expect(graph.nodes.some(node => node.templateId === 'output.review-adopt')).toBe(false)
     }
+  })
+
+  it('自动布局沿有向依赖从根节点向右分层且不修改原图', () => {
+    const graph = simpleGraph()
+    const original = structuredClone(graph)
+    const laidOut = autoLayoutAuthoringGraph(graph)
+    const [input, compose, output] = laidOut.nodes
+
+    expect(input.x).toBe(60)
+    expect(input.x).toBeLessThan(compose.x)
+    expect(compose.x).toBeLessThan(output.x)
+    expect(laidOut.nodes.map(node => node.y)).toEqual([60, 60, 60])
+    expect(laidOut.edges).toEqual(original.edges)
+    expect(laidOut.nodes.map((node, index) => ({
+      ...node,
+      x: original.nodes[index].x,
+      y: original.nodes[index].y,
+    }))).toEqual(original.nodes)
+    expect(graph).toEqual(original)
+    expect(autoLayoutAuthoringGraph(graph)).toEqual(laidOut)
+  })
+
+  it('自动布局将孤立节点与有边图的根节点放在首层的不同行', () => {
+    const graph = simpleGraph()
+    graph.nodes.push({ ...structuredClone(graph.nodes[0]), id: 'isolated' })
+    const laidOut = autoLayoutAuthoringGraph(graph)
+    const [input, compose, output, isolated] = laidOut.nodes
+
+    expect(input.x).toBe(60)
+    expect(isolated.x).toBe(input.x)
+    expect(isolated.y).toBeGreaterThan(input.y)
+    expect(input.x).toBeLessThan(compose.x)
+    expect(compose.x).toBeLessThan(output.x)
+    expect(laidOut.nodes.every(node => Number.isFinite(node.x) && Number.isFinite(node.y))).toBe(true)
   })
 
   it('百节点自动布局、框选辅助操作和子图复制保持稳定', () => {
@@ -109,7 +151,7 @@ describe('FLOW-3E · 大图效率、模板与可恢复执行', () => {
   })
 
   it('执行计划冻结调用上限，不把 API 配置或密钥写入计划', () => {
-    const graph = buildOfficialAuthoringTemplate('short-novel')
+    const graph = buildOfficialAuthoringTemplate('long-novel')
     const plan = buildAuthoringExecutionPlan({ graph })
     expect(plan.estimatedAiCalls).toBeGreaterThan(0)
     expect(plan.estimatedMaxAiCalls).toBeGreaterThanOrEqual(plan.estimatedAiCalls)

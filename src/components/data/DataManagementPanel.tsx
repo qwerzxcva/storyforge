@@ -71,7 +71,7 @@ export default function DataManagementPanel({ project, onImported, onOpenStorage
         })}
       </div>
 
-      {activeTab === 'export'    && <ExportTab project={project} onImported={onImported} onOpenStorageSettings={onOpenStorageSettings} />}
+      {activeTab === 'export'    && <ExportTab key={`${project.id}:${project.workspaceUid}`} project={project} onImported={onImported} onOpenStorageSettings={onOpenStorageSettings} />}
       {activeTab === 'backup'    && <BackupTab    project={project} onImported={onImported} />}
     </div>
   )
@@ -119,17 +119,42 @@ function ExportTab({ project, onImported, onOpenStorageSettings }: Props) {
   const [memoryEnabled, setMemoryEnabled] = useState(() => isMemoryEngineeringRuntimeEnabledV1())
   const [backupReport, setBackupReport] = useState<BackupTrustReport | null>(null)
 
-  // 进面板时把该项目已持久化的绑定读回来；授权仍有效则直接显示已绑定，失效则提示重新授权
+  const folderGeneration = useRef(0)
   useEffect(() => {
-    let cancelled = false
+    const reset = () => {
+      folderGeneration.current += 1
+      setFolderHandle(null)
+      setFolderName('')
+      setFolderNeedsAuth(false)
+      setFolderBusy(false)
+      setMemoryReport(null)
+      setMemoryCandidates(null)
+      setMemoryImpactPlan(null)
+      setStatus('idle')
+      setMessage('')
+    }
+    reset()
+    const generation = folderGeneration.current
+    const current = () => folderGeneration.current === generation
+    const cleared = (event: Event) => {
+      if ((event as CustomEvent<string>).detail === project.workspaceUid) reset()
+    }
+    window.addEventListener('storyforge-folder-binding-cleared', cleared)
     void (async () => {
       const h = await loadProjectFolderHandle({ workspaceUid: project.workspaceUid })
-      if (!h || cancelled) return
+      if (!h || !current()) return
+      const granted = await folderPermissionGranted(h)
+      if (!current()) return
       setFolderHandle(h)
       setFolderName(h.name)
-      setFolderNeedsAuth(!(await folderPermissionGranted(h)))
-    })()
-    return () => { cancelled = true }
+      setFolderNeedsAuth(!granted)
+    })().catch(error => {
+      if (current()) { setStatus('error'); setMessage(`读取文件夹失败：${(error as Error).message}`) }
+    })
+    return () => {
+      folderGeneration.current += 1
+      window.removeEventListener('storyforge-folder-binding-cleared', cleared)
+    }
   }, [project.id, project.workspaceUid])
 
   const show = (s: ExportStatus, msg: string) => {
@@ -213,15 +238,20 @@ function ExportTab({ project, onImported, onOpenStorageSettings }: Props) {
   const handleWorkspacePackageSelected = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (!file) return
+    const generation = ++folderGeneration.current
+    const current = () => folderGeneration.current === generation
     try {
       show('loading', '正在校验并恢复工作区包...')
       const restored = await importWorkspacePackageV1(JSON.parse(await file.text()))
-      await useProjectStore.getState().loadProject(restored.projectId)
+      if (!current()) return
+      await useProjectStore.getState().loadProject(restored.projectId, current)
+      if (!current()) return
       show('success', restored.reboundHarnessRunCount > 0
         ? `工作区包已恢复；${restored.reboundHarnessRunCount} 个 Harness 终态凭据因本地主键重绑定已安全标为待复核，历史证据仍保留`
         : '工作区包已完整恢复并通过回读核对')
       onImported?.(restored.projectId)
     } catch (e) {
+      if (!current()) return
       show('error', `工作区包导入失败：${(e as Error).message}`)
     } finally {
       event.target.value = ''
@@ -231,39 +261,52 @@ function ExportTab({ project, onImported, onOpenStorageSettings }: Props) {
   // 重新授权（更新/刷新后浏览器把权限降回 prompt 时，一次手势恢复）
   const handleReauthFolder = async () => {
     if (!folderHandle) return
+    const generation = ++folderGeneration.current
+    const current = () => folderGeneration.current === generation
     setFolderBusy(true)
     try {
       const ok = await ensureFolderPermission(folderHandle)
+      if (!current()) return
       if (!ok) { show('error', '仍未获授权'); return }
       setFolderNeedsAuth(false)
       show('success', '已重新授权；只有你点击保存时才会写入')
-    } catch (e) { show('error', `授权失败：${(e as Error).message}`) }
-    finally { setFolderBusy(false) }
+    } catch (e) { if (current()) show('error', `授权失败：${(e as Error).message}`) }
+    finally { if (current()) setFolderBusy(false) }
   }
 
   const handleSaveToFolder = async () => {
     if (!folderHandle) return
+    const generation = ++folderGeneration.current
+    const current = () => folderGeneration.current === generation
     setFolderBusy(true)
     try {
       show('loading', '正在写入本地文件夹...')
-      if (!(await ensureFolderPermission(folderHandle))) { show('error', '未获授权，无法写入'); setFolderNeedsAuth(true); return }
-      const ok = await writeProjectSnapshotToFolder(folderHandle, project.id!)
+      const granted = await ensureFolderPermission(folderHandle)
+      if (!current()) return
+      if (!granted) { show('error', '未获授权，无法写入'); setFolderNeedsAuth(true); return }
+      const ok = await writeProjectSnapshotToFolder(folderHandle, project.id!, current)
+      if (!current()) return
       show(ok ? 'success' : 'error', ok ? '完整 JSON 快照已保存到本地文件夹' : '写入失败，请重新绑定文件夹')
-    } catch (e) { show('error', `写入失败：${(e as Error).message}`) }
-    finally { setFolderBusy(false) }
+    } catch (e) { if (current()) show('error', `写入失败：${(e as Error).message}`) }
+    finally { if (current()) setFolderBusy(false) }
   }
 
   const handleCheckMemoryWorkspace = async () => {
     if (!folderHandle) return
+    const generation = ++folderGeneration.current
+    const current = () => folderGeneration.current === generation
     setFolderBusy(true)
     try {
       show('loading', '正在核对项目与本地文件...')
-      if (!(await ensureFolderPermission(folderHandle, false))) {
+      const granted = await ensureFolderPermission(folderHandle, false)
+      if (!current()) return
+      if (!granted) {
         show('error', '未获文件夹读取权限')
         setFolderNeedsAuth(true)
         return
       }
       const report = await buildWorkspaceSelfCheckReportV1(project.id!, folderHandle)
+      if (!current()) return
       setMemoryReport(report)
       const candidates = await buildWorkspaceFileAdoptionCandidatesV1({
         projectId: project.id!,
@@ -271,26 +314,34 @@ function ExportTab({ project, onImported, onOpenStorageSettings }: Props) {
         expectedPlanHash: report.plan.planHash,
         includeConflicts: true,
       })
+      if (!current()) return
       setMemoryCandidates(candidates)
-      setMemoryImpactPlan(candidates.candidates.length
+      const impactPlan = candidates.candidates.length
         ? await buildWorkspaceImpactPlanV1({ projectId: project.id!, candidateSet: candidates })
-        : null)
+        : null
+      if (!current()) return
+      setMemoryImpactPlan(impactPlan)
       const changed = report.summary.projectChanged + report.summary.fileChanged
         + report.summary.conflict + report.summary.missing + report.summary.extra + report.summary.invalid
       show('success', changed === 0 ? '项目与本地文件已经一致' : `核对完成：发现 ${changed} 项需要处理`)
     } catch (e) {
+      if (!current()) return
       show('error', `核对失败：${(e as Error).message}`)
     } finally {
-      setFolderBusy(false)
+      if (current()) setFolderBusy(false)
     }
   }
 
   const handleAdoptFileChanges = async () => {
     if (!folderHandle || !memoryReport) return
+    const generation = ++folderGeneration.current
+    const current = () => folderGeneration.current === generation
     setFolderBusy(true)
     try {
       show('loading', '正在按冻结候选采纳本地改动...')
-      if (!(await ensureFolderPermission(folderHandle))) {
+      const granted = await ensureFolderPermission(folderHandle)
+      if (!current()) return
+      if (!granted) {
         show('error', '需要文件夹写入权限才能提交新的同步基线')
         setFolderNeedsAuth(true)
         return
@@ -301,25 +352,33 @@ function ExportTab({ project, onImported, onOpenStorageSettings }: Props) {
         expectedPlanHash: memoryReport.plan.planHash,
         conflictResolution: memoryReport.summary.conflict > 0 ? 'file-wins' : 'reject',
       })
-      await useProjectStore.getState().loadProject(project.id!)
+      if (!current()) return
+      await useProjectStore.getState().loadProject(project.id!, current)
+      if (!current()) return
       const next = await buildWorkspaceSelfCheckReportV1(project.id!, folderHandle)
+      if (!current()) return
       setMemoryReport(next)
       setMemoryCandidates(null)
       setMemoryImpactPlan(null)
       show('success', '本地文件改动已采纳，并完成数据库与文件回读核对')
     } catch (e) {
+      if (!current()) return
       show('error', `采纳停止：${(e as Error).message}`)
     } finally {
-      setFolderBusy(false)
+      if (current()) setFolderBusy(false)
     }
   }
 
   const handleResolveConflictsUsingProject = async () => {
     if (!folderHandle || !memoryReport) return
+    const generation = ++folderGeneration.current
+    const current = () => folderGeneration.current === generation
     setFolderBusy(true)
     try {
       show('loading', '正在保留历史副本并用项目内容解决冲突...')
-      if (!(await ensureFolderPermission(folderHandle))) {
+      const granted = await ensureFolderPermission(folderHandle)
+      if (!current()) return
+      if (!granted) {
         show('error', '未获文件夹写入权限')
         setFolderNeedsAuth(true)
         return
@@ -329,24 +388,31 @@ function ExportTab({ project, onImported, onOpenStorageSettings }: Props) {
         root: folderHandle,
         expectedPlanHash: memoryReport.plan.planHash,
       })
+      if (!current()) return
       const next = await buildWorkspaceSelfCheckReportV1(project.id!, folderHandle)
+      if (!current()) return
       setMemoryReport(next)
       setMemoryCandidates(null)
       setMemoryImpactPlan(null)
       show('success', '已保留冲突文件历史，并以项目内容完成同步')
     } catch (e) {
+      if (!current()) return
       show('error', `冲突处理停止：${(e as Error).message}`)
     } finally {
-      setFolderBusy(false)
+      if (current()) setFolderBusy(false)
     }
   }
 
   const handleConfirmMissingChapterDeletion = async () => {
     if (!folderHandle || !memoryReport) return
+    const generation = ++folderGeneration.current
+    const current = () => folderGeneration.current === generation
     setFolderBusy(true)
     try {
       show('loading', '正在保存回收副本并执行章节删除生命周期...')
-      if (!(await ensureFolderPermission(folderHandle))) {
+      const granted = await ensureFolderPermission(folderHandle)
+      if (!current()) return
+      if (!granted) {
         show('error', '未获文件夹写入权限')
         setFolderNeedsAuth(true)
         return
@@ -354,50 +420,65 @@ function ExportTab({ project, onImported, onOpenStorageSettings }: Props) {
       await confirmMissingChapterFileDeletionsV1({
         projectId: project.id!, root: folderHandle, expectedPlanHash: memoryReport.plan.planHash,
       })
+      if (!current()) return
       const next = await buildWorkspaceSelfCheckReportV1(project.id!, folderHandle)
+      if (!current()) return
       setMemoryReport(next)
       setMemoryCandidates(null)
       setMemoryImpactPlan(null)
       show('success', '缺失章节已移入工作区回收历史，并完成引用核对')
     } catch (e) {
+      if (!current()) return
       show('error', `删除停止：${(e as Error).message}`)
     } finally {
-      setFolderBusy(false)
+      if (current()) setFolderBusy(false)
     }
   }
 
   const handleRestoreWorkspace = async () => {
     if (!folderHandle) return
+    const generation = ++folderGeneration.current
+    const current = () => folderGeneration.current === generation
     setFolderBusy(true)
     try {
       show('loading', '正在校验恢复胶囊并重建浏览器项目...')
-      if (!(await ensureFolderPermission(folderHandle, false))) {
+      const granted = await ensureFolderPermission(folderHandle, false)
+      if (!current()) return
+      if (!granted) {
         show('error', '未获文件夹读取权限')
         setFolderNeedsAuth(true)
         return
       }
       const restored = await restoreWorkspaceFromFolderV1(folderHandle)
+      if (!current()) return
       // The directory used to restore the project becomes that new project's
       // storage workspace. This persists only the handle and writes no files.
       await bindCreatedProjectStorageWorkspace(restored.projectId, folderHandle)
-      await useProjectStore.getState().loadProject(restored.projectId)
+      if (!current()) return
+      await useProjectStore.getState().loadProject(restored.projectId, current)
+      if (!current()) return
       show('success', restored.reboundHarnessRunCount > 0
         ? `已完整恢复并通过回读核对；${restored.reboundHarnessRunCount} 个 Harness 终态凭据因本地主键重绑定已安全标为待复核，历史证据仍保留`
         : '已从本地工作区完整恢复，并通过逐文档回读核对')
       onImported?.(restored.projectId)
     } catch (e) {
+      if (!current()) return
       show('error', `恢复停止：${(e as Error).message}`)
     } finally {
-      setFolderBusy(false)
+      if (current()) setFolderBusy(false)
     }
   }
 
   const handleSyncProjectChanges = async () => {
     if (!folderHandle || !memoryReport) return
+    const generation = ++folderGeneration.current
+    const current = () => folderGeneration.current === generation
     setFolderBusy(true)
     try {
       show('loading', '正在按核对计划写入本地文件...')
-      if (!(await ensureFolderPermission(folderHandle))) {
+      const granted = await ensureFolderPermission(folderHandle)
+      if (!current()) return
+      if (!granted) {
         show('error', '未获文件夹写入权限')
         setFolderNeedsAuth(true)
         return
@@ -407,13 +488,16 @@ function ExportTab({ project, onImported, onOpenStorageSettings }: Props) {
         root: folderHandle,
         expectedPlanHash: memoryReport.plan.planHash,
       })
+      if (!current()) return
       const next = await buildWorkspaceSelfCheckReportV1(project.id!, folderHandle)
+      if (!current()) return
       setMemoryReport(next)
       show('success', '项目改动已写入本地文件，并完成回读核对')
     } catch (e) {
+      if (!current()) return
       show('error', `同步停止：${(e as Error).message}`)
     } finally {
-      setFolderBusy(false)
+      if (current()) setFolderBusy(false)
     }
   }
 

@@ -4,7 +4,7 @@ import { stampNewRecord } from '../../src/lib/workspace/scope'
 import { captureNarrativeDomainV1, hashNarrativeDomainSourceV1 } from '../../src/lib/world-engine/narrative-domain-capture'
 import { confirmNarrativeDomainAnnotationsV1 } from '../../src/lib/world-engine/narrative-domain-authoring'
 import { hashNarrativeBytesV1 } from '../../src/lib/world-engine/narrative-json'
-import { seedNarrativeFamily } from './narrative-world-evaluation'
+import { seedNarrativeFamily } from './narrative-world-fixture'
 import corpus from '../acceptance/narrative-world/corpus-v1.json'
 import type { NarrativeDomainFieldsV1, NarrativeDomainMetadataV1 } from '../../src/lib/types/narrative-domain'
 

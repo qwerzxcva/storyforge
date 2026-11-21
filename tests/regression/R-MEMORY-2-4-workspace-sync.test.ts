@@ -1,3 +1,4 @@
+import '../../src/lib/export/registry-import'
 import { workspaceWriteText } from '../helpers/workspace-projection-write'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { parse as parseYaml, stringify as stringifyYaml } from 'yaml'
