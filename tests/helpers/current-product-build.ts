@@ -1,6 +1,6 @@
 import { db } from '../../src/lib/db/schema'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { createProductBuildPreviewManifestV1 } from '../../src/lib/product-production/preview-manifest'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { createProductBuildPreviewManifestV1 } from '../../src/lib/legacy-compat/product-production/preview-manifest'
 import type {
   ProductBuildPreviewManifestV1,
   ProductProductionBriefV3,
@@ -8,9 +8,9 @@ import type {
   WorkspaceScope,
   WorldRelease,
 } from '../../src/lib/types'
-import { createProductRuntimeInstanceFromSource } from '../../src/lib/product/runtime-instances'
-import type { ProductRuntimePackageWithTtrpgV2 } from '../../src/lib/ttrpg/content-version'
-import { parseProductRuntimePackageV1, type ProductTtrpgProtocol2ReaderV1 } from '../../src/lib/product-production/runtime-package'
+import { createProductRuntimeInstanceFromSource } from '../../src/lib/legacy-compat/product/runtime-instances'
+import type { ProductRuntimePackageWithTtrpgV2 } from '../../src/lib/legacy-compat/ttrpg/content-version'
+import { parseProductRuntimePackageV1, type ProductTtrpgProtocol2ReaderV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
 
 /**
  * Minimal current-only Product Build fixture. Tests that need a formal runtime

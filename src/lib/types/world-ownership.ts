@@ -1,4 +1,4 @@
-import type { CommunityWorldOrigin, WorkStatus } from './project'
+import type { CommunityWorldOrigin, WorkStatus } from './project';
 
 /** Author-owned policy for work that may follow prose adoption. */
 export type PostAdoptionPolicyV1 = 'off' | 'suggest' | 'auto-with-budget'

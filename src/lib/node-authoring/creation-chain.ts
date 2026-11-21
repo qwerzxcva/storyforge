@@ -1,10 +1,6 @@
-import { nanoid } from 'nanoid'
-import { AUTHORING_NODE_BY_ID, defaultConfigForTemplate } from './catalog'
-import type {
-  AuthoringEdge,
-  AuthoringNodeGraph,
-  AuthoringNodeInstance,
-} from './contracts'
+import { nanoid } from 'nanoid';
+import { AUTHORING_NODE_BY_ID, defaultConfigForTemplate } from './catalog';
+import type { AuthoringEdge, AuthoringNodeGraph, AuthoringNodeInstance } from './contracts';
 
 export const AUTHORING_CREATION_CHAIN_NODE_IDS = Object.freeze({
   context: 'chain-source-context',

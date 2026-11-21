@@ -1,4 +1,4 @@
-import {createInitialInteractionState, parseInteractionState} from '../../src/lib/character-interaction/runtime'
+import {createInitialInteractionState, parseInteractionState} from '../../src/lib/legacy-compat/character-interaction/runtime'
 import {chatNarrativeFixture} from './chat-narrative-fixture'
 import type {ChatGoalCommitmentV1} from '../../src/lib/types/chat-narrative'
 

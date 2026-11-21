@@ -1,27 +1,19 @@
-import { CInput, CTextarea } from '../shared/CompositionInput'
-import { useState, useEffect, useMemo, useRef } from 'react'
-import { Plus, Trash2, ArrowRight, Sparkles, Loader2, LayoutList, LayoutGrid, Info } from 'lucide-react'
-import { useForeshadowStore } from '../../stores/foreshadow'
-import { useChapterStore } from '../../stores/chapter'
-import { useOutlineStore } from '../../stores/outline'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { resolveRequestConfig } from '../../lib/ai/client'
-import { isAIConfigReady } from '../../lib/ai/config-readiness'
-import {
-  abandonForeshadowSuggestionRunV1,
-  adoptForeshadowSuggestionCandidateV1,
-  generateForeshadowSuggestionCandidateV1,
-  readPendingForeshadowSuggestionCandidateV1,
-  readRecoverableForeshadowSuggestionRunV1,
-  rejectForeshadowSuggestionCandidateV1,
-  type ForeshadowSuggestionCandidateV1,
-} from '../../lib/agent/run/foreshadow-suggestions-durable'
-import { resolveScopeLike } from '../../lib/workspace/scope'
-import { resolveCanonicalChapterSequence } from '../../lib/ai/chapter-memory/canonical-chapter-sequence'
-import { parseForeshadowEchoChapterIds } from '../../lib/foreshadow/context'
+import { CInput, CTextarea } from '../shared/CompositionInput';
+import { useState, useEffect, useMemo, useRef } from 'react';
+import { Plus, Trash2, ArrowRight, Sparkles, Loader2, LayoutList, LayoutGrid, Info } from 'lucide-react';
+import { useForeshadowStore } from '../../stores/foreshadow';
+import { useChapterStore } from '../../stores/chapter';
+import { useOutlineStore } from '../../stores/outline';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { resolveRequestConfig } from '../../lib/ai/client';
+import { isAIConfigReady } from '../../lib/ai/config-readiness';
+import { abandonForeshadowSuggestionRunV1, adoptForeshadowSuggestionCandidateV1, generateForeshadowSuggestionCandidateV1, readPendingForeshadowSuggestionCandidateV1, readRecoverableForeshadowSuggestionRunV1, rejectForeshadowSuggestionCandidateV1, type ForeshadowSuggestionCandidateV1 } from '../../lib/agent/run/foreshadow-suggestions-durable';
+import { resolveScopeLike } from '../../lib/workspace/scope';
+import { resolveCanonicalChapterSequence } from '../../lib/ai/chapter-memory/canonical-chapter-sequence';
+import { parseForeshadowEchoChapterIds } from '../../lib/foreshadow/context';
 import PromptRunPanel from '../shared/PromptRunPanel'
 import ForeshadowKanban from './ForeshadowKanban'
-import type { Project, Foreshadow, ForeshadowStatus, ForeshadowType } from '../../lib/types'
+import type { Project, Foreshadow, ForeshadowStatus, ForeshadowType } from '../../lib/types';
 
 const STATUS_LABELS: Record<ForeshadowStatus, { label: string; color: string }> = {
   planned: { label: '📋 计划中', color: 'text-text-muted' },

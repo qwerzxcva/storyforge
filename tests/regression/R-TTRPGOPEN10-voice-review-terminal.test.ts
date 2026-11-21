@@ -6,7 +6,7 @@ import { setupVoiceCandidateFixtureV1 } from '../helpers/open-voice-candidate'
 import { prepareTtrpgOpenVoiceCandidateV1,readTtrpgOpenVoiceCandidateV1,acceptTtrpgOpenVoiceCandidateReviewV1,
   readTtrpgOpenVoiceCandidateReviewV1 } from '../../src/lib/ttrpg/open-audio-service'
 import { parseTtrpgOpenVoiceQualityReviewV1 } from '../../src/lib/ttrpg/open-voice-review-contract'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { changeTtrpgSafetyStatus } from '../../src/lib/ttrpg/runtime-commands'
 import { openEnvelopeV1 } from '../helpers/open-ttrpg-session'
 import { canonicalStringify } from '../../src/lib/agent/run/hash'

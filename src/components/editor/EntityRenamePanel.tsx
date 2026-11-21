@@ -1,28 +1,18 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { liveQuery } from 'dexie'
-import { db } from '../../lib/db/schema'
-import type { Project, WorkspaceScope } from '../../lib/types'
-import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator'
-import { AlertTriangle, CheckCircle2, Eye, RotateCcw, ShieldCheck } from 'lucide-react'
-import { useBackupStore } from '../../stores/backup'
-import { useChapterStore } from '../../stores/chapter'
-import { useCharacterStore } from '../../stores/character'
-import { useCodexStore } from '../../stores/codex'
-import { useLocationStore } from '../../stores/location'
-import { useStateCardStore } from '../../stores/state-card'
-import {
-  buildEntityRenamePreview,
-  executeEntityRename,
-  listRenamableEntities,
-  undoEntityRename,
-  type EntityRenamePreview,
-  type EntityRenameTarget,
-  type EntityRenameUndoPatch,
-  type RenamableEntity,
-  type RenamableEntityKind,
-} from '../../lib/editor/entity-rename'
-import { useDialog } from '../shared/Dialog'
-import { useToast } from '../shared/Toast'
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { liveQuery } from 'dexie';
+import { db } from '../../lib/db/schema';
+import type { Project, WorkspaceScope } from '../../lib/types';
+import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator';
+import { AlertTriangle, CheckCircle2, Eye, RotateCcw, ShieldCheck } from 'lucide-react';
+import { useBackupStore } from '../../stores/backup';
+import { useChapterStore } from '../../stores/chapter';
+import { useCharacterStore } from '../../stores/character';
+import { useCodexStore } from '../../stores/codex';
+import { useLocationStore } from '../../stores/location';
+import { useStateCardStore } from '../../stores/state-card';
+import { buildEntityRenamePreview, executeEntityRename, listRenamableEntities, undoEntityRename, type EntityRenamePreview, type EntityRenameTarget, type EntityRenameUndoPatch, type RenamableEntity, type RenamableEntityKind } from '../../lib/editor/entity-rename';
+import { useDialog } from '../shared/Dialog';
+import { useToast } from '../shared/Toast';
 
 interface Props {
   projectId: number

@@ -3,28 +3,19 @@
  *
  * 用户为选中的角色设定初始/目标状态 → AI 生成中间情节大纲 → 可批量导入到大纲
  */
-
-import { useState, useEffect, useMemo, useRef } from 'react'
-import {
-  Sparkles, Trash2, Check, ChevronDown, ChevronRight,
-  Users, BookOpen, Loader2, ArrowRight, Copy, Plus, Pencil, Power,
-} from 'lucide-react'
-import { useCharacterStore } from '../../stores/character'
-import { useOutlineStore } from '../../stores/outline'
-import { useCharacterDrivenPlanStore } from '../../stores/character-driven-plan'
+import { useState, useEffect, useMemo, useRef } from 'react';
+import { Sparkles, Trash2, Check, ChevronDown, ChevronRight, Users, BookOpen, Loader2, ArrowRight, Copy, Plus, Pencil, Power } from 'lucide-react';
+import { useCharacterStore } from '../../stores/character';
+import { useOutlineStore } from '../../stores/outline';
+import { useCharacterDrivenPlanStore } from '../../stores/character-driven-plan';
 import AutoResizeTextarea from '../shared/AutoResizeTextarea'
-import { useDialog } from '../shared/Dialog'
-import type { Project, WorkspaceScope } from '../../lib/types'
-import {
-  parseCharacterDrivenPlanArcs,
-  parseCharacterDrivenPlotVolumes,
-  type CharacterDrivenPlanArc,
-  type CharacterDrivenPlotVolume,
-} from '../../lib/types'
-import { characterAxesLabel } from '../../lib/character/character-axes'
-import { adoptCharacterDrivenVolumes } from '../../lib/story-planning/character-driven-adoption'
+import { useDialog } from '../shared/Dialog';
+import type { Project, WorkspaceScope } from '../../lib/types';
+import { parseCharacterDrivenPlanArcs, parseCharacterDrivenPlotVolumes, type CharacterDrivenPlanArc, type CharacterDrivenPlotVolume } from '../../lib/types';
+import { characterAxesLabel } from '../../lib/character/character-axes';
+import { adoptCharacterDrivenVolumes } from '../../lib/story-planning/character-driven-adoption';
 import CharacterRevisionPanel from './CharacterRevisionPanel'
-import { useMasterCopilot } from '../agent/useMasterCopilot'
+import { useMasterCopilot } from '../agent/useMasterCopilot';
 import HarnessEvidencePanel from '../agent/HarnessEvidencePanel'
 
 type CharacterArcInput = CharacterDrivenPlanArc

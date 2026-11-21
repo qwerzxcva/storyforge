@@ -5,7 +5,7 @@ import { prepareAvgAssemblyBriefV1, readAvgAssemblyWorkspaceV1, restartAvgVisual
 import { readAvgDraftV1 } from '../../src/lib/avg/draft-service'
 import { authorizeProductProductionStartV1, readProductProductionDetailsV1, stopProductProductionV1 } from '../../src/lib/product-production/service'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 import { avgVisualPlanningFixtureV4 } from '../helpers/avg-visual-planning-fixture'
 import { avgV5WorkbenchPreparationFixture } from '../helpers/avg-v5-workbench-preparation-fixture'
 

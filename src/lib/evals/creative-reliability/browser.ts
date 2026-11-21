@@ -1,38 +1,19 @@
-import { chat, type ChatResult } from '../../ai/client'
-import { computeKnownCostUsd } from '../../ai/usage-log'
-import { supportsVerifiedJsonObjectResponseV1 } from '../../ai/provider-capabilities'
-import { validateDomainCandidateCanon } from '../../agent/canon-validator'
-import { hashCanonicalValue } from '../../agent/run/hash'
-import {
-  prepareStoryArcCopilot,
-  runStoryArcCreativeReliabilityV1,
-} from '../../agent/story-arc-copilot'
-import { AgentTeamBudgetTracker } from '../../agent/team-budget'
-import { db } from '../../db/schema'
-import { adopt } from '../../registry/adopt'
-import { assembleContext } from '../../registry/assemble-context'
-import type { AIConfig, ChatMessage, Project, WorkspaceScope } from '../../types'
-import type { CreativeReliabilityFixtureV1 } from './fixtures'
-import { createOwnedEvalWorkspaceV1, cleanupOwnedEvalWorkspaceV1, cleanupOwnedEvalWorkspacesV1, withEvalWorkspaceRunLeaseV1, type EvalWorkspaceRunLeaseV1, type EvalWorkspaceOwnerV1 } from '../workspace-ownership'
-import {
-  CREATIVE_RELIABILITY_GENERATOR_PROMPT_VERSION_V1,
-  CREATIVE_RELIABILITY_BASELINE_PROMPT_VERSION_V1,
-  CREATIVE_RELIABILITY_REPAIR_PROMPT_VERSION_V1,
-  CREATIVE_RELIABILITY_VERIFIER_PROMPT_VERSION_V1,
-  buildCreativeReliabilityBaselineMessagesV1,
-  buildCreativeReliabilityVerifierMessagesV1,
-  parseCreativeReliabilityBaselineOutputV1,
-  parseCreativeReliabilityVerifierAssessmentV1,
-} from './protocol'
-import type { CreativeReliabilityEvalRunDependenciesV1 } from './runner'
-import type {
-  CreativeReliabilityEvalCallV1,
-  CreativeReliabilityEvalGenerationV1,
-  CreativeReliabilityEvalIdentityV1,
-  CreativeReliabilityEvalUsageV1,
-  CreativeReliabilityEvalVariantV1,
-  CreativeReliabilityEvalVerificationV1,
-} from './types'
+import { chat, type ChatResult } from '../../ai/client';
+import { computeKnownCostUsd } from '../../ai/usage-log';
+import { supportsVerifiedJsonObjectResponseV1 } from '../../ai/provider-capabilities';
+import { validateDomainCandidateCanon } from '../../agent/canon-validator';
+import { hashCanonicalValue } from '../../agent/run/hash';
+import { prepareStoryArcCopilot, runStoryArcCreativeReliabilityV1 } from '../../agent/story-arc-copilot';
+import { AgentTeamBudgetTracker } from '../../agent/team-budget';
+import { db } from '../../db/schema';
+import { adopt } from '../../registry/adopt';
+import { assembleContext } from '../../registry/assemble-context';
+import type { AIConfig, ChatMessage, Project, WorkspaceScope } from '../../types';
+import type { CreativeReliabilityFixtureV1 } from './fixtures';
+import { createOwnedEvalWorkspaceV1, cleanupOwnedEvalWorkspaceV1, cleanupOwnedEvalWorkspacesV1, withEvalWorkspaceRunLeaseV1, type EvalWorkspaceRunLeaseV1, type EvalWorkspaceOwnerV1 } from '../workspace-ownership';
+import { CREATIVE_RELIABILITY_GENERATOR_PROMPT_VERSION_V1, CREATIVE_RELIABILITY_BASELINE_PROMPT_VERSION_V1, CREATIVE_RELIABILITY_REPAIR_PROMPT_VERSION_V1, CREATIVE_RELIABILITY_VERIFIER_PROMPT_VERSION_V1, buildCreativeReliabilityBaselineMessagesV1, buildCreativeReliabilityVerifierMessagesV1, parseCreativeReliabilityBaselineOutputV1, parseCreativeReliabilityVerifierAssessmentV1 } from './protocol';
+import type { CreativeReliabilityEvalRunDependenciesV1 } from './runner';
+import type { CreativeReliabilityEvalCallV1, CreativeReliabilityEvalGenerationV1, CreativeReliabilityEvalIdentityV1, CreativeReliabilityEvalUsageV1, CreativeReliabilityEvalVariantV1, CreativeReliabilityEvalVerificationV1 } from './types';
 
 const CREL_PROJECT_PREFIX = '[CREL-EVAL] '
 const CALL_TIMEOUT_MS = 180_000

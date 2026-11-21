@@ -1,18 +1,18 @@
 import { describe, expect, it } from 'vitest'
-import { validateTextOpenWorldEffectStateV1 } from '../../src/lib/open-world/effect-dsl'
-import { createTextOpenWorldConditionCatalogV1 } from '../../src/lib/open-world/condition-dsl'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
+import { validateTextOpenWorldEffectStateV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
+import { createTextOpenWorldConditionCatalogV1 } from '../../src/lib/legacy-compat/open-world/condition-dsl'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
 import {
   createInitialTextOpenWorldQuestInstancesV1,
   createTextOpenWorldDirectorQuestInstanceV1,
   createTextOpenWorldQuestInstanceKeyV1,
   deriveTextOpenWorldQuestConditionProjectionV1,
   projectTextOpenWorldQuestInstancesV1,
-} from '../../src/lib/open-world/quests'
+} from '../../src/lib/legacy-compat/open-world/quests'
 import {
   createInitialTextOpenWorldSessionProjectionV1,
   parseTextOpenWorldSessionProjectionV1,
-} from '../../src/lib/open-world/session-projection'
+} from '../../src/lib/legacy-compat/open-world/session-projection'
 import { createTextOpenWorldVNextFixture } from '../helpers/text-open-world-vnext-fixture'
 
 describe('Text Open World vNext · QuestDefinition and QuestInstance boundary', () => {

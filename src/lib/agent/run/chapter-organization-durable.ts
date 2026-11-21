@@ -1,22 +1,13 @@
-import { db } from '../../db/schema'
-import { hashChapterText } from '../../ai/chapter-memory/text-normalization'
-import type { WorkspaceScope } from '../../types'
-import type { ContextManifestV1 } from '../../types/agent-run'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import { hashCanonicalValue } from './hash'
-import {
-  type ChapterOrganizationCandidate,
-  type ChapterOrganizationDurableEvidence,
-  type ChapterOrganizationDomain,
-} from '../chapter-organization'
-import { assertRecordInScope, readOwnedRows, resolveScopeLike } from '../../workspace/scope'
-import { CHAPTER_ORGANIZATION_SOURCE_KEYS_CURRENT_V1, CHAPTER_ORGANIZATION_WRITE_TARGETS_CURRENT_V1 } from './chapter-organization-authority'
+import { db } from '../../db/schema';
+import { hashChapterText } from '../../ai/chapter-memory/text-normalization';
+import type { WorkspaceScope } from '../../types';
+import type { ContextManifestV1 } from '../../types/agent-run';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, type AgentRunSnapshotV1 } from './event-store';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { hashCanonicalValue } from './hash';
+import { type ChapterOrganizationCandidate, type ChapterOrganizationDurableEvidence, type ChapterOrganizationDomain } from '../chapter-organization';
+import { assertRecordInScope, readOwnedRows, resolveScopeLike } from '../../workspace/scope';
+import { CHAPTER_ORGANIZATION_SOURCE_KEYS_CURRENT_V1, CHAPTER_ORGANIZATION_WRITE_TARGETS_CURRENT_V1 } from './chapter-organization-authority';
 
 export const CHAPTER_ORGANIZATION_DURABLE_STEP_ID_V1 = 'chapter-organization'
 export const CHAPTER_ORGANIZATION_DURABLE_VERIFIER_SET_V1 = 'chapter-organization-terminal-v1'

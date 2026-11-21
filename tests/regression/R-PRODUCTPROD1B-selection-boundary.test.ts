@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { narrowProductProductionReadBoundaryV1 } from '../../src/lib/product-production/source-contracts'
+import { narrowProductProductionReadBoundaryV1 } from '../../src/lib/legacy-compat/product-production/source-contracts'
 
 describe('R-PRODUCTPROD-1B · frozen product selection boundary', () => {
   it('不会把同类型但未进入 SourceSelection 的世界记录交给正式生产', () => {

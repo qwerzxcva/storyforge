@@ -1,8 +1,8 @@
 import {canonicalStringify} from '../../src/lib/agent/run/hash'
-import {createInitialInteractionState} from '../../src/lib/character-interaction/runtime'
-import {applyReviewedChatNarrativeActionV1, requestChatNarrativeTriggerV1} from '../../src/lib/character-interaction/narrative-actions'
-import {CHAT_TURN_END_CONTROL_CHECKS_V1, type ChatTurnEndControlV1} from '../../src/lib/character-interaction/turn-end-control'
-import type {ChatControlHandoffReviewV1} from '../../src/lib/character-interaction/control-handoff-contract'
+import {createInitialInteractionState} from '../../src/lib/legacy-compat/character-interaction/runtime'
+import {applyReviewedChatNarrativeActionV1, requestChatNarrativeTriggerV1} from '../../src/lib/legacy-compat/character-interaction/narrative-actions'
+import {CHAT_TURN_END_CONTROL_CHECKS_V1, type ChatTurnEndControlV1} from '../../src/lib/legacy-compat/character-interaction/turn-end-control'
+import type {ChatControlHandoffReviewV1} from '../../src/lib/legacy-compat/character-interaction/control-handoff-contract'
 import type {ChatNarrativeActionV1} from '../../src/lib/types/chat-narrative'
 import {chatNarrativeFixture, chatActionReviewFixture} from './chat-narrative-fixture'
 

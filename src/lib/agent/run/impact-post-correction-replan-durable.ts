@@ -1,27 +1,19 @@
-import { db } from '../../db/schema'
-import type { WorkspaceScope } from '../../types'
-import { assembleContext } from '../../registry/assemble-context'
-import { hashImpactManualCorrectionTargetV1, readCompletedImpactManualCorrectionV1 } from './impact-manual-correction-durable'
-import type { CurrentImpactHandoffTargetV2 } from './impact-handoff-durable'
-import type { ImpactHandoffV2 } from '../../consistency/impact-handoff'
-import { buildEditImpactGraphV1, type EditImpactGraphV1 } from '../../consistency/impact-analysis'
-import { buildImpactRemediationPlanV1, type ImpactRemediationPlanV1 } from '../../consistency/impact-remediation-plan'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunChildV1,
-  readAgentRunV1,
-  readCurrentAgentRunParentV1,
-  staleAgentRunVerificationV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import { hashCanonicalValue } from './hash'
-import { assertRecordInScope, readOwnedRows } from '../../workspace/scope'
-import type { AgentRunRecord } from '../../types/agent-run'
-import { replanImpactRemediationV1 } from '../../consistency/impact-remediation-replan'
+import { db } from '../../db/schema';
+import type { WorkspaceScope } from '../../types';
+import { assembleContext } from '../../registry/assemble-context';
+import { hashImpactManualCorrectionTargetV1, readCompletedImpactManualCorrectionV1 } from './impact-manual-correction-durable';
+import type { CurrentImpactHandoffTargetV2 } from './impact-handoff-durable';
+import type { ImpactHandoffV2 } from '../../consistency/impact-handoff';
+import { buildEditImpactGraphV1, type EditImpactGraphV1 } from '../../consistency/impact-analysis';
+import { buildImpactRemediationPlanV1, type ImpactRemediationPlanV1 } from '../../consistency/impact-remediation-plan';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunChildV1, readAgentRunV1, readCurrentAgentRunParentV1, staleAgentRunVerificationV1, type AgentRunSnapshotV1 } from './event-store';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { hashCanonicalValue } from './hash';
+import { assertRecordInScope, readOwnedRows } from '../../workspace/scope';
+import type { AgentRunRecord } from '../../types/agent-run';
+import { replanImpactRemediationV1 } from '../../consistency/impact-remediation-replan';
 
 export const IMPACT_POST_CORRECTION_REPLAN_STEP_ID_V1 = 'impact-remediation:post-correction-replan' as const
 export const IMPACT_POST_CORRECTION_REPLAN_VERIFIER_SET_V1 = 'impact-post-correction-replan-terminal-v1' as const

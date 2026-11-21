@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { setupNormalizationRuntimeSourceV1 } from '../helpers/open-normalization-runtime-model'
 import { OPEN_HUMAN_VIEWER, openEnvelopeV1 } from '../helpers/open-ttrpg-session'
-import { readProductRuntimeState, branchProductRuntimeSession, deleteProductRuntimeSession } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState, branchProductRuntimeSession, deleteProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readTtrpgOpenNormalizationModelDeskV1, requestTtrpgOpenNormalizationModelDeskV1, resumeTtrpgOpenNormalizationModelDeskV1,
   reviewTtrpgOpenNormalizationModelDeskV1, repairTtrpgOpenNormalizationModelDeskV1, finishTtrpgOpenNormalizationModelDeskV1,
   closeTtrpgOpenNormalizationModelWindowDeskV1 } from '../../src/lib/ttrpg/open-normalization-model-desk'

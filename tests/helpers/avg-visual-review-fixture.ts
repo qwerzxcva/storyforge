@@ -1,5 +1,5 @@
 import type { AvgReviewIssuesV1 } from '../../src/lib/avg/artifact-contract'
-import type { AvgVisualProductionRequirementV1 } from '../../src/lib/avg/media-production-contract'
+import type { AvgVisualProductionRequirementV1 } from '../../src/lib/legacy-compat/avg/media-production-contract'
 import { AVG_VISUAL_REVIEW_CRITERIA_V1 } from '../../src/lib/avg/visual-review-contract'
 
 /** Explicitly synthetic author assessment for controlled engineering images.

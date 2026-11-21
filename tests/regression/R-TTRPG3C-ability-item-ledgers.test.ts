@@ -3,12 +3,12 @@ import {
   createTtrpgAbilityRuntimeStateV2,
   resetTtrpgAbilityUsageV2,
   consumeTtrpgAbilityV2,
-} from '../../src/lib/ttrpg/ability-ledger'
+} from '../../src/lib/legacy-compat/ttrpg/ability-ledger'
 import {
   applyTtrpgItemCommandV2,
   createEmptyTtrpgInventoryV2,
   inventoryItemsForOwnerV2,
-} from '../../src/lib/ttrpg/item-ledger'
+} from '../../src/lib/legacy-compat/ttrpg/item-ledger'
 import type { TtrpgAbilityDefinitionV2, TtrpgItemDefinitionV2 } from '../../src/lib/types'
 
 const charges: TtrpgAbilityDefinitionV2 = {

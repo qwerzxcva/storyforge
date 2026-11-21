@@ -1,7 +1,7 @@
 import { beforeEach, afterEach, expect, it } from "vitest";
 import { db } from "../../src/lib/db/schema";
 import { createChatDraftV1, readChatDraftV1, saveChatDraftV1, selectChatWorldV1, } from "../../src/lib/character-interaction/draft-service";
-import { DEFAULT_CHAT_SETTINGS, } from "../../src/lib/character-interaction/authoring-contract";
+import { DEFAULT_CHAT_SETTINGS, } from "../../src/lib/legacy-compat/character-interaction/authoring-contract";
 import { createMistHarborWorld } from "../../src/lib/world-engine/mist-harbor-preset";
 import { exportProjectJSON, importProjectJSON, } from "../../src/lib/export/json-export";
 import { deleteWork } from "../../src/lib/workspace/lifecycle";

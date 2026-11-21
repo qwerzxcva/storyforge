@@ -1,5 +1,5 @@
-import type { PromptWorkflow } from '../types'
-import { createLinearWorkflowGraph } from '../workflow/graph'
+import type { PromptWorkflow } from '../types';
+import { createLinearWorkflowGraph } from '../workflow/graph';
 
 export type WorkflowSeed = Omit<PromptWorkflow, 'id' | 'createdAt' | 'updatedAt'>
 type WorkflowSeedDraft = Omit<WorkflowSeed, 'graph'>

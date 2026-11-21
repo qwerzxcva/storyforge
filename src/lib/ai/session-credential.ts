@@ -1,4 +1,4 @@
-import type { AIConfig } from '../types'
+import type { AIConfig } from '../types';
 
 type CredentialOwner = Pick<AIConfig, 'provider' | 'baseUrl'>
 

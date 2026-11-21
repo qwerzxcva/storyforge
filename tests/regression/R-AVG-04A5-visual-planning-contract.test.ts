@@ -3,12 +3,12 @@ import { createAvgAuthoringPresetV1 } from '../../src/lib/avg/authoring-presets'
 import { assertAvgProfessionalArtifactAdmissionV1 } from '../../src/lib/avg/artifact-admission'
 import { parseAvgProfessionalArtifactV1, prepareAvgProfessionalArtifactV1 } from '../../src/lib/avg/artifact-contract'
 import { assertAvgVisualPlanningProposalV1, compileAvgVisualPlanningProposalV1, freezeAvgVisualPlanningScopeV1, validateAvgVisualProductionBatchSourceV1 } from '../../src/lib/avg/media-source'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import {
   avgMediaBriefArtifactKeyV1, parseAvgMediaBriefV1, parseAvgVisualBibleV1, parseAvgVisualPlanningScopeV1,
   type AvgMediaBriefV1, type AvgVisualBibleV1, type AvgVisualDesignKindV1, type AvgVisualRequirementTemplateV1,
-} from '../../src/lib/avg/visual-planning-contract'
-import type { AvgMediaReferenceV1 } from '../../src/lib/avg/media-reference-contract'
+} from '../../src/lib/legacy-compat/avg/visual-planning-contract'
+import type { AvgMediaReferenceV1 } from '../../src/lib/legacy-compat/avg/media-reference-contract'
 
 function template(subjectKind: AvgVisualDesignKindV1, subjectKey: string, requirementKey: string,
   slot: 'actor' | 'background' | 'icon' | 'detail', sceneKey = 'desk'): AvgVisualRequirementTemplateV1 {

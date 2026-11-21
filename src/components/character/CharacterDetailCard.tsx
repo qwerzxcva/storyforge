@@ -1,20 +1,16 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { ChevronDown, ChevronRight, Trash2 } from 'lucide-react'
-import type { Character, Project, WorldGroup } from '../../lib/types'
-import {
-  MORAL_AXIS_LABELS,
-  ORDER_AXIS_LABELS,
-  ROLE_WEIGHT_LABELS,
-} from '../../lib/character/character-axes'
-import { InlineInput, InlineTextarea } from '../shared/InlineEdit'
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { ChevronDown, ChevronRight, Trash2 } from 'lucide-react';
+import type { Character, Project, WorldGroup } from '../../lib/types';
+import { MORAL_AXIS_LABELS, ORDER_AXIS_LABELS, ROLE_WEIGHT_LABELS } from '../../lib/character/character-axes';
+import { InlineInput, InlineTextarea } from '../shared/InlineEdit';
 import CharacterAxesPicker from './CharacterAxesPicker'
 import CharacterDimensionFields from './CharacterDimensionFields'
 import CharacterStatusPanel from './CharacterStatusPanel'
 import CharacterSupplementAction from './CharacterSupplementAction'
 import CharacterLifecycleAction from './CharacterLifecycleAction'
 import CharacterWorldAffiliations from './CharacterWorldAffiliations'
-import { flushPendingEditsV1, registerPendingDraftFlusherV1 } from '../../lib/authoring/pending-edit-coordinator'
-import { useBeforeUnload } from '../../hooks/useBeforeUnload'
+import { flushPendingEditsV1, registerPendingDraftFlusherV1 } from '../../lib/authoring/pending-edit-coordinator';
+import { useBeforeUnload } from '../../hooks/useBeforeUnload';
 
 interface Props {
   char: Character

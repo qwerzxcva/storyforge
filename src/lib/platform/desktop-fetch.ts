@@ -1,4 +1,4 @@
-import { createNativeFetch, type NativeHttp } from './android-fetch'
+import { createNativeFetch, type NativeHttp } from './android-fetch';
 
 /** Only existing model endpoints use native HTTP. Assets, fixed local proxies,
  * telemetry, downloads and all ordinary browser builds retain their transport. */

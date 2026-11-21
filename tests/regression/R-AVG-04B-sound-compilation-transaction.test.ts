@@ -3,7 +3,7 @@ import { afterEach, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { avgSoundPlanningFixtureV1 } from '../helpers/avg-sound-planning-fixture'
 import { compileAvgSoundRequirementsV1 } from '../../src/lib/avg/sound-requirements'
-import { canonicalProductProductionJsonV2 } from '../../src/lib/product-production/hash'
+import { canonicalProductProductionJsonV2 } from '../../src/lib/legacy-compat/product-production/hash'
 
 afterEach(() => { vi.restoreAllMocks(); db.close() })
 it('keeps atomic adoption alive while the pure multi-requirement compiler hashes outside its DB transaction', async () => {

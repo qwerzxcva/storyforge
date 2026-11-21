@@ -1,8 +1,8 @@
 // @vitest-environment node
 import { createHash } from 'node:crypto'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { AVG_FOREGROUND_BOUNDARY_UNMIX_ID_V2 } from '../../src/lib/avg/image-foreground-boundary-unmix'
-import { parseAvgForegroundPolicyV1, parseAvgForegroundPolicyV2, type AvgForegroundPolicyV2 } from '../../src/lib/avg/image-foreground-contract'
+import { AVG_FOREGROUND_BOUNDARY_UNMIX_ID_V2 } from '../../src/lib/legacy-compat/avg/image-foreground-boundary-unmix'
+import { parseAvgForegroundPolicyV1, parseAvgForegroundPolicyV2, type AvgForegroundPolicyV2 } from '../../src/lib/legacy-compat/avg/image-foreground-contract'
 import { runAvgForegroundWorker } from '../../src/lib/avg/image-foreground-worker-client'
 import { runAvgForegroundWorkerV2, AVG_FOREGROUND_WORKER_TIMEOUT_MS_V2 } from '../../src/lib/avg/image-foreground-worker-client-v2'
 import { executeAvgForegroundWorkerRequestV1 } from '../../src/lib/avg/image-foreground-worker-protocol'

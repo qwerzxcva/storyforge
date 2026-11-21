@@ -1,5 +1,5 @@
-import type { Chapter } from '../types'
-import { countWords, htmlToPlainText } from '../utils/html'
+import type { Chapter } from '../types';
+import { countWords, htmlToPlainText } from '../utils/html';
 
 export function chapterContentWordCount(chapter: Chapter): number {
   const plain = htmlToPlainText(chapter.content || '').trim()

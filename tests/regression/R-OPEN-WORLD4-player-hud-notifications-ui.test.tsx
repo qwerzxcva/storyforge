@@ -2,14 +2,14 @@ import { StrictMode, act, createElement } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import TextOpenWorldVNextPlayer from '../../src/components/text-game/TextOpenWorldVNextPlayer'
-import { createTextOpenWorldDirectorCatalogV1 } from '../../src/lib/open-world/director'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
-import { createTextOpenWorldDirectorQuestInstanceV1 } from '../../src/lib/open-world/quests'
+import { createTextOpenWorldDirectorCatalogV1 } from '../../src/lib/legacy-compat/open-world/director'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
+import { createTextOpenWorldDirectorQuestInstanceV1 } from '../../src/lib/legacy-compat/open-world/quests'
 import {
   applyTextOpenWorldSessionEventV1,
   createInitialTextOpenWorldSessionProjectionV1,
   deriveTextOpenWorldContextsV1,
-} from '../../src/lib/open-world/session-projection'
+} from '../../src/lib/legacy-compat/open-world/session-projection'
 import type {
   ProductRuntimeEvent,
   TextOpenWorldRandomEvidenceV1,

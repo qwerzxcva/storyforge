@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react'
-import { useLocation } from 'react-router'
-import { useBackupStore, AUTO_BACKUP_INTERVAL, type BackupOwner } from '../stores/backup'
+import { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router';
+import { useBackupStore, AUTO_BACKUP_INTERVAL, type BackupOwner } from '../stores/backup';
 
 /**
  * 自动定时备份 Hook

@@ -1,5 +1,5 @@
-import type { ContextCompressionEvidenceV1 } from '../../registry/types'
-import type { CaseScore, EvalSplit } from '../long-consistency/types'
+import type { ContextCompressionEvidenceV1 } from '../../registry/types';
+import type { CaseScore, EvalSplit } from '../long-consistency/types';
 
 export const CONTEXT_COMPRESSION_EVAL_VARIANTS = [
   'full-source',

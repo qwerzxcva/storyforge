@@ -5,7 +5,7 @@ import { readyOpenTtrpgSessionV1,openEnvelopeV1,OPEN_HUMAN_VIEWER } from '../hel
 import { startTtrpgOpenEpochV1,delegateTtrpgOpenHostingV1,stopTtrpgOpenHostingV1,clarifyTtrpgOpenIntentCandidateV1,changeTtrpgSituationV1,
   startTtrpgOpenIntentCandidateOperationV1,preauthorizeTtrpgOpenCompanionV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { generateTtrpgOpenCompanionCandidateV1,readTtrpgOpenIntentCandidateV1 } from '../../src/lib/ttrpg/open-intent-harness'
-import { readProductRuntimeState,parseProductRuntimeState,replayProductRuntimeEvents } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState,parseProductRuntimeState,replayProductRuntimeEvents } from '../../src/lib/legacy-compat/product/runtime-core'
 import { inspectTtrpgOpenIntentRoutingV1 } from '../../src/lib/ttrpg/open-intent-clarification'
 import { operationInput } from '../helpers/open-ttrpg-branch-recovery'
 import { settleOpenPaidTurnsV1 } from '../helpers/open-ttrpg-paid-turns'

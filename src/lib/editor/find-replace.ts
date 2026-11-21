@@ -1,7 +1,7 @@
-import { countWords } from '../utils/html'
-import { buildBestChapterByOutlineMap } from '../chapters/selectors'
-import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk'
-import type { Chapter, OutlineNode } from '../types'
+import { countWords } from '../utils/html';
+import { buildBestChapterByOutlineMap } from '../chapters/selectors';
+import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk';
+import type { Chapter, OutlineNode } from '../types';
 
 export interface FindReplaceOptions {
   query: string

@@ -2,8 +2,7 @@
  * 多语言奇幻名字池
  * 支持中文古风、日式和风、欧洲中世纪、阿拉伯、高魔奇幻、暗黑奇幻
  */
-
-import type { NamingStyle } from './types'
+import type { NamingStyle } from './types';
 
 interface NameSet {
   states: string[]

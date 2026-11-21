@@ -1,145 +1,45 @@
-import { INSPIRATION_PREPARATION_MODULES, inspirationPreparationModeFromRequest } from '../../inspiration/preparation'
+import { INSPIRATION_PREPARATION_MODULES, inspirationPreparationModeFromRequest } from '../../inspiration/preparation';
 import Dexie from 'dexie'
-import type {
-  AgentEvent,
-  AgentRunEventTypeV1,
-  AgentRunProjectionV1,
-  WorkspaceScope,
-} from '../../types'
-import {
-  appendAgentEvent,
-  readAgentEvents,
-} from '../conversations'
-import {
-  DOMAIN_AGENT_IDS,
-  collectMasterAgentAffectedTaskIdsV1,
-  createMasterAgentReplanV1,
-  executeMasterAgentPlan,
-  type ExecutedMasterCandidate,
-  type MasterAgentExecutionTrace,
-  type MasterAgentReplanFailureV1,
-  type MasterAgentPlan,
-  type MasterAgentTask,
-  type MasterCandidateDependencyBindingV1,
-  type MasterCandidatePayload,
-} from '../orchestrator'
-import { parseCharacterSupplementTaskInputV1 } from '../character-supplement-copilot'
-import { parseCharacterLifecycleTaskInputV1 } from '../character-lifecycle-copilot'
-import type { AgentTeamBudgetEvidence } from '../team-budget'
-import { parseCreativeArtifactV1 } from '../creative-reliability'
-import {
-  parseStructuredOutputRunEvidenceV1,
-  structuredOutputFailureEvidenceV1,
-} from '../structured-output-pipeline'
-import { parseNarrativeBriefV1 } from '../narrative-brief'
-import { parseInformationBoundaryManifestV1 } from '../information-boundary'
-import {
-  getAgentSkillV1,
-  resolveAgentSkillV1,
-  validateAgentSkillContextEvidenceV1,
-  resolveAgentSkillContextSourceKeysV1,
-  type AgentSkillId,
-  type DomainAgentId,
-} from '../skill-registry'
-import {
-  assertAgentSkillExecutionBindingV1,
-  createAgentSkillExecutionBindingV1,
-} from '../execution-binding'
-import {
-  assertMasterWorkflowTaskCompatibilityV1,
-  getMasterWorkflowV1,
-  isMasterAgentRunWorkflowKindV1,
-  parseMasterWorkflowSelectionV1,
-} from '../workflow-catalog'
-import { acceptAgentRunContractV1 } from './contract'
-import {
-  appendAgentRunEventV1,
-  appendPrivilegedAgentRunEventInTransactionV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  readVerifiedAgentRunInTransactionV1,
-  withAgentRunMutationLockV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import {
-  beginAgentRunRecoveryV1,
-  createAgentRunCheckpointInTransactionV1,
-  createAgentRunCheckpointV1,
-  completeAgentRunRecoveryV1,
-  readLatestVerifiedAgentRunCheckpointV1,
-} from './checkpoint'
-import { canonicalStringify, hashCanonicalValue } from './hash'
-import {
-  recordCreationModelRequestV1,
-  recordCreationModelResponseV1,
-  recordUnavailableCreationResponseV1,
-} from './creation-response-evidence'
-import { parseAgentRunEventV1 } from './event-schema'
-import {
-  classifyAgentRunFailureV1,
-  matchingFailureCountV1,
-} from './failure-policy'
-import { maybeInjectHarnessFaultV1 } from '../dev-fault-injection'
-import {
-  MASTER_CANDIDATE_STEP_VERIFIER_SET_VERSION_V1,
-  contextManifestHashForStepAttemptV1,
-  createMasterCandidateStepReceiptV1,
-  readFreshMasterCandidateStepReceiptV1,
-  verifyHistoricalMasterCandidateStepReceiptV1,
-} from './master-step-verification'
-import {
-  AgentTeamBudgetExceededError,
-  AgentTeamBudgetTracker,
-  AGENT_TEAM_BUDGET_PROFILES,
-  resolveAgentTeamBudgetPolicy,
-  type AgentTeamBudgetProfile,
-} from '../team-budget'
-import { db } from '../../db/schema'
-import { assertRecordInScope, readOwnedRows, scopeTransactionTables } from '../../workspace/scope'
-import {
-  MASTER_CANDIDATE_SEMANTIC_REVIEW_VERIFIER_SET_V1,
-  MasterCandidateSemanticReviewBlockedError,
-  masterCandidateReviewStepIdV1,
-  parseMasterCandidateSemanticReviewArtifactV1,
-  runMasterCandidateSemanticReviewWithClientV1,
-  verifyMasterCandidateSemanticReviewArtifactV1,
-} from '../master-candidate-semantic-review'
-import { STORY_CORE_FIELDS, resolveStoryCoreFieldV1 } from '../story-core-copilot'
-import { CREATIVE_RULES_FIELDS, resolveCreativeRulesFieldV1 } from '../creative-rules-copilot'
-import {
-  WORLDVIEW_AGENT_FIELDS,
-  parseWorldviewFieldOutputBudgetV1,
-  resolveWorldviewAgentFieldV1,
-} from '../worldview-field-copilot'
-import { MAX_INSPIRATION_FRAGMENTS } from '../../inspiration/workspace'
-import { parseCharacterRevisionTaskInputV1 } from '../character-revision-copilot'
-import {
-  parseStoryArcMutationRequestV1,
-  type StoryArcMutationRequestV1,
-} from '../story-arc-copilot'
-import { parseWorkspaceContentRevisionV1 } from '../../authoring/content-revision'
-import {
-  assertPromptEvidenceMatchesOptionsV1,
-  parsePromptExecutionEvidenceV1,
-  parsePromptExecutionOptionsV1,
-  type GovernedPromptModuleKeyV1,
-} from '../prompt-execution'
-import {
-  computeMasterCandidateHashV1,
-  isMasterCandidateContextGatewayRequiredV1,
-} from './master-candidate-hash'
-import {
-  finalizeContextGatewayAttemptEvidenceV1,
-  recordContextGatewayPreflightEvidenceV1,
-  type ContextGatewayPreflightEvidenceV1,
-} from '../../context-gateway/attempt-evidence'
-import {
-  createContextManifestFromAssemblyV1,
-  createContextManifestV2FromV1,
-} from './context-manifest'
-import { isContextGatewayRequiredForWriteTargetV1 } from '../../context-gateway/skill-policy'
-import type { ContextManifestV2 } from '../../types/agent-run'
-import { recordAgentRunArtifactV1 } from '../../memory/artifact-store'
+import type { AgentEvent, AgentRunEventTypeV1, AgentRunProjectionV1, WorkspaceScope } from '../../types';
+import { appendAgentEvent, readAgentEvents } from '../conversations';
+import { DOMAIN_AGENT_IDS, collectMasterAgentAffectedTaskIdsV1, createMasterAgentReplanV1, executeMasterAgentPlan, type ExecutedMasterCandidate, type MasterAgentExecutionTrace, type MasterAgentReplanFailureV1, type MasterAgentPlan, type MasterAgentTask, type MasterCandidateDependencyBindingV1, type MasterCandidatePayload } from '../orchestrator';
+import { parseCharacterSupplementTaskInputV1 } from '../character-supplement-copilot';
+import { parseCharacterLifecycleTaskInputV1 } from '../character-lifecycle-copilot';
+import type { AgentTeamBudgetEvidence } from '../team-budget';
+import { parseCreativeArtifactV1 } from '../creative-reliability';
+import { parseStructuredOutputRunEvidenceV1, structuredOutputFailureEvidenceV1 } from '../structured-output-pipeline';
+import { parseNarrativeBriefV1 } from '../narrative-brief';
+import { parseInformationBoundaryManifestV1 } from '../information-boundary';
+import { getAgentSkillV1, resolveAgentSkillV1, validateAgentSkillContextEvidenceV1, resolveAgentSkillContextSourceKeysV1, type AgentSkillId, type DomainAgentId } from '../skill-registry';
+import { assertAgentSkillExecutionBindingV1, createAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { assertMasterWorkflowTaskCompatibilityV1, getMasterWorkflowV1, isMasterAgentRunWorkflowKindV1, parseMasterWorkflowSelectionV1 } from '../workflow-catalog';
+import { acceptAgentRunContractV1 } from './contract';
+import { appendAgentRunEventV1, appendPrivilegedAgentRunEventInTransactionV1, createAgentRunV1, readAgentRunV1, readVerifiedAgentRunInTransactionV1, withAgentRunMutationLockV1, type AgentRunSnapshotV1 } from './event-store';
+import { beginAgentRunRecoveryV1, createAgentRunCheckpointInTransactionV1, createAgentRunCheckpointV1, completeAgentRunRecoveryV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { canonicalStringify, hashCanonicalValue } from './hash';
+import { recordCreationModelRequestV1, recordCreationModelResponseV1, recordUnavailableCreationResponseV1 } from './creation-response-evidence';
+import { parseAgentRunEventV1 } from './event-schema';
+import { classifyAgentRunFailureV1, matchingFailureCountV1 } from './failure-policy';
+import { maybeInjectHarnessFaultV1 } from '../dev-fault-injection';
+import { MASTER_CANDIDATE_STEP_VERIFIER_SET_VERSION_V1, contextManifestHashForStepAttemptV1, createMasterCandidateStepReceiptV1, readFreshMasterCandidateStepReceiptV1, verifyHistoricalMasterCandidateStepReceiptV1 } from './master-step-verification';
+import { AgentTeamBudgetExceededError, AgentTeamBudgetTracker, AGENT_TEAM_BUDGET_PROFILES, resolveAgentTeamBudgetPolicy, type AgentTeamBudgetProfile } from '../team-budget';
+import { db } from '../../db/schema';
+import { assertRecordInScope, readOwnedRows, scopeTransactionTables } from '../../workspace/scope';
+import { MASTER_CANDIDATE_SEMANTIC_REVIEW_VERIFIER_SET_V1, MasterCandidateSemanticReviewBlockedError, masterCandidateReviewStepIdV1, parseMasterCandidateSemanticReviewArtifactV1, runMasterCandidateSemanticReviewWithClientV1, verifyMasterCandidateSemanticReviewArtifactV1 } from '../master-candidate-semantic-review';
+import { STORY_CORE_FIELDS, resolveStoryCoreFieldV1 } from '../story-core-copilot';
+import { CREATIVE_RULES_FIELDS, resolveCreativeRulesFieldV1 } from '../creative-rules-copilot';
+import { WORLDVIEW_AGENT_FIELDS, parseWorldviewFieldOutputBudgetV1, resolveWorldviewAgentFieldV1 } from '../worldview-field-copilot';
+import { MAX_INSPIRATION_FRAGMENTS } from '../../inspiration/workspace';
+import { parseCharacterRevisionTaskInputV1 } from '../character-revision-copilot';
+import { parseStoryArcMutationRequestV1, type StoryArcMutationRequestV1 } from '../story-arc-copilot';
+import { parseWorkspaceContentRevisionV1 } from '../../authoring/content-revision';
+import { assertPromptEvidenceMatchesOptionsV1, parsePromptExecutionEvidenceV1, parsePromptExecutionOptionsV1, type GovernedPromptModuleKeyV1 } from '../prompt-execution';
+import { computeMasterCandidateHashV1, isMasterCandidateContextGatewayRequiredV1 } from './master-candidate-hash';
+import { finalizeContextGatewayAttemptEvidenceV1, recordContextGatewayPreflightEvidenceV1, type ContextGatewayPreflightEvidenceV1 } from '../../context-gateway/attempt-evidence';
+import { createContextManifestFromAssemblyV1, createContextManifestV2FromV1 } from './context-manifest';
+import { isContextGatewayRequiredForWriteTargetV1 } from '../../context-gateway/skill-policy';
+import type { ContextManifestV2 } from '../../types/agent-run';
+import { recordAgentRunArtifactV1 } from '../../memory/artifact-store';
 
 export const MASTER_AGENT_PLAN_CHECKPOINT_KIND_V1 = 'master-agent-plan'
 export const MASTER_AGENT_PLAN_CHECKPOINT_VERSION_V1 = 1 as const

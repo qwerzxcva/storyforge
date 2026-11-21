@@ -4,7 +4,7 @@ import { seedChatRuntimeFixture } from '../helpers/character-chat-fixture'
 import { adoptInteractionRuntimeCandidateV1, generateInteractionRuntimeCandidateV1 } from '../../src/lib/character-interaction/harness'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { readAgentRunArtifactExactV1 } from '../../src/lib/memory/artifact-store'
-import { readProductRuntimeStateVersion } from '../../src/lib/character-interaction/runtime-api'
+import { readProductRuntimeStateVersion } from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 
 beforeEach(async () => { db.close(); await db.delete(); await db.open() })
 afterEach(() => db.close())

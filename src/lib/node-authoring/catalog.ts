@@ -1,13 +1,7 @@
-import { CHARACTER_DIMENSIONS } from '../character/character-dimensions'
-import { getAgentSkillV1, resolveAgentSkillContextSourceKeysV1 } from '../agent/skill-registry'
-import type { PromptModuleKey } from '../types/prompt'
-import type {
-  AuthoringNodeTemplate,
-  AuthoringParameterDefinition,
-  AuthoringPortDefinition,
-  AuthoringSemantic,
-  AuthoringWriteContract,
-} from './contracts'
+import { CHARACTER_DIMENSIONS } from '../character/character-dimensions';
+import { getAgentSkillV1, resolveAgentSkillContextSourceKeysV1 } from '../agent/skill-registry';
+import type { PromptModuleKey } from '../types/prompt';
+import type { AuthoringNodeTemplate, AuthoringParameterDefinition, AuthoringPortDefinition, AuthoringSemantic, AuthoringWriteContract } from './contracts';
 
 type FieldTemplateInput = {
   id: string

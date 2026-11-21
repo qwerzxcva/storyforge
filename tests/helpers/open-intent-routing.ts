@@ -1,6 +1,6 @@
 /** Pure frozen-content fixture; no Session/Run/DB construction or model call. */
 import { openCampaignFixture, openRuleFixture } from './ttrpg-open-content'
-import type { TtrpgOpenIntentRoutingSnapshotV1, TtrpgOpenIntentV1 } from '../../src/lib/ttrpg/open-intent'
+import type { TtrpgOpenIntentRoutingSnapshotV1, TtrpgOpenIntentV1 } from '../../src/lib/legacy-compat/ttrpg/open-intent'
 
 export function intentRoutingFixtureV1() {
   const campaign = openCampaignFixture(), rulePack = openRuleFixture(), actors = campaign.characterTemplates

@@ -1,4 +1,4 @@
-import type { NarrativeDomainFieldsV1 } from './narrative-domain'
+import type { NarrativeDomainFieldsV1 } from './narrative-domain';
 
 /**
  * RAG-1 · 可见资料与检索管理。

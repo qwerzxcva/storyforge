@@ -1,16 +1,16 @@
 /**
  * Phase 25.3 — 重要地点 Store
  */
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import type { ImportantLocation } from '../lib/types'
-import { readLocationTagsV1 } from '../lib/types/location'
-import { clearImportantLocationReferences } from '../lib/location/lifecycle'
-import { transactionTablesForReferences } from '../lib/registry/lifecycle'
-import { REGISTRY_BY_NAME } from '../lib/registry/project-tables'
-import { assertRegisteredTreeParentV1 } from '../lib/registry/tree-relations'
-import { collectLocationSubtreeV1, projectLocationForestV1, type LocationTreeNode } from '../lib/location/hierarchy'
-import { assertRecordInScope, readOwnedRows, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope'
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import type { ImportantLocation } from '../lib/types';
+import { readLocationTagsV1 } from '../lib/types/location';
+import { clearImportantLocationReferences } from '../lib/location/lifecycle';
+import { transactionTablesForReferences } from '../lib/registry/lifecycle';
+import { REGISTRY_BY_NAME } from '../lib/registry/project-tables';
+import { assertRegisteredTreeParentV1 } from '../lib/registry/tree-relations';
+import { collectLocationSubtreeV1, projectLocationForestV1, type LocationTreeNode } from '../lib/location/hierarchy';
+import { assertRecordInScope, readOwnedRows, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope';
 
 export type { LocationTreeNode } from '../lib/location/hierarchy'
 

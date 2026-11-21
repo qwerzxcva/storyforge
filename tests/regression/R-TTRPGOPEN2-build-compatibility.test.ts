@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { openRuntimePackageFixture } from '../helpers/ttrpg-open-package'
-import { createProductBuildCompatibilityReportV1 } from '../../src/lib/product-production/compatibility'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import type { ProductRuntimePackageWithTtrpgV2 } from '../../src/lib/ttrpg/content-version'
+import { createProductBuildCompatibilityReportV1 } from '../../src/lib/legacy-compat/product-production/compatibility'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import type { ProductRuntimePackageWithTtrpgV2 } from '../../src/lib/legacy-compat/ttrpg/content-version'
 
 describe('R-TTRPGOPEN2 conservative open save compatibility', () => {
   async function ref(pkg: ProductRuntimePackageWithTtrpgV2, buildNumber: number) {

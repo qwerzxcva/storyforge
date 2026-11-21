@@ -2,10 +2,10 @@ import { act, createElement } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import TtrpgOpenAuthoringEditor from '../../src/components/ttrpg/TtrpgOpenAuthoringEditor'
-import { defaultTtrpgSettingsV2 } from '../../src/lib/ttrpg/authoring-contract-v2'
+import { defaultTtrpgSettingsV2 } from '../../src/lib/legacy-compat/ttrpg/authoring-contract-v2'
 import { initializeTtrpgOpenAuthoringPoliciesV1 } from '../../src/lib/ttrpg/open-authoring-edit'
 import { flushPendingEditsV1 } from '../../src/lib/authoring/pending-edit-coordinator'
-import type { TtrpgOpenAuthoringV1 } from '../../src/lib/ttrpg/open-contract'
+import type { TtrpgOpenAuthoringV1 } from '../../src/lib/legacy-compat/ttrpg/open-contract'
 import { openCampaignFixture } from '../helpers/ttrpg-open-content'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true

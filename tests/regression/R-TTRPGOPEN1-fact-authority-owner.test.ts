@@ -1,13 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readyOpenTtrpgSessionV1 } from '../helpers/open-ttrpg-session'
-import { projectTtrpgOpenWorldFactsV1, ttrpgOpenSocialFactBalanceKeyV1 } from '../../src/lib/ttrpg/open-fact-authority'
-import { evaluateTtrpgPredicateV1 } from '../../src/lib/ttrpg/predicate'
-import { ttrpgOpenPredicateContextV1 } from '../../src/lib/ttrpg/open-rule-plan'
-import { projectTtrpgRulePackMechanicalCoreV1 } from '../../src/lib/ttrpg/rule-pack-v2'
-import { createCompleteTtrpgCharacterSheetV2 } from '../../src/lib/ttrpg/character-sheet'
-import type { TtrpgOpenFrozenFactV1 } from '../../src/lib/ttrpg/open-contract'
+import { projectTtrpgOpenWorldFactsV1, ttrpgOpenSocialFactBalanceKeyV1 } from '../../src/lib/legacy-compat/ttrpg/open-fact-authority'
+import { evaluateTtrpgPredicateV1 } from '../../src/lib/legacy-compat/ttrpg/predicate'
+import { ttrpgOpenPredicateContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-rule-plan'
+import { projectTtrpgRulePackMechanicalCoreV1 } from '../../src/lib/legacy-compat/ttrpg/rule-pack-v2'
+import { createCompleteTtrpgCharacterSheetV2 } from '../../src/lib/legacy-compat/ttrpg/character-sheet'
+import type { TtrpgOpenFrozenFactV1 } from '../../src/lib/legacy-compat/ttrpg/open-contract'
 function initial(overrides: Partial<TtrpgOpenFrozenFactV1>): TtrpgOpenFrozenFactV1 {
   return { factKey: 'fact.hero.location', subjectRef: 'hero', predicateKey: 'located-at', objectRef: null,
     canonicalValue: 'harbor', authority: 'initial-state', owner: 'entity', audience: 'public', knownByActorKeys: [],

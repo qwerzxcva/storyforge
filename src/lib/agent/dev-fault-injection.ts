@@ -1,4 +1,4 @@
-import type { HarnessFailureClassV1 } from './run/harness-failure'
+import type { HarnessFailureClassV1 } from './run/harness-failure';
 
 export const HARNESS_FAULT_POINTS_V1 = [
   'save.before-flush',

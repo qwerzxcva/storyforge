@@ -24,7 +24,7 @@ import {
 import {
   canonicalProductProductionJsonV2,
   hashProductProductionValueV2,
-} from '../../src/lib/product-production/hash'
+} from '../../src/lib/legacy-compat/product-production/hash'
 import type { AIConfig, WorkspaceScope } from '../../src/lib/types'
 import { seedCurrentWorkspace } from '../helpers/current-workspace'
 import { stampNewRecord } from '../../src/lib/workspace/scope'

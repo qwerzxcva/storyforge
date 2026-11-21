@@ -1,9 +1,6 @@
-import { buildEditImpactGraphV1, type EditImpactGraphV1 } from './impact-analysis'
-import {
-  buildImpactRemediationPlanV1,
-  type ImpactRemediationPlanV1,
-} from './impact-remediation-plan'
-import type { WorkspaceScope } from '../types'
+import { buildEditImpactGraphV1, type EditImpactGraphV1 } from './impact-analysis';
+import { buildImpactRemediationPlanV1, type ImpactRemediationPlanV1 } from './impact-remediation-plan';
+import type { WorkspaceScope } from '../types';
 
 export const IMPACT_REMEDIATION_REPLAN_VERSION_V1 = 1 as const
 

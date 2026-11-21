@@ -1,23 +1,15 @@
-import {
-  ATLAS_LAYER_LABELS,
-  DEFAULT_ATLAS_LAYERS,
-  type AtlasLayers,
-} from '../../lib/world-map/atlas/layers'
-import { createPortal } from 'react-dom'
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
-import { generateMap, type MapGenConfig } from '../../lib/world-map/engine'
-import {
-  geometryFromMap,
-  parseAtlasReference,
-  type AtlasGeometry,
-} from '../../lib/world-map/atlas/geometry'
-import { inspectCityPlacement } from '../../lib/world-map/atlas/inspect'
-import { loadAtlasSymbols, type AtlasSymbolStyle } from '../../lib/world-map/atlas/symbols'
-import { resolveAtlasStyle, type AtlasViewStyle } from '../../lib/world-map/atlas/view-style'
-import { drawLabels, drawTerrain } from '../../lib/world-map/atlas/paint'
+import { ATLAS_LAYER_LABELS, DEFAULT_ATLAS_LAYERS, type AtlasLayers } from '../../lib/world-map/atlas/layers';
+import { createPortal } from 'react-dom';
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { generateMap, type MapGenConfig } from '../../lib/world-map/engine';
+import { geometryFromMap, parseAtlasReference, type AtlasGeometry } from '../../lib/world-map/atlas/geometry';
+import { inspectCityPlacement } from '../../lib/world-map/atlas/inspect';
+import { loadAtlasSymbols, type AtlasSymbolStyle } from '../../lib/world-map/atlas/symbols';
+import { resolveAtlasStyle, type AtlasViewStyle } from '../../lib/world-map/atlas/view-style';
+import { drawLabels, drawTerrain } from '../../lib/world-map/atlas/paint';
 import AtlasPaintControls from './AtlasPaintControls'
-import { drawEnhancedAtlas } from '../../lib/world-map/atlas/enhance'
-import type { AtlasPaintPreview } from '../../lib/world-map/atlas/paint-preview'
+import { drawEnhancedAtlas } from '../../lib/world-map/atlas/enhance';
+import type { AtlasPaintPreview } from '../../lib/world-map/atlas/paint-preview';
 
 interface Props {
   config: MapGenConfig

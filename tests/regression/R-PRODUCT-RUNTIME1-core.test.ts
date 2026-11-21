@@ -6,8 +6,8 @@ import {
   deleteProductRuntimeSession,
   readProductRuntimeState,
   verifyProductRuntimeCheckpoint,
-} from '../../src/lib/product/runtime-api'
-import { appendProductRuntimeEvent } from '../../src/lib/product/runtime-core'
+} from '../../src/lib/legacy-compat/product/runtime-api'
+import { appendProductRuntimeEvent } from '../../src/lib/legacy-compat/product/runtime-core'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import { cascadeDeleteGroup } from '../../src/lib/registry/lifecycle'
 import {

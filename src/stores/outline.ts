@@ -1,16 +1,16 @@
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import type { OutlineNode, WorkspaceScope } from '../lib/types'
-import { normalizeOutlineNode } from '../lib/outline/normalize'
-import { useChapterStore } from './chapter'
-import { useDetailedOutlineStore } from './detailed-outline'
-import { cascadeDeleteChapterRecords } from '../lib/chapters/lifecycle'
-import { cascadeRegisteredReferences } from '../lib/workspace/lifecycle'
-import { transactionTablesFor, transactionTablesForReferenceCascade } from '../lib/registry/lifecycle'
-import { assertRetainedRunScopeTargetsV1 } from '../lib/agent/run/scope-lifecycle'
-import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope'
-import { coordinatePendingEditV1 } from '../lib/authoring/pending-edit-coordinator'
-import { FIELD_BY_TARGET } from '../lib/registry/field-registry'
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import type { OutlineNode, WorkspaceScope } from '../lib/types';
+import { normalizeOutlineNode } from '../lib/outline/normalize';
+import { useChapterStore } from './chapter';
+import { useDetailedOutlineStore } from './detailed-outline';
+import { cascadeDeleteChapterRecords } from '../lib/chapters/lifecycle';
+import { cascadeRegisteredReferences } from '../lib/workspace/lifecycle';
+import { transactionTablesFor, transactionTablesForReferenceCascade } from '../lib/registry/lifecycle';
+import { assertRetainedRunScopeTargetsV1 } from '../lib/agent/run/scope-lifecycle';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope';
+import { coordinatePendingEditV1 } from '../lib/authoring/pending-edit-coordinator';
+import { FIELD_BY_TARGET } from '../lib/registry/field-registry';
 
 interface OutlineStore {
   nodes: OutlineNode[]

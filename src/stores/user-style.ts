@@ -5,30 +5,12 @@
  * 本 store 只管作者显式的手改、开关、样本与反馈；AI 学习由
  * prose.style-learn durable Run 确认后经 adopt() 写入。
  */
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import {
-  createStyleCalibrationFeedback,
-  createStyleRevisionPair,
-  parseStyleCalibrationFeedback,
-  parseStyleRevisionPairs,
-  upsertStyleRevisionPair,
-} from '../lib/style/style-learning'
-import type {
-  StyleCalibrationFeedback,
-  StyleCalibrationVerdict,
-  StyleRevisionPair,
-  UserStyleProfile,
-} from '../lib/types/user-style'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveScopeLike,
-  stampNewRecord,
-  type WorkspaceScopeLike,
-} from '../lib/workspace/scope'
-import type { WorkspaceScope } from '../lib/types/world-ownership'
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import { createStyleCalibrationFeedback, createStyleRevisionPair, parseStyleCalibrationFeedback, parseStyleRevisionPairs, upsertStyleRevisionPair } from '../lib/style/style-learning';
+import type { StyleCalibrationFeedback, StyleCalibrationVerdict, StyleRevisionPair, UserStyleProfile } from '../lib/types/user-style';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope';
+import type { WorkspaceScope } from '../lib/types/world-ownership';
 
 interface CaptureRevisionPairInput {
   sourceChapterId?: number | null

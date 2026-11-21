@@ -1,4 +1,4 @@
-import type { Chapter } from '../../types'
+import type { Chapter } from '../../types';
 
 export const CHAPTER_TEXT_NORMALIZATION_VERSION = 'chapter-text-v1'
 

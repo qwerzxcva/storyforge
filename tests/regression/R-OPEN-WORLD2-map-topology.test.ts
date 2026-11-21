@@ -4,8 +4,8 @@ import {
   deriveTextOpenWorldLocationContentBindingsV1,
   planTextOpenWorldRouteV1,
   projectTextOpenWorldMapConnectionsV1,
-} from '../../src/lib/open-world/map-topology'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
+} from '../../src/lib/legacy-compat/open-world/map-topology'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
 import { createTextOpenWorldVNextFixture, downgradeTextOpenWorldFixtureWithoutCrimeV1 } from '../helpers/text-open-world-vnext-fixture'
 
 function worldPayload() {

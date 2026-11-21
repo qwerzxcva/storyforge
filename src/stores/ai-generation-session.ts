@@ -1,5 +1,5 @@
-import { create } from 'zustand'
-import type { TokenUsage } from '../lib/ai/logger'
+import { create } from 'zustand';
+import type { TokenUsage } from '../lib/ai/logger';
 
 export interface AIGenerationSession {
   output: string

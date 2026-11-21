@@ -1,12 +1,12 @@
 import {afterEach, beforeEach, describe, expect, it} from 'vitest'
 import {db} from '../../src/lib/db/schema'
-import {createInitialInteractionState, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/character-interaction/runtime'
-import {applyChatNarrativeActionV1, interruptChatNarrativeTriggerV1, previewChatNarrativeActionV1, requestChatNarrativeTriggerV1} from '../../src/lib/character-interaction/narrative-actions'
-import {branchProductRuntimeSession, commitChatNarrativeAction, commitInteractionCharacterReply, commitInteractionPlayerMessage, createProductRuntimeCheckpoint, readProductRuntimeState, readProductRuntimeStateVersion, requestChatNarrativeTrigger} from '../../src/lib/character-interaction/runtime-api'
+import {createInitialInteractionState, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/legacy-compat/character-interaction/runtime'
+import {applyChatNarrativeActionV1, interruptChatNarrativeTriggerV1, previewChatNarrativeActionV1, requestChatNarrativeTriggerV1} from '../../src/lib/legacy-compat/character-interaction/narrative-actions'
+import {branchProductRuntimeSession, commitChatNarrativeAction, commitInteractionCharacterReply, commitInteractionPlayerMessage, createProductRuntimeCheckpoint, readProductRuntimeState, readProductRuntimeStateVersion, requestChatNarrativeTrigger} from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import type {ChatNarrativeActionV1} from '../../src/lib/types/chat-narrative'
 import {chatNarrativeFixture, seedChatNarrativeRuntimeFixture, chatActionReviewFixture} from '../helpers/chat-narrative-fixture'
 import {exportProjectJSON, importProjectJSON} from '../../src/lib/export/json-export'
-import {assertFrozenProductRuntimeStateV1} from '../../src/lib/product/runtime-product-adapters'
+import {assertFrozenProductRuntimeStateV1} from '../../src/lib/legacy-compat/product/runtime-product-adapters'
 
 function opening() {
   const state = createInitialInteractionState(chatNarrativeFixture())

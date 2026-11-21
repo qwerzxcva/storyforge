@@ -1,6 +1,6 @@
-import { db } from '../../db/schema'
-import { PROJECT_TABLES, REGISTRY_BY_NAME } from '../../registry/project-tables'
-import { parseAgentRunContract } from './contract'
+import { db } from '../../db/schema';
+import { PROJECT_TABLES, REGISTRY_BY_NAME } from '../../registry/project-tables';
+import { parseAgentRunContract } from './contract';
 
 const retained = '无法删除：选中内容仍被运行历史引用。已保留全部内容和运行记录，请先导出完整备份；当前不支持解除该历史引用。'
 const unverifiable = '无法核验运行历史引用，删除未执行。原内容和运行记录已保留，请先核对备份与运行记录。'

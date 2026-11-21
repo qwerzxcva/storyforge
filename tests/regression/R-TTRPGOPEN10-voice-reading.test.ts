@@ -6,13 +6,13 @@ import { runInNewContext } from 'node:vm'
 import { db } from '../../src/lib/db/schema'
 import { setupAudioRuntimeV1 } from '../helpers/open-audio-runtime'
 import { prepareTtrpgOpenVoiceScriptV1, prepareTtrpgOpenVoiceReadingReviewV1, readTtrpgOpenReviewedVoiceReadingV1 } from '../../src/lib/ttrpg/open-audio-service'
-import { ttrpgOpenVoiceReadingTextV1, verifyTtrpgOpenVoiceReadingPreviewV1 } from '../../src/lib/ttrpg/open-voice-reading-contract'
+import { ttrpgOpenVoiceReadingTextV1, verifyTtrpgOpenVoiceReadingPreviewV1 } from '../../src/lib/legacy-compat/ttrpg/open-voice-reading-contract'
 import { hashCanonicalValue } from '../../src/lib/agent/run/hash'
 import { sha256Text } from '../../src/lib/ai/chapter-memory/text-normalization'
 import { changeTtrpgSafetyStatus } from '../../src/lib/ttrpg/runtime-commands'
 import { rt } from '../helpers/open-ttrpg-branch-recovery'
 import { openEnvelopeV1 } from '../helpers/open-ttrpg-session'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 
 const profile = JSON.parse(readFileSync('scripts/ttrpg-local-tts/reading-profile.json', 'utf8'))
 const fixture = async (text = '门口写着8点。') => ({ schema: 'storyforge.ttrpg-local-tts-reading-preview', version: 1,

@@ -6,8 +6,8 @@ import { OPEN_HUMAN_VIEWER, openEnvelopeV1 } from '../helpers/open-ttrpg-session
 import { prepareTtrpgOpenVoiceScriptV1, reserveTtrpgOpenVoiceRequestV1, recoverTtrpgOpenVoiceIntentV1,
   cancelTtrpgOpenVoiceRequestV1 } from '../../src/lib/ttrpg/open-audio-service'
 import { assembleContext } from '../../src/lib/registry/assemble-context'
-import { readProductRuntimeState, hashProductRuntimeStateV1 } from '../../src/lib/product/runtime-core'
-import { projectTtrpgOpenMechanicalBasisV1 } from '../../src/lib/ttrpg/open-rule-plan'
+import { readProductRuntimeState, hashProductRuntimeStateV1 } from '../../src/lib/legacy-compat/product/runtime-core'
+import { projectTtrpgOpenMechanicalBasisV1 } from '../../src/lib/legacy-compat/ttrpg/open-rule-plan'
 import { changeTtrpgSafetyStatus, postTtrpgOpenTableMessageV1 } from '../../src/lib/ttrpg/runtime-commands'
 import * as ledger from '../../src/lib/agent/run/event-store'
 import { readAgentRunArtifactExactV1 } from '../../src/lib/memory/artifact-store'

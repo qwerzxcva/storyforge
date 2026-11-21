@@ -1,9 +1,9 @@
-import type { AIProvider } from '../types/ai'
-import type { AssembleContextSourceEvidence, ContextSourceTransformer } from '../registry/types'
-import type { AgentContextPolicy } from './context-policy'
-import type { WorkspaceScope } from '../types/world-ownership'
-import type { ContextGatewayToolSessionV1 } from '../context-gateway/tool-session'
-import type { ContextSourceRefV1 } from '../registry/types'
+import type { AIProvider } from '../types/ai';
+import type { AssembleContextSourceEvidence, ContextSourceTransformer } from '../registry/types';
+import type { AgentContextPolicy } from './context-policy';
+import type { WorkspaceScope } from '../types/world-ownership';
+import type { ContextGatewayToolSessionV1 } from '../context-gateway/tool-session';
+import type { ContextSourceRefV1 } from '../registry/types';
 
 export type AgentToolRisk = 'read' | 'generate' | 'write'
 

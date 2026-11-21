@@ -2,10 +2,10 @@
  * Phase 25.4 — 多世界 AI 适配器
  * 世界建议（suggest）+ 世界扩写（expand）的 prompt 构建与输出解析
  */
-import type { ChatMessage, WorldGroupType } from '../types'
-import { usePromptStore } from '../../stores/prompt'
-import { renderPrompt } from './prompt-engine'
-import { wholeJSONContainerTextV1 } from './whole-json-container'
+import type { ChatMessage, WorldGroupType } from '../types';
+import { usePromptStore } from '../../stores/prompt';
+import { renderPrompt } from './prompt-engine';
+import { wholeJSONContainerTextV1 } from './whole-json-container';
 
 // ── 世界建议 ────────────────────────────────────────────────────────────
 

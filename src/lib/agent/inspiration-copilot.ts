@@ -1,66 +1,27 @@
-import { hashCanonicalValue } from './run/hash'
-import { usePromptStore } from '../../stores/prompt'
-import { INSPIRATION_PREPARATION_MODULES } from '../inspiration/preparation-contract'
-import { freezePromptExecutionOptionsV1, parsePromptExecutionOptionsV1, renderFrozenPromptExecutionV1, type PromptExecutionOptionsV1, type PromptExecutionEvidenceV1 } from './prompt-execution'
-import { supportsVerifiedJsonObjectResponseForModelV1 } from '../ai/provider-capabilities'
-import { buildInspirationPreparationPrompt, inspirationPreparationModeFromRequest, inspirationDirectionIndexFromRequest, isInspirationPreparationMode, parseInspirationPreparationDraft, type InspirationPreparationResult } from '../inspiration/preparation'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { useInspirationWorkspaceStore } from '../../stores/inspiration-workspace'
-import {
-  buildInspirationReverseMultiWorldPrompt,
-  buildInspirationReversePrompt,
-  parseReverseMultiWorldOutput,
-  parseReverseOutput,
-  type ReverseMultiWorldResult,
-  type ReverseResult,
-} from '../ai/inspiration-reverse'
-import { chat, resolveRequestConfig } from '../ai/client'
-import { db } from '../db/schema'
-import type {
-  GenerationGateIssue,
-  GenerationNode,
-  PreparedGenerationNode,
-} from '../generation/generation-node'
-import { prepareGenerationNode } from '../generation/generation-node'
-import {
-  latestInspirationVersion,
-  MAX_INSPIRATION_FRAGMENTS,
-  MAX_INSPIRATION_RESULT_CHARS,
-  parseInspirationFragments,
-  parseInspirationVersions,
-} from '../inspiration/workspace'
-import type { AIConfig } from '../types'
-import type { WorkspaceScope } from '../types/world-ownership'
-import type {
-  InspirationResultMode,
-  InspirationVersion,
-  InspirationWorkspace,
-} from '../types/inspiration-workspace'
-import {
-  attachAgentContextInputStateV1,
-  evidenceFromContextResult,
-  resolveAgentContextPolicy,
-  type AgentContextEvidence,
-  type AgentContextProfile,
-} from './context-policy'
-import {
-  createAgentContextCompressionSessionV1,
-  type AgentContextCompressionRuntimeV1,
-} from './context-compression'
-import { executeAgentTool } from './tool-registry'
-import {
-  buildAgentSkillInputGuidanceV1,
-  resolveAgentSkillInputStateV1,
-  resolveAgentSkillV1,
-  type AgentSkillId,
-} from './skill-registry'
-import type { MasterCandidateModelIdentityV1 } from './master-candidate-semantic-review'
-import { parseStructuredOutputV1 } from './structured-output-pipeline'
-import {
-  readOwnedRows,
-  resolveReadScopeLike,
-  type WorkspaceScopeLike,
-} from '../workspace/scope'
+import { hashCanonicalValue } from './run/hash';
+import { usePromptStore } from '../../stores/prompt';
+import { INSPIRATION_PREPARATION_MODULES } from '../inspiration/preparation-contract';
+import { freezePromptExecutionOptionsV1, parsePromptExecutionOptionsV1, renderFrozenPromptExecutionV1, type PromptExecutionOptionsV1, type PromptExecutionEvidenceV1 } from './prompt-execution';
+import { supportsVerifiedJsonObjectResponseForModelV1 } from '../ai/provider-capabilities';
+import { buildInspirationPreparationPrompt, inspirationPreparationModeFromRequest, inspirationDirectionIndexFromRequest, isInspirationPreparationMode, parseInspirationPreparationDraft, type InspirationPreparationResult } from '../inspiration/preparation';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { useInspirationWorkspaceStore } from '../../stores/inspiration-workspace';
+import { buildInspirationReverseMultiWorldPrompt, buildInspirationReversePrompt, parseReverseMultiWorldOutput, parseReverseOutput, type ReverseMultiWorldResult, type ReverseResult } from '../ai/inspiration-reverse';
+import { chat, resolveRequestConfig } from '../ai/client';
+import { db } from '../db/schema';
+import type { GenerationGateIssue, GenerationNode, PreparedGenerationNode } from '../generation/generation-node';
+import { prepareGenerationNode } from '../generation/generation-node';
+import { latestInspirationVersion, MAX_INSPIRATION_FRAGMENTS, MAX_INSPIRATION_RESULT_CHARS, parseInspirationFragments, parseInspirationVersions } from '../inspiration/workspace';
+import type { AIConfig } from '../types';
+import type { WorkspaceScope } from '../types/world-ownership';
+import type { InspirationResultMode, InspirationVersion, InspirationWorkspace } from '../types/inspiration-workspace';
+import { attachAgentContextInputStateV1, evidenceFromContextResult, resolveAgentContextPolicy, type AgentContextEvidence, type AgentContextProfile } from './context-policy';
+import { createAgentContextCompressionSessionV1, type AgentContextCompressionRuntimeV1 } from './context-compression';
+import { executeAgentTool } from './tool-registry';
+import { buildAgentSkillInputGuidanceV1, resolveAgentSkillInputStateV1, resolveAgentSkillV1, type AgentSkillId } from './skill-registry';
+import type { MasterCandidateModelIdentityV1 } from './master-candidate-semantic-review';
+import { parseStructuredOutputV1 } from './structured-output-pipeline';
+import { readOwnedRows, resolveReadScopeLike, type WorkspaceScopeLike } from '../workspace/scope';
 
 export type InspirationCopilotResult = ReverseResult | ReverseMultiWorldResult | InspirationPreparationResult
 

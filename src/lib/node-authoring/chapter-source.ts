@@ -1,12 +1,12 @@
-import { buildChapterOrganizationPrompt } from '../agent/chapter-organization'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { buildFactExtractPrompt } from '../ai/adapters/fact-extract-adapter'
-import { normalizeChapterText } from '../ai/chapter-memory/text-normalization'
-import { keepIntegrityReadAlive } from '../db/transaction-integrity'
-import { assembleContext } from '../registry/assemble-context'
-import type { AIConfig, Chapter, Character, CharacterRelation, ChatMessage, Foreshadow, ItemLedgerEntry, WorkspaceScope } from '../types'
-import { readOwnedRows } from '../workspace/scope'
-import { AUTHORING_NODE_BY_ID } from './catalog'
+import { buildChapterOrganizationPrompt } from '../agent/chapter-organization';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { buildFactExtractPrompt } from '../ai/adapters/fact-extract-adapter';
+import { normalizeChapterText } from '../ai/chapter-memory/text-normalization';
+import { keepIntegrityReadAlive } from '../db/transaction-integrity';
+import { assembleContext } from '../registry/assemble-context';
+import type { AIConfig, Chapter, Character, CharacterRelation, ChatMessage, Foreshadow, ItemLedgerEntry, WorkspaceScope } from '../types';
+import { readOwnedRows } from '../workspace/scope';
+import { AUTHORING_NODE_BY_ID } from './catalog';
 
 export interface AuthoringCanonicalChapterContext {
   scheme: 'registered-chapter-context-v2'

@@ -2,10 +2,7 @@ import type { AnyProductRuntimePackage, ProductRuntimePackageV1, ProductRuntimeP
 import type { ProductMediaKind } from "./product-media";
 import type { ProductionProductKindV1 } from "./product-identity";
 import type { AiTownProductionBriefV1 } from "./ai-town";
-import type {
-  TtrpgHouseRuleDiffV2,
-  TtrpgHouseRuleOverlayV2,
-} from "./ttrpg-product";
+import type { TtrpgHouseRuleDiffV2, TtrpgHouseRuleOverlayV2 } from "./ttrpg-product";
 import { TEXT_OPEN_WORLD_PRODUCTION_ARTIFACT_KINDS_V1 } from "./text-open-world-production";
 
 export const STORYFORGE_CANONICAL_JSON_VERSION = 2 as const;
@@ -48,7 +45,7 @@ export interface ProductBuildPreviewManifestV2 extends Omit<ProductBuildPreviewM
 }
 
 export type AnyProductBuildPreviewManifest = ProductBuildPreviewManifestV1 | ProductBuildPreviewManifestV2
-  | (Omit<ProductBuildPreviewManifestV1, 'runtimePackage'> & { runtimePackage: import('../ttrpg/content-version').ProductRuntimePackageWithTtrpgV2 });
+  | (Omit<ProductBuildPreviewManifestV1, 'runtimePackage'> & { runtimePackage: import('../legacy-compat/ttrpg/content-version').ProductRuntimePackageWithTtrpgV2 });
 
 /** Verified protocol inspection; this is not a playable-source admission. */
 export interface VerifiedProductRuntimeSourceEnvelope {
@@ -541,22 +538,22 @@ export interface ProductProductionBriefV3 {
   completionContract: ProductProductionCompletionContractV1;
   unresolvedDecisionKeys: string[];
   /** Closed TTRPG construction contract; required exactly when productType=ttrpg. */
-  characterChat?: import('../character-interaction/authoring-contract').ChatAuthoringSettings;
+  characterChat?: import('../legacy-compat/character-interaction/authoring-contract').ChatAuthoringSettings;
   /** Snapshot of separately governed, author-confirmed role interpretation records. */
-  characterChatProfiles?: import('../character-interaction/role-profile').ChatRoleProfileSetV1;
-  characterChatSourceUnits?: import('../character-interaction/source-unit-authorization').ChatSourceUnitSetV1;
-  avg?: import('../avg/authoring-contract').AvgAuthoringSettingsV1;
+  characterChatProfiles?: import('../legacy-compat/character-interaction/role-profile').ChatRoleProfileSetV1;
+  characterChatSourceUnits?: import('../legacy-compat/character-interaction/source-unit-authorization').ChatSourceUnitSetV1;
+  avg?: import('../legacy-compat/avg/authoring-contract').AvgAuthoringSettingsV1;
   avgRevision?: { version: 1; basePackageHash: string; runtimePackage: import('./product-release').ProductRuntimePackageV1 };
-  avgAssembly?: import('../avg/assembly-contract').AvgAssemblyBrief;
+  avgAssembly?: import('../legacy-compat/avg/assembly-contract').AvgAssemblyBrief;
   /** Explicit next AVG contract; mutually exclusive with legacy assembly. */
-  avgVisualPlanning?: import('../avg/visual-planning-brief-codec').AvgVisualPlanningBrief;
+  avgVisualPlanning?: import('../legacy-compat/avg/visual-planning-brief-codec').AvgVisualPlanningBrief;
   /** Frozen sound-production declaration; execution requires its own readiness. */
-  avgSoundPlanning?: import('../avg/sound-production-brief').AvgSoundPlanningBrief;
+  avgSoundPlanning?: import('../legacy-compat/avg/sound-production-brief').AvgSoundPlanningBrief;
   /** AVG-only explicit frozen local processing; no raw-request or author authority. */
-  avgAudioProcessing?: import('../avg/audio-production-contract').AvgAudioProductionProcessingPlan;
+  avgAudioProcessing?: import('../legacy-compat/avg/audio-production-contract').AvgAudioProductionProcessingPlan;
   ttrpg?: TtrpgProductionBriefV2;
   /** Open construction uses the same production budgets and lifecycle, with its own frozen content contract. */
-  ttrpgOpen?: import('../ttrpg/production-brief-v3').TtrpgProductionBriefContentV3;
+  ttrpgOpen?: import('../legacy-compat/ttrpg/production-brief-v3').TtrpgProductionBriefContentV3;
   /** Closed AI Town construction contract; required exactly when productType=ai-town. */
   aiTown?: AiTownProductionBriefV1;
   /** Closed text-adventure construction contract; required exactly for text-adventure. */
@@ -733,7 +730,7 @@ export interface ProductProductionBlockerResolutionV1 {
   note: string;
   /** Exact initial-situation candidate and source approved by the author. */
   chatSituation?: {candidatesHash: string; sourceHash: string; selectedOptionKey: string};
-  chatMedia?: import('../character-interaction/media-selection').ChatMediaProductionDecisionV1;
+  chatMedia?: import('../legacy-compat/character-interaction/media-selection').ChatMediaProductionDecisionV1;
   /** Explicit authored replacement; validated by the same task parser before acceptance. */
   authorDraftJson?: string;
   /** Explicit reference to an already retained and booked complete original response. */

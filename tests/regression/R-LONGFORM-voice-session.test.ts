@@ -316,26 +316,11 @@ describe('长篇语音会话与资源回收', () => {
       expect(revoke).toHaveBeenCalledWith('blob:pause-test'); expect(fetcher).toHaveBeenCalledOnce()
     } finally {createUrl.mockRestore(); revoke.mockRestore()}
   })
-  it('聊天有限入口拒绝服务模式，不复用长篇的提供商设置或发起请求', async () => {
-    const chat = new VoiceSession(next => {state = next}, transcript, 'character-chat')
-    try {
-      await chat.listen(serviceConfig())
-      expect(state.error).toContain('仅支持浏览器语音输入')
-      await chat.speak('玩家可见消息。', serviceConfig())
-      expect(state.error).toContain('仅支持浏览器朗读')
-      expect(fetcher).not.toHaveBeenCalled(); expect(getUserMedia).not.toHaveBeenCalled()
-    } finally {chat.dispose()}
-  })
-  it('聊天入口允许显式浏览器转写和朗读，但不接受未登记的产品边界', async () => {
-    expect(() => new VoiceSession(vi.fn(), vi.fn(), 'unknown-product' as never)).toThrow('未登记')
-    const chat = new VoiceSession(next => {state = next}, transcript, 'character-chat')
-    try {
-      await chat.listen(config())
-      FakeRecognition.last.onresult?.({results: [{isFinal: true, 0: {transcript: '我想先休息。'}}]})
-      expect(transcript).not.toHaveBeenCalled(); chat.finish()
-      expect(transcript).toHaveBeenCalledWith('我想先休息。')
-      await chat.speak('那就先休息。', config())
-      expect(synthesis.speak).toHaveBeenCalledOnce(); expect(fetcher).not.toHaveBeenCalled()
-    } finally {chat.dispose()}
+  it.each(['character-chat', 'unknown-product'])('拒绝退役或未登记的语音边界 %s 且不发起请求', boundary => {
+    expect(() => new VoiceSession(vi.fn(), transcript, boundary as never)).toThrow('未登记')
+    expect(fetcher).not.toHaveBeenCalled()
+    expect(getUserMedia).not.toHaveBeenCalled()
+    expect(synthesis.speak).not.toHaveBeenCalled()
+    expect(transcript).not.toHaveBeenCalled()
   })
 })

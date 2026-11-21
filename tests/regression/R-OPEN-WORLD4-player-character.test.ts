@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { createTextOpenWorldCombatStateMachineV1 } from '../../src/lib/open-world/combat-state-machine'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
+import { createTextOpenWorldCombatStateMachineV1 } from '../../src/lib/legacy-compat/open-world/combat-state-machine'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
 import { projectTextOpenWorldPlayerCharacterV1 } from '../../src/lib/open-world/player-character'
-import { deriveTextOpenWorldPlayerStatsFromModulesV1 } from '../../src/lib/open-world/player-stats'
-import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
+import { deriveTextOpenWorldPlayerStatsFromModulesV1 } from '../../src/lib/legacy-compat/open-world/player-stats'
+import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
 import type {
   TextOpenWorldActionModuleV1,
   TextOpenWorldActorModuleV1,

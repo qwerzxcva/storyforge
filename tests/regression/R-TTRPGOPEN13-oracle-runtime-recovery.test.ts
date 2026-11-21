@@ -6,11 +6,11 @@ import { prepareTtrpgOpenOracleInputV2 } from '../../src/lib/ttrpg/open-intent-i
 import { generateTtrpgOpenOracleCandidateV2, executeTtrpgOpenOracleRequestV1 } from '../../src/lib/ttrpg/open-intent-harness'
 import { finishTtrpgOpenOracleInstanceDraftV1 } from '../../src/lib/ttrpg/open-runtime-draft-stop'
 import { abandonTtrpgOpenOracleInstanceWaitV1, repairTtrpgOpenOracleInstanceResponseReceiptV1 } from '../../src/lib/ttrpg/open-situation-request-recovery'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { readAgentRunArtifactExactV1 } from '../../src/lib/memory/artifact-store'
 import * as commands from '../../src/lib/ttrpg/runtime-commands'
-import { ttrpgOpenCallBudgetV1 } from '../../src/lib/ttrpg/open-model-calls'
+import { ttrpgOpenCallBudgetV1 } from '../../src/lib/legacy-compat/ttrpg/open-model-calls'
 
 const decision = 'discard-this-oracle-instance-request-and-close-window' as const
 describe('R-TTRPGOPEN13 original instance Oracle cancellation, observed/unknown recovery and late execution', { timeout: 60000 }, () => {

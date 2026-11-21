@@ -1,18 +1,10 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Check, Loader2, RotateCcw, Trash2, Wand2, X } from 'lucide-react'
-import {
-  parseCharacterSupplementCandidateDraftV1,
-  serializeCharacterSupplementCandidateV1,
-  type CharacterSupplementCandidateV1,
-} from '../../lib/agent/character-supplement-copilot'
-import {
-  CHARACTER_DIMENSIONS,
-  filledDimensions,
-  type CharacterDimensionKey,
-} from '../../lib/character/character-dimensions'
-import type { Character, Project } from '../../lib/types'
-import { useMasterCopilot, type PendingMasterCandidate } from '../agent/useMasterCopilot'
-import { CTextarea } from '../shared/CompositionInput'
+import { useEffect, useMemo, useState } from 'react';
+import { Check, Loader2, RotateCcw, Trash2, Wand2, X } from 'lucide-react';
+import { parseCharacterSupplementCandidateDraftV1, serializeCharacterSupplementCandidateV1, type CharacterSupplementCandidateV1 } from '../../lib/agent/character-supplement-copilot';
+import { CHARACTER_DIMENSIONS, filledDimensions, type CharacterDimensionKey } from '../../lib/character/character-dimensions';
+import type { Character, Project } from '../../lib/types';
+import { useMasterCopilot, type PendingMasterCandidate } from '../agent/useMasterCopilot';
+import { CTextarea } from '../shared/CompositionInput';
 import CharacterDimensionPicker from './CharacterDimensionPicker'
 import HarnessEvidencePanel from '../agent/HarnessEvidencePanel'
 

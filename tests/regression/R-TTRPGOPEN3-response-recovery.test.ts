@@ -16,7 +16,7 @@ import * as gateway from '../../src/lib/context-gateway/attempt-evidence'
 import * as checkpoints from '../../src/lib/agent/run/checkpoint'
 import { hashCanonicalValue } from '../../src/lib/agent/run/hash'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 
 const output = JSON.stringify({ goal: '调查河港', method: '观察岸边', targetRefs: [], declaredResources: [], declaredAssumptions: [], requestedOutcome: null })
 const interrupted = new Error('simulated browser close after durable write')

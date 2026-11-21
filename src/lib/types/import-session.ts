@@ -5,10 +5,9 @@
  * 的 Agent Run；作者确认后正式写入并提交分块收据。
  * 本表保存本地任务、恢复进度与最终报告，不拥有已采纳的作品内容。
  */
-
-import type { VerificationReceiptV1 } from './agent-run'
-import type { WorkspaceScope } from './world-ownership'
-import type { UnifiedParseResult } from './import-session-data'
+import type { VerificationReceiptV1 } from './agent-run';
+import type { WorkspaceScope } from './world-ownership';
+import type { UnifiedParseResult } from './import-session-data';
 
 /** 导入目标 */
 export type ImportTarget = 'project' | 'reference'

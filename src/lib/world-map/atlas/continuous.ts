@@ -1,7 +1,7 @@
-import type { AtlasFeature, AtlasGeometry } from './geometry'
-import type { AtlasLayers } from './layers'
-import { along, line } from './paths'
-import { seedRandom } from '../engine/random'
+import type { AtlasFeature, AtlasGeometry } from './geometry';
+import type { AtlasLayers } from './layers';
+import { along, line } from './paths';
+import { seedRandom } from '../engine/random';
 
 const clamp = (n: number, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, n))
 

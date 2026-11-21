@@ -8,22 +8,15 @@
  *  · 全书 AI 总结展示
  *  · 每条标注 chunk 来源
  */
-import { useState, useMemo, useRef, useCallback, useEffect } from 'react'
-import {
-  AlertTriangle, Check, ChevronDown, ChevronRight, Loader2, RotateCcw, Sparkles,
-  Users2, X,
-} from 'lucide-react'
-import type { Reference, ReferenceAnalysisRun, ReferenceChunkAnalysis, AnalysisDimension } from '../../lib/types'
-import { DIMENSION_LABELS } from '../../lib/types/reference'
-import {
-  mergeAnalysisResults,
-  collectCharacterCraftTexts,
-  type MergedAnalysisResult, type MergedDimension, type AIMergedCharacter,
-} from '../../lib/reference-analysis/merge-analysis'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { useToast } from '../shared/Toast'
-import type { ReferenceDerivedModeV1 } from '../../lib/reference-analysis/derived-agent-baseline'
-import { useReferenceDerivedAI, type ReferenceDerivedLaneState } from './useReferenceDerivedAI'
+import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
+import { AlertTriangle, Check, ChevronDown, ChevronRight, Loader2, RotateCcw, Sparkles, Users2, X } from 'lucide-react';
+import type { Reference, ReferenceAnalysisRun, ReferenceChunkAnalysis, AnalysisDimension } from '../../lib/types';
+import { DIMENSION_LABELS } from '../../lib/types/reference';
+import { mergeAnalysisResults, collectCharacterCraftTexts, type MergedAnalysisResult, type MergedDimension, type AIMergedCharacter } from '../../lib/reference-analysis/merge-analysis';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { useToast } from '../shared/Toast';
+import type { ReferenceDerivedModeV1 } from '../../lib/reference-analysis/derived-agent-baseline';
+import { useReferenceDerivedAI, type ReferenceDerivedLaneState } from './useReferenceDerivedAI';
 
 const DIM_COLORS: Partial<Record<AnalysisDimension, string>> = {
   narrativeStyle:     'text-blue-400',

@@ -1,30 +1,21 @@
-import { keepIntegrityReadAlive } from '../db/transaction-integrity'
-import { estimateTokens } from '../ai/context-budget'
-import { hashChapterText } from '../ai/chapter-memory/text-normalization'
-import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { db } from '../db/schema'
-import { isCanonFactV1 } from '../fact-ledger/canon-eligibility'
-import { isWorkspaceUid, isWorkCode } from './identity'
-import type {
-  ConsistencyDossierFindingV1,
-  ConsistencyDossierSourceRefV1,
-  LongTermConsistencyDossierV1,
-} from '../types/memory-engineering'
-import type { TemporalFact } from '../types/temporal-fact'
-import { aggregateInventory, type ItemLedgerEntry } from '../types/item-ledger'
-import { readStateCardFields, type StateCard } from '../types/state-card'
-import type { KnowledgeLedgerEntry } from '../types/knowledge-ledger'
-import type { RetrievalChunk } from '../types/retrieval-chunk'
-import type { StoryTimelineEvent } from '../types/story-timeline'
-import type { Chapter, OutlineNode } from '../types'
-import type { RagDocumentMetadata } from '../types/rag-library'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveReadScopeLike,
-  type WorkspaceScopeLike,
-} from '../workspace/scope'
+import { keepIntegrityReadAlive } from '../db/transaction-integrity';
+import { estimateTokens } from '../ai/context-budget';
+import { hashChapterText } from '../ai/chapter-memory/text-normalization';
+import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { db } from '../db/schema';
+import { isCanonFactV1 } from '../fact-ledger/canon-eligibility';
+import { isWorkspaceUid, isWorkCode } from './identity';
+import type { ConsistencyDossierFindingV1, ConsistencyDossierSourceRefV1, LongTermConsistencyDossierV1 } from '../types/memory-engineering';
+import type { TemporalFact } from '../types/temporal-fact';
+import { aggregateInventory, type ItemLedgerEntry } from '../types/item-ledger';
+import { readStateCardFields, type StateCard } from '../types/state-card';
+import type { KnowledgeLedgerEntry } from '../types/knowledge-ledger';
+import type { RetrievalChunk } from '../types/retrieval-chunk';
+import type { StoryTimelineEvent } from '../types/story-timeline';
+import type { Chapter, OutlineNode } from '../types';
+import type { RagDocumentMetadata } from '../types/rag-library';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, type WorkspaceScopeLike } from '../workspace/scope';
 
 const DEFAULT_DOSSIER_TOKEN_LIMIT = 6_000
 const STALE_STATUSES = new Set(['stale', 'source-missing', 'invalid-range'])

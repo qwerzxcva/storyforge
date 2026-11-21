@@ -1,25 +1,12 @@
-import { lookupContextResourceMetadataV1 } from './resource-metadata'
-import { canonicalStringify } from '../agent/run/hash'
-import { sha256Text } from '../ai/chapter-memory/text-normalization'
-import type {
-  ContextResourceDescriptorV1,
-  FrozenResourceScopeV1,
-  WorldCapabilityArea,
-} from '../registry/types'
-import {
-  assertWorldReleaseIdentityCurrentV1,
-  WORLD_RELEASE_RESOURCE_PROVIDER_V1,
-  listAllWorldReleaseResourceDescriptorsV1,
-  openWorldReleaseV1,
-  readWorldResourceV1,
-  type OpenWorldReleaseV1,
-  worldReleaseIdentityTransactionTablesV1,
-} from './world-release-provider'
-import type { ProductSourcePlan, WorldReferenceV1 } from '../types/world-product-contracts'
-import type { WorldQueryAccessV1, WorldReferenceV2 } from '../types/world-query'
-import { createWorldReference, resolveWorldReferenceResourceScope } from '../world-engine/world-reference-v2'
-import { openProductPreparationWorldQueryV1, openProductPlanWorldQueryV1, openAuthorWorldQueryAccessV1, bindWorldQueryResourcesV1,
-  describeWorldQueryAccessV1, closeWorldQueryAccessV1 } from './world-query-client'
+import { lookupContextResourceMetadataV1 } from './resource-metadata';
+import { canonicalStringify } from '../agent/run/hash';
+import { sha256Text } from '../ai/chapter-memory/text-normalization';
+import type { ContextResourceDescriptorV1, FrozenResourceScopeV1, WorldCapabilityArea } from '../registry/types';
+import { assertWorldReleaseIdentityCurrentV1, WORLD_RELEASE_RESOURCE_PROVIDER_V1, listAllWorldReleaseResourceDescriptorsV1, openWorldReleaseV1, readWorldResourceV1, type OpenWorldReleaseV1, worldReleaseIdentityTransactionTablesV1 } from './world-release-provider';
+import type { ProductSourcePlan, WorldReferenceV1 } from '../types/world-product-contracts';
+import type { WorldQueryAccessV1, WorldReferenceV2 } from '../types/world-query';
+import { createWorldReference, resolveWorldReferenceResourceScope } from '../world-engine/world-reference-v2';
+import { openProductPreparationWorldQueryV1, openProductPlanWorldQueryV1, openAuthorWorldQueryAccessV1, bindWorldQueryResourcesV1, describeWorldQueryAccessV1, closeWorldQueryAccessV1 } from './world-query-client';
 
 const MAX_RESOURCE_READ_TOKENS = 100_000
 

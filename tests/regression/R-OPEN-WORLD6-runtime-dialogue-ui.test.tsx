@@ -10,7 +10,7 @@ import { projectTextOpenWorldScenesV1 } from '../../src/lib/open-world/scene-pro
 import {
   createInitialTextOpenWorldSessionProjectionV1,
   deriveTextOpenWorldContextsV1,
-} from '../../src/lib/open-world/session-projection'
+} from '../../src/lib/legacy-compat/open-world/session-projection'
 import { createTextOpenWorldVNextP9Fixture } from '../helpers/text-open-world-vnext-fixture'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true

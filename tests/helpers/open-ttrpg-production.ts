@@ -1,11 +1,11 @@
 /** Internal authoring contract fixture, not evidence of normal UI or real-model production. */
 import { db } from '../../src/lib/db/schema'
-import { defaultTtrpgSettingsV2 } from '../../src/lib/ttrpg/authoring-contract-v2'
+import { defaultTtrpgSettingsV2 } from '../../src/lib/legacy-compat/ttrpg/authoring-contract-v2'
 import { createTtrpgDraft, selectTtrpgWorld, prepareTtrpgBrief, readTtrpgDraft } from '../../src/lib/ttrpg/authoring-service'
 import { createMistHarborWorld } from '../../src/lib/world-engine/mist-harbor-preset'
-import { createTtrpgProductionBriefContentV3 } from '../../src/lib/ttrpg/production-brief-v3'
+import { createTtrpgProductionBriefContentV3 } from '../../src/lib/legacy-compat/ttrpg/production-brief-v3'
 import { createTtrpgOpenProductionBriefV3 } from '../../src/lib/ttrpg/open-production-brief'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 import { openCampaignFixture, openRuleFixture } from './ttrpg-open-content'
 import type { ProductSourcePlanV1 } from '../../src/lib/types'
 export async function openProductionFixtureV1() {

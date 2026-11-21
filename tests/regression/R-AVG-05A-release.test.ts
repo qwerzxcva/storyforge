@@ -5,11 +5,11 @@ import { createAvgAuthoringPresetV1 } from '../../src/lib/avg/authoring-presets'
 import { runAvgAssemblyV1 } from '../../src/lib/avg/assembly-service';
 import { startProductProductionPreviewV1, publishProductProductionV1 } from '../../src/lib/product-production/service';
 import { prepareProductProductionAdoption } from '../../src/lib/product-production/adoption';
-import { recordProductBuildMainRoutePlaythroughV1 } from '../../src/lib/product-production/quality-receipts';
+import { recordProductBuildMainRoutePlaythroughV1 } from '../../src/lib/legacy-compat/product-production/quality-receipts';
 import { reachAvgPresentationBeat } from '../../src/lib/avg/runtime-commands';
-import { readProductRuntimeStateVersion, readProductRuntimeState, commitNarrativeChoice } from '../../src/lib/product/runtime-core';
-import { createProductRuntimeInstance } from '../../src/lib/product/runtime-instances';
-import { verifyProductReleaseManifest } from '../../src/lib/product-production/runtime-package';
+import { readProductRuntimeStateVersion, readProductRuntimeState, commitNarrativeChoice } from '../../src/lib/legacy-compat/product/runtime-core';
+import { createProductRuntimeInstance } from '../../src/lib/legacy-compat/product/runtime-instances';
+import { verifyProductReleaseManifest } from '../../src/lib/legacy-compat/product-production/runtime-package';
 import { verifyProductBuildTerminalArtifactSetV1, assertProductBuildTerminalReadSetUnchangedV1 } from '../../src/lib/product-production/artifact-store';
 import { scopeTransactionTables } from '../../src/lib/workspace/scope';
 import { readAvgSystemPlanForCompilationV1 } from '../../src/lib/avg/author-artifacts';

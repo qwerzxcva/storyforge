@@ -1,4 +1,4 @@
-import {createInitialInteractionState, parseInteractionState} from '../../src/lib/character-interaction/runtime'
+import {createInitialInteractionState, parseInteractionState} from '../../src/lib/legacy-compat/character-interaction/runtime'
 import {chatNarrativeFixture} from './chat-narrative-fixture'
 
 /** Synthetic source-bound read-pressure state, not a meaningful-story score. */

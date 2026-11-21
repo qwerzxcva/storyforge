@@ -5,7 +5,7 @@
  * HARNESS-11：模型输出只做确定性解析。解析失败由生成 gate 阻断，禁止在
  * 解析器内部隐藏发起第二次模型调用。
  */
-import { wholeJSONContainerTextV1 } from './whole-json-container'
+import { wholeJSONContainerTextV1 } from './whole-json-container';
 
 export interface ParsedVolume {
   title: string

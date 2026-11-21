@@ -1,4 +1,4 @@
-import { parseDiagnosticDetails, type DiagnosticDetails } from './diagnostic-context'
+import { parseDiagnosticDetails, type DiagnosticDetails } from './diagnostic-context';
 /** Small, content-free handoff shared by the application and the official form. */
 export const FAILURE_REPORT_FRAGMENT = '#storyforge-report='
 export const FAILURE_FEEDBACK_URL = 'https://docs.storyforge-lab.com/feedback/bug'

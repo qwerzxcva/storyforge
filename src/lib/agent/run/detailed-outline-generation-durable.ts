@@ -1,77 +1,27 @@
 import Dexie from 'dexie'
-import { db } from '../../db/schema'
-import { adoptionTransactionTablesV1 } from '../../registry/adopt'
-import { parseAgentRunEventV1 } from './event-schema'
-import type { AgentConversation, AgentEvent, ChatMessage, WorkspaceScope } from '../../types'
-import type {
-  AgentRunFormalAIEntryBindingV1,
-  AgentRunContractV3,
-  ContextManifestV1,
-  ContextManifestV2,
-  ContextManifestV3,
-  AgentRunRecord,
-} from '../../types/agent-run'
-import {
-  appendAgentEvent,
-  getOrCreateAgentConversation,
-  readAgentEvents,
-} from '../conversations'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  readVerifiedAgentRunInTransactionV1,
-  appendAgentRunEventWithSettlementInTransactionV1,
-  withAgentRunMutationLockV1,
-  agentRunScopeTransactionTablesV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import { hashCanonicalValue } from './hash'
-import { createContextManifestFromAssemblyV1, createContextManifestV2FromV1 } from './context-manifest'
-import type { AssembleContextResult } from '../../registry/types'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  scopeTransactionTables,
-} from '../../workspace/scope'
-import {
-  getAgentSkillV1,
-  OUTLINE_DETAIL_CONTEXT_SOURCE_KEYS,
-  resolveAgentSkillContextSourceKeysV1,
-} from '../skill-registry'
-import {
-  assertAgentSkillExecutionBindingIntegrityV2,
-  assertAgentSkillExecutionBindingV1,
-  createAgentSkillExecutionBindingV2,
-  createAgentSkillExecutionBindingV1,
-} from '../execution-binding'
-import {
-  creativeArtifactCanAdoptV1,
-  parseCreativeArtifactV1,
-  type CreativeArtifactV1,
-} from '../creative-reliability'
-import { parseNarrativeBriefV1, type NarrativeBriefV1 } from '../narrative-brief'
-import {
-  assertWorkspaceContentRevisionFreshV1,
-  captureWorkspaceContentRevisionV1,
-  contentRevisionTableSpecsV1,
-  parseWorkspaceContentRevisionV1,
-  type WorkspaceContentRevisionVectorV1,
-} from '../../authoring/content-revision'
-import {
-  assertFormalAIEntrySnapshotIntegrityV1,
-  freezeFormalAIEntryBindingV1,
-} from '../formal-ai-entry'
-import {
-  finalizeContextGatewayAttemptEvidenceV1,
-  recordContextGatewayPreflightEvidenceV1,
-  type ContextGatewayPreflightEvidenceV1,
-} from '../../context-gateway/attempt-evidence'
-import type { ContextGatewayExecutionV1 } from '../../context-gateway/execution'
-import { assertContextGatewayCandidateAdoptableV1 } from '../../context-gateway/execution'
-import { detailedOutlineGatewayExecutionFromAssemblyV1 } from '../../outline/detail-gateway-context'
-import { assertDetailedOutlineTargetsUnwrittenFutureV1 } from '../../outline/future-boundary'
+import { db } from '../../db/schema';
+import { adoptionTransactionTablesV1 } from '../../registry/adopt';
+import { parseAgentRunEventV1 } from './event-schema';
+import type { AgentConversation, AgentEvent, ChatMessage, WorkspaceScope } from '../../types';
+import type { AgentRunFormalAIEntryBindingV1, AgentRunContractV3, ContextManifestV1, ContextManifestV2, ContextManifestV3, AgentRunRecord } from '../../types/agent-run';
+import { appendAgentEvent, getOrCreateAgentConversation, readAgentEvents } from '../conversations';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, readVerifiedAgentRunInTransactionV1, appendAgentRunEventWithSettlementInTransactionV1, withAgentRunMutationLockV1, agentRunScopeTransactionTablesV1, type AgentRunSnapshotV1 } from './event-store';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { hashCanonicalValue } from './hash';
+import { createContextManifestFromAssemblyV1, createContextManifestV2FromV1 } from './context-manifest';
+import type { AssembleContextResult } from '../../registry/types';
+import { assertRecordInScope, readOwnedRows, scopeTransactionTables } from '../../workspace/scope';
+import { getAgentSkillV1, OUTLINE_DETAIL_CONTEXT_SOURCE_KEYS, resolveAgentSkillContextSourceKeysV1 } from '../skill-registry';
+import { assertAgentSkillExecutionBindingIntegrityV2, assertAgentSkillExecutionBindingV1, createAgentSkillExecutionBindingV2, createAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { creativeArtifactCanAdoptV1, parseCreativeArtifactV1, type CreativeArtifactV1 } from '../creative-reliability';
+import { parseNarrativeBriefV1, type NarrativeBriefV1 } from '../narrative-brief';
+import { assertWorkspaceContentRevisionFreshV1, captureWorkspaceContentRevisionV1, contentRevisionTableSpecsV1, parseWorkspaceContentRevisionV1, type WorkspaceContentRevisionVectorV1 } from '../../authoring/content-revision';
+import { assertFormalAIEntrySnapshotIntegrityV1, freezeFormalAIEntryBindingV1 } from '../formal-ai-entry';
+import { finalizeContextGatewayAttemptEvidenceV1, recordContextGatewayPreflightEvidenceV1, type ContextGatewayPreflightEvidenceV1 } from '../../context-gateway/attempt-evidence';
+import type { ContextGatewayExecutionV1 } from '../../context-gateway/execution';
+import { assertContextGatewayCandidateAdoptableV1 } from '../../context-gateway/execution';
+import { detailedOutlineGatewayExecutionFromAssemblyV1 } from '../../outline/detail-gateway-context';
+import { assertDetailedOutlineTargetsUnwrittenFutureV1 } from '../../outline/future-boundary';
 
 export const DETAILED_OUTLINE_GENERATION_STEP_ID_V1 = 'detailed-outline.generate'
 export const DETAILED_OUTLINE_GENERATION_CONVERSATION_PURPOSE_V1 = 'detailed-outline-generation'

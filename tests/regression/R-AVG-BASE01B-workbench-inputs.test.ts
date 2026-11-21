@@ -6,7 +6,7 @@ import { createAvgAuthoringPresetV1 } from '../../src/lib/avg/authoring-presets'
 import { clearAvgVisualBatchDraftV1, prepareAvgAssemblyBriefV1, saveAvgVisualBatchDraftV1, startAvgAssemblyV1 } from '../../src/lib/avg/assembly-service'
 import { importAvgMediaV1 } from '../../src/lib/avg/editor-service'
 import { readAvgDraftV1 } from '../../src/lib/avg/draft-service'
-import type { AvgVisualProductionRequirementV1 } from '../../src/lib/avg/media-production-contract'
+import type { AvgVisualProductionRequirementV1 } from '../../src/lib/legacy-compat/avg/media-production-contract'
 
 const image = (key = 'first'): AvgVisualProductionRequirementV1 => ({ requirementKey: `letter.icon.${key}`, revision: 1,
   assetKey: `avg.generated.icon.${key}`, name: '信封图标', altText: '原创信封工程图标', family: { subjectKey: 'letter', familyKey: 'letter.original', variantKey: key, revision: 1 },

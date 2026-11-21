@@ -4,26 +4,22 @@
  * 左侧栏：按卷或未分卷区段展示章节（从 outlineNodes 读取）
  * 右侧编辑区：场景细纲 + 正文编辑器
  */
-import { useState, useEffect, useMemo, useRef } from 'react'
-import { ChevronDown, ChevronRight, Search } from 'lucide-react'
-import { useOutlineStore } from '../../stores/outline'
-import { useChapterStore } from '../../stores/chapter'
-import { useWorldGroupStore } from '../../stores/world-group'
-import { useCharacterStore } from '../../stores/character'
+import { useState, useEffect, useMemo, useRef } from 'react';
+import { ChevronDown, ChevronRight, Search } from 'lucide-react';
+import { useOutlineStore } from '../../stores/outline';
+import { useChapterStore } from '../../stores/chapter';
+import { useWorldGroupStore } from '../../stores/world-group';
+import { useCharacterStore } from '../../stores/character';
 import PanelLayout from '../shared/PanelLayout'
 import ScenePanel from '../outline/ScenePanel'
 import ChapterEditor from './ChapterEditor'
 import FindReplacePanel from './FindReplacePanel'
-import { buildBestChapterByOutlineMap } from '../../lib/chapters/selectors'
-import { groupOutlineChaptersByTopLevelVolume } from '../../lib/outline/canonical-outline-walk'
-import type { Project, ChapterStatus } from '../../lib/types'
-import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator'
-import { useToast } from '../shared/Toast'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-  useInitialRecordTarget,
-} from '../shared/initial-record-target'
+import { buildBestChapterByOutlineMap } from '../../lib/chapters/selectors';
+import { groupOutlineChaptersByTopLevelVolume } from '../../lib/outline/canonical-outline-walk';
+import type { Project, ChapterStatus } from '../../lib/types';
+import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator';
+import { useToast } from '../shared/Toast';
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes, useInitialRecordTarget } from '../shared/initial-record-target';
 
 interface Props {
   project: Project

@@ -1,5 +1,5 @@
-import { INSPIRATION_PREPARATION_LABELS, type InspirationPreparationMode } from '../inspiration/preparation-contract'
-import type { PromptSeed } from './prompt-seed-type'
+import { INSPIRATION_PREPARATION_LABELS, type InspirationPreparationMode } from '../inspiration/preparation-contract';
+import type { PromptSeed } from './prompt-seed-type';
 
 function preparationSystemPrompt(mode: InspirationPreparationMode): string {
 const method = {

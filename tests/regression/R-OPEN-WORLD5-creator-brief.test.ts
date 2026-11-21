@@ -12,7 +12,7 @@ import {
   parseTextOpenWorldCreatorSourceLocatorV1,
   textOpenWorldCreatorLocatorFromBriefRowV1,
   textOpenWorldCreatorLocatorColumnsV1,
-} from '../../src/lib/open-world/creator-brief-persistence'
+} from '../../src/lib/legacy-compat/open-world/creator-brief-persistence'
 import {
   inspectTextOpenWorldCreatorWorldSourceV1,
 } from '../../src/lib/open-world/creator-source'

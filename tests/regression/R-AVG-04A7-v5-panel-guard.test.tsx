@@ -6,11 +6,11 @@ import AssemblyWorkbench from '../../src/components/avg/AssemblyWorkbench'
 import { avgV5WorkbenchPreparationFixture } from '../helpers/avg-v5-workbench-preparation-fixture'
 import { useAIConfigStore } from '../../src/stores/ai-config'
 import * as service from '../../src/lib/avg/assembly-service'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 import VisualPlanningPanel from '../../src/components/avg/VisualPlanningPanel'
 import { avgV5FormalFixture } from '../helpers/avg-v5-formal-fixture'
 import { readAvgAssemblyWorkspaceV1 } from '../../src/lib/avg/assembly-service'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import type { ProductBuildRecordV1 } from '../../src/lib/types'
 
 Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true})

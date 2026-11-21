@@ -1,11 +1,11 @@
-import type { WorldCapabilityArea } from '../registry/types'
-import { WORLD_CAPABILITY_AREAS_V3 as WORLD_CAPABILITY_AREAS, WORLD_SEMANTIC_REGISTRY_V3 as WORLD_SEMANTIC_SPECS } from './semantic-registry-v3'
-import type { WorldRelease, WorldReleaseManifestV3 } from '../types'
-import { hashWorldReleaseValueV1 } from './release-hash'
-import { assertWorldSemanticSnapshotV1 } from './semantic-snapshot'
-import { verifyWorldReleaseContentV4 } from './narrative-release-v4'
-import type { WorldReleaseManifestV4 } from '../types/narrative-release'
-import type { NarrativeIndexV1 } from '../types/narrative-index'
+import type { WorldCapabilityArea } from '../registry/types';
+import { WORLD_CAPABILITY_AREAS_V3 as WORLD_CAPABILITY_AREAS, WORLD_SEMANTIC_REGISTRY_V3 as WORLD_SEMANTIC_SPECS } from './semantic-registry-v3';
+import type { WorldRelease, WorldReleaseManifestV3 } from '../types';
+import { hashWorldReleaseValueV1 } from './release-hash';
+import { assertWorldSemanticSnapshotV1 } from './semantic-snapshot';
+import { verifyWorldReleaseContentV4 } from './narrative-release-v4';
+import type { WorldReleaseManifestV4 } from '../types/narrative-release';
+import type { NarrativeIndexV1 } from '../types/narrative-index';
 
 const HASH = /^[a-f0-9]{64}$/
 const WORLD_SEMANTIC_TABLES = new Set(

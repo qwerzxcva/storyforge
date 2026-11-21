@@ -1,24 +1,16 @@
-import { selectReferenceMethods, spreadReferenceItems } from '../reference-analysis/context-selection'
-import type { Worldview, StoryCore, PowerSystem, Character, CreativeRules } from '../types'
-import { formatSystemFictionElementsV1 } from '../prose/system-fiction-contract'
-import type { HistoricalKeyword, HistoricalKeywordCategory } from '../types/history'
-import { KEYWORD_CATEGORY_LABELS } from '../types/history'
-import { DIMENSION_LABELS, ANALYSIS_DIMENSIONS } from '../types/reference'
-import {
-  getActiveReferenceAnalysisRun,
-  getReferenceAnalysisRunChunks,
-} from '../reference-analysis/lifecycle'
-import { loadContextMemo } from '../export/context-snapshot'
-import { db } from '../db/schema'
-import { readOwnedRows, resolveScope } from '../workspace/scope'
-import type { WorkspaceScope } from '../types/world-ownership'
-import {
-  MORAL_AXIS_LABELS,
-  normalizeCharacterAxes,
-  ORDER_AXIS_LABELS,
-  ROLE_WEIGHT_LABELS,
-} from '../character/character-axes'
-import { CHARACTER_DIMENSIONS } from '../character/character-dimensions'
+import { selectReferenceMethods, spreadReferenceItems } from '../reference-analysis/context-selection';
+import type { Worldview, StoryCore, PowerSystem, Character, CreativeRules } from '../types';
+import { formatSystemFictionElementsV1 } from '../prose/system-fiction-contract';
+import type { HistoricalKeyword, HistoricalKeywordCategory } from '../types/history';
+import { KEYWORD_CATEGORY_LABELS } from '../types/history';
+import { DIMENSION_LABELS, ANALYSIS_DIMENSIONS } from '../types/reference';
+import { getActiveReferenceAnalysisRun, getReferenceAnalysisRunChunks } from '../reference-analysis/lifecycle';
+import { loadContextMemo } from '../export/context-snapshot';
+import { db } from '../db/schema';
+import { readOwnedRows, resolveScope } from '../workspace/scope';
+import type { WorkspaceScope } from '../types/world-ownership';
+import { MORAL_AXIS_LABELS, normalizeCharacterAxes, ORDER_AXIS_LABELS, ROLE_WEIGHT_LABELS } from '../character/character-axes';
+import { CHARACTER_DIMENSIONS } from '../character/character-dimensions';
 
 /** 获取已缓存的上下文快照（如果有） */
 export function getContextMemo(projectId: number): string {

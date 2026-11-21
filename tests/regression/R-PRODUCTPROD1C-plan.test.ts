@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import {
   createProductProductionPlanV3,
   parseProductProductionPlanV3,
-} from '../../src/lib/product-production/plan'
+} from '../../src/lib/legacy-compat/product-production/plan'
 import { productProductionProviderOutputLimitV1 } from '../../src/lib/product-production/production-executor'
 import type { ProductProductionBriefV3 } from '../../src/lib/types'
 import { CURRENT_PRODUCT_RESOURCE_KEYS, currentProductSelection } from '../helpers/current-product-world'

@@ -1,8 +1,8 @@
-import { db } from '../db/schema'
-import { generateWorldCode } from '../workspace/identity'
-import { isPublicWorldCode } from './world-identity'
-import { effectiveWorkKind } from '../workspace/work-kind'
-import { resolveWorkspaceOwnership } from '../workspace/ownership'
+import { db } from '../db/schema';
+import { generateWorldCode } from '../workspace/identity';
+import { isPublicWorldCode } from './world-identity';
+import { effectiveWorkKind } from '../workspace/work-kind';
+import { resolveWorkspaceOwnership } from '../workspace/ownership';
 
 async function allocatePublicWorldCode(projectId: number): Promise<string> {
   for (let attempt = 0; attempt < 8; attempt += 1) {

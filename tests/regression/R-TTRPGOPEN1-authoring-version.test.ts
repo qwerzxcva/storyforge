@@ -3,24 +3,24 @@ import { db } from "../../src/lib/db/schema";
 import {
   defaultTtrpgSettings, isTtrpgAuthoringSettingsV2, parseTtrpgSettings,
   parseTtrpgSettingsV1, serializeTtrpgSettings, settingsFromTtrpgDraft, ttrpgSettingsRunFormat,
-} from "../../src/lib/ttrpg/authoring-contract";
-import { defaultTtrpgSettingsV2, parseTtrpgAuthoringSettingsV2 } from "../../src/lib/ttrpg/authoring-contract-v2";
+} from "../../src/lib/legacy-compat/ttrpg/authoring-contract";
+import { defaultTtrpgSettingsV2, parseTtrpgAuthoringSettingsV2 } from "../../src/lib/legacy-compat/ttrpg/authoring-contract-v2";
 import {
   createTtrpgDraft, prepareTtrpgBrief, readTtrpgDraft, saveTtrpgDraft, selectTtrpgWorld,
   prepareTtrpgOpenBriefCandidateV3, saveTtrpgOpenBriefV3, startTtrpgOpenBriefV3,
   verifyTtrpgOpenBriefV3,
 } from "../../src/lib/ttrpg/authoring-service";
-import { assertTtrpgScriptedAuthoringSettings } from "../../src/lib/ttrpg/authoring-settings";
+import { assertTtrpgScriptedAuthoringSettings } from "../../src/lib/legacy-compat/ttrpg/authoring-settings";
 import {
   createTtrpgProductionBriefContentV3, createTtrpgProductionBriefV3,
   hashTtrpgProductionBriefContentV3, parseTtrpgProductionBriefContentShapeV3, parseTtrpgProductionBriefV3,
-} from "../../src/lib/ttrpg/production-brief-v3";
-import { parseTtrpgProductionBriefV2 } from "../../src/lib/ttrpg/production-brief";
+} from "../../src/lib/legacy-compat/ttrpg/production-brief-v3";
+import { parseTtrpgProductionBriefV2 } from "../../src/lib/legacy-compat/ttrpg/production-brief";
 import { createStoryForgeRulePackV1 } from "../../src/lib/ttrpg/storyforge-rule-pack";
 import { saveTtrpgRulePackV1, saveTtrpgRulePackV2 } from "../../src/lib/ttrpg/rule-pack-library";
-import type { RulePackV2 } from "../../src/lib/ttrpg/open-contract";
-import { parseRulePackV2 } from "../../src/lib/ttrpg/rule-pack-v2";
-import { hashProductProductionValueV2 } from "../../src/lib/product-production/hash";
+import type { RulePackV2 } from "../../src/lib/legacy-compat/ttrpg/open-contract";
+import { parseRulePackV2 } from "../../src/lib/legacy-compat/ttrpg/rule-pack-v2";
+import { hashProductProductionValueV2 } from "../../src/lib/legacy-compat/product-production/hash";
 import { executeProductProductionCommand } from "../../src/lib/product-production/commands";
 import { createConfirmedProductBriefV1, resolveProductSourceReadBoundaryV1 } from "../../src/lib/product/source-contracts";
 import { listWorldSemanticResourceDescriptorsV1, readWorldSemanticResourceV1 } from "../../src/lib/context-gateway/world-release-client";

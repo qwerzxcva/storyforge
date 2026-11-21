@@ -1,15 +1,15 @@
-import type { WorldRelease, WorkspaceScope, WorldReferenceCatalogEntry } from '../types'
-import type { WorldReferenceV2 } from '../types/world-query'
-import type { WorldReleaseManifestV4 } from '../types/narrative-release'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { ensureWorldReleaseUidV1 } from './world-reference'
-import { worldReleaseUidV1, listWorldReleases } from './releases'
-import { worldQueryReferenceDecoderV1, worldQueryFailV1 } from '../context-gateway/world-query-contract'
-import { db } from '../db/schema'
-import type { WorldReferenceV1 } from '../types/world-product-contracts'
-import type { FrozenResourceScopeV1 } from '../registry/types'
-import { createWorldReferenceV1, validatePortableWorldReferenceV1, resolveWorldReferenceResourceScopeV1 } from './world-reference'
-import { verifyWorldReleaseRecordV1 } from './release-codec'
+import type { WorldRelease, WorkspaceScope, WorldReferenceCatalogEntry } from '../types';
+import type { WorldReferenceV2 } from '../types/world-query';
+import type { WorldReleaseManifestV4 } from '../types/narrative-release';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { ensureWorldReleaseUidV1 } from './world-reference';
+import { worldReleaseUidV1, listWorldReleases } from './releases';
+import { worldQueryReferenceDecoderV1, worldQueryFailV1 } from '../context-gateway/world-query-contract';
+import { db } from '../db/schema';
+import type { WorldReferenceV1 } from '../types/world-product-contracts';
+import type { FrozenResourceScopeV1 } from '../registry/types';
+import { createWorldReferenceV1, validatePortableWorldReferenceV1, resolveWorldReferenceResourceScopeV1 } from './world-reference';
+import { verifyWorldReleaseRecordV1 } from './release-codec';
 
 const portableBody = ({ localReleaseRecordId: _local, ...value }: Omit<WorldReferenceV2, 'referenceHash'>) => value
 

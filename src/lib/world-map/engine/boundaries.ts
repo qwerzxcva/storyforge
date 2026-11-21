@@ -1,4 +1,4 @@
-import type { VoronoiMapData } from './types'
+import type { VoronoiMapData } from './types';
 
 /** Province display follows the existing nearest same-state settlement policy. */
 function provinceMembership(data: VoronoiMapData): Uint16Array {

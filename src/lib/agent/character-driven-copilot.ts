@@ -1,49 +1,21 @@
-import { useAIConfigStore } from '../../stores/ai-config'
-import { usePromptStore } from '../../stores/prompt'
-import { chat, resolveRequestConfig } from '../ai/client'
-import { appendSimplifiedChineseOutputConstraint, appendUserConstraint } from '../ai/adapters/prompt-guards'
-import { renderPrompt } from '../ai/prompt-engine'
-import { db } from '../db/schema'
-import type {
-  GenerationGateIssue,
-  GenerationNode,
-  PreparedGenerationNode,
-} from '../generation/generation-node'
-import { prepareGenerationNode } from '../generation/generation-node'
-import { adopt } from '../registry/adopt'
-import { assembleContext } from '../registry/assemble-context'
-import type { AIConfig, ChatMessage, Character, WorkspaceScope } from '../types'
-import {
-  parseCharacterDrivenPlanArcs,
-  parseCharacterDrivenPlotVolumes,
-  type CharacterDrivenPlan,
-  type CharacterDrivenPlotVolume,
-} from '../types/character-driven-plan'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveReadScopeLike,
-} from '../workspace/scope'
-import {
-  attachAgentContextInputStateV1,
-  mergeContextEvidence,
-  resolveAgentContextPolicy,
-  splitAgentContextPolicy,
-  type AgentContextEvidence,
-  type AgentContextProfile,
-} from './context-policy'
-import {
-  createAgentContextCompressionSessionV1,
-  type AgentContextCompressionRuntimeV1,
-} from './context-compression'
-import {
-  buildAgentSkillInputGuidanceV1,
-  resolveAgentSkillInputStateV1,
-  resolveAgentSkillV1,
-  type AgentSkillId,
-} from './skill-registry'
-import { executeAgentTool } from './tool-registry'
-import { parseStructuredOutputV1 } from './structured-output-pipeline'
+import { useAIConfigStore } from '../../stores/ai-config';
+import { usePromptStore } from '../../stores/prompt';
+import { chat, resolveRequestConfig } from '../ai/client';
+import { appendSimplifiedChineseOutputConstraint, appendUserConstraint } from '../ai/adapters/prompt-guards';
+import { renderPrompt } from '../ai/prompt-engine';
+import { db } from '../db/schema';
+import type { GenerationGateIssue, GenerationNode, PreparedGenerationNode } from '../generation/generation-node';
+import { prepareGenerationNode } from '../generation/generation-node';
+import { adopt } from '../registry/adopt';
+import { assembleContext } from '../registry/assemble-context';
+import type { AIConfig, ChatMessage, Character, WorkspaceScope } from '../types';
+import { parseCharacterDrivenPlanArcs, parseCharacterDrivenPlotVolumes, type CharacterDrivenPlan, type CharacterDrivenPlotVolume } from '../types/character-driven-plan';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike } from '../workspace/scope';
+import { attachAgentContextInputStateV1, mergeContextEvidence, resolveAgentContextPolicy, splitAgentContextPolicy, type AgentContextEvidence, type AgentContextProfile } from './context-policy';
+import { createAgentContextCompressionSessionV1, type AgentContextCompressionRuntimeV1 } from './context-compression';
+import { buildAgentSkillInputGuidanceV1, resolveAgentSkillInputStateV1, resolveAgentSkillV1, type AgentSkillId } from './skill-registry';
+import { executeAgentTool } from './tool-registry';
+import { parseStructuredOutputV1 } from './structured-output-pipeline';
 
 interface CharacterDrivenArcIdentityV1 {
   label: string

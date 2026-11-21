@@ -1,7 +1,7 @@
 import { readyOpenTtrpgSessionV1,OPEN_HUMAN_VIEWER } from './open-ttrpg-session'
 import { readTtrpgOpenManualActionCatalogV1 } from '../../src/lib/ttrpg/open-table-service'
 import { firstManualRequestV1 } from './open-ttrpg-manual'
-import type { TtrpgOpenInteractionBindingV1 } from '../../src/lib/ttrpg/open-contract'
+import type { TtrpgOpenInteractionBindingV1 } from '../../src/lib/legacy-compat/ttrpg/open-contract'
 export async function seedOpenInteractionV1(kind: TtrpgOpenInteractionBindingV1['kind'],configure?: Parameters<typeof readyOpenTtrpgSessionV1>[1]) {
   const f = await readyOpenTtrpgSessionV1('冻结的游戏内互动',p => {
     const c = p.ttrpg!,action = c.rulePack.content.actions[0]

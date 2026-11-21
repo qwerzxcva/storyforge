@@ -1,6 +1,6 @@
-import type { AIConfig } from '../types'
-import { buildAIRequestHeaders, hasCustomHeaders } from './request-headers'
-import { normalizeOpenAIBaseUrl, providerApiFormat } from './openai-endpoint'
+import type { AIConfig } from '../types';
+import { buildAIRequestHeaders, hasCustomHeaders } from './request-headers';
+import { normalizeOpenAIBaseUrl, providerApiFormat } from './openai-endpoint';
 export { providerApiFormat } from './openai-endpoint'
 
 type RecordValue = Record<string, unknown>

@@ -3,17 +3,17 @@ import { db } from '../../src/lib/db/schema'
 import { avgNativePackage, avgNativeScripts, seedAvgNativePreview, seedAvgNativeRelease } from '../helpers/avg-native-fixture'
 import { avgSystemFixture } from '../helpers/avg-system-fixture'
 import { legacyPackage } from '../helpers/avg-carrier-fixture'
-import { parseProductRuntimePackageV2, requirePlayableProductRuntimePackage } from '../../src/lib/product-production/runtime-package'
+import { parseProductRuntimePackageV2, requirePlayableProductRuntimePackage } from '../../src/lib/legacy-compat/product-production/runtime-package'
 import { compileAvgExecutablePackageV2 } from '../../src/lib/avg/executable-compiler'
-import { avgExecutableModule, avgRuntimeStage } from '../../src/lib/avg/executable-module'
-import { createAvgGameInstance, createProductInitialStateV1, createProductRuntimeInstance } from '../../src/lib/product/runtime-instances'
-import { commitNarrativeChoice, readProductRuntimeStateVersion, readProductRuntimeState, createProductRuntimeCheckpoint, branchProductRuntimeSession } from '../../src/lib/product/runtime-core'
+import { avgExecutableModule, avgRuntimeStage } from '../../src/lib/legacy-compat/avg/executable-module'
+import { createAvgGameInstance, createProductInitialStateV1, createProductRuntimeInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
+import { commitNarrativeChoice, readProductRuntimeStateVersion, readProductRuntimeState, createProductRuntimeCheckpoint, branchProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
 import { reachAvgPresentationBeat } from '../../src/lib/avg/runtime-commands'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import { deleteWork } from '../../src/lib/workspace/lifecycle'
-import { createProductBuildPreviewManifestV2 } from '../../src/lib/product-production/preview-manifest'
-import { verifyProductRuntimeSessionSourceV1 } from '../../src/lib/product-production/preview-source'
+import { createProductBuildPreviewManifestV2 } from '../../src/lib/legacy-compat/product-production/preview-manifest'
+import { verifyProductRuntimeSessionSourceV1 } from '../../src/lib/legacy-compat/product-production/preview-source'
 
 async function readLine(id: number, key: string, commandId: string) {
   const base = await readProductRuntimeStateVersion(id)
@@ -95,7 +95,7 @@ describe('AVG native V2 compilation, event replay and saves', () => {
     const forged = structuredClone(actual)
     ;(forged.narrative!.variables.avg as any).knowledge.player.seal = true
     const runtimeHeadStateJson = JSON.stringify(forged)
-    const { hashStateJson } = await import('../../src/lib/product/runtime-core')
+    const { hashStateJson } = await import('../../src/lib/legacy-compat/product/runtime-core')
     await db.productRuntimeSessions.update(session.id!, { runtimeHeadStateJson, runtimeHeadStateHash: await hashStateJson(runtimeHeadStateJson), runtimeHeadSequence: actual.lastSequence })
     expect(await readProductRuntimeState(session.id!)).toEqual(actual)
     const initial = JSON.parse(session.initialStateJson); initial.avgRules.systemPlan.title = '篡改来源'

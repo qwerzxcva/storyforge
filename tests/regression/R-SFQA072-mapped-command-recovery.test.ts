@@ -5,10 +5,10 @@ import { completedAgentRunEvidencePrefixV1, replayAgentRunEventsV1, toAgentRunPr
 import { db } from '../../src/lib/db/schema'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import { executeTextOpenWorldActionV1, resumeTextOpenWorldSystemWorkV1 } from '../../src/lib/open-world/action-executor'
-import { fingerprintTextOpenWorldCommandV1 } from '../../src/lib/open-world/command-contract'
+import { fingerprintTextOpenWorldCommandV1 } from '../../src/lib/legacy-compat/open-world/command-contract'
 import { getTextOpenWorldCommandStatusV1 } from '../../src/lib/open-world/commands'
-import { applyProductRuntimeEvent, hashProductRuntimeStateV1, readProductRuntimeState } from '../../src/lib/product/runtime-core'
-import { createTextOpenWorldInstance } from '../../src/lib/product/runtime-instances'
+import { applyProductRuntimeEvent, hashProductRuntimeStateV1, readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
+import { createTextOpenWorldInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
 import type { TextOpenWorldCommandEnvelopeV1 } from '../../src/lib/types'
 import { useTextOpenWorldPlayerStore } from '../../src/stores/text-open-world-player'
 import {

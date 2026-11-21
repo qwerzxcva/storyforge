@@ -1,15 +1,10 @@
-import { usePromptStore } from '../../stores/prompt'
-import { renderPrompt } from '../ai/prompt-engine'
-import type { Chapter, ChatMessage, PromptTemplate, WorkspaceScope } from '../types'
-import type { UserStyleProfile } from '../types/user-style'
-import { countWords, htmlToPlainText } from '../utils/html'
-import { readOwnedRows } from '../workspace/scope'
-import {
-  formatStyleCalibrationFeedback,
-  formatStyleFewShotPairs,
-  parseStyleCalibrationFeedback,
-  parseStyleRevisionPairs,
-} from './style-learning'
+import { usePromptStore } from '../../stores/prompt';
+import { renderPrompt } from '../ai/prompt-engine';
+import type { Chapter, ChatMessage, PromptTemplate, WorkspaceScope } from '../types';
+import type { UserStyleProfile } from '../types/user-style';
+import { countWords, htmlToPlainText } from '../utils/html';
+import { readOwnedRows } from '../workspace/scope';
+import { formatStyleCalibrationFeedback, formatStyleFewShotPairs, parseStyleCalibrationFeedback, parseStyleRevisionPairs } from './style-learning';
 
 export const STYLE_LEARNING_MAX_CHAPTERS_V1 = 6
 export const STYLE_LEARNING_CHAPTER_CHARS_V1 = 2_500

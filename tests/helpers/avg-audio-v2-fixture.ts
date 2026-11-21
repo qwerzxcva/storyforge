@@ -1,6 +1,6 @@
-import type { AvgAudioProcessingRecipeV2 } from '../../src/lib/avg/audio-processing-contract-v2'
+import type { AvgAudioProcessingRecipeV2 } from '../../src/lib/legacy-compat/avg/audio-processing-contract-v2'
 import { encodeAvgAudioCanonicalWaveV2 } from '../../src/lib/avg/audio-processing-v2'
-import { sha256MediaData } from '../../src/lib/product-production/media-blob-store'
+import { sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 
 export const audioRecipeV2 = (patch: Partial<AvgAudioProcessingRecipeV2> = {}): AvgAudioProcessingRecipeV2 => ({
   schema: 'storyforge.avg.audio-processing-recipe', version: 2, gainMilliDb: 0, maximumDurationMs: 1000,

@@ -1,43 +1,26 @@
-import { useState, useEffect, useMemo, useCallback, useRef } from 'react'
-import { Plus, Sparkles, Wand2, AlertTriangle } from 'lucide-react'
-import { useOutlineStore } from '../../stores/outline'
-import { useDetailedOutlineStore } from '../../stores/detailed-outline'
-import { useCharacterStore } from '../../stores/character'
-import { useForeshadowStore } from '../../stores/foreshadow'
-import { normalizeParsedScenes, parseEnhancedDetailResult } from '../../lib/ai/adapters/detail-scene-adapter'
-import { batchGenerateDetails, type BatchProgress } from '../../lib/ai/batch-detail-runner'
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import { Plus, Sparkles, Wand2, AlertTriangle } from 'lucide-react';
+import { useOutlineStore } from '../../stores/outline';
+import { useDetailedOutlineStore } from '../../stores/detailed-outline';
+import { useCharacterStore } from '../../stores/character';
+import { useForeshadowStore } from '../../stores/foreshadow';
+import { normalizeParsedScenes, parseEnhancedDetailResult } from '../../lib/ai/adapters/detail-scene-adapter';
+import { batchGenerateDetails, type BatchProgress } from '../../lib/ai/batch-detail-runner';
 import AIStreamOutput from '../shared/AIStreamOutput'
-import { nanoid } from '../../lib/utils/id'
-import type { Project, DetailedOutline, DetailedScene, EmotionArc, WorkspaceScope } from '../../lib/types'
-import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator'
-import { db } from '../../lib/db/schema'
-import { liveQuery } from 'dexie'
-import { resolveScopeLike } from '../../lib/workspace/scope'
-import {
-  hashDetailedOutlineSourceSummaryV1,
-  readPendingDetailedOutlineNodeIdsV1,
-  type DetailedOutlineGenerationOperationV1,
-} from '../../lib/agent/run/detailed-outline-generation-durable'
-import {
-  commitDetailedOutlineBatchCandidateV1,
-  detailedOutlineBatchStepIdV1,
-  pauseDetailedOutlineBatchRunV1,
-  readLatestDetailedOutlineBatchCandidatesV1,
-  readLatestRecoverableDetailedOutlineBatchCandidateV1,
-  rejectDetailedOutlineBatchCandidateV1,
-  verifyDetailedOutlineBatchRunV1,
-  type DetailedOutlineBatchCandidateV1,
-} from '../../lib/agent/run/detailed-outline-batch-durable'
-import { useToast } from '../shared/Toast'
+import { nanoid } from '../../lib/utils/id';
+import type { Project, DetailedOutline, DetailedScene, EmotionArc, WorkspaceScope } from '../../lib/types';
+import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator';
+import { db } from '../../lib/db/schema';
+import { liveQuery } from 'dexie';
+import { resolveScopeLike } from '../../lib/workspace/scope';
+import { hashDetailedOutlineSourceSummaryV1, readPendingDetailedOutlineNodeIdsV1, type DetailedOutlineGenerationOperationV1 } from '../../lib/agent/run/detailed-outline-generation-durable';
+import { commitDetailedOutlineBatchCandidateV1, detailedOutlineBatchStepIdV1, pauseDetailedOutlineBatchRunV1, readLatestDetailedOutlineBatchCandidatesV1, readLatestRecoverableDetailedOutlineBatchCandidateV1, rejectDetailedOutlineBatchCandidateV1, verifyDetailedOutlineBatchRunV1, type DetailedOutlineBatchCandidateV1 } from '../../lib/agent/run/detailed-outline-batch-durable';
+import { useToast } from '../shared/Toast';
 import DetailedOutlineSidebar from './DetailedOutlineSidebar'
 import DetailedSceneCard from './DetailedSceneCard'
-import { useDetailedOutlineGenerationController } from './useDetailedOutlineGenerationController'
+import { useDetailedOutlineGenerationController } from './useDetailedOutlineGenerationController';
 import CreativeArtifactSummary from '../agent/CreativeArtifactSummary'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-  useInitialRecordTarget,
-} from '../shared/initial-record-target'
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes, useInitialRecordTarget } from '../shared/initial-record-target';
 
 interface Props {
   project: Project

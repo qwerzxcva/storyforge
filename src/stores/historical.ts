@@ -1,21 +1,10 @@
-import { cascadeRegisteredReferences } from '../lib/workspace/lifecycle'
-import { transactionTablesForReferenceCascade } from '../lib/registry/lifecycle'
-import { create } from 'zustand'
+import { cascadeRegisteredReferences } from '../lib/workspace/lifecycle';
+import { transactionTablesForReferenceCascade } from '../lib/registry/lifecycle';
+import { create } from 'zustand';
 import Dexie from 'dexie'
-import { db } from '../lib/db/schema'
-import type { HistoricalTimelineEvent, HistoricalKeyword, WorldOwnerScope } from '../lib/types'
-import {
-  assertRecordInScope,
-  getTableSpec,
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveWorldOwnerScopeLike,
-  resolveScopeLike,
-  scopeTransactionTables,
-  stampNewRecord,
-  type WorkspaceScopeLike,
-  type WorldOwnerScopeLike,
-} from '../lib/workspace/scope'
+import { db } from '../lib/db/schema';
+import type { HistoricalTimelineEvent, HistoricalKeyword, WorldOwnerScope } from '../lib/types';
+import { assertRecordInScope, getTableSpec, readOwnedRows, resolveReadScopeLike, resolveWorldOwnerScopeLike, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike, type WorldOwnerScopeLike } from '../lib/workspace/scope';
 
 interface HistoricalStore {
   events: HistoricalTimelineEvent[]

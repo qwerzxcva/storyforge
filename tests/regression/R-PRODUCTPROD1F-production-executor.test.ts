@@ -2,10 +2,10 @@ import { textRevisionRecoveryPreservesVisualContractV1, verifiedTextRevisionVisu
 import { installReferenceExtensionRules } from '../helpers/extension-rule-pack'
 import { disablePackage, uninstallPackage } from '../../src/lib/extensions/store'
 import { createWorldWork, switchActiveWork } from '../../src/lib/workspace/works'
-import {DEFAULT_CHAT_SETTINGS} from '../../src/lib/character-interaction/authoring-contract'
+import {DEFAULT_CHAT_SETTINGS} from '../../src/lib/legacy-compat/character-interaction/authoring-contract'
 import {loadProductProductionConsultationSourceV2} from '../../src/lib/product-production/world-source'
 import { authoredScenarioFixture } from '../helpers/ttrpg-authored-scenario'
-import { resolveTtrpgProductionRulePackV2 } from '../../src/lib/ttrpg/production-brief'
+import { resolveTtrpgProductionRulePackV2 } from '../../src/lib/legacy-compat/ttrpg/production-brief'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { inflateSync } from 'node:zlib'
 import { db } from '../../src/lib/db/schema'
@@ -17,9 +17,9 @@ import { executeProductProductionCommand } from '../../src/lib/product-productio
 import { resolveProductBuildCompatibilityPackageV1 } from '../../src/lib/product-production/compatibility-baseline'
 import { validateProductProductionRecoveryDirectiveV1, readTextAdventureRepairFeedbackV1, readTextAdventureVisualDirectionInputsV1, readTextAdventureVisualQualityInputsV1 } from '../../src/lib/product-production/context'
 import { draftProductProductionBriefV3, suggestProductStartingPoints } from '../../src/lib/product-production/consultation'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { createProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { createProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 import { PRODUCT_BROWSER_PERFORMANCE_POLICY_V1 } from '../../src/lib/product-production/browser-performance'
 import {
   resolveProductMediaProviderAdapterV1,
@@ -68,7 +68,7 @@ import {
   type ProductionTextRunnerV1,
   type ProductionVisionRunnerV1,
 } from '../../src/lib/product-production/production-executor'
-import { putMediaBlobObject, sha256MediaData } from '../../src/lib/product-production/media-blob-store'
+import { putMediaBlobObject, sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import {
   assertProductProductionBudgetLedgerV1,
   executionBindingDriftInvalidatedTaskKeysV1,
@@ -78,7 +78,7 @@ import {
   runProductProductionSchedulerCycleV1,
   recoverImportedProductProductionProofsV1,
 } from '../../src/lib/product-production/scheduler'
-import { parseProductRuntimePackageV1 } from '../../src/lib/product-production/runtime-package'
+import { parseProductRuntimePackageV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
 import { evaluateProductRuntimeProductQualityV1 } from '../../src/lib/product-production/product-quality'
 import {
   textAdventurePlayerPerspectiveIssuesV1,
@@ -96,7 +96,7 @@ import {
   textAdventureDecisionEchoPresentationV1,
 } from '../../src/lib/adventure/production-compiler'
 import type { TextAdventureQuestScriptArtifactV3 } from '../../src/lib/adventure/quest-settlement'
-import { adventureNarrativeActionContext, availableAdventureActions } from '../../src/lib/adventure/runtime'
+import { adventureNarrativeActionContext, availableAdventureActions } from '../../src/lib/legacy-compat/adventure/runtime'
 import { commitAdventureAction, commitAdventureNarrativeChoice } from '../../src/lib/adventure/runtime-api'
 import { planTextAdventureNarrativeLocationsV1 } from '../../src/lib/adventure/narrative-location-plan'
 import {
@@ -104,18 +104,18 @@ import {
   textAdventureNarrativeSkeletonV1,
   textAdventureSceneScriptPartSceneKeysV1,
 } from '../../src/lib/adventure/scene-script'
-import { resolveProductRuntimeSource } from '../../src/lib/product-production/preview-source'
+import { resolveProductRuntimeSource } from '../../src/lib/legacy-compat/product-production/preview-source'
 import { exportCommunityPrototypeDistributionBundleV2 } from '../../src/lib/product-platform/distribution-bundle'
 import {
   exportProductDistributionBundleV2,
   importMarketplaceProductDistributionV2,
 } from '../../src/lib/product-platform/distribution-bundle'
-import { createProductRuntimeInstanceFromSource } from '../../src/lib/product/runtime-instances'
+import { createProductRuntimeInstanceFromSource } from '../../src/lib/legacy-compat/product/runtime-instances'
 import {
   recordProductBrowserPerformanceMeasurementV1,
   recordProductBuildMainRoutePlaythroughV1,
   recordProductMediaRuntimeMeasurementV1,
-} from '../../src/lib/product-production/quality-receipts'
+} from '../../src/lib/legacy-compat/product-production/quality-receipts'
 import {
   beginProductProductionEvolutionV1,
   listProductProductionReviewArtifactsV1,
@@ -126,7 +126,7 @@ import {
   commitNarrativeChoice,
   readProductRuntimeState,
   readProductRuntimeStateVersion,
-} from '../../src/lib/product/runtime-api'
+} from '../../src/lib/legacy-compat/product/runtime-api'
 import {
   completeTtrpgSessionZero,
   openTtrpgCampaignScene,
@@ -136,7 +136,7 @@ import { reachAvgPresentationBeat } from '../../src/lib/avg/runtime-api'
 import {
   configureTtrpgSessionParticipantV2,
   readTtrpgSessionParticipantsV2,
-} from '../../src/lib/ttrpg/participants'
+} from '../../src/lib/legacy-compat/ttrpg/participants'
 import {
   AI_TOWN_DAY_SLOTS,
   type ProductBuildArtifactRecordV1,

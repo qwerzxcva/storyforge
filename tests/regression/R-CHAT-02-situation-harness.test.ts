@@ -4,11 +4,11 @@ import {hashCanonicalValue} from '../../src/lib/agent/run/hash'
 import {afterEach, beforeEach, expect, it} from 'vitest'
 import {db} from '../../src/lib/db/schema'
 import {generateInteractionRuntimeCandidateV1, adoptInteractionRuntimeCandidateV1, cancelInteractionRuntimeRunV1, resumeChatSituationReviewV1} from '../../src/lib/character-interaction/harness'
-import {readProductRuntimeState, readProductRuntimeStateVersion, requestChatNarrativeTrigger, commitInteractionPlayerMessage} from '../../src/lib/character-interaction/runtime-api'
+import {readProductRuntimeState, readProductRuntimeStateVersion, requestChatNarrativeTrigger, commitInteractionPlayerMessage} from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import {seedChatNarrativeRuntimeFixture} from '../helpers/chat-narrative-fixture'
 import {appendAgentRunEventV1, readInstanceAgentRunV1} from '../../src/lib/agent/run/event-store'
 import {CHAT_SITUATION_REVIEW_CHECKS_V1, type ChatSituationDraftV1} from '../../src/lib/types/chat-narrative'
-import {isChatSituationPreparedV1} from '../../src/lib/character-interaction/narrative-situations'
+import {isChatSituationPreparedV1} from '../../src/lib/legacy-compat/character-interaction/narrative-situations'
 
 const draft: ChatSituationDraftV1 = {kind: 'chat-situation', title: '门外的声响', location: '驿站', timeLabel: '傍晚',
   newFacts: [{factKey: 'knocking', kind: 'observation', text: '门外传来敲门声。', audienceKeys: ['player', 'guard', 'artisan'], evidenceFactKeys: ['road'], seedExcerpt: '门外传来敲门声'}],

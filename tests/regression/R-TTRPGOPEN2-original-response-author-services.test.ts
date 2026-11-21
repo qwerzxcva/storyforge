@@ -136,7 +136,7 @@ async function blocked() {
 }
 
 
-import { parseProductProductionCommandV1 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionCommandV1 } from '../../src/lib/legacy-compat/product-production/contracts'
 
 async function captured(options: { usage?: { inputTokens: number; outputTokens: number } | null } = {}) {
  const f=await blocked();if('usage' in options)f.setUsage(options.usage!)

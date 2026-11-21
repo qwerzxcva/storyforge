@@ -1,11 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import * as routing from '../../src/lib/ttrpg/open-intent'
+import * as routing from '../../src/lib/legacy-compat/ttrpg/open-intent'
 import { intentRoutingFixtureV1 } from '../helpers/open-intent-routing'
 import { db } from '../../src/lib/db/schema'
 import { readyOpenTtrpgSessionV1, openEnvelopeV1, OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
 import { startTtrpgOpenEpochV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { generateTtrpgOpenIntentCandidateV1 } from '../../src/lib/ttrpg/open-intent-harness'
-import { readProductRuntimeState, replayProductRuntimeEvents, parseProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState, replayProductRuntimeEvents, parseProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readTtrpgOpenTableIntentReviewV2, clarifyTtrpgOpenTableCandidateV2, acceptTtrpgOpenTableCandidateV1 } from '../../src/lib/ttrpg/open-table-service'
 import { readAgentRunArtifactExactV1 } from '../../src/lib/memory/artifact-store'
 

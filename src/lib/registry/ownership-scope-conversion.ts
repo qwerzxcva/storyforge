@@ -1,8 +1,8 @@
-import { db } from '../db/schema'
-import { PROJECT_TABLES } from './project-tables'
-import type { TableSpec } from './types'
-import type { OwnershipScopeChange, WorkspaceScope } from '../types'
-import { assertRecordInScope, getTableSpec, resolveScope } from '../workspace/scope'
+import { db } from '../db/schema';
+import { PROJECT_TABLES } from './project-tables';
+import type { TableSpec } from './types';
+import type { OwnershipScopeChange, WorkspaceScope } from '../types';
+import { assertRecordInScope, getTableSpec, resolveScope } from '../workspace/scope';
 
 type MovableOwner = 'world' | 'work'
 

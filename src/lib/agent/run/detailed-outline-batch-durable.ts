@@ -1,53 +1,23 @@
-import { db } from '../../db/schema'
-import type { AgentConversation, AgentEvent, ChatMessage, WorkspaceScope } from '../../types'
-import type { AssembleContextResult } from '../../registry/types'
-import type {
-  AgentRunFormalAIEntryBindingV1,
-  AgentRunContractV3,
-  ContextManifestV1,
-  ContextManifestV2,
-  ContextManifestV3,
-} from '../../types/agent-run'
-import {
-  appendAgentEvent,
-  getOrCreateAgentConversation,
-  readAgentEvents,
-} from '../conversations'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import { beginAgentRunRecoveryV1, completeAgentRunRecoveryV1, createAgentRunCheckpointV1 } from './checkpoint'
-import { hashCanonicalValue } from './hash'
-import { createContextManifestFromAssemblyV1, createContextManifestV2FromV1 } from './context-manifest'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-} from '../../workspace/scope'
-import { DETAILED_OUTLINE_GENERATION_SOURCE_KEYS_V1 } from './detailed-outline-generation-durable'
-import {
-  assertAgentSkillExecutionBindingIntegrityV2,
-  createAgentSkillExecutionBindingV1,
-  createAgentSkillExecutionBindingV2,
-  assertAgentSkillExecutionBindingV1,
-} from '../execution-binding'
-import { getAgentSkillV1, resolveAgentSkillContextSourceKeysV1 } from '../skill-registry'
-import {
-  assertFormalAIEntrySnapshotIntegrityV1,
-  freezeFormalAIEntryBindingV1,
-} from '../formal-ai-entry'
-import {
-  finalizeContextGatewayAttemptEvidenceV1,
-  recordContextGatewayPreflightEvidenceV1,
-  type ContextGatewayPreflightEvidenceV1,
-} from '../../context-gateway/attempt-evidence'
-import type { ContextGatewayExecutionV1 } from '../../context-gateway/execution'
-import { assertContextGatewayCandidateAdoptableV1 } from '../../context-gateway/execution'
-import { detailedOutlineGatewayExecutionFromAssemblyV1 } from '../../outline/detail-gateway-context'
-import { assertDetailedOutlineTargetsUnwrittenFutureV1 } from '../../outline/future-boundary'
+import { db } from '../../db/schema';
+import type { AgentConversation, AgentEvent, ChatMessage, WorkspaceScope } from '../../types';
+import type { AssembleContextResult } from '../../registry/types';
+import type { AgentRunFormalAIEntryBindingV1, AgentRunContractV3, ContextManifestV1, ContextManifestV2, ContextManifestV3 } from '../../types/agent-run';
+import { appendAgentEvent, getOrCreateAgentConversation, readAgentEvents } from '../conversations';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, type AgentRunSnapshotV1 } from './event-store';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { beginAgentRunRecoveryV1, completeAgentRunRecoveryV1, createAgentRunCheckpointV1 } from './checkpoint';
+import { hashCanonicalValue } from './hash';
+import { createContextManifestFromAssemblyV1, createContextManifestV2FromV1 } from './context-manifest';
+import { assertRecordInScope, readOwnedRows } from '../../workspace/scope';
+import { DETAILED_OUTLINE_GENERATION_SOURCE_KEYS_V1 } from './detailed-outline-generation-durable';
+import { assertAgentSkillExecutionBindingIntegrityV2, createAgentSkillExecutionBindingV1, createAgentSkillExecutionBindingV2, assertAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { getAgentSkillV1, resolveAgentSkillContextSourceKeysV1 } from '../skill-registry';
+import { assertFormalAIEntrySnapshotIntegrityV1, freezeFormalAIEntryBindingV1 } from '../formal-ai-entry';
+import { finalizeContextGatewayAttemptEvidenceV1, recordContextGatewayPreflightEvidenceV1, type ContextGatewayPreflightEvidenceV1 } from '../../context-gateway/attempt-evidence';
+import type { ContextGatewayExecutionV1 } from '../../context-gateway/execution';
+import { assertContextGatewayCandidateAdoptableV1 } from '../../context-gateway/execution';
+import { detailedOutlineGatewayExecutionFromAssemblyV1 } from '../../outline/detail-gateway-context';
+import { assertDetailedOutlineTargetsUnwrittenFutureV1 } from '../../outline/future-boundary';
 
 export const DETAILED_OUTLINE_BATCH_GENERATION_CONVERSATION_PURPOSE_V1 = 'detailed-outline-batch-generation'
 export const DETAILED_OUTLINE_BATCH_GENERATION_CANDIDATE_TYPE_V1 = 'detailed-outline-batch-candidate'

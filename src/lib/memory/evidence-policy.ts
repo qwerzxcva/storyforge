@@ -1,4 +1,4 @@
-import type { ExactRunArtifactKindV1 } from '../types'
+import type { ExactRunArtifactKindV1 } from '../types';
 
 const FORBIDDEN_KEY = /^(authorization|proxy-authorization|cookie|set-cookie|api[-_]?key|access[-_]?token|refresh[-_]?token|client[-_]?secret)$/i
 const HIDDEN_REASONING_KEY = /^(reasoning_content|chain_of_thought|hidden_reasoning|thinking)$/i

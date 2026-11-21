@@ -1,13 +1,13 @@
 import { beforeEach, afterEach, describe, it, expect } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import { describeTtrpgOpenHumanEffectV1 } from '../../src/lib/ttrpg/open-table-risk'
-import { applyTtrpgItemCommandV2, ttrpgItemDefinitionFromRuleV1 } from '../../src/lib/ttrpg/item-ledger'
+import { describeTtrpgOpenHumanEffectV1 } from '../../src/lib/legacy-compat/ttrpg/open-table-risk'
+import { applyTtrpgItemCommandV2, ttrpgItemDefinitionFromRuleV1 } from '../../src/lib/legacy-compat/ttrpg/item-ledger'
 import { setupPressureEffectFixtureV1 } from '../helpers/open-ttrpg-pressure-effect'
 import { setupMaintenanceFixtureV1 } from '../helpers/open-ttrpg-maintenance'
 import { setupChecksFixtureV1 } from '../helpers/open-ttrpg-checks'
 import { resumeTtrpgOpenSituationsV1 } from '../../src/lib/ttrpg/open-situation-coordinator'
 import { resumeTtrpgOpenChecksV1 } from '../../src/lib/ttrpg/open-checks-coordinator'
-import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readTtrpgOpenTableV1, readTtrpgOpenTableHostConsequenceV1, prepareTtrpgOpenTableConsequenceV1, proposeTtrpgOpenTableConsequenceV1, confirmTtrpgOpenTableConsequenceV1, resumeTtrpgOpenTableV1, readTtrpgOpenTableStageClosureV1, closeTtrpgOpenTableStageV1, type TtrpgOpenTableInputV1 } from '../../src/lib/ttrpg/open-table-service'
 const input = (f: Awaited<ReturnType<typeof setupPressureEffectFixtureV1>>): TtrpgOpenTableInputV1 => ({ scope: f.f.scope, sessionId: f.command.sessionId, viewerKey: f.command.viewerKey })
 async function locator(base: TtrpgOpenTableInputV1) { const view = await readTtrpgOpenTableV1(base);expect(view.player!.consequence).not.toBeNull();return { ...base, ...view.player!.consequence! } }

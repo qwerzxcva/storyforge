@@ -1,10 +1,9 @@
-import { NARRATIVE_KINDS_V1 } from '../types/narrative-ir'
-import { NARRATIVE_INDEX_EDGE_KINDS_V1 } from '../types/narrative-index'
-import type { WorldQueryGrantV1, WorldQueryPerspectiveV1, WorldQueryTimeV1, WorldQueryV1, WorldReferenceV2 } from '../types/world-query'
-import type { WorldReferenceV1 } from '../types/world-product-contracts'
-import { arrayV1, canonicalNarrativeJsonV1, enumV1, hashV1, keyV1, nullableV1, objectV1, textV1, uintV1, uniqueKeysV1,
-  type DecoderV1 } from '../world-engine/narrative-json'
-import { intervalDecoderV1, timePointDecoderV1 } from '../world-engine/narrative-time'
+import { NARRATIVE_KINDS_V1 } from '../types/narrative-ir';
+import { NARRATIVE_INDEX_EDGE_KINDS_V1 } from '../types/narrative-index';
+import type { WorldQueryGrantV1, WorldQueryPerspectiveV1, WorldQueryTimeV1, WorldQueryV1, WorldReferenceV2 } from '../types/world-query';
+import type { WorldReferenceV1 } from '../types/world-product-contracts';
+import { arrayV1, canonicalNarrativeJsonV1, enumV1, hashV1, keyV1, nullableV1, objectV1, textV1, uintV1, uniqueKeysV1, type DecoderV1 } from '../world-engine/narrative-json';
+import { intervalDecoderV1, timePointDecoderV1 } from '../world-engine/narrative-time';
 
 export const WORLD_QUERY_VERSION_V1 = 'world-query-v1' as const
 export const WORLD_QUERY_SORT_VERSION_V1 = 'authorized-lexical-source-evidence-v5' as const

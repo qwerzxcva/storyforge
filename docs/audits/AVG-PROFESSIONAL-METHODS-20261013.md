@@ -1,5 +1,7 @@
 # AVG 专业制作方法、场景观察与 Skill 校准研究
 
+> Android fork scope: world engine, longform, and longform nodes. Links marked “historical source” document retired implementations; they do not indicate available production or runtime features.
+
 > 版本：1.0.0 · 日期：2026-10-13 · 层级：L4 研究证据与目标方法。
 > 上位研究：[AVG 三条生产流程研究](AVG-PRODUCTION-RESEARCH-20261013.md)。
 > 检索代码基线：`516a98bff7cb03eab2414aecfcd0ce92102cbf9e`。
@@ -89,7 +91,7 @@
 
 ### 4.1 参考图与编辑接口的实际接入方向
 
-当前 AVG 通用[媒体请求](../../src/lib/product-production/media-adapters.ts)只有 prompt、尺寸、时长等输入，没有参考图片输入。解决一致性问题需改实际合同与传输；延长人物文字描述不足以填补该缺口。
+当前 AVG 通用[媒体请求 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/product-production/media-adapters.ts)只有 prompt、尺寸、时长等输入，没有参考图片输入。解决一致性问题需改实际合同与传输；延长人物文字描述不足以填补该缺口。
 
 | 路线 | 当前证据 | 研发取舍 |
 |---|---|---|

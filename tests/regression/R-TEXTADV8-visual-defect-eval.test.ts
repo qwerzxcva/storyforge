@@ -3,7 +3,7 @@ import {
   TEXT_ADVENTURE_VISUAL_DEFECT_EVAL_CASES_V1,
   evaluateTextAdventureVisualDefectSuiteV1,
 } from '../helpers/text-adventure-visual-quality'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import type { TextAdventureVisualQualityReviewArtifactV1 } from '../../src/lib/product-production/production-executor'
 
 async function fixture() {

@@ -1,5 +1,5 @@
-import { estimateTokens } from '../ai/context-budget'
-import { REFERENCE_APPLICATION_SKILL } from './content-skill'
+import { estimateTokens } from '../ai/context-budget';
+import { REFERENCE_APPLICATION_SKILL } from './content-skill';
 
 /** Budget whole evidence units, never prefixes that can lose a qualification. */
 export function selectReferenceMethods(units: string[], budgetTokens = 2000): string {

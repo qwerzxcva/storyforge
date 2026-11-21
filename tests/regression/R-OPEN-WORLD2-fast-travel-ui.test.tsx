@@ -2,7 +2,7 @@ import { act, createElement } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import TextOpenWorldMapPanel from '../../src/components/text-game/TextOpenWorldMapPanel'
-import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
+import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
 import { createTextOpenWorldVNextFixture } from '../helpers/text-open-world-vnext-fixture'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true

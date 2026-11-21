@@ -1,13 +1,13 @@
-import { renderAuthoringPromptControl } from './prompt-control'
-import { estimateTokens } from '../ai/context-budget'
-import type { NodeFlow, WorkspaceScope } from '../types'
-import { authoringConnectionsHash, hashAuthoringText, isAuthoringCanonReceiptCurrent, readAuthoringCanonBinding } from './bindings'
-import type { AuthoringCandidateMap, AuthoringRunSnapshotMap } from './executor'
-import { downstreamAuthoringNodeIds } from './graph'
-import { parseAuthoringGraph } from './graph-codec'
-import type { AuthoringNodeInstance } from './contracts'
-import { isQualityAuthoringReportCurrentV1, readQualityAuthoringRevisionV1 } from './quality-execution'
-import { resolveReadScope } from '../workspace/scope'
+import { renderAuthoringPromptControl } from './prompt-control';
+import { estimateTokens } from '../ai/context-budget';
+import type { NodeFlow, WorkspaceScope } from '../types';
+import { authoringConnectionsHash, hashAuthoringText, isAuthoringCanonReceiptCurrent, readAuthoringCanonBinding } from './bindings';
+import type { AuthoringCandidateMap, AuthoringRunSnapshotMap } from './executor';
+import { downstreamAuthoringNodeIds } from './graph';
+import { parseAuthoringGraph } from './graph-codec';
+import type { AuthoringNodeInstance } from './contracts';
+import { isQualityAuthoringReportCurrentV1, readQualityAuthoringRevisionV1 } from './quality-execution';
+import { resolveReadScope } from '../workspace/scope';
 
 export type AuthoringFreshnessReason =
   | 'never-run'

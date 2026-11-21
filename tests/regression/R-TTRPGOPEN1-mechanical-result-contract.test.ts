@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { parseTtrpgMechanicalResultV1 } from '../../src/lib/ttrpg/rule-action-mechanical'
-import { createTtrpgAbilityRuntimeStateV2, ttrpgAbilityStateKeyV2 } from '../../src/lib/ttrpg/ability-ledger'
+import { parseTtrpgMechanicalResultV1 } from '../../src/lib/legacy-compat/ttrpg/rule-action-mechanical'
+import { createTtrpgAbilityRuntimeStateV2, ttrpgAbilityStateKeyV2 } from '../../src/lib/legacy-compat/ttrpg/ability-ledger'
 describe('R-TTRPGOPEN1 shared mechanical result identity', () => {
   it('accepts valid maximum-length compound ability keys and rejects mixed actor/ability identities', () => {
     const actorInstanceId = 'a'.repeat(200), abilityKey = 'b'.repeat(200)

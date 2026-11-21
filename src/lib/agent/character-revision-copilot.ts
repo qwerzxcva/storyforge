@@ -1,61 +1,23 @@
 import Dexie from 'dexie'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { usePromptStore } from '../../stores/prompt'
-import { chat, resolveRequestConfig } from '../ai/client'
-import { appendSimplifiedChineseOutputConstraint, appendUserConstraint } from '../ai/adapters/prompt-guards'
-import { renderPrompt } from '../ai/prompt-engine'
-import { db } from '../db/schema'
-import type {
-  GenerationGateIssue,
-  GenerationNode,
-  PreparedGenerationNode,
-} from '../generation/generation-node'
-import { prepareGenerationNode } from '../generation/generation-node'
-import { adopt } from '../registry/adopt'
-import { assembleContext } from '../registry/assemble-context'
-import { canonicalStringify, hashCanonicalValue } from './run/hash'
-import {
-  buildCharacterRevisionSnapshot,
-  effectiveProtectedThrough,
-  formatCharacterRevisionScope,
-  parseCharacterRevisionOutput,
-  type CharacterRevisionPlan,
-  type CharacterRevisionScopeInput,
-  type CharacterRevisionSnapshot,
-  type CharacterRevisionStrategy,
-} from '../story-planning/character-revision'
-import type {
-  AIConfig,
-  Character,
-  Chapter,
-  CharacterDrivenPlan,
-  ChatMessage,
-  WorkspaceScope,
-} from '../types'
-import { parseCharacterDrivenPlanArcs } from '../types'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveReadScopeLike,
-} from '../workspace/scope'
-import {
-  attachAgentContextInputStateV1,
-  mergeContextEvidence,
-  resolveAgentContextPolicy,
-  type AgentContextEvidence,
-  type AgentContextProfile,
-} from './context-policy'
-import {
-  createAgentContextCompressionSessionV1,
-  type AgentContextCompressionRuntimeV1,
-} from './context-compression'
-import {
-  buildAgentSkillInputGuidanceV1,
-  resolveAgentSkillInputStateV1,
-  resolveAgentSkillV1,
-  type AgentSkillId,
-} from './skill-registry'
-import { parseStructuredOutputV1 } from './structured-output-pipeline'
+import { useAIConfigStore } from '../../stores/ai-config';
+import { usePromptStore } from '../../stores/prompt';
+import { chat, resolveRequestConfig } from '../ai/client';
+import { appendSimplifiedChineseOutputConstraint, appendUserConstraint } from '../ai/adapters/prompt-guards';
+import { renderPrompt } from '../ai/prompt-engine';
+import { db } from '../db/schema';
+import type { GenerationGateIssue, GenerationNode, PreparedGenerationNode } from '../generation/generation-node';
+import { prepareGenerationNode } from '../generation/generation-node';
+import { adopt } from '../registry/adopt';
+import { assembleContext } from '../registry/assemble-context';
+import { canonicalStringify, hashCanonicalValue } from './run/hash';
+import { buildCharacterRevisionSnapshot, effectiveProtectedThrough, formatCharacterRevisionScope, parseCharacterRevisionOutput, type CharacterRevisionPlan, type CharacterRevisionScopeInput, type CharacterRevisionSnapshot, type CharacterRevisionStrategy } from '../story-planning/character-revision';
+import type { AIConfig, Character, Chapter, CharacterDrivenPlan, ChatMessage, WorkspaceScope } from '../types';
+import { parseCharacterDrivenPlanArcs } from '../types';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike } from '../workspace/scope';
+import { attachAgentContextInputStateV1, mergeContextEvidence, resolveAgentContextPolicy, type AgentContextEvidence, type AgentContextProfile } from './context-policy';
+import { createAgentContextCompressionSessionV1, type AgentContextCompressionRuntimeV1 } from './context-compression';
+import { buildAgentSkillInputGuidanceV1, resolveAgentSkillInputStateV1, resolveAgentSkillV1, type AgentSkillId } from './skill-registry';
+import { parseStructuredOutputV1 } from './structured-output-pipeline';
 
 const CHANGE_TYPES = ['add-character', 'revise-arc', 'revise-ending', 'remove-or-demote'] as const
 const STRATEGIES = ['light', 'balanced', 'deep'] as const

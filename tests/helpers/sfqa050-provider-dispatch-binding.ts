@@ -1,5 +1,5 @@
 import { syntheticFrozenAllocationV1 } from './model-capacity-fixture'
-import { putMediaBlobObject, sha256MediaData } from '../../src/lib/product-production/media-blob-store'
+import { putMediaBlobObject, sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import { resolveConfiguredTextCapabilityV1, type ConfiguredProductionVisionImageV1 } from '../../src/lib/product-production/capabilities'
 import type { AIConfig, ProductBuildArtifactRecordV1, ProductProductionBriefV3, WorkspaceScope } from '../../src/lib/types'
 import { useAIConfigStore } from '../../src/stores/ai-config'
@@ -7,11 +7,11 @@ import { db } from '../../src/lib/db/schema'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
 import { draftProductProductionBriefV3, suggestProductStartingPoints } from '../../src/lib/product-production/consultation'
 import { createConfiguredProductProductionExecutorV1, textAdventureVisualBlueprintsV1 } from '../../src/lib/product-production/production-executor'
-import { createProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { createProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 import { seedCurrentProductWorld } from './current-product-world'
 import { openProductionFixtureV1 } from './open-ttrpg-production'
 import type { ProductProductionTaskExecutionInputV1 } from '../../src/lib/product-production/scheduler'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 
 export const SFQA050_CONFIG_A: AIConfig = syntheticFrozenAllocationV1({
   provider: 'agnes', apiKey: 'sfqa050-synthetic-secret-a', model: 'sfqa050-model-a',

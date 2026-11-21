@@ -9,7 +9,7 @@ import * as formal from '../../src/lib/agent/formal-ai-entry'
 import * as artifacts from '../../src/lib/memory/artifact-store'
 import * as builder from '../../src/lib/ttrpg/open-voice-execution-input'
 import * as assembly from '../../src/lib/registry/assemble-context'
-import { readProductRuntimeState, branchProductRuntimeSession, deleteProductRuntimeSession } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState, branchProductRuntimeSession, deleteProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import profile from '../../scripts/ttrpg-local-tts/product-profile.json'
 

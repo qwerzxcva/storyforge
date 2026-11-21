@@ -5,7 +5,7 @@ import {createConfiguredProductProductionExecutorV1, type ProductionTextRunnerV1
 import {runProductProductionUntilBlockedV1} from '../../src/lib/product-production/scheduler'
 import {readProductProductionDetailsV1, retryProductProductionBlockerV1} from '../../src/lib/product-production/service'
 import {chatOpeningPerspectiveReviewFixture, chatSituationCandidatesFixture, seedChatNarrativeProductionFixture} from '../helpers/chat-narrative-production-fixture'
-import type {ChatNarrativeProductionSourceV1} from '../../src/lib/character-interaction/narrative-production'
+import type {ChatNarrativeProductionSourceV1} from '../../src/lib/legacy-compat/character-interaction/narrative-production'
 
 beforeEach(async () => {await db.delete(); await db.open()})
 afterEach(async () => {await db.delete()})

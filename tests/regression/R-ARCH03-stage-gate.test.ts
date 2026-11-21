@@ -1,10 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { NAV_TREE, type TreeNode } from '../../src/components/layout/sidebar-tree'
 import { db } from '../../src/lib/db/schema'
-import * as productRuntime from '../../src/lib/product/runtime-api'
+import * as productRuntime from '../../src/lib/legacy-compat/product/runtime-api'
 import { EMPTY_PRODUCT_RUNTIME_STATE, PRODUCT_RUNTIME_KINDS } from '../../src/lib/types'
 import { createWorkspace } from '../../src/lib/workspace/create-workspace'
-import { createProductRuntimeInstance } from '../../src/lib/product/runtime-instances'
+import { createProductRuntimeInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
 import { useTtrpgRuntimePlayerStore } from '../../src/stores/ttrpg-runtime-player'
 
 function allLeafIds(nodes: TreeNode[]): string[] {

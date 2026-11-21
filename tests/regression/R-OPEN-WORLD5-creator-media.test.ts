@@ -10,16 +10,16 @@ import {
   readTextOpenWorldCreatorMediaTaskBudgetV1,
 } from '../../src/lib/open-world/creator-media-authority'
 import { readTextOpenWorldCreatorDerivedBuildAuthorityV1 } from '../../src/lib/open-world/creator-derived-authority'
-import { parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 import { verifyTextOpenWorldMediaRightsV1 } from '../../src/lib/open-world/media-quality'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
 import { setProductProductionPausedV1 } from '../../src/lib/product-production/service'
-import { parseProductProductionCommandV1 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionCommandV1 } from '../../src/lib/legacy-compat/product-production/contracts'
 import {
   canonicalProductProductionJsonV2,
   hashProductProductionValueV2,
-} from '../../src/lib/product-production/hash'
-import { putMediaBlobObject } from '../../src/lib/product-production/media-blob-store'
+} from '../../src/lib/legacy-compat/product-production/hash'
+import { putMediaBlobObject } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import { resolveTrustedRelayMediaCapabilityV1 } from '../../src/lib/product-production/media-transport'
 import { stampNewRecord } from '../../src/lib/workspace/scope'
 import type {

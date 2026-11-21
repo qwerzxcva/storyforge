@@ -4,7 +4,7 @@ import {readAgentRunV1} from '../../src/lib/agent/run/event-store'
 import {exportProjectJSON, importProjectJSON} from '../../src/lib/export/json-export'
 import {saveChatDraftV1, createChatDraftV3} from '../../src/lib/character-interaction/draft-service'
 import {readChatSourceUnitsContextV1} from '../../src/lib/character-interaction/source-units-context'
-import {parseChatSourceUnitsCandidateV1, validateChatSourceUnitsEvidenceV1, parseChatSourceUnitsReviewV1, sameChatSourceUnitsCandidateV1} from '../../src/lib/character-interaction/source-units'
+import {parseChatSourceUnitsCandidateV1, validateChatSourceUnitsEvidenceV1, parseChatSourceUnitsReviewV1, sameChatSourceUnitsCandidateV1} from '../../src/lib/legacy-compat/character-interaction/source-units'
 import {generateChatSourceUnitsV1, readChatSourceUnitsRunV1, readLatestChatSourceUnitsRunV1, recoverChatSourceUnitsRunV1, cancelChatSourceUnitsRunV1,
   reviewChatSourceUnitsV1, readChatSourceUnitsReviewRunV1, readLatestChatSourceUnitsReviewRunV1, recoverChatSourceUnitsReviewRunV1, cancelChatSourceUnitsReviewRunV1} from '../../src/lib/character-interaction/source-units-harness'
 import {seedChatSourceUnitsFixture, sourceUnitsReviewFixture, SOURCE_UNITS_FIXTURE_TEXT} from '../helpers/chat-source-units'

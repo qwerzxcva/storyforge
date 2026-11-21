@@ -1,14 +1,14 @@
 import { describe, expect, it } from 'vitest'
 import type { FrozenRuntimeMediaAssetV2 } from '../../src/lib/types'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { DECLARED_MAGENTA_ALPHA_MATTING_ID_V1 } from '../../src/lib/product-production/character-alpha-matting'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { DECLARED_MAGENTA_ALPHA_MATTING_ID_V1 } from '../../src/lib/legacy-compat/product-production/character-alpha-matting'
 import { AVG_IMAGE_PROCESSOR_V1, parseAvgProcessedImagePayloadV1, deriveAvgImageProcessingGeometryV1,
-  compileAvgForegroundRequirementV1, type AvgImageProcessingRecipeV2 } from '../../src/lib/avg/image-processing-contract'
+  compileAvgForegroundRequirementV1, type AvgImageProcessingRecipeV2 } from '../../src/lib/legacy-compat/avg/image-processing-contract'
 import { AVG_IMAGE_PROCESSOR_V2, assertAvgImageProcessingReceiptV2, parseAvgImageProcessingReceiptV2,
   parseAvgProcessedImagePayload, assertAvgProcessedImageArtifactFromDefinition, projectAvgForegroundCanvasRecipeV1,
   type AvgImageProcessingReceiptV2, type AvgProcessedImagePayloadV2 } from '../../src/lib/avg/image-processing-contract-v2'
-import type { AvgVisualProductionRequirementV1 } from '../../src/lib/avg/media-production-contract'
-import type { AvgForegroundPolicyV1 } from '../../src/lib/avg/image-foreground-contract'
+import type { AvgVisualProductionRequirementV1 } from '../../src/lib/legacy-compat/avg/media-production-contract'
+import type { AvgForegroundPolicyV1 } from '../../src/lib/legacy-compat/avg/image-foreground-contract'
 import { avgImageProcessingRecipeFixture, avgImageProcessingReceiptFixture } from '../helpers/avg-image-processing-fixture'
 
 async function fixture() {

@@ -3,7 +3,7 @@ import { db } from '../../src/lib/db/schema'
 import {
   createTextOpenWorldCreatorStartPreparationV1,
   type TextOpenWorldCreatorStartPreparationV1,
-} from '../../src/lib/open-world/creator-production-start'
+} from '../../src/lib/legacy-compat/open-world/creator-production-start'
 import {
   TEXT_OPEN_WORLD_CREATOR_ENDING_COUNT_V1,
   TEXT_OPEN_WORLD_CREATOR_ENDING_COUNT_ERROR_V1,
@@ -17,7 +17,7 @@ import {
 import {
   textOpenWorldCreatorSourceBindingFromSelectionV1,
   textOpenWorldCreatorSourceSummaryFromSelectionV1,
-} from '../../src/lib/open-world/creator-brief-persistence'
+} from '../../src/lib/legacy-compat/open-world/creator-brief-persistence'
 import {
   confirmTextOpenWorldCreatorProductionPreflightV1,
   createTextOpenWorldCreatorProductionPreflightV1,

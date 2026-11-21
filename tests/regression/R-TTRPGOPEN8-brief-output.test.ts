@@ -4,7 +4,7 @@ import { readyOpenTtrpgSessionV1, openEnvelopeV1, OPEN_HUMAN_VIEWER } from '../h
 import { recordTtrpgOpenNarrativeMemoryV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { CONTEXT_SOURCE_BY_KEY } from '../../src/lib/registry/context-sources'
 import { ttrpgOpenDeliveredBriefAttributionsV1, parseTtrpgOpenBriefV1 } from '../../src/lib/ttrpg/open-brief-output'
-import { parseTtrpgOpenBriefAttributionV1 } from '../../src/lib/ttrpg/open-brief-contract'
+import { parseTtrpgOpenBriefAttributionV1 } from '../../src/lib/legacy-compat/ttrpg/open-brief-contract'
 import { sha256Text } from '../../src/lib/ai/chapter-memory/text-normalization'
 import type { ContextGatewaySourceSnapshotInputV1 } from '../../src/lib/context-gateway/attempt-evidence'
 

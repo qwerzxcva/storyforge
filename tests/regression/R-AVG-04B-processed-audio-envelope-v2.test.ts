@@ -1,11 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { FrozenRuntimeMediaAssetV2 } from '../../src/lib/types'
-import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { sha256MediaData } from '../../src/lib/product-production/media-blob-store'
+import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import { processAvgAudioPcmWaveV1 } from '../../src/lib/avg/audio-processing'
 import { avgSoundPcmFixtureV1 } from '../helpers/avg-sound-wire-data'
-import type { AvgAudioPcmKindV1, AvgAudioProcessingRecipeV1 } from '../../src/lib/avg/audio-processing-contract'
-import { AVG_AUDIO_DYNAMICS_RESAMPLE_PROCESSOR_V2, type AvgAudioProcessingRecipeV2 } from '../../src/lib/avg/audio-processing-contract-v2'
+import type { AvgAudioPcmKindV1, AvgAudioProcessingRecipeV1 } from '../../src/lib/legacy-compat/avg/audio-processing-contract'
+import { AVG_AUDIO_DYNAMICS_RESAMPLE_PROCESSOR_V2, type AvgAudioProcessingRecipeV2 } from '../../src/lib/legacy-compat/avg/audio-processing-contract-v2'
 import { parseAvgProcessedAudioPayloadV1, parseAvgProcessedAudioPayloadV2, parseAvgProcessedAudioPayload,
   deriveAvgProcessedAudioAssetV1, deriveAvgProcessedAudioRightsV1, assertAvgProcessedAudioArtifactV1, assertAvgProcessedAudioArtifact,
   type AvgProcessedAudioPayload, type AvgProcessedAudioArtifactFieldsV1 } from '../../src/lib/avg/processed-audio-contract'

@@ -1,15 +1,15 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { readyOpenTtrpgSessionV1, openEnvelopeV1, OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
-import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/ttrpg/open-player-context'
+import { loadTtrpgOpenPlayerContextV1 } from '../../src/lib/legacy-compat/ttrpg/open-player-context'
 import { generateTtrpgOpenIntentCandidateV1, readTtrpgOpenIntentCandidateV1 } from '../../src/lib/ttrpg/open-intent-harness'
 import { startTtrpgOpenEpochV1, startTtrpgOpenIntentCandidateOperationV1, clarifyTtrpgOpenIntentCandidateV1, changeTtrpgSafetyStatus } from '../../src/lib/ttrpg/runtime-commands'
-import { parseProductRuntimeState, readProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/product/runtime-core'
+import { parseProductRuntimeState, readProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/legacy-compat/product/runtime-core'
 import { inspectTtrpgOpenIntentRoutingV1 } from '../../src/lib/ttrpg/open-intent-clarification'
-import type { TtrpgOpenIntentSelectionV1 } from '../../src/lib/ttrpg/open-intent-clarification-contract'
+import type { TtrpgOpenIntentSelectionV1 } from '../../src/lib/legacy-compat/ttrpg/open-intent-clarification-contract'
 import { approve,forkAndStart,rt } from '../helpers/open-ttrpg-branch-recovery'
 import { resumeTtrpgOpenOperationV1 } from '../../src/lib/ttrpg/open-operation-coordinator'
-import { parseTtrpgOpenModelCallV1 } from '../../src/lib/ttrpg/open-model-calls'
+import { parseTtrpgOpenModelCallV1 } from '../../src/lib/legacy-compat/ttrpg/open-model-calls'
 
 describe('R-TTRPGOPEN1 durable human clarification of an original semantic candidate', () => {
   beforeEach(async () => { await db.delete(); await db.open() })

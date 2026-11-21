@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import {
   buildInteractionContextWindow,
   interactionVisibilityView,
-} from '../../src/lib/character-interaction/runtime'
+} from '../../src/lib/legacy-compat/character-interaction/runtime'
 import { db } from '../../src/lib/db/schema'
 import { assembleContext } from '../../src/lib/registry/assemble-context'
 import {
@@ -18,7 +18,7 @@ import {
   resolveInteractionMemory,
   startInteractionScene,
   verifyProductRuntimeCheckpoint,
-} from '../../src/lib/character-interaction/runtime-api'
+} from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import type { ProductRuntimePackageV1 } from '../../src/lib/types'
 import { seedCurrentProductBuild } from '../helpers/current-product-build'
 import {

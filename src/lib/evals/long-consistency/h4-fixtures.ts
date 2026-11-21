@@ -1,14 +1,6 @@
-import type {
-  LongConsistencyEvalTaskV1,
-  LongConsistencyIntentClassificationV1,
-  LongConsistencyReportSourceInputV1,
-  LongConsistencySeverityV1,
-} from './report-types'
-import {
-  LONG_CONSISTENCY_SUBTYPES_V1,
-  type LongConsistencySubtypeV1,
-} from './taxonomy'
-import type { EvalSplit } from './types'
+import type { LongConsistencyEvalTaskV1, LongConsistencyIntentClassificationV1, LongConsistencyReportSourceInputV1, LongConsistencySeverityV1 } from './report-types';
+import { LONG_CONSISTENCY_SUBTYPES_V1, type LongConsistencySubtypeV1 } from './taxonomy';
+import type { EvalSplit } from './types';
 
 export const H4_LONG_CONSISTENCY_FIXTURE_VERSION_V1 = 'h4-synthetic-zh-60-v1'
 export const H4_LONG_CONSISTENCY_MIN_CHARS_V1 = 8_000

@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { useAIConfigStore } from '../../src/stores/ai-config'
-import * as readiness from '../../src/lib/avg/sound-production-brief'
+import * as readiness from '../../src/lib/legacy-compat/avg/sound-production-brief'
 import { acceptedAvgSoundArtifactV1, adoptAvgSoundArtifactV1, adoptAvgSoundSourcesV1, avgSoundHarnessFixtureV1, cycleAvgSoundUntilV1,
   stageAvgSoundArtifactV1, confirmAvgSoundCandidateV1 } from '../helpers/avg-sound-harness-fixture'
 import { readAvgSoundProposalEvidenceV1 } from '../../src/lib/avg/sound-planning-evidence'
@@ -9,10 +9,10 @@ import { readAvgConfirmedSoundPlanV1 } from '../../src/lib/avg/author-artifacts'
 import { runProductProductionSchedulerCycleV1 } from '../../src/lib/product-production/scheduler'
 import { compileAvgSoundRequirementsV1 } from '../../src/lib/avg/sound-requirements'
 import { verifyAcceptedProductBuildArtifactV1 } from '../../src/lib/product-production/artifact-store'
-import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import { deleteWork } from '../../src/lib/workspace/lifecycle'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 
 beforeEach(async () => {
   await db.delete(); await db.open()

@@ -1,9 +1,6 @@
-import { db } from '../db/schema'
-import { remapNarrativeDomainReferencesV1 } from '../narrative-domain/lifecycle'
-import {
-  detachCultivationProgressSystems,
-  refreshCultivationProgressStageSources,
-} from './progress-lifecycle'
+import { db } from '../db/schema';
+import { remapNarrativeDomainReferencesV1 } from '../narrative-domain/lifecycle';
+import { detachCultivationProgressSystems, refreshCultivationProgressStageSources } from './progress-lifecycle';
 
 /** 必须在 transactionTablesForReferences('cultivationSystems') 的 rw 事务中调用。 */
 export async function clearCultivationSystemReferences(

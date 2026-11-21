@@ -1,28 +1,12 @@
-import type {
-  ChatMessage,
-  Chapter,
-  Character,
-  CultivationProgress,
-  CultivationStage,
-  CultivationSystem,
-  CultivationTransition,
-  OutlineNode,
-} from '../types'
-import { CULTIVATION_TRANSITIONS, parseCultivationStages, validateCultivationStages } from '../types'
-import { db } from '../db/schema'
-import { adopt } from '../registry/adopt'
-import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence'
-import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk'
-import { htmlToPlainText } from '../utils/html'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveScopeLike,
-  scopeTransactionTables,
-  type WorkspaceScopeLike,
-} from '../workspace/scope'
-import type { WorkspaceScope } from '../types/world-ownership'
+import type { ChatMessage, Chapter, Character, CultivationProgress, CultivationStage, CultivationSystem, CultivationTransition, OutlineNode } from '../types';
+import { CULTIVATION_TRANSITIONS, parseCultivationStages, validateCultivationStages } from '../types';
+import { db } from '../db/schema';
+import { adopt } from '../registry/adopt';
+import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence';
+import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk';
+import { htmlToPlainText } from '../utils/html';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, scopeTransactionTables, type WorkspaceScopeLike } from '../workspace/scope';
+import type { WorkspaceScope } from '../types/world-ownership';
 
 export interface CultivationProgressCandidate {
   characterId: number

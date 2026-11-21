@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { EMPTY_AVG_STAGE } from '../../src/lib/avg/runtime'
-import { applyProductRuntimeEvent } from '../../src/lib/product/runtime-api'
+import { EMPTY_AVG_STAGE } from '../../src/lib/legacy-compat/avg/runtime'
+import { applyProductRuntimeEvent } from '../../src/lib/legacy-compat/product/runtime-api'
 import { EMPTY_PRODUCT_RUNTIME_STATE, type ProductRuntimeState } from '../../src/lib/types'
 
 describe('R-AVG2 · same-node visit projection', () => {

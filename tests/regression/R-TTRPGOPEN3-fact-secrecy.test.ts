@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { compileTtrpgFrozenWorldPredicateIndexV1 } from '../../src/lib/ttrpg/frozen-facts'
+import { compileTtrpgFrozenWorldPredicateIndexV1 } from '../../src/lib/legacy-compat/ttrpg/frozen-facts'
 import {
   assertTtrpgSessionFactGatesV1,
   type TtrpgSessionFactV1,
-} from '../../src/lib/ttrpg/session-facts'
+} from '../../src/lib/legacy-compat/ttrpg/session-facts'
 
 const HASH = 'b'.repeat(64)
 

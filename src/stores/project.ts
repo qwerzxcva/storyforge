@@ -1,17 +1,12 @@
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import type { Project, CreateWorkspaceInput, WorkspaceScope, Work } from '../lib/types'
-import { requireBackupBefore } from '../lib/safety/require-backup-before'
-import { cascadeDeleteProject } from '../lib/registry/lifecycle'
-import { resolveWorkspaceOwnership } from '../lib/workspace/ownership'
-import {
-  updateActiveWork,
-  updateWorkspace,
-  type ActiveWorkPatch,
-  type WorkspacePatch,
-} from '../lib/workspace/works'
-import { clearProjectFolderHandle } from '../lib/storage/folder-handle-store'
-import { createWorkspace, type CreateWorkspaceOptions } from '../lib/workspace/create-workspace'
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import type { Project, CreateWorkspaceInput, WorkspaceScope, Work } from '../lib/types';
+import { requireBackupBefore } from '../lib/safety/require-backup-before';
+import { cascadeDeleteProject } from '../lib/registry/lifecycle';
+import { resolveWorkspaceOwnership } from '../lib/workspace/ownership';
+import { updateActiveWork, updateWorkspace, type ActiveWorkPatch, type WorkspacePatch } from '../lib/workspace/works';
+import { clearProjectFolderHandle } from '../lib/storage/folder-handle-store';
+import { createWorkspace, type CreateWorkspaceOptions } from '../lib/workspace/create-workspace';
 
 interface ProjectStore {
   projects: Project[]

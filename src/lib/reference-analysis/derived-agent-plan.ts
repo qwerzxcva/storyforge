@@ -1,8 +1,5 @@
-import type { ChatMessage } from '../types'
-import type {
-  ReferenceDerivedBaselineV1,
-  ReferenceDerivedModeV1,
-} from './derived-agent-baseline'
+import type { ChatMessage } from '../types';
+import type { ReferenceDerivedBaselineV1, ReferenceDerivedModeV1 } from './derived-agent-baseline';
 
 export interface ReferenceDerivedPromptTemplateV1 {
   version: 'reference-derived-v1'

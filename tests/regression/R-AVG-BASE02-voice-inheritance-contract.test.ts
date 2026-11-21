@@ -1,15 +1,15 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 import { assertAvgPrototypeBuildWriteEnabledV1 } from '../../src/lib/avg/prototype-write-guard'
 import { prepareNativeAvgAssembly, startNativeAvgAssembly, confirmNativeAvgInputs } from '../helpers/avg-production-assembly-fixture'
-import { canonicalProductProductionJsonV2 } from '../../src/lib/product-production/hash'
+import { canonicalProductProductionJsonV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { parseAvgAuthorStageV1 } from '../../src/lib/avg/author-workspace-contract'
 import { applyAvgVoiceChoicesToDraftV1 } from '../../src/lib/avg/voice-configuration'
 import { assertAvgInheritedVoiceBindingV1, parseAvgGeneratedVoiceSourceV1, parseAvgInheritedStageVoicesV1 } from '../../src/lib/avg/stage-voice-source-contract'
 import { parseAvgGeneratedVoiceSourceV2, parseAvgInheritedStageVoices } from '../../src/lib/avg/stage-processed-voice-source-contract'
 import { avgVoiceConfigurationFixtureV1 } from '../helpers/avg-voice-production-fixture'
-import { hashAvgVoiceTextV1 } from '../../src/lib/avg/voice-production-contract'
+import { hashAvgVoiceTextV1 } from '../../src/lib/legacy-compat/avg/voice-production-contract'
 
 /** Structural engineering values only: these hashes are not real producer,
  * author, audition, rights or Build receipts. The authority reader must prove

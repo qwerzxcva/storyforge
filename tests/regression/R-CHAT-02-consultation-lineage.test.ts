@@ -5,11 +5,11 @@ import {adoptChatConsultationV2, generateChatConsultationV2, readChatConsultatio
 import {readChatDraftV1, saveChatDraftV1, createChatDraftV2} from '../../src/lib/character-interaction/draft-service'
 import {draftProductProductionBriefV3, suggestProductStartingPoints} from '../../src/lib/product-production/consultation'
 import {createProductProductionWithBriefV1, readProductProductionDetailsV1} from '../../src/lib/product-production/service'
-import * as sourcePlans from '../../src/lib/product-production/source-contracts'
+import * as sourcePlans from '../../src/lib/legacy-compat/product-production/source-contracts'
 import {readLatestVerifiedAgentRunCheckpointV1, createAgentRunCheckpointV1} from '../../src/lib/agent/run/checkpoint'
 import {readAgentRunV1} from '../../src/lib/agent/run/event-store'
 import {exportProjectJSON, importProjectJSON} from '../../src/lib/export/json-export'
-import {parseProductProductionBriefV3} from '../../src/lib/product-production/contracts'
+import {parseProductProductionBriefV3} from '../../src/lib/legacy-compat/product-production/contracts'
 
 beforeEach(async () => {db.close(); await db.delete(); await db.open()})
 afterEach(() => {vi.restoreAllMocks(); db.close()})

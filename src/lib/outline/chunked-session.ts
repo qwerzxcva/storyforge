@@ -1,16 +1,16 @@
-import { db } from '../db/schema'
-import { appendAgentEvent, getOrCreateAgentConversation, readAgentEvents } from '../agent/conversations'
-import { parseAgentEventPayload, type ChatMessage, type OutlineNode, type WorkspaceScope } from '../types'
-import { assertRecordInScope, readOwnedRows, resolveScope } from '../workspace/scope'
-import { assertWorkspaceContentRevisionFreshV1, captureWorkspaceContentRevisionV1, type WorkspaceContentRevisionVectorV1 } from '../authoring/content-revision'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { executeRegisteredAIEntryV1 } from '../agent/formal-ai-entry'
-import { readAgentRunV1 } from '../agent/run'
-import { prepareOutlineGatewayAssemblyV1 } from './gateway-context'
-import { createOutlineGenerationTraceV1, readOutlineGenerationCandidateV1, adoptOutlineGenerationCandidateV1, rejectOutlineGenerationCandidateV1, type OutlineGenerationCandidateV1 } from './harness'
-import { divideChaptersIntoBlocks, getBlockLabels, type ChunkedGenerationConfig } from './generation-modes'
-import { parseChapterOutlineOutput } from '../ai/parse-outline-output'
-import type { BlockChoice, BlockGenerationResult } from './chunked-generator'
+import { db } from '../db/schema';
+import { appendAgentEvent, getOrCreateAgentConversation, readAgentEvents } from '../agent/conversations';
+import { parseAgentEventPayload, type ChatMessage, type OutlineNode, type WorkspaceScope } from '../types';
+import { assertRecordInScope, readOwnedRows, resolveScope } from '../workspace/scope';
+import { assertWorkspaceContentRevisionFreshV1, captureWorkspaceContentRevisionV1, type WorkspaceContentRevisionVectorV1 } from '../authoring/content-revision';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { executeRegisteredAIEntryV1 } from '../agent/formal-ai-entry';
+import { readAgentRunV1 } from '../agent/run';
+import { prepareOutlineGatewayAssemblyV1 } from './gateway-context';
+import { createOutlineGenerationTraceV1, readOutlineGenerationCandidateV1, adoptOutlineGenerationCandidateV1, rejectOutlineGenerationCandidateV1, type OutlineGenerationCandidateV1 } from './harness';
+import { divideChaptersIntoBlocks, getBlockLabels, type ChunkedGenerationConfig } from './generation-modes';
+import { parseChapterOutlineOutput } from '../ai/parse-outline-output';
+import type { BlockChoice, BlockGenerationResult } from './chunked-generator';
 
 const TYPE = 'outline-chunked-session-v1'
 export interface ChunkedOutlineSession {

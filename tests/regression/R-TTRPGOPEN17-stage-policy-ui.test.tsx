@@ -3,7 +3,7 @@ import { createRoot, type Root } from 'react-dom/client'
 import { beforeEach, afterEach, describe, it, expect, vi } from 'vitest'
 import TtrpgOpenAuthoringEditor from '../../src/components/ttrpg/TtrpgOpenAuthoringEditor'
 import TtrpgOpenBriefReview from '../../src/components/ttrpg/TtrpgOpenBriefReview'
-import { defaultTtrpgSettingsV2 } from '../../src/lib/ttrpg/authoring-contract-v2'
+import { defaultTtrpgSettingsV2 } from '../../src/lib/legacy-compat/ttrpg/authoring-contract-v2'
 import { initializeTtrpgOpenAuthoringPoliciesV1 } from '../../src/lib/ttrpg/open-authoring-edit'
 import type { ProductProductionBriefV3 } from '../../src/lib/types'
 

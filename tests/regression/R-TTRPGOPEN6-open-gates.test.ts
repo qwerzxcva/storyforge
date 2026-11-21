@@ -6,9 +6,9 @@ import {
   evaluateTtrpgOpenRuntimeGatesV1,
   filterTtrpgOpenFailureLogsFromPlayerProjectionV1,
   recordTtrpgOpenFailureV1,
-} from '../../src/lib/ttrpg/open-gates'
+} from '../../src/lib/legacy-compat/ttrpg/open-gates'
 import { openCampaignFixture, openRuleFixture, openPublicationCampaignFixture as publishableCampaign } from '../helpers/ttrpg-open-content'
-import type { TtrpgPredicateEvaluationContextV1 } from '../../src/lib/ttrpg/predicate'
+import type { TtrpgPredicateEvaluationContextV1 } from '../../src/lib/legacy-compat/ttrpg/predicate'
 
 function predicateContext(campaign = openCampaignFixture()): TtrpgPredicateEvaluationContextV1 {
   return {

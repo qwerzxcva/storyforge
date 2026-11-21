@@ -1,7 +1,7 @@
 import Dexie from 'dexie'
-import type { TableSpec } from './types'
-import type { WorkspaceScope } from '../types/world-ownership'
-import { assertRecordInScope } from '../workspace/scope'
+import type { TableSpec } from './types';
+import type { WorkspaceScope } from '../types/world-ownership';
+import { assertRecordInScope } from '../workspace/scope';
 
 export class RegisteredTreeRelationError extends Error {
   constructor(message: string) {

@@ -1,8 +1,5 @@
-import type { AssembleContextResult } from '../registry/types'
-import {
-  parseCreativeAssumptionV1,
-  type CreativeAssumptionV1,
-} from './creative-reliability'
+import type { AssembleContextResult } from '../registry/types';
+import { parseCreativeAssumptionV1, type CreativeAssumptionV1 } from './creative-reliability';
 
 export const NARRATIVE_BRIEF_FIELD_KEYS = [
   'protagonistDesire',

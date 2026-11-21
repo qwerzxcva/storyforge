@@ -1,30 +1,15 @@
 /** Work creation and switching inside one workspace semantic scope. */
-import { db } from '../db/schema'
-import type {
-  NovelWorkflowProfile,
-  PostAdoptionBudgetV1,
-  PostAdoptionPolicyV1,
-  PostAdoptionTaskTypeV1,
-  Work,
-  WorkKind,
-  WorkspaceScope,
-} from '../types/world-ownership'
-import type { Project, WorkStatus } from '../types/project'
-import { resolveWorkspaceOwnership } from './ownership'
-import { assertRecordInScope, readOwnedRows, resolveScope, scopeTransactionTables } from './scope'
-import { generateWorkCode } from '../memory/identity'
-import {
-  assertShortNovelTargetWords,
-  effectiveNovelProfile,
-  effectiveWorkKind,
-  normalizeNewWorkClassification,
-  SHORT_NOVEL_MAX_WORDS,
-  SHORT_NOVEL_MIN_WORDS,
-} from './work-kind'
-import type { Chapter } from '../types/outline'
-import { canonicalManuscriptWordCount } from '../chapters/selectors'
-import { assertCurrentProductEntryV1, productCatalogIdForWorkV1 } from '../product/product-catalog'
-import { isAndroidAppBuild, isWorkAvailableInBuild } from '../runtime/app-mode'
+import { db } from '../db/schema';
+import type { NovelWorkflowProfile, PostAdoptionBudgetV1, PostAdoptionPolicyV1, PostAdoptionTaskTypeV1, Work, WorkKind, WorkspaceScope } from '../types/world-ownership';
+import type { Project, WorkStatus } from '../types/project';
+import { resolveWorkspaceOwnership } from './ownership';
+import { assertRecordInScope, readOwnedRows, resolveScope, scopeTransactionTables } from './scope';
+import { generateWorkCode } from '../memory/identity';
+import { assertShortNovelTargetWords, effectiveNovelProfile, effectiveWorkKind, normalizeNewWorkClassification, SHORT_NOVEL_MAX_WORDS, SHORT_NOVEL_MIN_WORDS } from './work-kind';
+import type { Chapter } from '../types/outline';
+import { canonicalManuscriptWordCount } from '../chapters/selectors';
+import { assertCurrentProductEntryV1, productCatalogIdForWorkV1 } from '../product/product-catalog';
+import { isWorkAvailableInBuild } from '../runtime/app-mode';
 
 export interface CreateWorkInput {
   title: string
@@ -118,7 +103,7 @@ export async function switchActiveWork(projectId: number, workId: number): Promi
   return db.transaction('rw', db.projects, db.worlds, db.works, async () => {
     const [project, work] = await Promise.all([db.projects.get(projectId), db.works.get(workId)])
     if (!project || !work || work.projectId !== projectId) throw new Error('[works] Work 不属于当前工作区')
-    if (isAndroidAppBuild() && project.workspacePurpose !== 'world-engine'
+    if (project.workspacePurpose !== 'world-engine'
       && !isWorkAvailableInBuild(work)) {
       throw new Error('[works] Android 版不能切换到已下线的 Work')
     }

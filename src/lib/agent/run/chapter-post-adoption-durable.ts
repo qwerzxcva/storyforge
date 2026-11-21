@@ -1,48 +1,20 @@
-import { db } from '../../db/schema'
-import {
-  getChapterDerivedMemoryStatus,
-  hashChapterText,
-} from '../../ai/chapter-memory/text-normalization'
-import type { ContextManifestV1, VerificationReceiptV1 } from '../../types/agent-run'
-import { parseAgentEventPayload, type AgentEvent, type WorkspaceScope } from '../../types'
-import type { ChapterOrganizationCandidate } from '../chapter-organization'
-import {
-  hashConsistencyAgentCandidateV1,
-  isConsistencyAgentCandidateV1,
-  type ConsistencyAgentCandidate,
-} from '../consistency-agent'
-import {
-  getAgentSkillV1,
-  resolveAgentSkillContextSourceKeysV1,
-} from '../skill-registry'
-import {
-  assertAgentSkillExecutionBindingV1,
-  createAgentSkillExecutionBindingV1,
-} from '../execution-binding'
-import {
-  AgentRunStoreError,
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunChildV1,
-  readCurrentAgentRunParentV1,
-  readAgentRunV1,
-  staleAgentRunVerificationV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { PROSE_GENERATION_VERIFIER_SET_V2, PROSE_GENERATION_VERIFIER_SET_V3 } from './prose-generation-durable'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import { hashCanonicalValue } from './hash'
-import { CHAPTER_ORGANIZATION_WRITE_TARGETS_CURRENT_V1 } from './chapter-organization-authority'
-import type { AgentRunFailureActionV1, AgentRunFailureCategoryV1 } from '../../types/agent-run'
-import { verifyContextManifestIntegrityV1 } from './context-manifest'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-} from '../../workspace/scope'
-import {
-  preflightPostAdoptionAutoV1,
-  type PostAdoptionAuthorizationSnapshotV1,
-} from '../../prose/post-adoption-policy'
+import { db } from '../../db/schema';
+import { getChapterDerivedMemoryStatus, hashChapterText } from '../../ai/chapter-memory/text-normalization';
+import type { ContextManifestV1, VerificationReceiptV1 } from '../../types/agent-run';
+import { parseAgentEventPayload, type AgentEvent, type WorkspaceScope } from '../../types';
+import type { ChapterOrganizationCandidate } from '../chapter-organization';
+import { hashConsistencyAgentCandidateV1, isConsistencyAgentCandidateV1, type ConsistencyAgentCandidate } from '../consistency-agent';
+import { getAgentSkillV1, resolveAgentSkillContextSourceKeysV1 } from '../skill-registry';
+import { assertAgentSkillExecutionBindingV1, createAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { AgentRunStoreError, appendAgentRunEventV1, createAgentRunV1, readAgentRunChildV1, readCurrentAgentRunParentV1, readAgentRunV1, staleAgentRunVerificationV1, type AgentRunSnapshotV1 } from './event-store';
+import { PROSE_GENERATION_VERIFIER_SET_V2, PROSE_GENERATION_VERIFIER_SET_V3 } from './prose-generation-durable';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { hashCanonicalValue } from './hash';
+import { CHAPTER_ORGANIZATION_WRITE_TARGETS_CURRENT_V1 } from './chapter-organization-authority';
+import type { AgentRunFailureActionV1, AgentRunFailureCategoryV1 } from '../../types/agent-run';
+import { verifyContextManifestIntegrityV1 } from './context-manifest';
+import { assertRecordInScope, readOwnedRows } from '../../workspace/scope';
+import { preflightPostAdoptionAutoV1, type PostAdoptionAuthorizationSnapshotV1 } from '../../prose/post-adoption-policy';
 
 /**
  * HARNESS-20: one durable barrier for the work that follows prose adoption.

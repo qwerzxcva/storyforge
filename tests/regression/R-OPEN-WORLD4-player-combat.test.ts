@@ -7,13 +7,13 @@ import {
   branchTextOpenWorldSessionFromCheckpointV1,
   createTextOpenWorldCheckpointV1,
 } from '../../src/lib/open-world/checkpoints'
-import { createTextOpenWorldCombatStateMachineV1 } from '../../src/lib/open-world/combat-state-machine'
+import { createTextOpenWorldCombatStateMachineV1 } from '../../src/lib/legacy-compat/open-world/combat-state-machine'
 import { projectTextOpenWorldPlayerCombatV1 } from '../../src/lib/open-world/player-combat'
 import {
   createInitialTextOpenWorldSessionProjectionV1,
   deriveTextOpenWorldContextsV1,
-} from '../../src/lib/open-world/session-projection'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+} from '../../src/lib/legacy-compat/open-world/session-projection'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import type {
   ProductRuntimeEvent,
   TextOpenWorldRuntimePackageV1,

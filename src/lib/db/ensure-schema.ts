@@ -1,8 +1,4 @@
-import {
-  db,
-  STORYFORGE_SCHEMA_VERSION,
-  STORYFORGE_STORES,
-} from './schema'
+import { db, STORYFORGE_SCHEMA_VERSION, STORYFORGE_STORES } from './schema';
 
 export const REQUIRED_TABLES = [
   'workCoverDrafts',

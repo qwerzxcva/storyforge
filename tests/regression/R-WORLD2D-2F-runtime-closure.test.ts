@@ -11,11 +11,11 @@ import {
   createProductRuntimeCheckpoint,
   readProductRuntimeState,
   verifyProductRuntimeCheckpoint,
-} from '../../src/lib/product/runtime-api'
-import { appendProductRuntimeEvent } from '../../src/lib/product/runtime-core'
+} from '../../src/lib/legacy-compat/product/runtime-api'
+import { appendProductRuntimeEvent } from '../../src/lib/legacy-compat/product/runtime-core'
 import type { NarrativeModuleKind, WorldReleaseManifestV3, WorkspaceScope } from '../../src/lib/types'
 import { createWorkspace as createWorkspaceRoot } from '../../src/lib/workspace/create-workspace'
-import { createProductRuntimeInstance } from '../../src/lib/product/runtime-instances'
+import { createProductRuntimeInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
 import { createCurrentTtrpgRuntimeTestBedV1 } from '../helpers/current-product-runtime'
 import {
   assertReleaseUnchanged,

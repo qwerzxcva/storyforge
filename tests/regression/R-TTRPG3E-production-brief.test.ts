@@ -10,12 +10,12 @@ import {
   parseTtrpgProductionBriefV2,
   resolveTtrpgProductionRulePackV2,
   unresolvedTtrpgProductionBriefDecisionsV2,
-} from "../../src/lib/ttrpg/production-brief";
+} from "../../src/lib/legacy-compat/ttrpg/production-brief";
 import {
   bindProductionMediaToTtrpgCampaignV1,
   compileProductionTtrpgCampaignV2,
 } from "../../src/lib/ttrpg/production-compiler";
-import { validateTtrpgCampaignForPublicationV1 } from "../../src/lib/ttrpg/campaign";
+import { validateTtrpgCampaignForPublicationV1 } from "../../src/lib/legacy-compat/ttrpg/campaign";
 import {
   createDefaultTtrpgProductionWizardValueV2,
   toTtrpgProductionBriefDraftInputV2,

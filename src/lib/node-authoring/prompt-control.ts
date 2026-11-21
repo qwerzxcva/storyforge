@@ -1,9 +1,9 @@
-import { assembleBoundPrompt, getPromptBindingSourceKeys } from '../ai/prompt-variable-bindings'
-import { db } from '../db/schema'
-import type { PromptTemplate, WorkspaceScope } from '../types'
-import { resolveReadScope } from '../workspace/scope'
-import { hashAuthoringText } from './bindings'
-import type { AuthoringNodeInstance } from './contracts'
+import { assembleBoundPrompt, getPromptBindingSourceKeys } from '../ai/prompt-variable-bindings';
+import { db } from '../db/schema';
+import type { PromptTemplate, WorkspaceScope } from '../types';
+import { resolveReadScope } from '../workspace/scope';
+import { hashAuthoringText } from './bindings';
+import type { AuthoringNodeInstance } from './contracts';
 
 /** Selection is a versioned author-owned snapshot in graph config, not a new
  * template store. It travels with graph backup and never changes global active

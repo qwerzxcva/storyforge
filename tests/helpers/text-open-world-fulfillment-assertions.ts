@@ -2,11 +2,11 @@ import { expect } from 'vitest'
 import type { TextOpenWorldQuestDesignDocumentsV1, TextOpenWorldRuntimePackageV1 } from '../../src/lib/types'
 import type { TextOpenWorldQuestFinalizeInputContextV1 } from '../../src/lib/open-world/quest-finalize-production'
 import { buildTextOpenWorldObjectiveFulfillmentDemandsV1 } from '../../src/lib/open-world/objective-fulfillment-production'
-import { createTextOpenWorldConditionCatalogV1 } from '../../src/lib/open-world/condition-dsl'
-import { createTextOpenWorldCraftingCatalogV1 } from '../../src/lib/open-world/crafting'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
-import { createInitialTextOpenWorldSessionProjectionV1, deriveTextOpenWorldContextsV1 } from '../../src/lib/open-world/session-projection'
+import { createTextOpenWorldConditionCatalogV1 } from '../../src/lib/legacy-compat/open-world/condition-dsl'
+import { createTextOpenWorldCraftingCatalogV1 } from '../../src/lib/legacy-compat/open-world/crafting'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
+import { createInitialTextOpenWorldSessionProjectionV1, deriveTextOpenWorldContextsV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
 
 /** Runs against the package produced by P8F -> P9 -> P10 -> V3, in isolated
  * fixture state. This is engineering evidence, never a real player receipt. */

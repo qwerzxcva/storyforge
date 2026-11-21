@@ -1,6 +1,6 @@
-import type { AtlasGeometry } from './geometry'
-import { continuousTerrain } from './continuous'
-import { DEFAULT_ATLAS_LAYERS } from './layers'
+import type { AtlasGeometry } from './geometry';
+import { continuousTerrain } from './continuous';
+import { DEFAULT_ATLAS_LAYERS } from './layers';
 
 interface Surface {
   geometry: AtlasGeometry

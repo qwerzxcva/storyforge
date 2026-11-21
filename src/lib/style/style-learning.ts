@@ -1,9 +1,5 @@
-import { htmlToPlainText } from '../utils/html'
-import type {
-  StyleCalibrationFeedback,
-  StyleCalibrationVerdict,
-  StyleRevisionPair,
-} from '../types/user-style'
+import { htmlToPlainText } from '../utils/html';
+import type { StyleCalibrationFeedback, StyleCalibrationVerdict, StyleRevisionPair } from '../types/user-style';
 
 export const MAX_STYLE_REVISION_PAIRS = 8
 export const MAX_INJECTED_STYLE_PAIRS = 3

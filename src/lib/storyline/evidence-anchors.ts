@@ -1,4 +1,4 @@
-import { qualityReviewAnchorsV1 } from '../prose/quality-review'
+import { qualityReviewAnchorsV1 } from '../prose/quality-review';
 
 /** Reuse the proven physical-text locator, pinned independently of future review prompts. */
 export function storylineEvidenceAnchorsV1(chapterContent: string) {

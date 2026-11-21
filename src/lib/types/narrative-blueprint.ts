@@ -87,4 +87,4 @@ export interface NarrativeExecutionStep {
   state: Record<string, unknown>
   successorNodes: NarrativeNode[]
 }
-import type { RagDocumentMetadata } from './rag-library'
+import type { RagDocumentMetadata } from './rag-library';

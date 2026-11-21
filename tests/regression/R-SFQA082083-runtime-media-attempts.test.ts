@@ -1,14 +1,14 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import { appendProductRuntimeEvent, branchProductRuntimeSession, deleteProductRuntimeSession, readProductRuntimeState, readProductRuntimeStateVersion, preparePreviewProductRuntimeSessionRecordV1, insertPreparedProductRuntimeSessionV1, finalizeInsertedRuntimeBranchProjectionV1 } from '../../src/lib/product/runtime-core'
-import { createProductOwnedBranchOriginV1, prepareProductRuntimeStateForBranchV1 } from '../../src/lib/product/runtime-product-adapters'
+import { appendProductRuntimeEvent, branchProductRuntimeSession, deleteProductRuntimeSession, readProductRuntimeState, readProductRuntimeStateVersion, preparePreviewProductRuntimeSessionRecordV1, insertPreparedProductRuntimeSessionV1, finalizeInsertedRuntimeBranchProjectionV1 } from '../../src/lib/legacy-compat/product/runtime-core'
+import { createProductOwnedBranchOriginV1, prepareProductRuntimeStateForBranchV1 } from '../../src/lib/legacy-compat/product/runtime-product-adapters'
 import { runtimeInstanceTablesV1, transactionTablesForReferenceCascade } from '../../src/lib/registry/lifecycle'
 import { scopeTransactionTables } from '../../src/lib/workspace/scope'
 import { cloneTtrpgRuntimePreservedExtensionsV1 } from '../../src/lib/ttrpg/runtime-branch'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import * as runtimeMediaLibrary from '../../src/lib/product/runtime-media-library'
 import type { MediaProviderTransportV1 } from '../../src/lib/product-production/media-adapters'
-import { sha256MediaData } from '../../src/lib/product-production/media-blob-store'
+import { sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import {
   cancelTtrpgRuntimeAssetRequestV1, enqueueTtrpgRuntimeAssetRequestV1, processTtrpgRuntimeAssetRequestV1,
   readTtrpgRuntimeMediaBlobV1, readVisibleTtrpgRuntimeMediaRequestsV1,

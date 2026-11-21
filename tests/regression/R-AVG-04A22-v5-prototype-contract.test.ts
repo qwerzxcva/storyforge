@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import * as readiness from '../../src/lib/avg/visual-planning-brief-v5'
+import * as readiness from '../../src/lib/legacy-compat/avg/visual-planning-brief-v5'
 import { classifyAvgAuthorPrototypeBriefV1, isAvgAuthorPrototypeBriefV1, assertAvgVisualPrototypeWriteEnabledV5 } from '../../src/lib/avg/prototype-contract'
 import { avgV5FormalFixture } from '../helpers/avg-v5-formal-fixture'
 

@@ -6,13 +6,13 @@ import { readyOpenTtrpgSessionV1, openEnvelopeV1, OPEN_HUMAN_VIEWER } from '../h
 import { recordTtrpgOpenNarrativeMemoryV1, startTtrpgOpenEpochV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { prepareTtrpgOpenIntentInputV1, prepareTtrpgOpenCompanionInputV1, prepareTtrpgOpenKpInputV1 } from '../../src/lib/ttrpg/open-intent-input'
 import { executeTtrpgOpenIntentRequestV1 } from '../../src/lib/ttrpg/open-intent-harness'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { readAgentRunArtifactExactV1 } from '../../src/lib/memory/artifact-store'
 import { setupChecksFixtureV1 } from '../helpers/open-ttrpg-checks'
 import { resumeTtrpgOpenChecksV1 } from '../../src/lib/ttrpg/open-checks-coordinator'
-import { assertTtrpgOpenFrozenContextSourcesV1 } from '../../src/lib/ttrpg/open-model-purpose-contract'
-import type { TtrpgOpenMemoryDraftV1 } from '../../src/lib/ttrpg/open-memory-contract'
+import { assertTtrpgOpenFrozenContextSourcesV1 } from '../../src/lib/legacy-compat/ttrpg/open-model-purpose-contract'
+import type { TtrpgOpenMemoryDraftV1 } from '../../src/lib/legacy-compat/ttrpg/open-memory-contract'
 
 const rawInput = '调查河港的迟到线索', modelIdentity = { provider: 'test-adapter', model: 'injected' }
 const output = JSON.stringify({ goal: '调查河港', method: null, targetRefs: [], declaredResources: [], declaredAssumptions: [], requestedOutcome: null })

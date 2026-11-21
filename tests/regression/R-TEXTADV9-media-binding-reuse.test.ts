@@ -1,9 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { carryForwardProductBuildArtifactsAcrossBuildsV1 } from '../../src/lib/product-production/artifact-store'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
-import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { createProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
+import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { createProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 import {
   applyCrossBuildEvolutionReuseV1,
   invalidateStaleCarriedTextAdventureVisionClosureV1,

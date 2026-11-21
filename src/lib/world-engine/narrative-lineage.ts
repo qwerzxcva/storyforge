@@ -1,13 +1,13 @@
-import type { NarrativeLineageV1 } from '../types/narrative-lineage'
-import type { NarrativeDomainProjectionV1 } from '../types/narrative-projection'
-import type { NarrativeOwnerV1 } from '../types/narrative-ir'
-import { isWorkspaceUid } from '../memory/identity'
-import { isPublicWorldCode } from '../workspace/identity'
-import { canonicalNarrativeJsonV1, compareUnicodeCodePointsV1, enumV1, hashNarrativeValueV1, hashV1, keyV1, narrativeFail, nullableV1, objectV1 } from './narrative-json'
-import { createNarrativeSemanticIdV1, narrativeOwnerKeyV1, ownerDecoderV1, parseNarrativeSemanticIdV1 } from './narrative-identity'
-import { parseNarrativeIdentityAliasV1 } from './narrative-ir-codec'
-import { compileImmutableNarrativeIRV1, compileNarrativeIRBundleV1 } from './narrative-ir'
-import { WORLD_SEMANTIC_REGISTRY_V4 } from './semantic-registry-v4'
+import type { NarrativeLineageV1 } from '../types/narrative-lineage';
+import type { NarrativeDomainProjectionV1 } from '../types/narrative-projection';
+import type { NarrativeOwnerV1 } from '../types/narrative-ir';
+import { isWorkspaceUid } from '../memory/identity';
+import { isPublicWorldCode } from '../workspace/identity';
+import { canonicalNarrativeJsonV1, compareUnicodeCodePointsV1, enumV1, hashNarrativeValueV1, hashV1, keyV1, narrativeFail, nullableV1, objectV1 } from './narrative-json';
+import { createNarrativeSemanticIdV1, narrativeOwnerKeyV1, ownerDecoderV1, parseNarrativeSemanticIdV1 } from './narrative-identity';
+import { parseNarrativeIdentityAliasV1 } from './narrative-ir-codec';
+import { compileImmutableNarrativeIRV1, compileNarrativeIRBundleV1 } from './narrative-ir';
+import { WORLD_SEMANTIC_REGISTRY_V4 } from './semantic-registry-v4';
 
 export function parseNarrativeLineageV1(value: unknown): NarrativeLineageV1 {
   canonicalNarrativeJsonV1(value)

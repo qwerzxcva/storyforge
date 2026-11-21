@@ -1,19 +1,19 @@
 import { CONTEXT_SOURCE_BY_KEY } from '../../src/lib/registry/context-sources'
-import { createProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { createProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
 import { runProductProductionUntilBlockedV1, ProductProductionResultUnknownErrorV1 } from '../../src/lib/product-production/scheduler'
 import { readProductProductionRepairFeedback } from '../../src/lib/product-production/context'
 import { seedOpenBrowserProductionV1, runOpenBrowserProductionV1 } from '../helpers/open-ttrpg-production-browser'
 import { openProductionCompilerFixtureV1 } from '../helpers/open-ttrpg-production-artifacts'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 /** Registered task views and same-task repair; explicit fixture transport only. */
 import { afterEach, beforeEach, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { openProductionFixtureV1 } from '../helpers/open-ttrpg-production'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { projectTtrpgOpenProductionTaskBriefV1 } from '../../src/lib/ttrpg/open-production-task-brief'
 import { ttrpgOpenProductionSystemPromptV3 } from '../../src/lib/ttrpg/open-production-prompts'
-import { TTRPG_OPEN_PRODUCTION_BINDINGS_V3 } from '../../src/lib/ttrpg/open-production-bindings'
+import { TTRPG_OPEN_PRODUCTION_BINDINGS_V3 } from '../../src/lib/legacy-compat/ttrpg/open-production-bindings'
 import { getAgentSkillV1 } from '../../src/lib/agent/skill-registry'
 
 beforeEach(async () => { await db.delete(); await db.open() })

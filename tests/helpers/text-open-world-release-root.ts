@@ -1,9 +1,9 @@
 import { appendAgentRunEventV1, createAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { db } from '../../src/lib/db/schema'
-import { acceptTextOpenWorldSourcePinBundleV1 } from '../../src/lib/open-world/source-pin'
-import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { createProductBuildPreviewManifestV1 } from '../../src/lib/product-production/preview-manifest'
-import { createProductBuildRootTerminalReceiptV1 } from '../../src/lib/product-production/receipts'
+import { acceptTextOpenWorldSourcePinBundleV1 } from '../../src/lib/legacy-compat/open-world/source-pin'
+import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { createProductBuildPreviewManifestV1 } from '../../src/lib/legacy-compat/product-production/preview-manifest'
+import { createProductBuildRootTerminalReceiptV1 } from '../../src/lib/legacy-compat/product-production/receipts'
 import type { ProductRuntimePackageV1, TextOpenWorldSourcePinBundleV1, WorkspaceScope } from '../../src/lib/types'
 
 /**

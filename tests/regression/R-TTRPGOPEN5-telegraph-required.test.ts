@@ -3,8 +3,8 @@ import {
   evaluateTtrpgFrontAdvanceV1,
   evaluateTtrpgFrontTelegraphV1,
   parseTtrpgPressureFrontV1,
-} from '../../src/lib/ttrpg/pressure-runtime'
-import { advanceTtrpgWorldTimeV1, createTtrpgWorldTimeV1 } from '../../src/lib/ttrpg/world-time'
+} from '../../src/lib/legacy-compat/ttrpg/pressure-runtime'
+import { advanceTtrpgWorldTimeV1, createTtrpgWorldTimeV1 } from '../../src/lib/legacy-compat/ttrpg/world-time'
 import { openCampaignFixture } from '../helpers/ttrpg-open-content'
 
 function worldTimeAt(turn: number) {

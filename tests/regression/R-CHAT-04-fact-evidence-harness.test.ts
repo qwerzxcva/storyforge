@@ -1,7 +1,7 @@
 import {sha256Text} from '../../src/lib/ai/chapter-memory/text-normalization'
 import {afterEach, beforeEach, expect, it, vi} from 'vitest'
 import {db} from '../../src/lib/db/schema'
-import * as api from '../../src/lib/character-interaction/runtime-api'
+import * as api from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import {useHistoricalChatReaderFixture, freezeLegacyChatActionContractFixture, freezeLegacyChatSituationContractFixture} from '../helpers/chat-historical-reader'
 import {adoptInteractionRuntimeCandidateV1, generateInteractionRuntimeCandidateV1, resumeChatNarrativeReviewV1} from '../../src/lib/character-interaction/harness'
 import {readInstanceAgentRunV1} from '../../src/lib/agent/run/event-store'

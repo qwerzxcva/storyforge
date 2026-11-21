@@ -2,12 +2,12 @@
 import { describe, expect, it } from 'vitest'
 import { avgRegionProcessedFixture } from '../helpers/avg-region-processed-fixture'
 import { parseAvgImageProcessingPlanV1, parseAvgImageProcessingPlanV2, parseAvgImageProcessingPlanV3,
-  parseAvgImageProcessingRecipeV1, parseAvgProcessedImagePayloadV1 } from '../../src/lib/avg/image-processing-contract'
+  parseAvgImageProcessingRecipeV1, parseAvgProcessedImagePayloadV1 } from '../../src/lib/legacy-compat/avg/image-processing-contract'
 import { parseAvgProcessedImagePayloadV2, parseAvgProcessedImagePayload } from '../../src/lib/avg/image-processing-contract-v2'
 import { parseAvgProcessedImagePayloadV3 } from '../../src/lib/avg/image-processing-contract-v3'
-import { readAvgRegionRecipeReferenceV1 } from '../../src/lib/avg/image-region-composite-binding'
-import { parseAvgGeneratedReferenceSourceV9 } from '../../src/lib/avg/visual-region-source-contract'
-import { parseAvgGeneratedReferenceSourceV6, parseAvgGeneratedReferenceSourceV8, parseAvgGeneratedImageSource } from '../../src/lib/avg/media-generated-reference-contract'
+import { readAvgRegionRecipeReferenceV1 } from '../../src/lib/legacy-compat/avg/image-region-composite-binding'
+import { parseAvgGeneratedReferenceSourceV9 } from '../../src/lib/legacy-compat/avg/visual-region-source-contract'
+import { parseAvgGeneratedReferenceSourceV6, parseAvgGeneratedReferenceSourceV8, parseAvgGeneratedImageSource } from '../../src/lib/legacy-compat/avg/media-generated-reference-contract'
 
 describe('AVG composition V3 contracts and V9 portable source — scalar evidence is not admission', () => {
   it('admits an explicit mixed V3 plan while strict V1/V2 reject the new recipe', async () => {

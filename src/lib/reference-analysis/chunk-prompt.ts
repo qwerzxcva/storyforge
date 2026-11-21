@@ -1,7 +1,7 @@
-import type { ChatMessage, Reference, ReferenceAnalysisDepth } from '../types'
-import type { ChunkPlan } from '../import/chunker'
-import { FICTION_DIMENSIONS, HISTORY_DIMENSIONS, DIMENSION_LABELS } from '../types/reference'
-import { REFERENCE_READING_SKILL } from './content-skill'
+import type { ChatMessage, Reference, ReferenceAnalysisDepth } from '../types';
+import type { ChunkPlan } from '../import/chunker';
+import { FICTION_DIMENSIONS, HISTORY_DIMENSIONS, DIMENSION_LABELS } from '../types/reference';
+import { REFERENCE_READING_SKILL } from './content-skill';
 
 export type ReferenceChunkInput = {
   runId: number

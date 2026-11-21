@@ -1,7 +1,7 @@
 /** Registered owner tables and read/retention transaction closure share one metadata source. */
-import { PROJECT_TABLES } from '../registry/project-tables'
-import type { MemoryArtifactRefV1 } from '../types'
-import { extractExactArtifactOwnerRootsV1 } from './artifact-roots'
+import { PROJECT_TABLES } from '../registry/project-tables';
+import type { MemoryArtifactRefV1 } from '../types';
+import { extractExactArtifactOwnerRootsV1 } from './artifact-roots';
 
 function owners() {
   return PROJECT_TABLES.filter(spec => spec.exactArtifactRoots?.length)

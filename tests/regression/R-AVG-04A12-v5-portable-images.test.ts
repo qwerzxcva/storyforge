@@ -5,7 +5,7 @@ import { avgV5MediaReviewFixture,avgV5ReviewReport } from '../helpers/avg-v5-med
 import { avgV5Accepted,confirmAvgV5PendingCandidate } from '../helpers/avg-v5-registered-proposals-fixture'
 import { stageAvgVisualReviewV2,stageAvgMediaChoiceV5 } from '../../src/lib/avg/visual-review-service-v5'
 import { prepareAvgAdoptedGeneratedImageV2,readAvgAdoptedGeneratedImageV2 } from '../../src/lib/avg/media-generated-reference'
-import { parseAvgGeneratedReferenceSourceV2,parseAvgGeneratedReferenceSourceV5,parseAvgGeneratedImageSource } from '../../src/lib/avg/media-generated-reference-contract'
+import { parseAvgGeneratedReferenceSourceV2,parseAvgGeneratedReferenceSourceV5,parseAvgGeneratedImageSource } from '../../src/lib/legacy-compat/avg/media-generated-reference-contract'
 import { readAvgHistoricalCompiledImageDefinitionV4 } from '../../src/lib/avg/visual-image-history'
 import { readAvgHistoricalCompiledImageDefinitionV5 } from '../../src/lib/avg/visual-image-history-v5'
 import { readAvgImageConsumptionDefinitionV5 } from '../../src/lib/avg/image-consumption-v5'

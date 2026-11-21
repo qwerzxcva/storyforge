@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   applyProductRuntimeEvent,
   replayProductRuntimeEvents,
-} from "../../src/lib/product/runtime-core";
+} from "../../src/lib/legacy-compat/product/runtime-core";
 import { EMPTY_PRODUCT_RUNTIME_STATE } from "../../src/lib/types";
 import type {
   ProductRuntimeEvent,
@@ -10,20 +10,20 @@ import type {
 } from "../../src/lib/types";
 import {
   createInitialTtrpgOpenProductStateV1,
-} from "../../src/lib/ttrpg/runtime";
-import { parseTtrpgState } from "../../src/lib/ttrpg/runtime-state";
+} from "../../src/lib/legacy-compat/ttrpg/runtime";
+import { parseTtrpgState } from "../../src/lib/legacy-compat/ttrpg/runtime-state";
 import {
   createTtrpgOpenRunStateV1,
   parseTtrpgOpenRunStateV1,
   parseTtrpgRuntimeStateV2,
   advanceOpenWorldTimeV1,
-} from "../../src/lib/ttrpg/open-runtime-contract";
-import { rebaseProductRuntimeStateForBranchV1 } from "../../src/lib/product/runtime-product-adapters";
-import { parseRulePackV2, projectTtrpgRulePackMechanicalCoreV1 } from "../../src/lib/ttrpg/rule-pack-v2";
-import { instantiateTtrpgSituationV1 } from "../../src/lib/ttrpg/situation-engine";
+} from "../../src/lib/legacy-compat/ttrpg/open-runtime-contract";
+import { rebaseProductRuntimeStateForBranchV1 } from "../../src/lib/legacy-compat/product/runtime-product-adapters";
+import { parseRulePackV2, projectTtrpgRulePackMechanicalCoreV1 } from "../../src/lib/legacy-compat/ttrpg/rule-pack-v2";
+import { instantiateTtrpgSituationV1 } from "../../src/lib/legacy-compat/ttrpg/situation-engine";
 import { openCampaignFixture, openRuleFixture } from "../helpers/ttrpg-open-content";
-import { createTtrpgOpenAuthorizationV1 } from "../../src/lib/ttrpg/open-authorization";
-import { buildInitialTtrpgParticipantsV2 } from "../../src/lib/ttrpg/participants";
+import { createTtrpgOpenAuthorizationV1 } from "../../src/lib/legacy-compat/ttrpg/open-authorization";
+import { buildInitialTtrpgParticipantsV2 } from "../../src/lib/legacy-compat/ttrpg/participants";
 import type { ProductRuntimeSession } from "../../src/lib/types";
 
 function event(

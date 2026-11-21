@@ -1,9 +1,9 @@
 import { openContextPolicyFixtureV1 as contextPolicyFixtureV1 } from '../helpers/open-ttrpg-context'
 import { describe, expect, it } from 'vitest'
-import { parseTtrpgOpenContextPolicyV1 } from '../../src/lib/ttrpg/open-context-policy'
-import { parseTtrpgOpenAuthoringV1 } from '../../src/lib/ttrpg/open-content-authoring'
-import { parseTtrpgCampaignContentV2 } from '../../src/lib/ttrpg/campaign-v2'
-import { normalizeTtrpgContextTextV1 } from '../../src/lib/ttrpg/context-trigger-contract'
+import { parseTtrpgOpenContextPolicyV1 } from '../../src/lib/legacy-compat/ttrpg/open-context-policy'
+import { parseTtrpgOpenAuthoringV1 } from '../../src/lib/legacy-compat/ttrpg/open-content-authoring'
+import { parseTtrpgCampaignContentV2 } from '../../src/lib/legacy-compat/ttrpg/campaign-v2'
+import { normalizeTtrpgContextTextV1 } from '../../src/lib/legacy-compat/ttrpg/context-trigger-contract'
 import { openCampaignFixture, openRuleFixture, emptyOpenAuthoringFixture } from '../helpers/ttrpg-open-content'
 
 describe('R-TTRPGOPEN7 immutable authored context policy', () => {

@@ -1,5 +1,5 @@
 /** Explicit engineering response, using only common fact/clock/identity/rule projections. */
-import type { TtrpgOpenPublicSituationKernelV1 } from '../../src/lib/ttrpg/open-public-situation-kernel'
+import type { TtrpgOpenPublicSituationKernelV1 } from '../../src/lib/legacy-compat/ttrpg/open-public-situation-kernel'
 export function publicSituationOutputV1(snapshot: TtrpgOpenPublicSituationKernelV1) {
   const original = structuredClone(snapshot.basis.campaign.situationTemplates[0])
   const { templateKey: _key, ...template } = original

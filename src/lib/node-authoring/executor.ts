@@ -1,53 +1,32 @@
-import { CREATIVE_REPAIR_PRE_DISPATCH_CANCELLED_V1 } from '../agent/creative-execution'
+import { CREATIVE_REPAIR_PRE_DISPATCH_CANCELLED_V1 } from '../agent/creative-execution';
 import Dexie from 'dexie'
-import { assertCurrentProductEntryV1, productCatalogIdForWorkV1 } from '../product/product-catalog'
-import { renderAuthoringPromptControl } from './prompt-control'
-import { estimateTokens } from '../ai/context-budget'
-import { chat } from '../ai/client'
-import { resolveAIConfigPresetV1, useAIConfigStore } from '../../stores/ai-config'
-import { isAIConfigReady } from '../ai/config-readiness'
-import {
-  parseCreativeArtifactV1,
-  resolveCreativeQualityPolicyV1,
-} from '../agent/creative-reliability'
-import { db } from '../db/schema'
-import { canonicalStringify } from '../agent/run/hash'
-import { adopt } from '../registry/adopt'
-import { projectScopedTables } from '../registry/lifecycle'
-import type { AdoptResult } from '../registry/types'
-import type { NodeFlow, NodeRunRecord, WorkspaceScope } from '../types'
-import { AUTHORING_NODE_BY_ID } from './catalog'
-import {
-  hashAuthoringText,
-  readAuthoringCanonBinding,
-  readAuthoringTargetFingerprint,
-  resolveAuthoringBoundRecordId,
-  captureAuthoringCanonReceipt,
-  readAuthoringReceiptRows,
-  assertAuthoringCanonReceipt,
-  type AuthoringSourceEvidenceV1,
-} from './bindings'
-import { authoringExecutionSubgraph, validateAuthoringGraph, topologicalAuthoringOrder } from './graph'
-import { parseAuthoringGraph } from './graph-codec'
-import type {
-  AuthoringCandidate,
-  AuthoringCandidateDomain,
-  AuthoringInputEnvelope,
-  AuthoringNodeGraph,
-  AuthoringNodeInstance,
-  AuthoringRunSignature,
-} from './contracts'
-import { safeAuthoringGraphJson } from './contracts'
-import { adoptDomainCandidate, executeDomainNode, readNodeFieldCandidateCountV1 } from './domain-execution'
-import { executionInput, readNodeFieldProducerPrefixV1 } from './field-producer'
-import { confirmNodeFieldAdoptionIntentV1, commitNodeFieldBusinessV1,
-  prepareNodeFieldAdoptionCompletionV1, readNodeFieldAdoptionProofV1,
-  type NodeFieldAdoptionInputV1 } from './field-adoption'
-import { withAgentRunMutationLockV1 } from '../agent/run/event-store'
-import { authoringDomainActionBindingV1 } from './domain-action-registry'
-import { rejectQualityAuthoringRevisionV1 } from './quality-execution'
-import { authoringCanonReadBudgetV1, inspectAuthoringGraphFreshness } from './freshness'
-import { assertRecordInScope, readOwnedRows, resolveReadScope, resolveScopeLike, scopeTransactionTables, stampNewRecord } from '../workspace/scope'
+import { assertCurrentProductEntryV1, productCatalogIdForWorkV1 } from '../product/product-catalog';
+import { renderAuthoringPromptControl } from './prompt-control';
+import { estimateTokens } from '../ai/context-budget';
+import { chat } from '../ai/client';
+import { resolveAIConfigPresetV1, useAIConfigStore } from '../../stores/ai-config';
+import { isAIConfigReady } from '../ai/config-readiness';
+import { parseCreativeArtifactV1, resolveCreativeQualityPolicyV1 } from '../agent/creative-reliability';
+import { db } from '../db/schema';
+import { canonicalStringify } from '../agent/run/hash';
+import { adopt } from '../registry/adopt';
+import { projectScopedTables } from '../registry/lifecycle';
+import type { AdoptResult } from '../registry/types';
+import type { NodeFlow, NodeRunRecord, WorkspaceScope } from '../types';
+import { AUTHORING_NODE_BY_ID } from './catalog';
+import { hashAuthoringText, readAuthoringCanonBinding, readAuthoringTargetFingerprint, resolveAuthoringBoundRecordId, captureAuthoringCanonReceipt, readAuthoringReceiptRows, assertAuthoringCanonReceipt, type AuthoringSourceEvidenceV1 } from './bindings';
+import { authoringExecutionSubgraph, validateAuthoringGraph, topologicalAuthoringOrder } from './graph';
+import { parseAuthoringGraph } from './graph-codec';
+import type { AuthoringCandidate, AuthoringCandidateDomain, AuthoringInputEnvelope, AuthoringNodeGraph, AuthoringNodeInstance, AuthoringRunSignature } from './contracts';
+import { safeAuthoringGraphJson } from './contracts';
+import { adoptDomainCandidate, executeDomainNode, readNodeFieldCandidateCountV1 } from './domain-execution';
+import { executionInput, readNodeFieldProducerPrefixV1 } from './field-producer';
+import { confirmNodeFieldAdoptionIntentV1, commitNodeFieldBusinessV1, prepareNodeFieldAdoptionCompletionV1, readNodeFieldAdoptionProofV1, type NodeFieldAdoptionInputV1 } from './field-adoption';
+import { withAgentRunMutationLockV1 } from '../agent/run/event-store';
+import { authoringDomainActionBindingV1 } from './domain-action-registry';
+import { rejectQualityAuthoringRevisionV1 } from './quality-execution';
+import { authoringCanonReadBudgetV1, inspectAuthoringGraphFreshness } from './freshness';
+import { assertRecordInScope, readOwnedRows, resolveReadScope, resolveScopeLike, scopeTransactionTables, stampNewRecord } from '../workspace/scope';
 
 export interface AuthoringRunSnapshot {
   nodeId: string

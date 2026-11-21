@@ -1,9 +1,9 @@
 import Dexie from 'dexie'
-import { db } from '../db/schema'
-import type { WorldRelease } from '../types'
-import type { WorldNarrativeIndexCacheV1 } from '../types/narrative-index-cache'
-import { verifyWorldReleaseManifestV1, type VerifiedWorldReleaseV1 } from './release-codec'
-import { boundedCanonicalNarrativeJsonV1, canonicalNarrativeJsonV1, narrativeUtf8ByteLengthV1 } from './narrative-json'
+import { db } from '../db/schema';
+import type { WorldRelease } from '../types';
+import type { WorldNarrativeIndexCacheV1 } from '../types/narrative-index-cache';
+import { verifyWorldReleaseManifestV1, type VerifiedWorldReleaseV1 } from './release-codec';
+import { boundedCanonicalNarrativeJsonV1, canonicalNarrativeJsonV1, narrativeUtf8ByteLengthV1 } from './narrative-json';
 
 export const NARRATIVE_INDEX_CACHE_LIMITS_V1 = Object.freeze({ maxEntries: 8, maxBytes: 64 * 1024 * 1024, maxEntryBytes: 16 * 1024 * 1024 })
 type Scope = { projectId: number; worldId: number }

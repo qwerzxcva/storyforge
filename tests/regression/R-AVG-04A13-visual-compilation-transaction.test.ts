@@ -4,7 +4,7 @@ import { db } from '../../src/lib/db/schema'
 import { avgVersionedPlanningFixture } from '../helpers/avg-versioned-planning-fixture'
 import { compileAvgVisualPlanningProposalV1,freezeAvgVisualPlanningScopeV1 } from '../../src/lib/avg/media-source'
 import { compileAvgVisualPlanningProposalV2,freezeAvgVisualPlanningScopeV2 } from '../../src/lib/avg/media-source-v2'
-import { canonicalProductProductionJsonV2,hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { canonicalProductProductionJsonV2,hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 
 beforeEach(async()=>{await db.delete();await db.open()})
 afterEach(()=>{vi.restoreAllMocks();db.close()})

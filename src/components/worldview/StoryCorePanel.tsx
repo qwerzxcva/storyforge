@@ -1,27 +1,20 @@
-import { inputAreaLayoutV1 } from '../../lib/input-area-layout'
-import { useScopedWorldviewReadback } from '../../hooks/useScopedWorldviewReadback'
+import { inputAreaLayoutV1 } from '../../lib/input-area-layout';
+import { useScopedWorldviewReadback } from '../../hooks/useScopedWorldviewReadback';
 import WorldviewReadBoundary from './WorldviewReadBoundary'
-import { useState, useEffect } from 'react'
-import { Check, Loader2, Sparkles, Trash2 } from 'lucide-react'
-import { useWorldviewStore } from '../../stores/worldview'
-import { useWorldGroupStore } from '../../stores/world-group'
+import { useState, useEffect } from 'react';
+import { Check, Loader2, Sparkles, Trash2 } from 'lucide-react';
+import { useWorldviewStore } from '../../stores/worldview';
+import { useWorldGroupStore } from '../../stores/world-group';
 import PromptRunPanel from '../shared/PromptRunPanel'
-import { InlineTextarea } from '../shared/InlineEdit'
+import { InlineTextarea } from '../shared/InlineEdit';
 import AIFieldModeTabs from '../shared/AIFieldModeTabs'
 import CandidateDraftEditor from '../agent/CandidateDraftEditor'
-import { useMasterCopilot, type PendingMasterCandidate } from '../agent/useMasterCopilot'
-import {
-  formatStoryCoreGenerationRequestV1,
-  type StoryCoreField,
-} from '../../lib/agent/story-core-copilot'
-import { STORY_CORE_GENERATABLE_FIELD_SPECS } from '../../lib/registry/field-registry'
-import type { Project } from '../../lib/types'
-import type { FieldGenerationMode } from '../../lib/ai/field-generation-context'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-  useInitialRecordTarget,
-} from '../shared/initial-record-target'
+import { useMasterCopilot, type PendingMasterCandidate } from '../agent/useMasterCopilot';
+import { formatStoryCoreGenerationRequestV1, type StoryCoreField } from '../../lib/agent/story-core-copilot';
+import { STORY_CORE_GENERATABLE_FIELD_SPECS } from '../../lib/registry/field-registry';
+import type { Project } from '../../lib/types';
+import type { FieldGenerationMode } from '../../lib/ai/field-generation-context';
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes, useInitialRecordTarget } from '../shared/initial-record-target';
 import HarnessEvidencePanel from '../agent/HarnessEvidencePanel'
 import CopilotGenerationStatus from '../agent/CopilotGenerationStatus'
 

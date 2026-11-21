@@ -4,7 +4,7 @@ import { beforeEach, afterEach, describe, it, expect } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { seedOpenBrowserProductionV1 } from '../helpers/open-ttrpg-production-browser'
 import { readProductProductionDetailsV1 } from '../../src/lib/product-production/service'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 import { createConfiguredProductProductionExecutorV1, type ProductionTextRunnerV1 } from '../../src/lib/product-production/production-executor'
 import { runProductProductionUntilBlockedV1 } from '../../src/lib/product-production/scheduler'
 

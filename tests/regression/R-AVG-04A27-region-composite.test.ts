@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { deriveAvgRegionCompositeGeometryV1, parseAvgImageRegionCompositeRecipeV3,
-  type AvgImageRegionCompositeRecipeV3 } from '../../src/lib/avg/image-region-composite-contract'
+  type AvgImageRegionCompositeRecipeV3 } from '../../src/lib/legacy-compat/avg/image-region-composite-contract'
 import { composeAvgCharacterRegionsV1 } from '../../src/lib/avg/image-region-composite-kernel'
-import { parseAvgImageProcessingRecipeV1, parseAvgImageProcessingRecipeV2 } from '../../src/lib/avg/image-processing-contract'
+import { parseAvgImageProcessingRecipeV1, parseAvgImageProcessingRecipeV2 } from '../../src/lib/legacy-compat/avg/image-processing-contract'
 
 const recipe = (): AvgImageRegionCompositeRecipeV3 => ({ schema: 'storyforge.avg.image-processing-recipe', version: 3,
   algorithm: 'storyforge.avg.region-bilinear-srgb.v1', width: 64, height: 64,

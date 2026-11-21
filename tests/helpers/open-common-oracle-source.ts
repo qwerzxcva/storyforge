@@ -1,9 +1,9 @@
 /** Actual AI-host Oracle/F13 fixture; no real-provider or independent-player evidence. */
 import { setupOpenEntityPlanningV1 } from './open-entity-runtime'
 import { OPEN_HUMAN_VIEWER } from './open-ttrpg-session'
-import { createCompleteTtrpgCharacterSheetV2 } from '../../src/lib/ttrpg/character-sheet'
+import { createCompleteTtrpgCharacterSheetV2 } from '../../src/lib/legacy-compat/ttrpg/character-sheet'
 import { proposeTtrpgOpenEntityDeskV1, readTtrpgOpenEntityDeskV1, confirmTtrpgOpenEntityDeskV1, materializeTtrpgOpenEntityDeskV1 } from '../../src/lib/ttrpg/open-entity-desk'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 
 export async function setupCommonOracleSourceV1(audience: 'party' | 'public' = 'party', late = false, configure?: Parameters<typeof setupOpenEntityPlanningV1>[0]) {
   const s = await setupOpenEntityPlanningV1(pkg => {

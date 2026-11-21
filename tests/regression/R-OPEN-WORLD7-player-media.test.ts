@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
 import { projectTextOpenWorldPlayerMediaV1 } from '../../src/lib/open-world/player-media'
 import type { FrozenRuntimeMediaAssetV2 } from '../../src/lib/types'
 import { createTextOpenWorldVNextFixture } from '../helpers/text-open-world-vnext-fixture'

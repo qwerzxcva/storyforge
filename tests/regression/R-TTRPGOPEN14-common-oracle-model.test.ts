@@ -8,9 +8,9 @@ import { readTtrpgOpenOracleCandidateV1 } from '../../src/lib/ttrpg/open-oracle-
 import { reviewTtrpgOpenCommonOracleCandidateV1, commitTtrpgOpenCommonOracleCandidateFactV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { reviewTtrpgOpenOracleCandidateV1, commitTtrpgOpenOracleCandidateFactV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
-import type { TtrpgOpenOracleFactProposalV1 } from '../../src/lib/ttrpg/open-fact-ledger'
-import * as gm from '../../src/lib/ttrpg/open-gm-oracle-context'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
+import type { TtrpgOpenOracleFactProposalV1 } from '../../src/lib/legacy-compat/ttrpg/open-fact-ledger'
+import * as gm from '../../src/lib/legacy-compat/ttrpg/open-gm-oracle-context'
 import { closeTtrpgOpenReviewedCommonOracleWindowV1 } from '../../src/lib/ttrpg/open-common-oracle-close'
 import { finishTtrpgOpenCommonOracleDraftV1 } from '../../src/lib/ttrpg/open-runtime-draft-stop'
 

@@ -1,6 +1,6 @@
-import type { WorkspaceContentRevisionVectorV1 } from '../authoring/content-revision'
-import type { AgentContextEvidence } from './context-policy'
-import type { PromptExecutionEvidenceV1 } from './prompt-execution'
+import type { WorkspaceContentRevisionVectorV1 } from '../authoring/content-revision';
+import type { AgentContextEvidence } from './context-policy';
+import type { PromptExecutionEvidenceV1 } from './prompt-execution';
 
 export const HARNESS_LIFECYCLE_STAGE_IDS_V1 = [
   'author-edits-saved',

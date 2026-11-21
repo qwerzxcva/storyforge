@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { routeTtrpgOpenIntentV1, routeTtrpgOpenIntentV2 } from '../../src/lib/ttrpg/open-intent'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { routeTtrpgOpenIntentV1, routeTtrpgOpenIntentV2 } from '../../src/lib/legacy-compat/ttrpg/open-intent'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { intentRoutingFixtureV1, intentRoutingLegacyCasesV1 } from '../helpers/open-intent-routing'
 
 describe('R-TTRPGOPEN16 frozen legacy method routing', () => {

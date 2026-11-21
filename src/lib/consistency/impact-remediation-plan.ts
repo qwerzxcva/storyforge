@@ -1,8 +1,5 @@
-import { hashCanonicalValue } from '../agent/run/hash'
-import type {
-  EditImpactGraphNodeKindV1,
-  EditImpactGraphV1,
-} from './impact-analysis'
+import { hashCanonicalValue } from '../agent/run/hash';
+import type { EditImpactGraphNodeKindV1, EditImpactGraphV1 } from './impact-analysis';
 
 export const IMPACT_REMEDIATION_PLAN_VERSION_V1 = 1 as const
 

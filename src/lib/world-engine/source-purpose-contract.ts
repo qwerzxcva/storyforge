@@ -1,8 +1,8 @@
-import { sha256 } from '@noble/hashes/sha2.js'
-import { canonicalStringify } from '../agent/run/hash'
-import { UPPER_PRODUCT_KINDS_V1, type UpperProductKindV1 } from '../types/product-identity'
-import type { WorldSourceDeclarationV1 } from '../types/world-sharing'
-import { parseWorldSourceDeclarationV1 } from './source-declaration'
+import { sha256 } from '@noble/hashes/sha2.js';
+import { canonicalStringify } from '../agent/run/hash';
+import { UPPER_PRODUCT_KINDS_V1, type UpperProductKindV1 } from '../types/product-identity';
+import type { WorldSourceDeclarationV1 } from '../types/world-sharing';
+import { parseWorldSourceDeclarationV1 } from './source-declaration';
 
 type ReleaseIdentity = { releaseUid: string; releaseHash: string }
 type LocalWorldOwnerIdentity = { workspaceUid: string; worldCode: string }

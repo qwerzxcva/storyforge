@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { previewTtrpgCheckProbabilityV2 } from "../../src/lib/ttrpg/house-rule";
+import { previewTtrpgCheckProbabilityV2 } from "../../src/lib/legacy-compat/ttrpg/house-rule";
 import { resolveTtrpgResolutionV2 } from "../../src/lib/ttrpg/resolution";
 import { createStoryForgeRulePackV1 } from "../../src/lib/ttrpg/storyforge-rule-pack";
 

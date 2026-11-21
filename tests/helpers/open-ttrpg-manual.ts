@@ -1,5 +1,5 @@
-import type { ProductRuntimePackageWithTtrpgV2 } from '../../src/lib/ttrpg/content-version'
-import { cloneTtrpgCompatibleOpeningTemplateV1,cloneTtrpgCompatibleOpeningTemplateWithEffectsV2 } from '../../src/lib/ttrpg/open-compatible-opening-contract'
+import type { ProductRuntimePackageWithTtrpgV2 } from '../../src/lib/legacy-compat/ttrpg/content-version'
+import { cloneTtrpgCompatibleOpeningTemplateV1,cloneTtrpgCompatibleOpeningTemplateWithEffectsV2 } from '../../src/lib/legacy-compat/ttrpg/open-compatible-opening-contract'
 import { seedOpenTtrpgSessionV1,OPEN_HUMAN_VIEWER } from './open-ttrpg-session'
 import { consentTtrpgOpenTableSeatV1,consentTtrpgOpenHostSeatV1,startTtrpgOpenTableV1,readTtrpgOpenTableV1,readTtrpgOpenManualActionCatalogV1 } from '../../src/lib/ttrpg/open-table-service'
 export async function seedManualTableV1(configure?: Parameters<typeof seedOpenTtrpgSessionV1>[1]) {

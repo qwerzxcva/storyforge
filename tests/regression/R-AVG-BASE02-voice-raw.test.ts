@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { avgRawVoiceFixtureV1 } from '../helpers/avg-voice-production-fixture'
 import { assertAvgRawVoiceArtifactV1, parseAvgVoiceByteMeasurementV1, encodeAvgRawVoicePayloadV1 } from '../../src/lib/avg/voice-raw-contract'
-import { compileAvgVoiceSpeechRequestV1 } from '../../src/lib/avg/voice-request-contract'
-import { encodeAvgVoiceExactStorageV1 } from '../../src/lib/avg/voice-exact-storage'
+import { compileAvgVoiceSpeechRequestV1 } from '../../src/lib/legacy-compat/avg/voice-request-contract'
+import { encodeAvgVoiceExactStorageV1 } from '../../src/lib/legacy-compat/avg/voice-exact-storage'
 
 describe('AVG BASE-02 exact raw voice metadata', () => {
   it('retains unknown actual cost and unreviewed provider rights without claiming Work, bytes or audition authority', async () => {

@@ -1,14 +1,10 @@
-import type { ChatMessage } from '../../types'
-import { adopt } from '../../registry/adopt'
-import {
-  parseChapterMemoryOutput,
-  prepareChapterMemoryRequest,
-  type ParsedChapterMemory,
-} from '../adapters/chapter-memory-adapter'
-import { CHAPTER_TEXT_NORMALIZATION_VERSION } from './text-normalization'
-import { loadChapterPlanSnapshot } from './plan-reconciliation'
-import { assertRecordInScope, resolveScopeLike } from '../../workspace/scope'
-import { db } from '../../db/schema'
+import type { ChatMessage } from '../../types';
+import { adopt } from '../../registry/adopt';
+import { parseChapterMemoryOutput, prepareChapterMemoryRequest, type ParsedChapterMemory } from '../adapters/chapter-memory-adapter';
+import { CHAPTER_TEXT_NORMALIZATION_VERSION } from './text-normalization';
+import { loadChapterPlanSnapshot } from './plan-reconciliation';
+import { assertRecordInScope, resolveScopeLike } from '../../workspace/scope';
+import { db } from '../../db/schema';
 
 export interface ChapterMemoryTaskResult {
   status: 'written' | 'stale' | 'parse-error'

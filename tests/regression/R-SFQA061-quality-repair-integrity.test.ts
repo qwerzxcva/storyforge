@@ -1,12 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
-import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import {
   readLatestTextAdventureHumanVisualReviewGateV1, recordTextAdventureHumanVisualReviewV1,
   requirePassedTextAdventureHumanVisualReviewGateV1, verifyPortableProductQualityGateReceiptV1,
   verifyTextAdventureHumanVisualReviewReceiptV1,
-} from '../../src/lib/product-production/quality-receipts'
+} from '../../src/lib/legacy-compat/product-production/quality-receipts'
 import { seedTextAdventureMediaRevisionWorkbenchV1 } from '../helpers/text-adventure-media-revision-workbench'
 
 const PNG = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M/wHwAF/gL+X8WgWQAAAABJRU5ErkJggg=='

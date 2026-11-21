@@ -2,14 +2,11 @@
  * WorldMapVoronoi — Voronoi 地图引擎 Canvas 组件
  * 调用 generateMap + renderMap，支持缩放/拖拽 + 渲染配置
  */
-
-import { useRef, useEffect, useState, useCallback, useMemo } from 'react'
-import { Loader2, RefreshCw, Download, Info, Settings2, Map } from 'lucide-react'
-import { generateMap, renderMap, STYLE_PRESET_LABELS } from '../../lib/world-map/engine'
-import { BIOMES } from '../../lib/world-map/engine/climate'
-import type {
-  MapGenConfig, VoronoiMapData, MapStylePreset, LayerVisibility,
-} from '../../lib/world-map/engine'
+import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
+import { Loader2, RefreshCw, Download, Info, Settings2, Map } from 'lucide-react';
+import { generateMap, renderMap, STYLE_PRESET_LABELS } from '../../lib/world-map/engine';
+import { BIOMES } from '../../lib/world-map/engine/climate';
+import type { MapGenConfig, VoronoiMapData, MapStylePreset, LayerVisibility } from '../../lib/world-map/engine';
 
 interface Props {
   config?: Partial<MapGenConfig>

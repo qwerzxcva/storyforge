@@ -2,21 +2,11 @@
  * WorldTreeSidebar — 世界树导航面板
  * 可折叠树形列表，支持展开/折叠、新建/删除
  */
-
-import { useState, useCallback } from 'react'
-import {
-  ChevronRight,
-  ChevronDown,
-  Plus,
-  Trash2,
-  Edit3,
-  Link,
-  PanelLeftClose,
-  PanelLeftOpen,
-} from 'lucide-react'
-import { useWorldNodeStore, type WorldTreeNode } from '../../stores/world-node'
-import { parseWorldPortals } from '../../lib/utils/world-portals'
-import { useDialog } from '../shared/Dialog'
+import { useState, useCallback } from 'react';
+import { ChevronRight, ChevronDown, Plus, Trash2, Edit3, Link, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import { useWorldNodeStore, type WorldTreeNode } from '../../stores/world-node';
+import { parseWorldPortals } from '../../lib/utils/world-portals';
+import { useDialog } from '../shared/Dialog';
 
 interface Props {
   projectId: number

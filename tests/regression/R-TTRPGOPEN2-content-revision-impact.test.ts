@@ -3,8 +3,8 @@ import { db } from '../../src/lib/db/schema'
 import { openContentRevisionFixtureV1 } from '../helpers/open-ttrpg-content-revision'
 import { inspectTtrpgOpenContentRevisionImpactV1 as inspect } from '../../src/lib/ttrpg/open-production-content-revision-impact'
 import * as registry from '../../src/lib/agent/skill-registry'
-import { parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
-import { parseProductProductionCommandV1 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
+import { parseProductProductionCommandV1 } from '../../src/lib/legacy-compat/product-production/contracts'
 const snapshot = async () => JSON.stringify({ builds: await db.productBuilds.toArray(), productions: await db.productProductions.toArray(),
   commands: await db.productProductionCommands.toArray(), runs: await db.agentRuns.toArray(), artifacts: await db.productBuildArtifacts.toArray(),
   raw: await db.agentRunArtifacts.toArray() })

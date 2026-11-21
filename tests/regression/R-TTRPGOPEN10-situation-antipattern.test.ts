@@ -1,16 +1,16 @@
 import { describe, expect, it } from 'vitest'
-import type { TtrpgPredicateV1 } from '../../src/lib/ttrpg/open-contract'
+import type { TtrpgPredicateV1 } from '../../src/lib/legacy-compat/ttrpg/open-contract'
 import type {
   TtrpgSituationGenerationCandidateV1,
   TtrpgSituationGenerationInputV1,
-} from '../../src/lib/ttrpg/situation-generation'
+} from '../../src/lib/legacy-compat/ttrpg/situation-generation'
 import {
   calculateWeightedJaccardV1,
   checkTtrpgSituationDependenciesV1,
   detectTtrpgSituationDependencyCyclesV1,
   evaluateTtrpgSituationGenerationV1,
   getTtrpgSituationCooldownUntilWorldTurnV1,
-} from '../../src/lib/ttrpg/situation-generation'
+} from '../../src/lib/legacy-compat/ttrpg/situation-generation'
 
 const PLAYER_FACT = 'fact.player-choice'
 const PLAYER_ACTOR = 'actor:hero'

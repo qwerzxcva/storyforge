@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { estimateTokens } from '../../src/lib/ai/context-budget'
 import { getAgentSkillV1 } from '../../src/lib/agent/skill-registry'
-import { TEXT_OPEN_WORLD_PRODUCTION_TASK_CONTRACTS_V1 } from '../../src/lib/open-world/production-contract'
+import { TEXT_OPEN_WORLD_PRODUCTION_TASK_CONTRACTS_V1 } from '../../src/lib/legacy-compat/open-world/production-contract'
 import { CONTEXT_SOURCE_BY_KEY } from '../../src/lib/registry/context-sources'
 import type { TextOpenWorldCraftingEconomyCatalogV1, TextOpenWorldItemRewardCatalogV1 } from '../../src/lib/types'
 import {

@@ -1,35 +1,27 @@
-import { useState, useEffect, useMemo, useRef } from 'react'
-import { Play, Square } from 'lucide-react'
-import { usePromptStore } from '../../../stores/prompt'
-import { useWorldviewStore } from '../../../stores/worldview'
-import { useCreativeRulesStore } from '../../../stores/project-singletons'
-import { useCharacterStore } from '../../../stores/character'
-import { useOutlineStore } from '../../../stores/outline'
-import { useForeshadowStore } from '../../../stores/foreshadow'
-import { useWorldGroupStore } from '../../../stores/world-group'
-import { useAIStream } from '../../../hooks/useAIStream'
-import { renderPrompt } from '../../../lib/ai/prompt-engine'
-import { assembleBoundPrompt } from '../../../lib/ai/prompt-variable-bindings'
-import { assembleContext } from '../../../lib/registry/assemble-context'
+import { useState, useEffect, useMemo, useRef } from 'react';
+import { Play, Square } from 'lucide-react';
+import { usePromptStore } from '../../../stores/prompt';
+import { useWorldviewStore } from '../../../stores/worldview';
+import { useCreativeRulesStore } from '../../../stores/project-singletons';
+import { useCharacterStore } from '../../../stores/character';
+import { useOutlineStore } from '../../../stores/outline';
+import { useForeshadowStore } from '../../../stores/foreshadow';
+import { useWorldGroupStore } from '../../../stores/world-group';
+import { useAIStream } from '../../../hooks/useAIStream';
+import { renderPrompt } from '../../../lib/ai/prompt-engine';
+import { assembleBoundPrompt } from '../../../lib/ai/prompt-variable-bindings';
+import { assembleContext } from '../../../lib/registry/assemble-context';
 import CodexPanel from '../../codex/CodexPanel'
-import type { PromptWorkflow, PromptWorkflowStep } from '../../../lib/types/workflow'
-import type { Project } from '../../../lib/types'
-import { useActiveWork } from '../../../hooks/useActiveWork'
-import { assembleWorkflowStepVars } from './workflow-helpers'
-import {
-  prepareGenerationNode,
-  runGenerationNode,
-} from '../../../lib/generation/generation-node'
-import { createWorkflowGenerationNode } from '../../../lib/generation/workflow-generation-node'
+import type { PromptWorkflow, PromptWorkflowStep } from '../../../lib/types/workflow';
+import type { Project } from '../../../lib/types';
+import { useActiveWork } from '../../../hooks/useActiveWork';
+import { assembleWorkflowStepVars } from './workflow-helpers';
+import { prepareGenerationNode, runGenerationNode } from '../../../lib/generation/generation-node';
+import { createWorkflowGenerationNode } from '../../../lib/generation/workflow-generation-node';
 import WorkflowStepCard from './WorkflowStepCard'
-import type { StepResult } from './WorkflowStepCard'
+import type { StepResult } from './WorkflowStepCard';
 import WorkflowExecutionGraph from './WorkflowExecutionGraph'
-import {
-  collectWorkflowUpstreamInputs,
-  compileWorkflowGraph,
-  formatWorkflowUpstreamContext,
-  groupWorkflowInputsByVariable,
-} from '../../../lib/workflow/graph'
+import { collectWorkflowUpstreamInputs, compileWorkflowGraph, formatWorkflowUpstreamContext, groupWorkflowInputsByVariable } from '../../../lib/workflow/graph';
 
 export { WorkflowStepCard as StepCard } from './WorkflowStepCard'
 export type { StepResult } from './WorkflowStepCard'

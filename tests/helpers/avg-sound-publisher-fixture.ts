@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs'
-import type { AvgSoundPublisherLibrarySourceV2 } from '../../src/lib/avg/sound-publisher-library'
+import type { AvgSoundPublisherLibrarySourceV2 } from '../../src/lib/legacy-compat/avg/sound-publisher-library'
 
 /** Verbatim CC0 member and the actual first original-library-reader result.
  * Test HTTP using them is controlled; no author/producer or hearing is seeded. */

@@ -1,4 +1,4 @@
-import type { ProductionProductKindV1 } from './product-identity'
+import type { ProductionProductKindV1 } from './product-identity';
 
 export const PRODUCT_MEDIA_KINDS = [
   'background',

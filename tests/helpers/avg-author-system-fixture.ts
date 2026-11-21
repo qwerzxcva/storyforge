@@ -1,8 +1,8 @@
 import { db } from '../../src/lib/db/schema'
 import { stageAvgAuthorArtifactV1 } from '../../src/lib/avg/author-artifacts'
-import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
-import { parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
+import { parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 import { seedAvgAuthorArtifacts } from './avg-author-artifact-fixture'
 import { avgSystemFixture } from './avg-system-fixture'
 

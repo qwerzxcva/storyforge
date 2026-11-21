@@ -1,23 +1,7 @@
-import { useMemo, useRef, useState } from 'react'
-import {
-  CircleDot,
-  Link2,
-  Maximize2,
-  Plus,
-  Trash2,
-  ZoomIn,
-  ZoomOut,
-} from 'lucide-react'
-import type {
-  PromptWorkflow,
-  PromptWorkflowGraph,
-  PromptWorkflowGraphEdge,
-} from '../../../lib/types/workflow'
-import {
-  WORKFLOW_NODE_HEIGHT,
-  WORKFLOW_NODE_WIDTH,
-  workflowGraphFor,
-} from '../../../lib/workflow/graph'
+import { useMemo, useRef, useState } from 'react';
+import { CircleDot, Link2, Maximize2, Plus, Trash2, ZoomIn, ZoomOut } from 'lucide-react';
+import type { PromptWorkflow, PromptWorkflowGraph, PromptWorkflowGraphEdge } from '../../../lib/types/workflow';
+import { WORKFLOW_NODE_HEIGHT, WORKFLOW_NODE_WIDTH, workflowGraphFor } from '../../../lib/workflow/graph';
 
 interface Props {
   workflow: PromptWorkflow

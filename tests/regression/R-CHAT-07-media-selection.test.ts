@@ -1,8 +1,8 @@
 import {expect, it} from 'vitest'
-import {createChatMediaReviewSourceV1, confirmChatMediaSelectionV1, readConfirmedChatMediaV1} from '../../src/lib/character-interaction/media-selection'
-import {hashProductProductionValueV2} from '../../src/lib/product-production/hash'
+import {createChatMediaReviewSourceV1, confirmChatMediaSelectionV1, readConfirmedChatMediaV1} from '../../src/lib/legacy-compat/character-interaction/media-selection'
+import {hashProductProductionValueV2} from '../../src/lib/legacy-compat/product-production/hash'
 import type {FrozenRuntimeMediaAssetV2} from '../../src/lib/types'
-import type {ChatMediaBindingsV1} from '../../src/lib/character-interaction/media-contract'
+import type {ChatMediaBindingsV1} from '../../src/lib/legacy-compat/character-interaction/media-contract'
 import {chatNarrativeFixture} from '../helpers/chat-narrative-fixture'
 
 function fixture() {

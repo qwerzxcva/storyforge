@@ -1,16 +1,16 @@
-import { appendAgentEvent, readAgentEvents } from './conversations'
-import { publishLongformContinuationV1 } from './longform-stage-queue'
-import { parseAgentEventPayload } from '../types'
-import { readLatestChapterPostAdoptionRunV1 } from './run/chapter-post-adoption-durable'
-import { db } from '../db/schema'
-import type { Chapter, Project, WorkspaceScope } from '../types'
-import { readOwnedRows } from '../workspace/scope'
-import { restoreMasterAgentCandidatesV1 } from './run/master-durable'
-import { isMasterAgentCandidateBusinessStateMatchingV1 } from './run/master-adoption'
-import { prepareChapterPostAdoptionV1, runChapterPostAdoptionV1 } from '../prose/post-adoption-runner'
-import { hashChapterText } from '../ai/chapter-memory/text-normalization'
-import { htmlToPlainText } from '../utils/html'
-import { useAIConfigStore } from '../../stores/ai-config'
+import { appendAgentEvent, readAgentEvents } from './conversations';
+import { publishLongformContinuationV1 } from './longform-stage-queue';
+import { parseAgentEventPayload } from '../types';
+import { readLatestChapterPostAdoptionRunV1 } from './run/chapter-post-adoption-durable';
+import { db } from '../db/schema';
+import type { Chapter, Project, WorkspaceScope } from '../types';
+import { readOwnedRows } from '../workspace/scope';
+import { restoreMasterAgentCandidatesV1 } from './run/master-durable';
+import { isMasterAgentCandidateBusinessStateMatchingV1 } from './run/master-adoption';
+import { prepareChapterPostAdoptionV1, runChapterPostAdoptionV1 } from '../prose/post-adoption-runner';
+import { hashChapterText } from '../ai/chapter-memory/text-normalization';
+import { htmlToPlainText } from '../utils/html';
+import { useAIConfigStore } from '../../stores/ai-config';
 
 /** Once a master phase is verified, link each adopted chapter to the shared downstream chain. */
 export async function prepareMasterChapterPostAdoptionV1(input: {

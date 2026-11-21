@@ -1,31 +1,15 @@
 import Dexie from 'dexie'
-import { db } from '../db/schema'
-import type {
-  AgentConversation,
-  AgentEvent,
-  AgentEventKind,
-} from '../types'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveScope,
-  scopeTransactionTables,
-  stampNewRecord,
-} from '../workspace/scope'
-import type { WorkspaceScope } from '../types/world-ownership'
-import { hashCanonicalValue } from './run/hash'
-import {
-  appendPrivilegedAgentRunEventInTransactionV1,
-  readVerifiedAgentRunInTransactionV1,
-} from './run/event-store'
-import { parseAgentRunEventV1 } from './run/event-schema'
-import type { MasterCandidatePayload } from './orchestrator'
-import { parseCreativeArtifactV1, type CreativeArtifactV1 } from './creative-reliability'
-import {
-  contextManifestHashForStepAttemptV1,
-  createMasterCandidateStepReceiptV1,
-} from './run/master-step-verification'
-import { computeMasterCandidateHashV1 } from './run/master-candidate-hash'
+import { db } from '../db/schema';
+import type { AgentConversation, AgentEvent, AgentEventKind } from '../types';
+import { assertRecordInScope, readOwnedRows, resolveScope, scopeTransactionTables, stampNewRecord } from '../workspace/scope';
+import type { WorkspaceScope } from '../types/world-ownership';
+import { hashCanonicalValue } from './run/hash';
+import { appendPrivilegedAgentRunEventInTransactionV1, readVerifiedAgentRunInTransactionV1 } from './run/event-store';
+import { parseAgentRunEventV1 } from './run/event-schema';
+import type { MasterCandidatePayload } from './orchestrator';
+import { parseCreativeArtifactV1, type CreativeArtifactV1 } from './creative-reliability';
+import { contextManifestHashForStepAttemptV1, createMasterCandidateStepReceiptV1 } from './run/master-step-verification';
+import { computeMasterCandidateHashV1 } from './run/master-candidate-hash';
 
 export async function getOrCreateAgentConversation(input: {
   projectId: number

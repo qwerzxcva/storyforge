@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import Dexie, { type Transaction } from 'dexie'
 import { db } from '../../src/lib/db/schema'
-import { putMediaBlobObject } from '../../src/lib/product-production/media-blob-store'
+import { putMediaBlobObject } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import { readAvgRegionCompositeInputsV1 } from '../../src/lib/avg/image-region-composite-source'
 import { prepareNativeAvgAssembly, startNativeAvgAssembly } from '../helpers/avg-production-assembly-fixture'
 import { avgRegionProcessedFixture } from '../helpers/avg-region-processed-fixture'

@@ -1,9 +1,9 @@
 /** Synthetic five-contract release fixture; never normal author/provider acceptance. */
 import { db } from '../../src/lib/db/schema'
 import type { WorkspaceScope } from '../../src/lib/types'
-import type { ProductRuntimePackageWithTtrpgV2 } from '../../src/lib/ttrpg/content-version'
+import type { ProductRuntimePackageWithTtrpgV2 } from '../../src/lib/legacy-compat/ttrpg/content-version'
 import { createFixtureProductReleaseManifestV1 } from './product-release-v1'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 
 export async function seedOpenFixtureReleaseV1(scope: WorkspaceScope, runtimePackage: ProductRuntimePackageWithTtrpgV2,
   previous?: { id: number; version: number; manifest: Awaited<ReturnType<typeof createFixtureProductReleaseManifestV1>> }) {

@@ -6,9 +6,9 @@ import { ProductProductionDraftRejectedErrorV1 } from '../../src/lib/product-pro
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import { assertTtrpgOpenProductionMediaRequirementsV1, bindTtrpgOpenProductionMediaV1,
   ttrpgOpenProductionMediaContextV1 } from '../../src/lib/ttrpg/open-production-media'
-import { createProductProductionPlanV3 } from '../../src/lib/product-production/plan'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { parseProductRuntimePackageV1 } from '../../src/lib/product-production/runtime-package'
+import { createProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { parseProductRuntimePackageV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
 import type { ProductBuildArtifactRecordV1 } from '../../src/lib/types'
 import type { ProductProductionTaskExecutionInputV1 } from '../../src/lib/product-production/scheduler'
 import { openProductionCompilerFixtureV1 } from '../helpers/open-ttrpg-production-artifacts'

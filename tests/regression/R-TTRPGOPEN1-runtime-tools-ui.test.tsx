@@ -6,7 +6,7 @@ import { db } from '../../src/lib/db/schema'
 import TtrpgRuntimePanel from '../../src/components/ttrpg/TtrpgRuntimePanel'
 import { useTtrpgRuntimePlayerStore } from '../../src/stores/ttrpg-runtime-player'
 import { seedManualTableV1 } from '../helpers/open-ttrpg-manual'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { startTtrpgOpenConsultationDeskV1, closeTtrpgOpenConsultationDeskV1 } from '../../src/lib/ttrpg/open-consultation-desk'
 
 import { seedCurrentProductWorld, loadCurrentProductWorldSourceCatalogV1 } from '../helpers/current-product-world'

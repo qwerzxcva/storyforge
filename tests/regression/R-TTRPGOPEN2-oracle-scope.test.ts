@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { assertTtrpgOracleInterpretationScopeV1 } from '../../src/lib/ttrpg/oracle'
+import { assertTtrpgOracleInterpretationScopeV1 } from '../../src/lib/legacy-compat/ttrpg/oracle'
 import { openRuleFixture } from '../helpers/ttrpg-open-content'
 
 describe('R-TTRPGOPEN2 oracle scope', () => {

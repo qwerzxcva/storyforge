@@ -1,6 +1,6 @@
-import type { Chapter, OutlineNode } from '../types'
-import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence'
-import { htmlToPlainText } from '../utils/html'
+import type { Chapter, OutlineNode } from '../types';
+import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence';
+import { htmlToPlainText } from '../utils/html';
 
 export type InventoryExtractionMode = 'all' | 'range'
 

@@ -1,5 +1,7 @@
 # StoryForge · 故事熔炉
 
+> Android fork scope: world engine, longform, and longform nodes. Links marked “historical source” document retired implementations; they do not indicate available production or runtime features.
+
 **이야기를 쓰고, 그 세계로 들어가세요.**
 
 <!-- readme-languages:start -->
@@ -131,7 +133,7 @@ AI 동료 두 명과 오래된 해난 사고를 조사하고, 캐릭터의 비�
 
 최신 `main`을 실행하고 **TTRPG**(`跑团`)에서 제작 영역 아래의 모험을 선택하거나 `/storyforge/play`로 접속하세요. 모델을 설정하고 캐릭터를 고릅니다. AI 동료와 혼자 플레이하거나 같은 기기를 번갈아 사용할 수 있습니다. 진행 상황, 재개, 체크포인트는 로컬에 저장됩니다. 공개 온라인 멀티플레이는 배포되지 않았으며, 공유 기기의 비밀은 기기 소유자로부터 보호되지 않습니다.
 
-[플레이어 안내](./examples/ttrpg/README.md) · [제작 및 실제 플레이 검증 기록](./examples/ttrpg/fog-harbor/production-status.md)
+[플레이어 안내 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/examples/ttrpg/README.md) · [제작 및 실제 플레이 검증 기록 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/examples/ttrpg/fog-harbor/production-status.md)
 
 </details>
 
@@ -211,7 +213,7 @@ Vite가 표시하는 주소의 `/storyforge/` 경로를 열고, 사용하는 동
 
 전용 과정은 **중국어 글자 수 기준 5,000~25,000자, 3~8장**을 대상으로 브리프, 설계, 장 카드, 집필, 검토, 재작성, 출판으로 이어집니다. 실제 분량, 장 구조, 빠진 본문, 대기 중인 후보를 검사합니다. 검토 지적은 장과 근거 문장에 연결되며 원고 해시에 묶이므로 수정 후에는 최신 검토가 필요합니다. 재작성은 특정 장을 대상으로 합니다. 진행을 막는 미해결 문제는 출판을 중단시키며, 승인된 판본은 변경 불가로 저장되고 이전 판본도 유지됩니다.
 
-[제작과 완성 조건](./src/lib/short-novel/service.ts) · [전용 영속 AI 실행](./src/lib/agent/run/short-novel-durable.ts)
+[제작과 완성 조건 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/short-novel/service.ts) · [전용 영속 AI 실행 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/agent/run/short-novel-durable.ts)
 
 ### 시나리오: 각색 판단을 추적하는 구조화 장면
 
@@ -219,7 +221,7 @@ Vite가 표시하는 주소의 `/storyforge/` 경로를 열고, 사용하는 동
 
 원전에 대한 충실도와 극적 구조는 따로 검토합니다. 수정은 대상 장면과 기대 리비전을 지정하고, 잠긴 장면은 먼저 해제해야 하며 오래된 수정 후보는 차단합니다. 공개 판본은 원전·판단·장면을 고정하므로 이후 소설 편집이 공개 시나리오를 자동으로 바꾸지 않습니다.
 
-[제작과 수정](./src/lib/screenplay/production.ts) · [판본](./src/lib/screenplay/release.ts) · [렌더러](./src/lib/screenplay/renderers.ts)
+[제작과 수정 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/screenplay/production.ts) · [판본 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/screenplay/release.ts) · [렌더러 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/screenplay/renderers.ts)
 
 ### 만화: 이미지와 레터링을 별도 레이어로 관리
 
@@ -229,7 +231,7 @@ Vite가 표시하는 주소의 `/storyforge/` 경로를 열고, 사용하는 동
 
 **현재 제한:** 범용 OpenAI 호환 이미지 어댑터는 텍스트만 전송하며 참조 이미지, 고정 시드, 인페인팅을 지원하지 않는다고 명시합니다. 프롬프트에서 참조를 언급하는 것은 이미지를 보낸 증거가 아닙니다. 시각 제작에는 설정된 이미지 서비스 또는 작가의 적절한 자료와 사람의 선택·연속성 검토가 필요합니다.
 
-[제작](./src/lib/comic/production.ts) · [미디어 증거](./src/lib/comic/media-service.ts) · [레터링](./src/lib/comic/renderers.ts) · [품질 검사](./src/lib/comic/qa.ts)
+[제작 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/production.ts) · [미디어 증거 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/media-service.ts) · [레터링 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/renderers.ts) · [품질 검사 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/qa.ts)
 
 현재 기술적 과정은 `main`에 구현되어 있습니다. 제공업체 성능과 콘텐츠 품질은 계속 평가 중입니다. [능력 기준과 한계](./docs/roadmap/CAPABILITY-BASELINE.md)를 참고하세요.
 
@@ -247,12 +249,12 @@ Vite가 표시하는 주소의 `/storyforge/` 경로를 열고, 사용하는 동
 
 | 제품 | 구현된 방식 | 현재 한계 |
 |---|---|---|
-| [TTRPG / AI KP](./src/lib/ttrpg/information-boundary.ts) | 코드로 규칙·주사위·효과 처리, KP/플레이어/NPC 맥락 분리, 수신자별 비밀, 이벤트와 체크포인트 | Fog Harbor의 실제 모델 검증 기록 있음. 공개 온라인 멀티플레이 미제공 |
-| [캐릭터 대화](./src/lib/character-interaction/runtime.ts) | 고정 프로필과 말투, 장면 목표, 약속·비밀·갈등의 기억, 신뢰·친밀감·경계·존중 | 장기적인 캐릭터 품질 평가 중 |
-| [Afterstory AI 마을](./src/lib/ai-town/runtime.ts) | 하루 6개 시간대, 장소와 이동, 지식, 기억, 관계, 가벼운 관리, 오프라인 시간 보정 | 14일 리플레이 검증 있음. 장기 모델 동작과 테스트용이 아닌 미디어 품질 평가 중 |
-| [텍스트 어드벤처](./src/lib/adventure/runtime.ts) | 전제 조건, 소지품, 자원, 능력, 퀘스트, 결과를 코드로 확인 | 완성된 체험에는 작품별 검증 필요 |
-| [AVG](./src/lib/avg/runtime.ts) | 선언형 연출 지시, 배경·인물·음향 레이어, 자료 검사, 무대 스냅샷 | 완전한 시청각 제공은 검증 중 |
-| [텍스트 오픈 월드](./src/lib/open-world/runtime.ts) | 지역, 여행, 자원, 세력, 행동 일정, 시간에 따른 지역 변화 | 전체 제작과 장기 플레이 개발 중 |
+| [TTRPG / AI KP — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/ttrpg/information-boundary.ts) | 코드로 규칙·주사위·효과 처리, KP/플레이어/NPC 맥락 분리, 수신자별 비밀, 이벤트와 체크포인트 | Fog Harbor의 실제 모델 검증 기록 있음. 공개 온라인 멀티플레이 미제공 |
+| [캐릭터 대화 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/character-interaction/runtime.ts) | 고정 프로필과 말투, 장면 목표, 약속·비밀·갈등의 기억, 신뢰·친밀감·경계·존중 | 장기적인 캐릭터 품질 평가 중 |
+| [Afterstory AI 마을 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/ai-town/runtime.ts) | 하루 6개 시간대, 장소와 이동, 지식, 기억, 관계, 가벼운 관리, 오프라인 시간 보정 | 14일 리플레이 검증 있음. 장기 모델 동작과 테스트용이 아닌 미디어 품질 평가 중 |
+| [텍스트 어드벤처 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/adventure/runtime.ts) | 전제 조건, 소지품, 자원, 능력, 퀘스트, 결과를 코드로 확인 | 완성된 체험에는 작품별 검증 필요 |
+| [AVG — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/avg/runtime.ts) | 선언형 연출 지시, 배경·인물·음향 레이어, 자료 검사, 무대 스냅샷 | 완전한 시청각 제공은 검증 중 |
+| [텍스트 오픈 월드 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/runtime.ts) | 지역, 여행, 자원, 세력, 행동 일정, 시간에 따른 지역 변화 | 전체 제작과 장기 플레이 개발 중 |
 
 온라인 커뮤니티와 상용 서비스는 이후 단계의 계획입니다.
 

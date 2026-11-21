@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { parseAvgAssemblyBriefV1, parseAvgAssemblyBriefV2 } from '../../src/lib/avg/assembly-contract'
-import { buildAvgAssemblyPlanV1, buildAvgMediaAssemblyPlanV2 } from '../../src/lib/avg/assembly-plan'
+import { parseAvgAssemblyBriefV1, parseAvgAssemblyBriefV2 } from '../../src/lib/legacy-compat/avg/assembly-contract'
+import { buildAvgAssemblyPlanV1, buildAvgMediaAssemblyPlanV2 } from '../../src/lib/legacy-compat/avg/assembly-plan'
 import type { ProviderCapabilityRequirementV1 } from '../../src/lib/types'
 import { createAvgAuthoringPresetV1 } from '../../src/lib/avg/authoring-presets'
 import { parseAvgAuthorWorkspaceV1 } from '../../src/lib/avg/author-workspace-contract'
@@ -9,8 +9,8 @@ import {
   avgMediaChoiceArtifactKeyV1, avgRawMediaArtifactKeyV1, avgVisualBatchArtifactKeysV1,
   parseAvgAuthorMediaChoiceV1, parseAvgVisualProductionBatchV1, parseAvgVisualProductionRequirementV1,
   type AvgVisualProductionRequirementV1,
-} from '../../src/lib/avg/media-production-contract'
-import { parseAvgImageRecoveryV1 } from '../../src/lib/avg/media-recovery-contract'
+} from '../../src/lib/legacy-compat/avg/media-production-contract'
+import { parseAvgImageRecoveryV1 } from '../../src/lib/legacy-compat/avg/media-recovery-contract'
 
 function requirement(): AvgVisualProductionRequirementV1 {
   return { requirementKey: 'keeper.neutral', revision: 1, assetKey: 'avg.generated.keeper.neutral', name: '值班员平静立绘', altText: '同一服装的值班员',

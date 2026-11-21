@@ -4,7 +4,7 @@ import {createRoot, type Root} from 'react-dom/client'
 import {db} from '../../src/lib/db/schema'
 import BuildMediaInspector from '../../src/components/character-interaction/BuildMediaInspector'
 import BuildInspector from '../../src/components/character-interaction/BuildInspector'
-import * as source from '../../src/lib/product-production/preview-source'
+import * as source from '../../src/lib/legacy-compat/product-production/preview-source'
 import * as service from '../../src/lib/product-production/service'
 import {seedChatMediaBuildFixture} from '../helpers/chat-media-fixture'
 

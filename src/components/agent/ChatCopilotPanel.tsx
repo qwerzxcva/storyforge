@@ -1,38 +1,24 @@
 import './agent-workspace.css'
 import CodexPanel from '../codex/CodexPanel'
 import LongformAgentProgress from '../longform/LongformAgentProgress'
-import type { MasterAgentPlan } from '../../lib/agent/orchestrator'
-import { useEffect, useMemo, useRef, useState } from 'react'
-import {
-  Bot,
-  Check,
-  ChevronDown,
-  ChevronRight,
-  Loader2,
-  Mic,
-  RotateCcw,
-  Send,
-  Square,
-  Settings2,
-  Volume2,
-  Trash2,
-  X,
-} from 'lucide-react'
-import type { Project } from '../../lib/types'
-import { parseAgentEventPayload } from '../../lib/types'
-import { creativeArtifactCanAdoptV1 } from '../../lib/agent/creative-reliability'
-import { estimateCreativeRunPreviewV1 } from '../../lib/agent/creative-run-preview'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { useMasterCopilot } from './useMasterCopilot'
+import type { MasterAgentPlan } from '../../lib/agent/orchestrator';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Bot, Check, ChevronDown, ChevronRight, Loader2, Mic, RotateCcw, Send, Square, Settings2, Volume2, Trash2, X } from 'lucide-react';
+import type { Project } from '../../lib/types';
+import { parseAgentEventPayload } from '../../lib/types';
+import { creativeArtifactCanAdoptV1 } from '../../lib/agent/creative-reliability';
+import { estimateCreativeRunPreviewV1 } from '../../lib/agent/creative-run-preview';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { useMasterCopilot } from './useMasterCopilot';
 import CandidateDraftEditor from './CandidateDraftEditor'
 import CreativeArtifactSummary from './CreativeArtifactSummary'
 import HarnessEvidencePanel from './HarnessEvidencePanel'
-import type { HarnessLifecycleEvidenceV1 } from '../../lib/agent/harness-evidence'
-import { useActiveWork } from '../../hooks/useActiveWork'
-import { useCompanionStore } from '../../stores/companion'
-import CompanionPortrait, { companionPose, COMPANION_POSES } from './CompanionPortrait'
+import type { HarnessLifecycleEvidenceV1 } from '../../lib/agent/harness-evidence';
+import { useActiveWork } from '../../hooks/useActiveWork';
+import { useCompanionStore } from '../../stores/companion';
+import CompanionPortrait, { companionPose, COMPANION_POSES } from './CompanionPortrait';
 import CompanionSettings from './CompanionSettings'
-import { useCompanionVoice } from './useCompanionVoice'
+import { useCompanionVoice } from './useCompanionVoice';
 
 interface Props {
   project: Project

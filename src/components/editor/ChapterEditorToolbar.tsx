@@ -1,16 +1,13 @@
-import { BookOpenCheck, Check, ClipboardList, Eye, GitBranch, Loader2, RefreshCw, Search, ShieldCheck, StickyNote, X } from 'lucide-react'
-import { useRef, useState } from 'react'
-import { CInput, CTextarea } from '../shared/CompositionInput'
-import type { ImpactPatchCandidateV1 } from '../../lib/agent/run/impact-patch-durable'
-import type { ImpactOutlineRegenerationCandidateV1 } from '../../lib/agent/run/impact-outline-regeneration-durable'
-import type { ImpactStoryTimelineRegenerationCandidateV1 } from '../../lib/agent/run/impact-story-timeline-regeneration-durable'
-import type { ImpactDownstreamScheduleV1 } from '../../lib/agent/run/impact-downstream-schedule'
-import type {
-  ImpactAuthorReviewRecordV1,
-  ImpactReviewDecisionV1,
-} from '../../lib/agent/run/impact-review-durable'
-import type { ImpactRemediationPlanV1 } from '../../lib/consistency/impact-remediation-plan'
-import type { FutureEvolutionPlanV1 } from '../../lib/outline/future-evolution'
+import { BookOpenCheck, Check, ClipboardList, Eye, GitBranch, Loader2, RefreshCw, Search, ShieldCheck, StickyNote, X } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { CInput, CTextarea } from '../shared/CompositionInput';
+import type { ImpactPatchCandidateV1 } from '../../lib/agent/run/impact-patch-durable';
+import type { ImpactOutlineRegenerationCandidateV1 } from '../../lib/agent/run/impact-outline-regeneration-durable';
+import type { ImpactStoryTimelineRegenerationCandidateV1 } from '../../lib/agent/run/impact-story-timeline-regeneration-durable';
+import type { ImpactDownstreamScheduleV1 } from '../../lib/agent/run/impact-downstream-schedule';
+import type { ImpactAuthorReviewRecordV1, ImpactReviewDecisionV1 } from '../../lib/agent/run/impact-review-durable';
+import type { ImpactRemediationPlanV1 } from '../../lib/consistency/impact-remediation-plan';
+import type { FutureEvolutionPlanV1 } from '../../lib/outline/future-evolution';
 
 interface ImpactPatchTarget {
   id: number

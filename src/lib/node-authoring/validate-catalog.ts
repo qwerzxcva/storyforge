@@ -1,9 +1,9 @@
-import { ADOPTION_BY_TARGET } from '../registry/adoption-schema'
-import { CONTEXT_SOURCE_BY_KEY } from '../registry/context-sources'
-import { FIELD_BY_TARGET } from '../registry/field-registry'
-import { REGISTRY_BY_NAME } from '../registry/project-tables'
-import { AUTHORING_NODE_CATALOG } from './catalog'
-import { isAuthoringSemantic, type AuthoringNodeTemplate } from './contracts'
+import { ADOPTION_BY_TARGET } from '../registry/adoption-schema';
+import { CONTEXT_SOURCE_BY_KEY } from '../registry/context-sources';
+import { FIELD_BY_TARGET } from '../registry/field-registry';
+import { REGISTRY_BY_NAME } from '../registry/project-tables';
+import { AUTHORING_NODE_CATALOG } from './catalog';
+import { isAuthoringSemantic, type AuthoringNodeTemplate } from './contracts';
 
 export interface AuthoringCatalogIssue {
   code: string

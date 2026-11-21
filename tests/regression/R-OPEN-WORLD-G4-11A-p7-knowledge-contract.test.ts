@@ -10,7 +10,7 @@ import {
 import {
   canonicalProductProductionJsonV2,
   hashProductProductionValueV2,
-} from '../../src/lib/product-production/hash'
+} from '../../src/lib/legacy-compat/product-production/hash'
 import type {
   ProductProductionTaskExecutionInputV1,
 } from '../../src/lib/product-production/scheduler'

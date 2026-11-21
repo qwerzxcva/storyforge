@@ -5,7 +5,7 @@ import {
   putMediaBlobObject, readMediaBlobObjectData, readVerifiedMediaBlobObjectData,
   acquireMediaBlobLease, collectUnreferencedMediaBlobObjects,
   type MediaBlobCommitGuardV1,
-} from '../../src/lib/product-production/media-blob-store'
+} from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import type { MediaBlobObjectRecordV1 } from '../../src/lib/types'
 import { createCurrentTtrpgRuntimeTestBedV1 } from '../helpers/current-product-runtime'
 import { createBuildProductMediaResolver } from '../../src/lib/product-production/media-resolver'

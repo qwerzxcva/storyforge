@@ -1,5 +1,5 @@
-import type { TableSpec } from '../registry/types'
-import type { FactPredicateSpec } from './temporal-fact'
+import type { TableSpec } from '../registry/types';
+import type { FactPredicateSpec } from './temporal-fact';
 
 /** Serializable interpretation rules. Historical releases use their captured
  * wire contract; live authoring still derives these rules from the registry. */

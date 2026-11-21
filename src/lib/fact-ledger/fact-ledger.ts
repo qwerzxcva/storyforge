@@ -9,28 +9,17 @@
  * - ★不在此自动 supersede 旧权威事实——supersede 只发生在【作者确认候选/异常复核】时（confirmFactCandidate），
  *   候选(observation)不改 canon（§14.6「无证据 observation 不得自动升级为 Canon」）。
  */
-import { db } from '../db/schema'
-import { isCanonFactV1 } from './canon-eligibility'
-import type { TemporalFact } from '../types/temporal-fact'
-import type { ExtractedFactCandidate } from '../ai/adapters/fact-extract-adapter'
-import { CANON_ASSERTION_SOURCE_REGISTRY } from '../registry/canon-assertion-source-registry'
-import { getFactPredicate, normalizeFactValue } from '../registry/fact-predicate-registry'
-import {
-  checkSettingAssertionClashes,
-  validateSettingAssertionSource,
-  type SettingAssertionClash,
-} from './setting-assertions'
-import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence'
-import { normalizeChapterText } from '../ai/chapter-memory/text-normalization'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveScopeLike,
-  stampNewRecord,
-  scopeTransactionTables,
-} from '../workspace/scope'
-import type { WorkspaceScope } from '../types/world-ownership'
+import { db } from '../db/schema';
+import { isCanonFactV1 } from './canon-eligibility';
+import type { TemporalFact } from '../types/temporal-fact';
+import type { ExtractedFactCandidate } from '../ai/adapters/fact-extract-adapter';
+import { CANON_ASSERTION_SOURCE_REGISTRY } from '../registry/canon-assertion-source-registry';
+import { getFactPredicate, normalizeFactValue } from '../registry/fact-predicate-registry';
+import { checkSettingAssertionClashes, validateSettingAssertionSource, type SettingAssertionClash } from './setting-assertions';
+import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence';
+import { normalizeChapterText } from '../ai/chapter-memory/text-normalization';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, stampNewRecord, scopeTransactionTables } from '../workspace/scope';
+import type { WorkspaceScope } from '../types/world-ownership';
 
 const now = () => Date.now()
 

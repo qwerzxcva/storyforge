@@ -1,7 +1,7 @@
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import { exportProjectJSON, importProjectJSON } from '../lib/export/json-export'
-import type { Snapshot } from '../lib/types'
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import { exportProjectJSON, importProjectJSON } from '../lib/export/json-export';
+import type { Snapshot } from '../lib/types';
 
 /** 每个项目最多保留的快照数量 */
 const MAX_SNAPSHOTS_PER_PROJECT = 20

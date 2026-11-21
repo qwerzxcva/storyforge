@@ -60,7 +60,7 @@ import {
   textOpenWorldCreatorProductionLocatorColumnsV1,
   textOpenWorldCreatorSourceBindingFromSelectionV1,
   textOpenWorldCreatorSourceSummaryFromSelectionV1,
-} from '../../src/lib/open-world/creator-brief-persistence'
+} from '../../src/lib/legacy-compat/open-world/creator-brief-persistence'
 import { worldReleaseUidV1 } from '../../src/lib/world-engine/releases'
 import { validatePortableWorldReferenceV1 } from '../../src/lib/world-engine/world-reference'
 import '../../src/components/text-game/TextOpenWorldCreatorWorkflow'

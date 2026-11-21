@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { compileAvgSoundRequirementsV1 } from '../../src/lib/avg/sound-requirements'
-import { parseAvgSoundPlanningScopeV1 } from '../../src/lib/avg/sound-scope-contract'
+import { parseAvgSoundPlanningScopeV1 } from '../../src/lib/legacy-compat/avg/sound-scope-contract'
 import { listAvgSoundLibraryMetadataV1, listAvgSoundLibraryMetadataV2, validateAvgSoundProviderResultV1 } from '../../src/lib/avg/sound-provider-contract'
 import { createConfiguredAvgSoundTransportV1, avgSoundFromBase64V1 } from '../../src/lib/avg/sound-transport'
 import { avgSoundPlanningFixtureV1 } from '../helpers/avg-sound-planning-fixture'

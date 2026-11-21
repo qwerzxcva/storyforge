@@ -6,7 +6,7 @@ import TtrpgOpenFactPanel from '../../src/components/ttrpg/TtrpgOpenFactPanel'
 import { setupOpenEntityPlanningV1 } from '../helpers/open-entity-runtime'
 import { OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
 import * as desk from '../../src/lib/ttrpg/open-fact-desk'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import type { TtrpgOpenFactDeskReviewV1 } from '../../src/lib/ttrpg/open-fact-desk-contract'
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 

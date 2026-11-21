@@ -7,7 +7,7 @@ import {
   recallTtrpgNarrativeMemoryV1,
   recordTtrpgNarrativeMemoryV1,
   type TtrpgNarrativeMemoryV1,
-} from '../../src/lib/ttrpg/narrative-memory'
+} from '../../src/lib/legacy-compat/ttrpg/narrative-memory'
 
 const HASH_A = 'a'.repeat(64)
 const HASH_B = 'b'.repeat(64)

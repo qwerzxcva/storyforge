@@ -1,5 +1,5 @@
-import type { PromptModuleKey } from '../types/prompt'
-import type { CreativeArtifactV1 } from '../agent/creative-reliability'
+import type { PromptModuleKey } from '../types/prompt';
+import type { CreativeArtifactV1 } from '../agent/creative-reliability';
 
 /**
  * FLOW-3 graph contract.

@@ -1,44 +1,12 @@
-import { CONTEXT_SOURCE_BY_KEY } from '../../registry/context-sources'
-import { FIELD_BY_TARGET } from '../../registry/field-registry'
-import { ADOPTION_EXTENSIONS } from '../../registry/adoption-schema'
-import { REGISTRY_BY_NAME } from '../../registry/project-tables'
-import type {
-  AcceptedAgentRunContract,
-  AcceptedAgentRunContractV1,
-  AcceptedAgentRunContractV2,
-  AcceptedAgentRunContractV3,
-  AgentRunAcceptanceCriterionV1,
-  AgentRunAcceptanceKind,
-  AgentRunContract,
-  AgentRunContractV1,
-  AgentRunContractV2,
-  AgentRunContractV3,
-  AgentExecutionBoundaryV1,
-  AgentRunParentLineageV1,
-  AgentRunStepExecutionBindingV2,
-  AgentRunVerificationKind,
-  AgentRunVerificationStepV1,
-  AgentRunWorkflowKind,
-  AgentRunStepExecutionBindingV1,
-  AgentRunWriteMode,
-  AgentRunWriteTargetV1,
-} from '../../types/agent-run'
-import { canonicalStringify, hashCanonicalValue } from './hash'
-import { readAgentRunContractJsonV1 } from './checkpoint-contract'
-import { assertAgentSkillExecutionBindingIntegrityV2 } from '../execution-binding'
-import {
-  assertExactKeys,
-  assertUnique,
-  failSchema,
-  readArray,
-  readBoolean,
-  readEnum,
-  readHash,
-  readInteger,
-  readNonNegativeNumber,
-  readRecord,
-  readString,
-} from './schema-utils'
+import { CONTEXT_SOURCE_BY_KEY } from '../../registry/context-sources';
+import { FIELD_BY_TARGET } from '../../registry/field-registry';
+import { ADOPTION_EXTENSIONS } from '../../registry/adoption-schema';
+import { REGISTRY_BY_NAME } from '../../registry/project-tables';
+import type { AcceptedAgentRunContract, AcceptedAgentRunContractV1, AcceptedAgentRunContractV2, AcceptedAgentRunContractV3, AgentRunAcceptanceCriterionV1, AgentRunAcceptanceKind, AgentRunContract, AgentRunContractV1, AgentRunContractV2, AgentRunContractV3, AgentExecutionBoundaryV1, AgentRunParentLineageV1, AgentRunStepExecutionBindingV2, AgentRunVerificationKind, AgentRunVerificationStepV1, AgentRunWorkflowKind, AgentRunStepExecutionBindingV1, AgentRunWriteMode, AgentRunWriteTargetV1 } from '../../types/agent-run';
+import { canonicalStringify, hashCanonicalValue } from './hash';
+import { readAgentRunContractJsonV1 } from './checkpoint-contract';
+import { assertAgentSkillExecutionBindingIntegrityV2 } from '../execution-binding';
+import { assertExactKeys, assertUnique, failSchema, readArray, readBoolean, readEnum, readHash, readInteger, readNonNegativeNumber, readRecord, readString } from './schema-utils';
 
 const WORKFLOW_KINDS: readonly AgentRunWorkflowKind[] = [
   'direct-generation',

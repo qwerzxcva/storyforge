@@ -1,4 +1,4 @@
-import type { MotionDramaTargetSpecV1 } from './motion-drama'
+import type { MotionDramaTargetSpecV1 } from './motion-drama';
 
 export type AdaptationMedium = 'screenplay' | 'comic' | 'motion-drama'
 export type AdaptationStatus =

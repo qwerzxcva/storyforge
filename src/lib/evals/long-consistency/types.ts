@@ -1,4 +1,4 @@
-import type { ChatMessage } from '../../types'
+import type { ChatMessage } from '../../types';
 
 export type LongConsistencyTask = 'completion' | 'continuation' | 'expansion'
 export type EvalSplit = 'development' | 'held-out'

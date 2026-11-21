@@ -1,4 +1,4 @@
-import { assertNarrativeJsonV1, compareUnicodeCodePointsV1, narrativeFail } from './narrative-json'
+import { assertNarrativeJsonV1, compareUnicodeCodePointsV1, narrativeFail } from './narrative-json';
 
 /** Transport only. These coordinates never become semantic or database IDs.
  * null/boolean/number retain their JSON values. Tuples encode a string [0,id],

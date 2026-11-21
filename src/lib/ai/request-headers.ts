@@ -1,4 +1,4 @@
-import type { AIConfig, AIRequestHeader } from '../types'
+import type { AIConfig, AIRequestHeader } from '../types';
 
 type HeaderConfig = Pick<AIConfig, 'provider' | 'apiKey' | 'customHeaders' | 'apiFormat'>
 

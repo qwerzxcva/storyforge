@@ -9,11 +9,11 @@
  * 普通审校/去 AI 味/追读力仍是廉价可重算的内存产物；一致性 Agent 报告另经
  * agentConversations/agentEvents 持久化，这里只保留当前 UI 投影。
  */
-import { create } from 'zustand'
-import type { ReviewResult } from '../lib/ai/adapters/review-adapter'
-import type { AntiAIResult } from '../lib/ai/adapters/anti-ai-adapter'
-import type { ReadabilityResult } from '../lib/ai/adapters/readability-adapter'
-import type { ConsistencyAuditResult } from '../lib/ai/adapters/consistency-audit-adapter'
+import { create } from 'zustand';
+import type { ReviewResult } from '../lib/ai/adapters/review-adapter';
+import type { AntiAIResult } from '../lib/ai/adapters/anti-ai-adapter';
+import type { ReadabilityResult } from '../lib/ai/adapters/readability-adapter';
+import type { ConsistencyAuditResult } from '../lib/ai/adapters/consistency-audit-adapter';
 
 export type ReviewTab = 'consistency' | 'review' | 'antiAI' | 'readability'
 

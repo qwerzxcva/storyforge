@@ -3,8 +3,8 @@ import {db} from '../../src/lib/db/schema'
 import {seedChatNarrativeRuntimeFixture} from '../helpers/chat-narrative-fixture'
 import {seedChatRuntimeFixture} from '../helpers/character-chat-fixture'
 import {applyChatMemoryManagementPlanV1, chatMemoryPlayerViewV1, readChatMemoryManagementPlanV1} from '../../src/lib/character-interaction/memory-management'
-import {commitInteractionPlayerMessage, proposeInteractionMemory, readProductRuntimeState, readProductRuntimeStateVersion, resolveInteractionMemory} from '../../src/lib/character-interaction/runtime-api'
-import {buildInteractionContextWindow} from '../../src/lib/character-interaction/runtime'
+import {commitInteractionPlayerMessage, proposeInteractionMemory, readProductRuntimeState, readProductRuntimeStateVersion, resolveInteractionMemory} from '../../src/lib/legacy-compat/character-interaction/runtime-api'
+import {buildInteractionContextWindow} from '../../src/lib/legacy-compat/character-interaction/runtime'
 
 beforeEach(async () => {await db.delete(); await db.open()})
 afterEach(async () => {await db.delete()})

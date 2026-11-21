@@ -2,8 +2,8 @@ import { beforeEach, afterEach, describe, it, expect } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { seedOpenTtrpgSessionV1, readyOpenTtrpgSessionV1, OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
 import { readTtrpgOpenTableV1, consentTtrpgOpenTableSeatV1, startTtrpgOpenTableV1 } from '../../src/lib/ttrpg/open-table-service'
-import { loadTtrpgOpenPlayerContextV1, loadTtrpgOpenHumanViewV1, loadTtrpgOpenPartyProjectionV1 } from '../../src/lib/ttrpg/open-player-context'
-import { parseProductRuntimeState, readProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/product/runtime-core'
+import { loadTtrpgOpenPlayerContextV1, loadTtrpgOpenHumanViewV1, loadTtrpgOpenPartyProjectionV1 } from '../../src/lib/legacy-compat/ttrpg/open-player-context'
+import { parseProductRuntimeState, readProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/legacy-compat/product/runtime-core'
 describe('R-TTRPGOPEN3 real scoped player desk adapter', () => {
   beforeEach(async () => { await db.delete();await db.open() });afterEach(() => db.close())
   it('exposes no role secrets before identity confirmation, and only the selected human private projection afterwards', async () => {

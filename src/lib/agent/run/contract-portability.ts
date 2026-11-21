@@ -1,6 +1,6 @@
-import type { AgentRunContract } from '../../types'
-import { parseAgentRunContract } from './contract'
-import { canonicalStringify, hashCanonicalValue } from './hash'
+import type { AgentRunContract } from '../../types';
+import { parseAgentRunContract } from './contract';
+import { canonicalStringify, hashCanonicalValue } from './hash';
 
 export interface PortableContractResultV1 {
   contract: AgentRunContract

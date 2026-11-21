@@ -2,7 +2,7 @@ import { act, createElement } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { beforeEach, afterEach, expect, it, vi } from 'vitest'
 import Panel from '../../src/components/ttrpg/TtrpgOpenContentRevision'
-import { parseProductProductionCommandV1 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionCommandV1 } from '../../src/lib/legacy-compat/product-production/contracts'
 const m = vi.hoisted(() => ({ inspect: vi.fn(), read: vi.fn(), prepare: vi.fn(), submit: vi.fn(), prepareLocal: vi.fn(), submitLocal: vi.fn() }))
 vi.mock('../../src/lib/ttrpg/open-production-content-revision-service', () => ({ inspectTtrpgOpenContentRevisionV1: m.inspect,
   readTtrpgOpenContentRevisionDraftV1: m.read, prepareTtrpgOpenContentRevisionProposalV1: m.prepare, submitTtrpgOpenContentRevisionV1: m.submit, prepareTtrpgOpenLocalNoDispatchProposalV1: m.prepareLocal, submitTtrpgOpenLocalNoDispatchV1: m.submitLocal }))

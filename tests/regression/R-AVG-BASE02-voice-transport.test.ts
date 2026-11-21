@@ -1,9 +1,9 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { avgVoiceAssemblyFixtureV3 } from '../helpers/avg-voice-production-fixture'
-import { hashAvgVoiceTextV1 } from '../../src/lib/avg/voice-production-contract'
-import { hashAvgSpeechProtocolV1, compileAvgVoiceSpeechRequestV1 } from '../../src/lib/avg/voice-request-contract'
-import { AVG_VOICE_NETWORK_TIMEOUT_MS_V1, AVG_VOICE_TASK_TIMEOUT_MS_V1 } from '../../src/lib/avg/voice-request-contract'
-import { avgVoiceRouteBindingHashV1 } from '../../src/lib/avg/voice-assembly-contract'
+import { hashAvgVoiceTextV1 } from '../../src/lib/legacy-compat/avg/voice-production-contract'
+import { hashAvgSpeechProtocolV1, compileAvgVoiceSpeechRequestV1 } from '../../src/lib/legacy-compat/avg/voice-request-contract'
+import { AVG_VOICE_NETWORK_TIMEOUT_MS_V1, AVG_VOICE_TASK_TIMEOUT_MS_V1 } from '../../src/lib/legacy-compat/avg/voice-request-contract'
+import { avgVoiceRouteBindingHashV1 } from '../../src/lib/legacy-compat/avg/voice-assembly-contract'
 import { AvgVoiceTransportErrorV1, configuredAvgVoiceEndpointHashV1, createConfiguredAvgVoiceTransportV1 } from '../../src/lib/avg/voice-transport'
 
 // Original short PCM tone, not speech, actual account access or author review.

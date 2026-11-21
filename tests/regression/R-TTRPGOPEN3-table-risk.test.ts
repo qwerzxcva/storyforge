@@ -5,7 +5,7 @@ import { openEnvelopeV1, OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session
 import { startTtrpgOpenOperationV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { resumeTtrpgOpenOperationV1 } from '../../src/lib/ttrpg/open-operation-coordinator'
 import { readTtrpgOpenTableV1, confirmTtrpgOpenTableRiskV1, chooseTtrpgOpenTableConsequenceV1 } from '../../src/lib/ttrpg/open-table-service'
-import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/legacy-compat/product/runtime-core'
 const input = (f: Awaited<ReturnType<typeof setup>>) => ({ scope: f.scope, sessionId: f.sessionId, viewerKey: OPEN_HUMAN_VIEWER })
 async function fixture(hidden = false, privateDice = false) {
   return setup({ generic: true, cost: true, failForward: true }, pkg => {

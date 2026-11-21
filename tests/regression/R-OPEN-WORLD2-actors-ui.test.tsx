@@ -2,7 +2,7 @@ import { createElement } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, describe, expect, it } from 'vitest'
 import TextOpenWorldActorsPanel from '../../src/components/text-game/TextOpenWorldActorsPanel'
-import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
+import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
 import { createTextOpenWorldVNextFixture } from '../helpers/text-open-world-vnext-fixture'
 
 describe('Text Open World vNext · actor UI projection', () => {

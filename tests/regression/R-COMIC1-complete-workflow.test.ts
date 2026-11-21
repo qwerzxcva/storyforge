@@ -34,7 +34,7 @@ import {
   removeComicMediaAssetV1,
   selectComicMediaAssetV1,
 } from '../../src/lib/comic/media-service'
-import { assertComicPanelPlanCandidateV1 } from '../../src/lib/comic/production-contracts'
+import { assertComicPanelPlanCandidateV1 } from '../../src/lib/legacy-compat/comic/production-contracts'
 import { renderComicPageSvgV1 } from '../../src/lib/comic/renderers'
 import { inspectComicQualityV1 } from '../../src/lib/comic/qa'
 import { completeAdaptationProductionV1 } from '../../src/lib/adaptation/completion'

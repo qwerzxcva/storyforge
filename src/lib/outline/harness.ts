@@ -1,60 +1,17 @@
-import {
-  acceptAgentRunContract,
-  appendAgentRunEventV1,
-  allocateInMemoryAgentRunIdV1,
-  createContextManifestFromAssemblyV1,
-  createContextManifestV2FromV1,
-  createAgentRunV1,
-  createGenerationNodeDurableTraceV1,
-  createGenerationNodeShadowTraceV1,
-  hashCanonicalValue,
-  readAgentRunV1,
-  type AgentRunSnapshotV1,
-  type GenerationNodeDurableTraceV1,
-  type GenerationNodeShadowTraceV1,
-} from '../agent/run'
-import {
-  finalizeContextGatewayAttemptEvidenceV1,
-  recordContextGatewayPreflightEvidenceV1,
-  type ContextGatewayPreflightEvidenceV1,
-} from '../context-gateway/attempt-evidence'
-import {
-  assertAgentSkillBindingMatchesAssemblyV2,
-  createAgentSkillExecutionBindingV2,
-} from '../agent/execution-binding'
-import {
-  getAgentSkillV1,
-  resolveAgentSkillContextSourceKeysV1,
-} from '../agent/skill-registry'
-import { getOrCreateAgentConversation } from '../agent/conversations'
-import type { GenerationNodeShadowTrace } from '../generation/generation-node'
-import {
-  assertWorkspaceContentRevisionFreshV1,
-  captureWorkspaceContentRevisionV1,
-  type WorkspaceContentRevisionVectorV1,
-} from '../authoring/content-revision'
-import type { AssembleContextResult } from '../registry/types'
-import { resolveScope } from '../workspace/scope'
-import type {
-  AgentExecutionBoundaryV1,
-  AgentRunContractV3,
-  AgentSkillExecutionBindingV2,
-  WorkspaceScope,
-} from '../types'
-import type { OutlineGenerationRequest } from './generation-request'
-import {
-  encodeGenerationOperation,
-  outlineGenerationModuleKey,
-} from './generation-request'
-import {
-  OUTLINE_GENERATION_CONVERSATION_PURPOSE,
-  OUTLINE_GENERATION_TERMINAL_VERIFIER_V1,
-  persistOutlineGenerationCandidateV1,
-  type OutlineGenerationBatchRefV1,
-  type ChunkedOutlineCandidateRefV1,
-  type OutlineGenerationCandidateV1,
-} from './candidate-lifecycle'
-import { outlineGatewayExecutionFromAssemblyV1 } from './gateway-context'
+import { acceptAgentRunContract, appendAgentRunEventV1, allocateInMemoryAgentRunIdV1, createContextManifestFromAssemblyV1, createContextManifestV2FromV1, createAgentRunV1, createGenerationNodeDurableTraceV1, createGenerationNodeShadowTraceV1, hashCanonicalValue, readAgentRunV1, type AgentRunSnapshotV1, type GenerationNodeDurableTraceV1, type GenerationNodeShadowTraceV1 } from '../agent/run';
+import { finalizeContextGatewayAttemptEvidenceV1, recordContextGatewayPreflightEvidenceV1, type ContextGatewayPreflightEvidenceV1 } from '../context-gateway/attempt-evidence';
+import { assertAgentSkillBindingMatchesAssemblyV2, createAgentSkillExecutionBindingV2 } from '../agent/execution-binding';
+import { getAgentSkillV1, resolveAgentSkillContextSourceKeysV1 } from '../agent/skill-registry';
+import { getOrCreateAgentConversation } from '../agent/conversations';
+import type { GenerationNodeShadowTrace } from '../generation/generation-node';
+import { assertWorkspaceContentRevisionFreshV1, captureWorkspaceContentRevisionV1, type WorkspaceContentRevisionVectorV1 } from '../authoring/content-revision';
+import type { AssembleContextResult } from '../registry/types';
+import { resolveScope } from '../workspace/scope';
+import type { AgentExecutionBoundaryV1, AgentRunContractV3, AgentSkillExecutionBindingV2, WorkspaceScope } from '../types';
+import type { OutlineGenerationRequest } from './generation-request';
+import { encodeGenerationOperation, outlineGenerationModuleKey } from './generation-request';
+import { OUTLINE_GENERATION_CONVERSATION_PURPOSE, OUTLINE_GENERATION_TERMINAL_VERIFIER_V1, persistOutlineGenerationCandidateV1, type OutlineGenerationBatchRefV1, type ChunkedOutlineCandidateRefV1, type OutlineGenerationCandidateV1 } from './candidate-lifecycle';
+import { outlineGatewayExecutionFromAssemblyV1 } from './gateway-context';
 
 export * from './candidate-lifecycle'
 

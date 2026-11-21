@@ -7,8 +7,8 @@ import { openEnvelopeV1 } from '../helpers/open-ttrpg-session'
 import { CONTEXT_SOURCE_BY_KEY } from '../../src/lib/registry/context-sources'
 import { generateTtrpgOpenFactNormalizationCandidateV2, generateTtrpgOpenOracleCandidateV2 } from '../../src/lib/ttrpg/open-intent-harness'
 import { reviewTtrpgOpenOracleCandidateV1, closeTtrpgOpenEpochV1 } from '../../src/lib/ttrpg/runtime-commands'
-import { createTtrpgOpenNormalizationRuntimeReferencePolicyV1 } from '../../src/lib/ttrpg/open-runtime-entity-references'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { createTtrpgOpenNormalizationRuntimeReferencePolicyV1 } from '../../src/lib/legacy-compat/ttrpg/open-runtime-entity-references'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 
 describe('R-TTRPGOPEN13 normalization full-source audience before metadata and formal dispatch', { timeout: 120000 }, () => {
   beforeEach(async () => { await db.delete(); await db.open() }); afterEach(() => { vi.restoreAllMocks(); db.close() })

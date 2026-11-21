@@ -3,10 +3,10 @@ import { db } from '../../src/lib/db/schema'
 import { readyOpenTtrpgSessionV1, openEnvelopeV1, OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
 import { preparedOpenTtrpgCallV1 } from '../helpers/open-ttrpg-call'
 import { branchProductRuntimeSession, readProductRuntimeState, readProductRuntimeStateVersion, deleteProductRuntimeSession,
-  createPreviewProductRuntimeSession, replayProductRuntimeEvents, parseProductRuntimeState } from '../../src/lib/product/runtime-core'
-import { parseTtrpgRuntimeStateV2 } from '../../src/lib/ttrpg/open-runtime-contract'
-import { verifyTtrpgOpenBranchLineageV1 } from '../../src/lib/ttrpg/open-branch-contract'
-import { prepareTtrpgOpenBranchStateV1 } from '../../src/lib/ttrpg/open-branch'
+  createPreviewProductRuntimeSession, replayProductRuntimeEvents, parseProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
+import { parseTtrpgRuntimeStateV2 } from '../../src/lib/legacy-compat/ttrpg/open-runtime-contract'
+import { verifyTtrpgOpenBranchLineageV1 } from '../../src/lib/legacy-compat/ttrpg/open-branch-contract'
+import { prepareTtrpgOpenBranchStateV1 } from '../../src/lib/legacy-compat/ttrpg/open-branch'
 import { startTtrpgOpenEpochV1, startTtrpgOpenOperationV1, confirmTtrpgOpenOperationV1, completeTtrpgOpenSessionZeroV1,
   dispatchTtrpgOpenModelCallV1, finishTtrpgOpenModelCallV1, ttrpgOpenOperationCommandIdV1, inheritTtrpgOpenSourceV1,
   customizeTtrpgPlayerCharacterV1 } from '../../src/lib/ttrpg/runtime-commands'

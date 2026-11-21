@@ -1,12 +1,12 @@
-import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator'
-import { useCallback, useEffect, useState } from 'react'
-import { BookOpenText, Check, Plus, Trash2, X } from 'lucide-react'
-import type { Work } from '../../lib/types/world-ownership'
-import { createWorldWork, listWorldWorks, switchActiveWork } from '../../lib/workspace/works'
-import { deleteWork } from '../../lib/workspace/lifecycle'
-import { useDialog } from '../shared/Dialog'
+import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator';
+import { useCallback, useEffect, useState } from 'react';
+import { BookOpenText, Check, Plus, Trash2, X } from 'lucide-react';
+import type { Work } from '../../lib/types/world-ownership';
+import { createWorldWork, listWorldWorks, switchActiveWork } from '../../lib/workspace/works';
+import { deleteWork } from '../../lib/workspace/lifecycle';
+import { useDialog } from '../shared/Dialog';
 import WorkKindBadge from '../work/WorkKindBadge'
-import { isWorkAvailableInBuild } from '../../lib/runtime/app-mode'
+import { isWorkAvailableInBuild } from '../../lib/runtime/app-mode';
 
 interface Props {
   projectId: number
@@ -46,7 +46,7 @@ export default function WorldWorkManager({ projectId, activeWorkId, onChanged }:
     setBusy(true); setError('')
     try {
       await flushPendingEditsV1()
-      const work = await createWorldWork(projectId, { title })
+      const work = await createWorldWork(projectId, { title, kind: 'novel', novelProfile: 'long' })
       await switchActiveWork(projectId, work.id!)
       setTitle(''); setCreating(false)
       await onChanged()

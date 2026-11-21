@@ -1,10 +1,10 @@
-import type { Project, Work, WorkspaceScope } from '../types'
-import type { ChatMessage, PromptTemplate, PromptVariableContext } from '../types'
-import { assembleContext } from '../registry/assemble-context'
-import { resolveReadScope } from '../workspace/scope'
-import { CONTEXT_SOURCE_BY_KEY } from '../registry/context-sources'
-import { renderPrompt } from './prompt-engine'
-import { effectiveWorkKind } from '../workspace/work-kind'
+import type { Project, Work, WorkspaceScope } from '../types';
+import type { ChatMessage, PromptTemplate, PromptVariableContext } from '../types';
+import { assembleContext } from '../registry/assemble-context';
+import { resolveReadScope } from '../workspace/scope';
+import { CONTEXT_SOURCE_BY_KEY } from '../registry/context-sources';
+import { renderPrompt } from './prompt-engine';
+import { effectiveWorkKind } from '../workspace/work-kind';
 
 export function derivePromptLengthMode(targetWordCount: number): 'short' | 'medium' | 'long' {
   if (targetWordCount <= 50_000) return 'short'

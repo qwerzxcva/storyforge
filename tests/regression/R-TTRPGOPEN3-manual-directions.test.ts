@@ -2,7 +2,7 @@ import { afterEach,beforeEach,describe,expect,it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { seedManualDiscoveryDirectionsV1,firstManualRequestV1 } from '../helpers/open-ttrpg-manual'
 import { proposeTtrpgOpenManualActionV1,readTtrpgOpenTableV1 } from '../../src/lib/ttrpg/open-table-service'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { rt } from '../helpers/open-ttrpg-branch-recovery'
 
 describe('R-TTRPGOPEN3 visible manual discovery directions', { timeout: 60000 }, () => {

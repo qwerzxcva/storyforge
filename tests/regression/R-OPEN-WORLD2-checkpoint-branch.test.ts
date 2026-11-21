@@ -8,10 +8,10 @@ import {
   repairTextOpenWorldRuntimeHeadV1,
 } from '../../src/lib/open-world/checkpoints'
 import { commitTextOpenWorldCommandV1 } from '../../src/lib/open-world/commands'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
 import { commitTextOpenWorldOutcomeBatchV1 } from '../../src/lib/open-world/events'
-import { hashProductRuntimeStateV1, readProductRuntimeState, readProductRuntimeStateVersion } from '../../src/lib/product/runtime-core'
-import * as runtimeCore from '../../src/lib/product/runtime-core'
+import { hashProductRuntimeStateV1, readProductRuntimeState, readProductRuntimeStateVersion } from '../../src/lib/legacy-compat/product/runtime-core'
+import * as runtimeCore from '../../src/lib/legacy-compat/product/runtime-core'
 import type { TextOpenWorldCommandEnvelopeV1, TextOpenWorldRuntimePackageV1 } from '../../src/lib/types'
 import { createGovernedTextOpenWorldSessionFixtureV1 } from '../helpers/text-open-world-product-session'
 import { createTextOpenWorldVNextFixture } from '../helpers/text-open-world-vnext-fixture'

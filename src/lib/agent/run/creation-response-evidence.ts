@@ -1,7 +1,7 @@
-import type { ChatResult } from '../../ai/client'
-import type { ChatMessage, WorkspaceScope } from '../../types'
-import { recordAgentRunArtifactV1 } from '../../memory/artifact-store'
-import type { AgentRunSnapshotV1 } from './event-store'
+import type { ChatResult } from '../../ai/client';
+import type { ChatMessage, WorkspaceScope } from '../../types';
+import { recordAgentRunArtifactV1 } from '../../memory/artifact-store';
+import type { AgentRunSnapshotV1 } from './event-store';
 
 interface CreationRequestEvidenceV1 {
   readonly scope: Readonly<WorkspaceScope>

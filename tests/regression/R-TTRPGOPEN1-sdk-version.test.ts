@@ -2,9 +2,9 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { createWorkspace } from '../../src/lib/workspace/create-workspace'
 import { hashCanonicalValue } from '../../src/lib/agent/run/hash'
-import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { createStoryForgeRulePackV1 } from '../../src/lib/ttrpg/storyforge-rule-pack'
-import { parseRulePackV2, projectTtrpgRulePackMechanicalCoreV1 } from '../../src/lib/ttrpg/rule-pack-v2'
+import { parseRulePackV2, projectTtrpgRulePackMechanicalCoreV1 } from '../../src/lib/legacy-compat/ttrpg/rule-pack-v2'
 import {
   assertTtrpgCreatorPackageExecutionAllowedV1,
   createSignedTtrpgCreatorPackageV1, createSignedTtrpgCreatorPackageV2,
@@ -19,11 +19,11 @@ import {
   readTtrpgRulePackVersionedV1, saveTtrpgRulePackV1, saveTtrpgRulePackV2,
   prepareTtrpgRulePackOverlayV2,
 } from '../../src/lib/ttrpg/rule-pack-library'
-import { hashTtrpgFrozenPredicateIndexV1 } from '../../src/lib/ttrpg/content-version'
-import { applyTtrpgHouseRuleOverlayV2, previewTtrpgCheckProbabilityV2 } from '../../src/lib/ttrpg/house-rule'
+import { hashTtrpgFrozenPredicateIndexV1 } from '../../src/lib/legacy-compat/ttrpg/content-version'
+import { applyTtrpgHouseRuleOverlayV2, previewTtrpgCheckProbabilityV2 } from '../../src/lib/legacy-compat/ttrpg/house-rule'
 import { applyTtrpgHouseRuleOverlayV3, type TtrpgHouseRuleOverlayV3 } from '../../src/lib/ttrpg/house-rule-v2'
 import type { RulePackV1 } from '../../src/lib/types'
-import type { RulePackV2 } from '../../src/lib/ttrpg/open-contract'
+import type { RulePackV2 } from '../../src/lib/legacy-compat/ttrpg/open-contract'
 import { openRuleFixture, openCampaignFixture } from '../helpers/ttrpg-open-content'
 
 const NOW = 1_800_000_000_000

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
 import { createTextOpenWorldVNextFixture, downgradeTextOpenWorldFixtureWithoutCrimeV1 } from '../helpers/text-open-world-vnext-fixture'
 
 describe('Text Open World vNext · vNext module schemas and reference integrity', () => {

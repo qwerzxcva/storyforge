@@ -1,7 +1,7 @@
 import {createHash} from 'node:crypto'
 import {expect, it} from 'vitest'
 import {indexChatHistoryRowsV1} from '../../src/lib/character-interaction/history-projection-rows'
-import {buildInteractionContextWindow} from '../../src/lib/character-interaction/runtime'
+import {buildInteractionContextWindow} from '../../src/lib/legacy-compat/character-interaction/runtime'
 import {selectChatCoordinatorContextV1} from '../../src/lib/character-interaction/coordinator-selection'
 import {chatHistorySelectionFixture} from '../helpers/chat-history-selection'
 import baseline from '../acceptance/character-chat-v140-projection-baseline.json'

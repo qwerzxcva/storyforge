@@ -1,25 +1,14 @@
-import { inputAreaLayoutV1 } from '../../lib/input-area-layout'
-import { useEffect, useMemo, useState } from 'react'
-import { GitBranch, Plus, Trash2 } from 'lucide-react'
-import type { Project } from '../../lib/types'
-import {
-  cultivationStageTiers,
-  parseCultivationStages,
-  stringifyCultivationStages,
-  validateCultivationStages,
-  type CultivationStage,
-  type CultivationSystem,
-} from '../../lib/types/cultivation'
-import { useCultivationStore } from '../../stores/cultivation'
-import { useWorldGroupStore } from '../../stores/world-group'
-import { useDialog } from '../shared/Dialog'
-import { useToast } from '../shared/Toast'
-import { InlineInput, InlineTextarea } from '../shared/InlineEdit'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-  useInitialRecordTarget,
-} from '../shared/initial-record-target'
+import { inputAreaLayoutV1 } from '../../lib/input-area-layout';
+import { useEffect, useMemo, useState } from 'react';
+import { GitBranch, Plus, Trash2 } from 'lucide-react';
+import type { Project } from '../../lib/types';
+import { cultivationStageTiers, parseCultivationStages, stringifyCultivationStages, validateCultivationStages, type CultivationStage, type CultivationSystem } from '../../lib/types/cultivation';
+import { useCultivationStore } from '../../stores/cultivation';
+import { useWorldGroupStore } from '../../stores/world-group';
+import { useDialog } from '../shared/Dialog';
+import { useToast } from '../shared/Toast';
+import { InlineInput, InlineTextarea } from '../shared/InlineEdit';
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes, useInitialRecordTarget } from '../shared/initial-record-target';
 
 function nextStageId(): string {
   return `stage-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`

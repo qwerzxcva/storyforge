@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { avgVoicePolicyFixtureV3 } from '../helpers/avg-voice-production-fixture'
-import { assertAvgVoiceProductionPolicyV3, avgVoiceProductionBudgetV3 } from '../../src/lib/avg/voice-production-policy'
-import { buildAvgVoiceAssemblyPlanV3 } from '../../src/lib/avg/voice-assembly-plan'
-import { AVG_VOICE_NETWORK_TIMEOUT_MS_V1, AVG_VOICE_TASK_TIMEOUT_MS_V1 } from '../../src/lib/avg/voice-request-contract'
+import { assertAvgVoiceProductionPolicyV3, avgVoiceProductionBudgetV3 } from '../../src/lib/legacy-compat/avg/voice-production-policy'
+import { buildAvgVoiceAssemblyPlanV3 } from '../../src/lib/legacy-compat/avg/voice-assembly-plan'
+import { AVG_VOICE_NETWORK_TIMEOUT_MS_V1, AVG_VOICE_TASK_TIMEOUT_MS_V1 } from '../../src/lib/legacy-compat/avg/voice-request-contract'
 
 describe('AVG private voice/combined production policy', () => {
   it.each([false, true])('closes one voice request and optional image %s against exact finite resource and completion gates', async withImage => {

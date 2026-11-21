@@ -1,87 +1,40 @@
 import Dexie from 'dexie'
-import { detailedOutlineAuthoringPostStateMatchesV1, type DetailedOutlineAuthoringSnapshotV1 } from '../detailed-outline-authoring'
-import { db } from '../../db/schema'
-import type { OutlineNode, WorkspaceScope } from '../../types'
-import {
-  assertMasterCandidateDependenciesAdoptedV1,
-  assertMasterCreativeArtifactAdoptableV1,
-  adoptMasterCandidate,
-  type ExecutedMasterCandidate,
-} from '../orchestrator'
-import { appendAgentEvent } from '../conversations'
-import { readOwnedRows, scopeTransactionTables } from '../../workspace/scope'
-import { projectScopedTables } from '../../registry/lifecycle'
-import {
-  restoreMasterAgentCandidatesV1,
-  type MasterAgentDurableCandidateV1,
-} from './master-durable'
-import { isMasterAgentRunWorkflowKindV1 } from '../workflow-catalog'
-import {
-  appendAgentRunEventV1,
-  appendPrivilegedAgentRunEventInTransactionV1,
-  readAgentRunV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { canonicalStringify, hashCanonicalValue } from './hash'
-import { parseAgentRunEventV1 } from './event-schema'
-import { adoptGeneratedOutlineItems } from '../../outline/adopt-generation'
-import { parseCharacterCandidateDraft } from '../character-copilot'
-import { parseOutlineCandidateDraft, type OutlineCopilotSnapshot } from '../outline-copilot'
-import { parseProseCandidateDraft } from '../prose-copilot'
-import { parseInspirationCandidateDraft } from '../inspiration-copilot'
-import {
-  parseStoryArcCandidateDraftForMutationV1,
-  storyArcCandidateMatchesRowV1,
-  type StoryArcCopilotSnapshot,
-} from '../story-arc-copilot'
-import {
-  characterDrivenCandidateMatchesPlanV1,
-  parseCharacterDrivenCandidateDraftV1,
-} from '../character-driven-copilot'
-import {
-  characterRevisionCandidateMatchesBusinessStateV1,
-  CharacterRevisionCopilotStaleError,
-  repairPartialCharacterRevisionAdoptionV1,
-  type CharacterRevisionCopilotSnapshotV1,
-} from '../character-revision-copilot'
-import {
-  characterSupplementCandidateMatchesBusinessStateV1,
-  type CharacterSupplementCopilotSnapshotV1,
-} from '../character-supplement-copilot'
-import {
-  parseCharacterLifecycleCandidateV1,
-  type CharacterLifecycleSnapshotV1,
-} from '../character-lifecycle-copilot'
-import {
-  parseStoryCoreCandidateDraft,
-  storyCoreCandidateMatchesRowV1,
-} from '../story-core-copilot'
-import {
-  creativeRulesCandidateMatchesRowV1,
-  parseCreativeRulesCandidateDraftV1,
-} from '../creative-rules-copilot'
-import {
-  parseWorldviewFieldCandidateDraft,
-  worldviewFieldCandidateMatchesRowV1,
-} from '../worldview-field-copilot'
-import { parseStorylineProgressCandidateDraftV1 } from '../storyline-progress-copilot'
-import { parseInspirationVersions } from '../../inspiration/workspace'
-import { plainTextToHtml } from '../../utils/html'
-import {
-  beginAgentRunRecoveryV1,
-  completeAgentRunRecoveryV1,
-} from './checkpoint'
-import { appendMasterAgentImpactReportV1 } from './master-impact'
-import { readFreshMasterCandidateStepReceiptV1 } from './master-step-verification'
-import {
-  assertWorkspaceContentRevisionAfterOutlineAppendV1,
-  assertWorkspaceContentRevisionFreshV1,
-  captureWorkspaceContentRevisionV1,
-} from '../../authoring/content-revision'
-import { maybeInjectHarnessFaultV1 } from '../dev-fault-injection'
-import { assertContextGatewayCandidateAdoptableV1 } from '../../context-gateway/execution'
-import { masterCandidateWriteTargetV1 } from './master-candidate-hash'
-import { resolveAgentSkillV1 } from '../skill-registry'
+import { detailedOutlineAuthoringPostStateMatchesV1, type DetailedOutlineAuthoringSnapshotV1 } from '../detailed-outline-authoring';
+import { db } from '../../db/schema';
+import type { OutlineNode, WorkspaceScope } from '../../types';
+import { assertMasterCandidateDependenciesAdoptedV1, assertMasterCreativeArtifactAdoptableV1, adoptMasterCandidate, type ExecutedMasterCandidate } from '../orchestrator';
+import { appendAgentEvent } from '../conversations';
+import { readOwnedRows, scopeTransactionTables } from '../../workspace/scope';
+import { projectScopedTables } from '../../registry/lifecycle';
+import { restoreMasterAgentCandidatesV1, type MasterAgentDurableCandidateV1 } from './master-durable';
+import { isMasterAgentRunWorkflowKindV1 } from '../workflow-catalog';
+import { appendAgentRunEventV1, appendPrivilegedAgentRunEventInTransactionV1, readAgentRunV1, type AgentRunSnapshotV1 } from './event-store';
+import { canonicalStringify, hashCanonicalValue } from './hash';
+import { parseAgentRunEventV1 } from './event-schema';
+import { adoptGeneratedOutlineItems } from '../../outline/adopt-generation';
+import { parseCharacterCandidateDraft } from '../character-copilot';
+import { parseOutlineCandidateDraft, type OutlineCopilotSnapshot } from '../outline-copilot';
+import { parseProseCandidateDraft } from '../prose-copilot';
+import { parseInspirationCandidateDraft } from '../inspiration-copilot';
+import { parseStoryArcCandidateDraftForMutationV1, storyArcCandidateMatchesRowV1, type StoryArcCopilotSnapshot } from '../story-arc-copilot';
+import { characterDrivenCandidateMatchesPlanV1, parseCharacterDrivenCandidateDraftV1 } from '../character-driven-copilot';
+import { characterRevisionCandidateMatchesBusinessStateV1, CharacterRevisionCopilotStaleError, repairPartialCharacterRevisionAdoptionV1, type CharacterRevisionCopilotSnapshotV1 } from '../character-revision-copilot';
+import { characterSupplementCandidateMatchesBusinessStateV1, type CharacterSupplementCopilotSnapshotV1 } from '../character-supplement-copilot';
+import { parseCharacterLifecycleCandidateV1, type CharacterLifecycleSnapshotV1 } from '../character-lifecycle-copilot';
+import { parseStoryCoreCandidateDraft, storyCoreCandidateMatchesRowV1 } from '../story-core-copilot';
+import { creativeRulesCandidateMatchesRowV1, parseCreativeRulesCandidateDraftV1 } from '../creative-rules-copilot';
+import { parseWorldviewFieldCandidateDraft, worldviewFieldCandidateMatchesRowV1 } from '../worldview-field-copilot';
+import { parseStorylineProgressCandidateDraftV1 } from '../storyline-progress-copilot';
+import { parseInspirationVersions } from '../../inspiration/workspace';
+import { plainTextToHtml } from '../../utils/html';
+import { beginAgentRunRecoveryV1, completeAgentRunRecoveryV1 } from './checkpoint';
+import { appendMasterAgentImpactReportV1 } from './master-impact';
+import { readFreshMasterCandidateStepReceiptV1 } from './master-step-verification';
+import { assertWorkspaceContentRevisionAfterOutlineAppendV1, assertWorkspaceContentRevisionFreshV1, captureWorkspaceContentRevisionV1 } from '../../authoring/content-revision';
+import { maybeInjectHarnessFaultV1 } from '../dev-fault-injection';
+import { assertContextGatewayCandidateAdoptableV1 } from '../../context-gateway/execution';
+import { masterCandidateWriteTargetV1 } from './master-candidate-hash';
+import { resolveAgentSkillV1 } from '../skill-registry';
 
 export interface MasterAgentCandidateAdoptionRefV1 {
   scope: WorkspaceScope

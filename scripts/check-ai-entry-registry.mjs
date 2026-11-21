@@ -207,54 +207,18 @@ for (const entry of registry.entries ?? []) {
 
 const actualCalls = []
 const actualTransports = []
+const governedSourceFiles = walk('src').filter(file => {
+  const source = fs.readFileSync(path.join(root, file), 'utf8')
+  return /(?:from|import\s*\()\s*['"][^'"]*(?:formal-ai-entry|useAIStream|limited-ai-transport|longform-voice\/contract)['"]/.test(source)
+})
 const scannedFiles = [
-  'src/lib/world-map/atlas/paint-preview.ts',
   ...['src/components', 'src/hooks', 'src/pages', 'src/lib/generation', 'src/lib/outline'].flatMap(dir => walk(dir)),
-  // DETAIL-1: this service is itself a formal generation entry and must not
-  // remain outside the UI/generation scanners merely because it predates them.
+  'src/lib/world-map/atlas/paint-preview.ts',
   'src/lib/ai/batch-detail-runner.ts',
-  // Q07/Q08: step and node review/revision share this formal provider service.
   'src/lib/prose/quality-transport.ts',
-  // The independently-integrated Node producer must obey the same literal
-  // entry/category/physical-caller gate once its module exists. A registered
-  // entry without any real call remains an error below, including a missing module.
-  ...(fs.existsSync(path.join(root, 'src/lib/node-authoring/field-producer.ts'))
-    ? ['src/lib/node-authoring/field-producer.ts'] : []),
-  'src/lib/ai-town/consultation.ts',
-  // CHAT-01: source suggestions remain read-only; role profiles require explicit governed adoption.
-  'src/lib/character-interaction/source-review-harness.ts',
-  'src/lib/character-interaction/role-profile-harness.ts',
-  'src/lib/character-interaction/source-units-harness.ts',
-  'src/lib/character-interaction/source-unit-confirmation-harness.ts',
-  'src/lib/character-interaction/consultation-harness.ts',
-  // G5-02 creator consultation is a formal durable service rather than a UI
-  // hook; keep its literal entry/category binding under the same machine gate.
-  'src/lib/reference-analysis/pipeline.ts',
-  // Import candidate transport is governed even though its owner is not a UI component.
-  'src/lib/import/document-parse-durable.ts',
-  'src/lib/open-world/creator-brief.ts',
-  // G5-06 Creator Artifact Agent edits are a formal durable service; direct
-  // edits share its candidate pipeline but never cross this AI entry.
-  'src/lib/open-world/creator-artifact-edit.ts',
-  // G6-01 owns the only frozen provider gateway for all six vNext open-world
-  // runtime AI skills. Later UI work must call this governed service.
-  'src/lib/open-world/runtime-ai-execution.ts',
-  // Open TTRPG has its own actor-scoped, one-send governed transport boundary.
-  'src/lib/ttrpg/open-intent-harness.ts',
-  // S2 author proposals use their own frozen Work-owned request and raw receipt.
-  'src/lib/ttrpg/open-authoring-design-harness.ts',
-  'src/lib/ttrpg/open-voice-execution.ts',
-  // Fixed-fixture offline speech evaluation is a limited transport, never a
-  // creative binding or an application/provider fallback.
-  'scripts/ttrpg-local-tts/evaluate.mjs',
-  'scripts/ttrpg-local-tts/timbre-evaluate.mjs',
-  'scripts/ttrpg-local-tts/native-voice-evaluate.mjs',
-  // G6-10's independent semantic grader is an eval-only formal model entry.
-  // It may judge redacted observations, but can never adopt product content.
-  'src/lib/evals/open-world-runtime/judge.ts',
-  // G7-11's independent release calibrator is an explicit paid eval-only call.
-  // Its output may only become Build-bound quality evidence.
-  'src/lib/open-world/creator-quality-calibration.ts',
+  ...governedSourceFiles,
+  ...(registry.entries ?? []).flatMap(entry => entry.allowedCallers ?? []),
+  ...(registry.limitedTransports ?? []).flatMap(entry => entry.allowedCallers ?? []),
   ...walk('src/lib/longform-voice'),
   ...walk('src/lib/extensions'),
 ]

@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
-import { parseAnyProductReleaseManifest } from '../../src/lib/product/releases'
-import { createTextOpenWorldInstance } from '../../src/lib/product/runtime-instances'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
+import { parseAnyProductReleaseManifest } from '../../src/lib/legacy-compat/product/releases'
+import { createTextOpenWorldInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
 import {
   createSaltRidgeShowcaseBriefV1, materializeSaltRidgeShowcase, SALT_RIDGE_SHOWCASE_PRODUCT_KEY,
   saltRidgeShowcase,

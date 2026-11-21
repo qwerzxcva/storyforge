@@ -1,4 +1,4 @@
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { setupCommonOracleSourceV1 } from './open-common-oracle-source'
 import { closeTtrpgOpenEntityDeskV1 } from '../../src/lib/ttrpg/open-entity-desk'
 import { readTtrpgOpenCommonOracleDeskV1 } from '../../src/lib/ttrpg/open-common-oracle-desk'

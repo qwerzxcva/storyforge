@@ -10,7 +10,7 @@ import {
   TEXT_OPEN_WORLD_RUNTIME_QUEST_PACKAGING_STEP_ID_V1,
   type TextOpenWorldRuntimeQuestPackagingSlotV1,
 } from '../../src/lib/open-world/runtime-quest-packaging'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { createGovernedTextOpenWorldSessionFixtureV1 } from '../helpers/text-open-world-product-session'
 import { createTextOpenWorldVNextP9Fixture } from '../helpers/text-open-world-vnext-fixture'
 

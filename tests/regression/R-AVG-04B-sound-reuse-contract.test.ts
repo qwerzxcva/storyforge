@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { parseAvgSoundRevalidationEvidenceV1 } from '../../src/lib/avg/sound-reuse-contract'
-import type { AvgGeneratedSoundSource } from '../../src/lib/avg/stage-processed-sound-source-contract'
+import type { AvgGeneratedSoundSource } from '../../src/lib/legacy-compat/avg/stage-processed-sound-source-contract'
 
 const hash = '1'.repeat(64)
 // Structural locator fixtures only. No Run, receipt, proof hash, adoption or

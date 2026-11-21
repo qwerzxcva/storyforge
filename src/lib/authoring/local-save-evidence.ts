@@ -1,4 +1,4 @@
-import type { WorkspaceScope } from '../types'
+import type { WorkspaceScope } from '../types';
 
 /** Deliberately limited to the independently owned long novel's Natural fields. */
 export const LOCAL_SAVE_NATURAL_FIELDS_V1 = [

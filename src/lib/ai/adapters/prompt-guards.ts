@@ -1,4 +1,4 @@
-import type { ChatMessage } from '../../types'
+import type { ChatMessage } from '../../types';
 
 export const SIMPLIFIED_CHINESE_OUTPUT_CONSTRAINT = [
   '【语言输出硬约束】',

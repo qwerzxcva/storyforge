@@ -1,14 +1,14 @@
-import { estimateTokens } from '../ai/context-budget'
-import type { NarrativeRecordV1, TypedValueV1 } from '../types/narrative-ir'
-import type { NarrativeTimeV1 } from '../types/narrative-time'
-import type { NarrativeIndexV1 } from '../types/narrative-index'
-import type { NarrativeDomainProjectionV1 } from '../types/narrative-projection'
-import type { WorldQueryGrantV1, WorldQueryItemV1, WorldQueryResultV1, WorldQueryV1, WorldReferenceV2 } from '../types/world-query'
-import { canonicalNarrativeJsonV1, compareUnicodeCodePointsV1, hashNarrativeValueV1 } from '../world-engine/narrative-json'
-import { parseWorldQueryGrantV1, parseWorldQueryV1, WORLD_QUERY_SORT_VERSION_V1, WORLD_QUERY_VERSION_V1, worldQueryFailV1 } from './world-query-contract'
-import { matchWorldQueryTimeV1, validateWorldQueryTimeV1 } from './world-query-time'
-import { buildWorldQueryVisibilityV1, queryVisibilityAllowsV1 } from './world-query-visibility'
-import { WORLD_SEMANTIC_REGISTRY_V4 } from '../world-engine/semantic-registry-v4'
+import { estimateTokens } from '../ai/context-budget';
+import type { NarrativeRecordV1, TypedValueV1 } from '../types/narrative-ir';
+import type { NarrativeTimeV1 } from '../types/narrative-time';
+import type { NarrativeIndexV1 } from '../types/narrative-index';
+import type { NarrativeDomainProjectionV1 } from '../types/narrative-projection';
+import type { WorldQueryGrantV1, WorldQueryItemV1, WorldQueryResultV1, WorldQueryV1, WorldReferenceV2 } from '../types/world-query';
+import { canonicalNarrativeJsonV1, compareUnicodeCodePointsV1, hashNarrativeValueV1 } from '../world-engine/narrative-json';
+import { parseWorldQueryGrantV1, parseWorldQueryV1, WORLD_QUERY_SORT_VERSION_V1, WORLD_QUERY_VERSION_V1, worldQueryFailV1 } from './world-query-contract';
+import { matchWorldQueryTimeV1, validateWorldQueryTimeV1 } from './world-query-time';
+import { buildWorldQueryVisibilityV1, queryVisibilityAllowsV1 } from './world-query-visibility';
+import { WORLD_SEMANTIC_REGISTRY_V4 } from '../world-engine/semantic-registry-v4';
 
 interface VerifiedQueryInputV1 {
   reference: WorldReferenceV2

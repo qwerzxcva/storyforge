@@ -1,10 +1,10 @@
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
-import { readTtrpgOpenModelCallRunsV1 } from '../../src/lib/ttrpg/open-model-call-evidence'
+import { readTtrpgOpenModelCallRunsV1 } from '../../src/lib/legacy-compat/ttrpg/open-model-call-evidence'
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { setupChecksFixtureV1 } from '../helpers/open-ttrpg-checks'
 import { openEnvelopeV1 } from '../helpers/open-ttrpg-session'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import * as commands from '../../src/lib/ttrpg/runtime-commands'
 import { readyOpenTtrpgSessionV1, OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
 import { operationInput } from '../helpers/open-ttrpg-branch-recovery'
@@ -14,7 +14,7 @@ import { stopTtrpgOpenTableHostingV1, readTtrpgOpenTableV1, recordTtrpgOpenTable
 import { resumeTtrpgOpenPlayV1 } from '../../src/lib/ttrpg/open-play-coordinator'
 import { delegateTtrpgOpenHostingV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { resumeTtrpgOpenHostingV1 } from '../../src/lib/ttrpg/open-hosting-coordinator'
-import { TtrpgOpenInputBudgetErrorV1 } from '../../src/lib/ttrpg/open-runtime-wire-budget'
+import { TtrpgOpenInputBudgetErrorV1 } from '../../src/lib/legacy-compat/ttrpg/open-runtime-wire-budget'
 
 const companion = JSON.stringify({ goal: '观察港口', method: '调查', targetRefs: [], declaredResources: [], declaredAssumptions: [], requestedOutcome: null })
 const kp = JSON.stringify({ paragraphs: [{ text: '你们看清了本次行动留下的结果。', sourceKeys: ['action.receipt'] }] })

@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { readTtrpgDraft, saveTtrpgDraft, prepareTtrpgBrief,
   prepareTtrpgOpenProductionBriefV3 } from '../../src/lib/ttrpg/authoring-service'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
 
 import { createFreshOpenDraftFixtureV1 as fixture } from '../helpers/open-ttrpg-fresh-authoring'

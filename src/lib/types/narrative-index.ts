@@ -1,5 +1,5 @@
-import type { NarrativeTimeV1 } from './narrative-time'
-import type { NarrativeRecordV1, SemanticKindV1, VisibilityV1 } from './narrative-ir'
+import type { NarrativeTimeV1 } from './narrative-time';
+import type { NarrativeRecordV1, SemanticKindV1, VisibilityV1 } from './narrative-ir';
 
 export const NARRATIVE_INDEX_RECIPE_V1 = 'narrative-index-v1:raw-utf8:scalar-order:1024-byte-chunks:ascii-words-unicode-pairs' as const
 export const NARRATIVE_INDEX_EDGE_KINDS_V1 = [

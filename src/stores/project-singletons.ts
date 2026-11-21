@@ -12,13 +12,8 @@
  *
  * 所有单例均直接使用当前表结构与统一工厂。
  */
-
-import type {
-  CreativeRules,
-  Geography,
-  History,
-} from '../lib/types'
-import { createProjectSingletonStore } from './_factories'
+import type { CreativeRules, Geography, History } from '../lib/types';
+import { createProjectSingletonStore } from './_factories';
 
 export const useGeographyStore = createProjectSingletonStore<'geography', Geography>({
   table: 'geographies',

@@ -5,7 +5,7 @@ import {db} from '../../src/lib/db/schema'
 import TtrpgOpenPlayTable from '../../src/components/ttrpg/TtrpgOpenPlayTable'
 import {seedManualTableV1} from '../helpers/open-ttrpg-manual'
 import {OPEN_HUMAN_VIEWER} from '../helpers/open-ttrpg-session'
-import {readProductRuntimeState} from '../../src/lib/product/runtime-core'
+import {readProductRuntimeState} from '../../src/lib/legacy-compat/product/runtime-core'
 globalThis.IS_REACT_ACT_ENVIRONMENT=true
 let host,root
 beforeEach(async()=>{await db.delete();await db.open();host=document.createElement('div');document.body.append(host);root=createRoot(host)})

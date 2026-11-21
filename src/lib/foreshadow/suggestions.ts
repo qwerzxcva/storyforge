@@ -1,9 +1,9 @@
-import { db } from '../db/schema'
-import { canonicalStringify } from '../agent/run/hash'
-import { adopt } from '../registry/adopt'
-import { projectScopedTables } from '../registry/lifecycle'
-import type { ForeshadowType, WorkspaceScope } from '../types'
-import { readOwnedRows, scopeTransactionTables } from '../workspace/scope'
+import { db } from '../db/schema';
+import { canonicalStringify } from '../agent/run/hash';
+import { adopt } from '../registry/adopt';
+import { projectScopedTables } from '../registry/lifecycle';
+import type { ForeshadowType, WorkspaceScope } from '../types';
+import { readOwnedRows, scopeTransactionTables } from '../workspace/scope';
 
 export interface ForeshadowSuggestionBaselineRowV1 {
   id: number

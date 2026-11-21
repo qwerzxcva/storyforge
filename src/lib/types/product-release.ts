@@ -1,24 +1,18 @@
-import type {
-  NarrativeModuleKind,
-  NarrativeNodeKind,
-} from './narrative-blueprint'
-import type {
-  FrozenInteractionCharacterProfile,
-  FrozenInteractionSceneTemplate,
-} from './character-interaction'
-import type { AdventureContentV1 } from './adventure'
-import type { AdventureContent } from './adventure-v2'
-import type { AvgPresentationContentV1 } from './avg'
-import type { AvgRuntimeModuleV1 } from '../avg/runtime-contract-v2'
-import type { AvgRuntimeModuleV2 } from '../avg/executable-module'
-import type { FrozenProductMediaAsset } from './product-media'
-import type { OpenWorldEvolutionContentV1 } from './open-world-evolution'
-import type { OpenWorldContentV1 } from './open-world'
-import type { RagDocumentMetadata } from './rag-library'
-import type { TtrpgRuntimeContentV1 } from './ttrpg-product'
-import type { ProductionProductKindV1 } from './product-identity'
-import type { AiTownRuntimeContentV1 } from './ai-town'
-import type { TextOpenWorldRuntimePackageV1 } from './text-open-world-runtime'
+import type { NarrativeModuleKind, NarrativeNodeKind } from './narrative-blueprint';
+import type { FrozenInteractionCharacterProfile, FrozenInteractionSceneTemplate } from './character-interaction';
+import type { AdventureContentV1 } from './adventure';
+import type { AdventureContent } from './adventure-v2';
+import type { AvgPresentationContentV1 } from './avg';
+import type { AvgRuntimeModuleV1 } from '../legacy-compat/avg/runtime-contract-v2';
+import type { AvgRuntimeModuleV2 } from '../legacy-compat/avg/executable-module';
+import type { FrozenProductMediaAsset } from './product-media';
+import type { OpenWorldEvolutionContentV1 } from './open-world-evolution';
+import type { OpenWorldContentV1 } from './open-world';
+import type { RagDocumentMetadata } from './rag-library';
+import type { TtrpgRuntimeContentV1 } from './ttrpg-product';
+import type { ProductionProductKindV1 } from './product-identity';
+import type { AiTownRuntimeContentV1 } from './ai-town';
+import type { TextOpenWorldRuntimePackageV1 } from './text-open-world-runtime';
 
 /** Product-owned selection over the neutral WorldRelease resource protocol. */
 export interface ProductWorldSourceSelectionV1 {
@@ -138,12 +132,12 @@ export interface FrozenInteractionRuntimeV2 {
   /** Experimental chat narrative module; absent in existing releases. */
   chatNarrative?: import('./chat-narrative').FrozenChatNarrativeV1
   /** Player-visible images owned by this frozen product, never by the world. */
-  chatMedia?: import('../character-interaction/media-contract').ChatMediaBindingsV1
-  chatVisualDesign?: import('../character-interaction/visual-design').ChatVisualDesignV1
+  chatMedia?: import('../legacy-compat/character-interaction/media-contract').ChatMediaBindingsV1
+  chatVisualDesign?: import('../legacy-compat/character-interaction/visual-design').ChatVisualDesignV1
   /** Attribution for converted external cards; never copied into role knowledge. */
-  chatCardCredits?: import('../character-interaction/card-credits').ChatCharacterCardCreditsV1
+  chatCardCredits?: import('../legacy-compat/character-interaction/card-credits').ChatCharacterCardCreditsV1
   /** Public author statements, frozen per release and excluded from AI knowledge. */
-  chatExperienceInfo?: import('../character-interaction/experience-info').ChatExperienceInfoV1
+  chatExperienceInfo?: import('../legacy-compat/character-interaction/experience-info').ChatExperienceInfoV1
 }
 
 export interface FrozenRuntimeMediaAssetV2 extends FrozenProductMediaAsset {
@@ -296,7 +290,7 @@ export interface ProductRuntimePackageV2 {
 }
 
 export type AnyProductRuntimePackage = ProductRuntimePackageV1 | ProductRuntimePackageV2
-  | import('../ttrpg/content-version').ProductRuntimePackageWithTtrpgV2
+  | import('../legacy-compat/ttrpg/content-version').ProductRuntimePackageWithTtrpgV2
 
 export interface ProductReleaseManifestV2 extends Omit<ProductReleaseManifestV1,
   'version' | 'productType' | 'runtimePackage' | 'sourceContracts' | 'lineage'> {
@@ -312,7 +306,7 @@ export interface ProductReleaseManifestV2 extends Omit<ProductReleaseManifestV1,
 }
 
 export type AnyProductReleaseManifest = ProductReleaseManifestV1 | ProductReleaseManifestV2
-  | import('../ttrpg/content-version').ProductReleaseManifestWithTtrpgV2
+  | import('../legacy-compat/ttrpg/content-version').ProductReleaseManifestWithTtrpgV2
 
 export interface ProductReleaseMarketplaceProvenanceV1 {
   source: 'marketplace' | 'community-bundle'

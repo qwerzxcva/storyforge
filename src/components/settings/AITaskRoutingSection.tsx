@@ -1,19 +1,9 @@
 import './ai-task-routing.css'
-import type { AIConfigPreset } from '../../lib/types'
-import {
-  AGENT_ROLE_TASK_KINDS,
-  GENERAL_AI_TASK_KINDS,
-  type AITaskKind,
-  type AITaskRoutes,
-} from '../../lib/ai/task-routing'
-import {
-  AGENT_CONTEXT_TASK_KINDS,
-  type AgentContextProfile,
-  type AgentContextProfiles,
-  type AgentContextTaskKind,
-} from '../../lib/agent/context-policy'
-import type { AgentTeamBudgetProfile } from '../../lib/agent/team-budget'
-import type { CreativeQualityModeV1 } from '../../lib/agent/creative-reliability'
+import type { AIConfigPreset } from '../../lib/types';
+import { AGENT_ROLE_TASK_KINDS, GENERAL_AI_TASK_KINDS, type AITaskKind, type AITaskRoutes } from '../../lib/ai/task-routing';
+import { AGENT_CONTEXT_TASK_KINDS, type AgentContextProfile, type AgentContextProfiles, type AgentContextTaskKind } from '../../lib/agent/context-policy';
+import type { AgentTeamBudgetProfile } from '../../lib/agent/team-budget';
+import type { CreativeQualityModeV1 } from '../../lib/agent/creative-reliability';
 
 const TASK_ROUTE_META: Record<AITaskKind, { label: string; description: string }> = {
   creation: { label: '创作生成', description: '正文、大纲、细纲、世界观与角色生成' },

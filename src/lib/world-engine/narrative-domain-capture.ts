@@ -1,16 +1,16 @@
 import Dexie from 'dexie'
-import { db } from '../db/schema'
-import { PROJECT_TABLES } from '../registry/project-tables'
-import { assertRecordInScope, resolveReadScope, scopeTransactionTables } from '../workspace/scope'
-import type { WorkspaceScope } from '../types/world-ownership'
-import type { NarrativeOwnerV1 } from '../types/narrative-ir'
-import type { NarrativeDomainRegistryV1 } from '../types/narrative-domain-registry'
-import { currentNarrativeDomainRegistryV1, narrativeDomainTableV1 } from './narrative-domain-registry'
-import type { NarrativeDomainFieldsV1 } from '../types/narrative-domain'
-import { NARRATIVE_DOMAIN_FIELDS_V1, parseNarrativeDomainFieldV1 } from '../narrative-domain/codec'
-import { portableNarrativeDomainFieldValueV1 } from '../narrative-domain/references'
-import { compareUnicodeCodePointsV1, hashNarrativeValueV1, narrativeFail } from './narrative-json'
-import { ownerDecoderV1 } from './narrative-identity'
+import { db } from '../db/schema';
+import { PROJECT_TABLES } from '../registry/project-tables';
+import { assertRecordInScope, resolveReadScope, scopeTransactionTables } from '../workspace/scope';
+import type { WorkspaceScope } from '../types/world-ownership';
+import type { NarrativeOwnerV1 } from '../types/narrative-ir';
+import type { NarrativeDomainRegistryV1 } from '../types/narrative-domain-registry';
+import { currentNarrativeDomainRegistryV1, narrativeDomainTableV1 } from './narrative-domain-registry';
+import type { NarrativeDomainFieldsV1 } from '../types/narrative-domain';
+import { NARRATIVE_DOMAIN_FIELDS_V1, parseNarrativeDomainFieldV1 } from '../narrative-domain/codec';
+import { portableNarrativeDomainFieldValueV1 } from '../narrative-domain/references';
+import { compareUnicodeCodePointsV1, hashNarrativeValueV1, narrativeFail } from './narrative-json';
+import { ownerDecoderV1 } from './narrative-identity';
 
 export type NarrativeDomainRowV1 = Record<string, unknown> & NarrativeDomainFieldsV1
 export interface NarrativeDomainCaptureV1 {

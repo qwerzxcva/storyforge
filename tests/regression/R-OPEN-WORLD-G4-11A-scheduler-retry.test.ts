@@ -3,8 +3,8 @@ import { appendAgentRunEventV1, readAgentRunV1 } from '../../src/lib/agent/run/e
 import { db } from '../../src/lib/db/schema'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
 import { draftProductProductionBriefV3, suggestProductStartingPoints } from '../../src/lib/product-production/consultation'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { createProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { createProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 import {
   ProductProductionRetryableExecutionErrorV1,
   runProductProductionSchedulerCycleV1,

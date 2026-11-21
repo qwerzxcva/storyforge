@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { readyOpenTtrpgSessionV1 } from '../helpers/open-ttrpg-session'
-import { appendProductRuntimeEvent, readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { appendProductRuntimeEvent, readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { PRODUCT_RUNTIME_EVENT_TYPES } from '../../src/lib/types'
 
 describe('R-TTRPGOPEN8 closed memory event admission', () => {

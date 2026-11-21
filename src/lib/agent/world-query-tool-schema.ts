@@ -1,6 +1,6 @@
-import type { AgentToolJsonSchema, AgentToolJsonSchemaProperty } from './types'
-import { NARRATIVE_KINDS_V1 } from '../types/narrative-ir'
-import { NARRATIVE_INDEX_EDGE_KINDS_V1 } from '../types/narrative-index'
+import type { AgentToolJsonSchema, AgentToolJsonSchemaProperty } from './types';
+import { NARRATIVE_KINDS_V1 } from '../types/narrative-ir';
+import { NARRATIVE_INDEX_EDGE_KINDS_V1 } from '../types/narrative-index';
 
 const key: AgentToolJsonSchemaProperty = { type: 'string', minLength: 1, maxLength: 4000 }
 const keys: AgentToolJsonSchemaProperty = { type: 'array', items: key }

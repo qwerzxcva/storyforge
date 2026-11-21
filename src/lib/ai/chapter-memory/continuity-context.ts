@@ -1,13 +1,9 @@
-import type { Chapter, OutlineNode, WorkspaceScope } from '../../types'
-import { readOwnedRows, resolveReadScopeLike } from '../../workspace/scope'
-import { formatHandoff } from './handoff-format'
-import { getChapterDerivedMemoryStatus, normalizeChapterText } from './text-normalization'
-import {
-  resolveCanonicalChapterSequence,
-  type CanonicalChapterEntry,
-  type ChapterSequenceAnomaly,
-} from './canonical-chapter-sequence'
-import { isPlanReconciliationCurrent } from './plan-reconciliation'
+import type { Chapter, OutlineNode, WorkspaceScope } from '../../types';
+import { readOwnedRows, resolveReadScopeLike } from '../../workspace/scope';
+import { formatHandoff } from './handoff-format';
+import { getChapterDerivedMemoryStatus, normalizeChapterText } from './text-normalization';
+import { resolveCanonicalChapterSequence, type CanonicalChapterEntry, type ChapterSequenceAnomaly } from './canonical-chapter-sequence';
+import { isPlanReconciliationCurrent } from './plan-reconciliation';
 
 export interface PreparedContinuityContext {
   current: CanonicalChapterEntry | null

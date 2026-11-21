@@ -7,7 +7,7 @@ import { createAdventureWebZipV1, readAdventureWebFileV1, readAdventureWebPackag
 import { adventureWebPlayerStorageName, isAdventureWebPlayerAssetRequest } from '../../src/lib/adventure/web-player-policy'
 import { installAdventureWebPackageV1 } from '../../src/lib/adventure/web-player-install'
 import { isWorkspaceUid } from '../../src/lib/memory/identity'
-import { createTextAdventureInstance } from '../../src/lib/product/runtime-instances'
+import { createTextAdventureInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
 import { readProductRuntimeState } from '../../src/lib/adventure/runtime-api'
 
 async function template() {

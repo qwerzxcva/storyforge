@@ -1,9 +1,9 @@
 import {adoptInteractionRuntimeCandidateV1, generateInteractionRuntimeCandidateV1} from '../../src/lib/character-interaction/harness'
-import {readProductRuntimeState, readProductRuntimeStateVersion, requestChatNarrativeTrigger} from '../../src/lib/character-interaction/runtime-api'
+import {readProductRuntimeState, readProductRuntimeStateVersion, requestChatNarrativeTrigger} from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import {chatActionReviewOutputFixture, seedChatNarrativeRuntimeFixture} from './chat-narrative-fixture'
 import {chatActionChoiceFixture, chatActionOutcomeFixture} from './chat-action-outcome'
 import {chatTurnEndActionFixture, chatTurnEndReviewFixture} from './chat-turn-end-control'
-import type {ChatTurnEndControlV1} from '../../src/lib/character-interaction/turn-end-control'
+import type {ChatTurnEndControlV1} from '../../src/lib/legacy-compat/character-interaction/turn-end-control'
 import type {ChatMessage} from '../../src/lib/types'
 
 /** Synthetic responses exercise the production Harness, never a quality score. */

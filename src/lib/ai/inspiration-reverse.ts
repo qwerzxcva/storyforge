@@ -3,16 +3,10 @@
  *
  * 用户写碎片灵感 → AI 反向生成世界观草稿、故事核心、初始角色卡
  */
-
-import type {
-  ChatMessage,
-  CharacterMoralAxis,
-  CharacterOrderAxis,
-  CharacterRoleWeight,
-} from '../types'
-import { usePromptStore } from '../../stores/prompt'
-import { renderPrompt } from './prompt-engine'
-import { extractJSON } from './adapters/import-adapter'
+import type { ChatMessage, CharacterMoralAxis, CharacterOrderAxis, CharacterRoleWeight } from '../types';
+import { usePromptStore } from '../../stores/prompt';
+import { renderPrompt } from './prompt-engine';
+import { extractJSON } from './adapters/import-adapter';
 
 // ── 类型 ────────────────────────────────────────────────────────────────
 
@@ -57,8 +51,7 @@ export interface ReverseResult {
 }
 
 // ── 多世界版类型 ─────────────────────────────────────────────────────────
-
-import type { WorldGroupType } from '../types'
+import type { WorldGroupType } from '../types';
 
 export interface ReverseWorld {
   name: string

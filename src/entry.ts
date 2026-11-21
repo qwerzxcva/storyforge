@@ -1,8 +1,8 @@
-import { IS_SHOWCASE } from './lib/showcase/policy'
-import { installRuntimeDiagnostics, recordRuntimeDiagnosticError } from './lib/diagnostics/runtime-errors'
-import { failureFeedbackLink } from './lib/diagnostics/failure-summary'
-import { buildFailureSummary } from './lib/diagnostics/build-failure-summary'
-import { acknowledgeBootstrapModuleLoadV1, reserveBootstrapModuleReloadV1 } from './lib/module-load-recovery'
+import { IS_SHOWCASE } from './lib/showcase/policy';
+import { installRuntimeDiagnostics, recordRuntimeDiagnosticError } from './lib/diagnostics/runtime-errors';
+import { failureFeedbackLink } from './lib/diagnostics/failure-summary';
+import { buildFailureSummary } from './lib/diagnostics/build-failure-summary';
+import { acknowledgeBootstrapModuleLoadV1, reserveBootstrapModuleReloadV1 } from './lib/module-load-recovery';
 
 // Keep app/store imports behind the isolation boundary; static imports run too early.
 async function start() {

@@ -1,6 +1,6 @@
-import type { GenerationGateIssue } from '../generation/generation-node'
-import { checkHeldItemAcquisition, readProjectHeldItems } from '../consistency/held-items'
-import type { DomainAgentId } from './orchestrator'
+import type { GenerationGateIssue } from '../generation/generation-node';
+import { checkHeldItemAcquisition, readProjectHeldItems } from '../consistency/held-items';
+import type { DomainAgentId } from './orchestrator';
 
 /**
  * 当前可对领域候选直接做出的零 token 硬判决。

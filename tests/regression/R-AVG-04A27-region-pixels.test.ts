@@ -1,12 +1,12 @@
 // @vitest-environment node
 import { describe, expect, it } from 'vitest'
 import { avgRegionCompositeByteFixture as fixture } from '../helpers/avg-region-composite-byte-fixture'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { encodeAvgStraightPngV1, decodeAvgStraightPngV1 } from '../../src/lib/avg/image-straight-png'
-import { deriveAvgRegionCompositeGeometryV1 } from '../../src/lib/avg/image-region-composite-contract'
+import { deriveAvgRegionCompositeGeometryV1 } from '../../src/lib/legacy-compat/avg/image-region-composite-contract'
 import { hashAvgRegionBytesV1, processAvgRegionCompositeBytesV1, verifyAvgRegionCompositeBytesV1 } from '../../src/lib/avg/image-region-composite-pixels'
 import { assertAvgImageRegionCompositeReceiptV3 } from '../../src/lib/avg/image-region-composite-receipt'
-import { parseAvgImageProcessingReceiptV1 } from '../../src/lib/avg/image-processing-contract'
+import { parseAvgImageProcessingReceiptV1 } from '../../src/lib/legacy-compat/avg/image-processing-contract'
 import { parseAvgImageProcessingReceiptV2 } from '../../src/lib/avg/image-processing-contract-v2'
 
 describe('AVG region-composition V3 physical receipt and independent recomputation', () => {

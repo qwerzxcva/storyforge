@@ -7,7 +7,7 @@ import { prepareTtrpgOpenLocalVoiceExecutionV1, readTtrpgOpenLocalVoicePreparati
 import * as runs from '../../src/lib/agent/run/event-store'
 import { readAgentRunArtifactExactV1 } from '../../src/lib/memory/artifact-store'
 import { verifyTtrpgOpenVoiceRawResultForKernelV1 } from '../../src/lib/ttrpg/open-voice-result'
-import { parseTtrpgOpenVoiceSampleClockV1, verifyTtrpgOpenGeneratedVoiceTimeline } from '../../src/lib/ttrpg/open-voice-timeline-contract'
+import { parseTtrpgOpenVoiceSampleClockV1, verifyTtrpgOpenGeneratedVoiceTimeline } from '../../src/lib/legacy-compat/ttrpg/open-voice-timeline-contract'
 import { saveTtrpgNarratorVoiceV1 } from '../../src/lib/ttrpg/narration-listening-preferences'
 import { currentTtrpgOpenVoiceProductProfileV1 } from '../../src/lib/ttrpg/open-voice-product-profile'
 

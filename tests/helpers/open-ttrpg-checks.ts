@@ -40,7 +40,7 @@ export async function checksTerminalV1(command: Awaited<ReturnType<typeof setupC
 }
 
 export async function approveChecksStageEffectV1(command: Awaited<ReturnType<typeof setupChecksFixtureV1>>['command']) {
-  const api = await import('../../src/lib/ttrpg/runtime-commands'), { readProductRuntimeState } = await import('../../src/lib/product/runtime-core'), { rt } = await import('./open-ttrpg-branch-recovery')
+  const api = await import('../../src/lib/ttrpg/runtime-commands'), { readProductRuntimeState } = await import('../../src/lib/legacy-compat/product/runtime-core'), { rt } = await import('./open-ttrpg-branch-recovery')
   const run = rt(await readProductRuntimeState(command.sessionId)).openRun!, cycle = run.stageClosures!.find(c => !c.completedRef)!, work = cycle.work.find(w => !w.completedRef)!
   const locator = { ...command, cycleKey: cycle.cycleKey, workKey: work.workKey }, request = { bindings: { actor: 'hero' }, alternativeKey: null }
   const review = await api.prepareTtrpgOpenStageEffectV1({ ...locator, request })

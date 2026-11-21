@@ -1,7 +1,7 @@
 /** Explicit isolated input, not real author approval or an actor store. */
-import type { TtrpgAuthoringSettingsV2 } from '../../src/lib/ttrpg/authoring-contract-v2'
-import type { TtrpgOpenApprovalActorV1 } from '../../src/lib/ttrpg/open-contract'
-import { proposeTtrpgOpenAuthoringSeatPlanV1 } from '../../src/lib/ttrpg/open-authoring-seat-plan'
+import type { TtrpgAuthoringSettingsV2 } from '../../src/lib/legacy-compat/ttrpg/authoring-contract-v2'
+import type { TtrpgOpenApprovalActorV1 } from '../../src/lib/legacy-compat/ttrpg/open-contract'
+import { proposeTtrpgOpenAuthoringSeatPlanV1 } from '../../src/lib/legacy-compat/ttrpg/open-authoring-seat-plan'
 import { openCampaignFixture } from './ttrpg-open-content'
 
 export function withOpenAuthoringSeatPlanFixtureV1(settings: Extract<TtrpgAuthoringSettingsV2, { runFormat: 'open' }>,

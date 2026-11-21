@@ -8,8 +8,8 @@ import {
   repairTextOpenWorldPlayerCheckpointV1,
   type TextOpenWorldSaveOwnerV1,
 } from '../../src/lib/open-world/player-saves'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { createTextOpenWorldInstance } from '../../src/lib/product/runtime-instances'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { createTextOpenWorldInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
 import type { ProductRelease } from '../../src/lib/types'
 import { createWorkspace } from '../../src/lib/workspace/create-workspace'
 import {

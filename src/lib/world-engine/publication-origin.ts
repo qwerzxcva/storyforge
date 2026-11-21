@@ -1,13 +1,13 @@
-import type { WorldRevisionOriginV1 } from '../types/world-release'
-import { assertWorldRevisionOriginV1 } from './publication-origin-contract'
-import { verifyWorldReleaseManifestV1, type VerifiedWorldReleaseV1 } from './release-codec'
-import { readWorldPublicationAuthoritySnapshotV1, type PublicationRelease } from './publication-authority-rows'
+import type { WorldRevisionOriginV1 } from '../types/world-release';
+import { assertWorldRevisionOriginV1 } from './publication-origin-contract';
+import { verifyWorldReleaseManifestV1, type VerifiedWorldReleaseV1 } from './release-codec';
+import { readWorldPublicationAuthoritySnapshotV1, type PublicationRelease } from './publication-authority-rows';
 
 type Row = Record<string, unknown>
 type Manifest = VerifiedWorldReleaseV1['manifest']
 
 export { worldRevisionOriginV1 } from './publication-origin-contract'
-import { worldRevisionOriginV1 } from './publication-origin-contract'
+import { worldRevisionOriginV1 } from './publication-origin-contract';
 
 function matchesOrigin(origin: unknown, manifest: Manifest, contentHash: string): origin is WorldRevisionOriginV1 {
   try { assertWorldRevisionOriginV1(origin) } catch { return false }

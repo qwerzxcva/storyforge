@@ -1,24 +1,8 @@
-import {createContextTextScorerV1} from './lexical-query'
-import { hashCanonicalValue } from '../agent/run/hash'
-import {
-  AGENT_CONTEXT_TASK_KINDS,
-  type AgentContextTaskKind,
-} from '../agent/context-policy'
-import type {
-  ContextAccessPolicyV1,
-  ContextResourceAuthorityV1,
-  ContextResourceDepthV1,
-  ContextResourceDescriptorV1,
-  ContextResourceKind,
-  ContextSufficiencyObligationV1,
-  ContextSufficiencyReportV1,
-  ContextTimeRangeV1,
-  FrozenResourceScopeV1,
-} from '../registry/types'
-import {
-  createContextSufficiencyReportV1,
-  isContextResourceDiscoverableV1,
-} from './contracts'
+import { createContextTextScorerV1 } from './lexical-query';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { AGENT_CONTEXT_TASK_KINDS, type AgentContextTaskKind } from '../agent/context-policy';
+import type { ContextAccessPolicyV1, ContextResourceAuthorityV1, ContextResourceDepthV1, ContextResourceDescriptorV1, ContextResourceKind, ContextSufficiencyObligationV1, ContextSufficiencyReportV1, ContextTimeRangeV1, FrozenResourceScopeV1 } from '../registry/types';
+import { createContextSufficiencyReportV1, isContextResourceDiscoverableV1 } from './contracts';
 
 export const CONTEXT_SELECTOR_VERSION_V1 = 'context-selector-v2'
 

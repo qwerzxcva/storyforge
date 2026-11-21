@@ -4,10 +4,10 @@ import { seedCurrentProductWorld, loadCurrentProductWorldSourceCatalogV1 } from 
 import { createCurrentTtrpgRuntimePackageFixture } from '../helpers/current-ttrpg-runtime-package'
 import { seedCurrentProductBuild } from '../helpers/current-product-build'
 import * as scenarioFixtures from '../helpers/ttrpg-authored-scenario'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { parseProductRuntimePackageV1 } from '../../src/lib/product-production/runtime-package'
-import { parseRulePackV1 } from '../../src/lib/ttrpg/rule-pack'
-import { assertInitialTtrpgProductStateV1 } from '../../src/lib/ttrpg/runtime'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { parseProductRuntimePackageV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
+import { parseRulePackV1 } from '../../src/lib/legacy-compat/ttrpg/rule-pack'
+import { assertInitialTtrpgProductStateV1 } from '../../src/lib/legacy-compat/ttrpg/runtime'
 import { createTtrpgViewerProjectionV1 } from '../../src/lib/ttrpg/viewer-projection'
 import {
   advanceTtrpgCharacterV1, commitTtrpgDeterministicFallbackV1, commitTtrpgEffectPlanV2,
@@ -16,7 +16,7 @@ import {
 import {
   applyProductRuntimeEvent, branchProductRuntimeSession, parseProductRuntimeState, readProductRuntimeState, readProductRuntimeStateVersion,
   readSessionEvents, replayProductRuntimeEvents,
-} from '../../src/lib/product/runtime-core'
+} from '../../src/lib/legacy-compat/product/runtime-core'
 
 async function ready(origin: 'builtin-storyforge' | 'builtin-d20-fantasy' = 'builtin-storyforge', actions = 1, phase?: 'free' | 'reaction' | 'downtime', legacyNpcSheet = false) {
   const owner = await seedCurrentProductWorld('SFQA scripted command controls')

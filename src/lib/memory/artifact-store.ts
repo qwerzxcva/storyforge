@@ -1,22 +1,10 @@
 import Dexie from 'dexie'
-import { sha256Text } from '../ai/chapter-memory/text-normalization'
-import { db } from '../db/schema'
-import type {
-  AgentRunArtifactRecordV1,
-  AgentRunEventPayloadByTypeV1,
-  ExactRunArtifactAvailabilityV1,
-  ExactRunArtifactKindV1,
-  WorkspaceScope,
-} from '../types'
-import { assertExactRunArtifactBodySafeV1 } from './evidence-policy'
-import {
-  agentRunScopeTransactionTablesV1,
-  appendPrivilegedAgentRunEventInTransactionV1,
-  readVerifiedAgentRunInTransactionV1,
-  withAgentRunMutationLockV1,
-  type AgentRunSnapshotV1,
-} from '../agent/run/event-store'
-import { parseAgentRunEventV1 } from '../agent/run/event-schema'
+import { sha256Text } from '../ai/chapter-memory/text-normalization';
+import { db } from '../db/schema';
+import type { AgentRunArtifactRecordV1, AgentRunEventPayloadByTypeV1, ExactRunArtifactAvailabilityV1, ExactRunArtifactKindV1, WorkspaceScope } from '../types';
+import { assertExactRunArtifactBodySafeV1 } from './evidence-policy';
+import { agentRunScopeTransactionTablesV1, appendPrivilegedAgentRunEventInTransactionV1, readVerifiedAgentRunInTransactionV1, withAgentRunMutationLockV1, type AgentRunSnapshotV1 } from '../agent/run/event-store';
+import { parseAgentRunEventV1 } from '../agent/run/event-schema';
 
 const HASH = /^[a-f0-9]{64}$/
 

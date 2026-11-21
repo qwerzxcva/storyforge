@@ -1,8 +1,8 @@
 import { avgVoiceConfigurationFixtureV1 } from './avg-voice-production-fixture'
 import { freezeAvgSoundPlanningScopeV1 } from '../../src/lib/avg/sound-source'
 import { compileAvgSoundRequirementsV1 } from '../../src/lib/avg/sound-requirements'
-import type { AvgSoundPlanV1 } from '../../src/lib/avg/sound-plan-contract'
-import type { AvgSoundTemplateV1 } from '../../src/lib/avg/sound-scope-contract'
+import type { AvgSoundPlanV1 } from '../../src/lib/legacy-compat/avg/sound-plan-contract'
+import type { AvgSoundTemplateV1 } from '../../src/lib/legacy-compat/avg/sound-scope-contract'
 import type { AvgAuthorSoundChoiceV1 } from '../../src/lib/avg/sound-choice-contract'
 
 /** Pure metadata fixture. No Work/Run, actual audio, licence proof, hearing or

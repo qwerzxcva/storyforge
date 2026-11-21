@@ -5,14 +5,14 @@
  * IndexedDB。v14/v15、分支定义不同的 v16 和 v17 经严格校验进入 v18；
  * 仅按表注册元数据补缺失的新增空表，不臆造注释、作者确认或运行记忆。
  */
-import type { TableSpec } from '../registry/types'
-import { PROJECT_TABLES } from '../registry/project-tables'
-import { createPortableResourceUidV1, isPortableResourceUidV1 } from '../context-gateway/resource-uid'
-import { isCurrentWorldCode } from '../workspace/identity'
-import { NARRATIVE_DOMAIN_FIELDS_V1, parseNarrativeDomainFieldV1 } from '../narrative-domain/codec'
-import { assertNarrativeDomainReferenceRowsV1 } from '../narrative-domain/integrity'
-import { inspectPortableRequiredReferencesV1, inspectPortableTableStructure, readPortableOwnerShadowV1 } from './portable-table-structure'
-import { inspectCommunityWorldOriginV1 } from '../world-engine/source-declaration'
+import type { TableSpec } from '../registry/types';
+import { PROJECT_TABLES } from '../registry/project-tables';
+import { createPortableResourceUidV1, isPortableResourceUidV1 } from '../context-gateway/resource-uid';
+import { isCurrentWorldCode } from '../workspace/identity';
+import { NARRATIVE_DOMAIN_FIELDS_V1, parseNarrativeDomainFieldV1 } from '../narrative-domain/codec';
+import { assertNarrativeDomainReferenceRowsV1 } from '../narrative-domain/integrity';
+import { inspectPortableRequiredReferencesV1, inspectPortableTableStructure, readPortableOwnerShadowV1 } from './portable-table-structure';
+import { inspectCommunityWorldOriginV1 } from '../world-engine/source-declaration';
 
 export const CURRENT_BACKUP_VERSION = 20
 

@@ -5,7 +5,7 @@ import { db } from '../../src/lib/db/schema'
 import TtrpgOpenCommonOraclePanel from '../../src/components/ttrpg/TtrpgOpenCommonOraclePanel'
 import { setupCommonOracleDeskV1 as fixture } from '../helpers/open-common-oracle-desk'
 import * as desk from '../../src/lib/ttrpg/open-common-oracle-desk'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 describe('R-TTRPGOPEN14 common fact component actual authorization, review, stopping and identity', { timeout: 120000 }, () => {

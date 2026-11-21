@@ -5,8 +5,8 @@ import {db} from '../../src/lib/db/schema'
 import MediaSelection from '../../src/components/character-interaction/MediaSelection'
 import * as authority from '../../src/lib/product-production/chat-media-authority'
 import {seedChatMediaBuildFixture} from '../helpers/chat-media-fixture'
-import {createChatMediaReviewSourceV1} from '../../src/lib/character-interaction/media-selection'
-import {hashProductProductionValueV2} from '../../src/lib/product-production/hash'
+import {createChatMediaReviewSourceV1} from '../../src/lib/legacy-compat/character-interaction/media-selection'
+import {hashProductProductionValueV2} from '../../src/lib/legacy-compat/product-production/hash'
 
 let host: HTMLDivElement, root: Root
 const made = vi.fn(), revoked = vi.fn()

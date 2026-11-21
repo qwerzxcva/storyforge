@@ -2,13 +2,9 @@
  * 地点标签选择器：双列展示自然地形 + 人文场所标签
  * 支持多选组合
  */
-import { useState } from 'react'
-import { X, ChevronDown, ChevronUp } from 'lucide-react'
-import {
-  TAG_CATEGORIES,
-  TAG_EMOJI,
-  type LocationTag,
-} from '../../lib/types/location'
+import { useState } from 'react';
+import { X, ChevronDown, ChevronUp } from 'lucide-react';
+import { TAG_CATEGORIES, TAG_EMOJI, type LocationTag } from '../../lib/types/location';
 
 interface Props {
   selected: LocationTag[]

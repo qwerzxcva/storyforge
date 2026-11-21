@@ -14,12 +14,12 @@ import {
   startTextOpenWorldCreatorBriefSessionV1,
   type TextOpenWorldCreatorBriefSessionV1,
 } from '../../src/lib/open-world/creator-brief'
-import { createTextOpenWorldCreatorSourceLocatorV1 } from '../../src/lib/open-world/creator-brief-persistence'
+import { createTextOpenWorldCreatorSourceLocatorV1 } from '../../src/lib/legacy-compat/open-world/creator-brief-persistence'
 import {
   confirmTextOpenWorldCreatorProductionPreflightV1,
   createTextOpenWorldCreatorProductionPreflightV1,
 } from '../../src/lib/open-world/creator-production-preflight'
-import { createTextOpenWorldCreatorExecutionBriefV1, readTextOpenWorldCreatorExecutionBriefV1 } from '../../src/lib/open-world/creator-production-start'
+import { createTextOpenWorldCreatorExecutionBriefV1, readTextOpenWorldCreatorExecutionBriefV1 } from '../../src/lib/legacy-compat/open-world/creator-production-start'
 import { assertTextOpenWorldBuildNewWorkV1 } from '../../src/lib/open-world/source-admission'
 import { runProductProductionSchedulerCycleV1 } from '../../src/lib/product-production/scheduler'
 import {

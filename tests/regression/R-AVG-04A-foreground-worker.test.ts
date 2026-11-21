@@ -1,12 +1,12 @@
 // @vitest-environment node
 import { createHash } from 'node:crypto'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import * as mediaBytes from '../../src/lib/product-production/media-blob-store'
-import { DECLARED_MAGENTA_ALPHA_MATTING_ID_V1 } from '../../src/lib/product-production/character-alpha-matting'
+import * as mediaBytes from '../../src/lib/legacy-compat/product-production/media-blob-store'
+import { DECLARED_MAGENTA_ALPHA_MATTING_ID_V1 } from '../../src/lib/legacy-compat/product-production/character-alpha-matting'
 import { runAvgForegroundWorkerV1, AVG_FOREGROUND_WORKER_TIMEOUT_MS_V1 } from '../../src/lib/avg/image-foreground-worker-client'
 import { executeAvgForegroundWorkerRequestV1, parseAvgForegroundWorkerReplyV1,
   type AvgForegroundWorkerReplyV1, type AvgForegroundWorkerRequestV1 } from '../../src/lib/avg/image-foreground-worker-protocol'
-import type { AvgForegroundPolicyV1 } from '../../src/lib/avg/image-foreground-contract'
+import type { AvgForegroundPolicyV1 } from '../../src/lib/legacy-compat/avg/image-foreground-contract'
 
 const policy: AvgForegroundPolicyV1 = { schema: 'storyforge.avg.foreground-policy', version: 1,
   method: 'reserved-magenta', reservedColor: '#FF00FF', subjectUsesReservedColor: false,

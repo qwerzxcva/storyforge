@@ -1,8 +1,8 @@
 /** Internal F13 planning fixture, not a produced work or real-provider acceptance. */
 import { readyOpenTtrpgSessionV1, OPEN_HUMAN_VIEWER, openEnvelopeV1 } from './open-ttrpg-session'
 import { startTtrpgOpenEpochV1, consultTtrpgOracleV1 } from '../../src/lib/ttrpg/runtime-commands'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
-import type { TtrpgOpenEntityProposalV1 } from '../../src/lib/ttrpg/open-entity-contract'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
+import type { TtrpgOpenEntityProposalV1 } from '../../src/lib/legacy-compat/ttrpg/open-entity-contract'
 
 export async function setupOpenEntityPlanningV1(configure?: Parameters<typeof readyOpenTtrpgSessionV1>[1], viewerKey = OPEN_HUMAN_VIEWER, selectedCharacterKeys?: string[]) {
   const f = await readyOpenTtrpgSessionV1('F13 original Oracle planning', pkg => {

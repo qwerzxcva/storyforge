@@ -1,6 +1,6 @@
 import {expect, it} from 'vitest'
 import {chatNextActionLimitV1} from '../../src/lib/character-interaction/narrative-pacing'
-import {DEFAULT_CHAT_NARRATIVE_SETUP_V1, parseChatNarrativeSetupV1} from '../../src/lib/character-interaction/narrative-setup'
+import {DEFAULT_CHAT_NARRATIVE_SETUP_V1, parseChatNarrativeSetupV1} from '../../src/lib/legacy-compat/character-interaction/narrative-setup'
 import type {ChatNarrativeTriggerStateV1} from '../../src/lib/types/chat-narrative'
 
 const permissions = DEFAULT_CHAT_NARRATIVE_SETUP_V1.permissions

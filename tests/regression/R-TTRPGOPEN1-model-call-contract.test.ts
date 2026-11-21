@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { parseTtrpgOpenModelCallV1, assertTtrpgOpenCallReservationV1, ttrpgOpenCallBudgetV1 } from '../../src/lib/ttrpg/open-model-calls'
-import type { TtrpgOpenEpochV1 } from '../../src/lib/ttrpg/open-coordination'
+import { parseTtrpgOpenModelCallV1, assertTtrpgOpenCallReservationV1, ttrpgOpenCallBudgetV1 } from '../../src/lib/legacy-compat/ttrpg/open-model-calls'
+import type { TtrpgOpenEpochV1 } from '../../src/lib/legacy-compat/ttrpg/open-coordination'
 const hash = 'a'.repeat(64)
 const raw = { requestKey:'session.a.epoch.1.request.1',authorizationEpochKey:'epoch.1',skillId:'prose.ttrpg-open-intent',runContractHash:hash,
   actorKey:'hero',admissionStateHash:hash,visibilityHash:hash,runtimeSourceHash:hash,

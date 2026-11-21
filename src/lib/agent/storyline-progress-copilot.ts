@@ -1,56 +1,22 @@
-import { useAIConfigStore } from '../../stores/ai-config'
-import { chat, resolveRequestConfig } from '../ai/client'
-import { supportsVerifiedJsonObjectResponseForModelV1 } from '../ai/provider-capabilities'
-import { resolveStorylineModelEvidenceV1, storylineEvidenceAnchorsV1 } from '../storyline/evidence-anchors'
-import type {
-  GenerationGateIssue,
-  GenerationNode,
-  PreparedGenerationNode,
-} from '../generation/generation-node'
-import { prepareGenerationNode } from '../generation/generation-node'
-import { assembleContext } from '../registry/assemble-context'
-import type { AdoptResult, AssembleContextResult } from '../registry/types'
-import type {
-  AIConfig,
-  Chapter,
-  ChatMessage,
-  StoryArc,
-  WorkspaceScope,
-} from '../types'
-import {
-  adoptStorylineAnalysisCandidates,
-  buildStorylineProgressPrompt,
-  parseCanonicalStorylineCandidateV1,
-  parseStorylineProgressResult,
-  validateCanonicalStorylineCandidateV1,
-  type StorylineAnalysisCandidates,
-} from '../storyline/storyline-progress'
-import {
-  readOwnedRows,
-  resolveReadScopeLike,
-} from '../workspace/scope'
-import {
-  attachAgentContextInputStateV1,
-  evidenceFromContextResult,
-  resolveAgentContextPolicy,
-  type AgentContextEvidence,
-  type AgentContextProfile,
-} from './context-policy'
-import {
-  createAgentContextCompressionSessionV1,
-  type AgentContextCompressionRuntimeV1,
-} from './context-compression'
-import {
-  buildAgentSkillInputGuidanceV1,
-  resolveAgentSkillInputStateV1,
-  resolveAgentSkillV1,
-  type AgentSkillId,
-} from './skill-registry'
-import { parseStructuredOutputV1 } from './structured-output-pipeline'
-import { hashCanonicalValue } from './run/hash'
-import type { MasterCandidateModelIdentityV1 } from './master-candidate-semantic-review'
-import { htmlToPlainText } from '../utils/html'
-import { db } from '../db/schema'
+import { useAIConfigStore } from '../../stores/ai-config';
+import { chat, resolveRequestConfig } from '../ai/client';
+import { supportsVerifiedJsonObjectResponseForModelV1 } from '../ai/provider-capabilities';
+import { resolveStorylineModelEvidenceV1, storylineEvidenceAnchorsV1 } from '../storyline/evidence-anchors';
+import type { GenerationGateIssue, GenerationNode, PreparedGenerationNode } from '../generation/generation-node';
+import { prepareGenerationNode } from '../generation/generation-node';
+import { assembleContext } from '../registry/assemble-context';
+import type { AdoptResult, AssembleContextResult } from '../registry/types';
+import type { AIConfig, Chapter, ChatMessage, StoryArc, WorkspaceScope } from '../types';
+import { adoptStorylineAnalysisCandidates, buildStorylineProgressPrompt, parseCanonicalStorylineCandidateV1, parseStorylineProgressResult, validateCanonicalStorylineCandidateV1, type StorylineAnalysisCandidates } from '../storyline/storyline-progress';
+import { readOwnedRows, resolveReadScopeLike } from '../workspace/scope';
+import { attachAgentContextInputStateV1, evidenceFromContextResult, resolveAgentContextPolicy, type AgentContextEvidence, type AgentContextProfile } from './context-policy';
+import { createAgentContextCompressionSessionV1, type AgentContextCompressionRuntimeV1 } from './context-compression';
+import { buildAgentSkillInputGuidanceV1, resolveAgentSkillInputStateV1, resolveAgentSkillV1, type AgentSkillId } from './skill-registry';
+import { parseStructuredOutputV1 } from './structured-output-pipeline';
+import { hashCanonicalValue } from './run/hash';
+import type { MasterCandidateModelIdentityV1 } from './master-candidate-semantic-review';
+import { htmlToPlainText } from '../utils/html';
+import { db } from '../db/schema';
 
 export interface StorylineProgressCopilotSnapshotV1 {
   chapterId: number

@@ -11,7 +11,7 @@ import { projectTextOpenWorldScenesV1 } from '../../src/lib/open-world/scene-pro
 import {
   createInitialTextOpenWorldSessionProjectionV1,
   deriveTextOpenWorldContextsV1,
-} from '../../src/lib/open-world/session-projection'
+} from '../../src/lib/legacy-compat/open-world/session-projection'
 import { EMPTY_PRODUCT_RUNTIME_STATE } from '../../src/lib/types'
 import { useTextOpenWorldPlayerStore } from '../../src/stores/text-open-world-player'
 import {

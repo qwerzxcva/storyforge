@@ -1,11 +1,7 @@
-import { isInspirationPreparationMode } from '../../lib/inspiration/preparation'
-import { Check, GitCompareArrows, History, Trash2, X } from 'lucide-react'
-import type { InspirationResultDiff } from '../../lib/inspiration/workspace'
-import type {
-  InspirationFragment,
-  InspirationResultMode,
-  InspirationVersion,
-} from '../../lib/types/inspiration-workspace'
+import { isInspirationPreparationMode } from '../../lib/inspiration/preparation';
+import { Check, GitCompareArrows, History, Trash2, X } from 'lucide-react';
+import type { InspirationResultDiff } from '../../lib/inspiration/workspace';
+import type { InspirationFragment, InspirationResultMode, InspirationVersion } from '../../lib/types/inspiration-workspace';
 
 const SOURCE_LABELS = {
   author: '本人灵感',

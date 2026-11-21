@@ -1,5 +1,5 @@
-import { seedRandom } from '../engine/random'
-import type { Point } from './geometry'
+import { seedRandom } from '../engine/random';
+import type { Point } from './geometry';
 
 /** Shared polygon edges must get exactly the same perturbation in either
  * direction; otherwise two adjoining land fills expose tiny water slivers. */

@@ -4,10 +4,10 @@ import {
   evaluateTtrpgPressureOnWorldTurnV1,
   parseTtrpgPressureClockV1,
   TTRPG_PRESSURE_CLOCK_TRIGGER_SOURCES,
-} from '../../src/lib/ttrpg/pressure-runtime'
-import type { TtrpgPredicateEvaluationContextV1 } from '../../src/lib/ttrpg/predicate'
-import { advanceTtrpgWorldTimeV1, createTtrpgWorldTimeV1 } from '../../src/lib/ttrpg/world-time'
-import type { TtrpgWorldTimeV1 } from '../../src/lib/ttrpg/world-time'
+} from '../../src/lib/legacy-compat/ttrpg/pressure-runtime'
+import type { TtrpgPredicateEvaluationContextV1 } from '../../src/lib/legacy-compat/ttrpg/predicate'
+import { advanceTtrpgWorldTimeV1, createTtrpgWorldTimeV1 } from '../../src/lib/legacy-compat/ttrpg/world-time'
+import type { TtrpgWorldTimeV1 } from '../../src/lib/legacy-compat/ttrpg/world-time'
 import { openCampaignFixture } from '../helpers/ttrpg-open-content'
 
 function advanceWorldTime(

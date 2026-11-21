@@ -17,12 +17,12 @@ import {
   readProductProductionDetailsV1,
   upgradeTextAdventureProductionPlanV1,
 } from '../../src/lib/product-production/service'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
-import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { createProductProductionPlanV3, parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
-import { putMediaBlobObject } from '../../src/lib/product-production/media-blob-store'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
+import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { createProductProductionPlanV3, parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
+import { putMediaBlobObject } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import { runProductProductionSchedulerCycleV1 } from '../../src/lib/product-production/scheduler'
-import { recordTextAdventureHumanVisualReviewV1 } from '../../src/lib/product-production/quality-receipts'
+import { recordTextAdventureHumanVisualReviewV1 } from '../../src/lib/legacy-compat/product-production/quality-receipts'
 import type { ProductBuildArtifactRecordV1, ProductProductionPlanV3 } from '../../src/lib/types'
 import { seedCurrentProductWorld } from '../helpers/current-product-world'
 import { seedTextAdventureMediaRevisionWorkbenchV1 } from '../helpers/text-adventure-media-revision-workbench'

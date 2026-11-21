@@ -1,12 +1,12 @@
 /**
  * 状态表 Store — 管理角色/地点/物品/势力的状态卡 CRUD
  */
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import type { StateCard, StateCategory, StateDiffItem, StateField, Character, WorkspaceScope } from '../lib/types'
-import { readStateCardFields, stringifyFields } from '../lib/types/state-card'
-import { adopt, hashAdoptRecordFieldsV1 } from '../lib/registry/adopt'
-import { assertRecordInScope, readOwnedRows, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope'
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import type { StateCard, StateCategory, StateDiffItem, StateField, Character, WorkspaceScope } from '../lib/types';
+import { readStateCardFields, stringifyFields } from '../lib/types/state-card';
+import { adopt, hashAdoptRecordFieldsV1 } from '../lib/registry/adopt';
+import { assertRecordInScope, readOwnedRows, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope';
 
 const now = () => Date.now()
 let loadRequest = 0

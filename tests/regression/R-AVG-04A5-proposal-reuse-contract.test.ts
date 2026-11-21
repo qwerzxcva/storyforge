@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import { avgVisualPlanningFixtureV4 } from '../helpers/avg-visual-planning-fixture'
-import { parseAvgVisualPlanningBriefV4 } from '../../src/lib/avg/visual-planning-brief'
-import { avgVisualPlanningTargetKeysV4,type AvgVisualProposalReuseSourceV4 } from '../../src/lib/avg/visual-planning-reuse-contract'
-import { buildAvgVisualPlanningPlanV4 } from '../../src/lib/avg/visual-planning-plan'
-import { avgVisualPlanningBudgetV4,avgVisualPlanningGateIdsV4 } from '../../src/lib/avg/visual-planning-policy'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
-import { parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { parseAvgVisualPlanningBriefV4 } from '../../src/lib/legacy-compat/avg/visual-planning-brief'
+import { avgVisualPlanningTargetKeysV4,type AvgVisualProposalReuseSourceV4 } from '../../src/lib/legacy-compat/avg/visual-planning-reuse-contract'
+import { buildAvgVisualPlanningPlanV4 } from '../../src/lib/legacy-compat/avg/visual-planning-plan'
+import { avgVisualPlanningBudgetV4,avgVisualPlanningGateIdsV4 } from '../../src/lib/legacy-compat/avg/visual-planning-policy'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
+import { parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 
 const h='a'.repeat(64)
 function source(artifactKey:string):AvgVisualProposalReuseSourceV4{return {schema:'storyforge.avg.visual-proposal-reuse-source',version:1,

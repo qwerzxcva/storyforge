@@ -1,23 +1,10 @@
-import type { UseAIStreamReturn } from '../../hooks/useAIStream'
-import {
-  checkHeldItemAcquisition,
-  type HeldItemProjection,
-} from '../consistency/held-items'
-import type {
-  GenerationGateIssue,
-  GenerationGateResult,
-  GenerationNode,
-} from '../generation/generation-node'
-import {
-  checkCognitionBoundary,
-  parseCognitionReferences,
-  type CognitionAuditSnapshot,
-} from '../knowledge-ledger/knowledge-ledger'
-import {
-  normalizeConstitutionValue,
-} from '../fact-ledger/setting-assertions'
-import type { AssembleContextResult } from '../registry/types'
-import type { ChatMessage, TemporalFact } from '../types'
+import type { UseAIStreamReturn } from '../../hooks/useAIStream';
+import { checkHeldItemAcquisition, type HeldItemProjection } from '../consistency/held-items';
+import type { GenerationGateIssue, GenerationGateResult, GenerationNode } from '../generation/generation-node';
+import { checkCognitionBoundary, parseCognitionReferences, type CognitionAuditSnapshot } from '../knowledge-ledger/knowledge-ledger';
+import { normalizeConstitutionValue } from '../fact-ledger/setting-assertions';
+import type { AssembleContextResult } from '../registry/types';
+import type { ChatMessage, TemporalFact } from '../types';
 
 export const OUTLINE_WORKSHOP_STAGES = [
   'scan',

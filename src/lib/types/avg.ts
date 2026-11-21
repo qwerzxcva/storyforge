@@ -1,4 +1,4 @@
-import type { FrozenProductMediaAsset } from './product-media'
+import type { FrozenProductMediaAsset } from './product-media';
 
 export const AVG_STAGE_LAYERS = [
   'background', 'environment', 'actor-back', 'actor-front', 'effect', 'dialogue', 'overlay',
@@ -66,7 +66,7 @@ export interface AvgStageState {
 
 export interface AvgRuntimePresentationState {
   /** Absent in legacy states; durable native non-loop transport observations. */
-  onceAudio?: import('../avg/once-audio-runtime').AvgOnceAudioStateV1
+  onceAudio?: import('../legacy-compat/avg/once-audio-runtime').AvgOnceAudioStateV1
   schema: 'storyforge.avg-presentation'
   version: 1
   contentHash: string

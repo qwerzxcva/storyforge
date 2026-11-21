@@ -1,13 +1,5 @@
-import type { ComponentType } from 'react'
-import {
-  FileText, Library, Globe, Mountain, Users2, Sparkles,
-  UserCircle, UsersRound, User, Footprints, Network,
-  Ruler, BookOpen, FilePen, Eye,
-  FileCog, History, Upload, Download, Settings,
-  Map, ClipboardList, GitBranch, Clock, MapPin, Scale,
-  Drama, Package, CalendarClock, ScanSearch, Coins, Feather, Database, TrendingUp, Workflow,
-  Replace,
-} from 'lucide-react'
+import type { ComponentType } from 'react';
+import { FileText, Library, Globe, Mountain, Users2, Sparkles, UserCircle, UsersRound, User, Footprints, Network, Ruler, BookOpen, FilePen, Eye, FileCog, History, Upload, Download, Settings, Map, ClipboardList, GitBranch, Clock, MapPin, Scale, Drama, Package, CalendarClock, ScanSearch, Coins, Feather, Database, TrendingUp, Workflow, Replace } from 'lucide-react';
 
 /** 当前侧边栏模块 ID；一个叶子对应一个正式 panel。 */
 export type SidebarModule =

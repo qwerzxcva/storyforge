@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { createTextOpenWorldActionRegistryV1 } from '../../src/lib/open-world/action-registry'
-import { createTextOpenWorldConditionCatalogV1 } from '../../src/lib/open-world/condition-dsl'
+import { createTextOpenWorldConditionCatalogV1 } from '../../src/lib/legacy-compat/open-world/condition-dsl'
 import type { TextOpenWorldConditionEvaluationContextV1, TextOpenWorldConditionExpressionV1 } from '../../src/lib/types'
 import { createTextOpenWorldVNextFixture } from '../helpers/text-open-world-vnext-fixture'
 

@@ -2,12 +2,12 @@
  * 当前三注册表完整性校验。启动时双向核对 PROJECT_TABLES、
  * FIELD_REGISTRY、Adoption Schema 与 CONTEXT_SOURCES；任何不一致都必须阻断应用启动。
  */
-import { db } from '../db/schema'
-import { PROJECT_TABLES, REGISTRY_BY_NAME } from './project-tables'
-import { FIELD_REGISTRY, FIELD_BY_TARGET } from './field-registry'
-import { ADOPTION_EXTENSIONS, ADOPTION_SCHEMAS } from './adoption-schema'
-import { CONTEXT_SOURCES } from './context-sources'
-import { CONTEXT_RESOURCE_KINDS_V1 } from './types'
+import { db } from '../db/schema';
+import { PROJECT_TABLES, REGISTRY_BY_NAME } from './project-tables';
+import { FIELD_REGISTRY, FIELD_BY_TARGET } from './field-registry';
+import { ADOPTION_EXTENSIONS, ADOPTION_SCHEMAS } from './adoption-schema';
+import { CONTEXT_SOURCES } from './context-sources';
+import { CONTEXT_RESOURCE_KINDS_V1 } from './types';
 
 /** 解析 'tableName[field]' → tableName */
 function parseTargetTable(target: string): string | null {

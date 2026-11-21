@@ -1,4 +1,4 @@
-import type { SystemFictionElementsV1 } from '../types/creative-rules'
+import type { SystemFictionElementsV1 } from '../types/creative-rules';
 
 export const SYSTEM_FICTION_ELEMENT_FIELDS = [
   { key: 'protagonistIntent', label: '主角处境与目标', placeholder: '主角想争取什么，为什么现在行动？已有角色资料继续保留。' },

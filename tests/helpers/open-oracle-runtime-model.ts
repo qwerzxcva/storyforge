@@ -1,12 +1,12 @@
-import { TTRPG_OPEN_ORACLE_INSTANCE_INPUT_V1 } from '../../src/lib/ttrpg/open-coordination'
-import { createTtrpgOpenOracleRuntimeReferencePolicyV1 } from '../../src/lib/ttrpg/open-runtime-entity-references'
+import { TTRPG_OPEN_ORACLE_INSTANCE_INPUT_V1 } from '../../src/lib/legacy-compat/ttrpg/open-coordination'
+import { createTtrpgOpenOracleRuntimeReferencePolicyV1 } from '../../src/lib/legacy-compat/ttrpg/open-runtime-entity-references'
 /** Real F13/Oracle engineering fixture; does not itself grant a model scope. */
 import { setupOpenEntityPlanningV1 } from './open-entity-runtime'
 import { openEnvelopeV1 } from './open-ttrpg-session'
-import { createCompleteTtrpgCharacterSheetV2 } from '../../src/lib/ttrpg/character-sheet'
+import { createCompleteTtrpgCharacterSheetV2 } from '../../src/lib/legacy-compat/ttrpg/character-sheet'
 import { closeTtrpgOpenEntityDeskV1, readTtrpgOpenEntityDeskV1, proposeTtrpgOpenEntityDeskV1, confirmTtrpgOpenEntityDeskV1, materializeTtrpgOpenEntityDeskV1 } from '../../src/lib/ttrpg/open-entity-desk'
 import { startTtrpgOpenEpochV1, consultTtrpgOracleV1 } from '../../src/lib/ttrpg/runtime-commands'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 
 export async function setupOracleRuntimePolicyV1(audience: 'public' | 'party' | 'gm-only', pending = false, options: { aiEnabled?: boolean; configure?: Parameters<typeof setupOpenEntityPlanningV1>[0]; selectedCharacterKeys?: string[] } = {}) {
   const s = await setupOpenEntityPlanningV1(pkg => {

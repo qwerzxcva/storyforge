@@ -8,13 +8,13 @@ import {copyChatSaveToReleaseV1} from '../../src/lib/character-interaction/relea
 import {seedChatExperiencePackageFixture} from '../helpers/chat-experience-package-fixture'
 import {useCharacterInteractionPlayerStore as player} from '../../src/stores/character-interaction-player'
 import {commitInteractionPlayerMessage, deleteProductRuntimeSession, readProductRuntimeState, readProductRuntimeStateVersion,
-  requestChatNarrativeTrigger, saveChatComposerDraftV1} from '../../src/lib/character-interaction/runtime-api'
+  requestChatNarrativeTrigger, saveChatComposerDraftV1} from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import {adoptInteractionRuntimeCandidateV1, generateInteractionRuntimeCandidateV1} from '../../src/lib/character-interaction/harness'
 import {chatActionReviewOutputFixture, withChatActionChoiceFixture} from '../helpers/chat-narrative-fixture'
 import {exportProjectJSON, importProjectJSON} from '../../src/lib/export/json-export'
 import {readChatMessageEditPlanV1, forkChatMessageEditV1} from '../../src/lib/character-interaction/narrative-edit'
 import type {ChatNarrativeActionV1} from '../../src/lib/types/chat-narrative'
-import {assertChatReleaseUpgradeReceiptV1} from '../../src/lib/character-interaction/release-upgrade-receipt'
+import {assertChatReleaseUpgradeReceiptV1} from '../../src/lib/legacy-compat/character-interaction/release-upgrade-receipt'
 
 const bytes = (value: unknown) => new TextEncoder().encode(JSON.stringify(value)).buffer
 beforeEach(async () => {db.close(); await db.delete(); await db.open(); player.setState({scope: null, busy: false, selectedSessionId: null})})

@@ -6,8 +6,8 @@ import {
   createTextOpenWorldManualSaveV1,
   type TextOpenWorldSaveOwnerV1,
 } from '../../src/lib/open-world/player-saves'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { createTextOpenWorldInstance } from '../../src/lib/product/runtime-instances'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { createTextOpenWorldInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
 import { EMPTY_PRODUCT_RUNTIME_STATE, type ProductRelease, type ProductRuntimePackageV1 } from '../../src/lib/types'
 import { createWorkspace } from '../../src/lib/workspace/create-workspace'
 import { useTextOpenWorldPlayerStore } from '../../src/stores/text-open-world-player'

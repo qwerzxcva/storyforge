@@ -1,5 +1,5 @@
-import type { PromptModuleKey } from '../types/prompt'
-import type { PromptSeed } from './prompt-seed-type'
+import type { PromptModuleKey } from '../types/prompt';
+import type { PromptSeed } from './prompt-seed-type';
 
 /** 原创语义模板；来源比较与使用边界见 docs/audits/NOVEL-PROMPT-CRAFT-20260927.md。 */
 const CRAFT_SYSTEM = `你是熔炉的小说写作搭档。完成本次指定的小任务，让作者拿到可选择、可继续加工的候选。

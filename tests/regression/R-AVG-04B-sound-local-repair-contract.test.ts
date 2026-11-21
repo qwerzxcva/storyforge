@@ -1,13 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { avgSoundPlanningFixtureV1 } from '../helpers/avg-sound-planning-fixture'
 import { compileAvgSoundRequirementsV1 } from '../../src/lib/avg/sound-requirements'
 import { parseAvgSoundLocalRepairV1, assertAvgSoundLocalRepairV1,
-  type AvgSoundLocalRepairV1 } from '../../src/lib/avg/sound-local-repair-contract'
+  type AvgSoundLocalRepairV1 } from '../../src/lib/legacy-compat/avg/sound-local-repair-contract'
 import { parseAvgSoundPlanningBriefV1, parseAvgSoundPlanningBriefV2, parseAvgSoundPlanningBrief,
-  type AvgSoundPlanningBriefV1, type AvgSoundPlanningBriefV2 } from '../../src/lib/avg/sound-production-brief'
-import type { AvgAudioProcessingRecipe } from '../../src/lib/avg/audio-processing-versioned-contract'
-import type { AvgGeneratedSoundSource } from '../../src/lib/avg/stage-processed-sound-source-contract'
+  type AvgSoundPlanningBriefV1, type AvgSoundPlanningBriefV2 } from '../../src/lib/legacy-compat/avg/sound-production-brief'
+import type { AvgAudioProcessingRecipe } from '../../src/lib/legacy-compat/avg/audio-processing-versioned-contract'
+import type { AvgGeneratedSoundSource } from '../../src/lib/legacy-compat/avg/stage-processed-sound-source-contract'
 
 const hash = (digit: string) => digit.repeat(64)
 const recipe = (version: 1 | 2): AvgAudioProcessingRecipe => {

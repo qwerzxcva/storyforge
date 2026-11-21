@@ -4,7 +4,7 @@ import {seedChatRoleProfileFixture} from '../helpers/chat-role-profile'
 import {generateChatRoleProfileCandidateV1, readChatRoleProfileRunV1, readLatestChatRoleProfileRunV1, adoptChatRoleProfileCandidateV1, recoverChatRoleProfileRunV1, cancelChatRoleProfileRunV1} from '../../src/lib/character-interaction/role-profile-harness'
 import {readAgentRunV1} from '../../src/lib/agent/run/event-store'
 import {readChatDraftV1, saveChatDraftV1, createChatDraftV2} from '../../src/lib/character-interaction/draft-service'
-import {parseChatAuthoringSettings} from '../../src/lib/character-interaction/authoring-contract'
+import {parseChatAuthoringSettings} from '../../src/lib/legacy-compat/character-interaction/authoring-contract'
 import {readChatRoleProfilesV1, removeChatRoleProfileV1} from '../../src/lib/character-interaction/role-profile-store'
 import {exportProjectJSON, importProjectJSON} from '../../src/lib/export/json-export'
 

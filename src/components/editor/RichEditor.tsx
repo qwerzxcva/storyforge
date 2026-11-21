@@ -1,20 +1,14 @@
-import { forwardRef, useCallback, useImperativeHandle, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
-import { useEditor, EditorContent, type Editor } from '@tiptap/react'
-import { getHTMLFromFragment } from '@tiptap/core'
-import type { EditorView } from '@tiptap/pm/view'
-import { Decoration, DecorationSet } from '@tiptap/pm/view'
-import { Plugin, PluginKey } from '@tiptap/pm/state'
-import { richEditorExtensionsV1 } from '../../lib/editor/rich-editor-schema'
-import { countWords } from '../../lib/utils/html'
-import { loadEditorTypography, saveEditorTypography, applyEditorTypography, type EditorTypography } from '../../lib/editor-typography'
-import {
-  filterEditorEntityReferences,
-  type EditorEntityReference,
-} from '../../lib/editor/entity-reference'
-import {
-  resolveColorForInput,
-  type PendingTextStyle,
-} from '../../lib/editor/rich-editor-theme'
+import { forwardRef, useCallback, useImperativeHandle, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useEditor, EditorContent, type Editor } from '@tiptap/react';
+import { getHTMLFromFragment } from '@tiptap/core';
+import type { EditorView } from '@tiptap/pm/view';
+import { Decoration, DecorationSet } from '@tiptap/pm/view';
+import { Plugin, PluginKey } from '@tiptap/pm/state';
+import { richEditorExtensionsV1 } from '../../lib/editor/rich-editor-schema';
+import { countWords } from '../../lib/utils/html';
+import { loadEditorTypography, saveEditorTypography, applyEditorTypography, type EditorTypography } from '../../lib/editor-typography';
+import { filterEditorEntityReferences, type EditorEntityReference } from '../../lib/editor/entity-reference';
+import { resolveColorForInput, type PendingTextStyle } from '../../lib/editor/rich-editor-theme';
 import RichEditorEntityOverlays from './RichEditorEntityOverlays'
 import RichEditorToolbar from './RichEditorToolbar'
 

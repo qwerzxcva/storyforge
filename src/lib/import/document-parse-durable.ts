@@ -1,42 +1,33 @@
-import { hashDocumentImportChunkBindingV1 } from './document-parse-binding'
+import { hashDocumentImportChunkBindingV1 } from './document-parse-binding';
 /** Candidate-only foundation. The current import UI does not dispatch through
  * this entry until it can show and explicitly adopt its recovered candidate. */
-import {
-  bindImportChunkParseRunV1, hashImportChunkTextV1, readImportSessionAuthorityInTransactionV1,
-  readImportSessionAuthorityV1, reserveImportChunkParseV1,
-} from '../../stores/import-session'
+import { bindImportChunkParseRunV1, hashImportChunkTextV1, readImportSessionAuthorityInTransactionV1, readImportSessionAuthorityV1, reserveImportChunkParseV1 } from '../../stores/import-session';
 import Dexie from 'dexie'
-import { db } from '../db/schema'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { useCodexStore } from '../../stores/codex'
-import { usePromptStore } from '../../stores/prompt'
-import { getAIConfigRequiredMessage, isAIConfigReady } from '../ai/config-readiness'
-import { resolveRequestConfig, type ChatResult } from '../ai/client'
-import { modelDispatchWasCancelledV1 } from '../ai/codex-transport'
-import { prepareModelCapacityV1, freezeModelCapacityV1 } from '../ai/model-capacity'
-import { buildDocumentParseFrameV1, assessDocumentParseRequestV1 } from './document-parse-request'
-import { createAgentSkillExecutionBindingV1 } from '../agent/execution-binding'
-import { executeFrozenFormalAIEntryV1, freezeFormalAIEntryBindingV1 } from '../agent/formal-ai-entry'
-import { getAgentSkillV1 } from '../agent/skill-registry'
-import { createAgentRunCheckpointInTransactionV1, readLatestVerifiedAgentRunCheckpointV1 } from '../agent/run/checkpoint'
-import { createContextManifestFromAssemblyV1 } from '../agent/run/context-manifest'
-import {
-  recordCreationModelRequestV1, recordCreationModelResponseV1, recordUnavailableCreationResponseV1,
-} from '../agent/run/creation-response-evidence'
-import {
-  agentRunScopeTransactionTablesV1, appendAgentRunEventV1, appendPrivilegedAgentRunEventInTransactionV1,
-  createAgentRunV1, readAgentRunV1, readVerifiedAgentRunInTransactionV1, withAgentRunMutationLockV1,
-  type AgentRunSnapshotV1,
-} from '../agent/run/event-store'
-import { parseAgentRunEventV1 } from '../agent/run/event-schema'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { readAgentRunArtifactExactV1 } from '../memory/artifact-store'
-import { assembleContext } from '../registry/assemble-context'
-import type { UnifiedParseResult, WorkspaceScope } from '../types'
-import type { ExactRunArtifactKindV1 } from '../types/memory-engineering'
-import type { CodexImportCategoryOption } from './codex-classification'
-import { getChunkText } from './chunk-text-registry'
-import { normalizeUnified } from './unified-merge'
+import { db } from '../db/schema';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { useCodexStore } from '../../stores/codex';
+import { usePromptStore } from '../../stores/prompt';
+import { getAIConfigRequiredMessage, isAIConfigReady } from '../ai/config-readiness';
+import { resolveRequestConfig, type ChatResult } from '../ai/client';
+import { modelDispatchWasCancelledV1 } from '../ai/codex-transport';
+import { prepareModelCapacityV1, freezeModelCapacityV1 } from '../ai/model-capacity';
+import { buildDocumentParseFrameV1, assessDocumentParseRequestV1 } from './document-parse-request';
+import { createAgentSkillExecutionBindingV1 } from '../agent/execution-binding';
+import { executeFrozenFormalAIEntryV1, freezeFormalAIEntryBindingV1 } from '../agent/formal-ai-entry';
+import { getAgentSkillV1 } from '../agent/skill-registry';
+import { createAgentRunCheckpointInTransactionV1, readLatestVerifiedAgentRunCheckpointV1 } from '../agent/run/checkpoint';
+import { createContextManifestFromAssemblyV1 } from '../agent/run/context-manifest';
+import { recordCreationModelRequestV1, recordCreationModelResponseV1, recordUnavailableCreationResponseV1 } from '../agent/run/creation-response-evidence';
+import { agentRunScopeTransactionTablesV1, appendAgentRunEventV1, appendPrivilegedAgentRunEventInTransactionV1, createAgentRunV1, readAgentRunV1, readVerifiedAgentRunInTransactionV1, withAgentRunMutationLockV1, type AgentRunSnapshotV1 } from '../agent/run/event-store';
+import { parseAgentRunEventV1 } from '../agent/run/event-schema';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { readAgentRunArtifactExactV1 } from '../memory/artifact-store';
+import { assembleContext } from '../registry/assemble-context';
+import type { UnifiedParseResult, WorkspaceScope } from '../types';
+import type { ExactRunArtifactKindV1 } from '../types/memory-engineering';
+import type { CodexImportCategoryOption } from './codex-classification';
+import { getChunkText } from './chunk-text-registry';
+import { normalizeUnified } from './unified-merge';
 
 const STEP = 'document-import.parse'
 const SKILL = 'inspiration.document-import-parse'

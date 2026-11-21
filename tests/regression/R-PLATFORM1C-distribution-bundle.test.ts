@@ -11,11 +11,11 @@ import {
   verifyProductDistributionBundleV2,
   type MarketplaceImportProvenanceV2,
 } from '../../src/lib/product-platform/distribution-bundle'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { discardUnreferencedMediaBlobObjectsV1, putMediaBlobObject, sha256MediaData } from '../../src/lib/product-production/media-blob-store'
-import { parseProductRuntimePackageV1 } from '../../src/lib/product-production/runtime-package'
-import { assertProductReleaseUnchanged } from '../../src/lib/product/releases'
-import { createAvgGameInstance } from '../../src/lib/product/runtime-instances'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { discardUnreferencedMediaBlobObjectsV1, putMediaBlobObject, sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
+import { parseProductRuntimePackageV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
+import { assertProductReleaseUnchanged } from '../../src/lib/legacy-compat/product/releases'
+import { createAvgGameInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
 import type { FrozenRuntimeMediaAssetV2, ProductRuntimePackageV1, WorkspaceScope } from '../../src/lib/types'
 import { sanitizeSvg } from '../../src/lib/utils/sanitize-svg'
 import { resolveWorkspaceOwnership } from '../../src/lib/workspace/ownership'

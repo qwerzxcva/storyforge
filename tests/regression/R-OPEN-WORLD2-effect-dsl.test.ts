@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
-import { createTextOpenWorldCombatStateMachineV1 } from '../../src/lib/open-world/combat-state-machine'
-import { createTextOpenWorldQuestTransitionCatalogV1 } from '../../src/lib/open-world/quest-state-machine'
-import { createInitialTextOpenWorldQuestInstancesV1 } from '../../src/lib/open-world/quests'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
+import { createTextOpenWorldCombatStateMachineV1 } from '../../src/lib/legacy-compat/open-world/combat-state-machine'
+import { createTextOpenWorldQuestTransitionCatalogV1 } from '../../src/lib/legacy-compat/open-world/quest-state-machine'
+import { createInitialTextOpenWorldQuestInstancesV1 } from '../../src/lib/legacy-compat/open-world/quests'
 import type { TextOpenWorldEffectDefinitionV1, TextOpenWorldEffectStateV1 } from '../../src/lib/types'
 import {
   createTextOpenWorldVNextFixture,

@@ -1,45 +1,17 @@
-import { db } from '../../db/schema'
-import type { AIRequestSettingsV1 } from '../../ai/client'
-import type {
-  AgentRunContractV1,
-  AgentRunEventTypeV1,
-  AgentRunRecord,
-  WorkspaceScope,
-} from '../../types'
-import { hashChapterText, normalizeChapterText } from '../../ai/chapter-memory/text-normalization'
-import { assertRecordInScope, readOwnedRows } from '../../workspace/scope'
-import {
-  CONSISTENCY_AGENT_DEEP_SOURCES_V1,
-  CONSISTENCY_AGENT_FAST_SOURCES_V1,
-  CONSISTENCY_AGENT_INPUT_BUDGET_V1,
-  CONSISTENCY_AGENT_OUTPUT_BUDGET_V1,
-  hashConsistencyAgentCandidateV1,
-  isConsistencyAgentCandidateV1,
-  persistConsistencyAgentCandidate,
-  runConsistencyAgent,
-  type ConsistencyAgentCandidate,
-  type ConsistencyAgentMode,
-  type ConsistencyAgentRun,
-} from '../consistency-agent'
-import { AgentTeamBudgetTracker } from '../team-budget'
-import { captureWorkspaceContentRevisionV1 } from '../../authoring/content-revision'
-import { recordAgentRunArtifactV1 } from '../../memory/artifact-store'
-import {
-  beginAgentRunRecoveryV1,
-  completeAgentRunRecoveryV1,
-  createAgentRunCheckpointV1,
-  readLatestVerifiedAgentRunCheckpointV1,
-} from './checkpoint'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  staleAgentRunVerificationV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { hashCanonicalValue } from './hash'
-import { createVerificationReceiptV1 } from './verification-receipt'
+import { db } from '../../db/schema';
+import type { AIRequestSettingsV1 } from '../../ai/client';
+import type { AgentRunContractV1, AgentRunEventTypeV1, AgentRunRecord, WorkspaceScope } from '../../types';
+import { hashChapterText, normalizeChapterText } from '../../ai/chapter-memory/text-normalization';
+import { assertRecordInScope, readOwnedRows } from '../../workspace/scope';
+import { CONSISTENCY_AGENT_DEEP_SOURCES_V1, CONSISTENCY_AGENT_FAST_SOURCES_V1, CONSISTENCY_AGENT_INPUT_BUDGET_V1, CONSISTENCY_AGENT_OUTPUT_BUDGET_V1, hashConsistencyAgentCandidateV1, isConsistencyAgentCandidateV1, persistConsistencyAgentCandidate, runConsistencyAgent, type ConsistencyAgentCandidate, type ConsistencyAgentMode, type ConsistencyAgentRun } from '../consistency-agent';
+import { AgentTeamBudgetTracker } from '../team-budget';
+import { captureWorkspaceContentRevisionV1 } from '../../authoring/content-revision';
+import { recordAgentRunArtifactV1 } from '../../memory/artifact-store';
+import { beginAgentRunRecoveryV1, completeAgentRunRecoveryV1, createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, staleAgentRunVerificationV1, type AgentRunSnapshotV1 } from './event-store';
+import { hashCanonicalValue } from './hash';
+import { createVerificationReceiptV1 } from './verification-receipt';
 
 export const CONSISTENCY_AUDIT_DURABLE_STEP_ID_V1 = 'chapter:consistency-audit' as const
 export const CONSISTENCY_AUDIT_VERIFIER_SET_V1 = 'chapter-consistency-audit-terminal-v1' as const

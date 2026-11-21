@@ -1,14 +1,7 @@
-import { useEffect, useState } from 'react'
-import {
-  Check,
-  ChevronRight,
-  ClipboardCopy,
-  Loader2,
-  Sparkles,
-  X,
-} from 'lucide-react'
-import type { TokenUsage } from '../../../lib/ai/logger'
-import type { PromptWorkflowStep } from '../../../lib/types/workflow'
+import { useEffect, useState } from 'react';
+import { Check, ChevronRight, ClipboardCopy, Loader2, Sparkles, X } from 'lucide-react';
+import type { TokenUsage } from '../../../lib/ai/logger';
+import type { PromptWorkflowStep } from '../../../lib/types/workflow';
 
 export interface StepResult {
   stepId: string

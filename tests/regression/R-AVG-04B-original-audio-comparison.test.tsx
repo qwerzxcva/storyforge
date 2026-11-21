@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { act, type ComponentProps } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import OriginalAudioComparisonPlayer from '../../src/components/avg/OriginalAudioComparisonPlayer'
-import { sha256MediaData } from '../../src/lib/product-production/media-blob-store'
+import { sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 
 type Source = Awaited<ReturnType<ComponentProps<typeof OriginalAudioComparisonPlayer>['loadSource']>>
 let root: Root, host: HTMLDivElement

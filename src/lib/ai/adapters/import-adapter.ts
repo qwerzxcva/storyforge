@@ -1,7 +1,7 @@
-import type { AIConfig, ChatMessage } from '../../types'
+import type { AIConfig, ChatMessage } from '../../types';
 import JSON5 from 'json5'
-import { usePromptStore } from '../../../stores/prompt'
-import { renderPrompt } from '../prompt-engine'
+import { usePromptStore } from '../../../stores/prompt';
+import { renderPrompt } from '../prompt-engine';
 
 export type ImportParseType = 'character' | 'worldview' | 'outline' | 'all'
 

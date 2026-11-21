@@ -6,7 +6,7 @@ import VisualPlanningPanel from '../../src/components/avg/VisualPlanningPanel'
 import { readAvgAssemblyWorkspaceV1 } from '../../src/lib/avg/assembly-service'
 import { stageAvgVisualPlanningAuthorInputV5 } from '../../src/lib/avg/visual-planning-workspace'
 import { runProductProductionSchedulerCycleV1 } from '../../src/lib/product-production/scheduler'
-import { canonicalProductProductionJsonV2 } from '../../src/lib/product-production/hash'
+import { canonicalProductProductionJsonV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { useAIConfigStore } from '../../src/stores/ai-config'
 import { avgV5RegisteredProposalsFixture,adoptAvgV5Sources,cycleAvgV5Until } from '../helpers/avg-v5-registered-proposals-fixture'
 

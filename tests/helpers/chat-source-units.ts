@@ -1,7 +1,7 @@
 import {seedChatBackgroundSourceFixture} from './chat-background-source'
-import {DEFAULT_CHAT_SETTINGS_V3} from '../../src/lib/character-interaction/authoring-contract'
+import {DEFAULT_CHAT_SETTINGS_V3} from '../../src/lib/legacy-compat/character-interaction/authoring-contract'
 import {saveChatDraftV1, loadChatSourceProjectionV1} from '../../src/lib/character-interaction/draft-service'
-import type {ChatSourceUnitsCandidateV1, ChatSourceUnitsReviewV1} from '../../src/lib/character-interaction/source-units'
+import type {ChatSourceUnitsCandidateV1, ChatSourceUnitsReviewV1} from '../../src/lib/legacy-compat/character-interaction/source-units'
 
 /** Synthetic engineering fixture, never a replacement for the retained V97 source/cohort. */
 export const SOURCE_UNITS_FIXTURE_TEXT = '铜印被掌柜拿去拓印破损的通行单，放在柜台下的木箱里；守卫和玩家起初都不知道。'

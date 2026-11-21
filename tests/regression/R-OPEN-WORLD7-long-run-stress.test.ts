@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { canonicalProductProductionJsonV2 } from '../../src/lib/product-production/hash'
-import { createTextOpenWorldDirectorCatalogV1 } from '../../src/lib/open-world/director'
-import { validateTextOpenWorldEffectStateV1 } from '../../src/lib/open-world/effect-dsl'
-import { resolveTextOpenWorldRandomEvidenceV1 } from '../../src/lib/open-world/event-contract'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
-import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
+import { canonicalProductProductionJsonV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { createTextOpenWorldDirectorCatalogV1 } from '../../src/lib/legacy-compat/open-world/director'
+import { validateTextOpenWorldEffectStateV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
+import { resolveTextOpenWorldRandomEvidenceV1 } from '../../src/lib/legacy-compat/open-world/event-contract'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
+import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
 import type {
   TextOpenWorldDirectorTriggerV1,
   TextOpenWorldEffectStateV1,

@@ -1,8 +1,8 @@
-import { AUTHORING_NODE_CATALOG, AUTHORING_NODE_BY_ID } from './catalog'
-import { authoringPortsCompatible } from './compatibility'
-import { emptyAuthoringGraph, type AuthoringNodeGraph, type AuthoringNodeInstance } from './contracts'
-import { hashAuthoringText } from './bindings'
-import { buildRagLibrary } from '../retrieval/rag-library'
+import { AUTHORING_NODE_CATALOG, AUTHORING_NODE_BY_ID } from './catalog';
+import { authoringPortsCompatible } from './compatibility';
+import { emptyAuthoringGraph, type AuthoringNodeGraph, type AuthoringNodeInstance } from './contracts';
+import { hashAuthoringText } from './bindings';
+import { buildRagLibrary } from '../retrieval/rag-library';
 
 const TABLE_SEMANTICS: Record<string, AuthoringNodeInstance['outputs'][number]['semantic']> = {
   importantLocations: 'world.location',

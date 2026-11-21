@@ -1,5 +1,5 @@
 import Dexie from 'dexie'
-import { db } from './schema'
+import { db } from './schema';
 
 /** Native hashing and verification need a live IndexedDB transaction until their pure work settles. */
 export function keepIntegrityReadAlive<T>(pending: Promise<T>): Promise<T> {

@@ -1,6 +1,6 @@
-import { db } from '../db/schema'
-import { remapNarrativeDomainReferencesV1 } from '../narrative-domain/lifecycle'
-import { parseEntryRefs, stringifyEntryRefs } from '../types/codex'
+import { db } from '../db/schema';
+import { remapNarrativeDomainReferencesV1 } from '../narrative-domain/lifecycle';
+import { parseEntryRefs, stringifyEntryRefs } from '../types/codex';
 
 /**
  * 从项目内所有剩余词条的 refs JSON 中移除已删除词条 ID。

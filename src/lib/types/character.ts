@@ -1,5 +1,5 @@
-import type { NarrativeDomainMetadataV1, NarrativeDomainFieldsV1 } from './narrative-domain'
-import type { RagDocumentMetadata } from './rag-library'
+import type { NarrativeDomainMetadataV1, NarrativeDomainFieldsV1 } from './narrative-domain';
+import type { RagDocumentMetadata } from './rag-library';
 
 /** 戏份权重（R1：与阵营正交） */
 export type CharacterRoleWeight = 'main' | 'secondary' | 'npc' | 'extra'

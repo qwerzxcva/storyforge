@@ -9,12 +9,9 @@
  *  - 多世界按 worldGroupId 隔离（与 buildCurrentWorldContext 同源）；
  *    传 null/undefined 表示主世界/单世界，读取未归属世界组的词条。
  */
-import { readOwnedRows, resolveScope } from '../workspace/scope'
-import type { WorkspaceScope } from '../types/world-ownership'
-import {
-  codexEntryInWorld, parseEntryFields, parseFieldSchema,
-  type CodexCategory, type CodexEntry,
-} from '../types/codex'
+import { readOwnedRows, resolveScope } from '../workspace/scope';
+import type { WorkspaceScope } from '../types/world-ownership';
+import { codexEntryInWorld, parseEntryFields, parseFieldSchema, type CodexCategory, type CodexEntry } from '../types/codex';
 
 interface BuildOptions {
   /** 总长度预算（字符），默认 2500 */

@@ -18,10 +18,10 @@ import { stageAvgSoundPlanV1, stageAvgSoundReviewV1, stageAvgSoundChoiceV1 } fro
 import { readProductProductionDetailsV1 } from '../../src/lib/product-production/service'
 import { saveAvgVoiceProductionDraftV1 } from '../../src/lib/avg/voice-draft-service'
 import { avgLocalVoiceProtocolV1, AVG_LOCAL_VOICE_REVISION_V1, AVG_LOCAL_VOICE_RIGHTS_REFERENCE_V1 } from '../../src/lib/avg/voice-local-profile'
-import { hashAvgSpeechProtocolV1, AVG_NATURAL_VOICE_INTENT_V1 } from '../../src/lib/avg/voice-request-contract'
+import { hashAvgSpeechProtocolV1, AVG_NATURAL_VOICE_INTENT_V1 } from '../../src/lib/legacy-compat/avg/voice-request-contract'
 import type { WorkspaceScope } from '../../src/lib/types'
 import type { AvgReviewIssuesV1 } from '../../src/lib/avg/artifact-contract'
-import type { AvgSoundTemplateV1 } from '../../src/lib/avg/sound-scope-contract'
+import type { AvgSoundTemplateV1 } from '../../src/lib/legacy-compat/avg/sound-scope-contract'
 
 type Owner = { scope: WorkspaceScope; productionId: number }
 const declaration = 'ENGINEERING isolated combined pipeline; controlled HTTP/decoder/author observations are not real art, speech or hearing acceptance'

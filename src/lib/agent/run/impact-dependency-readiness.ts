@@ -1,11 +1,8 @@
-import type { ImpactRemediationItemV1 } from '../../consistency/impact-remediation-plan'
-import type { WorkspaceScope } from '../../types'
-import { hashCanonicalValue } from './hash'
-import {
-  readCurrentImpactPostCorrectionReplanV1,
-  type ImpactPostCorrectionReplanResultV1,
-} from './impact-post-correction-replan-durable'
-import { readImpactAuthorReviewsV1 } from './impact-review-durable'
+import type { ImpactRemediationItemV1 } from '../../consistency/impact-remediation-plan';
+import type { WorkspaceScope } from '../../types';
+import { hashCanonicalValue } from './hash';
+import { readCurrentImpactPostCorrectionReplanV1, type ImpactPostCorrectionReplanResultV1 } from './impact-post-correction-replan-durable';
+import { readImpactAuthorReviewsV1 } from './impact-review-durable';
 
 export interface ImpactDependencyProofV1 {
   version: 1

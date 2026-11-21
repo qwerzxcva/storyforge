@@ -1,14 +1,14 @@
 import Dexie from 'dexie'
-import { scopeTransactionTables } from '../workspace/scope'
-import { recordLongformWorkCompletionV1 } from '../workspace/works'
-import { db } from '../db/schema'
-import type { Chapter, OutlineNode, WorkspaceScope } from '../types'
-import { readOwnedRows } from '../workspace/scope'
-import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk'
-import { buildBestChapterByOutlineMap } from '../chapters/selectors'
-import { countWords, htmlToPlainText } from '../utils/html'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { readAgentRunV1 } from '../agent/run/event-store'
+import { scopeTransactionTables } from '../workspace/scope';
+import { recordLongformWorkCompletionV1 } from '../workspace/works';
+import { db } from '../db/schema';
+import type { Chapter, OutlineNode, WorkspaceScope } from '../types';
+import { readOwnedRows } from '../workspace/scope';
+import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk';
+import { buildBestChapterByOutlineMap } from '../chapters/selectors';
+import { countWords, htmlToPlainText } from '../utils/html';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { readAgentRunV1 } from '../agent/run/event-store';
 
 /** Deterministic coverage evidence, separate from the author's literary acceptance. */
 export async function readLongformCompletionV1(scope: WorkspaceScope) {

@@ -1,7 +1,7 @@
 import {afterEach, beforeEach, expect, it, vi} from 'vitest'
 import {db} from '../../src/lib/db/schema'
 import {seedChatBackgroundSourceFixture, chatStructuredWorldRulesFixture} from '../helpers/chat-background-source'
-import {readChatSourceReviewContextV1} from '../../src/lib/character-interaction/source-review-context'
+import {readChatSourceReviewContextV1} from '../../src/lib/legacy-compat/character-interaction/source-review-context'
 import {parseChatSourceSuggestionsV1} from '../../src/lib/character-interaction/source-review-suggestions'
 import {generateChatSourceReviewSuggestionsV1, readLatestChatSourceReviewRunV1, readChatSourceReviewRunV1, recoverChatSourceReviewRunV1, cancelChatSourceReviewRunV1, type ChatSourceReviewBoundaryV1} from '../../src/lib/character-interaction/source-review-harness'
 import {readAgentRunV1} from '../../src/lib/agent/run/event-store'

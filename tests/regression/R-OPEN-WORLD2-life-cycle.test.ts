@@ -10,16 +10,16 @@ import {
   inspectTextOpenWorldCheckpointV1,
   retryDefeatedTextOpenWorldCombatV1,
 } from '../../src/lib/open-world/checkpoints'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
-import { createTextOpenWorldCombatStateMachineV1 } from '../../src/lib/open-world/combat-state-machine'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
+import { createTextOpenWorldCombatStateMachineV1 } from '../../src/lib/legacy-compat/open-world/combat-state-machine'
 import { deriveTextOpenWorldLifeProjectionV1 } from '../../src/lib/open-world/life-cycle'
 import {
   createInitialTextOpenWorldSessionProjectionV1,
   deriveTextOpenWorldContextsV1,
-} from '../../src/lib/open-world/session-projection'
+} from '../../src/lib/legacy-compat/open-world/session-projection'
 import {
   readProductRuntimeState,
-} from '../../src/lib/product/runtime-core'
+} from '../../src/lib/legacy-compat/product/runtime-core'
 import type {
   ProductRuntimeSession,
   TextOpenWorldEffectStateV1,

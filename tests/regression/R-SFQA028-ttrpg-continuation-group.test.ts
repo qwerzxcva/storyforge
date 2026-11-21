@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import { branchProductRuntimeSession, readProductRuntimeState, readSessionEvents } from '../../src/lib/product/runtime-core'
+import { branchProductRuntimeSession, readProductRuntimeState, readSessionEvents } from '../../src/lib/legacy-compat/product/runtime-core'
 import { createTtrpgOpenContinuationFromPlanV1, previewTtrpgOpenContinuationV1 } from '../../src/lib/ttrpg/continuity'
 import { confirmTtrpgOpenTableContinuationV1, prepareTtrpgOpenTableContinuationV1 } from '../../src/lib/ttrpg/open-table-service'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'

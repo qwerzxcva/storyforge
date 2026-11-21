@@ -9,13 +9,11 @@
  * 这样页面刷新 / 部署更新后绑定不丢，但绑定本身不授权任何自动写入；
  * 所有文件写入仍必须来自用户明确触发的快照或记忆自检流程。
  */
+import type { Project } from '../types/project';
+import { IS_SHOWCASE, SHOWCASE_DATABASE } from '../showcase/policy';
 
-import type { Project } from '../types/project'
-import { IS_SHOWCASE, SHOWCASE_DATABASE } from '../showcase/policy'
 
-import { IS_ADVENTURE_WEB_PLAYER, adventureWebPlayerIdentity, adventureWebPlayerStorageName } from '../adventure/web-player-policy'
-
-const DB_NAME = IS_ADVENTURE_WEB_PLAYER ? `${adventureWebPlayerStorageName(adventureWebPlayerIdentity())}-fsa` : IS_SHOWCASE ? `${SHOWCASE_DATABASE}-fsa` : 'storyforge-fsa'
+const DB_NAME = IS_SHOWCASE ? `${SHOWCASE_DATABASE}-fsa` : 'storyforge-fsa'
 const STORE = 'handles'
 
 // A handle selected in the current document does not need an immediate

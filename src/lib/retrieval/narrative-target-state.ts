@@ -1,9 +1,9 @@
-import { FIELD_BY_TARGET } from '../registry/field-registry'
-import { REGISTRY_BY_NAME } from '../registry/project-tables'
-import { parseNarrativeDomainFieldV1 } from '../narrative-domain/codec'
-import { portableNarrativeDomainFieldJsonV1 } from '../narrative-domain/references'
-import { isPortableResourceUidV1 } from '../context-gateway/resource-uid'
-import type { RagAnnotationTargetSelectionV1, RagAnnotationTargetStateV1, RagDocumentPolicy } from '../types/rag-library'
+import { FIELD_BY_TARGET } from '../registry/field-registry';
+import { REGISTRY_BY_NAME } from '../registry/project-tables';
+import { parseNarrativeDomainFieldV1 } from '../narrative-domain/codec';
+import { portableNarrativeDomainFieldJsonV1 } from '../narrative-domain/references';
+import { isPortableResourceUidV1 } from '../context-gateway/resource-uid';
+import type { RagAnnotationTargetSelectionV1, RagAnnotationTargetStateV1, RagDocumentPolicy } from '../types/rag-library';
 
 /** Pure projection used only by ragSelection's explicit original read. The
  * caller must first locate this same row through its authorized Canon field.

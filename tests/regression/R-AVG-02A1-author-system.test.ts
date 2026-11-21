@@ -5,7 +5,7 @@ import { validateAvgSystemPlanForAuthorV1, simulateAvgSystemPlanV1 } from '../..
 import { prepareAvgProfessionalArtifactV1 } from '../../src/lib/avg/artifact-contract'
 import { assertAvgProfessionalArtifactAdmissionV1 } from '../../src/lib/avg/artifact-admission'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
-import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import { deleteWork } from '../../src/lib/workspace/lifecycle'
 import { createAvgDraftV1 } from '../../src/lib/avg/draft-service'

@@ -3,15 +3,15 @@ import { db } from '../../src/lib/db/schema'
 import { createTextOpenWorldActionRegistryV1 } from '../../src/lib/open-world/action-registry'
 import { executeTextOpenWorldActionV1 } from '../../src/lib/open-world/action-executor'
 import { commitTextOpenWorldCommandV1 } from '../../src/lib/open-world/commands'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
 import { commitTextOpenWorldOutcomeBatchV1 } from '../../src/lib/open-world/events'
 import {
   createTextOpenWorldPreflightFeedbackV1,
   readTextOpenWorldFeedbackV1,
   verifyTextOpenWorldFeedbackReceiptV1,
 } from '../../src/lib/open-world/feedback'
-import { createInitialTextOpenWorldSessionProjectionV1, deriveTextOpenWorldContextsV1 } from '../../src/lib/open-world/session-projection'
-import { readProductRuntimeState, readProductRuntimeStateVersion } from '../../src/lib/product/runtime-core'
+import { createInitialTextOpenWorldSessionProjectionV1, deriveTextOpenWorldContextsV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
+import { readProductRuntimeState, readProductRuntimeStateVersion } from '../../src/lib/legacy-compat/product/runtime-core'
 import { projectTextOpenWorldPlayerFeedbackV1, projectTextOpenWorldPlayerNotificationsV1 } from '../../src/lib/open-world/player-notifications'
 import type { TextOpenWorldCommandOutcomeV1, TextOpenWorldDegradationV1, TextOpenWorldOutcomeReasonV1 } from '../../src/lib/types'
 import { createGovernedTextOpenWorldSessionFixtureV1 } from '../helpers/text-open-world-product-session'

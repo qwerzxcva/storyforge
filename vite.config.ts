@@ -2,7 +2,6 @@ import { defineConfig, type ViteDevServer, type PreviewServer } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import { localCodexPlugin } from './scripts/local-codex/bridge.mjs'
-import { localTtsPlugin } from './scripts/ttrpg-local-tts/product-bridge.mjs'
 import { execSync } from 'node:child_process'
 import { providerProxies } from './scripts/distribution/proxies.mjs'
 
@@ -167,7 +166,6 @@ export default defineConfig(({ mode }) => {
   },
   plugins: [
     ...(!showcase ? [localCodexPlugin()] : []),
-    ...(!showcase ? [localTtsPlugin()] : []),
     ...(showcase ? [{
       name: 'storyforge-showcase-html',
       transformIndexHtml: {
@@ -257,7 +255,7 @@ export default defineConfig(({ mode }) => {
     outDir: showcase ? 'dist-showcase' : mode === 'android' ? 'dist-android/storyforge' : 'dist',
     chunkSizeWarningLimit: 1200,
     rollupOptions: {
-      input: showcase ? { main: 'index.html' } : { main: 'index.html', 'ui-preview': 'ui-preview/index.html' },
+      input: { main: 'index.html' },
       output: {
         // 只把 react 固定成独立 vendor chunk（便于缓存）。
         // pdfjs / mammoth / three / jszip 均已通过「动态 import() 按需加载」自然分块，

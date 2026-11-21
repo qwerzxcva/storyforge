@@ -1,14 +1,14 @@
-import * as playerContext from '../../src/lib/ttrpg/open-player-context'
-import { TtrpgOpenReadConflictV1 } from '../../src/lib/ttrpg/open-read-conflict'
+import * as playerContext from '../../src/lib/legacy-compat/ttrpg/open-player-context'
+import { TtrpgOpenReadConflictV1 } from '../../src/lib/legacy-compat/ttrpg/open-read-conflict'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { preparedOpenTtrpgCallV1 } from '../helpers/open-ttrpg-call'
 import { openEnvelopeV1, OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
 import { dispatchTtrpgOpenModelCallV1, finishTtrpgOpenModelCallV1, closeTtrpgOpenEpochV1, reserveTtrpgOpenModelCallV1,
   changeTtrpgSafetyStatus } from '../../src/lib/ttrpg/runtime-commands'
-import { readProductRuntimeState, replayProductRuntimeEvents, parseProductRuntimeState } from '../../src/lib/product/runtime-core'
-import { ttrpgOpenCallBudgetV1 } from '../../src/lib/ttrpg/open-model-calls'
-import { parseTtrpgOpenCoordinationV1 } from '../../src/lib/ttrpg/open-coordination'
+import { readProductRuntimeState, replayProductRuntimeEvents, parseProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
+import { ttrpgOpenCallBudgetV1 } from '../../src/lib/legacy-compat/ttrpg/open-model-calls'
+import { parseTtrpgOpenCoordinationV1 } from '../../src/lib/legacy-compat/ttrpg/open-coordination'
 describe('R-TTRPGOPEN1 durable request journal and exact response evidence', () => {
   beforeEach(async () => { await db.delete(); await db.open() })
   afterEach(() => { vi.restoreAllMocks(); db.close() })

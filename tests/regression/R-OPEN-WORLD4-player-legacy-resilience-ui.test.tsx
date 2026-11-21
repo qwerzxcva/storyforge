@@ -2,7 +2,7 @@ import { act, createElement } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import TextOpenWorldLegacyCompatibilityPlayer from '../../src/components/text-game/TextOpenWorldLegacyCompatibilityPlayer'
-import { createInitialOpenWorldState } from '../../src/lib/open-world/runtime'
+import { createInitialOpenWorldState } from '../../src/lib/legacy-compat/open-world/runtime'
 import { classifyTextOpenWorldPlayerIssueV1 } from '../../src/lib/open-world/player-resilience'
 import {
   EMPTY_PRODUCT_RUNTIME_STATE,

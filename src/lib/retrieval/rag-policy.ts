@@ -1,5 +1,5 @@
-import { parseEntryFields } from '../types/codex'
-import type { RagDocumentPolicy } from '../types/rag-library'
+import { parseEntryFields } from '../types/codex';
+import type { RagDocumentPolicy } from '../types/rag-library';
 
 /** Author viewing is independent from this automatic/model-input permission. */
 export function isRagSelectionEnabledV1(policy: RagDocumentPolicy | undefined, fields: readonly string[] = []): boolean {

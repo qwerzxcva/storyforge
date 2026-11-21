@@ -1,9 +1,9 @@
-import { transactionTablesForReferenceCascade } from '../lib/registry/lifecycle'
-import { cascadeRegisteredReferences } from '../lib/workspace/lifecycle'
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import type { CharacterRelation } from '../lib/types'
-import { assertRecordInScope, readOwnedRows, resolveScopeLike, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope'
+import { transactionTablesForReferenceCascade } from '../lib/registry/lifecycle';
+import { cascadeRegisteredReferences } from '../lib/workspace/lifecycle';
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import type { CharacterRelation } from '../lib/types';
+import { assertRecordInScope, readOwnedRows, resolveScopeLike, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope';
 
 interface CharacterRelationStore {
   relations: CharacterRelation[]

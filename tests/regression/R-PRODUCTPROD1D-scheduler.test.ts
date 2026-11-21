@@ -1,9 +1,9 @@
 import Dexie from 'dexie'
-import * as compatibilityModule from '../../src/lib/product-production/compatibility'
+import * as compatibilityModule from '../../src/lib/legacy-compat/product-production/compatibility'
 import { resolveProductBuildCompatibilityPackageV1 } from '../../src/lib/product-production/compatibility-baseline'
 import { createLegacyProductBuildRootTerminalReceiptV1, createProductBuildRootTerminalReceiptV1,
-  verifyProductBuildRootTerminalReceiptV1 } from '../../src/lib/product-production/receipts'
-import { productProductionTerminalArtifactKeysV1 } from '../../src/lib/product-production/runtime-package'
+  verifyProductBuildRootTerminalReceiptV1 } from '../../src/lib/legacy-compat/product-production/receipts'
+import { productProductionTerminalArtifactKeysV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
 import { createLegacyTextOpenWorldProductRuntimePackageFixtureV1,
   createTextOpenWorldProductRuntimePackageFixtureV1 } from '../helpers/text-open-world-product-session'
 import { createTextOpenWorldVNextFixture } from '../helpers/text-open-world-vnext-fixture'
@@ -19,13 +19,13 @@ import { readTextAdventureRepairFeedbackV1, validateProductProductionRecoveryDir
 import {
   canonicalProductProductionJsonV2,
   hashProductProductionValueV2,
-} from '../../src/lib/product-production/hash'
+} from '../../src/lib/legacy-compat/product-production/hash'
 import {
   acceptProductBuildArtifact,
   carryForwardProductBuildArtifactsAcrossBuildsV1,
   carryForwardProductBuildArtifactsToEpochV1,
 } from '../../src/lib/product-production/artifact-store'
-import { createProductProductionPlanV3, parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { createProductProductionPlanV3, parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 import {
   assertProductProductionBudgetLedgerV1,
   prepareLegacyPausedProductBuildV1,

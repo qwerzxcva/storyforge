@@ -10,7 +10,7 @@ import {
 import {
   parseTextOpenWorldCreatorCalibrationEvidence,
   parseTextOpenWorldCreatorCalibrationEvidenceV1,
-} from '../../src/lib/open-world/creator-quality-contract'
+} from '../../src/lib/legacy-compat/open-world/creator-quality-contract'
 import { projectProductProductionObservedTextLatencyV1 } from '../../src/lib/product-production/scheduler'
 
 const HASH = 'a'.repeat(64)

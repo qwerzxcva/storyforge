@@ -1,18 +1,10 @@
-import { db } from '../db/schema'
-import { ADOPTION_BY_TARGET, ADOPTION_EXTENSIONS } from '../registry/adoption-schema'
-import { CONTEXT_SOURCE_BY_KEY } from '../registry/context-sources'
-import { FIELD_BY_TARGET } from '../registry/field-registry'
-import { REGISTRY_BY_NAME } from '../registry/project-tables'
-import type {
-  AgentRunContract,
-  AgentRunProjectionV1,
-  AgentRunRecord,
-  AnyAgentRunEventV1,
-  MemoryArtifactRefV1,
-  MemorySettlementReceiptV1,
-  WorkspaceScope,
-} from '../types'
-import { hashCanonicalValue } from '../agent/run/hash'
+import { db } from '../db/schema';
+import { ADOPTION_BY_TARGET, ADOPTION_EXTENSIONS } from '../registry/adoption-schema';
+import { CONTEXT_SOURCE_BY_KEY } from '../registry/context-sources';
+import { FIELD_BY_TARGET } from '../registry/field-registry';
+import { REGISTRY_BY_NAME } from '../registry/project-tables';
+import type { AgentRunContract, AgentRunProjectionV1, AgentRunRecord, AnyAgentRunEventV1, MemoryArtifactRefV1, MemorySettlementReceiptV1, WorkspaceScope } from '../types';
+import { hashCanonicalValue } from '../agent/run/hash';
 
 export interface MemorySettlementSnapshotV1 {
   run: AgentRunRecord & { id: number }

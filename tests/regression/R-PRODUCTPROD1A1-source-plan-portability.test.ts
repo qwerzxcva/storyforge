@@ -2,8 +2,8 @@ import { afterAll, beforeEach, describe, expect, it } from 'vitest'
 import { openWorldSemanticResourceCatalogV1 } from '../../src/lib/context-gateway/world-release-client'
 import { db } from '../../src/lib/db/schema'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { parseProductProductionSourcePlanV1 } from '../../src/lib/product-production/source-contracts'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { parseProductProductionSourcePlanV1 } from '../../src/lib/legacy-compat/product-production/source-contracts'
 import {
   freezeProductSourcePlanV1,
   type WorldRequirementAdapterV1,

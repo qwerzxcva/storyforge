@@ -1,27 +1,26 @@
 import Dexie from 'dexie'
-import { verifyWorkspaceContentRevisionV1 } from '../authoring/content-revision'
-import { db } from '../db/schema'
-import type { WorkspaceScope, WorldDerivationV1, WorldRelease, WorldRevision } from '../types'
-import { nameDerivedWorldV1, type DeriveNovelToWorldInput, type DerivedNovelWorldResult } from './derivation'
-import { importProjectJSON } from '../export/json-export'
-import { deriveRegisteredSemanticRowsV1 } from '../export/registry-export'
-import { generateWorkspaceUid } from '../memory/identity'
-import { generateWorldCode } from '../workspace/identity'
-import { resolveScope } from '../workspace/scope'
-import { effectiveNovelProfile, effectiveWorkKind } from '../workspace/work-kind'
-import { captureNarrativeDomainInTransactionV1, hashNarrativeDomainSourceV1, narrativeDomainCaptureTablesV1,
-  type NarrativeDomainCaptureV1 } from './narrative-domain-capture'
-import { deriveNarrativeSemanticTransferV1 } from './narrative-semantic-transfer'
-import { projectNarrativeDomainCaptureV1 } from './narrative-domain-projection'
-import { CURRENT_NARRATIVE_DOMAIN_COMPILER_V4 } from '../types/narrative-release'
-import { canonicalNarrativeJsonV1, hashNarrativeValueV1 } from './narrative-json'
-import { prepareNarrativeDomainConfirmationV1 } from './narrative-domain-authoring'
-import { createNarrativeLineageV1 } from './narrative-lineage'
-import { prepareNarrativeDerivationBackupV4, reconcileNarrativeDerivationBackupV4 } from './narrative-derivation-portability'
-import { worldReleaseUidV1 } from './releases'
-import { captureFrozenNarrativeSourcesV4, verifyWorldReleaseContentV4 } from './narrative-release-v4'
-import { compileNarrativeReleaseInWorkerV1 } from './narrative-release-worker'
-import { captureWorldReleaseSourceInTransactionV4, type WorldReleaseInputV4 } from './narrative-release-capture'
+import { verifyWorkspaceContentRevisionV1 } from '../authoring/content-revision';
+import { db } from '../db/schema';
+import type { WorkspaceScope, WorldDerivationV1, WorldRelease, WorldRevision } from '../types';
+import { nameDerivedWorldV1, type DeriveNovelToWorldInput, type DerivedNovelWorldResult } from './derivation';
+import { importProjectJSON } from '../export/json-export';
+import { deriveRegisteredSemanticRowsV1 } from '../export/registry-export';
+import { generateWorkspaceUid } from '../memory/identity';
+import { generateWorldCode } from '../workspace/identity';
+import { resolveScope } from '../workspace/scope';
+import { effectiveNovelProfile, effectiveWorkKind } from '../workspace/work-kind';
+import { captureNarrativeDomainInTransactionV1, hashNarrativeDomainSourceV1, narrativeDomainCaptureTablesV1, type NarrativeDomainCaptureV1 } from './narrative-domain-capture';
+import { deriveNarrativeSemanticTransferV1 } from './narrative-semantic-transfer';
+import { projectNarrativeDomainCaptureV1 } from './narrative-domain-projection';
+import { CURRENT_NARRATIVE_DOMAIN_COMPILER_V4 } from '../types/narrative-release';
+import { canonicalNarrativeJsonV1, hashNarrativeValueV1 } from './narrative-json';
+import { prepareNarrativeDomainConfirmationV1 } from './narrative-domain-authoring';
+import { createNarrativeLineageV1 } from './narrative-lineage';
+import { prepareNarrativeDerivationBackupV4, reconcileNarrativeDerivationBackupV4 } from './narrative-derivation-portability';
+import { worldReleaseUidV1 } from './releases';
+import { captureFrozenNarrativeSourcesV4, verifyWorldReleaseContentV4 } from './narrative-release-v4';
+import { compileNarrativeReleaseInWorkerV1 } from './narrative-release-worker';
+import { captureWorldReleaseSourceInTransactionV4, type WorldReleaseInputV4 } from './narrative-release-capture';
 
 async function captureIndependent(scope: WorkspaceScope, selectedTables?: readonly string[]) {
   return db.transaction('r', narrativeDomainCaptureTablesV1(), async () => {

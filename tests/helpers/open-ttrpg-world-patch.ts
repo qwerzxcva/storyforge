@@ -1,12 +1,12 @@
 /** Real immutable world/production/release chain with explicit simulated model transport, never a real-provider receipt. */
 import { seedOpenBrowserProductionV1, runOpenBrowserProductionV1 } from './open-ttrpg-production-browser'
 import { publishProductProductionV1 } from '../../src/lib/product-production/service'
-import { createProductRuntimeInstanceFromSource } from '../../src/lib/product/runtime-instances'
+import { createProductRuntimeInstanceFromSource } from '../../src/lib/legacy-compat/product/runtime-instances'
 import { configureOpenSeatsV1, openEnvelopeV1, OPEN_HUMAN_VIEWER } from './open-ttrpg-session'
 import { completeTtrpgOpenSessionZeroV1, startTtrpgOpenRunV1, startTtrpgOpenEpochV1, consultTtrpgOracleV1,
   commitTtrpgOpenOracleFactV1, retireTtrpgOpenSessionFactV1, recordTtrpgOpenNarrativeMemoryV1 } from '../../src/lib/ttrpg/runtime-commands'
-import { hashTtrpgOpenOracleFactCandidateV1, type TtrpgOpenOracleFactProposalV1 } from '../../src/lib/ttrpg/open-fact-ledger'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { hashTtrpgOpenOracleFactCandidateV1, type TtrpgOpenOracleFactProposalV1 } from '../../src/lib/legacy-compat/ttrpg/open-fact-ledger'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 
 export async function seedTtrpgWorldPatchReviewV1() {
   const production = await seedOpenBrowserProductionV1({ humanGm: true, runtimeAIEnabled: true })

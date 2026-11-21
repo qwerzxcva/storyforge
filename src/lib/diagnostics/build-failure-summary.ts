@@ -1,6 +1,6 @@
-import { APP_BUILD_ID } from '../version'
-import { readRuntimeDiagnosticErrors } from './runtime-errors'
-import { parseFailureSummary, type FailureSummary } from './failure-summary'
+import { APP_BUILD_ID } from '../version';
+import { readRuntimeDiagnosticErrors } from './runtime-errors';
+import { parseFailureSummary, type FailureSummary } from './failure-summary';
 
 export async function buildFailureSummary(): Promise<FailureSummary> {
   const ua = navigator.userAgent

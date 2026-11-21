@@ -1,5 +1,5 @@
-import { diagnosticContextEnabled } from '../diagnostics/operation-trail'
-import type { FailureEvent } from '../diagnostics/failure-summary'
+import { diagnosticContextEnabled } from '../diagnostics/operation-trail';
+import type { FailureEvent } from '../diagnostics/failure-summary';
 
 let supported: Promise<boolean> | undefined
 export function diagnosticDetailsSupported(base: string): Promise<boolean> {

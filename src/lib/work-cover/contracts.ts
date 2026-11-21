@@ -1,7 +1,7 @@
-import { hashCanonicalValue } from '../agent/run/hash'
-import { extractExactArtifactOwnerRootsV1 } from '../memory/artifact-roots'
-import { isWorkCode } from '../memory/identity'
-import type { WorkCoverImageCandidateV1 } from './types'
+import { hashCanonicalValue } from '../agent/run/hash';
+import { extractExactArtifactOwnerRootsV1 } from '../memory/artifact-roots';
+import { isWorkCode } from '../memory/identity';
+import type { WorkCoverImageCandidateV1 } from './types';
 
 export const WORK_COVER_MAX_RESPONSE_BYTES_V1 = 36 * 1024 * 1024
 export const WORK_COVER_MAX_PROMPT_CHARS_V1 = 8_000

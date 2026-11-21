@@ -5,12 +5,12 @@ import { prepareTtrpgOpenIntentInputV1 } from '../../src/lib/ttrpg/open-intent-i
 import { startTtrpgOpenEpochV1, dispatchTtrpgOpenModelCallV1, finishTtrpgOpenModelCallV1,
   changeTtrpgSafetyStatus } from '../../src/lib/ttrpg/runtime-commands'
 import { readInstanceAgentRunV1, appendAgentRunEventV1 } from '../../src/lib/agent/run/event-store'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { finalizeContextGatewayAttemptEvidenceV1, verifyContextGatewayCandidateEvidenceV1 } from '../../src/lib/context-gateway/attempt-evidence'
 import { recordAgentRunArtifactV1, readAgentRunArtifactExactV1 } from '../../src/lib/memory/artifact-store'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { verifyTtrpgOpenInputEvidenceV1 } from '../../src/lib/ttrpg/open-input-evidence'
-import { TTRPG_OPEN_RUNTIME_INPUT_ESTIMATION_V1 } from '../../src/lib/ttrpg/open-runtime-wire-budget'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { verifyTtrpgOpenInputEvidenceV1 } from '../../src/lib/legacy-compat/ttrpg/open-input-evidence'
+import { TTRPG_OPEN_RUNTIME_INPUT_ESTIMATION_V1 } from '../../src/lib/legacy-compat/ttrpg/open-runtime-wire-budget'
 
 describe('R-TTRPGOPEN1 actual progressive actor input before one authorized send', () => {
   beforeEach(async () => { await db.delete(); await db.open() })

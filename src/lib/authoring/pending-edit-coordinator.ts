@@ -5,7 +5,7 @@
  * register their promise under a stable key. Formal generation calls flush() so
  * it cannot race ahead of blur/debounce persistence.
  */
-import { maybeInjectHarnessFaultV1 } from '../agent/dev-fault-injection'
+import { maybeInjectHarnessFaultV1 } from '../agent/dev-fault-injection';
 
 export interface PendingEditFlushReceiptV1 {
   version: 1

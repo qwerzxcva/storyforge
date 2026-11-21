@@ -9,13 +9,13 @@ import { projectTextOpenWorldPlayerQuestLogV1 } from '../../src/lib/open-world/p
 import {
   deriveTextOpenWorldContextsV1,
   parseTextOpenWorldSessionProjectionV1,
-} from '../../src/lib/open-world/session-projection'
-import { parseTextOpenWorldRuntimePackageV1 } from '../../src/lib/open-world/runtime-package'
+} from '../../src/lib/legacy-compat/open-world/session-projection'
+import { parseTextOpenWorldRuntimePackageV1 } from '../../src/lib/legacy-compat/open-world/runtime-package'
 import {
   createProductRuntimeCheckpoint,
   readProductRuntimeState,
   verifyProductRuntimeCheckpoint,
-} from '../../src/lib/product/runtime-core'
+} from '../../src/lib/legacy-compat/product/runtime-core'
 import type { ProductRuntimeEvent } from '../../src/lib/types'
 import {
   createLargeTextOpenWorldRuntimePackageV1,

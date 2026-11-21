@@ -1,12 +1,12 @@
 import { expect } from 'vitest'
 import type { TextOpenWorldEffectPlanV1, TextOpenWorldItemRewardCatalogV1, TextOpenWorldQuestDesignDocumentsV1, TextOpenWorldRuntimePackageV1 } from '../../src/lib/types'
 import { createTextOpenWorldActionRegistryV1 } from '../../src/lib/open-world/action-registry'
-import { createTextOpenWorldEconomyCatalogV1 } from '../../src/lib/open-world/economy'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
-import { parseTextOpenWorldModulesV1 } from '../../src/lib/open-world/modules'
-import { createTextOpenWorldObjectiveCatalogV1 } from '../../src/lib/open-world/objective-state'
-import { createTextOpenWorldQuestTransitionCatalogV1 } from '../../src/lib/open-world/quest-state-machine'
-import { createInitialTextOpenWorldSessionProjectionV1, deriveTextOpenWorldContextsV1 } from '../../src/lib/open-world/session-projection'
+import { createTextOpenWorldEconomyCatalogV1 } from '../../src/lib/legacy-compat/open-world/economy'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
+import { parseTextOpenWorldModulesV1 } from '../../src/lib/legacy-compat/open-world/modules'
+import { createTextOpenWorldObjectiveCatalogV1 } from '../../src/lib/legacy-compat/open-world/objective-state'
+import { createTextOpenWorldQuestTransitionCatalogV1 } from '../../src/lib/legacy-compat/open-world/quest-state-machine'
+import { createInitialTextOpenWorldSessionProjectionV1, deriveTextOpenWorldContextsV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
 
 /** Production-fixture evidence through the actual P8 -> P8F -> P9 -> P10
  * package. Only unrelated starting prerequisites are fixture state. Every

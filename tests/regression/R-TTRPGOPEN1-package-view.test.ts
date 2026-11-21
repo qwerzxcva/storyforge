@@ -1,24 +1,24 @@
 import { readFileSync } from "node:fs";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { db } from "../../src/lib/db/schema";
-import { hashProductProductionValueV2 } from "../../src/lib/product-production/hash";
+import { hashProductProductionValueV2 } from "../../src/lib/legacy-compat/product-production/hash";
 import {
   parseProductRuntimePackageV1,
   verifyProductReleaseManifestV1,
   verifyProductReleaseRuntimeViewV1,
-} from "../../src/lib/product-production/runtime-package";
+} from "../../src/lib/legacy-compat/product-production/runtime-package";
 import {
   createProductBuildPreviewManifestV1,
   verifyProductBuildPreviewRuntimeViewV1,
-} from "../../src/lib/product-production/preview-manifest";
+} from "../../src/lib/legacy-compat/product-production/preview-manifest";
 import { verifyProductDistributionBundleV2 } from "../../src/lib/product-platform/distribution-bundle";
-import { hashStateJson, readProductRuntimeState, readProductRuntimeStateVersion } from "../../src/lib/product/runtime-core";
+import { hashStateJson, readProductRuntimeState, readProductRuntimeStateVersion } from "../../src/lib/legacy-compat/product/runtime-core";
 import { loadTtrpgRuntimeContentV1 } from "../../src/lib/ttrpg/runtime-content";
-import { assertTtrpgPlayerProtocolV1, resolveTtrpgRunFormatV1 } from "../../src/lib/ttrpg/run-format";
+import { assertTtrpgPlayerProtocolV1, resolveTtrpgRunFormatV1 } from "../../src/lib/legacy-compat/ttrpg/run-format";
 import { readyAiKpSession } from "../helpers/ready-ttrpg-session";
 import { openRuntimePackageFixture } from "../helpers/ttrpg-open-package";
 import { createFixtureProductReleaseManifestV1 } from "../helpers/product-release-v1";
-import { hashTtrpgFrozenPredicateIndexV1 } from "../../src/lib/ttrpg/content-version";
+import { hashTtrpgFrozenPredicateIndexV1 } from "../../src/lib/legacy-compat/ttrpg/content-version";
 import { startTtrpgOpenRunV1, advanceTtrpgWorldTurnV1 } from "../../src/lib/ttrpg/runtime-commands";
 
 async function fogHarbor() {

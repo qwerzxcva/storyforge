@@ -1,44 +1,18 @@
-import { useAIConfigStore } from '../../stores/ai-config'
-import { chat, resolveRequestConfig } from '../ai/client'
-import { appendSimplifiedChineseOutputConstraint } from '../ai/adapters/prompt-guards'
-import {
-  prepareGenerationNode,
-  type GenerationNode,
-  type PreparedGenerationNode,
-} from '../generation/generation-node'
-import { adopt } from '../registry/adopt'
-import type { AssembleContextResult } from '../registry/types'
-import type {
-  AIConfig,
-  Character,
-  CharacterNarrativeStatus,
-  ChatMessage,
-  Chapter,
-  StoryArc,
-  WorkspaceScope,
-} from '../types'
-import { readOwnedRows, resolveReadScopeLike } from '../workspace/scope'
-import { executeContextGatewayV1, type ContextGatewayExecutionV1 } from '../context-gateway/execution'
-import { isContextGatewayRequiredForWriteTargetV1 } from '../context-gateway/skill-policy'
-import {
-  assembleContextGatewayPacketV1,
-  contextGatewayInputStateSourceKeysV1,
-  projectContextGatewayInputStateV1,
-} from './context-gateway-input'
-import {
-  attachAgentContextInputStateV1,
-  evidenceFromContextResult,
-  resolveAgentContextPolicy,
-  type AgentContextEvidence,
-  type AgentContextProfile,
-} from './context-policy'
-import type { MasterCandidateModelIdentityV1 } from './master-candidate-semantic-review'
-import {
-  buildAgentSkillInputGuidanceV1,
-  resolveAgentSkillV1,
-  type AgentSkillId,
-} from './skill-registry'
-import { parseStructuredOutputV1 } from './structured-output-pipeline'
+import { useAIConfigStore } from '../../stores/ai-config';
+import { chat, resolveRequestConfig } from '../ai/client';
+import { appendSimplifiedChineseOutputConstraint } from '../ai/adapters/prompt-guards';
+import { prepareGenerationNode, type GenerationNode, type PreparedGenerationNode } from '../generation/generation-node';
+import { adopt } from '../registry/adopt';
+import type { AssembleContextResult } from '../registry/types';
+import type { AIConfig, Character, CharacterNarrativeStatus, ChatMessage, Chapter, StoryArc, WorkspaceScope } from '../types';
+import { readOwnedRows, resolveReadScopeLike } from '../workspace/scope';
+import { executeContextGatewayV1, type ContextGatewayExecutionV1 } from '../context-gateway/execution';
+import { isContextGatewayRequiredForWriteTargetV1 } from '../context-gateway/skill-policy';
+import { assembleContextGatewayPacketV1, contextGatewayInputStateSourceKeysV1, projectContextGatewayInputStateV1 } from './context-gateway-input';
+import { attachAgentContextInputStateV1, evidenceFromContextResult, resolveAgentContextPolicy, type AgentContextEvidence, type AgentContextProfile } from './context-policy';
+import type { MasterCandidateModelIdentityV1 } from './master-candidate-semantic-review';
+import { buildAgentSkillInputGuidanceV1, resolveAgentSkillV1, type AgentSkillId } from './skill-registry';
+import { parseStructuredOutputV1 } from './structured-output-pipeline';
 
 export const CHARACTER_NARRATIVE_STATUSES = [
   'planned', 'active', 'inactive', 'retired', 'deceased',

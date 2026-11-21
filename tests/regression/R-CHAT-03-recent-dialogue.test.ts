@@ -2,7 +2,7 @@ import {expect, it} from 'vitest'
 import actualFailure from '../fixtures/character-chat-reading-recent-dialogue-v324.json'
 import {sha256Text} from '../../src/lib/ai/chapter-memory/text-normalization'
 import {estimateTokens} from '../../src/lib/ai/context-budget'
-import {buildInteractionContextWindow, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/character-interaction/runtime'
+import {buildInteractionContextWindow, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/legacy-compat/character-interaction/runtime'
 import {formatInteractionRuntimeContextV1} from '../../src/lib/character-interaction/context-format'
 import {chatRetrievalVersionForReader} from '../../src/lib/character-interaction/context-selection'
 

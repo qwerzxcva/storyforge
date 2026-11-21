@@ -1,5 +1,5 @@
-import type { AgnesReferenceImageBindingV1, ImageGenerationBindingV1 } from './capability'
-import { assertGenerationAvailable } from '../showcase/policy'
+import type { AgnesReferenceImageBindingV1, ImageGenerationBindingV1 } from './capability';
+import { assertGenerationAvailable } from '../showcase/policy';
 
 const MAX_BYTES = 25 * 1024 * 1024
 

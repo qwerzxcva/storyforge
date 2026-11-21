@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
 import {
   createTextOpenWorldInventoryCatalogV1,
-} from '../../src/lib/open-world/inventory'
-import { createInitialTextOpenWorldSessionProjectionV1, deriveTextOpenWorldContextsV1 } from '../../src/lib/open-world/session-projection'
+} from '../../src/lib/legacy-compat/open-world/inventory'
+import { createInitialTextOpenWorldSessionProjectionV1, deriveTextOpenWorldContextsV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
 import type { TextOpenWorldEffectDefinitionV1 } from '../../src/lib/types'
 import { createTextOpenWorldVNextFixture } from '../helpers/text-open-world-vnext-fixture'
 

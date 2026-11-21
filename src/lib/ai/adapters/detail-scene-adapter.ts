@@ -1,9 +1,9 @@
-import type { ChatMessage, DetailedScene, ScenePace } from '../../types'
-import { SCENE_PACES } from '../../types/detailed-outline'
-import { usePromptStore } from '../../../stores/prompt'
-import { renderPrompt } from '../prompt-engine'
-import { nanoid } from '../../utils/id'
-import { parseDetailedSceneTaskFieldsV1, type DetailedSceneTaskV1 } from '../../types/detailed-outline'
+import type { ChatMessage, DetailedScene, ScenePace } from '../../types';
+import { SCENE_PACES } from '../../types/detailed-outline';
+import { usePromptStore } from '../../../stores/prompt';
+import { renderPrompt } from '../prompt-engine';
+import { nanoid } from '../../utils/id';
+import { parseDetailedSceneTaskFieldsV1, type DetailedSceneTaskV1 } from '../../types/detailed-outline';
 
 /** 细纲场景生成 */
 export function buildDetailSceneGeneratePrompt(

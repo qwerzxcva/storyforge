@@ -1,5 +1,5 @@
-import type { AIConfig, AIConfigPreset } from '../types'
-import { aiProviderAllowsEmptyKey } from './config-readiness'
+import type { AIConfig, AIConfigPreset } from '../types';
+import { aiProviderAllowsEmptyKey } from './config-readiness';
 
 export const GENERAL_AI_TASK_KINDS = ['creation', 'extraction', 'analysis', 'review'] as const
 export const AGENT_ROLE_TASK_KINDS = [

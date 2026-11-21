@@ -3,9 +3,9 @@ import { db } from '../../src/lib/db/schema'
 import { createWorkspace } from '../../src/lib/workspace/create-workspace'
 import { STORYFORGE_RULE_PACK_V1 } from '../../src/lib/ttrpg/storyforge-rule-pack'
 import { createStoryForgeOpenRulePackV2 } from '../../src/lib/ttrpg/storyforge-open-rule-pack'
-import { projectTtrpgRulePackMechanicalCoreV1 } from '../../src/lib/ttrpg/rule-pack-v2'
-import { resolveRulePackCheckV1, runRulePackFixturesV1 } from '../../src/lib/ttrpg/rule-pack'
-import { resolveTtrpgOracleV1, verifyTtrpgOracleOutcomeV1, assertTtrpgOracleInterpretationScopeV1 } from '../../src/lib/ttrpg/oracle'
+import { projectTtrpgRulePackMechanicalCoreV1 } from '../../src/lib/legacy-compat/ttrpg/rule-pack-v2'
+import { resolveRulePackCheckV1, runRulePackFixturesV1 } from '../../src/lib/legacy-compat/ttrpg/rule-pack'
+import { resolveTtrpgOracleV1, verifyTtrpgOracleOutcomeV1, assertTtrpgOracleInterpretationScopeV1 } from '../../src/lib/legacy-compat/ttrpg/oracle'
 import { listValidatedTtrpgRulePacksV1, listValidatedTtrpgRulePacksV2, saveTtrpgRulePackV1, saveTtrpgRulePackV2, readTtrpgRulePackVersionedV1 } from '../../src/lib/ttrpg/rule-pack-library'
 
 describe('R-TTRPGOPEN2 first-party open rules', () => {

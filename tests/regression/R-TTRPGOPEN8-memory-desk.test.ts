@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { seedTableConversationV1 } from '../helpers/open-ttrpg-table-conversation'
 import { readTtrpgOpenNarrativeMemoriesV1, recordTtrpgOpenDeskMemoryV1 } from '../../src/lib/ttrpg/open-memory-service'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 
 async function prepare() {
   const fixture = await seedTableConversationV1(true)

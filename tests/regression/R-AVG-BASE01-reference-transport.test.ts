@@ -1,15 +1,15 @@
 import { describe, expect, it, vi } from 'vitest'
 import { AIError } from '../../src/lib/types'
-import { sha256MediaData } from '../../src/lib/product-production/media-blob-store'
+import { sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import { ProductProductionResultUnknownErrorV1 } from '../../src/lib/product-production/scheduler'
 import type { MediaProviderTransportV1, MediaTransportResponseV1, ProductMediaRequestV1 } from '../../src/lib/product-production/media-adapters'
 import {
   assertAvgImageRequestV1, freezeAvgImageRequestV1, parseAvgMediaReferencesV1,
   AVG_IMAGE_REFERENCE_CAPABILITY_V1,AVG_IMAGE_REFERENCE_CAPABILITY_V2,
   type AvgMediaReferenceV1,
-} from '../../src/lib/avg/media-reference-contract'
+} from '../../src/lib/legacy-compat/avg/media-reference-contract'
 import { AvgImageOperationUnknownErrorV1, createAvgReferenceImageAdapterV1 } from '../../src/lib/avg/media-reference-adapter'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 
 const PNG_BASE64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4z8DwHwAFgAI/ScLbtAAAAABJRU5ErkJggg=='
 const PNG = Uint8Array.from(atob(PNG_BASE64), c => c.charCodeAt(0)).buffer

@@ -1,4 +1,4 @@
-import * as api from '../../src/lib/character-interaction/runtime-api'
+import * as api from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import {adoptInteractionRuntimeCandidateV1, generateInteractionRuntimeCandidateV1} from '../../src/lib/character-interaction/harness'
 import type {ChatNarrativeActionV1} from '../../src/lib/types/chat-narrative'
 import {seedChatNarrativeRuntimeFixture, chatActionReviewOutputFixture, withChatActionChoiceFixture} from './chat-narrative-fixture'

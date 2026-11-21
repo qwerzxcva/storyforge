@@ -1,5 +1,5 @@
-import type { ChatMessage } from '../types'
-import { jsonrepair } from 'jsonrepair'
+import type { ChatMessage } from '../types';
+import { jsonrepair } from 'jsonrepair';
 
 export type StructuredOutputStatusV1 =
   | 'ready'

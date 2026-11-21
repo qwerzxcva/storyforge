@@ -1,4 +1,7 @@
 <p align="center">
+
+> Android fork scope: world engine, longform, and longform nodes. Links marked “historical source” document retired implementations; they do not indicate available production or runtime features.
+
   <img src="./public/brand/storyforge-icon.png" alt="StoryForge 标志" width="80" />
 </p>
 
@@ -161,7 +164,7 @@ Agent 可以把排查、整理和提交反馈一起完成，维护者也能根�
 
 **体验过程：** 提出行动 → 规则结算 → KP 回应 → 查看线索 → 保存并继续。
 
-[运行与模型配置](#快速开始) · [玩家说明](./examples/ttrpg/README.md) · [真实制作及试玩记录](./examples/ttrpg/fog-harbor/production-status.md)
+[运行与模型配置](#快速开始) · [玩家说明 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/examples/ttrpg/README.md) · [真实制作及试玩记录 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/examples/ttrpg/fog-harbor/production-status.md)
 
 <details>
 <summary>试玩方式与当前范围</summary>
@@ -173,7 +176,7 @@ Agent 可以把排查、整理和提交反馈一起完成，维护者也能根�
 
 **开始方式：** 运行最新主干 → 首页“跑团” → 下方“跑团作品” → “开始一场新冒险”。也可打开本站 `/storyforge/play`。配置自己的模型 API，选择角色与参与方式后开始。
 
-本作是本地社区预览，公共联网多人尚未部署。同机交接也不提供针对设备拥有者的秘密保护。详见[玩家说明](./examples/ttrpg/README.md)与[真实制作及试玩记录](./examples/ttrpg/fog-harbor/production-status.md)。
+本作是本地社区预览，公共联网多人尚未部署。同机交接也不提供针对设备拥有者的秘密保护。详见[玩家说明 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/examples/ttrpg/README.md)与[真实制作及试玩记录 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/examples/ttrpg/fog-harbor/production-status.md)。
 
 </details>
 
@@ -353,7 +356,7 @@ Windows 请使用 Git for Windows，并选择较短的目录路径。上述克�
 - **让审校意见落到原文。** 问题带有章节和证据，重写针对具体章节；审校记录绑定本次手稿的内容指纹。正文改动后需要重新审校，避免拿旧报告给新稿盖章。
 - **保留可交付的定稿。** 缺失章节、待处理候选和未解决的严重问题会阻止发布。通过检查后新增冻结作品版本，后续继续修订可保留原版，导出 **Markdown、TXT、JSON**。
 
-对作者而言，工作台持续回答三个问题：还差哪一章、哪里需要修改、这一版是否已经完成。实现入口：[短篇生产与完成检查](./src/lib/short-novel/service.ts)、[独立 AI 运行链](./src/lib/agent/run/short-novel-durable.ts)。
+对作者而言，工作台持续回答三个问题：还差哪一章、哪里需要修改、这一版是否已经完成。实现入口：[短篇生产与完成检查 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/short-novel/service.ts)、[独立 AI 运行链 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/agent/run/short-novel-durable.ts)。
 
 ### 小说转剧本
 
@@ -365,7 +368,7 @@ Windows 请使用 Git for Windows，并选择较短的目录路径。上述克�
 
 例如把小说中的内心独白改成一场对峙，作者可沿来源与场景映射核对信息是否保留，再审查动作、冲突和节奏是否成立。发布时冻结来源、改编决定与场景，后续改小说不会悄悄改变已导出的剧本。
 
-实现入口：[剧本生产与定向修订](./src/lib/screenplay/production.ts)、[版本封存](./src/lib/screenplay/release.ts)、[格式渲染](./src/lib/screenplay/renderers.ts)。
+实现入口：[剧本生产与定向修订 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/screenplay/production.ts)、[版本封存 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/screenplay/release.ts)、[格式渲染 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/screenplay/renderers.ts)。
 
 ### 小说转漫画
 
@@ -378,7 +381,7 @@ Windows 请使用 Git for Windows，并选择较短的目录路径。上述克�
 
 **当前图像接入边界：** 内置通用 OpenAI 兼容图像适配器当前只发送文本，未声明参考图、固定 seed 或局部重绘能力。系统会提示限制，不能把“在提示词中提到参考图”记作已传图的证据。视觉制作需要单独配置图像服务或采用符合要求的作者素材；角色一致性仍需要人工选图与审校。
 
-实现入口：[漫画生产](./src/lib/comic/production.ts)、[媒资与生成证据](./src/lib/comic/media-service.ts)、[本地排字](./src/lib/comic/renderers.ts)、[双版本质量检查](./src/lib/comic/qa.ts)。
+实现入口：[漫画生产 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/production.ts)、[媒资与生成证据 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/media-service.ts)、[本地排字 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/renderers.ts)、[双版本质量检查 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/qa.ts)。
 
 以上三个产品已完成当前主干的工程闭环，内容质量和不同服务商的实际效果仍持续评测。各格式的具体适用条件以产品工作台为准。
 
@@ -425,7 +428,7 @@ flowchart LR
 
 以跑团的秘密为例，系统区分主持人掌握的事实和玩家已得知的信息，按接收者组织上下文；规则允许的状态变化再通过事件写入存档。小镇则按居民日程与可知信息组织生活过程。这些机制为“角色为什么知道这件事、这次行动改变了什么”提供了可检查的依据。
 
-实现入口：[跑团信息边界](./src/lib/ttrpg/information-boundary.ts)、[角色互动](./src/lib/character-interaction/runtime.ts)、[小镇](./src/lib/ai-town/runtime.ts)、[文字冒险](./src/lib/adventure/runtime.ts)、[AVG 演出](./src/lib/avg/runtime.ts)、[开放世界](./src/lib/open-world/runtime.ts)。
+实现入口：[跑团信息边界 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/ttrpg/information-boundary.ts)、[角色互动 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/character-interaction/runtime.ts)、[小镇 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/ai-town/runtime.ts)、[文字冒险 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/adventure/runtime.ts)、[AVG 演出 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/avg/runtime.ts)、[开放世界 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/runtime.ts)。
 
 <details>
 <summary>查看产品入口与成熟度</summary>

@@ -5,7 +5,7 @@ import { captureTtrpgDirectorViewV1 } from '../../src/lib/ttrpg/director-context
 import { generateTtrpgDirectorDecisionV1, adoptTtrpgDirectorDecisionV1 } from '../../src/lib/ttrpg/director-harness'
 import { adoptTtrpgGmNarrationCandidateV1, generateTtrpgGmNarrationCandidateV1 } from '../../src/lib/ttrpg/gm-harness'
 import { loadTtrpgGmRuntimeViewV1 } from '../../src/lib/ttrpg/gm-context'
-import { createDeterministicGmSynthesisFrameV2 } from '../../src/lib/ttrpg/action-feedback'
+import { createDeterministicGmSynthesisFrameV2 } from '../../src/lib/legacy-compat/ttrpg/action-feedback'
 import { readProductRuntimeState, readProductRuntimeStateVersion, replayProductRuntimeEvents, changeTtrpgSafetyStatus } from '../../src/lib/ttrpg/runtime-api'
 
 const empty = { revealClueKeys: [], recommendedSceneKeys: [], recommendedEndingKeys: [], pacing: 'investigate' }

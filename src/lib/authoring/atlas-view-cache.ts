@@ -1,7 +1,7 @@
-import { assertAtlasPaintPackageV2, type AtlasPaintPackageV2 } from '../world-map/atlas/paint-package'
-import type { AtlasViewStyle } from '../world-map/atlas/view-style'
-import type { AtlasSymbolStyle } from '../world-map/atlas/symbols'
-import { authorViewCache } from '../storage/author-view-cache'
+import { assertAtlasPaintPackageV2, type AtlasPaintPackageV2 } from '../world-map/atlas/paint-package';
+import type { AtlasViewStyle } from '../world-map/atlas/view-style';
+import type { AtlasSymbolStyle } from '../world-map/atlas/symbols';
+import { authorViewCache } from '../storage/author-view-cache';
 
 /** Browser-owned, disposable author-view cache. Never a world semantic table or a
  * portable project asset. Explicit paint packages remain the portable backup. */

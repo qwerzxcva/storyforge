@@ -1,11 +1,11 @@
-import { isCanonFactV1 } from '../fact-ledger/canon-eligibility'
-import type { Chapter, Character, OutlineNode } from '../types'
-import type { ConsistencyFinding } from '../ai/adapters/consistency-audit-adapter'
-import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence'
-import { getFactPredicate, normalizeFactValue } from '../registry/fact-predicate-registry'
-import type { TemporalFact } from '../types/temporal-fact'
-import type { WorkspaceScope } from '../types/world-ownership'
-import { readOwnedRows, resolveReadScopeLike } from '../workspace/scope'
+import { isCanonFactV1 } from '../fact-ledger/canon-eligibility';
+import type { Chapter, Character, OutlineNode } from '../types';
+import type { ConsistencyFinding } from '../ai/adapters/consistency-audit-adapter';
+import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence';
+import { getFactPredicate, normalizeFactValue } from '../registry/fact-predicate-registry';
+import type { TemporalFact } from '../types/temporal-fact';
+import type { WorkspaceScope } from '../types/world-ownership';
+import { readOwnedRows, resolveReadScopeLike } from '../workspace/scope';
 
 export type CharacterLifecycleStatus = 'alive' | 'dead' | 'missing' | 'unknown'
 

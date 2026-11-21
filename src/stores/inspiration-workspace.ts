@@ -1,17 +1,10 @@
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import { adopt, adoptionTransactionTablesV1 } from '../lib/registry/adopt'
-import {
-  createInspirationFragment, createInspirationVersion, MAX_INSPIRATION_VERSIONS,
-  parseInspirationFragments, parseInspirationVersions, repairInspirationVersionParents,
-  upsertInspirationFragment,
-} from '../lib/inspiration/workspace'
-import type {
-  InspirationFragment, InspirationResultMode, InspirationSourceKind, InspirationVersion,
-  InspirationWorkspace,
-} from '../lib/types/inspiration-workspace'
-import type { WorkspaceScope } from '../lib/types/world-ownership'
-import { readOwnedRows, resolveReadScopeLike, resolveScopeLike, type WorkspaceScopeLike } from '../lib/workspace/scope'
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import { adopt, adoptionTransactionTablesV1 } from '../lib/registry/adopt';
+import { createInspirationFragment, createInspirationVersion, MAX_INSPIRATION_VERSIONS, parseInspirationFragments, parseInspirationVersions, repairInspirationVersionParents, upsertInspirationFragment } from '../lib/inspiration/workspace';
+import type { InspirationFragment, InspirationResultMode, InspirationSourceKind, InspirationVersion, InspirationWorkspace } from '../lib/types/inspiration-workspace';
+import type { WorkspaceScope } from '../lib/types/world-ownership';
+import { readOwnedRows, resolveReadScopeLike, resolveScopeLike, type WorkspaceScopeLike } from '../lib/workspace/scope';
 
 interface InspirationWorkspaceState {
   scope: WorkspaceScope | null

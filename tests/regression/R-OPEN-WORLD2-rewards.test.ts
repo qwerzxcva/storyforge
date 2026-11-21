@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
-import { resolveTextOpenWorldRandomEvidenceV1 } from '../../src/lib/open-world/event-contract'
-import { createTextOpenWorldRewardCatalogV1 } from '../../src/lib/open-world/rewards'
-import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
+import { resolveTextOpenWorldRandomEvidenceV1 } from '../../src/lib/legacy-compat/open-world/event-contract'
+import { createTextOpenWorldRewardCatalogV1 } from '../../src/lib/legacy-compat/open-world/rewards'
+import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
 import {
   createTextOpenWorldVNextFixture,
   downgradeTextOpenWorldFixtureCombatActionsV1,

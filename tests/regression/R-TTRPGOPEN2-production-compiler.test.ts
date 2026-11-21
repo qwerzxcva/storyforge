@@ -1,9 +1,9 @@
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { openContextPolicyFixtureV1 } from '../helpers/open-ttrpg-context'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { compileProductionTtrpgOpenCampaignV2 } from '../../src/lib/ttrpg/open-production-compiler'
-import { parseTtrpgCampaignContentV2 } from '../../src/lib/ttrpg/campaign-v2'
+import { parseTtrpgCampaignContentV2 } from '../../src/lib/legacy-compat/ttrpg/campaign-v2'
 
 import { openProductionCompilerFixtureV1 as fixture } from '../helpers/open-ttrpg-production-artifacts'
 

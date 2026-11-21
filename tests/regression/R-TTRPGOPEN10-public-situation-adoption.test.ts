@@ -3,14 +3,14 @@ import { db } from '../../src/lib/db/schema'
 import { setupPublicSituationAdoptionV1 } from '../helpers/open-public-situation-adoption'
 import { openEnvelopeV1 } from '../helpers/open-ttrpg-session'
 import { acceptTtrpgOpenPublicSituationV1, activateTtrpgOpenSessionSituationV1, changeTtrpgSafetyStatus } from '../../src/lib/ttrpg/runtime-commands'
-import { parseTtrpgOpenSessionSituationReceiptV1, parseTtrpgOpenSessionSituationReceiptV2 } from '../../src/lib/ttrpg/open-session-situation-contract'
+import { parseTtrpgOpenSessionSituationReceiptV1, parseTtrpgOpenSessionSituationReceiptV2 } from '../../src/lib/legacy-compat/ttrpg/open-session-situation-contract'
 import { reconcileTtrpgOpenPublicSituationRunV1 } from '../../src/lib/ttrpg/open-public-situation-adoption'
 import { TtrpgOpenSituationReceiptPendingError } from '../../src/lib/ttrpg/open-session-situation-adoption'
 import { finishTtrpgOpenPublicSituationDraftV1 } from '../../src/lib/ttrpg/open-public-situation-stop'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { readAgentRunArtifactExactV1 } from '../../src/lib/memory/artifact-store'
-import { verifyTtrpgOpenSessionSituationHashesV1 } from '../../src/lib/ttrpg/open-session-situation-proof'
+import { verifyTtrpgOpenSessionSituationHashesV1 } from '../../src/lib/legacy-compat/ttrpg/open-session-situation-proof'
 
 describe('R-TTRPGOPEN10 original once-authorized AI host adoption', { timeout: 180000 }, () => {
   beforeEach(async () => { await db.delete(); await db.open() }); afterEach(() => { vi.restoreAllMocks(); db.close() })

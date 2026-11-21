@@ -1,26 +1,13 @@
 import Dexie from 'dexie'
-import { db } from '../db/schema'
-import type { GenerationGateIssue } from '../generation/generation-node'
-import {
-  readCognitionAuditSnapshot,
-  type CognitionCatalogEntry,
-  type ProjectedKnowledge,
-} from '../knowledge-ledger/knowledge-ledger'
-import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk'
-import {
-  parseCharacterDrivenPlanArcs,
-  parseCharacterDrivenPlotVolumes,
-} from '../types/character-driven-plan'
-import { parseStages } from '../types/story-arc'
-import type {
-  Character,
-  OutlineNode,
-  StoryArc,
-  StorylineProgress,
-  WorkspaceScope,
-} from '../types'
-import { readOwnedRows } from '../workspace/scope'
-import { hashCanonicalValue } from './run/hash'
+import { db } from '../db/schema';
+import type { GenerationGateIssue } from '../generation/generation-node';
+import { readCognitionAuditSnapshot, type CognitionCatalogEntry, type ProjectedKnowledge } from '../knowledge-ledger/knowledge-ledger';
+import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk';
+import { parseCharacterDrivenPlanArcs, parseCharacterDrivenPlotVolumes } from '../types/character-driven-plan';
+import { parseStages } from '../types/story-arc';
+import type { Character, OutlineNode, StoryArc, StorylineProgress, WorkspaceScope } from '../types';
+import { readOwnedRows } from '../workspace/scope';
+import { hashCanonicalValue } from './run/hash';
 
 export const INFORMATION_BOUNDARY_VERSION_V1 = 1
 

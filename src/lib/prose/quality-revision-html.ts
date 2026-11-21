@@ -1,5 +1,5 @@
-import { htmlToPlainText, plainTextToHtml } from '../utils/html'
-import { applyQualityRevisionPatchesV1, type QualityRevisionPlanV1 } from './quality-revision'
+import { htmlToPlainText, plainTextToHtml } from '../utils/html';
+import { applyQualityRevisionPatchesV1, type QualityRevisionPlanV1 } from './quality-revision';
 
 interface Point { node: Node; offset: number }
 interface Unit { char: string; start: Point; end: Point }

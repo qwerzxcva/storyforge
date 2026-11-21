@@ -4,14 +4,14 @@ import { assertTextOpenWorldBuildNewWorkV1 } from '../../src/lib/open-world/sour
 import { createTextOpenWorldProductionExecutorV1 } from '../../src/lib/open-world/production-executor'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
 import { draftProductProductionBriefV3, suggestProductStartingPoints } from '../../src/lib/product-production/consultation'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { putMediaBlobObject } from '../../src/lib/product-production/media-blob-store'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { putMediaBlobObject } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import { resolveTrustedRelayMediaCapabilityV1 } from '../../src/lib/product-production/media-transport'
 import {
   createBuiltInProductionCapabilityBindingV1,
 } from '../../src/lib/product-production/production-executor'
-import { createProductProductionPlanV3, parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { createProductProductionPlanV3, parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 import {
   projectProductProductionSchedulerV1,
   runProductProductionSchedulerCycleV1,

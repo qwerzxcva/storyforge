@@ -1,29 +1,29 @@
 import Dexie from 'dexie'
-import { db } from '../../db/schema'
-import type { AgentRunContractV3, AgentRunRecord, ChatMessage, WorkspaceScope } from '../../types'
-import type { AIRequestConfigResolution, StreamResult } from '../../ai/client'
-import { describeResolvedAIRequestSettingsV1, resolveRequestConfig } from '../../ai/client'
-import { useAIConfigStore } from '../../../stores/ai-config'
-import { htmlToPlainText } from '../../utils/html'
-import { assertRecordInScope, readOwnedRows } from '../../workspace/scope'
-import { captureWorkspaceContentRevisionV1, assertWorkspaceContentRevisionFreshV1, type WorkspaceContentRevisionVectorV1 } from '../../authoring/content-revision'
-import { prepareProseGatewayAssemblyV1 } from '../../prose/gateway-context'
-import { buildWholeChapterQualityReviewRequestV1, parseWholeChapterQualityReviewV1, verifyWholeChapterQualityReviewV1, QUALITY_REVIEW_PROMPT_VERSION_V1, type QualityReviewArtifactV1, type QualityReviewModeV1 } from '../../prose/quality-review'
-import { proseRenderedRequestV1 } from '../../prose/request-evidence'
-import { prepareQualityResolutionV1 } from '../../prose/quality-request-budget'
-import { wholeChapterQualityRequestOptionsV1 } from '../../prose/quality-review-request-options'
-import { getAgentSkillV1, resolveAgentSkillContextSourceKeysV1 } from '../skill-registry'
-import { createAgentSkillExecutionBindingV2 } from '../execution-binding'
-import { freezeFormalAIEntryBindingV1 } from '../formal-ai-entry'
-import { createAgentRunV1, appendAgentRunEventV1, readAgentRunV1, type AgentRunSnapshotV1 } from './event-store'
-import { hashCanonicalValue } from './hash'
-import { createContextManifestFromAssemblyV1, createContextManifestV2FromV1 } from './context-manifest'
-import { recordContextGatewayPreflightEvidenceV1, finalizeContextGatewayAttemptEvidenceV1, verifyContextGatewayCandidateEvidenceV1, inspectContextGatewayManifestFreshnessV1 } from '../../context-gateway/attempt-evidence'
-import { readAgentRunArtifactExactV1, recordAgentRunArtifactV1 } from '../../memory/artifact-store'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import { AgentTeamBudgetTracker } from '../team-budget'
-import { createContextGatewayToolSessionV1 } from '../../context-gateway/tool-session'
-import { createContextAccessPolicyForExecutionV1 } from '../../context-gateway/skill-policy'
+import { db } from '../../db/schema';
+import type { AgentRunContractV3, AgentRunRecord, ChatMessage, WorkspaceScope } from '../../types';
+import type { AIRequestConfigResolution, StreamResult } from '../../ai/client';
+import { describeResolvedAIRequestSettingsV1, resolveRequestConfig } from '../../ai/client';
+import { useAIConfigStore } from '../../../stores/ai-config';
+import { htmlToPlainText } from '../../utils/html';
+import { assertRecordInScope, readOwnedRows } from '../../workspace/scope';
+import { captureWorkspaceContentRevisionV1, assertWorkspaceContentRevisionFreshV1, type WorkspaceContentRevisionVectorV1 } from '../../authoring/content-revision';
+import { prepareProseGatewayAssemblyV1 } from '../../prose/gateway-context';
+import { buildWholeChapterQualityReviewRequestV1, parseWholeChapterQualityReviewV1, verifyWholeChapterQualityReviewV1, QUALITY_REVIEW_PROMPT_VERSION_V1, type QualityReviewArtifactV1, type QualityReviewModeV1 } from '../../prose/quality-review';
+import { proseRenderedRequestV1 } from '../../prose/request-evidence';
+import { prepareQualityResolutionV1 } from '../../prose/quality-request-budget';
+import { wholeChapterQualityRequestOptionsV1 } from '../../prose/quality-review-request-options';
+import { getAgentSkillV1, resolveAgentSkillContextSourceKeysV1 } from '../skill-registry';
+import { createAgentSkillExecutionBindingV2 } from '../execution-binding';
+import { freezeFormalAIEntryBindingV1 } from '../formal-ai-entry';
+import { createAgentRunV1, appendAgentRunEventV1, readAgentRunV1, type AgentRunSnapshotV1 } from './event-store';
+import { hashCanonicalValue } from './hash';
+import { createContextManifestFromAssemblyV1, createContextManifestV2FromV1 } from './context-manifest';
+import { recordContextGatewayPreflightEvidenceV1, finalizeContextGatewayAttemptEvidenceV1, verifyContextGatewayCandidateEvidenceV1, inspectContextGatewayManifestFreshnessV1 } from '../../context-gateway/attempt-evidence';
+import { readAgentRunArtifactExactV1, recordAgentRunArtifactV1 } from '../../memory/artifact-store';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { AgentTeamBudgetTracker } from '../team-budget';
+import { createContextGatewayToolSessionV1 } from '../../context-gateway/tool-session';
+import { createContextAccessPolicyForExecutionV1 } from '../../context-gateway/skill-policy';
 
 export const QUALITY_REVIEW_STEP_V1 = 'whole-chapter-review'
 const VERIFIER = 'whole-chapter-review-terminal-v1'

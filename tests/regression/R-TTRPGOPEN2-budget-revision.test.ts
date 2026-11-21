@@ -3,7 +3,7 @@ import {db} from '../../src/lib/db/schema'
 import {openProductionFixtureV1} from '../helpers/open-ttrpg-production'
 import * as commands from '../../src/lib/product-production/commands'
 import {stopProductProductionV1} from '../../src/lib/product-production/service'
-import {createProductProductionPlanV3} from '../../src/lib/product-production/plan'
+import {createProductProductionPlanV3} from '../../src/lib/legacy-compat/product-production/plan'
 import {runProductProductionUntilBlockedV1,ProductProductionResultUnknownErrorV1} from '../../src/lib/product-production/scheduler'
 import {inspectTtrpgOpenProductionBudgetRevisionV1 as inspect,prepareTtrpgOpenProductionBudgetRevisionV1 as prepare,
  saveTtrpgOpenProductionBudgetRevisionV1 as save} from '../../src/lib/ttrpg/open-production-budget-revision'

@@ -12,18 +12,18 @@ import { verifyTextOpenWorldVNextSessionBindingV1 } from '../../src/lib/open-wor
 import {
   putMediaBlobObject,
   readProductMediaBlobData,
-} from '../../src/lib/product-production/media-blob-store'
+} from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import {
   canonicalProductProductionJsonV2,
   hashProductProductionValueV2,
-} from '../../src/lib/product-production/hash'
+} from '../../src/lib/legacy-compat/product-production/hash'
 import {
   type ProductQualityGateReceiptV1,
   verifyProductQualityGateReceiptRecordV1,
-} from '../../src/lib/product-production/quality-receipts'
-import { createTextOpenWorldInstance } from '../../src/lib/product/runtime-instances'
-import { deleteProductRuntimeSession } from '../../src/lib/product/runtime-core'
-import { assertProductReleaseUnchanged } from '../../src/lib/product/releases'
+} from '../../src/lib/legacy-compat/product-production/quality-receipts'
+import { createTextOpenWorldInstance } from '../../src/lib/legacy-compat/product/runtime-instances'
+import { deleteProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
+import { assertProductReleaseUnchanged } from '../../src/lib/legacy-compat/product/releases'
 import type { ProductMediaAsset, ProductMediaBlob, ProductRelease } from '../../src/lib/types'
 import { deleteWork } from '../../src/lib/workspace/lifecycle'
 import { resolveWorkspaceOwnership } from '../../src/lib/workspace/ownership'

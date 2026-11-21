@@ -1,7 +1,7 @@
 /** Explicit engineering candidate using a real frozen source and confirmed session fact; no model/acceptance receipt is invented. */
 import { seedTtrpgWorldPatchReviewV1 } from './open-ttrpg-world-patch'
-import { loadTtrpgOpenSituationProposalBasisV1 } from '../../src/lib/ttrpg/open-generated-situation-basis'
-import type { TtrpgOpenSituationProposalBasisV1 } from '../../src/lib/ttrpg/open-generated-situation-contract'
+import { loadTtrpgOpenSituationProposalBasisV1 } from '../../src/lib/legacy-compat/ttrpg/open-generated-situation-basis'
+import type { TtrpgOpenSituationProposalBasisV1 } from '../../src/lib/legacy-compat/ttrpg/open-generated-situation-contract'
 
 export function generatedSituationProposalFixtureV1(basis: TtrpgOpenSituationProposalBasisV1) {
   const original = structuredClone(basis.campaign.situationTemplates[0]), key = basis.assignedTemplateKey

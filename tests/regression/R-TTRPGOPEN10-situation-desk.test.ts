@@ -1,11 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { setupSituationGenerationV1, situationGenerationOutputV1, SITUATION_GENERATION_INPUT_V1 } from '../helpers/open-situation-generation'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { prepareTtrpgOpenSituationInputV1 } from '../../src/lib/ttrpg/open-intent-input'
 import { generateTtrpgOpenSituationCandidateV1 } from '../../src/lib/ttrpg/open-intent-harness'
-import { loadTtrpgOpenSituationKernelInputV1 } from '../../src/lib/ttrpg/open-generated-situation-context'
+import { loadTtrpgOpenSituationKernelInputV1 } from '../../src/lib/legacy-compat/ttrpg/open-generated-situation-context'
 import { finishTtrpgOpenSituationDraftV1 } from '../../src/lib/ttrpg/open-generated-situation-stop'
 import { TtrpgOpenSituationReceiptPendingError } from '../../src/lib/ttrpg/open-session-situation-adoption'
 import { readTtrpgOpenSituationDeskV1, requestTtrpgOpenSituationDeskV1, confirmTtrpgOpenSituationDeskV1, declineTtrpgOpenSituationDeskV1,

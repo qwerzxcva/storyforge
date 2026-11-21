@@ -2,13 +2,13 @@ import { beforeEach, afterEach, describe, it, expect } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { setupOpenEntityPlanningV1 } from '../helpers/open-entity-runtime'
 import { openEnvelopeV1 } from '../helpers/open-ttrpg-session'
-import { createCompleteTtrpgCharacterSheetV2 } from '../../src/lib/ttrpg/character-sheet'
+import { createCompleteTtrpgCharacterSheetV2 } from '../../src/lib/legacy-compat/ttrpg/character-sheet'
 import { readTtrpgOpenEntityDeskV1, proposeTtrpgOpenEntityDeskV1, confirmTtrpgOpenEntityDeskV1, materializeTtrpgOpenEntityDeskV1 } from '../../src/lib/ttrpg/open-entity-desk'
 import { consultTtrpgOracleV1 } from '../../src/lib/ttrpg/runtime-commands'
-import { readProductRuntimeState, branchProductRuntimeSession, deleteProductRuntimeSession } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState, branchProductRuntimeSession, deleteProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
 import { createTtrpgOpenRuntimeEntityReferencesV1, parseTtrpgOpenRuntimeEntityReferencesV1, assertTtrpgOpenRuntimeEntityReferencesMatchV1,
-  verifyTtrpgOpenRuntimeEntityReferencesHashV1 } from '../../src/lib/ttrpg/open-runtime-entity-references'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+  verifyTtrpgOpenRuntimeEntityReferencesHashV1 } from '../../src/lib/legacy-compat/ttrpg/open-runtime-entity-references'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 
 async function setup() {

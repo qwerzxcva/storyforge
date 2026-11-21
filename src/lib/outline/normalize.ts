@@ -1,4 +1,4 @@
-import type { OutlineNode } from '../types'
+import type { OutlineNode } from '../types';
 
 /** Enforce the single current OutlineNode shape at every UI/store boundary. */
 export function normalizeOutlineNode(node: OutlineNode): OutlineNode {

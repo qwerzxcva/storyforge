@@ -1,9 +1,9 @@
 import {describe, expect, it} from 'vitest'
 import type {CharacterInteractionRuntimeState} from '../../src/lib/types'
 import type {ChatCommitmentEffectV1, ChatNarrativeActionV1} from '../../src/lib/types/chat-narrative'
-import {applyChatCommitmentEffectsV1, CHAT_GOAL_COMMITMENT_LIMIT_V1, chatVisibleCommitmentsV1, parseChatCommitmentEffectsV1} from '../../src/lib/character-interaction/narrative-commitments'
-import {createInitialInteractionState, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/character-interaction/runtime'
-import {applyChatNarrativeActionV1, requestChatNarrativeTriggerV1} from '../../src/lib/character-interaction/narrative-actions'
+import {applyChatCommitmentEffectsV1, CHAT_GOAL_COMMITMENT_LIMIT_V1, chatVisibleCommitmentsV1, parseChatCommitmentEffectsV1} from '../../src/lib/legacy-compat/character-interaction/narrative-commitments'
+import {createInitialInteractionState, parseInteractionState, rebaseInteractionStateForBranch} from '../../src/lib/legacy-compat/character-interaction/runtime'
+import {applyChatNarrativeActionV1, requestChatNarrativeTriggerV1} from '../../src/lib/legacy-compat/character-interaction/narrative-actions'
 import {chatNarrativeFixture} from '../helpers/chat-narrative-fixture'
 
 // State-contract fixtures only. No model, formal action commit or UI is enabled.

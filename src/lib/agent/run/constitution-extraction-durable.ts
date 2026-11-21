@@ -1,34 +1,15 @@
-import { chat } from '../../ai/client'
-import {
-  adoptSettingAssertionCandidatesAtomicV1,
-  buildSettingAssertionExtractMessagesFromRegisteredContextV1,
-  buildSettingAssertionFactCandidateV1,
-  formatSettingAssertionScanContext,
-  listSettingAssertionSources,
-  listSettingAssertionSubjects,
-  normalizeConstitutionValue,
-  parseSettingAssertionCandidatesStrictV1,
-  readSettingAssertionExtractPromptTemplateSnapshotV1,
-  type ExtractedSettingAssertion,
-  type SettingAssertionSource,
-  type SettingAssertionSubjects,
-} from '../../fact-ledger/setting-assertions'
-import { assembleContext } from '../../registry/assemble-context'
-import type { AIConfig, ChatMessage, TemporalFact, WorkspaceScope } from '../../types'
-import { readOwnedRows } from '../../workspace/scope'
-import { createAgentSkillExecutionBindingV1 } from '../execution-binding'
-import { getAgentSkillV1 } from '../skill-registry'
-import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  staleAgentRunVerificationV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { canonicalStringify, hashCanonicalValue } from './hash'
-import { createVerificationReceiptV1 } from './verification-receipt'
+import { chat } from '../../ai/client';
+import { adoptSettingAssertionCandidatesAtomicV1, buildSettingAssertionExtractMessagesFromRegisteredContextV1, buildSettingAssertionFactCandidateV1, formatSettingAssertionScanContext, listSettingAssertionSources, listSettingAssertionSubjects, normalizeConstitutionValue, parseSettingAssertionCandidatesStrictV1, readSettingAssertionExtractPromptTemplateSnapshotV1, type ExtractedSettingAssertion, type SettingAssertionSource, type SettingAssertionSubjects } from '../../fact-ledger/setting-assertions';
+import { assembleContext } from '../../registry/assemble-context';
+import type { AIConfig, ChatMessage, TemporalFact, WorkspaceScope } from '../../types';
+import { readOwnedRows } from '../../workspace/scope';
+import { createAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { getAgentSkillV1 } from '../skill-registry';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, staleAgentRunVerificationV1, type AgentRunSnapshotV1 } from './event-store';
+import { canonicalStringify, hashCanonicalValue } from './hash';
+import { createVerificationReceiptV1 } from './verification-receipt';
 
 export const CONSTITUTION_EXTRACTION_STEP_ID_V1 = 'world-origin:constitution-extract' as const
 export const CONSTITUTION_EXTRACTION_VERIFIER_SET_V1 = 'constitution-extraction-terminal-v1' as const

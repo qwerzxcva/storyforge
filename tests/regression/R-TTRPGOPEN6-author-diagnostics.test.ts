@@ -5,13 +5,13 @@ import { setupGateHintFixtureV1 } from '../helpers/open-ttrpg-gate-recovery'
 import { readyOpenTtrpgSessionV1, openEnvelopeV1, configureOpenSeatsV1 } from '../helpers/open-ttrpg-session'
 import { resumeTtrpgOpenChecksV1 } from '../../src/lib/ttrpg/open-checks-coordinator'
 import { recoverTtrpgOpenOperationGatesV1, changeTtrpgSafetyStatus, completeTtrpgOpenSessionZeroV1, startTtrpgOpenRunV1 } from '../../src/lib/ttrpg/runtime-commands'
-import { chooseTtrpgOpenGateRecoveryV1 } from '../../src/lib/ttrpg/open-gate-recovery'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
-import { createProductRuntimeInstanceFromSource } from '../../src/lib/product/runtime-instances'
+import { chooseTtrpgOpenGateRecoveryV1 } from '../../src/lib/legacy-compat/ttrpg/open-gate-recovery'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
+import { createProductRuntimeInstanceFromSource } from '../../src/lib/legacy-compat/product/runtime-instances'
 import { forkAndStart, approve, operationInput } from '../helpers/open-ttrpg-branch-recovery'
 import { createFixtureProductReleaseManifestV1 } from '../helpers/product-release-v1'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { createProductBuildPreviewManifestV1 } from '../../src/lib/product-production/preview-manifest'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { createProductBuildPreviewManifestV1 } from '../../src/lib/legacy-compat/product-production/preview-manifest'
 
 const locator = (f: Awaited<ReturnType<typeof readyOpenTtrpgSessionV1>>) => ({ scope: f.scope,productionId: f.productionId,sessionId: f.sessionId })
 describe('R-TTRPGOPEN6 actual author playtest diagnostics and explicit revision handoff', { timeout: 60000 }, () => {

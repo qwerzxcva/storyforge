@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { projectTextOpenWorldPlayerHudV1 } from '../../src/lib/open-world/player-hud'
-import { createTextOpenWorldDirectorQuestInstanceV1 } from '../../src/lib/open-world/quests'
-import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
+import { createTextOpenWorldDirectorQuestInstanceV1 } from '../../src/lib/legacy-compat/open-world/quests'
+import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
 import { createTextOpenWorldVNextP9Fixture } from '../helpers/text-open-world-vnext-fixture'
 
 const MAIN_INSTANCE_KEY = 'quest-instance.12.quest.main.1.release.13.session-start'

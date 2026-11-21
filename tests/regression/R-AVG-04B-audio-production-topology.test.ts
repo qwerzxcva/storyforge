@@ -1,13 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { proposeAvgAudioProcessingTopologyV1 } from '../../src/lib/avg/audio-production-topology'
-import { buildAvgVoiceAssemblyPlanV3 } from '../../src/lib/avg/voice-assembly-plan'
-import { buildAvgSoundProductionPlanV1 } from '../../src/lib/avg/sound-production-plan'
-import { parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
+import { proposeAvgAudioProcessingTopologyV1 } from '../../src/lib/legacy-compat/avg/audio-production-topology'
+import { buildAvgVoiceAssemblyPlanV3 } from '../../src/lib/legacy-compat/avg/voice-assembly-plan'
+import { buildAvgSoundProductionPlanV1 } from '../../src/lib/legacy-compat/avg/sound-production-plan'
+import { parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
 import { avgVoiceAssemblyFixtureV3 } from '../helpers/avg-voice-production-fixture'
 import { avgSoundPlanningFixtureV1 } from '../helpers/avg-sound-planning-fixture'
-import type { AvgAudioProductionProcessingPlanV1 } from '../../src/lib/avg/audio-production-contract'
-import { avgAudioProcessingExecutionReadyV1 } from '../../src/lib/avg/audio-production-brief'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import type { AvgAudioProductionProcessingPlanV1 } from '../../src/lib/legacy-compat/avg/audio-production-contract'
+import { avgAudioProcessingExecutionReadyV1 } from '../../src/lib/legacy-compat/avg/audio-production-brief'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 
 async function fixture(domain: 'voice' | 'sound') {
   const v = await avgVoiceAssemblyFixtureV3()

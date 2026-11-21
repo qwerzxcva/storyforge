@@ -2,8 +2,7 @@
  * 地图渲染风格预设
  * 每种预设定义颜色方案、字体、透明度等
  */
-
-import type { MapStylePreset } from './types'
+import type { MapStylePreset } from './types';
 
 /** 风格配置 */
 export interface StyleConfig {

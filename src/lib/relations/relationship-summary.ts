@@ -1,8 +1,8 @@
-import { adopt } from '../registry/adopt'
-import { db } from '../db/schema'
-import type { Character, CharacterRelation } from '../types'
-import type { WorkspaceScope } from '../types/world-ownership'
-import { assertRecordInScope, resolveScopeLike } from '../workspace/scope'
+import { adopt } from '../registry/adopt';
+import { db } from '../db/schema';
+import type { Character, CharacterRelation } from '../types';
+import type { WorkspaceScope } from '../types/world-ownership';
+import { assertRecordInScope, resolveScopeLike } from '../workspace/scope';
 
 export const RELATION_FIELD_PREFIX = '- 与【'
 

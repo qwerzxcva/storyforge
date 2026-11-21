@@ -1,7 +1,7 @@
-import type { MasterAgentPlan } from './orchestrator'
-import { hashMasterAgentPlanV1, parseMasterAgentPlanV1, restoreMasterAgentCandidatesV1 } from './run/master-durable'
-import { appendAgentEvent, readAgentEvents } from './conversations'
-import { parseAgentEventPayload, type WorkspaceScope } from '../types'
+import type { MasterAgentPlan } from './orchestrator';
+import { hashMasterAgentPlanV1, parseMasterAgentPlanV1, restoreMasterAgentCandidatesV1 } from './run/master-durable';
+import { appendAgentEvent, readAgentEvents } from './conversations';
+import { parseAgentEventPayload, type WorkspaceScope } from '../types';
 
 /** Keep at most one prose chapter in a phase so its shared post-chain can settle before the next chapter. */
 export function splitLongformPlanAtChapterV1(input: MasterAgentPlan): { current: MasterAgentPlan; remaining: MasterAgentPlan | null } {

@@ -1,15 +1,9 @@
-import type { AgentSkillDefinitionV1 } from './skill-registry'
-import { resolveAgentSkillContextSourceKeysV1 } from './skill-registry'
-import { getAgentToolSchemaSnapshotV1 } from './tool-registry'
-import { canonicalStringify, hashCanonicalValue } from './run/hash'
-import type {
-  AgentOptionalContextActivationV2,
-  AgentRunWriteTargetV1,
-  AgentSkillExecutionBindingV1,
-  AgentSkillExecutionBindingV2,
-  AgentRunWriteMode,
-} from '../types/agent-run'
-import type { AssembleContextResult } from '../registry/types'
+import type { AgentSkillDefinitionV1 } from './skill-registry';
+import { resolveAgentSkillContextSourceKeysV1 } from './skill-registry';
+import { getAgentToolSchemaSnapshotV1 } from './tool-registry';
+import { canonicalStringify, hashCanonicalValue } from './run/hash';
+import type { AgentOptionalContextActivationV2, AgentRunWriteTargetV1, AgentSkillExecutionBindingV1, AgentSkillExecutionBindingV2, AgentRunWriteMode } from '../types/agent-run';
+import type { AssembleContextResult } from '../registry/types';
 
 export const AGENT_EXECUTION_BINDING_VERSION_V1 = 1 as const
 export const AGENT_TOOL_SCHEMA_VERSION_V1 = 'agent-read-tools-v23-positioning-preparation-v1' as const

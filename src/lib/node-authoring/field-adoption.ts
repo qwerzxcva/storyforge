@@ -1,34 +1,24 @@
 import Dexie from 'dexie'
-import { db } from '../db/schema'
-import type { NodeFlow, WorkspaceScope, Worldview, StoryCore } from '../types'
-import type { AdoptResult } from '../registry/types'
-import type { AgentRunEventPayloadByTypeV1, AgentRunEventTypeV1 } from '../types/agent-run'
-import {
-  appendAgentRunEventWithSettlementInTransactionV1, readVerifiedAgentRunInTransactionV1,
-  withAgentRunMutationLockV1, type AgentRunSnapshotV1,
-} from '../agent/run/event-store'
-import { parseAgentRunEventV1 } from '../agent/run/event-schema'
-import { createAgentRunCheckpointInTransactionV1 } from '../agent/run/checkpoint'
-import { createVerificationReceiptV1 } from '../agent/run/verification-receipt'
-import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash'
-import { recordAgentRunArtifactV1 } from '../memory/artifact-store'
-import {
-  adoptRestoredWorldviewFieldCandidate, parseWorldviewFieldCandidateDraft,
-  worldviewFieldCandidateIssuesV1, worldviewFieldCandidateMatchesRowV1, type WorldviewAgentField,
-} from '../agent/worldview-field-copilot'
-import {
-  adoptRestoredStoryCoreCandidate, parseStoryCoreCandidateDraft,
-  storyCoreCandidateIssuesV1, storyCoreCandidateMatchesRowV1, type StoryCoreField,
-} from '../agent/story-core-copilot'
-import { adoptionTransactionTablesV1 } from '../registry/adopt'
-import { assertRecordInScope, readOwnedRows, resolveScope, scopeTransactionTables } from '../workspace/scope'
-import { readNodeFieldCandidateCountV1 } from './domain-execution'
-import { executionInput, readNodeFieldProducerPrefixV1, NodeFieldProducerWitnessConflictErrorV1 } from './field-producer'
-import { parseAuthoringGraph } from './graph-codec'
-import { inspectAuthoringGraphFreshness } from './freshness'
-import { assertAuthoringCanonReceipt, authoringConnectionsHash, captureAuthoringCanonReceipt,
-  hashAuthoringText, readAuthoringTargetFingerprint, readAuthoringReceiptRows, receiptRecordHash } from './bindings'
-import type { AuthoringCandidate, AuthoringInputEnvelope } from './contracts'
+import { db } from '../db/schema';
+import type { NodeFlow, WorkspaceScope, Worldview, StoryCore } from '../types';
+import type { AdoptResult } from '../registry/types';
+import type { AgentRunEventPayloadByTypeV1, AgentRunEventTypeV1 } from '../types/agent-run';
+import { appendAgentRunEventWithSettlementInTransactionV1, readVerifiedAgentRunInTransactionV1, withAgentRunMutationLockV1, type AgentRunSnapshotV1 } from '../agent/run/event-store';
+import { parseAgentRunEventV1 } from '../agent/run/event-schema';
+import { createAgentRunCheckpointInTransactionV1 } from '../agent/run/checkpoint';
+import { createVerificationReceiptV1 } from '../agent/run/verification-receipt';
+import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash';
+import { recordAgentRunArtifactV1 } from '../memory/artifact-store';
+import { adoptRestoredWorldviewFieldCandidate, parseWorldviewFieldCandidateDraft, worldviewFieldCandidateIssuesV1, worldviewFieldCandidateMatchesRowV1, type WorldviewAgentField } from '../agent/worldview-field-copilot';
+import { adoptRestoredStoryCoreCandidate, parseStoryCoreCandidateDraft, storyCoreCandidateIssuesV1, storyCoreCandidateMatchesRowV1, type StoryCoreField } from '../agent/story-core-copilot';
+import { adoptionTransactionTablesV1 } from '../registry/adopt';
+import { assertRecordInScope, readOwnedRows, resolveScope, scopeTransactionTables } from '../workspace/scope';
+import { readNodeFieldCandidateCountV1 } from './domain-execution';
+import { executionInput, readNodeFieldProducerPrefixV1, NodeFieldProducerWitnessConflictErrorV1 } from './field-producer';
+import { parseAuthoringGraph } from './graph-codec';
+import { inspectAuthoringGraphFreshness } from './freshness';
+import { assertAuthoringCanonReceipt, authoringConnectionsHash, captureAuthoringCanonReceipt, hashAuthoringText, readAuthoringTargetFingerprint, readAuthoringReceiptRows, receiptRecordHash } from './bindings';
+import type { AuthoringCandidate, AuthoringInputEnvelope } from './contracts';
 
 const STEP = 'node-field:generate'
 type ProducerRead = Awaited<ReturnType<typeof readNodeFieldProducerPrefixV1>>

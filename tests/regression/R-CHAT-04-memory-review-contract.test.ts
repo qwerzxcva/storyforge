@@ -1,6 +1,6 @@
 import {expect, it} from 'vitest'
-import {createInitialInteractionState, parseInteractionState, rebaseInteractionStateForBranch, interactionVisibilityView} from '../../src/lib/character-interaction/runtime'
-import {chatMemoryReviewBindingV1, hasChatMemoryContentReviewV1, parseChatMemoryReviewV1, parseChatMemoryReceiptV1, CHAT_MEMORY_CHECKS} from '../../src/lib/character-interaction/memory-review-contract'
+import {createInitialInteractionState, parseInteractionState, rebaseInteractionStateForBranch, interactionVisibilityView} from '../../src/lib/legacy-compat/character-interaction/runtime'
+import {chatMemoryReviewBindingV1, hasChatMemoryContentReviewV1, parseChatMemoryReviewV1, parseChatMemoryReceiptV1, CHAT_MEMORY_CHECKS} from '../../src/lib/legacy-compat/character-interaction/memory-review-contract'
 import {chatNarrativeFixture} from '../helpers/chat-narrative-fixture'
 
 function fixture() {

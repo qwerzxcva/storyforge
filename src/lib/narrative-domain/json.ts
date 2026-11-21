@@ -1,4 +1,4 @@
-import { createNarrativeSha256V1 } from './sha256'
+import { createNarrativeSha256V1 } from './sha256';
 
 /** Separate from immutable v3 release canonicalization. Never change the v3 comparator. */
 export class NarrativeContractErrorV1 extends Error {

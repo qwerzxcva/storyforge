@@ -1,10 +1,6 @@
-import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { AlertTriangle, Info, X } from 'lucide-react'
-import {
-  setBackupDialogAdapter,
-  type BackupChoice,
-  type RequireBackupOptions,
-} from '../../lib/safety/require-backup-before'
+import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { AlertTriangle, Info, X } from 'lucide-react';
+import { setBackupDialogAdapter, type BackupChoice, type RequireBackupOptions } from '../../lib/safety/require-backup-before';
 
 type DialogTone = 'info' | 'danger'
 

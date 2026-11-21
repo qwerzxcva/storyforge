@@ -1,17 +1,17 @@
 import {buildChatOpeningReviewReferencesV1} from '../../src/lib/character-interaction/opening-review-references'
-import type {ChatExperienceInfoV1} from '../../src/lib/character-interaction/experience-info'
-import type {ChatCharacterCardOriginV1} from '../../src/lib/character-interaction/private-character'
+import type {ChatExperienceInfoV1} from '../../src/lib/legacy-compat/character-interaction/experience-info'
+import type {ChatCharacterCardOriginV1} from '../../src/lib/legacy-compat/character-interaction/private-character'
 import {CHAT_OPENING_CHECKS, type ChatOpeningReviewDraftV1} from '../../src/lib/character-interaction/situation-production-review'
 import { seedCurrentProductWorld } from './current-product-world'
 import { createChatDraftV3, selectChatWorldV1, saveChatDraftV1, loadChatSourceProjectionV1, confirmChatSourceReviewV1, readChatDraftV1 } from '../../src/lib/character-interaction/draft-service'
 import {generateChatConsultationV2, adoptChatConsultationV2} from '../../src/lib/character-interaction/consultation-harness'
-import { parseChatAuthoringSettings } from '../../src/lib/character-interaction/authoring-contract'
+import { parseChatAuthoringSettings } from '../../src/lib/legacy-compat/character-interaction/authoring-contract'
 import { loadProductProductionConsultationSourceV2, loadProductProductionWorldSourceCatalogV2 } from '../../src/lib/product-production/world-source'
 import { suggestProductStartingPoints, draftProductProductionBriefV3 } from '../../src/lib/product-production/consultation'
 import { prepareChatNarrativeCompilerSourceV1 } from '../../src/lib/product-production/product-module-compilers'
-import type { ChatNarrativeProductionSourceV1, ChatSituationCandidatesV1 } from '../../src/lib/character-interaction/narrative-production'
-import {chatProjectionResourcesV1} from '../../src/lib/character-interaction/source-projection'
-import {createChatPrivateCharacterV1} from '../../src/lib/character-interaction/private-character'
+import type { ChatNarrativeProductionSourceV1, ChatSituationCandidatesV1 } from '../../src/lib/legacy-compat/character-interaction/narrative-production'
+import {chatProjectionResourcesV1} from '../../src/lib/legacy-compat/character-interaction/source-projection'
+import {createChatPrivateCharacterV1} from '../../src/lib/legacy-compat/character-interaction/private-character'
 
 export async function seedChatNarrativeProductionFixture(options: {mappedPlayer?: boolean; factDiscovery?: boolean; worldDiscovery?: boolean; privateKnownFact?: boolean; privateCast?: 'only' | 'mixed'; consultation?: boolean; cardOrigin?: ChatCharacterCardOriginV1; experienceInfo?: ChatExperienceInfoV1} = {}) {
   const world = await seedCurrentProductWorld('CHAT situation production', options.worldDiscovery ? {characterDetails: {

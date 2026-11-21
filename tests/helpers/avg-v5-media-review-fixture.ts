@@ -1,17 +1,17 @@
 import { vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import * as readiness from '../../src/lib/avg/visual-planning-brief-v5'
+import * as readiness from '../../src/lib/legacy-compat/avg/visual-planning-brief-v5'
 import * as decoder from '../../src/lib/avg/image-decoder'
 import { detectProductImageDimensionsV1 } from '../../src/lib/product-production/media-adapters'
 import { deterministicRegionMapPngV1 } from '../../src/lib/product-production/production-executor'
 import { runProductProductionUntilBlockedV1 } from '../../src/lib/product-production/scheduler'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { avgV5RegisteredProposalsFixture,adoptAvgV5CompiledSources,type AvgV5RegisteredFixture } from './avg-v5-registered-proposals-fixture'
 import { readAvgImageConsumptionDefinitionV5 } from '../../src/lib/avg/image-consumption-v5'
 import { AVG_VISUAL_REVIEW_CRITERIA_V1 } from '../../src/lib/avg/visual-review-contract'
 import type { AvgReviewIssuesV2 } from '../../src/lib/avg/visual-review-contract-v2'
-import type { AvgImageProcessingPlan } from '../../src/lib/avg/image-processing-contract'
-import type { AvgVisualProductionRequirementV2 } from '../../src/lib/avg/media-production-contract-v2'
+import type { AvgImageProcessingPlan } from '../../src/lib/legacy-compat/avg/image-processing-contract'
+import type { AvgVisualProductionRequirementV2 } from '../../src/lib/legacy-compat/avg/media-production-contract-v2'
 
 /** All saved Work/Brief/Run/compiler/raw rows use the actual commands and
  * configured transport. Only unavailable Happy DOM decoder observations are

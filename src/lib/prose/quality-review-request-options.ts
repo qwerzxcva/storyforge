@@ -1,5 +1,5 @@
-import type { AIConfig } from '../types'
-import type { ChatRequestOptions } from '../ai/client'
+import type { AIConfig } from '../types';
+import type { ChatRequestOptions } from '../ai/client';
 
 /** Scoped to the model whose bounded JSON workflow has a verified thinking
  * toggle. No saved route/config change and no retry without the option. */

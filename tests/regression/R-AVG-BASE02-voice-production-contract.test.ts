@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import { avgSystemFixture } from '../helpers/avg-system-fixture'
 import type { AvgSceneScriptV1 } from '../../src/lib/avg/artifact-contract'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import type { AvgMediaSourceInputV1 } from '../../src/lib/avg/media-source'
 import {
   assertAvgVoiceProductionTextHashesV1, hashAvgVoiceTextV1, parseAvgVoiceProductionBatchV1,
   type AvgVoiceProductionBatchV1,
-} from '../../src/lib/avg/voice-production-contract'
+} from '../../src/lib/legacy-compat/avg/voice-production-contract'
 import { hashAvgVoiceSourceInputV1, validateAvgVoiceProductionSourcesV1 } from '../../src/lib/avg/voice-production-source'
 
 async function fixture() {

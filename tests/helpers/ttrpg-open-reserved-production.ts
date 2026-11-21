@@ -2,8 +2,8 @@
  * frozen Brief/settings/authority; only adapts fixture model output and hashes. */
 import type { ProductProductionBriefV3, WorkspaceScope } from '../../src/lib/types'
 import { openProductionCompilerFixtureV1 } from './open-ttrpg-production-artifacts'
-import { assertTtrpgOpenAuthoringSeatPlanCurrentV1 } from '../../src/lib/ttrpg/open-authoring-seat-plan'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { assertTtrpgOpenAuthoringSeatPlanCurrentV1 } from '../../src/lib/legacy-compat/ttrpg/open-authoring-seat-plan'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 
 export async function openReservedProductionFixtureV1(basis: { brief: ProductProductionBriefV3; productionId: number; scope: WorkspaceScope }) {
   const before = JSON.stringify(basis.brief), settings = basis.brief.ttrpgOpen!.settings

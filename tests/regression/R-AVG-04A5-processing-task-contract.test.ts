@@ -1,8 +1,8 @@
 import { describe,expect,it } from 'vitest'
 import { avgVisualPlanningFixtureV4 } from '../helpers/avg-visual-planning-fixture'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
-import { buildAvgVisualPlanningPlanV4,AVG_VISUAL_REQUIREMENTS_ARTIFACT_V4 } from '../../src/lib/avg/visual-planning-plan'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
+import { buildAvgVisualPlanningPlanV4,AVG_VISUAL_REQUIREMENTS_ARTIFACT_V4 } from '../../src/lib/legacy-compat/avg/visual-planning-plan'
 import type { ProductProductionPlanTaskV3 } from '../../src/lib/types'
 
 async function processingPlan(){

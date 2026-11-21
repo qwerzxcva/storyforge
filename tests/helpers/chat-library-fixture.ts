@@ -1,7 +1,7 @@
-import type {ChatExperienceInfoV1} from '../../src/lib/character-interaction/experience-info'
+import type {ChatExperienceInfoV1} from '../../src/lib/legacy-compat/character-interaction/experience-info'
 import {db} from '../../src/lib/db/schema'
-import {hashProductProductionValueV2} from '../../src/lib/product-production/hash'
-import {verifyProductBuildPreviewManifestV1} from '../../src/lib/product-production/preview-manifest'
+import {hashProductProductionValueV2} from '../../src/lib/legacy-compat/product-production/hash'
+import {verifyProductBuildPreviewManifestV1} from '../../src/lib/legacy-compat/product-production/preview-manifest'
 import {createFixtureProductReleaseManifestV1} from './product-release-v1'
 import {seedChatNarrativeRuntimeFixture} from './chat-narrative-fixture'
 

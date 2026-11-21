@@ -1,7 +1,5 @@
-import { PROMPT_MODULE_KEYS } from '../types/prompt'
-import type {
-  PromptApplicability, PromptExample, PromptParameter, PromptTemplate, PromptVariableBinding,
-} from '../types/prompt'
+import { PROMPT_MODULE_KEYS } from '../types/prompt';
+import type { PromptApplicability, PromptExample, PromptParameter, PromptTemplate, PromptVariableBinding } from '../types/prompt';
 
 /** Global template exchange is independent of a Project backup or a frozen Run. */
 export const PROMPT_TEMPLATE_EXCHANGE_FORMAT = 'storyforge.prompt-templates'

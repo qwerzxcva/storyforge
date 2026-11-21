@@ -1,9 +1,9 @@
 import {afterEach, beforeEach, expect, it} from 'vitest'
 import {db} from '../../src/lib/db/schema'
-import {applyInteractionEvent, buildInteractionContextWindow, parseInteractionState} from '../../src/lib/character-interaction/runtime'
+import {applyInteractionEvent, buildInteractionContextWindow, parseInteractionState} from '../../src/lib/legacy-compat/character-interaction/runtime'
 import {selectChatCoordinatorContextV1} from '../../src/lib/character-interaction/coordinator-selection'
 import {adoptInteractionRuntimeCandidateV1, generateInteractionRuntimeCandidateV1} from '../../src/lib/character-interaction/harness'
-import {branchProductRuntimeSession, changeChatMemoryUse, commitInteractionPlayerMessage, correctChatMemory, deleteProductRuntimeSession, proposeInteractionMemory, readProductRuntimeState, readProductRuntimeStateVersion, requestChatNarrativeTrigger, resolveInteractionMemory} from '../../src/lib/character-interaction/runtime-api'
+import {branchProductRuntimeSession, changeChatMemoryUse, commitInteractionPlayerMessage, correctChatMemory, deleteProductRuntimeSession, proposeInteractionMemory, readProductRuntimeState, readProductRuntimeStateVersion, requestChatNarrativeTrigger, resolveInteractionMemory} from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import {exportProjectJSON, importProjectJSON} from '../../src/lib/export/json-export'
 import {chatActionReviewOutputFixture, seedChatNarrativeRuntimeFixture, withChatActionChoiceFixture} from '../helpers/chat-narrative-fixture'
 

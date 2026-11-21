@@ -3,13 +3,13 @@ import { CURRENT_PRODUCT_SOURCE_CATALOG, seedCurrentProductWorld } from './curre
 import { db } from '../../src/lib/db/schema'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
 import { draftProductProductionBriefV3, suggestProductStartingPoints } from '../../src/lib/product-production/consultation'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
-import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
+import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { parseProductMediaRequirementsArtifactV2 } from '../../src/lib/product-production/production-executor'
-import { putMediaBlobObject } from '../../src/lib/product-production/media-blob-store'
-import { createProductProductionPlanV3 } from '../../src/lib/product-production/plan'
-import { createProductBuildPreviewManifestV1, verifyProductBuildPreviewManifestV1 } from '../../src/lib/product-production/preview-manifest'
-import { parseProductRuntimePackageV1 } from '../../src/lib/product-production/runtime-package'
+import { putMediaBlobObject } from '../../src/lib/legacy-compat/product-production/media-blob-store'
+import { createProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
+import { createProductBuildPreviewManifestV1, verifyProductBuildPreviewManifestV1 } from '../../src/lib/legacy-compat/product-production/preview-manifest'
+import { parseProductRuntimePackageV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
 import type {
   ProductBuildArtifactKindV1,
   ProductBuildArtifactRecordV1,

@@ -1,12 +1,6 @@
-import type {
-  AgentRunStepProjectionV1,
-  AnyAgentRunEventV1,
-} from '../../types/agent-run'
-import type { AgentRunSnapshotV1 } from './event-store'
-import {
-  CHAPTER_POST_ADOPTION_STEP_IDS_V1,
-  type ChapterPostAdoptionStepIdV1,
-} from './chapter-post-adoption-durable'
+import type { AgentRunStepProjectionV1, AnyAgentRunEventV1 } from '../../types/agent-run';
+import type { AgentRunSnapshotV1 } from './event-store';
+import { CHAPTER_POST_ADOPTION_STEP_IDS_V1, type ChapterPostAdoptionStepIdV1 } from './chapter-post-adoption-durable';
 
 /**
  * HARNESS-42 control-plane decision for a post-adoption step.

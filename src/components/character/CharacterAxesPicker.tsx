@@ -1,16 +1,5 @@
-import type {
-  CharacterMoralAxis,
-  CharacterOrderAxis,
-  CharacterRoleWeight,
-} from '../../lib/types'
-import {
-  MORAL_AXES,
-  MORAL_AXIS_LABELS,
-  ORDER_AXES,
-  ORDER_AXIS_LABELS,
-  ROLE_WEIGHTS,
-  ROLE_WEIGHT_LABELS,
-} from '../../lib/character/character-axes'
+import type { CharacterMoralAxis, CharacterOrderAxis, CharacterRoleWeight } from '../../lib/types';
+import { MORAL_AXES, MORAL_AXIS_LABELS, ORDER_AXES, ORDER_AXIS_LABELS, ROLE_WEIGHTS, ROLE_WEIGHT_LABELS } from '../../lib/character/character-axes';
 
 interface Props {
   roleWeight: CharacterRoleWeight | null

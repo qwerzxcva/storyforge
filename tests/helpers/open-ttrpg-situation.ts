@@ -1,10 +1,10 @@
-import { nextTtrpgOpenOperationStepV1 } from '../../src/lib/ttrpg/open-operation'
+import { nextTtrpgOpenOperationStepV1 } from '../../src/lib/legacy-compat/ttrpg/open-operation'
 import { resumeTtrpgOpenSituationsV1 } from '../../src/lib/ttrpg/open-situation-coordinator'
 /** Real isolated frozen admission/cleanup fixture, no model transport. */
 import { setupPressureFixtureV1, nextPressureInputV1 } from './open-ttrpg-pressure'
 import { rt } from './open-ttrpg-branch-recovery'
 import { openEnvelopeV1 } from './open-ttrpg-session'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { advanceTtrpgOpenPressureV1, changeTtrpgSituationV1,completeTtrpgOpenOperationStepV1,ttrpgOpenOperationCommandIdV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { resumeTtrpgOpenOperationV1 } from '../../src/lib/ttrpg/open-operation-coordinator'
 

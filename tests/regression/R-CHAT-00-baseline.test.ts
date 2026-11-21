@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, it } from 'vitest'
 import { characterChatBaselineInput } from '../helpers/character-chat-baseline'
 import { compileInteractionModulesV1 } from '../../src/lib/product-production/product-module-compilers'
-import { createInitialInteractionState, interactionVisibilityView } from '../../src/lib/character-interaction/runtime'
+import { createInitialInteractionState, interactionVisibilityView } from '../../src/lib/legacy-compat/character-interaction/runtime'
 
 /**
  * Known defects at CHAT-00's baseline. `it.fails` documents a reproduced gap,

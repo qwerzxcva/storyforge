@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { hashAvgVoiceTextV1, type AvgVoiceProductionBatchV1 } from '../../src/lib/avg/voice-production-contract'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { hashAvgVoiceTextV1, type AvgVoiceProductionBatchV1 } from '../../src/lib/legacy-compat/avg/voice-production-contract'
 import {
   AVG_NATURAL_VOICE_INTENT_V1, compileAvgVoiceSpeechRequestV1, hashAvgSpeechProtocolV1,
   parseAvgSpeechProtocolV1, type AvgSpeechProtocolV1,
-} from '../../src/lib/avg/voice-request-contract'
+} from '../../src/lib/legacy-compat/avg/voice-request-contract'
 
 /** Inert request fixture. No accepted Work, real service or rights are asserted. */
 async function fixture() {

@@ -1,19 +1,19 @@
-import * as timingPlans from '../../src/lib/ttrpg/open-rule-plan'
+import * as timingPlans from '../../src/lib/legacy-compat/ttrpg/open-rule-plan'
 import { settleOpenPaidTurnsV1 } from '../helpers/open-ttrpg-paid-turns'
 import { prepareTtrpgOpenPrivateChoiceDisclosureV1,discloseTtrpgOpenPrivateChoiceV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/product/runtime-core'
-import { parseTtrpgRuntimeStateV2 } from '../../src/lib/ttrpg/open-runtime-contract'
-import { nextTtrpgOpenOperationStepV1 } from '../../src/lib/ttrpg/open-operation'
+import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents } from '../../src/lib/legacy-compat/product/runtime-core'
+import { parseTtrpgRuntimeStateV2 } from '../../src/lib/legacy-compat/ttrpg/open-runtime-contract'
+import { nextTtrpgOpenOperationStepV1 } from '../../src/lib/legacy-compat/ttrpg/open-operation'
 import { startTtrpgOpenEpochV1, startTtrpgOpenOperationV1, confirmTtrpgOpenOperationV1,
   resolveTtrpgOpenOperationRuleV1, applyTtrpgOpenOperationEffectV1, completeTtrpgOpenOperationStepV1,
   advanceTtrpgWorldTurnV1, completeTtrpgOpenOperationV1, ttrpgOpenOperationCommandIdV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { selectTtrpgOpenOperationEffectV1, disposeTtrpgOpenIntentV1, changeTtrpgSafetyStatus, closeTtrpgOpenEpochV1 } from '../../src/lib/ttrpg/runtime-commands'
-import type { TtrpgOpenRuleRequestV1 } from '../../src/lib/ttrpg/open-rule-plan'
+import type { TtrpgOpenRuleRequestV1 } from '../../src/lib/legacy-compat/ttrpg/open-rule-plan'
 import { openEnvelopeV1, readyOpenTtrpgSessionV1, OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
 import { resumeTtrpgOpenOperationV1 } from '../../src/lib/ttrpg/open-operation-coordinator'
-import { DEGREES } from '../../src/lib/ttrpg/open-contract-parse'
+import { DEGREES } from '../../src/lib/legacy-compat/ttrpg/open-contract-parse'
 
 async function runtime(sessionId: number) {
   const state = await readProductRuntimeState(sessionId)

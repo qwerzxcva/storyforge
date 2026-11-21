@@ -1,12 +1,7 @@
-import type { ChatMessage, OutlineNode, Work } from '../types'
-import {
-  buildChapterOutlinePrompt,
-  buildSingleChapterOutlinePrompt,
-  buildVolumeOutlinePrompt,
-  type RunOptions,
-} from '../ai/adapters/outline-adapter'
-import type { AssembleContextResult } from '../registry/types'
-import type { OutlineGenerationRequest } from './generation-request'
+import type { ChatMessage, OutlineNode, Work } from '../types';
+import { buildChapterOutlinePrompt, buildSingleChapterOutlinePrompt, buildVolumeOutlinePrompt, type RunOptions } from '../ai/adapters/outline-adapter';
+import type { AssembleContextResult } from '../registry/types';
+import type { OutlineGenerationRequest } from './generation-request';
 
 export type OutlineGenerationPlan = {
   status: 'ready'

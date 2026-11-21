@@ -1,25 +1,12 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { ChevronRight, Star } from 'lucide-react'
-import { CInput, CTextarea } from '../shared/CompositionInput'
-import {
-  codexEntryInWorld,
-  codexCategoryFormatIssueV1,
-  codexEntryFormatIssueV1,
-  parseEntryFields,
-  parseEntryRefs,
-  parseFieldSchema,
-  stringifyEntryFields,
-  stringifyEntryRefs,
-} from '../../lib/types/codex'
-import type {
-  CodexCategory,
-  CodexEntry,
-  CodexFieldDef,
-} from '../../lib/types/codex'
-import { parseCultivationStages } from '../../lib/types/cultivation'
-import { useCultivationStore } from '../../stores/cultivation'
-import { useLocationStore } from '../../stores/location'
-import { useCodexEntryDraft, type SaveCodexDraft } from './useCodexEntryDraft'
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { ChevronRight, Star } from 'lucide-react';
+import { CInput, CTextarea } from '../shared/CompositionInput';
+import { codexEntryInWorld, codexCategoryFormatIssueV1, codexEntryFormatIssueV1, parseEntryFields, parseEntryRefs, parseFieldSchema, stringifyEntryFields, stringifyEntryRefs } from '../../lib/types/codex';
+import type { CodexCategory, CodexEntry, CodexFieldDef } from '../../lib/types/codex';
+import { parseCultivationStages } from '../../lib/types/cultivation';
+import { useCultivationStore } from '../../stores/cultivation';
+import { useLocationStore } from '../../stores/location';
+import { useCodexEntryDraft, type SaveCodexDraft } from './useCodexEntryDraft';
 
 interface Props {
   entry: CodexEntry

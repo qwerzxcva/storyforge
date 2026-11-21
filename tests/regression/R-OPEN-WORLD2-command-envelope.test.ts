@@ -1,11 +1,11 @@
 import { afterAll, beforeEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import { parseTextOpenWorldCommandEnvelopeV1 } from '../../src/lib/open-world/command-contract'
+import { parseTextOpenWorldCommandEnvelopeV1 } from '../../src/lib/legacy-compat/open-world/command-contract'
 import { commitTextOpenWorldCommandV1, getTextOpenWorldCommandStatusV1 } from '../../src/lib/open-world/commands'
 import {
   appendProductRuntimeEvent,
   readProductRuntimeStateVersion,
-} from '../../src/lib/product/runtime-core'
+} from '../../src/lib/legacy-compat/product/runtime-core'
 import type { ProductRuntimeSession, TextOpenWorldCommandEnvelopeV1 } from '../../src/lib/types'
 import { createGovernedTextOpenWorldSessionFixtureV1 } from '../helpers/text-open-world-product-session'
 import { createTextOpenWorldVNextFixture } from '../helpers/text-open-world-vnext-fixture'

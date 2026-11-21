@@ -1,12 +1,12 @@
-import { transactionTablesForReferenceCascade } from '../lib/registry/lifecycle'
-import { cascadeRegisteredReferences } from '../lib/workspace/lifecycle'
+import { transactionTablesForReferenceCascade } from '../lib/registry/lifecycle';
+import { cascadeRegisteredReferences } from '../lib/workspace/lifecycle';
 /**
  * 故事进程年表 store — Phase 25.5.2-a
  */
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import type { StoryTimelineEvent } from '../lib/types'
-import { assertRecordInScope, readOwnedRows, resolveScopeLike, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope'
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import type { StoryTimelineEvent } from '../lib/types';
+import { assertRecordInScope, readOwnedRows, resolveScopeLike, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope';
 
 interface StoryTimelineStore {
   events: StoryTimelineEvent[]

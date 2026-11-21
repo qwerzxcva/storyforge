@@ -1,11 +1,11 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import sourceFixture from '../helpers/avg-neutral-background.json'
-import { sha256MediaData } from '../../src/lib/product-production/media-blob-store'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { AVG_FOREGROUND_SAM2_CHECKPOINT_SHA256_V4, AVG_FOREGROUND_SAM2_MODEL_REVISION_V4,
   AVG_FOREGROUND_SAM2_PROMPT_STRATEGY_V5, AVG_FOREGROUND_SAM2_MATTING_ID_V6,
   AVG_FOREGROUND_SAM2_MATTING_METHOD_V6, AVG_FOREGROUND_SAM2_QUALITY_GATE_V6, AVG_FOREGROUND_SAM2_NEUTRAL_RULE_V6,
-  compileAvgForegroundRequirement, parseAvgForegroundPolicy, parseAvgForegroundPolicyV6 } from '../../src/lib/avg/image-foreground-contract'
+  compileAvgForegroundRequirement, parseAvgForegroundPolicy, parseAvgForegroundPolicyV6 } from '../../src/lib/legacy-compat/avg/image-foreground-contract'
 import { deriveAvgNeutralBackgroundV1, parseAvgNeutralBackgroundObservationV1 } from '../../src/lib/avg/image-foreground-neutral-background'
 import { assertAvgSam2ForegroundCapabilityV6, assertAvgSam2ForegroundServiceReadyV6,
   parseAvgSam2ForegroundHeadersV6, parseAvgForegroundSam2ObservationV6, runAvgForegroundSam2V6 } from '../../src/lib/avg/image-foreground-sam2-v6'

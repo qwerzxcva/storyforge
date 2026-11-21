@@ -1,5 +1,5 @@
-import { db } from '../db/schema'
-import { parseCultivationStages, type CultivationStage } from '../types'
+import { db } from '../db/schema';
+import { parseCultivationStages, type CultivationStage } from '../types';
 
 /** 章节删除保留正文证据与冗余标题，只断开 FK 并降级复核。 */
 export async function detachCultivationProgressForDeletedChapters(

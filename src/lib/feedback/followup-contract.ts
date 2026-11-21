@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
 export const feedbackStages = ['accepted', 'investigating', 'needs-evidence', 'planned', 'merged', 'verifying', 'released', 'closed', 'reopened'] as const
 const issueUrl = z.string().regex(/^$|^https:\/\/github\.com\/yuanbw2025\/storyforge\/issues\/\d+$/)

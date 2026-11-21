@@ -2,25 +2,16 @@
  * WorldMapPanel — 世界地图主面板
  * 顶层容器：世界树导航 + AI 生成按钮 + Voronoi/2D/3D 切换 + Canvas + 属性编辑器
  */
-
-import { useState, useMemo, useEffect, useCallback, useRef, lazy, Suspense } from 'react'
-import { Check, Sparkles, Loader2, RefreshCw, Map, Box, Globe, X } from 'lucide-react'
-import { useWorldNodeStore } from '../../stores/world-node'
-import { useWorldGroupStore } from '../../stores/world-group'
-import { useAIConfigStore } from '../../stores/ai-config'
+import { useState, useMemo, useEffect, useCallback, useRef, lazy, Suspense } from 'react';
+import { Check, Sparkles, Loader2, RefreshCw, Map, Box, Globe, X } from 'lucide-react';
+import { useWorldNodeStore } from '../../stores/world-node';
+import { useWorldGroupStore } from '../../stores/world-group';
+import { useAIConfigStore } from '../../stores/ai-config';
 import WorldGroupSwitcher from '../world-group/WorldGroupSwitcher'
-import {
-  abandonWorldMapConfigRunV1,
-  adoptWorldMapConfigCandidateV1,
-  generateWorldMapConfigCandidateV1,
-  readPendingWorldMapConfigCandidateV1,
-  readRecoverableWorldMapConfigRunV1,
-  rejectWorldMapConfigCandidateV1,
-  type WorldMapConfigCandidateV1,
-} from '../../lib/agent/run/world-map-config-durable'
-import { resolveScopeLike } from '../../lib/workspace/scope'
-import type { Project, WorkspaceScope } from '../../lib/types'
-import type { MapGenConfig } from '../../lib/world-map/engine'
+import { abandonWorldMapConfigRunV1, adoptWorldMapConfigCandidateV1, generateWorldMapConfigCandidateV1, readPendingWorldMapConfigCandidateV1, readRecoverableWorldMapConfigRunV1, rejectWorldMapConfigCandidateV1, type WorldMapConfigCandidateV1 } from '../../lib/agent/run/world-map-config-durable';
+import { resolveScopeLike } from '../../lib/workspace/scope';
+import type { Project, WorkspaceScope } from '../../lib/types';
+import type { MapGenConfig } from '../../lib/world-map/engine';
 import WorldTreeSidebar from './WorldTreeSidebar'
 
 // Voronoi 地图引擎组件懒加载

@@ -1,4 +1,4 @@
-import type { RagDocumentMetadata } from './rag-library'
+import type { RagDocumentMetadata } from './rag-library';
 
 /**
  * 物品流水（游戏包裹式物品栏）— Phase 25.5.2-b

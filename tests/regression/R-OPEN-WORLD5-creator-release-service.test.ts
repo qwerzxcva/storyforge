@@ -14,7 +14,7 @@ import {
   prepareTextOpenWorldCreatorReleaseV1,
   publishTextOpenWorldCreatorReleaseV1,
 } from '../../src/lib/open-world/creator-release'
-import { parseProductProductionCommandV1 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionCommandV1 } from '../../src/lib/legacy-compat/product-production/contracts'
 
 const scope = { projectId: 1, worldId: 2, workId: 3 }
 

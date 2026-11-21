@@ -1,18 +1,18 @@
-import { prepareModelCapacityV1, modelInputBudgetV1 } from '../ai/model-capacity'
-import { canonRowResourceKeysV1 } from '../context-gateway/canon-provider'
-import { db } from '../db/schema'
-import { executeContextGatewayV1, type ContextGatewayExecutionV1 } from '../context-gateway/execution'
-import { assembleContextGatewayPacketV1 } from '../agent/context-gateway-input'
-import { resolveAgentContextPolicy, type AgentContextProfile } from '../agent/context-policy'
-import { resolveAgentSkillV1, type AgentSkillId } from '../agent/skill-registry'
-import { STORY_INTENT_FIELDS_V1 } from '../storyline/intent-projection'
-import { assembleContext } from '../registry/assemble-context'
-import type { AssembleContextResult } from '../registry/types'
-import type { AIConfig, OutlineNode, WorkspaceScope } from '../types'
-import { parseStages } from '../types/story-arc'
-import { readOwnedRows, resolveScope } from '../workspace/scope'
-import type { OutlineGenerationRequest } from './generation-request'
-import { assertOutlineRequestTargetsUnwrittenFutureV1 } from './future-boundary'
+import { prepareModelCapacityV1, modelInputBudgetV1 } from '../ai/model-capacity';
+import { canonRowResourceKeysV1 } from '../context-gateway/canon-provider';
+import { db } from '../db/schema';
+import { executeContextGatewayV1, type ContextGatewayExecutionV1 } from '../context-gateway/execution';
+import { assembleContextGatewayPacketV1 } from '../agent/context-gateway-input';
+import { resolveAgentContextPolicy, type AgentContextProfile } from '../agent/context-policy';
+import { resolveAgentSkillV1, type AgentSkillId } from '../agent/skill-registry';
+import { STORY_INTENT_FIELDS_V1 } from '../storyline/intent-projection';
+import { assembleContext } from '../registry/assemble-context';
+import type { AssembleContextResult } from '../registry/types';
+import type { AIConfig, OutlineNode, WorkspaceScope } from '../types';
+import { parseStages } from '../types/story-arc';
+import { readOwnedRows, resolveScope } from '../workspace/scope';
+import type { OutlineGenerationRequest } from './generation-request';
+import { assertOutlineRequestTargetsUnwrittenFutureV1 } from './future-boundary';
 
 type StableRow = {
   id?: number

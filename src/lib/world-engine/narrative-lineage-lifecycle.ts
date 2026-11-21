@@ -1,5 +1,5 @@
-import { canonicalNarrativeJsonV1 } from './narrative-json'
-import { verifyNarrativeLineageV1 } from './narrative-lineage'
+import { canonicalNarrativeJsonV1 } from './narrative-json';
+import { verifyNarrativeLineageV1 } from './narrative-lineage';
 
 /** Portable lineage has no local FK inside its JSON. Validate the outer World
  * owner and immutable hash before import writes anything or export succeeds. */

@@ -15,11 +15,11 @@ import type {
 import {
   canonicalProductProductionJsonV2,
   hashProductProductionValueV2,
-} from '../../src/lib/product-production/hash'
+} from '../../src/lib/legacy-compat/product-production/hash'
 import {
   hashProductProductionCarriedCandidateV1,
   hashProductProductionCarriedReceiptV1,
-} from '../../src/lib/product-production/task-evidence'
+} from '../../src/lib/legacy-compat/product-production/task-evidence'
 import { hashTextOpenWorldCreatorEditCarriedLineageV1 } from '../../src/lib/open-world/creator-artifact-edit-contract'
 import {
   buildTextOpenWorldCreatorArtifactEditMessagesV1,

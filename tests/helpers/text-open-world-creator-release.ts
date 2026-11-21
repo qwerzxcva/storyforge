@@ -1,29 +1,29 @@
 import { db } from '../../src/lib/db/schema'
-import { TEXT_OPEN_WORLD_PRODUCTION_TASK_CONTRACTS_V1 } from '../../src/lib/open-world/production-contract'
-import { freezeTextOpenWorldResponsibilitySnapshotV1 } from '../../src/lib/open-world/responsibility-assembly'
+import { TEXT_OPEN_WORLD_PRODUCTION_TASK_CONTRACTS_V1 } from '../../src/lib/legacy-compat/open-world/production-contract'
+import { freezeTextOpenWorldResponsibilitySnapshotV1 } from '../../src/lib/legacy-compat/open-world/responsibility-assembly'
 import type { ProductProductionTaskExecutionInputV1 } from '../../src/lib/product-production/scheduler'
 import {
   createTextOpenWorldCreatorReleaseAuthorizationV1,
   createTextOpenWorldCreatorReleaseLineageV1,
   createTextOpenWorldCreatorReleaseSourceContractsV1,
-} from '../../src/lib/open-world/creator-release-contract'
+} from '../../src/lib/legacy-compat/open-world/creator-release-contract'
 import {
   TEXT_OPEN_WORLD_CREATOR_RELEASE_QUALITY_GATE_ID_V1,
   type TextOpenWorldCreatorReleaseQualityEvidenceV1,
-} from '../../src/lib/open-world/creator-quality-contract'
+} from '../../src/lib/legacy-compat/open-world/creator-quality-contract'
 import {
   freezeTextOpenWorldNovelSourceV1,
   freezeTextOpenWorldWorldReleaseSourceV1,
-} from '../../src/lib/open-world/source-pin'
+} from '../../src/lib/legacy-compat/open-world/source-pin'
 import {
   canonicalProductProductionJsonV2,
   hashProductProductionValueV2,
-} from '../../src/lib/product-production/hash'
+} from '../../src/lib/legacy-compat/product-production/hash'
 import {
   parseProductRuntimePackageV1,
   productReleaseIdentityHashV1,
   verifyProductReleaseManifestV1,
-} from '../../src/lib/product-production/runtime-package'
+} from '../../src/lib/legacy-compat/product-production/runtime-package'
 import type {
   ProductReleaseManifestV1,
   TextOpenWorldCreatorReleaseArtifactReceiptV1,

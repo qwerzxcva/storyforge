@@ -2,8 +2,8 @@ import { beforeEach, afterEach, describe, it, expect } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { setupOpenEntityPlanningV1 } from '../helpers/open-entity-runtime'
 import { createTtrpgOpenEntityPlanV1, ttrpgOpenEntityDisclosureV1, ttrpgOpenEntityIdentityCatalogV1 } from '../../src/lib/ttrpg/open-entity-plan'
-import { parseTtrpgOpenEntityOperationV1, parseTtrpgOpenEntityProposalV1 } from '../../src/lib/ttrpg/open-entity-contract'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { parseTtrpgOpenEntityOperationV1, parseTtrpgOpenEntityProposalV1 } from '../../src/lib/legacy-compat/ttrpg/open-entity-contract'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 
 describe('R-TTRPGOPEN11 bounded original Oracle entity plan', { timeout: 60000 }, () => {
   beforeEach(async () => { await db.delete(); await db.open() }); afterEach(() => { db.close() })

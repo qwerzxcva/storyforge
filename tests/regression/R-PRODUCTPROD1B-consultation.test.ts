@@ -5,14 +5,14 @@ import {
   suggestProductStartingPoints,
 } from '../../src/lib/product-production/consultation'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 import { loadProductProductionWorldSourceCatalogV2 } from '../../src/lib/product-production/world-source'
 import { seedCurrentProductWorld } from '../helpers/current-product-world'
 import { createWorkspace } from '../../src/lib/workspace/create-workspace'
 import { stampNewRecord } from '../../src/lib/workspace/scope'
 import { createWorldRevision, publishWorldRevision } from '../../src/lib/world-engine/releases'
 import { createProductProductionWithBriefV1 } from '../../src/lib/product-production/service'
-import { assertAiTownWorldSourceSelectionHashV1 } from '../../src/lib/ai-town/contracts'
+import { assertAiTownWorldSourceSelectionHashV1 } from '../../src/lib/legacy-compat/ai-town/contracts'
 import {
   assertAiTownWorldSourceCatalogHashV1,
   freezeAiTownWorldSourceSelectionV1,

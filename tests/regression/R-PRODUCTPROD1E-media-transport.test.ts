@@ -8,7 +8,7 @@ import {
   resolveConfiguredAgnesImageCapabilityV1,
   resolveTrustedRelayMediaCapabilityV1,
 } from '../../src/lib/product-production/media-transport'
-import { sha256MediaData } from '../../src/lib/product-production/media-blob-store'
+import { sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import type { AIConfig, ProviderCapabilityRequirementV1 } from '../../src/lib/types'
 import { useAIConfigStore } from '../../src/stores/ai-config'
 import { inspectConfiguredTextCapabilityV1 } from '../../src/lib/product-production/capabilities'

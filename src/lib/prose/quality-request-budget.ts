@@ -1,5 +1,5 @@
-import type { AIRequestConfigResolution } from '../ai/client'
-import { getModelCapacityV1, prepareModelCapacityV1 } from '../ai/model-capacity'
+import type { AIRequestConfigResolution } from '../ai/client';
+import { getModelCapacityV1, prepareModelCapacityV1 } from '../ai/model-capacity';
 
 /** Zero means automatic in settings. Freeze a bounded per-task value without
  * changing the saved provider/route/temperature or global configuration. */

@@ -5,7 +5,7 @@ import { gunzipSync } from 'node:zlib'
 import { db } from '../../src/lib/db/schema'
 import { setupOpenEntityPlanningV1 } from '../helpers/open-entity-runtime'
 import { OPEN_HUMAN_VIEWER, openEnvelopeV1, seedOpenTtrpgSessionV1, configureOpenSeatsV1 } from '../helpers/open-ttrpg-session'
-import { loadTtrpgOpenEntityContextV1, createTtrpgOpenEntityContextProviderV1, TTRPG_OPEN_ENTITY_SOURCE_V1 } from '../../src/lib/ttrpg/open-entity-context'
+import { loadTtrpgOpenEntityContextV1, createTtrpgOpenEntityContextProviderV1, TTRPG_OPEN_ENTITY_SOURCE_V1 } from '../../src/lib/legacy-compat/ttrpg/open-entity-context'
 import { getAgentToolSchemaSnapshotV1 } from '../../src/lib/agent/tool-registry'
 import { AGENT_TOOL_SCHEMA_HASH_V1, AGENT_TOOL_SCHEMA_VERSION_V1 } from '../../src/lib/agent/execution-binding'
 import { hashCanonicalValue } from '../../src/lib/agent/run/hash'
@@ -16,8 +16,8 @@ import { executeTtrpgOpenOracleRequestV1 } from '../../src/lib/ttrpg/open-intent
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { changeTtrpgSafetyStatus, postTtrpgOpenTableMessageV1, completeTtrpgOpenSessionZeroV1, startTtrpgOpenRunV1,
   startTtrpgOpenEpochV1, consultTtrpgOracleV1 } from '../../src/lib/ttrpg/runtime-commands'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
-import { configureTtrpgSessionParticipantV2, readTtrpgSessionParticipantsV2 } from '../../src/lib/ttrpg/participants'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
+import { configureTtrpgSessionParticipantV2, readTtrpgSessionParticipantsV2 } from '../../src/lib/legacy-compat/ttrpg/participants'
 
 const sourceKey = TTRPG_OPEN_ENTITY_SOURCE_V1, provider = createTtrpgOpenEntityContextProviderV1()
 async function setup() {

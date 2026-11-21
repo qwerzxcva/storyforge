@@ -1,6 +1,6 @@
 import { describe,expect,it } from 'vitest'
 import { clearUnusedAvgVisualConsumerSlotsV1,prepareAvgVisualPlanningSourceDraftV4,prepareAvgVisualPlanningSourceDraftV5 } from '../../src/lib/avg/visual-planning-scope-draft'
-import { avgVisualPlanningTemplateRequirementsV1 } from '../../src/lib/avg/visual-planning-contract'
+import { avgVisualPlanningTemplateRequirementsV1 } from '../../src/lib/legacy-compat/avg/visual-planning-contract'
 import { assertAvgMediaConsumerDeclarationsV1,hashAvgMediaSourceInputV1,validateAvgVisualProductionBatchSourceV1 } from '../../src/lib/avg/media-source'
 import { avgProfessionalFamilyScopeFixtureV4 } from '../helpers/avg-professional-family-scope-fixture'
 import { avgInventoryMediaFixture } from '../helpers/avg-inventory-media-fixture'

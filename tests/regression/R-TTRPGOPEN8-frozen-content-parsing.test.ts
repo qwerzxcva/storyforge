@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { openRuntimePackageFixture } from '../helpers/ttrpg-open-package'
-import { parseTtrpgRuntimeContentVersionedV1, parseTtrpgFrozenRuntimeContentV1, createTtrpgVerifiedContentViewV1 } from '../../src/lib/ttrpg/content-version'
-import * as ruleParser from '../../src/lib/ttrpg/rule-pack-v2'
+import { parseTtrpgRuntimeContentVersionedV1, parseTtrpgFrozenRuntimeContentV1, createTtrpgVerifiedContentViewV1 } from '../../src/lib/legacy-compat/ttrpg/content-version'
+import * as ruleParser from '../../src/lib/legacy-compat/ttrpg/rule-pack-v2'
 
 async function content(title: string) {
   const raw = (await openRuntimePackageFixture()).ttrpg!

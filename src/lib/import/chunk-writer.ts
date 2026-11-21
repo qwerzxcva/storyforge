@@ -4,22 +4,17 @@
  * 从 pipeline.ts 抽出。这里有 side effect（写 DB + 触发 store load），
  * 但逻辑上是"给我一个解析结果 → 落库 → 告诉我条数"，与流水线控制流完全解耦。
  */
-
-import { useCharacterStore } from '../../stores/character'
-import { useWorldviewStore } from '../../stores/worldview'
-import { useOutlineStore } from '../../stores/outline'
+import { useCharacterStore } from '../../stores/character';
+import { useWorldviewStore } from '../../stores/worldview';
+import { useOutlineStore } from '../../stores/outline';
 import Dexie from 'dexie'
-import { adopt, adoptionTransactionTablesV1 } from '../registry/adopt'
-import type { AdoptResult } from '../registry/types'
-import type { Character, OutlineNode, UnifiedParseResult, Worldview } from '../types'
-import { CHARACTER_DIMENSIONS } from '../character/character-dimensions'
-import { isCompleteCharacterAxes } from '../character/character-axes'
-import { readOwnedRows, resolveScopeLike, type WorkspaceScopeLike } from '../workspace/scope'
-import {
-  deduplicateWorldviewText,
-  mergeCharacterFields,
-  checkOutlineDuplicate,
-} from './dedup'
+import { adopt, adoptionTransactionTablesV1 } from '../registry/adopt';
+import type { AdoptResult } from '../registry/types';
+import type { Character, OutlineNode, UnifiedParseResult, Worldview } from '../types';
+import { CHARACTER_DIMENSIONS } from '../character/character-dimensions';
+import { isCompleteCharacterAxes } from '../character/character-axes';
+import { readOwnedRows, resolveScopeLike, type WorkspaceScopeLike } from '../workspace/scope';
+import { deduplicateWorldviewText, mergeCharacterFields, checkOutlineDuplicate } from './dedup';
 
 // 角色文字字段单一事实源：所有维度 + relationships(非维度，单列保留)。加维度自动跟随导入。
 const CHARACTER_TEXT_KEYS = [...CHARACTER_DIMENSIONS.map(d => d.key), 'relationships'] as const

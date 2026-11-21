@@ -1,7 +1,7 @@
-import { db } from '../db/schema'
-import { assertRecordInScope, resolveScopeLike, scopeTransactionTables } from '../workspace/scope'
-import { coordinatePendingEditV1 } from '../authoring/pending-edit-coordinator'
-import { selectAllChapterOrganizationCandidates, type ChapterOrganizationCandidate, type ChapterOrganizationRun, type ChapterOrganizationSelection } from './chapter-organization'
+import { db } from '../db/schema';
+import { assertRecordInScope, resolveScopeLike, scopeTransactionTables } from '../workspace/scope';
+import { coordinatePendingEditV1 } from '../authoring/pending-edit-coordinator';
+import { selectAllChapterOrganizationCandidates, type ChapterOrganizationCandidate, type ChapterOrganizationRun, type ChapterOrganizationSelection } from './chapter-organization';
 
 function parseSelection(value: unknown, candidate: ChapterOrganizationCandidate): ChapterOrganizationSelection {
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('保存的选择必须是对象。')

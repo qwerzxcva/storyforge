@@ -1,9 +1,5 @@
-import type {
-  ExactRunArtifactIdentityV1,
-  ExactRunArtifactPruneReceiptV1,
-  MemoryArtifactRefV1,
-} from '../types'
-import { hashCanonicalValue } from '../agent/run/hash'
+import type { ExactRunArtifactIdentityV1, ExactRunArtifactPruneReceiptV1, MemoryArtifactRefV1 } from '../types';
+import { hashCanonicalValue } from '../agent/run/hash';
 
 function key(identity: ExactRunArtifactIdentityV1): string {
   return `${identity.artifactKind}\u0000${identity.contentHash}`

@@ -4,7 +4,7 @@ import { useAIConfigStore } from '../../src/stores/ai-config'
 import { avgV5MediaReviewFixture } from '../helpers/avg-v5-media-review-fixture'
 import { verifyAcceptedProductBuildArtifactV1,verifyHistoricalAvgVisualImageProducerV4,verifyHistoricalAvgVisualImageProducerV5,
   verifyHistoricalAvgVisualPlanningArtifactV4,verifyHistoricalAvgVisualPlanningArtifactV5 } from '../../src/lib/product-production/artifact-store'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { stopProductProductionV1 } from '../../src/lib/product-production/service'
 import { exportProjectJSON,importProjectJSON } from '../../src/lib/export/json-export'
 import { deleteWork } from '../../src/lib/workspace/lifecycle'

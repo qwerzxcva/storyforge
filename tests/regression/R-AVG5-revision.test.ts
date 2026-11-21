@@ -5,7 +5,7 @@ import {
   draftProductProductionBriefV3,
   suggestProductStartingPoints,
 } from "../../src/lib/product-production/consultation";
-import { verifyProductBuildPreviewManifestV1 } from "../../src/lib/product-production/preview-manifest";
+import { verifyProductBuildPreviewManifestV1 } from "../../src/lib/legacy-compat/product-production/preview-manifest";
 import {
   readProductProductionDetailsV1,
   runAuthorizedProductProductionV1,

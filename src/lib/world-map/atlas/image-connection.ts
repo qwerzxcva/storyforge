@@ -1,5 +1,5 @@
-import type { AIConfig } from '../../types'
-import { normalizeOpenAIBaseUrl } from '../../ai/openai-endpoint'
+import type { AIConfig } from '../../types';
+import { normalizeOpenAIBaseUrl } from '../../ai/openai-endpoint';
 
 export type AtlasImageProtocol = 'agnes' | 'openai-edit' | 'gemini-interactions'
 export type AtlasImageCapability = 'unknown' | 'text' | 'vision' | 'text-to-image' | 'reference-image'

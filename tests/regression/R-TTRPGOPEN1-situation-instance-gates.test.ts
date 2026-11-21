@@ -3,8 +3,8 @@ import {
   assertTtrpgSituationInstanceGatesV1,
   instantiateTtrpgSituationV1,
   parseTtrpgSituationTemplateV1,
-} from '../../src/lib/ttrpg/situation-engine'
-import type { TtrpgPredicateEvaluationContextV1 } from '../../src/lib/ttrpg/predicate'
+} from '../../src/lib/legacy-compat/ttrpg/situation-engine'
+import type { TtrpgPredicateEvaluationContextV1 } from '../../src/lib/legacy-compat/ttrpg/predicate'
 import { openCampaignFixture, openRuleFixture } from '../helpers/ttrpg-open-content'
 
 function contextFor(campaign: ReturnType<typeof openCampaignFixture>): TtrpgPredicateEvaluationContextV1 {

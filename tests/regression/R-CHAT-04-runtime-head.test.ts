@@ -1,7 +1,7 @@
 import {afterEach, beforeEach, expect, it, vi} from 'vitest'
 import {db} from '../../src/lib/db/schema'
-import * as core from '../../src/lib/product/runtime-core'
-import * as api from '../../src/lib/character-interaction/runtime-api'
+import * as core from '../../src/lib/legacy-compat/product/runtime-core'
+import * as api from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import {seedChatNarrativeRuntimeFixture} from '../helpers/chat-narrative-fixture'
 
 beforeEach(async () => {db.close(); await db.delete(); await db.open()})

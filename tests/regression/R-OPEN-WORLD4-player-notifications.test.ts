@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { createTextOpenWorldDirectorCatalogV1 } from '../../src/lib/open-world/director'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
+import { createTextOpenWorldDirectorCatalogV1 } from '../../src/lib/legacy-compat/open-world/director'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
 import { projectTextOpenWorldPlayerNotificationsV1 } from '../../src/lib/open-world/player-notifications'
 import {
   applyTextOpenWorldSessionEventV1,
   createInitialTextOpenWorldSessionProjectionV1,
   deriveTextOpenWorldContextsV1,
-} from '../../src/lib/open-world/session-projection'
+} from '../../src/lib/legacy-compat/open-world/session-projection'
 import type {
   ProductRuntimeEvent,
   TextOpenWorldDirectorSettlementAuthorizationV1,

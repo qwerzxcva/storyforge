@@ -5,7 +5,7 @@ import { openContextPolicyFixtureV1 } from '../helpers/open-ttrpg-context'
 import { startTtrpgOpenEpochV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { prepareTtrpgOpenIntentInputV1 } from '../../src/lib/ttrpg/open-intent-input'
 import { readTtrpgOpenTableContextTraceV1 } from '../../src/lib/ttrpg/open-table-service'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import { resolveScope } from '../../src/lib/workspace/scope'
 

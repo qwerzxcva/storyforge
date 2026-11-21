@@ -1,6 +1,6 @@
 import { buildUpperProductModulesV1 } from '../../src/lib/product-production/product-adapters'
-import { parseProductRuntimePackageV1 } from '../../src/lib/product-production/runtime-package'
-import { compileTextAdventureProductionBriefV1 } from '../../src/lib/adventure/production-brief'
+import { parseProductRuntimePackageV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
+import { compileTextAdventureProductionBriefV1 } from '../../src/lib/legacy-compat/adventure/production-brief'
 import type { ProductProductionWorldSourceCatalogV2 } from '../../src/lib/product-production/world-source'
 import type {
   ProductProductionBriefV3,

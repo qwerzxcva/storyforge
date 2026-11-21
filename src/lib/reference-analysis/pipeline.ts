@@ -10,41 +10,31 @@
  *   · 每轮写入独立 ReferenceAnalysisRun + scoped referenceChunkAnalysis。
  *   · 只有作者激活的 run 同步 Reference 当前投影并进入创作上下文。
  */
-import { referenceChunkMessages, type ReferenceChunkInput } from './chunk-prompt'
-import { db } from '../db/schema'
-import { resolveRequestConfig, type ChatResult } from '../ai/client'
-import { isConfirmedProviderThrottleV1 } from '../ai/provider-rejection'
-import { assembleContext } from '../registry/assemble-context'
-import { createAgentSkillExecutionBindingV1 } from '../agent/execution-binding'
-import { executeFrozenFormalAIEntryV1, freezeFormalAIEntryBindingV1 } from '../agent/formal-ai-entry'
-import { getAgentSkillV1 } from '../agent/skill-registry'
-import { createContextManifestFromAssemblyV1 } from '../agent/run/context-manifest'
-import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, type AgentRunSnapshotV1 } from '../agent/run/event-store'
-import { recordCreationModelRequestV1, recordCreationModelResponseV1, recordUnavailableCreationResponseV1 } from '../agent/run/creation-response-evidence'
-import { createVerificationReceiptV1 } from '../agent/run/verification-receipt'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { sha256Text } from '../ai/chapter-memory/text-normalization'
-import { readAgentRunArtifactExactV1 } from '../memory/artifact-store'
-import { resolveWorkspaceScope } from '../workspace/ownership'
-import { ANALYSIS_DIMENSIONS } from '../types/reference'
-import type { AgentRunEventTypeV1 } from '../types/agent-run'
-import type { WorkspaceScope } from '../types/world-ownership'
-import { getAIConfigRequiredMessage, isAIConfigReady } from '../ai/config-readiness'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { chunkDocument, quickHash, type ChunkPlan } from '../import/chunker'
-import type { ReferenceChunkAnalysis, ReferenceAnalysisDepth } from '../types'
-import { adopt } from '../registry/adopt'
-import {
-  completeReferenceAnalysisRun,
-  createReferenceAnalysisRun,
-  getReferenceAnalysisRunChunks,
-  listReferenceAnalysisRuns,
-  patchReferenceAnalysisRun,
-  readReferenceAnalysisChunks,
-  readReferenceChunkAuthorityV1,
-  writeReferenceChunkRunLinkV1,
-  type ReferenceChunkRunLinkV1,
-} from './lifecycle'
+import { referenceChunkMessages, type ReferenceChunkInput } from './chunk-prompt';
+import { db } from '../db/schema';
+import { resolveRequestConfig, type ChatResult } from '../ai/client';
+import { isConfirmedProviderThrottleV1 } from '../ai/provider-rejection';
+import { assembleContext } from '../registry/assemble-context';
+import { createAgentSkillExecutionBindingV1 } from '../agent/execution-binding';
+import { executeFrozenFormalAIEntryV1, freezeFormalAIEntryBindingV1 } from '../agent/formal-ai-entry';
+import { getAgentSkillV1 } from '../agent/skill-registry';
+import { createContextManifestFromAssemblyV1 } from '../agent/run/context-manifest';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, type AgentRunSnapshotV1 } from '../agent/run/event-store';
+import { recordCreationModelRequestV1, recordCreationModelResponseV1, recordUnavailableCreationResponseV1 } from '../agent/run/creation-response-evidence';
+import { createVerificationReceiptV1 } from '../agent/run/verification-receipt';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { sha256Text } from '../ai/chapter-memory/text-normalization';
+import { readAgentRunArtifactExactV1 } from '../memory/artifact-store';
+import { resolveWorkspaceScope } from '../workspace/ownership';
+import { ANALYSIS_DIMENSIONS } from '../types/reference';
+import type { AgentRunEventTypeV1 } from '../types/agent-run';
+import type { WorkspaceScope } from '../types/world-ownership';
+import { getAIConfigRequiredMessage, isAIConfigReady } from '../ai/config-readiness';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { chunkDocument, quickHash, type ChunkPlan } from '../import/chunker';
+import type { ReferenceChunkAnalysis, ReferenceAnalysisDepth } from '../types';
+import { adopt } from '../registry/adopt';
+import { completeReferenceAnalysisRun, createReferenceAnalysisRun, getReferenceAnalysisRunChunks, listReferenceAnalysisRuns, patchReferenceAnalysisRun, readReferenceAnalysisChunks, readReferenceChunkAuthorityV1, writeReferenceChunkRunLinkV1, type ReferenceChunkRunLinkV1 } from './lifecycle';
 
 /** 两档:浅层(大块·轻析) / 深层(小块·深析) */
 const DEPTH_PRESET: Record<ReferenceAnalysisDepth, {

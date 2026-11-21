@@ -1,42 +1,16 @@
 import Dexie from 'dexie'
-import { db } from '../../db/schema'
-import type {
-  AcceptedAgentRunContract,
-  AgentRunContract,
-  AgentRunEventPayloadByTypeV1,
-  AgentRunEventRecord,
-  AgentRunEventTypeV1,
-  AgentRunProjectionV1,
-  AgentRunRecord,
-  AgentRunNodeProducerTupleV1,
-  AnyAgentRunEventV1,
-  MemorySettlementReceiptV1,
-  OutlineNode,
-  WorkspaceScope,
-} from '../../types'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveScope,
-  scopeTransactionTables,
-  stampNewRecord,
-} from '../../workspace/scope'
-import { resolveCanonicalOutlineAncestry } from '../../outline/canonical-outline-walk'
-import { acceptAgentRunContract } from './contract'
-import { parseAgentRunEventV1 } from './event-schema'
-import { canonicalStringify, hashCanonicalValue } from './hash'
-import {
-  hashAgentRunProjectionBodyV1,
-  replayAgentRunEventsV1,
-  toAgentRunProjectionBodyV1,
-} from './projection'
-import {
-  buildMemorySettlementReceiptFromSnapshotV1,
-  hashMemoryArtifactIndexV1,
-} from '../../memory/settlement-core'
-import { pruneUnreferencedAgentRunArtifactsInCurrentTransactionV1 } from '../../memory/artifact-retention-store'
-import { assertRegisteredSourceRunsUnreferencedV1, exactArtifactOwnerTablesV1 } from '../../memory/artifact-root-registry'
-import { readAgentRunNodeProducerTupleV1, readHash } from './schema-utils'
+import { db } from '../../db/schema';
+import type { AcceptedAgentRunContract, AgentRunContract, AgentRunEventPayloadByTypeV1, AgentRunEventRecord, AgentRunEventTypeV1, AgentRunProjectionV1, AgentRunRecord, AgentRunNodeProducerTupleV1, AnyAgentRunEventV1, MemorySettlementReceiptV1, OutlineNode, WorkspaceScope } from '../../types';
+import { assertRecordInScope, readOwnedRows, resolveScope, scopeTransactionTables, stampNewRecord } from '../../workspace/scope';
+import { resolveCanonicalOutlineAncestry } from '../../outline/canonical-outline-walk';
+import { acceptAgentRunContract } from './contract';
+import { parseAgentRunEventV1 } from './event-schema';
+import { canonicalStringify, hashCanonicalValue } from './hash';
+import { hashAgentRunProjectionBodyV1, replayAgentRunEventsV1, toAgentRunProjectionBodyV1 } from './projection';
+import { buildMemorySettlementReceiptFromSnapshotV1, hashMemoryArtifactIndexV1 } from '../../memory/settlement-core';
+import { pruneUnreferencedAgentRunArtifactsInCurrentTransactionV1 } from '../../memory/artifact-retention-store';
+import { assertRegisteredSourceRunsUnreferencedV1, exactArtifactOwnerTablesV1 } from '../../memory/artifact-root-registry';
+import { readAgentRunNodeProducerTupleV1, readHash } from './schema-utils';
 
 export class AgentRunStoreError extends Error {
   constructor(public readonly code: string, message: string) {

@@ -1,14 +1,7 @@
-import type {
-  HistoricalEra,
-  HistoricalKeyword,
-  HistoricalKeywordCategory,
-  HistoricalTimelineEvent,
-  History,
-  WorkspaceScope,
-} from '../types'
-import { HISTORICAL_ERA_LABELS, KEYWORD_CATEGORY_LABELS } from '../types/history'
-import { readOwnedRows } from '../workspace/scope'
-import { formatHistoricalYear } from './year'
+import type { HistoricalEra, HistoricalKeyword, HistoricalKeywordCategory, HistoricalTimelineEvent, History, WorkspaceScope } from '../types';
+import { HISTORICAL_ERA_LABELS, KEYWORD_CATEGORY_LABELS } from '../types/history';
+import { readOwnedRows } from '../workspace/scope';
+import { formatHistoricalYear } from './year';
 
 export type HistoryAgentModeV1 = 'consult' | 'storm'
 export type HistoryAgentTargetKindV1 = 'event' | 'keyword'

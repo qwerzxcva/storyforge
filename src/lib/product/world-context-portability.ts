@@ -1,11 +1,11 @@
 /** Portable evidence of a real frozen-world read; never substitutes a new context read. */
-import { db } from '../db/schema'
-import { hashCanonicalValue, canonicalStringify } from '../agent/run/hash'
-import { readAgentRunV1, type AgentRunSnapshotV1 } from '../agent/run/event-store'
-import { readAgentRunArtifactExactV1 } from '../memory/artifact-store'
-import { readContextGatewayManifestV3ForAttemptV1 } from '../context-gateway/attempt-evidence'
-import { describeWorldSemanticReleaseV1 } from '../context-gateway/world-release-client'
-import { createWorldReferenceV1, resolveWorldReferenceResourceScopeV1, WorldReferenceErrorV1 } from '../world-engine/world-reference'
+import { db } from '../db/schema';
+import { hashCanonicalValue, canonicalStringify } from '../agent/run/hash';
+import { readAgentRunV1, type AgentRunSnapshotV1 } from '../agent/run/event-store';
+import { readAgentRunArtifactExactV1 } from '../memory/artifact-store';
+import { readContextGatewayManifestV3ForAttemptV1 } from '../context-gateway/attempt-evidence';
+import { describeWorldSemanticReleaseV1 } from '../context-gateway/world-release-client';
+import { createWorldReferenceV1, resolveWorldReferenceResourceScopeV1, WorldReferenceErrorV1 } from '../world-engine/world-reference';
 
 interface PortableWorldContextBindingV1 {
   schema: 'storyforge.portable-world-context-binding'; version: 1
@@ -93,13 +93,4 @@ export async function freezeTtrpgWorldContextBindingsForExportV1(runId: number):
     if (!previous) bindings.push(binding)
   }
   return bindings.length ? canonicalStringify(bindings.sort((a,b) => a.manifestHash.localeCompare(b.manifestHash))) : undefined
-}
-
-export async function verifyImportedWorldContextBindingV1(input: {
-  snapshot: AgentRunSnapshotV1; manifestHash: string; sourceScopeFingerprint: string; worldReleaseUid: string; worldReleaseHash: string
-}): Promise<boolean> {
-  if (!importedAndReverified(input.snapshot)) return false
-  const bindings = await parseBindings(input.snapshot.run.portableWorldContextBindingsJson)
-  return bindings.some(b => b.manifestHash === input.manifestHash && b.sourceScopeFingerprint === input.sourceScopeFingerprint
-    && b.worldReleaseUid === input.worldReleaseUid && b.worldReleaseHash === input.worldReleaseHash)
 }

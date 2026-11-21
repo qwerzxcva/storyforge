@@ -1,11 +1,7 @@
-import { sha256Text } from '../ai/chapter-memory/text-normalization'
-import { hashCanonicalValue } from '../agent/run/hash'
-import type {
-  AgentRunArtifactRecordV1,
-  ExactRunArtifactKindV1,
-  ExactRunArtifactPruneReceiptV1,
-} from '../types'
-import { assertExactRunArtifactBodySafeV1 } from './evidence-policy'
+import { sha256Text } from '../ai/chapter-memory/text-normalization';
+import { hashCanonicalValue } from '../agent/run/hash';
+import type { AgentRunArtifactRecordV1, ExactRunArtifactKindV1, ExactRunArtifactPruneReceiptV1 } from '../types';
+import { assertExactRunArtifactBodySafeV1 } from './evidence-policy';
 
 const HASH = /^[a-f0-9]{64}$/
 const KINDS = new Set<ExactRunArtifactKindV1>([

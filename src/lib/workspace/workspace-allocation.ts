@@ -1,15 +1,13 @@
 /** Internal root allocation; authoring and verified installation are its only callers. */
-import { splitDocumentChapters } from '../import/chunker'
-import { db } from '../db/schema'
-import { generateWorkspaceUid } from '../memory/identity'
-import { generateWorkspaceScopeCode, generateWorldCode } from './identity'
-import type { Chapter, CreateWorkspaceInput, OutlineNode, Project, WorkspaceScope, World } from '../types'
-import type { CreateWorkspaceOptions, CreatedWorkspace } from './create-workspace'
-import { scopeTransactionTables, stampNewRecord } from './scope'
-import { buildWorkRecord } from './works'
-import { deriveShortNovelStructure } from './work-kind'
-import { buildShortNovelProductionRecordV1 } from '../short-novel/service'
-import { countWords, plainTextToHtml } from '../utils/html'
+import { splitDocumentChapters } from '../import/chunker';
+import { db } from '../db/schema';
+import { generateWorkspaceUid } from '../memory/identity';
+import { generateWorkspaceScopeCode, generateWorldCode } from './identity';
+import type { CreateWorkspaceInput, Project, World } from '../types';
+import type { CreateWorkspaceOptions, CreatedWorkspace } from './create-workspace';
+import { scopeTransactionTables, stampNewRecord } from './scope';
+import { buildWorkRecord } from './works';
+import { countWords, plainTextToHtml } from '../utils/html';
 
 
 function projectRoot(input: CreateWorkspaceInput, options: CreateWorkspaceOptions, now: number): Project {
@@ -40,56 +38,6 @@ function projectRoot(input: CreateWorkspaceInput, options: CreateWorkspaceOption
   }
 }
 
-async function createShortNovelSkeleton(
-  scope: WorkspaceScope,
-  targetWordCount: number,
-  preferredChapterCount: number | undefined,
-  initialChapterSummary: string | undefined,
-  initialChapterContent: string | undefined,
-  now: number,
-): Promise<void> {
-  const structure = deriveShortNovelStructure(targetWordCount, preferredChapterCount)
-  const volume: OutlineNode = stampNewRecord(scope, 'outlineNodes', {
-    projectId: scope.projectId,
-    parentId: null,
-    type: 'volume',
-    title: '短篇正文',
-    summary: '',
-    order: 0,
-    createdAt: now,
-    updatedAt: now,
-  }, { owner: 'work' })
-  const volumeId = await db.outlineNodes.add(volume) as number
-
-  for (let index = 0; index < structure.chapterCount; index += 1) {
-    const title = `第${index + 1}章`
-    const outline: OutlineNode = stampNewRecord(scope, 'outlineNodes', {
-      projectId: scope.projectId,
-      parentId: volumeId,
-      type: 'chapter',
-      title,
-      summary: index === 0 ? initialChapterSummary?.trim() ?? '' : '',
-      order: index,
-      createdAt: now,
-      updatedAt: now,
-    }, { owner: 'work' })
-    const outlineNodeId = await db.outlineNodes.add(outline) as number
-    const chapter: Chapter = stampNewRecord(scope, 'chapters', {
-      projectId: scope.projectId,
-      outlineNodeId,
-      title,
-      content: index === 0 && initialChapterContent ? plainTextToHtml(initialChapterContent) : '',
-      wordCount: index === 0 && initialChapterContent ? countWords(initialChapterContent) : 0,
-      status: index === 0 && initialChapterContent ? 'draft' : 'outline',
-      order: index,
-      notes: '',
-      createdAt: now,
-      updatedAt: now,
-    }, { owner: 'work' })
-    await db.chapters.add(chapter)
-  }
-}
-
 export function workspaceCreationTransactionTablesV1() {
   return scopeTransactionTables(db.outlineNodes, db.chapters, db.shortNovelProductions)
 }
@@ -101,7 +49,7 @@ export async function allocateWorkspace(
 ): Promise<CreatedWorkspace> {
   const initialChapterSummary = options.initialChapterSummary?.trim()
   const initialChapterContent = options.initialChapterContent?.trim()
-  if ((initialChapterSummary || initialChapterContent) && (options.kind !== 'novel' || options.novelProfile !== 'short')) throw new Error('首章创意种子或导入正文只适用于短篇小说工作区')
+  if (initialChapterSummary || initialChapterContent) throw new Error('短篇创作已下线，请导入长篇正文')
   if (initialChapterSummary && initialChapterSummary.length > 4_000) throw new Error('首章创意种子不得超过 4000 字符')
   if (initialChapterContent && (initialChapterContent.length > 200_000 || countWords(initialChapterContent) > 25_000)) throw new Error('导入正文不得超过 20 万字符或 25,000 字')
   const importedNovelText = options.importedNovelText
@@ -155,10 +103,6 @@ export async function allocateWorkspace(
     })
     const workId = await db.works.add(work) as number
     const scope = { projectId, worldId, workId }
-    if (work.kind === 'novel' && work.novelProfile === 'short') {
-      await createShortNovelSkeleton(scope, work.targetWordCount, options.preferredChapterCount, initialChapterSummary, initialChapterContent, now)
-      await db.shortNovelProductions.add(buildShortNovelProductionRecordV1(scope, now))
-    }
     if (importedNovelText) {
       const chunks = splitDocumentChapters(importedNovelText)
       for (let index = 0; index < chunks.length; index++) {

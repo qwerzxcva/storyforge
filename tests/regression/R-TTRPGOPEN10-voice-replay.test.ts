@@ -2,8 +2,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { setupLocalVoiceExecutionV1 as fixture } from '../helpers/open-local-voice'
 import { finishTtrpgOpenVoiceIntentForKernelV1 } from '../../src/lib/ttrpg/open-voice-intent-receipt'
-import * as core from '../../src/lib/product/runtime-core'
-import * as source from '../../src/lib/product-production/preview-source'
+import * as core from '../../src/lib/legacy-compat/product/runtime-core'
+import * as source from '../../src/lib/legacy-compat/product-production/preview-source'
 
 describe('R-TTRPGOPEN10 original voice intent reuses exact pure replay', { timeout: 60000 }, () => {
   beforeEach(async () => { await db.delete(); await db.open() })

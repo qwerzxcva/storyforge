@@ -3,15 +3,15 @@ import {
   classifyTextOpenWorldPlayerQuestLogCategoryV1,
   projectTextOpenWorldPlayerQuestLogV1,
 } from '../../src/lib/open-world/player-quest-log'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
-import { createTextOpenWorldOutcomeFingerprintV1 } from '../../src/lib/open-world/event-contract'
-import { createTextOpenWorldObjectiveCatalogV1 } from '../../src/lib/open-world/objective-state'
-import { createTextOpenWorldQuestTransitionCatalogV1 } from '../../src/lib/open-world/quest-state-machine'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
+import { createTextOpenWorldOutcomeFingerprintV1 } from '../../src/lib/legacy-compat/open-world/event-contract'
+import { createTextOpenWorldObjectiveCatalogV1 } from '../../src/lib/legacy-compat/open-world/objective-state'
+import { createTextOpenWorldQuestTransitionCatalogV1 } from '../../src/lib/legacy-compat/open-world/quest-state-machine'
 import {
   createTextOpenWorldDirectorQuestInstanceV1,
   createTextOpenWorldQuestInstanceKeyV1,
-} from '../../src/lib/open-world/quests'
-import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
+} from '../../src/lib/legacy-compat/open-world/quests'
+import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
 import type {
   ProductRuntimeEvent,
   TextOpenWorldActionModuleV1,

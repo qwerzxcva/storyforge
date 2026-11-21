@@ -9,7 +9,7 @@ import {
 import {
   DEFAULT_AVG_SETTINGS,
   parseAvgAuthoringSettingsV1,
-} from "../../src/lib/avg/authoring-contract";
+} from "../../src/lib/legacy-compat/avg/authoring-contract";
 import { createMistHarborWorld } from "../../src/lib/world-engine/mist-harbor-preset";
 import {
   exportProjectJSON,

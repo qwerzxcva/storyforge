@@ -2,34 +2,24 @@
  * Phase 25.3 — 重要地点面板
  * 树状图 / 列表双视图 + 多标签组合 + 树状父子层级
  */
-import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
-import {
-  Plus, Trash2, ChevronDown, ChevronRight, MapPin,
-  GitBranch, List, Sparkles, Loader2, RotateCcw, AlertTriangle,
-} from 'lucide-react'
-import { useLocationStore, type LocationTreeNode } from '../../stores/location'
-import { locationDescendantsV1 } from '../../lib/location/hierarchy'
-import type { Project, ImportantLocation, LocationTag } from '../../lib/types'
-import { TAG_EMOJI } from '../../lib/types/location'
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { Plus, Trash2, ChevronDown, ChevronRight, MapPin, GitBranch, List, Sparkles, Loader2, RotateCcw, AlertTriangle } from 'lucide-react';
+import { useLocationStore, type LocationTreeNode } from '../../stores/location';
+import { locationDescendantsV1 } from '../../lib/location/hierarchy';
+import type { Project, ImportantLocation, LocationTag } from '../../lib/types';
+import { TAG_EMOJI } from '../../lib/types/location';
 import LocationTagPicker from './LocationTagPicker'
 import LocationTreeView from './LocationTreeView'
-import { LocationTagsParseError, readLocationRecordTagsV1, readLocationTagsV1 } from '../../lib/types/location'
-import { saveFile } from '../../lib/platform/save-file'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { resolveRequestConfig } from '../../lib/ai/client'
-import { getAIConfigRequiredMessage, isAIConfigReady } from '../../lib/ai/config-readiness'
-import type { ExtractedLocation } from '../../lib/ai/adapters/structured-extract-adapter'
+import { LocationTagsParseError, readLocationRecordTagsV1, readLocationTagsV1 } from '../../lib/types/location';
+import { saveFile } from '../../lib/platform/save-file';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { resolveRequestConfig } from '../../lib/ai/client';
+import { getAIConfigRequiredMessage, isAIConfigReady } from '../../lib/ai/config-readiness';
+import type { ExtractedLocation } from '../../lib/ai/adapters/structured-extract-adapter';
 import ExtractionReviewPanel from '../shared/ExtractionReviewPanel'
-import { assertRecordInScope, resolveScopeLike } from '../../lib/workspace/scope'
-import { db } from '../../lib/db/schema'
-import {
-  abandonLocationExtractionV1,
-  adoptLocationExtractionCandidateV1,
-  generateLocationExtractionCandidateV1,
-  readPendingLocationExtractionCandidateV1,
-  readRecoverableLocationExtractionV1,
-  resumeLocationExtractionCandidateV1,
-} from '../../lib/agent/run/location-extraction-durable'
+import { assertRecordInScope, resolveScopeLike } from '../../lib/workspace/scope';
+import { db } from '../../lib/db/schema';
+import { abandonLocationExtractionV1, adoptLocationExtractionCandidateV1, generateLocationExtractionCandidateV1, readPendingLocationExtractionCandidateV1, readRecoverableLocationExtractionV1, resumeLocationExtractionCandidateV1 } from '../../lib/agent/run/location-extraction-durable';
 
 interface Props {
   project: Project

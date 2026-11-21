@@ -1,14 +1,14 @@
-import { cascadeRegisteredReferences } from '../workspace/lifecycle'
-import { db } from '../db/schema'
-import { detachCultivationProgressForDeletedChapters } from '../cultivation/progress-lifecycle'
-import { detachTemporalFactsForDeletedChapters } from '../fact-ledger/lifecycle'
-import { detachKnowledgeForDeletedChapters } from '../knowledge-ledger/lifecycle'
-import { transactionTablesFor } from '../registry/lifecycle'
-import { detachStorylineForDeletedChapters } from '../storyline/lifecycle'
-import { assertRetainedRunScopeTargetsV1 } from '../agent/run/scope-lifecycle'
-import { canonicalStringify } from '../agent/run/hash'
-import { assertRecordInScope } from '../workspace/scope'
-import type { WorkspaceScope } from '../types'
+import { cascadeRegisteredReferences } from '../workspace/lifecycle';
+import { db } from '../db/schema';
+import { detachCultivationProgressForDeletedChapters } from '../cultivation/progress-lifecycle';
+import { detachTemporalFactsForDeletedChapters } from '../fact-ledger/lifecycle';
+import { detachKnowledgeForDeletedChapters } from '../knowledge-ledger/lifecycle';
+import { transactionTablesFor } from '../registry/lifecycle';
+import { detachStorylineForDeletedChapters } from '../storyline/lifecycle';
+import { assertRetainedRunScopeTargetsV1 } from '../agent/run/scope-lifecycle';
+import { canonicalStringify } from '../agent/run/hash';
+import { assertRecordInScope } from '../workspace/scope';
+import type { WorkspaceScope } from '../types';
 
 /** The exact rows and stable owners whose contents were archived by the author. */
 export interface ChapterDeletionPreconditionsV1 {

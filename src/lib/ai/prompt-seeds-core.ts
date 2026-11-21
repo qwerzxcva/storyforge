@@ -1,6 +1,6 @@
-import { withPreparationContentMethods } from './prompt-seeds-content-methods'
-import { VOLUME_OUTLINE_PARAMETERS } from './prompt-seed-params'
-import type { PromptSeed } from './prompt-seed-type'
+import { withPreparationContentMethods } from './prompt-seeds-content-methods';
+import { VOLUME_OUTLINE_PARAMETERS } from './prompt-seed-params';
+import type { PromptSeed } from './prompt-seed-type';
 
 /**
  * 系统级内置提示词模板。

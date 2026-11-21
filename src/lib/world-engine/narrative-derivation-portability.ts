@@ -1,14 +1,14 @@
 import Dexie from 'dexie'
-import { db } from '../db/schema'
-import { BACKUP_REFERENCE_REVIEW_TITLE, referenceReviewScopeMatchesV1 } from '../export/backup-trust'
-import { readPortableOwnerShadowV1 } from '../export/portable-table-structure'
-import { REGISTRY_BY_NAME } from '../registry/project-tables'
-import type { WorkspaceScope } from '../types'
-import type { Note } from '../types/note'
-import type { NarrativeDomainAuthorityV1 } from '../types/narrative-domain'
-import { readOwnedRows, stampNewRecord } from '../workspace/scope'
-import type { WorldReleaseInputV4 } from './narrative-release-capture'
-import { materializeWorldReleaseBackupV1 } from './semantic-snapshot'
+import { db } from '../db/schema';
+import { BACKUP_REFERENCE_REVIEW_TITLE, referenceReviewScopeMatchesV1 } from '../export/backup-trust';
+import { readPortableOwnerShadowV1 } from '../export/portable-table-structure';
+import { REGISTRY_BY_NAME } from '../registry/project-tables';
+import type { WorkspaceScope } from '../types';
+import type { Note } from '../types/note';
+import type { NarrativeDomainAuthorityV1 } from '../types/narrative-domain';
+import { readOwnedRows, stampNewRecord } from '../workspace/scope';
+import type { WorldReleaseInputV4 } from './narrative-release-capture';
+import { materializeWorldReleaseBackupV1 } from './semantic-snapshot';
 
 type RecordRow = Record<string, unknown>
 type ExportIds = ReadonlyMap<string, ReadonlyMap<number, number>>

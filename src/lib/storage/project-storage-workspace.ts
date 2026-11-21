@@ -1,10 +1,6 @@
-import { db } from '../db/schema'
-import type { Project } from '../types/project'
-import {
-  LAST_FOLDER_KEY,
-  saveFolderHandle,
-  saveProjectFolderHandle,
-} from './folder-handle-store'
+import { db } from '../db/schema';
+import type { Project } from '../types/project';
+import { LAST_FOLDER_KEY, saveFolderHandle, saveProjectFolderHandle } from './folder-handle-store';
 
 /**
  * Make one user-selected directory the project's storage workspace.

@@ -5,9 +5,9 @@ import {
   type TextOpenWorldCreatorRepairAuthorizationV1,
   type TextOpenWorldCreatorRepairImpactPlanV1,
 } from '../../src/lib/open-world/creator-artifact-repair-contract'
-import { textOpenWorldProductionTaskDescendantsV1 } from '../../src/lib/open-world/production-contract'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { parseProductProductionCommandV1 } from '../../src/lib/product-production/contracts'
+import { textOpenWorldProductionTaskDescendantsV1 } from '../../src/lib/legacy-compat/open-world/production-contract'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { parseProductProductionCommandV1 } from '../../src/lib/legacy-compat/product-production/contracts'
 
 const H = (value: string) => value.repeat(64)
 

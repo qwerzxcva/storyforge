@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { projectTextOpenWorldPlayerEndingV1 } from '../../src/lib/open-world/player-ending'
-import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
+import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
 import type { TextOpenWorldSessionProjectionV1 } from '../../src/lib/types'
 import { createTextOpenWorldVNextP9Fixture } from '../helpers/text-open-world-vnext-fixture'
 

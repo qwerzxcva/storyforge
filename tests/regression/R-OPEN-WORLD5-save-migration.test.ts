@@ -5,10 +5,10 @@ import {
   migrateTextOpenWorldSaveToReleaseV1,
   previewTextOpenWorldSaveMigrationV1,
 } from '../../src/lib/open-world/player-save-migration'
-import { readProductRuntimeState, prepareReleasedProductRuntimeSessionRecordV1, insertPreparedProductRuntimeSessionV1 } from '../../src/lib/product/runtime-core'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { readProductRuntimeState, prepareReleasedProductRuntimeSessionRecordV1, insertPreparedProductRuntimeSessionV1 } from '../../src/lib/legacy-compat/product/runtime-core'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
-import { assertProductReleaseUnchanged } from '../../src/lib/product/releases'
+import { assertProductReleaseUnchanged } from '../../src/lib/legacy-compat/product/releases'
 import type { ProductRelease, ProductRuntimePackageV1 } from '../../src/lib/types'
 import { createFixtureProductReleaseManifestV1 } from '../helpers/product-release-v1'
 import { createGovernedTextOpenWorldSessionFixtureV1 } from '../helpers/text-open-world-product-session'

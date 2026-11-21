@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { readInstanceAgentRunV1 } from '../../src/lib/agent/run/event-store'
 import { db } from '../../src/lib/db/schema'
 import { executeTextOpenWorldActionV1 } from '../../src/lib/open-world/action-executor'
-import { replayTextOpenWorldEventProtocolV1 } from '../../src/lib/open-world/event-contract'
+import { replayTextOpenWorldEventProtocolV1 } from '../../src/lib/legacy-compat/open-world/event-contract'
 import { readProductRuntimeState } from '../../src/lib/open-world/runtime-api'
 import { generateTextOpenWorldRuntimeDialogueV1 } from '../../src/lib/open-world/runtime-dialogue'
 import {
@@ -12,7 +12,7 @@ import {
 import {
   parseTextOpenWorldSessionProjectionV1,
   rebaseTextOpenWorldSessionProjectionForBranchV1,
-} from '../../src/lib/open-world/session-projection'
+} from '../../src/lib/legacy-compat/open-world/session-projection'
 import { createGovernedTextOpenWorldSessionFixtureV1 } from '../helpers/text-open-world-product-session'
 import { createTextOpenWorldVNextP9Fixture } from '../helpers/text-open-world-vnext-fixture'
 

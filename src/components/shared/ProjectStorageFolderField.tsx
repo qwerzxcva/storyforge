@@ -1,10 +1,6 @@
-import { useState } from 'react'
-import { FolderOpen, Loader2 } from 'lucide-react'
-import {
-  ensureFolderPermission,
-  isFSASupported,
-  pickFolder,
-} from '../../lib/storage/folder-backup'
+import { useState } from 'react';
+import { FolderOpen, Loader2 } from 'lucide-react';
+import { ensureFolderPermission, isFSASupported, pickFolder } from '../../lib/storage/folder-backup';
 
 interface Props {
   value: FileSystemDirectoryHandle | null

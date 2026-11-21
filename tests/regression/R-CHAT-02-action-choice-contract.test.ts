@@ -1,7 +1,7 @@
 import {expect, it} from 'vitest'
 import {createHash} from 'node:crypto'
-import {createInitialInteractionState, buildInteractionContextWindow} from '../../src/lib/character-interaction/runtime'
-import {requestChatNarrativeTriggerV1} from '../../src/lib/character-interaction/narrative-actions'
+import {createInitialInteractionState, buildInteractionContextWindow} from '../../src/lib/legacy-compat/character-interaction/runtime'
+import {requestChatNarrativeTriggerV1} from '../../src/lib/legacy-compat/character-interaction/narrative-actions'
 import {chatNarrativeFixture} from '../helpers/chat-narrative-fixture'
 import {appendChatActionChoiceProposalV1, buildChatActionChoiceMessagesV1, chatActionChoiceRequestOptionsV1,
   chatActionModelCallAllowanceV1, chatNeedsActionChoiceV1, parseChatActionChoiceV1, type ChatActionChoiceV1} from '../../src/lib/character-interaction/action-choice-contract'

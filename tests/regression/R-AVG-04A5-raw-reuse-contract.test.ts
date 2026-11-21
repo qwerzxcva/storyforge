@@ -1,11 +1,11 @@
 import { describe,expect,it } from 'vitest'
 import { avgVisualPlanningFixtureV4 } from '../helpers/avg-visual-planning-fixture'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
-import { parseProductProductionPlanV3 } from '../../src/lib/product-production/plan'
-import { canonicalProductProductionJsonV2,hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { avgVisualPlanningBudgetV4,avgVisualPlanningGateIdsV4 } from '../../src/lib/avg/visual-planning-policy'
-import { buildAvgVisualPlanningPlanV4 } from '../../src/lib/avg/visual-planning-plan'
-import type { AvgVisualRawReuseSourceV4 } from '../../src/lib/avg/visual-image-reuse-contract'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
+import { parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
+import { canonicalProductProductionJsonV2,hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { avgVisualPlanningBudgetV4,avgVisualPlanningGateIdsV4 } from '../../src/lib/legacy-compat/avg/visual-planning-policy'
+import { buildAvgVisualPlanningPlanV4 } from '../../src/lib/legacy-compat/avg/visual-planning-plan'
+import type { AvgVisualRawReuseSourceV4 } from '../../src/lib/legacy-compat/avg/visual-image-reuse-contract'
 
 const hash='a'.repeat(64)
 async function fixture(){

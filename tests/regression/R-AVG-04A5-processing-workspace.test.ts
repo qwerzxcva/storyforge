@@ -1,6 +1,6 @@
 import {afterEach,beforeEach,describe,expect,it,vi} from 'vitest'
 import {db} from '../../src/lib/db/schema'
-import * as readiness from '../../src/lib/avg/visual-planning-brief'
+import * as readiness from '../../src/lib/legacy-compat/avg/visual-planning-brief'
 import {avgVisualPlanningFixtureV4} from '../helpers/avg-visual-planning-fixture'
 import {avgImageProcessingRecipeFixture} from '../helpers/avg-image-processing-fixture'
 import {executeProductProductionCommand} from '../../src/lib/product-production/commands'
@@ -8,7 +8,7 @@ import {readProductProductionDetailsV1} from '../../src/lib/product-production/s
 import {prepareAvgVisualImageProcessingV4} from '../../src/lib/avg/visual-processing-workspace'
 import {readAvgDraftV1} from '../../src/lib/avg/draft-service'
 import {exportProjectJSON} from '../../src/lib/export/json-export'
-import type {AvgImageProcessingPlanV1} from '../../src/lib/avg/image-processing-contract'
+import type {AvgImageProcessingPlanV1} from '../../src/lib/legacy-compat/avg/image-processing-contract'
 
 beforeEach(async()=>{await db.delete();await db.open();vi.spyOn(readiness,'avgVisualPlanningExecutionReadyV4').mockReturnValue(true)})
 afterEach(()=>{vi.restoreAllMocks();vi.unstubAllGlobals();db.close()})

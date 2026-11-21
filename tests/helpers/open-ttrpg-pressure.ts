@@ -1,15 +1,15 @@
-import { nextTtrpgOpenOperationStepV1 } from '../../src/lib/ttrpg/open-operation'
-import { ttrpgOpenTurnCycleMatchesV1 } from '../../src/lib/ttrpg/open-turn-settlement'
-import { ttrpgOpenPressureRuleSourceV1 } from '../../src/lib/ttrpg/open-pressure-cycle'
+import { nextTtrpgOpenOperationStepV1 } from '../../src/lib/legacy-compat/ttrpg/open-operation'
+import { ttrpgOpenTurnCycleMatchesV1 } from '../../src/lib/legacy-compat/ttrpg/open-turn-settlement'
+import { ttrpgOpenPressureRuleSourceV1 } from '../../src/lib/legacy-compat/ttrpg/open-pressure-cycle'
 /** Real frozen pressure fixture shared by isolated IndexedDB regression and browser tests. */
 import { setup, start } from './open-ttrpg-knowledge'
 import { rt } from './open-ttrpg-branch-recovery'
 import { openEnvelopeV1, OPEN_HUMAN_VIEWER } from './open-ttrpg-session'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { telegraphTtrpgOpenFrontV1, ttrpgOpenOperationCommandIdV1 } from '../../src/lib/ttrpg/runtime-commands'
-import { ttrpgOpenScopedKeyV1 } from '../../src/lib/ttrpg/open-coordination'
-import { nextTtrpgOpenPressureActionV1 } from '../../src/lib/ttrpg/open-pressure-cycle'
-import { pressureActionKeyV1 } from '../../src/lib/ttrpg/open-pressure-reducer'
+import { ttrpgOpenScopedKeyV1 } from '../../src/lib/legacy-compat/ttrpg/open-coordination'
+import { nextTtrpgOpenPressureActionV1 } from '../../src/lib/legacy-compat/ttrpg/open-pressure-cycle'
+import { pressureActionKeyV1 } from '../../src/lib/legacy-compat/ttrpg/open-pressure-reducer'
 
 export async function setupPressureFixtureV1(options: { released?: boolean; turns?: number; generic?: boolean; maximum?: number; effect?: boolean; prewarn?: boolean; isolateSituations?: boolean } = {}, configure?: Parameters<typeof setup>[1], beforeStart?: (fixture: Awaited<ReturnType<typeof setup>>) => Promise<void>) {
   const f = await setup({ generic: options.generic, released: options.released }, pkg => {

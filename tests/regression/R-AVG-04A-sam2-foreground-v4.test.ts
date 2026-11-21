@@ -1,9 +1,9 @@
 import { describe, expect, it, vi } from 'vitest'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { AVG_FOREGROUND_SAM2_CHECKPOINT_SHA256_V4, AVG_FOREGROUND_SAM2_MATTING_ID_V4,
   AVG_FOREGROUND_SAM2_MATTING_METHOD_V4, AVG_FOREGROUND_SAM2_MODEL_REVISION_V4,
   AVG_FOREGROUND_SAM2_PROMPT_STRATEGY_V4, compileAvgForegroundRequirement, assertAvgForegroundRequirementBinding,
-  parseAvgForegroundPolicyV4, supportsAvgSam2ForegroundRequirementV4 } from '../../src/lib/avg/image-foreground-contract'
+  parseAvgForegroundPolicyV4, supportsAvgSam2ForegroundRequirementV4 } from '../../src/lib/legacy-compat/avg/image-foreground-contract'
 import { assertAvgSam2ForegroundCapabilityV4, assertAvgSam2ForegroundServiceReadyV4,
   parseAvgSam2ForegroundHeadersV4, parseAvgForegroundSam2ObservationV4 } from '../../src/lib/avg/image-foreground-sam2-v4'
 

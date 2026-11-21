@@ -1,8 +1,8 @@
-import type { ChatMessage } from '../types'
-import { hashCanonicalValue } from '../agent/run/hash'
-import type { AIRequestSettingsV1 } from '../ai/client'
-import { parseProseRequestSettingsV1 } from './request-evidence'
-import { SCENE_REVIEW_GUIDANCE_V1 } from './scene-craft'
+import type { ChatMessage } from '../types';
+import { hashCanonicalValue } from '../agent/run/hash';
+import type { AIRequestSettingsV1 } from '../ai/client';
+import { parseProseRequestSettingsV1 } from './request-evidence';
+import { SCENE_REVIEW_GUIDANCE_V1 } from './scene-craft';
 
 export const QUALITY_REVIEW_PROMPT_VERSION_V1 = 'whole-chapter-quality-review-v12'
 const REVIEW_PROMPT_VERSIONS = ['whole-chapter-quality-review-v1', 'whole-chapter-quality-review-v2', 'whole-chapter-quality-review-v3', 'whole-chapter-quality-review-v4', 'whole-chapter-quality-review-v5', 'whole-chapter-quality-review-v6', 'whole-chapter-quality-review-v7', 'whole-chapter-quality-review-v8', 'whole-chapter-quality-review-v9', 'whole-chapter-quality-review-v10', 'whole-chapter-quality-review-v11', QUALITY_REVIEW_PROMPT_VERSION_V1] as const

@@ -1,4 +1,4 @@
-import type { RacesGatewayEvalFixtureV1 } from './types'
+import type { RacesGatewayEvalFixtureV1 } from './types';
 
 const EMPTY_TITLES = [
   '潮声之后', '午夜账本', '雾中灯塔', '无人知晓的河', '第七只钟',

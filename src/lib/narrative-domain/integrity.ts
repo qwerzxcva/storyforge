@@ -1,8 +1,8 @@
-import { PROJECT_TABLES } from '../registry/project-tables'
-import type { TableSpec } from '../registry/types'
-import { mapNarrativeDomainReferencesV1, NARRATIVE_DOMAIN_FIELDS_V1 } from './codec'
-import { narrativeDomainReferenceTargetV1 } from './references'
-import { narrativeFail } from './json'
+import { PROJECT_TABLES } from '../registry/project-tables';
+import type { TableSpec } from '../registry/types';
+import { mapNarrativeDomainReferencesV1, NARRATIVE_DOMAIN_FIELDS_V1 } from './codec';
+import { narrativeDomainReferenceTargetV1 } from './references';
+import { narrativeFail } from './json';
 
 type Row = Record<string, unknown>
 type Rows = ReadonlyMap<string, readonly Row[]>

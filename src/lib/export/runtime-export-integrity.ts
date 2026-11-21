@@ -1,10 +1,5 @@
-import { assertFrozenRuntimePackageSessionV1, parseProductRuntimeState } from '../product/runtime-core'
-import type { AnyProductBuildPreviewManifest } from '../types'
-import { avgExecutableModule } from '../avg/executable-module'
-import { verifyAvgBranchOriginV1 } from '../avg/branch-origin'
-import { isTtrpgRuntimeContentV2 } from '../ttrpg/content-version'
-import { assertProductRuntimeSourceSnapshotV3 } from '../product/runtime-source-branch'
-import type { AnyProductReleaseManifest, ProductRuntimeEvent } from '../types'
+import type { AnyProductBuildPreviewManifest } from '../types';
+import type { AnyProductReleaseManifest, ProductRuntimeEvent } from '../types';
 
 function maximumRuntimeSequenceForExport(sequences: ReadonlySet<number> | undefined): number {
   let maximum = 0
@@ -16,16 +11,30 @@ function maximumRuntimeSequenceForExport(sequences: ReadonlySet<number> | undefi
 export async function assertProductRuntimeExportIntegrityV1(
   rowsByTable: ReadonlyMap<string, readonly any[]>,
 ): Promise<void> {
-  const { validateEnhancedProductSourcePlanRecordV2 } = await import('../product/exact-source-contracts')
-  for (const brief of rowsByTable.get('productProductionBriefs') ?? []) {
-    if (typeof brief.sourcePlanJson === 'string') await validateEnhancedProductSourcePlanRecordV2(brief)
-  }
+  const briefs = rowsByTable.get('productProductionBriefs') ?? []
   const builds = rowsByTable.get('productBuilds') ?? []
   const qualityReceipts = rowsByTable.get('productQualityGateReceipts') ?? []
   const sessions = rowsByTable.get('productRuntimeSessions') ?? []
   const events = rowsByTable.get('productRuntimeEvents') ?? []
   const checkpoints = rowsByTable.get('productRuntimeCheckpoints') ?? []
   const releases = rowsByTable.get('productReleases') ?? []
+  if (![briefs, builds, qualityReceipts, sessions, events, checkpoints, releases].some(rows => rows.length)) return
+  const [runtimeCore, avgModule, avgOrigin, ttrpgContent, sourceBranch, sourceContracts] = await Promise.all([
+    import('../legacy-compat/product/runtime-core'),
+    import('../legacy-compat/avg/executable-module'),
+    import('../legacy-compat/avg/branch-origin'),
+    import('../legacy-compat/ttrpg/content-version'),
+    import('../legacy-compat/product/runtime-source-branch'),
+    import('../product/exact-source-contracts'),
+  ])
+  const { assertFrozenRuntimePackageSessionV1, parseProductRuntimeState } = runtimeCore
+  const { avgExecutableModule } = avgModule
+  const { verifyAvgBranchOriginV1 } = avgOrigin
+  const { isTtrpgRuntimeContentV2 } = ttrpgContent
+  const { assertProductRuntimeSourceSnapshotV3 } = sourceBranch
+  for (const brief of briefs) {
+    if (typeof brief.sourcePlanJson === 'string') await sourceContracts.validateEnhancedProductSourcePlanRecordV2(brief)
+  }
   const releasesById = new Map<number, any>()
   const releaseManifestsById = new Map<number, AnyProductReleaseManifest>()
   const buildsById = new Map<number, any>()
@@ -33,7 +42,7 @@ export async function assertProductRuntimeExportIntegrityV1(
   const buildPreviewVersions = new Map<number, 1 | 2>()
   const executableAvgBuilds = new Set<number>()
   const executableAvgPreviews = new Map<number, AnyProductBuildPreviewManifest>()
-  const previewCodec = builds.length ? await import('../product-production/preview-manifest') : null
+  const previewCodec = builds.length ? await import('../legacy-compat/product-production/preview-manifest') : null
   for (const build of builds) {
     if (!Number.isSafeInteger(build.id) || build.id < 1 || buildsById.has(build.id)) {
       throw new Error('[deriveExport] ProductBuild 本地主键无效')
@@ -55,7 +64,7 @@ export async function assertProductRuntimeExportIntegrityV1(
     }
   }
   if (qualityReceipts.length > 0) {
-    const { verifyProductQualityGateReceiptRecordV1 } = await import('../product-production/quality-receipts')
+    const { verifyProductQualityGateReceiptRecordV1 } = await import('../legacy-compat/product-production/quality-receipts')
     for (const row of qualityReceipts) {
       const build = buildsById.get(row.buildId)
       if (!build || row.projectId !== build.projectId || row.worldId !== build.worldId
@@ -72,8 +81,8 @@ export async function assertProductRuntimeExportIntegrityV1(
   }
   if (releases.length > 0) {
     const [runtimePackage, productionHash] = await Promise.all([
-      import('../product-production/runtime-package'),
-      import('../product-production/hash'),
+      import('../legacy-compat/product-production/runtime-package'),
+      import('../legacy-compat/product-production/hash'),
     ])
     for (const release of releases) {
       if (!Number.isSafeInteger(release.id) || release.id < 1 || releasesById.has(release.id)) {
@@ -95,10 +104,9 @@ export async function assertProductRuntimeExportIntegrityV1(
     }
   }
   const sessionsById = new Map<number, any>()
-  const sourceManifestContract = await import('../product/runtime-source-manifest')
-  const briefsByRevision = new Map((rowsByTable.get('productProductionBriefs') ?? [])
-    .map(brief => [`${brief.productionId}:${brief.revision}`, brief]))
-  let migrationContract: typeof import('../open-world/player-save-migration-contract') | null = null
+  const sourceManifestContract = await import('../legacy-compat/product/runtime-source-manifest')
+  const briefsByRevision = new Map(briefs.map(brief => [`${brief.productionId}:${brief.revision}`, brief]))
+  let migrationContract: typeof import('../legacy-compat/open-world/player-save-migration-contract') | null = null
   for (const session of sessions) {
     if (!Number.isSafeInteger(session.id) || session.id < 1 || sessionsById.has(session.id)) {
       throw new Error('[deriveExport] ProductRuntimeSession 本地主键无效')
@@ -177,8 +185,8 @@ export async function assertProductRuntimeExportIntegrityV1(
       if (childManifest.version !== 1 || childManifest.productType !== 'character-interaction') {
         throw new Error('[deriveExport] 角色聊天升级副本的发布协议或产品类型不匹配')
       }
-      const contract = await import('../character-interaction/release-upgrade-branch')
-      const {parseProductReleaseManifestV1} = await import('../product-production/runtime-package')
+      const contract = await import('../legacy-compat/character-interaction/release-upgrade-branch')
+      const {parseProductReleaseManifestV1} = await import('../legacy-compat/product-production/runtime-package')
 
       await contract.verifyChatReleaseUpgradeReceiptV1({childSession: session, childManifest: parseProductReleaseManifestV1(childManifest), receipt: upgradeReceipt})
     }
@@ -212,7 +220,7 @@ export async function assertProductRuntimeExportIntegrityV1(
       throw new Error('[deriveExport] ProductRuntimeSession 迁移Release缺失')
     }
     if (parent.kind === 'ttrpg' && JSON.parse(session.initialStateJson).ttrpg?.openRun?.releaseContinuation) {
-      const { assertTtrpgOpenContinuationParentV1 } = await import('../ttrpg/open-release-continuation-backup')
+      const { assertTtrpgOpenContinuationParentV1 } = await import('../legacy-compat/ttrpg/open-release-continuation-backup')
       const parentContent = parentManifest.runtimePackage.ttrpg, targetContent = childManifest.runtimePackage.ttrpg
       if (!parentContent || !targetContent || !isTtrpgRuntimeContentV2(parentContent) || !isTtrpgRuntimeContentV2(targetContent)
         || parent.runtimeSourceHash !== parentManifest.packageHash || session.runtimeSourceHash !== childManifest.packageHash) {
@@ -228,15 +236,15 @@ export async function assertProductRuntimeExportIntegrityV1(
           || parentManifest.productType !== 'character-interaction' || childManifest.productType !== 'character-interaction') {
           throw new Error('[deriveExport] 角色聊天升级分支的发布协议或产品类型不匹配')
         }
-        const contract = await import('../character-interaction/release-upgrade-branch')
-        const {parseProductReleaseManifestV1} = await import('../product-production/runtime-package')
+        const contract = await import('../legacy-compat/character-interaction/release-upgrade-branch')
+        const {parseProductReleaseManifestV1} = await import('../legacy-compat/product-production/runtime-package')
 
         await contract.verifyChatReleaseUpgradeBranchV1({parentSession: parent, childSession: session, parentManifest: parseProductReleaseManifestV1(parentManifest), childManifest: parseProductReleaseManifestV1(childManifest),
           parentEvents: eventsBySession.get(parent.id) ?? [], childEvents: eventsBySession.get(session.id) ?? []})
         continue
       }
-      migrationContract ??= await import('../open-world/player-save-migration-contract')
-      const { parseProductReleaseManifestV1 } = await import('../product-production/runtime-package')
+      migrationContract ??= await import('../legacy-compat/open-world/player-save-migration-contract')
+      const { parseProductReleaseManifestV1 } = await import('../legacy-compat/product-production/runtime-package')
       const sourceStateHash = await migrationContract.replayTextOpenWorldMigrationSourceStateHashV1({
         session: parent,
         events: eventsBySession.get(parent.id) ?? [],
@@ -269,7 +277,7 @@ export async function assertProductRuntimeExportIntegrityV1(
   }
 
   if (checkpoints.length > 0) {
-    const runtimeCore = await import('../product/runtime-core')
+    const runtimeCore = await import('../legacy-compat/product/runtime-core')
     for (const checkpoint of checkpoints) {
       let parsed
       try {

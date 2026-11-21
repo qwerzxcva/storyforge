@@ -1,61 +1,21 @@
-import { ensureLocalNarrativeIndexV1 } from '../retrieval/retrieval'
-import { prepareModelCapacityV1, modelInputBudgetV1, type ModelCapacityV1 } from '../ai/model-capacity'
-import type { AIConfig } from '../types'
-import { estimateTokens } from '../ai/context-budget'
-import { sha256Text } from '../ai/chapter-memory/text-normalization'
-import { AGENT_TOOL_SCHEMA_HASH_V1 } from '../agent/execution-binding'
-import { runReadOnlyAgent, type AgentModelAdapter, type ReadOnlyAgentResult } from '../agent/runner'
-import type { AgentSkillDefinitionV1 } from '../agent/skill-registry'
-import type { AgentToolResult } from '../agent/types'
-import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash'
-import { CONTEXT_SOURCES } from '../registry/context-sources'
-import type {
-  ContextPacketV1,
-  ContextAccessPolicyV1,
-  ContextResourceDescriptorV1,
-  ContextSufficiencyObligationV1,
-  ContextSufficiencyReportV1,
-  ContextTimeRangeV1,
-  FrozenResourceScopeV1,
-  RetrievalDecisionV1,
-  RetrievalQueryTraceV1,
-  RetrievalTraceV1,
-} from '../registry/types'
-import type { WorkspaceScope } from '../types'
-import {
-  createContextGatewayContractSnapshotV1,
-  createContextPacketV1,
-  createContextSufficiencyReportV1,
-  createRetrievalTraceV1,
-  filterContextResourcePageV1,
-  assertResourcePageV1,
-} from './contracts'
-import {
-  inspectContextGatewayManifestFreshnessV1,
-  verifyContextGatewayCandidateEvidenceV1,
-  type ContextGatewaySourceSnapshotInputV1,
-  type ContextGatewayToolTranscriptInputV1,
-} from './attempt-evidence'
-import {
-  CONTEXT_SELECTOR_VERSION_V1,
-  contextSelectorCategoryForKindV1,
-  selectContextResourcesV1,
-  type ContextSelectorResultV1,
-} from './selector'
-import {
-  createContextGatewayToolSessionV1,
-  MAX_SOURCE_CAPABILITIES_PER_RESOURCE,
-  isContextGatewayResourceAllowedV1,
-  settleContextGatewayTokensV1,
-  type ContextGatewayProviderBindingV1,
-  type ContextGatewayToolSessionV1,
-} from './tool-session'
-import {
-  assertAgentSkillContextGatewayPolicyV1,
-  contextGatewayAdditionalReadToolNamesForSkillV1,
-  createContextAccessPolicyForExecutionV1,
-  isContextGatewayRequiredForWriteTargetV1,
-} from './skill-policy'
+import { ensureLocalNarrativeIndexV1 } from '../retrieval/retrieval';
+import { prepareModelCapacityV1, modelInputBudgetV1, type ModelCapacityV1 } from '../ai/model-capacity';
+import type { AIConfig } from '../types';
+import { estimateTokens } from '../ai/context-budget';
+import { sha256Text } from '../ai/chapter-memory/text-normalization';
+import { AGENT_TOOL_SCHEMA_HASH_V1 } from '../agent/execution-binding';
+import { runReadOnlyAgent, type AgentModelAdapter, type ReadOnlyAgentResult } from '../agent/runner';
+import type { AgentSkillDefinitionV1 } from '../agent/skill-registry';
+import type { AgentToolResult } from '../agent/types';
+import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash';
+import { CONTEXT_SOURCES } from '../registry/context-sources';
+import type { ContextPacketV1, ContextAccessPolicyV1, ContextResourceDescriptorV1, ContextSufficiencyObligationV1, ContextSufficiencyReportV1, ContextTimeRangeV1, FrozenResourceScopeV1, RetrievalDecisionV1, RetrievalQueryTraceV1, RetrievalTraceV1 } from '../registry/types';
+import type { WorkspaceScope } from '../types';
+import { createContextGatewayContractSnapshotV1, createContextPacketV1, createContextSufficiencyReportV1, createRetrievalTraceV1, filterContextResourcePageV1, assertResourcePageV1 } from './contracts';
+import { inspectContextGatewayManifestFreshnessV1, verifyContextGatewayCandidateEvidenceV1, type ContextGatewaySourceSnapshotInputV1, type ContextGatewayToolTranscriptInputV1 } from './attempt-evidence';
+import { CONTEXT_SELECTOR_VERSION_V1, contextSelectorCategoryForKindV1, selectContextResourcesV1, type ContextSelectorResultV1 } from './selector';
+import { createContextGatewayToolSessionV1, MAX_SOURCE_CAPABILITIES_PER_RESOURCE, isContextGatewayResourceAllowedV1, settleContextGatewayTokensV1, type ContextGatewayProviderBindingV1, type ContextGatewayToolSessionV1 } from './tool-session';
+import { assertAgentSkillContextGatewayPolicyV1, contextGatewayAdditionalReadToolNamesForSkillV1, createContextAccessPolicyForExecutionV1, isContextGatewayRequiredForWriteTargetV1 } from './skill-policy';
 
 const CATALOG_PAGE_SIZE = 50
 const MAX_CATALOG_PAGES = 20_000

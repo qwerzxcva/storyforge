@@ -1,23 +1,23 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest'
 import { readAgentRunV1 } from '../../src/lib/agent/run/event-store'
-import { parseChatAuthoringSettings } from '../../src/lib/character-interaction/authoring-contract'
+import { parseChatAuthoringSettings } from '../../src/lib/legacy-compat/character-interaction/authoring-contract'
 import {
   confirmChatSourceReviewV1, createChatDraftV3, loadChatSourceProjectionV1, saveChatDraftV1, selectChatWorldV1,
 } from '../../src/lib/character-interaction/draft-service'
-import type { ChatNarrativeProductionSourceV1 } from '../../src/lib/character-interaction/narrative-production'
-import { chatProjectionResourcesV1 } from '../../src/lib/character-interaction/source-projection'
+import type { ChatNarrativeProductionSourceV1 } from '../../src/lib/legacy-compat/character-interaction/narrative-production'
+import { chatProjectionResourcesV1 } from '../../src/lib/legacy-compat/character-interaction/source-projection'
 import { db } from '../../src/lib/db/schema'
 import type { ProductSourcePlan } from '../../src/lib/types'
 import { aggregateProductSourceManifestFromExactRuns } from '../../src/lib/product/source-contracts'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
 import { draftProductProductionBriefV3, suggestProductStartingPoints } from '../../src/lib/product-production/consultation'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import {
   createBuiltInProductionCapabilityBindingV1, createConfiguredProductProductionExecutorV1, type ProductionTextRunnerV1,
 } from '../../src/lib/product-production/production-executor'
 import { runProductProductionSchedulerCycleV1, runProductProductionUntilBlockedV1 } from '../../src/lib/product-production/scheduler'
 import { confirmChatSituationDecisionV1, readProductProductionDetailsV1 } from '../../src/lib/product-production/service'
-import { parseProductProductionSourcePlanV1 } from '../../src/lib/product-production/source-contracts'
+import { parseProductProductionSourcePlanV1 } from '../../src/lib/legacy-compat/product-production/source-contracts'
 import {
   loadProductProductionConsultationSourceV2, loadProductProductionWorldSourceCatalogV2,
 } from '../../src/lib/product-production/world-source'

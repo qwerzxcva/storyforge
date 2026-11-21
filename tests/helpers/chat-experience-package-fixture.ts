@@ -1,4 +1,4 @@
-import type {ChatExperienceInfoV1} from '../../src/lib/character-interaction/experience-info'
+import type {ChatExperienceInfoV1} from '../../src/lib/legacy-compat/character-interaction/experience-info'
 import {exportProductDistributionBundleV2} from '../../src/lib/product-platform/distribution-bundle'
 import {seedChatMediaPlayerFixture} from './chat-media-fixture'
 

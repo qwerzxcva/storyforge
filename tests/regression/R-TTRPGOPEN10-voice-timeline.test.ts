@@ -2,11 +2,11 @@ import { describe, expect, it } from 'vitest'
 import wire from '../../scripts/ttrpg-local-tts/product-profile-v2.json'
 import { sha256Text } from '../../src/lib/ai/chapter-memory/text-normalization'
 import { canonicalStringify, hashCanonicalValue } from '../../src/lib/agent/run/hash'
-import { parseTtrpgOpenAudioRequestV1 } from '../../src/lib/ttrpg/open-audio-contract'
-import { validateTtrpgVoiceTimelineV1 } from '../../src/lib/ttrpg/open-audio-runtime'
+import { parseTtrpgOpenAudioRequestV1 } from '../../src/lib/legacy-compat/ttrpg/open-audio-contract'
+import { validateTtrpgVoiceTimelineV1 } from '../../src/lib/legacy-compat/ttrpg/open-audio-runtime'
 import { parseTtrpgOpenGeneratedVoiceTimelineV1, verifyTtrpgOpenGeneratedVoiceTimelineV1,
   verifyTtrpgOpenVoiceSampleClockV1, ttrpgOpenVoiceReadingPositionV1, TTRPG_OPEN_VOICE_TIMING_LIMITS_V1,
-  type TtrpgOpenGeneratedVoiceTimelineV1 } from '../../src/lib/ttrpg/open-voice-timeline-contract'
+  type TtrpgOpenGeneratedVoiceTimelineV1 } from '../../src/lib/legacy-compat/ttrpg/open-voice-timeline-contract'
 
 // Protocol timing only; these declared sample counts do not prove actual PCM,
 // a real model, listening, rights, acceptance or an E16 commit.

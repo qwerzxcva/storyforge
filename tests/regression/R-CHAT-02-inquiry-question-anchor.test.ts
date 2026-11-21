@@ -1,9 +1,9 @@
 import {afterEach, beforeEach, expect, it} from 'vitest'
 import {db} from '../../src/lib/db/schema'
-import {readProductRuntimeState, readProductRuntimeStateVersion} from '../../src/lib/character-interaction/runtime-api'
+import {readProductRuntimeState, readProductRuntimeStateVersion} from '../../src/lib/legacy-compat/character-interaction/runtime-api'
 import {generateInteractionRuntimeCandidateV1, adoptInteractionRuntimeCandidateV1} from '../../src/lib/character-interaction/harness'
-import {previewChatSituationV1} from '../../src/lib/character-interaction/narrative-situations'
-import {chatInquiryQuestionEvidenceContextV1, chatInquiryEvidenceVersionForContractV1} from '../../src/lib/character-interaction/inquiry-evidence'
+import {previewChatSituationV1} from '../../src/lib/legacy-compat/character-interaction/narrative-situations'
+import {chatInquiryQuestionEvidenceContextV1, chatInquiryEvidenceVersionForContractV1} from '../../src/lib/legacy-compat/character-interaction/inquiry-evidence'
 import {prepareChatInquiryFixture, chatInquiryDraftFixture, chatInquiryInputFixture, chatInquiryReviewFixture, inquiryQuestion, inquiryReassurance} from '../helpers/chat-inquiry-result'
 
 beforeEach(async () => {db.close(); await db.delete(); await db.open()})

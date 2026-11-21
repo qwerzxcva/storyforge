@@ -1,14 +1,9 @@
-import { inputAreaLayoutV1 } from '../../lib/input-area-layout'
-import { ChevronDown, ChevronRight } from 'lucide-react'
-import type {
-  Chapter,
-  HistoricalEra,
-  HistoricalKeyword,
-  HistoricalKeywordCategory,
-} from '../../lib/types'
-import { HISTORICAL_ERA_LABELS, KEYWORD_CATEGORY_LABELS } from '../../lib/types/history'
-import { CInput, CTextarea } from '../shared/CompositionInput'
-import HistoryAgentWorkspace, { type HistoryAgentViewState } from './HistoryAgentWorkspace'
+import { inputAreaLayoutV1 } from '../../lib/input-area-layout';
+import { ChevronDown, ChevronRight } from 'lucide-react';
+import type { Chapter, HistoricalEra, HistoricalKeyword, HistoricalKeywordCategory } from '../../lib/types';
+import { HISTORICAL_ERA_LABELS, KEYWORD_CATEGORY_LABELS } from '../../lib/types/history';
+import { CInput, CTextarea } from '../shared/CompositionInput';
+import HistoryAgentWorkspace, { type HistoryAgentViewState } from './HistoryAgentWorkspace';
 import HistoryChapterPicker from './HistoryChapterPicker'
 
 interface Props {

@@ -5,10 +5,10 @@ import { readyOpenTtrpgSessionV1 } from '../helpers/open-ttrpg-session'
 import { openContextPolicyFixtureV1 } from '../helpers/open-ttrpg-context'
 import { setupChecksFixtureV1 } from '../helpers/open-ttrpg-checks'
 import { resumeTtrpgOpenChecksV1 } from '../../src/lib/ttrpg/open-checks-coordinator'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 import { sha256Text } from '../../src/lib/ai/chapter-memory/text-normalization'
 import type { FrozenResourceScopeV1 } from '../../src/lib/registry/types'
-import type { ProductRuntimePackageWithTtrpgV2 } from '../../src/lib/ttrpg/content-version'
+import type { ProductRuntimePackageWithTtrpgV2 } from '../../src/lib/legacy-compat/ttrpg/content-version'
 
 function configure(pkg: ProductRuntimePackageWithTtrpgV2) {
   pkg.ttrpg!.campaign.runtimePolicy.enabled = true

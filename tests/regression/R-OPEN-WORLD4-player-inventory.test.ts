@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/open-world/effect-dsl'
+import { createTextOpenWorldEffectCatalogV1 } from '../../src/lib/legacy-compat/open-world/effect-dsl'
 import { projectTextOpenWorldPlayerInventoryV1 } from '../../src/lib/open-world/player-inventory'
-import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
+import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
 import type {
   TextOpenWorldActionModuleV1,
   TextOpenWorldItemModuleV1,

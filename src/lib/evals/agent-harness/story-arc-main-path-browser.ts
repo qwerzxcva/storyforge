@@ -1,42 +1,24 @@
-import { chat, type ChatResult } from '../../ai/client'
-import { estimateTokens } from '../../ai/context-budget'
-import { supportsVerifiedJsonObjectResponseV1 } from '../../ai/provider-capabilities'
-import { validateDomainCandidateCanon } from '../../agent/canon-validator'
-import { getOrCreateAgentConversation } from '../../agent/conversations'
-import type { ExecutedMasterCandidate, MasterAgentPlan } from '../../agent/orchestrator'
-import { readAgentRunV1 } from '../../agent/run/event-store'
-import { hashCanonicalValue } from '../../agent/run/hash'
-import {
-  runDurableMasterAgentPlanV1,
-  type MasterAgentDurableDependenciesV1,
-} from '../../agent/run/master-durable'
-import { getAgentSkillV1 } from '../../agent/skill-registry'
-import { prepareStoryArcCopilot } from '../../agent/story-arc-copilot'
-import { AgentTeamBudgetTracker } from '../../agent/team-budget'
-import { runBudgetedGenerationNode } from '../../agent/team-execution'
-import { db } from '../../db/schema'
-import { adopt } from '../../registry/adopt'
-import { assembleContext } from '../../registry/assemble-context'
-import type { AIConfig, Project, WorkspaceScope } from '../../types'
-import { stringifyStages } from '../../types/story-arc'
-import {
-  H86_AGENT_PROMPT_VERSION_V1,
-  H86_BASELINE_PROMPT_VERSION_V1,
-  H86_VERIFIER_PROMPT_VERSION_V1,
-  buildH86BaselineStoryArcMessagesV1,
-  buildH86VerifierMessagesV1,
-  createH86CallEvidenceV1,
-  parseH86BaselineStoryArcOutputV1,
-  parseH86VerifierAssessmentV1,
-  type H86CallEvidenceV1,
-  type H86GenerationAttemptV1,
-  type H86GenerationCallInputV1,
-  type H86ModelIdentityV1,
-  type H86VerificationAttemptV1,
-  type H86VerificationCallInputV1,
-} from './story-arc-main-path'
-import type { H86StoryArcFixtureV1 } from './story-arc-main-path-fixtures'
-import { createOwnedEvalWorkspaceV1, cleanupOwnedEvalWorkspaceV1, cleanupOwnedEvalWorkspacesV1, withEvalWorkspaceRunLeaseV1, type EvalWorkspaceRunLeaseV1, type EvalWorkspaceOwnerV1 } from '../workspace-ownership'
+import { chat, type ChatResult } from '../../ai/client';
+import { estimateTokens } from '../../ai/context-budget';
+import { supportsVerifiedJsonObjectResponseV1 } from '../../ai/provider-capabilities';
+import { validateDomainCandidateCanon } from '../../agent/canon-validator';
+import { getOrCreateAgentConversation } from '../../agent/conversations';
+import type { ExecutedMasterCandidate, MasterAgentPlan } from '../../agent/orchestrator';
+import { readAgentRunV1 } from '../../agent/run/event-store';
+import { hashCanonicalValue } from '../../agent/run/hash';
+import { runDurableMasterAgentPlanV1, type MasterAgentDurableDependenciesV1 } from '../../agent/run/master-durable';
+import { getAgentSkillV1 } from '../../agent/skill-registry';
+import { prepareStoryArcCopilot } from '../../agent/story-arc-copilot';
+import { AgentTeamBudgetTracker } from '../../agent/team-budget';
+import { runBudgetedGenerationNode } from '../../agent/team-execution';
+import { db } from '../../db/schema';
+import { adopt } from '../../registry/adopt';
+import { assembleContext } from '../../registry/assemble-context';
+import type { AIConfig, Project, WorkspaceScope } from '../../types';
+import { stringifyStages } from '../../types/story-arc';
+import { H86_AGENT_PROMPT_VERSION_V1, H86_BASELINE_PROMPT_VERSION_V1, H86_VERIFIER_PROMPT_VERSION_V1, buildH86BaselineStoryArcMessagesV1, buildH86VerifierMessagesV1, createH86CallEvidenceV1, parseH86BaselineStoryArcOutputV1, parseH86VerifierAssessmentV1, type H86CallEvidenceV1, type H86GenerationAttemptV1, type H86GenerationCallInputV1, type H86ModelIdentityV1, type H86VerificationAttemptV1, type H86VerificationCallInputV1 } from './story-arc-main-path';
+import type { H86StoryArcFixtureV1 } from './story-arc-main-path-fixtures';
+import { createOwnedEvalWorkspaceV1, cleanupOwnedEvalWorkspaceV1, cleanupOwnedEvalWorkspacesV1, withEvalWorkspaceRunLeaseV1, type EvalWorkspaceRunLeaseV1, type EvalWorkspaceOwnerV1 } from '../workspace-ownership';
 
 const H86_PROJECT_PREFIX = '[H86-EVAL] '
 const CALL_TIMEOUT_MS = 180_000

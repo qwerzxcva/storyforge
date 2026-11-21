@@ -3,7 +3,7 @@ import {
   hashTextOpenWorldCreatorEditPatchV1,
   type TextOpenWorldCreatorEditPatchV1,
 } from '../../src/lib/open-world/creator-artifact-edit-contract'
-import { canonicalProductProductionJsonV2 } from '../../src/lib/product-production/hash'
+import { canonicalProductProductionJsonV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import * as progressionCompiler from '../../src/lib/open-world/progression-catalogs-production'
 
 vi.mock('../../src/lib/open-world/progression-catalogs-production', () => ({

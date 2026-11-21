@@ -3,7 +3,7 @@ import {
   adoptAdventureRuntimeCandidateV1,
   generateAdventureRuntimeCandidateV1,
 } from '../../src/lib/adventure/harness'
-import { availableAdventureActions } from '../../src/lib/adventure/runtime'
+import { availableAdventureActions } from '../../src/lib/legacy-compat/adventure/runtime'
 import { db } from '../../src/lib/db/schema'
 import {
   adoptOpenWorldEvolutionRuntimeCandidateV1,

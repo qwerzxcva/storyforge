@@ -1,5 +1,5 @@
 import type { FrozenRuntimeMediaAssetV2 } from '../../src/lib/types'
-import type { AvgMediaReferenceV2 } from '../../src/lib/avg/media-reference-contract-v2'
+import type { AvgMediaReferenceV2 } from '../../src/lib/legacy-compat/avg/media-reference-contract-v2'
 import { processAvgRegionCompositeBytesV1 } from '../../src/lib/avg/image-region-composite-pixels'
 import { avgRegionCompositeByteFixture } from './avg-region-composite-byte-fixture'
 

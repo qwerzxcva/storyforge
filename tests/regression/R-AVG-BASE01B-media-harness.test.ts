@@ -7,15 +7,15 @@ import { saveAvgVisualBatchDraftV1, prepareAvgAssemblyBriefV1, startAvgAssemblyV
   confirmAvgWorkspaceInputV1, runAvgAssemblyV1, stageAvgMediaChoiceV2, configureAvgChosenMediaDraftV2, prepareAvgImageRecoveryBriefV1, keepAvgGeneratedStageDraftV1,stageAvgVisualReviewV1,saveAvgImageProcessingDraftV1,readAvgProcessedImageCandidateBytesV1,readAvgAssemblyWorkspaceV1 } from '../../src/lib/avg/assembly-service'
 import { deterministicRegionMapPngV1 } from '../../src/lib/product-production/production-executor'
 import { readProductProductionDetailsV1, stopProductProductionV1 } from '../../src/lib/product-production/service'
-import { verifyStoredProductBuildPreview } from '../../src/lib/product-production/preview-manifest'
+import { verifyStoredProductBuildPreview } from '../../src/lib/legacy-compat/product-production/preview-manifest'
 import * as mediaVerifier from '../../src/lib/product-production/media-runtime-verifier'
-import type { AvgVisualProductionRequirementV1 } from '../../src/lib/avg/media-production-contract'
-import { avgExecutableModule } from '../../src/lib/avg/executable-module'
+import type { AvgVisualProductionRequirementV1 } from '../../src/lib/legacy-compat/avg/media-production-contract'
+import { avgExecutableModule } from '../../src/lib/legacy-compat/avg/executable-module'
 import { verifyAcceptedProductBuildArtifactV1, verifyRetainedAvgRawImageArtifactV1, verifyHistoricalAvgImageRevalidationProducerV1, verifyHistoricalAvgImageProcessingProducerV1 } from '../../src/lib/product-production/artifact-store'
 import { scopeTransactionTables } from '../../src/lib/workspace/scope'
-import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { seedCurrentProductWorld } from '../helpers/current-product-world'
-import * as mediaBlobStore from '../../src/lib/product-production/media-blob-store'
+import * as mediaBlobStore from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import { deleteWork } from '../../src/lib/workspace/lifecycle'
 import { prepareAvgImageRecoveryV1 } from '../../src/lib/avg/media-recovery'
@@ -25,7 +25,7 @@ import { saveAvgAuthorWorkspaceV1 } from '../../src/lib/avg/editor-service'
 import { parseAvgAuthorWorkspaceV1 } from '../../src/lib/avg/author-workspace-contract'
 import { readAvgInheritedStageImagesV1 } from '../../src/lib/avg/stage-image-sources'
 import { prepareAvgCharacterFamilyProposalV1, saveAvgCharacterFamilyBatchDraftV1 } from '../../src/lib/avg/character-family-service'
-import type { AvgCharacterFamilyPlanV1 } from '../../src/lib/avg/character-family-contract'
+import type { AvgCharacterFamilyPlanV1 } from '../../src/lib/legacy-compat/avg/character-family-contract'
 import { validateAvgVisualProductionBatchSourceV1 } from '../../src/lib/avg/media-source'
 import { verifyFrozenAvgAuthorInputsV1 } from '../../src/lib/avg/author-artifacts'
 import { avgVisualReviewFixture } from '../helpers/avg-visual-review-fixture'
@@ -33,7 +33,7 @@ import { avgVersionedReferenceTransportFixture } from '../helpers/avg-versioned-
 import { prepareAvgRawImageRequestV1 } from '../../src/lib/avg/media-raw-contract'
 import * as imageProcessing from '../../src/lib/avg/image-processing'
 import { avgImageProcessingRecipeFixture,avgImageProcessingReceiptFixture } from '../helpers/avg-image-processing-fixture'
-import type { AvgImageProcessingPlanV1 } from '../../src/lib/avg/image-processing-contract'
+import type { AvgImageProcessingPlanV1 } from '../../src/lib/legacy-compat/avg/image-processing-contract'
 
 const requirement = (): AvgVisualProductionRequirementV1 => ({ requirementKey: 'desk.background', revision: 1,
   assetKey: 'avg.generated.desk', name: '原创工程背景', altText: '仅用于管线验证的原创色块',
@@ -507,7 +507,7 @@ describe('R-AVG-BASE01B · actual public media Harness with controlled HTTP/deco
     await expect(readAvgGeneratedReferenceBytesV1(s.scope,{...ref,purpose:'identity',generatedSource:selected.source},
       {...secondaryRequirement().family,revision:2})).rejects.toThrow(/身份基准版本已变化/)
     const frozen = await prepareAvgRawImageRequestV1({brief:s.details.executionBrief!,requirementKey:'desk.reference',idempotencyKey:'a'.repeat(64)})
-    const {freezeAvgImageRequestV1}=await import('../../src/lib/avg/media-reference-contract')
+    const {freezeAvgImageRequestV1}=await import('../../src/lib/legacy-compat/avg/media-reference-contract')
     const withReference = await freezeAvgImageRequestV1({request:{...frozen.request,allowedDataClasses:[ref.dataClass]},resolutionTier:'1K',references:[ref]})
     const adapter = await createAvgDraftReferenceAdapterV1({scope:s.scope,frozen:withReference})
     const transport = {request:vi.fn()}

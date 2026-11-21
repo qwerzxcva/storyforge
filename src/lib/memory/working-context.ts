@@ -1,21 +1,9 @@
-import { db } from '../db/schema'
-import type {
-  AnyAgentRunEventV1,
-  WorkingContextCompactionCheckpointV1,
-  WorkingContextSourceDecisionV1,
-  WorkspaceScope,
-} from '../types'
-import {
-  createAgentRunCheckpointV1,
-  readLatestVerifiedAgentRunCheckpointV1,
-  verifyAgentRunCheckpointV1,
-} from '../agent/run/checkpoint'
-import { readAgentRunV1 } from '../agent/run/event-store'
-import { hashCanonicalValue } from '../agent/run/hash'
-import {
-  inspectAgentRunArtifactAvailabilityV1,
-  readAgentRunArtifactExactV1,
-} from './artifact-store'
+import { db } from '../db/schema';
+import type { AnyAgentRunEventV1, WorkingContextCompactionCheckpointV1, WorkingContextSourceDecisionV1, WorkspaceScope } from '../types';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1, verifyAgentRunCheckpointV1 } from '../agent/run/checkpoint';
+import { readAgentRunV1 } from '../agent/run/event-store';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { inspectAgentRunArtifactAvailabilityV1, readAgentRunArtifactExactV1 } from './artifact-store';
 
 const HASH = /^[a-f0-9]{64}$/
 

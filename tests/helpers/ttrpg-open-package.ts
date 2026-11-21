@@ -1,8 +1,8 @@
-import type { ProductRuntimePackageWithTtrpgV2 } from "../../src/lib/ttrpg/content-version";
-import { hashTtrpgFrozenPredicateIndexV1 } from "../../src/lib/ttrpg/content-version";
-import { hashProductProductionValueV2 } from "../../src/lib/product-production/hash";
-import { parseTtrpgCampaignContentV2 } from "../../src/lib/ttrpg/campaign-v2";
-import { parseRulePackV2 } from "../../src/lib/ttrpg/rule-pack-v2";
+import type { ProductRuntimePackageWithTtrpgV2 } from "../../src/lib/legacy-compat/ttrpg/content-version";
+import { hashTtrpgFrozenPredicateIndexV1 } from "../../src/lib/legacy-compat/ttrpg/content-version";
+import { hashProductProductionValueV2 } from "../../src/lib/legacy-compat/product-production/hash";
+import { parseTtrpgCampaignContentV2 } from "../../src/lib/legacy-compat/ttrpg/campaign-v2";
+import { parseRulePackV2 } from "../../src/lib/legacy-compat/ttrpg/rule-pack-v2";
 import { openCampaignFixture, openRuleFixture } from "./ttrpg-open-content";
 
 export async function openRuntimePackageFixture(): Promise<ProductRuntimePackageWithTtrpgV2> {

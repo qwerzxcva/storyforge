@@ -10,7 +10,7 @@ import {
 import {
   defaultAiTownSettings,
   settingsFromAiTownDraft,
-} from "../../src/lib/ai-town/authoring-contract";
+} from "../../src/lib/legacy-compat/ai-town/authoring-contract";
 import { createMistHarborWorld } from "../../src/lib/world-engine/mist-harbor-preset";
 import {
   exportProjectJSON,

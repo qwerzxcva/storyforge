@@ -1,5 +1,5 @@
-import { create } from 'zustand'
-import { DEFAULT_COMPANION, type CompanionPreferences, type VoiceService } from '../lib/longform-voice/contract'
+import { create } from 'zustand';
+import { DEFAULT_COMPANION, type CompanionPreferences, type VoiceService } from '../lib/longform-voice/contract';
 
 export const COMPANION_KEY = 'storyforge-longform-companion-v1'
 const SESSION_KEY = 'storyforge-longform-voice-keys-v1'

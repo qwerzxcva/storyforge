@@ -2,14 +2,14 @@
 import { beforeEach, afterEach, describe, it, expect, vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { readTtrpgDraft, saveTtrpgDraft, prepareTtrpgBrief, prepareTtrpgOpenProductionBriefV3 } from '../../src/lib/ttrpg/authoring-service'
-import { settingsFromTtrpgDraft } from '../../src/lib/ttrpg/authoring-contract'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { settingsFromTtrpgDraft } from '../../src/lib/legacy-compat/ttrpg/authoring-contract'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 import { beginProductProductionEvolutionV1, publishProductProductionV1 } from '../../src/lib/product-production/service'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
 import { seedOpenBrowserProductionV1, runOpenBrowserProductionV1 } from '../helpers/open-ttrpg-production-browser'
 import * as consultation from '../../src/lib/product-production/consultation'
-import { resolveProductRuntimeSource } from '../../src/lib/product-production/preview-source'
-import { evaluateTtrpgOpenStageClosureV1 } from '../../src/lib/ttrpg/open-gates'
+import { resolveProductRuntimeSource } from '../../src/lib/legacy-compat/product-production/preview-source'
+import { evaluateTtrpgOpenStageClosureV1 } from '../../src/lib/legacy-compat/ttrpg/open-gates'
 import { createFreshOpenDraftFixtureV1 } from '../helpers/open-ttrpg-fresh-authoring'
 
 describe('R-TTRPGOPEN17 explicit new-version stage policy', { timeout: 60000 }, () => {

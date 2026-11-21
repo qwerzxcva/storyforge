@@ -1,13 +1,13 @@
-import { keepIntegrityReadAlive } from '../db/transaction-integrity'
-import { estimateTokens } from '../ai/context-budget'
-import { buildGenreConstraintContext } from '../ai/genre-metadata'
-import { buildStylePromptInjection } from '../ai/writing-styles'
-import { sha256Text } from '../ai/chapter-memory/text-normalization'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { db } from '../db/schema'
-import type { ContextResourceProviderV1, ContextResourceDescriptorV1, ContextSourceRefV1, FrozenResourceScopeV1 } from '../registry/types'
-import type { Work } from '../types'
-import { canonScopeFingerprintV1 } from './canon-provider'
+import { keepIntegrityReadAlive } from '../db/transaction-integrity';
+import { estimateTokens } from '../ai/context-budget';
+import { buildGenreConstraintContext } from '../ai/genre-metadata';
+import { buildStylePromptInjection } from '../ai/writing-styles';
+import { sha256Text } from '../ai/chapter-memory/text-normalization';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { db } from '../db/schema';
+import type { ContextResourceProviderV1, ContextResourceDescriptorV1, ContextSourceRefV1, FrozenResourceScopeV1 } from '../registry/types';
+import type { Work } from '../types';
+import { canonScopeFingerprintV1 } from './canon-provider';
 
 const SOURCE_KEY = 'workAuthoringIntent'
 const PROVIDER_VERSION = 'work-authoring-intent-v2'

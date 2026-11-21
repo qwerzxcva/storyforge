@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import TextOpenWorldPlayer from '../../src/components/text-game/TextOpenWorldPlayer'
 import type { Project, WorkspaceScope } from '../../src/lib/types'
 import { useTextOpenWorldPlayerStore } from '../../src/stores/text-open-world-player'
-import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/open-world/session-projection'
+import { createInitialTextOpenWorldSessionProjectionV1 } from '../../src/lib/legacy-compat/open-world/session-projection'
 import { createTextOpenWorldVNextFixture } from '../helpers/text-open-world-vnext-fixture'
 import {
   createTextOpenWorldPlayerSessionRowFixtureV1,

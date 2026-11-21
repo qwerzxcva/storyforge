@@ -2,7 +2,7 @@ import { act, createElement } from 'react'
 import { createRoot, type Root } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import Editor from '../../src/components/ttrpg/TtrpgOpenSeatApprovalEditor'
-import { defaultTtrpgSettingsV2 } from '../../src/lib/ttrpg/authoring-contract-v2'
+import { defaultTtrpgSettingsV2 } from '../../src/lib/legacy-compat/ttrpg/authoring-contract-v2'
 import { initializeTtrpgOpenAuthoringPoliciesV1 } from '../../src/lib/ttrpg/open-authoring-edit'
 import { acknowledgeSeatApprovalSave, beginSeatApprovalDraft, clearSeatApprovalDraft, markSeatApprovalApplied,
   proposeSeatApprovalDraft, readSeatApprovalDraft, reviewSeatApprovalDraft, setSeatApprovalHost,

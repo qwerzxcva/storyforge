@@ -1,5 +1,5 @@
 import {expect, it} from 'vitest'
-import {buildInteractionContextWindow, createInitialInteractionState, interactionVisibilityView, rebaseInteractionStateForBranch} from '../../src/lib/character-interaction/runtime'
+import {buildInteractionContextWindow, createInitialInteractionState, interactionVisibilityView, rebaseInteractionStateForBranch} from '../../src/lib/legacy-compat/character-interaction/runtime'
 import {formatInteractionRuntimeContextV1} from '../../src/lib/character-interaction/context-format'
 import {selectChatCoordinatorContextV1} from '../../src/lib/character-interaction/coordinator-selection'
 import {chatRetrievalVersionForReader} from '../../src/lib/character-interaction/context-selection'

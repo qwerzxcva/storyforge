@@ -1,6 +1,6 @@
-import { sha256 } from '@noble/hashes/sha2.js'
-import { bytesToHex } from '@noble/hashes/utils.js'
-import { normalizeOpenAIBaseUrl } from '../openai-endpoint'
+import { sha256 } from '@noble/hashes/sha2.js';
+import { bytesToHex } from '@noble/hashes/utils.js';
+import { normalizeOpenAIBaseUrl } from '../openai-endpoint';
 /**
  * NS-5 · Embedding 适配器 — 语义检索通道的唯一出口。
  *
@@ -8,10 +8,10 @@ import { normalizeOpenAIBaseUrl } from '../openai-endpoint'
  * 批量嵌入（一次多段省往返）；带超时与取消；消耗记到 'retrieval.embed' 分类。
  * 失败抛错由调用方决定降级——绝不污染主流程。
  */
-import type { EmbeddingConfig } from '../../types'
-import { IS_MODEL_DISABLED_BUILD, assertGenerationAvailable } from '../../showcase/policy'
-import { recordUsage } from '../usage-log'
-import { estimateTokens } from '../context-budget'
+import type { EmbeddingConfig } from '../../types';
+import { IS_MODEL_DISABLED_BUILD, assertGenerationAvailable } from '../../showcase/policy';
+import { recordUsage } from '../usage-log';
+import { estimateTokens } from '../context-budget';
 
 /** 当前向量所属连接标识（模型、端点及凭据作用域隔离；旧标签只作不可复用缓存）。 */
 export function embeddingModelTag(cfg: EmbeddingConfig): string {

@@ -1,7 +1,7 @@
-import type { ChatMessage, Location } from '../../types'
-import { usePromptStore } from '../../../stores/prompt'
-import { useWorldviewStore } from '../../../stores/worldview'
-import { renderPrompt } from '../prompt-engine'
+import type { ChatMessage, Location } from '../../types';
+import { usePromptStore } from '../../../stores/prompt';
+import { useWorldviewStore } from '../../../stores/worldview';
+import { renderPrompt } from '../prompt-engine';
 
 /** 从世界观 store 提取与地理相关的上下文 */
 function getWorldviewGeoContext(): string {

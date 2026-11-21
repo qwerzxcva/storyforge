@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { matteEdgeConnectedCharacterBackdropV1 } from '../../src/lib/product-production/character-alpha-matting'
+import { matteEdgeConnectedCharacterBackdropV1 } from '../../src/lib/legacy-compat/product-production/character-alpha-matting'
 
 function checkerboard(width: number, height: number): Uint8ClampedArray {
   const data = new Uint8ClampedArray(width * height * 4)

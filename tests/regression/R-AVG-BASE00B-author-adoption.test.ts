@@ -1,7 +1,7 @@
 import { beforeEach, afterEach, describe, expect, it } from 'vitest'
 import { db } from '../../src/lib/db/schema'
 import { executeProductProductionCommand } from '../../src/lib/product-production/commands'
-import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { canonicalProductProductionJsonV2, hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { applyAvgAuthorArtifactAdoptionV1, stageAvgAuthorArtifactV1 } from '../../src/lib/avg/author-artifacts'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import { deleteWork } from '../../src/lib/workspace/lifecycle'

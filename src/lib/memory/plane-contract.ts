@@ -1,5 +1,5 @@
-import { REGISTRY_BY_NAME } from '../registry/project-tables'
-import type { MemoryPlaneIdV1 } from '../types'
+import { REGISTRY_BY_NAME } from '../registry/project-tables';
+import type { MemoryPlaneIdV1 } from '../types';
 
 /**
  * MEMINT-0 boundary declaration, not a fourth data registry. Table lifecycle

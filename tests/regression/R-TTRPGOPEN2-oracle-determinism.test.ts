@@ -5,7 +5,7 @@ import {
   resolveTtrpgOracleV1,
   selectTtrpgOracleEntryIndexV1,
   verifyTtrpgOracleOutcomeV1,
-} from '../../src/lib/ttrpg/oracle'
+} from '../../src/lib/legacy-compat/ttrpg/oracle'
 import { openRuleFixture } from '../helpers/ttrpg-open-content'
 
 describe('R-TTRPGOPEN2 oracle determinism', () => {

@@ -1,11 +1,4 @@
-import {
-  AUTHORING_GRAPH_VERSION,
-  emptyAuthoringGraph,
-  isAuthoringSemantic,
-  type AuthoringNodeGraph,
-  type AuthoringNodeInstance,
-  type AuthoringPortDefinition,
-} from './contracts'
+import { AUTHORING_GRAPH_VERSION, emptyAuthoringGraph, isAuthoringSemantic, type AuthoringNodeGraph, type AuthoringNodeInstance, type AuthoringPortDefinition } from './contracts';
 
 function assertObject(value: unknown, label: string): asserts value is Record<string, unknown> {
   if (!value || typeof value !== 'object' || Array.isArray(value)) {

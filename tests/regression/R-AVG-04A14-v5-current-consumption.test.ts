@@ -7,7 +7,7 @@ import { readAvgImageConsumptionDefinitionV4 } from '../../src/lib/avg/image-con
 import { stageAvgMediaChoiceV5 } from '../../src/lib/avg/visual-review-service-v5'
 import { exportProjectJSON } from '../../src/lib/export/json-export'
 import { scopeTransactionTables } from '../../src/lib/workspace/scope'
-import type { AvgAuthorMediaChoiceV1 } from '../../src/lib/avg/media-production-contract'
+import type { AvgAuthorMediaChoiceV1 } from '../../src/lib/legacy-compat/avg/media-production-contract'
 
 beforeEach(async()=>{
   await db.delete();await db.open()

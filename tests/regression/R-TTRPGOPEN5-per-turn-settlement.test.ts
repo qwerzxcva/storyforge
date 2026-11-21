@@ -1,7 +1,7 @@
 import { setupPerTurnConsequenceFixtureV1 } from '../helpers/open-ttrpg-per-turn'
 import { afterEach,beforeEach,describe,expect,it,vi } from 'vitest'
 import { db } from '../../src/lib/db/schema'
-import { readProductRuntimeState,parseProductRuntimeState,replayProductRuntimeEvents,applyProductRuntimeEvent } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState,parseProductRuntimeState,replayProductRuntimeEvents,applyProductRuntimeEvent } from '../../src/lib/legacy-compat/product/runtime-core'
 import { setupPressureFixtureV1,nextPressureInputV1 } from '../helpers/open-ttrpg-pressure'
 import { settleOpenPaidTurnsV1 } from '../helpers/open-ttrpg-paid-turns'
 import { rt,forkAndStart,approve,operationInput } from '../helpers/open-ttrpg-branch-recovery'
@@ -10,7 +10,7 @@ import { resumeTtrpgOpenPressureV1 } from '../../src/lib/ttrpg/open-pressure-coo
 import { prepareTtrpgOpenPressureEffectV1,proposeTtrpgOpenPressureEffectV1,confirmTtrpgOpenPressureEffectV1,applyTtrpgOpenPressureEffectV1,advanceTtrpgWorldTurnV1,advanceTtrpgOpenPressureV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { exportProjectJSON,importProjectJSON } from '../../src/lib/export/json-export'
 import legacy from '../fixtures/ttrpg-open-paid-turn-legacy-v1.json'
-import * as plans from '../../src/lib/ttrpg/open-rule-plan'
+import * as plans from '../../src/lib/legacy-compat/ttrpg/open-rule-plan'
 
 async function replay(sessionId: number) {
   const row = (await db.productRuntimeSessions.get(sessionId))!,events = await db.productRuntimeEvents.where('sessionId').equals(sessionId).sortBy('sequence')

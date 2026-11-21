@@ -1,23 +1,23 @@
 import Dexie from 'dexie'
-import { db } from '../db/schema'
-import { readOwnedRows, resolveScope } from '../workspace/scope'
-import type { Chapter, DetailedOutline, OutlineNode, WorkspaceScope, ChatMessage } from '../types'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { executeRegisteredAIEntryV1 } from './formal-ai-entry'
-import { resolveRequestConfig, type ChatResult } from '../ai/client'
-import { prepareGenerationNode, type GenerationNode } from '../generation/generation-node'
-import { prepareDetailedOutlineGatewayAssemblyV1 } from '../outline/detail-gateway-context'
-import { buildDetailSceneGeneratePrompt, buildEnhancedDetailPrompt } from '../ai/adapters/detail-scene-adapter'
-import { buildAgentSkillInputGuidanceV1, getAgentSkillV1 } from './skill-registry'
-import { contextGatewayInputStateSourceKeysV1, projectContextGatewayInputStateV1 } from './context-gateway-input'
-import { attachAgentContextInputStateV1, evidenceFromContextResult } from './context-policy'
-import { buildNarrativeBriefV1, formatNarrativeBriefForPromptV1 } from './narrative-brief'
-import { buildDetailedOutlineCopilotPatchV1, buildDetailedOutlineSceneMergeGuidanceV1, detailedOutlinePostStateMatchesPatchV1, type DetailedOutlineCopilotOperationV1 } from './detailed-outline-copilot'
-import { hashCanonicalValue } from './run/hash'
-import { adopt, adoptionTransactionTablesV1 } from '../registry/adopt'
-import { assertDetailedOutlineTargetsUnwrittenFutureV1 } from '../outline/future-boundary'
-import { resolveUnwrittenChapterTargetV1 } from './prose-copilot'
-import type { OutlineGatewayAssemblyV1 } from '../outline/gateway-context'
+import { db } from '../db/schema';
+import { readOwnedRows, resolveScope } from '../workspace/scope';
+import type { Chapter, DetailedOutline, OutlineNode, WorkspaceScope, ChatMessage } from '../types';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { executeRegisteredAIEntryV1 } from './formal-ai-entry';
+import { resolveRequestConfig, type ChatResult } from '../ai/client';
+import { prepareGenerationNode, type GenerationNode } from '../generation/generation-node';
+import { prepareDetailedOutlineGatewayAssemblyV1 } from '../outline/detail-gateway-context';
+import { buildDetailSceneGeneratePrompt, buildEnhancedDetailPrompt } from '../ai/adapters/detail-scene-adapter';
+import { buildAgentSkillInputGuidanceV1, getAgentSkillV1 } from './skill-registry';
+import { contextGatewayInputStateSourceKeysV1, projectContextGatewayInputStateV1 } from './context-gateway-input';
+import { attachAgentContextInputStateV1, evidenceFromContextResult } from './context-policy';
+import { buildNarrativeBriefV1, formatNarrativeBriefForPromptV1 } from './narrative-brief';
+import { buildDetailedOutlineCopilotPatchV1, buildDetailedOutlineSceneMergeGuidanceV1, detailedOutlinePostStateMatchesPatchV1, type DetailedOutlineCopilotOperationV1 } from './detailed-outline-copilot';
+import { hashCanonicalValue } from './run/hash';
+import { adopt, adoptionTransactionTablesV1 } from '../registry/adopt';
+import { assertDetailedOutlineTargetsUnwrittenFutureV1 } from '../outline/future-boundary';
+import { resolveUnwrittenChapterTargetV1 } from './prose-copilot';
+import type { OutlineGatewayAssemblyV1 } from '../outline/gateway-context';
 
 export interface DetailedOutlineAuthoringSnapshotV1 {
   outlineNodeId: number

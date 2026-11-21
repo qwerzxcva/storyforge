@@ -1,4 +1,4 @@
-import type { ImportantLocation } from '../types/location'
+import type { ImportantLocation } from '../types/location';
 
 export interface LocationTreeNode extends ImportantLocation {
   children: LocationTreeNode[]

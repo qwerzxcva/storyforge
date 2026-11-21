@@ -1,5 +1,5 @@
-import type { VisibilityV1 } from '../types/narrative-ir'
-import { canonicalNarrativeJsonV1, compareUnicodeCodePointsV1 } from './json'
+import type { VisibilityV1 } from '../types/narrative-ir';
+import { canonicalNarrativeJsonV1, compareUnicodeCodePointsV1 } from './json';
 
 /** Effective disclosure may only become more restrictive through evidence or
  * dependency closure. Explicit author-only and unclassified inputs never

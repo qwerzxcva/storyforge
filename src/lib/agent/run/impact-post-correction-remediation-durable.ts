@@ -1,13 +1,8 @@
-import type { WorkspaceScope } from '../../types'
-import {
-  executeImpactRemediationV1,
-} from './impact-remediation-durable'
-import {
-  readCurrentImpactPostCorrectionReplanV1,
-  type ImpactPostCorrectionReplanResultV1,
-} from './impact-post-correction-replan-durable'
-import { readAgentRunChildV1 } from './event-store'
-import { hashCanonicalValue } from './hash'
+import type { WorkspaceScope } from '../../types';
+import { executeImpactRemediationV1 } from './impact-remediation-durable';
+import { readCurrentImpactPostCorrectionReplanV1, type ImpactPostCorrectionReplanResultV1 } from './impact-post-correction-replan-durable';
+import { readAgentRunChildV1 } from './event-store';
+import { hashCanonicalValue } from './hash';
 
 /**
  * HARNESS-58: execute the deterministic remainder of a fresh H57 plan.

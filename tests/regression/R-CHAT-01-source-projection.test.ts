@@ -5,7 +5,7 @@ import { loadCurrentProductWorldSourceCatalogV1, seedCurrentProductWorld } from 
 import {
   createChatSourceProjectionDraftV1, readChatSourceProjectionViewV1,
   type ChatSourceClassificationV1,
-} from '../../src/lib/character-interaction/source-projection'
+} from '../../src/lib/legacy-compat/character-interaction/source-projection'
 
 beforeEach(async () => { db.close(); await db.delete(); await db.open() })
 afterEach(() => db.close())

@@ -4,7 +4,7 @@ import { setup } from '../helpers/open-ttrpg-knowledge'
 import { openEnvelopeV1,OPEN_HUMAN_VIEWER } from '../helpers/open-ttrpg-session'
 import { startTtrpgOpenOperationV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { readTtrpgOpenTableV1,confirmTtrpgOpenTableRiskV1 } from '../../src/lib/ttrpg/open-table-service'
-import { readProductRuntimeState } from '../../src/lib/product/runtime-core'
+import { readProductRuntimeState } from '../../src/lib/legacy-compat/product/runtime-core'
 
 describe('R-TTRPGOPEN3 meaningful risk for an authorized AI companion without private content',() => {
   beforeEach(async () => { await db.delete();await db.open() });afterEach(() => db.close())

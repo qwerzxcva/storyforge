@@ -1,14 +1,8 @@
-import { INSPIRATION_PREPARATION_MODULES, type InspirationPreparationPromptModuleKey } from '../inspiration/preparation-contract'
-import { renderPrompt } from '../ai/prompt-engine'
-import type { ChatMessage } from '../types'
-import type {
-  PromptExample,
-  PromptModuleKey,
-  PromptParameter,
-  PromptTemplate,
-  PromptVariableContext,
-} from '../types/prompt'
-import { hashCanonicalValue } from './run/hash'
+import { INSPIRATION_PREPARATION_MODULES, type InspirationPreparationPromptModuleKey } from '../inspiration/preparation-contract';
+import { renderPrompt } from '../ai/prompt-engine';
+import type { ChatMessage } from '../types';
+import type { PromptExample, PromptModuleKey, PromptParameter, PromptTemplate, PromptVariableContext } from '../types/prompt';
+import { hashCanonicalValue } from './run/hash';
 
 export const PROMPT_EXECUTION_VERSION_V1 = 1 as const
 export const MAX_PROMPT_OVERRIDE_CHARS_V1 = 40_000

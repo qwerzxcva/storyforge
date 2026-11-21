@@ -1,5 +1,7 @@
 # AVG 游戏系统与媒资生产、自动配置研究
 
+> Android fork scope: world engine, longform, and longform nodes. Links marked “historical source” document retired implementations; they do not indicate available production or runtime features.
+
 > 版本：1.0.0 · 日期：2026-10-13 · L4 研究与本地化设计提案。
 > 产品/生命周期：AVG/Galgame 产品能力研发；正式作品制作仍走 S2 定向 → S3 执行。
 > 代码核对：`097ba563fd690ad773facb482814121ad03fcfe1`；与上游 `646beba1` 比对，本文涉及的 AVG/生产/媒资/运行源码闭包未变。
@@ -37,15 +39,15 @@ AVG Work 拥有生产配置、剧本、参考与候选；冻结发布媒资及�
 
 | 系统 | 目标设计内容 | 当前 AVG 代码事实/缺口 |
 |---|---|---|
-| 对话与阅读 | 句/说话人身份、显示姓名、文本框模式、逐字/整句、输入优先级、文本/语音/演出推进 | [播放器](../../src/components/text-game/AvgGamePlayer.tsx)已有逐字、姓名、手动/自动及已读快进；自动推进未等语音结束，匿名显示、排版模式等需专项合同 |
+| 对话与阅读 | 句/说话人身份、显示姓名、文本框模式、逐字/整句、输入优先级、文本/语音/演出推进 | [播放器 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/components/text-game/AvgGamePlayer.tsx)已有逐字、姓名、手动/自动及已读快进；自动推进未等语音结束，匿名显示、排版模式等需专项合同 |
 | 历史与回听 | 实际阅读顺序、重访记录、句版本及语音回听；回看不写当前状态 | 当前历史按全稿 beats 筛已读 key，未形成完整的事件次序/重复访问与语音回听投影 |
 | 选择、路线与关系 | 类型化变量、条件/效果、即时及延迟反馈、路线解锁和汇流；知识与关系分开 | [条件/效果](../../src/lib/types/narrative-blueprint.ts)及正式 choice command 有底座；布尔变量不等于专门关系/证据/库存系统 |
-| 物品与证据 | 定义、获得/持有、状态、查看/使用/出示、反馈、合法数量或唯一实例 | [AVG adapter](../../src/lib/product-production/product-adapters.ts)只声明 narrative/presentation；未提供 AVG 库存、证据栏和专属交互模块。其他产品的库存不直接接管 AVG |
+| 物品与证据 | 定义、获得/持有、状态、查看/使用/出示、反馈、合法数量或唯一实例 | [AVG adapter — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/product-production/product-adapters.ts)只声明 narrative/presentation；未提供 AVG 库存、证据栏和专属交互模块。其他产品的库存不直接接管 AVG |
 | 地点与调查热点 | 地点入口、热点区域/键盘顺序、可见/可用条件、已检查状态和后续信息 | 显示背景已支持；背景 PNG 不等于可检查区域和调查运行规则 |
 | 话题、消息与知识 | 话题/关键词/消息身份、已知条件、回复、已读、时间及触发后果 | 有限叙事状态可作为基础，尚无商业作品式 phone/话题交互的专属合同和 UI |
 | 舞台与导演 | 角色外观、站位/朝向、层、景别、转场、焦点、事件依赖及打断 | [Cue 与舞台类型](../../src/lib/types/avg.ts)支持整图/全舞台 camera；完整角色布局、复杂事件协调待补 |
-| 配音与声音 | 逐句/角色音色、多通道、进入退出、循环、混音、回听与失效 | voice 可导入和播放；[StageAudio](../../src/components/avg/StageAudio.tsx)没有向推进器报告结束，通用生产请求不接受 voice |
-| 存读档与恢复 | 自动、快速、手动槽、缩略图/进度、版本 pin、舞台/声音/库存恢复 | [store](../../src/stores/avg-game-player.ts)已有开始/选择后的自动检查点、手动检查点及分支恢复；需完善面向玩家的槽/快速存读和恢复合同 |
+| 配音与声音 | 逐句/角色音色、多通道、进入退出、循环、混音、回听与失效 | voice 可导入和播放；[StageAudio — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/components/avg/StageAudio.tsx)没有向推进器报告结束，通用生产请求不接受 voice |
+| 存读档与恢复 | 自动、快速、手动槽、缩略图/进度、版本 pin、舞台/声音/库存恢复 | [store — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/stores/avg-game-player.ts)已有开始/选择后的自动检查点、手动检查点及分支恢复；需完善面向玩家的槽/快速存读和恢复合同 |
 | 作品收藏与回顾 | 已读、结局/CG/音乐解锁、路线回顾、防剧透、跨周目进度 | 当前 readBeatKeys 属于运行 presentation；完整作品级收藏/解锁策略及 UI 尚待设计 |
 | 标题、菜单与设置 | 继续/新游戏/章节、文本速度/字体、分通道/角色音量、控制与设置持久化 | 有库、菜单、总音量及部分偏好；播放器 Preferences 在组件 state，缺完整设置持久化和细分声道合同 |
 | 信息档案与目标 | 可读词条、案件进度、提示层次、已知事实与未公开事实分开 | 来源读取及变量存在；不能直接把完整源世界内容显示为玩家词典 |
@@ -144,14 +146,14 @@ AVG Work 拥有生产配置、剧本、参考与候选；冻结发布媒资及�
 | 环节 | 目标产物及处理 | 当前状态/要补的内容 |
 |---|---|---|
 | 1 系统/剧情定向 | 确定启用模块、人物/物件/地点、语言与表现；作者确认范围 | 复用 S2 Brief/SourcePlan；新增系统 profile 需形成 AVG 契约 |
-| 2 提取需求 | AI 提议需求清单；确定性校验主体、拍/动作、用途、覆盖与必要/可选 | [requirements parser](../../src/lib/product-production/production-executor.ts)已有 `mediaKind/sceneTag/beatKey/characterAnchorRefs`；缺物品/消费者及完整变体逻辑 |
+| 2 提取需求 | AI 提议需求清单；确定性校验主体、拍/动作、用途、覆盖与必要/可选 | [requirements parser — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/product-production/production-executor.ts)已有 `mediaKind/sceneTag/beatKey/characterAnchorRefs`；缺物品/消费者及完整变体逻辑 |
 | 3 参考与家族 | 基准确认、参考 owner/ref/hash、身份/构图/姿态用途及允许变化 | 目前角色锚点主要是文本；产品图片需要独立媒体输入合同 |
 | 4 制作任务 | 可见的生成/编辑/复用/导入方式、候选数、预算/尝试上限与能力冻结 | 复用 Harness/任务调度；不因某 API 支持参考便认定当前 adapter 已支持 |
-| 5 真实生成/编辑/录音 | 实际参考字节和准确 provider/model/voice 进入请求；receipt/原始失败留存 | [ProductMediaRequestV1](../../src/lib/product-production/media-adapters.ts)没有输入图或逐句 voice 字段；voice 不在通用自动音频路径中 |
+| 5 真实生成/编辑/录音 | 实际参考字节和准确 provider/model/voice 进入请求；receipt/原始失败留存 | [ProductMediaRequestV1 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/product-production/media-adapters.ts)没有输入图或逐句 voice 字段；voice 不在通用自动音频路径中 |
 | 6 制作后处理 | 必要的透明边、裁切/缩放、音频切分/循环/对齐，保留原始候选与父版本 | 已有技术分析及特定 adapter 的角色抠图分支；不能推定所有 provider/用途都已支持后处理，不能静默重画 |
 | 7 质量与采用 | 技术检查 + 家族/场景视觉或声音评审 + 作者采用；返修限定受影响项 | 复用现行注册候选与 adoption；Prompt/hash/尺寸不能替代看图/听音 |
 | 8 配置候选 | 主体/变体/消费者到接受 asset 的映射，角色布局/热点/UI/逐句音频及 Cue 参数 | 当前按 kind/beat 自动生成基本 Cue；物品/UI 等需专用 consumer binding 与 renderer 能力 |
-| 9 确定性编译 | 校验 Work/Build、版本/hash、用途/类型、覆盖、可见性、允许降级及引用 | [AVG validator](../../src/lib/avg/runtime.ts)、[adoption](../../src/lib/product-production/adoption.ts)已有资源/Build 完整性检查；扩展不能绕过这些门 |
+| 9 确定性编译 | 校验 Work/Build、版本/hash、用途/类型、覆盖、可见性、允许降级及引用 | [AVG validator — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/avg/runtime.ts)、[adoption — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/product-production/adoption.ts)已有资源/Build 完整性检查；扩展不能绕过这些门 |
 | 10 同一 Build 体验 | 戏剧意图、文字区/构图、声音/选择、物品行动、性能和存读档一起验证 | 需取得真实产物与连续体验；自动通关不是艺术或人物表现验收 |
 | 11 修订与冻结 | 最小依赖失效、局部补产、作者复核、新 Build/release；旧发布保留 | 复用版本和来源底座；新增消费者、句版本/变体及模块依赖须纳入失效规则 |
 

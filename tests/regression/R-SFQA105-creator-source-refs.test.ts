@@ -11,7 +11,7 @@ import {
   rejectTextOpenWorldCreatorArtifactEditCandidateV1,
 } from '../../src/lib/open-world/creator-artifact-edit'
 import { readTextOpenWorldArtifactGovernanceV1 } from '../../src/lib/open-world/creator-artifact-governance'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import {
   rebuildTextOpenWorldCreatorArtifactsFromAuthorEditableDraftV1,
 } from '../../src/lib/open-world/creator-artifact-edit-dispatch'

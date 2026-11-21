@@ -1,9 +1,9 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
-import { sha256MediaData } from '../../src/lib/product-production/media-blob-store'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
+import { sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import { AVG_FOREGROUND_SAM2_CHECKPOINT_SHA256_V4, AVG_FOREGROUND_SAM2_MATTING_METHOD_V4, AVG_FOREGROUND_SAM2_MODEL_REVISION_V4,
   AVG_FOREGROUND_SAM2_MATTING_ID_V5, AVG_FOREGROUND_SAM2_PROMPT_STRATEGY_V5, AVG_FOREGROUND_SAM2_QUALITY_GATE_V5,
-  assertAvgForegroundRequirementBinding, compileAvgForegroundRequirement, parseAvgForegroundPolicy, parseAvgForegroundPolicyV5 } from '../../src/lib/avg/image-foreground-contract'
+  assertAvgForegroundRequirementBinding, compileAvgForegroundRequirement, parseAvgForegroundPolicy, parseAvgForegroundPolicyV5 } from '../../src/lib/legacy-compat/avg/image-foreground-contract'
 import { assertAvgSam2ForegroundCapabilityV5, assertAvgSam2ForegroundServiceReadyV5, hashAvgSam2PromptManifestV5,
   parseAvgForegroundSam2ObservationV5, parseAvgSam2ForegroundHeadersV5, runAvgForegroundSam2V5,
   selectAvgSam2CandidateV5, type AvgSam2MaskCandidateV5 } from '../../src/lib/avg/image-foreground-sam2-v5'

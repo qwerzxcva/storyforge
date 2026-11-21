@@ -1,4 +1,4 @@
-import type { AIConfig } from '../types'
+import type { AIConfig } from '../types';
 
 /** Keep transport support and its durable parameter evidence in agreement. */
 export function supportsAgnesThinkingModeV1(config: Pick<AIConfig, 'provider' | 'model'>): boolean {

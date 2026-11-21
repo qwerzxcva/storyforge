@@ -6,7 +6,7 @@ import {setupVoiceCandidateFixtureV1} from '../helpers/open-voice-candidate'
 import * as api from '../../src/lib/ttrpg/open-audio-service'
 import * as checkpoints from '../../src/lib/agent/run/checkpoint'
 import {appendAgentRunEventV1,readInstanceAgentRunV1} from '../../src/lib/agent/run/event-store'
-import {readProductRuntimeState} from '../../src/lib/product/runtime-core'
+import {readProductRuntimeState} from '../../src/lib/legacy-compat/product/runtime-core'
 import {readTtrpgOpenVoiceExecutionControlsForKernelV1} from '../../src/lib/ttrpg/open-voice-execution'
 import {exportProjectJSON,importProjectJSON} from '../../src/lib/export/json-export'
 

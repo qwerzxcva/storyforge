@@ -13,7 +13,7 @@ import { avgAuthorWorkspaceFixture } from '../helpers/avg-author-stage-fixture'
 import { avgVoiceAssemblyFixtureV3 } from '../helpers/avg-voice-production-fixture'
 import { saveAvgVoiceProductionDraftV1 } from '../../src/lib/avg/voice-draft-service'
 import { configuredAvgVoiceEndpointHashV1 } from '../../src/lib/avg/voice-transport'
-import { hashAvgSpeechProtocolV1 } from '../../src/lib/avg/voice-request-contract'
+import { hashAvgSpeechProtocolV1 } from '../../src/lib/legacy-compat/avg/voice-request-contract'
 import { AVG_LOCAL_VOICE_MODEL_V1,AVG_LOCAL_VOICE_PROVIDER_V1 } from '../../src/lib/avg/voice-local-profile'
 
 Object.assign(globalThis, { IS_REACT_ACT_ENVIRONMENT: true })

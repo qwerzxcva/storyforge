@@ -8,9 +8,9 @@ import VisualImageRoutePanel from '../../src/components/avg/VisualImageRoutePane
 import ImageProcessingPlanPanel from '../../src/components/avg/ImageProcessingPlanPanel'
 import { avgV5WorkbenchPreparationFixture } from '../helpers/avg-v5-workbench-preparation-fixture'
 import { prepareAvgAssemblyBriefV1,readAvgAssemblyWorkspaceV1,startAvgAssemblyV1,restartAvgVisualPlanningFromDraftV4,restartAvgVisualPlanningFromDraftV5 } from '../../src/lib/avg/assembly-service'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 import { stopProductProductionV1 } from '../../src/lib/product-production/service'
-import * as readiness from '../../src/lib/avg/visual-planning-brief-v5'
+import * as readiness from '../../src/lib/legacy-compat/avg/visual-planning-brief-v5'
 import type { AvgVisualPlanningDraftV4,AvgVisualPlanningDraftV5 } from '../../src/lib/avg/visual-planning-workspace'
 
 Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true})

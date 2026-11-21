@@ -8,7 +8,7 @@ import {
 import {
   createAuthorGuidedTtrpgCampaignDesignV2,
   parseTtrpgCampaignDesignV2,
-} from '../../src/lib/ttrpg/campaign-proposal'
+} from '../../src/lib/legacy-compat/ttrpg/campaign-proposal'
 import { createWorkspace } from '../../src/lib/workspace/create-workspace'
 import { stampNewRecord } from '../../src/lib/workspace/scope'
 import { createWorldRevision, publishWorldRevision } from '../../src/lib/world-engine/releases'

@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest'
 import type { ProductProductionBriefV3, ProductRuntimePackageV1, ProductionProductKindV1 } from '../../src/lib/types'
 import { buildUpperProductModulesV1 } from '../../src/lib/product-production/product-adapters'
 import { evaluateProductRuntimeProductQualityV1 } from '../../src/lib/product-production/product-quality'
-import { parseProductRuntimePackageV1 } from '../../src/lib/product-production/runtime-package'
-import { compileTextAdventureProductionBriefV1 } from '../../src/lib/adventure/production-brief'
+import { parseProductRuntimePackageV1 } from '../../src/lib/legacy-compat/product-production/runtime-package'
+import { compileTextAdventureProductionBriefV1 } from '../../src/lib/legacy-compat/adventure/production-brief'
 import { TEXT_ADVENTURE_COMMERCIAL_VISUAL_BASELINE_V1 } from '../../src/lib/adventure/media-composition'
 import {
   CURRENT_PRODUCT_RESOURCE_KEYS,

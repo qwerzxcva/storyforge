@@ -1,4 +1,4 @@
-import type { ContextResourceDescriptorV1, ContextResourceProviderV1, FrozenResourceScopeV1 } from '../registry/types'
+import type { ContextResourceDescriptorV1, ContextResourceProviderV1, FrozenResourceScopeV1 } from '../registry/types';
 
 /** Resolve exact descriptors through the scoped metadata protocol. A freshness
  * or publication check must not read body text or depend on a truncation budget.

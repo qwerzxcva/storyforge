@@ -1,9 +1,6 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type FocusEvent, type FocusEventHandler, type ReactNode, type RefObject } from 'react'
-import {
-  clampInputAreaBoxV1, isInputAreaLayoutKeyV1, readInputAreaBoxV1, normalizeInputAreaDesiredBoxV1, saveInputAreaBoxV1,
-  type InputAreaBoundsV1, type InputAreaDesiredBoxV1, type InputAreaLayoutOptionsV1,
-} from '../../lib/input-area-layout'
-import { parseCssPixels } from './textarea-scroll'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type FocusEvent, type FocusEventHandler, type ReactNode, type RefObject } from 'react';
+import { clampInputAreaBoxV1, isInputAreaLayoutKeyV1, readInputAreaBoxV1, normalizeInputAreaDesiredBoxV1, saveInputAreaBoxV1, type InputAreaBoundsV1, type InputAreaDesiredBoxV1, type InputAreaLayoutOptionsV1 } from '../../lib/input-area-layout';
+import { parseCssPixels } from './textarea-scroll';
 
 export interface AreaControlV1 {
   ref: RefObject<HTMLTextAreaElement | null>

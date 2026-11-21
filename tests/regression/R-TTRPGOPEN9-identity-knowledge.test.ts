@@ -5,11 +5,11 @@ import { OPEN_HUMAN_VIEWER, openEnvelopeV1 } from '../helpers/open-ttrpg-session
 import { rt } from '../helpers/open-ttrpg-branch-recovery'
 import { changeTtrpgSafetyStatus, shareTtrpgOpenKnowledgeV1, completeTtrpgOpenSessionZeroV1 } from '../../src/lib/ttrpg/runtime-commands'
 import { readProductRuntimeState, parseProductRuntimeState, replayProductRuntimeEvents, applyProductRuntimeEvent,
-  branchProductRuntimeSession, deleteProductRuntimeSession } from '../../src/lib/product/runtime-core'
+  branchProductRuntimeSession, deleteProductRuntimeSession } from '../../src/lib/legacy-compat/product/runtime-core'
 import { prepareTtrpgOpenIdentityKnowledgeV1, confirmTtrpgOpenIdentityKnowledgeReviewV1, readTtrpgOpenLearnedIdentitiesV1, readTtrpgOpenIdentityKnowledgeDeskV1, type TtrpgOpenIdentityKnowledgeDeskInputV1 } from '../../src/lib/ttrpg/open-identity-knowledge-service'
-import { ttrpgOpenActorKnowsEvidenceV1, projectTtrpgOpenKnowledgeForViewerV1 } from '../../src/lib/ttrpg/open-knowledge'
-import { ttrpgOpenEntityIdentityCatalogV1 } from '../../src/lib/ttrpg/open-entity-catalog'
-import { hashTtrpgOpenKnowledgeShareConfirmationV1 } from '../../src/lib/ttrpg/open-knowledge-share'
+import { ttrpgOpenActorKnowsEvidenceV1, projectTtrpgOpenKnowledgeForViewerV1 } from '../../src/lib/legacy-compat/ttrpg/open-knowledge'
+import { ttrpgOpenEntityIdentityCatalogV1 } from '../../src/lib/legacy-compat/ttrpg/open-entity-catalog'
+import { hashTtrpgOpenKnowledgeShareConfirmationV1 } from '../../src/lib/legacy-compat/ttrpg/open-knowledge-share'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 
 const confirm = (owner: TtrpgOpenIdentityKnowledgeDeskInputV1, review: Awaited<ReturnType<typeof prepareTtrpgOpenIdentityKnowledgeV1>>) =>
