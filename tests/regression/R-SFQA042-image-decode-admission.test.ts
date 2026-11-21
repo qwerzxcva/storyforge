@@ -126,7 +126,7 @@ it('stores only a verified immutable snapshot; keeps historical bad bytes on fai
   const {scope} = await createWorkspace({
     name: '042 isolated media', genres: ['other'], status: 'drafting', description: '',
     targetWordCount: 5_000, enableMultiWorld: false,
-  }, {kind: 'novel', novelProfile: 'short'})
+  }, {kind: 'novel', novelProfile: 'long'})
   const fake = signatureOnlyPng()
   await expect(putVerifiedMediaBlobV1({scope, data: fake})).rejects.toThrow(/图片/u)
   expect(await db.mediaBlobObjects.where('workId').equals(scope.workId).count()).toBe(0)
