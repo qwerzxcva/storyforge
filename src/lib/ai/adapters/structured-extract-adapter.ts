@@ -1,3 +1,4 @@
+import { codexContentTemplateVariablesV1 } from '../../creation/world-entry-content-skill'
 import type { AIConfig, ChatMessage, LocationTag } from '../../types'
 import type { ChatRequestOptions } from '../client'
 import type { CodexFieldDef } from '../../types/codex'
@@ -30,13 +31,15 @@ export interface ExtractedLocation {
 
 export function buildCodexExtractPrompt(input: {
   categoryName: string
+  categoryBuiltInKey?: string | null
   sourceText: string
   fieldSchema: CodexFieldDef[]
   existingNames: string[]
   supplementTags: boolean
 }): ChatMessage[] {
   const template = usePromptStore.getState().getActive('codex.extract')
-  return renderPrompt(template, {
+  const rendered = renderPrompt(template, {
+    ...codexContentTemplateVariablesV1(input.categoryBuiltInKey),
     categoryName: input.categoryName,
     fieldSchema: JSON.stringify(input.fieldSchema.map(field => ({
       key: field.key,
@@ -48,6 +51,7 @@ export function buildCodexExtractPrompt(input: {
     supplementTags: input.supplementTags ? '是' : '否',
     sourceText: input.sourceText,
   }).messages
+  return rendered
 }
 
 export function parseCodexEntries(raw: string, allowedFieldKeys: string[]): ExtractedCodexEntry[] {
@@ -212,11 +216,13 @@ export function parseCodexEntriesStrictV1(
 export function buildCodexExtractPromptFromRegisteredContextV1(input: {
   sourceText: string
   baselineContext: string
+  categoryBuiltInKey?: string | null
   discoveredNames: readonly string[]
   supplementTags: boolean
 }): ChatMessage[] {
   const template = usePromptStore.getState().getActive('codex.extract')
   const rendered = renderPrompt(template, {
+    ...codexContentTemplateVariablesV1(input.categoryBuiltInKey),
     categoryName: input.baselineContext,
     fieldSchema: '严格使用上述登记基线中的字段 schema；select 必须取登记选项，number 必须是有限数值字符串，ref 字段的 key 必须从输出 fields 对象完全省略，不得填空字符串、null 或 []；关联由作者采纳后设置。不得添加其它 key。',
     existingEntries: input.discoveredNames.join('、') || '登记基线之外，本轮前置分块尚无新候选。',
@@ -244,12 +250,14 @@ export function readCodexExtractPromptTemplateSnapshotV1() {
 
 export function buildCodexEnrichPromptFromRegisteredContextV1(input: {
   baselineContext: string
+  categoryBuiltInKey?: string | null
   worldContext: string
   authorRequest: string
   supplementTags: boolean
 }): ChatMessage[] {
   const template = usePromptStore.getState().getActive('codex.enrich')
   const rendered = renderPrompt(template, {
+    ...codexContentTemplateVariablesV1(input.categoryBuiltInKey),
     baselineContext: input.baselineContext,
     worldContext: input.worldContext,
     authorRequest: input.authorRequest,

@@ -3,7 +3,6 @@ import { BookOpen } from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router'
 import AIConfigPanel from './AIConfigPanel'
 import ClientUpdatePanel from './ClientUpdatePanel'
-import ClientPrivacyPanel from './ClientPrivacyPanel'
 import { ClientLegalDocuments } from './ClientAgreement'
 import CreativeReliabilityCommunityPanel from './CreativeReliabilityCommunityPanel'
 import ProjectStorageWorkspacePanel from './ProjectStorageWorkspacePanel'
@@ -19,6 +18,8 @@ const HarnessEvalPanel = import.meta.env.DEV
   : null
 
 interface Props {
+  /** Internal opt-in; ordinary settings stay free of development tools. */
+  showDeveloperTools?: boolean
   project?: Project
   onOpenDataManagement?: () => void
   textOpenWorldCreatorReturn?: TextOpenWorldSettingsReturnV1 | null
@@ -31,6 +32,7 @@ interface Props {
  * 项目内设置同时承载存储工作区；全局设置会诚实显示“先进入项目”。
  */
 export default function SettingsPage({
+  showDeveloperTools = false,
   project,
   onOpenDataManagement,
   textOpenWorldCreatorReturn,
@@ -45,13 +47,13 @@ export default function SettingsPage({
         onClick={() => onReturnToTextOpenWorldCreator(textOpenWorldCreatorReturn)}
       >返回开放世界制作</button>}
       <ClientUpdatePanel />
-      <AIConfigPanel />
+      <AIConfigPanel showDeveloperTools={import.meta.env.DEV && showDeveloperTools} />
       <div className="mt-6">
         <ProjectStorageWorkspacePanel project={project} onOpenDataManagement={onOpenDataManagement} />
       </div>
       <CreativeReliabilityCommunityPanel />
       <FailureFeedbackPanel />
-      {HarnessEvalPanel && (
+      {import.meta.env.DEV && showDeveloperTools && HarnessEvalPanel && (
         <Suspense fallback={null}>
           <HarnessEvalPanel />
         </Suspense>
@@ -62,8 +64,8 @@ export default function SettingsPage({
         <h3 className="text-sm font-semibold text-text-primary mb-3">其他</h3>
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm text-text-secondary">新手引导</p>
-            <p className="text-xs text-text-muted">浏览示例作品，了解各产品的创作与游玩方式</p>
+            <p className="text-sm text-text-secondary">示例作品库</p>
+            <p className="text-xs text-text-muted">阅读内置作品与前期制作包，或创建独立的体验副本与游戏存档</p>
           </div>
           <a
             href={`${import.meta.env.BASE_URL}home/examples`}
@@ -74,7 +76,6 @@ export default function SettingsPage({
           </a>
         </div>
       </div>
-      <ClientPrivacyPanel />
       <ClientLegalDocuments />
     </div>
   )
@@ -88,6 +89,7 @@ export function RoutedSettingsPage(props: Props) {
   const creatorReturn = parseTextOpenWorldSettingsReturnV1(location.state)
   return <SettingsPage
     {...props}
+    showDeveloperTools={import.meta.env.DEV && new URLSearchParams(location.search).get('developerTools') === '1'}
     textOpenWorldCreatorReturn={creatorReturn}
     onReturnToTextOpenWorldCreator={(resume) => {
       const params = new URLSearchParams({ mode: 'production' })

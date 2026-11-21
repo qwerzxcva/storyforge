@@ -90,6 +90,20 @@ describe('custom model request headers', () => {
     expect((await freshStore()).getState().config.customHeaders).toEqual(CUSTOM_HEADERS)
   })
 
+  it('persists preset header ownership names without leaking session-only header values', async () => {
+    let store = await freshStore()
+    store.getState().setConfig({ ...config(), customHeadersPresetNames: ['x-gateway-token'] })
+    const id = store.getState().saveAsPreset('session-only gateway')
+    const saved = JSON.parse(localStorage.getItem('storyforge-ai-presets')!)
+    expect(saved[0].config.customHeaders).toEqual([])
+    expect(saved[0].config.customHeadersPresetNames).toEqual(['x-gateway-token'])
+    expect(localStorage.getItem('storyforge-ai-presets')).not.toContain('synthetic-gateway-secret')
+    store = await freshStore()
+    store.getState().applyPreset(id)
+    expect(store.getState().config.customHeaders).toEqual(CUSTOM_HEADERS)
+    expect(store.getState().config.customHeadersPresetNames).toEqual(['x-gateway-token'])
+  })
+
   it('restores preset-specific session headers and supplies them to task routes', async () => {
     const store = await freshStore()
     store.getState().setConfig(config())
@@ -136,6 +150,7 @@ describe('custom model request headers', () => {
     const fetchImpl = mockCompletion()
     await fetchOpenAIModels({ baseUrl: config().baseUrl, customHeaders: [{ name: '', value: '' }], fetchImpl })
     expect(new Headers(fetchImpl.mock.calls[0][1]?.headers).has('Authorization')).toBe(false)
+    expect(fetchImpl.mock.calls[0][1]?.redirect).toBeUndefined()
     fetchImpl.mockClear()
     for (const header of [{ name: '', value: 'orphan' }, { name: 'Bad Name', value: 'value' }, { name: 'X-Token', value: 'one\r\ntwo' }]) {
       await expect(fetchOpenAIModels({ baseUrl: config().baseUrl, customHeaders: [header], fetchImpl })).rejects.toThrow('自定义请求头')
@@ -172,8 +187,54 @@ describe('custom model request headers', () => {
     const store = await freshStore()
     store.getState().setConfig(config())
     vi.stubGlobal('fetch', vi.fn(async () => new Response('gateway rejected synthetic-gateway-secret', { status: 401 })))
-    expect((await store.getState().testConnection()).ok).toBe(false)
+    const result = await store.getState().testConnection()
+    expect(result.ok).toBe(false)
+    expect(result.message).not.toContain('synthetic-gateway-secret')
+    expect(result.message).not.toContain('synthetic-gateway')
+    expect(result.message).toContain('[REDACTED]')
     const { getLogs } = await import('../../src/lib/ai/logger')
     expect(JSON.stringify(getLogs())).not.toContain('synthetic-gateway-secret')
+  })
+
+  it('redacts escaped custom header values from JSON errors across all generation modes', async () => {
+    const { chat, chatWithImagesV1, streamChat } = await import('../../src/lib/ai/client')
+    const secret = 'synthetic/gateway-secret'
+    const requestConfig = { ...config(), customHeaders: [{ name: 'X-Gateway-Token', value: secret }] }
+    const escapedJson = JSON.stringify({ error: { message: `provider echoed ${secret}` } })
+      .replaceAll('/', '\\/')
+      .replace('secret', '\\u0073ecret')
+    vi.stubGlobal('fetch', vi.fn(async () => new Response(escapedJson, { status: 401 })))
+    const expectRedacted = async (request: () => Promise<unknown>) => {
+      try { await request(); throw new Error('Expected request to fail') }
+      catch (error) {
+        expect(error).toBeInstanceOf(Error)
+        expect((error as Error).message).toContain('[REDACTED]')
+        expect((error as Error).message).not.toContain('synthetic')
+      }
+    }
+    await expectRedacted(() => chat([{ role: 'user', content: 'hello' }], requestConfig))
+    await expectRedacted(() => chatWithImagesV1([{ role: 'user', content: 'describe' }], [
+      { label: 'test', dataUrl: 'data:image/png;base64,dGVzdA==', detail: 'low' },
+    ], requestConfig))
+    await expectRedacted(async () => {
+      for await (const _part of streamChat([{ role: 'user', content: 'hello' }], requestConfig)) { }
+    })
+  })
+
+  it('redacts numeric credential values reflected as JSON scalars', async () => {
+    const { chat } = await import('../../src/lib/ai/client')
+    const numericConfig = { ...config(), customHeaders: [{ name: 'X-Numeric-Key', value: '12345678' }] }
+    vi.stubGlobal('fetch', vi.fn(async () => new Response('{"echo":12345678}', { status: 401 })))
+    await expect(chat([{ role: 'user', content: 'hello' }], numericConfig)).rejects.not.toThrow('12345678')
+  })
+
+  it('redacts credentials before truncating plain connection error text', async () => {
+    const store = await freshStore()
+    store.getState().setConfig(config())
+    vi.stubGlobal('fetch', vi.fn(async () => new Response(`${'x'.repeat(490)}synthetic-api-key`, { status: 401 })))
+    const result = await store.getState().testConnection()
+    expect(result.message).not.toContain('synthetic-api-key')
+    expect(result.message).not.toContain('synthetic-api')
+    expect(result.message).toContain('[REDACTED]')
   })
 })

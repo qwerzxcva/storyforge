@@ -13,9 +13,12 @@ export function buildSceneVerifyPrompt(args: {
   scene: string
   sceneEra?: string
   sceneLocation?: string
+  researchMode?: 'scene' | 'plan' | 'sources'
+  hasSuppliedSources?: boolean
 }): ChatMessage[] {
   const tpl = usePromptStore.getState().getActive('scene.verify')
   const { messages } = renderPrompt(tpl, {
+    [`research_${args.researchMode ?? 'scene'}_${args.hasSuppliedSources ? 'sources' : 'empty'}`]: '1',
     worldContext: args.worldContext,
     historyContext: args.historyContext,
     worldRulesContext: args.worldRulesContext,

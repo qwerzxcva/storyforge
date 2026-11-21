@@ -1,3 +1,6 @@
+import type { MasterAgentDurableDependenciesV1 } from '../../src/lib/agent/run/master-durable'
+import type { ExecutedMasterCandidate } from '../../src/lib/agent/orchestrator'
+import { legacyAgentToolsV22 } from '../helpers/legacy-agent-tools-v22'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { getAgentToolSchemaSnapshotV1 } from '../../src/lib/agent/tool-registry'
 import { hashCanonicalValue } from '../../src/lib/agent/run/hash'
@@ -59,7 +62,7 @@ async function createConversation(scope: WorkspaceScope): Promise<number> {
     worldGroupId: null,
     purpose: 'master-authoring',
   })
-  return conversation.id
+  return conversation.id!
 }
 
 function contract() {
@@ -73,7 +76,8 @@ function contract() {
 
 function generationDependency(scope: WorkspaceScope) {
   return {
-    execute: async (options: Parameters<NonNullable<Parameters<typeof runDurableMasterAgentPlanV1>[1]['execute']>>[0]) => {
+    execute: async (options: Parameters<NonNullable<MasterAgentDurableDependenciesV1['execute']>>[0]) => {
+      if (!options.scope || !options.budget) throw new Error('版本绑定夹具需要明确的作品作用域与预算。')
       const task = options.plan.tasks[0]
       const currentWorld = currentWorldOriginCandidateFixtureV1('世界由周期性潮汐塑造。')
       await options.executionTrace?.taskStarted?.(task)
@@ -82,7 +86,7 @@ function generationDependency(scope: WorkspaceScope) {
         worldGroupId: options.worldGroupId,
         executionTrace: options.executionTrace!,
       }, task, currentWorld.draft)
-      await options.executionTrace?.candidateReady?.(task, {
+      const candidate: ExecutedMasterCandidate = {
         payload: {
           version: 1,
           taskId: task.id,
@@ -100,7 +104,9 @@ function generationDependency(scope: WorkspaceScope) {
         runtimeNode: {} as any,
         runtimeOutput: currentWorld.runtimeOutput,
         contextGatewayRuntime: gateway.contextGatewayRuntime,
-      })
+      }
+      await options.executionTrace?.candidateReady?.(task, candidate)
+      return [candidate]
     },
   }
 }
@@ -122,6 +128,7 @@ describe.sequential('R-HARNESS18 · Skill、Prompt 与 Tool 执行版本绑定',
     })
     expect(binding.toolSchemaVersion).toBe(AGENT_TOOL_SCHEMA_VERSION_V1)
     expect(binding.toolSchemaHash).toBe(AGENT_TOOL_SCHEMA_HASH_V1)
+    expect(await hashCanonicalValue(legacyAgentToolsV22(getAgentToolSchemaSnapshotV1()))).toBe('3672ecfc10d949b52c7518f9600d9887bc32290d6982115a6a579b95f636673b')
     expect(await hashCanonicalValue(getAgentToolSchemaSnapshotV1())).toBe(AGENT_TOOL_SCHEMA_HASH_V1)
     expect(await verifyAgentToolSchemaBindingV1()).toBe(true)
 
@@ -156,7 +163,7 @@ describe.sequential('R-HARNESS18 · Skill、Prompt 与 Tool 执行版本绑定',
       budget: new AgentTeamBudgetTracker('balanced'),
     }, generationDependency(scope))
     const candidate = result.candidates[0]
-    expect(candidate.payload.executionBinding?.promptVersion).toBe('worldview-field-copilot-v1')
+    expect(candidate.payload.executionBinding?.promptVersion).toBe('worldview-field-copilot-v3')
 
     const { executionBinding: _executionBinding, ...payloadWithoutBinding } = candidate.payload
     expect(await computeMasterCandidateHashV1(candidate.payload, candidate.draft))

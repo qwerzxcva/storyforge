@@ -76,7 +76,7 @@ export function buildHistoryAIMessages(input: {
   template: PromptTemplate
 }) {
   const { mode, target, worldContext, template } = input
-  return renderPrompt(template, {
+  const rendered = renderPrompt(template, {
     itemMeta: target.kind === 'event' ? eventMeta(target.item, mode) : keywordMeta(target.item),
     finalText: target.item.description || '（条目定稿暂未填写）',
     conceptNote: (target.item.conceptNote || '').trim(),
@@ -85,6 +85,7 @@ export function buildHistoryAIMessages(input: {
       : { stormPrompt: (target.item.stormPrompt || '').trim() }),
     worldContext,
   }).messages
+  return rendered
 }
 
 const HISTORY_AGENT_STRICT_PROTOCOL_V1: Record<HistoryAIMode, string> = {

@@ -232,13 +232,15 @@ export function readStyleLearningPromptTemplateSnapshotV1(
 
 export function buildStyleLearningAgentMessagesV1(input: {
   registeredContext: string
+  sampleCount: number
+  sampleWords: number
   template?: PromptTemplate
 }): ChatMessage[] {
   const template = input.template ?? readStyleLearningPromptTemplateV1()
   const rendered = renderPrompt(template, {
     samples: input.registeredContext,
-    sampleCount: 0,
-    sampleWords: 0,
+    sampleCount: input.sampleCount,
+    sampleWords: input.sampleWords,
     revisionPairs: '',
     calibrationFeedback: '',
     userHint: '',

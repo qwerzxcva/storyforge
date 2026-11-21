@@ -461,7 +461,7 @@ export interface TableSpec<T = any> {
   exactArtifactRoots?: readonly ExactArtifactRootSpecV1[]
   /** A registered exact-evidence owner also needs the source Run entity until
    * its own lifecycle releases this indexed FK; single/tree Run deletion stops. */
-  sourceRunRetention?: { field: string }
+  sourceRunRetention?: { field: string; additionalFields?: readonly string[] }
   /** Product-neutral stable reference to a governed binary object table, used by shared GC. */
   mediaRef?: { blobTable: string; field: string }
   /**
@@ -762,8 +762,9 @@ export interface AssembleContextInput {
   /** Character interaction: frozen product source + confirmed product Brief. */
   /** CM-1: 本次明确参与增量融合的碎片；由 inspirationWorkspace source 读取。 */
   inspirationFragmentIds?: string[]
-  /** CM-1: 单世界与多世界各自维护最近确认版本。 */
+  /** 完整反推及灵感/定位准备动作分别维护最近确认版本。 */
   inspirationMode?: InspirationResultMode
+  inspirationDirectionIndex?: number
   /** STORY-1: 角色驱动规划 Skill 明确冻结的方案；缺省时仍读取作者激活的下游参考方案。 */
   characterDrivenPlanId?: number
   /** ADAPT-CORE-1: target-owned adaptation selector; never a caller supplied source Work ID. */
@@ -1140,7 +1141,7 @@ export interface ContextSource {
   budgetTokens: number
   /** NS-1: assembleContext 总预算裁剪时不得整段删除。 */
   protectedFromTrim?: boolean
-  /** Structured contract sources must remain byte-complete; overflow fails instead of slicing invalid JSON. */
+  /** Sources remain byte-complete: protected overflow fails; optional sources may be dropped whole, never sliced. */
   atomic?: boolean
   /** Source can use a caller-provided continuity snapshot without reading a Chapter row. */
   acceptsDetachedContinuitySnapshot?: boolean
