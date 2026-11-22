@@ -32,6 +32,9 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - run: npm run build:android:web
+        env:
+          STORYFORGE_ANDROID_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
       - name: Restore the permanent signing identity for the test runner
         env:
           ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/storyforge-fork-release.p12
