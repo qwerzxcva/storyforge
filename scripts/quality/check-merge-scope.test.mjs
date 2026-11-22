@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict'
-import { execFileSync, spawnSync } from 'node:child_process'
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { spawnSync } from 'node:child_process'
+import { createRequire } from 'node:module'
+import { mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+
+const yaml = createRequire(import.meta.url)('js-yaml')
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import test from 'node:test'
@@ -30,54 +33,42 @@ test('finishes the other selected files when isolated admission fails and keeps 
     if (args.includes(admission)) throw original
   }), error => error instanceof AggregateError && error.errors[0] === original)
   assert.deepEqual(invocations, [admission, other].map(file => [
-    'run', '--tagsFilter', '!manual-media', '--maxWorkers=2', file,
+    'run', '--maxWorkers=2', file,
   ]))
 })
 
-test('isolates sound repair and admission in every selection order without losing a shard file', () => {
+test('isolates the governed admission suite in every selection order without losing shard files', () => {
   const admission = 'tests/regression/R-SFQA004-product-entry-admission.test.tsx'
-  const sound = 'tests/regression/R-AVG-04B-sound-local-repair-flow.test.ts'
   const first = 'tests/a.test.ts'
   const second = 'tests/b.test.ts'
-  assert.deepEqual(runnerBatches([sound]), [[sound]])
-  assert.deepEqual(runnerBatches([first, sound, second]), [[sound], [first, second]])
-  assert.deepEqual(runnerBatches([sound, admission]), [[admission], [sound]])
   /** @param {string[]} files @returns {string[][]} */
   const permutations = files => files.length ? files.flatMap((file, i) =>
     permutations(files.filter((_, j) => i !== j)).map(rest => [file, ...rest])) : [[]]
-  for (const files of permutations([admission, sound, first, second])) {
+  for (const files of permutations([admission, first, second])) {
     const batches = runnerBatches(files)
-    assert.deepEqual(batches, [[admission], [sound], files.filter(file => file === first || file === second)])
+    assert.deepEqual(batches, [[admission], files.filter(file => file === first || file === second)])
     assert.deepEqual(batches.flat().sort(), files.slice().sort())
     assert.equal(new Set(batches.flat()).size, files.length)
   }
-  const selected = [admission, sound, ...Array.from({ length: 300 }, (_, i) => `tests/shard-${i}.test.ts`)]
+  const selected = [admission, ...Array.from({ length: 300 }, (_, i) => `tests/shard-${i}.test.ts`)]
   const groups = partitionUnits(selected)
   const executed = groups.flatMap(group => runnerBatches(group).flat())
   assert.deepEqual(executed.sort(), selected.slice().sort())
   assert.equal(new Set(executed).size, selected.length)
 })
 
-test('aggregates both isolated failures, continues ordinary work and preserves every CLI option', () => {
+test('continues ordinary work after isolated admission fails and preserves every CLI option', () => {
   const admission = 'tests/regression/R-SFQA004-product-entry-admission.test.tsx'
-  const sound = 'tests/regression/R-AVG-04B-sound-local-repair-flow.test.ts'
   const other = 'tests/registry/project-tables.test.ts'
-  const errors = [new Error('admission failed'), new Error('sound repair failed')]
+  const original = new Error('admission failed')
   /** @type {string[][]} */
   const calls = []
-  assert.throws(() => runUnits([other, sound, admission], ['--maxWorkers=2'], (command, args) => {
+  assert.throws(() => runUnits([other, admission], ['--maxWorkers=2'], (command, args) => {
     assert.equal(command, 'node_modules/.bin/vitest')
     calls.push(args)
-    if (args.includes(admission)) throw errors[0]
-    if (args.includes(sound)) throw errors[1]
-  }), error => {
-    assert.ok(error instanceof AggregateError)
-    assert.deepEqual(error.errors, errors)
-    return true
-  })
-  assert.deepEqual(calls, [admission, sound, other].map(file => [
-    'run', '--tagsFilter', '!manual-media', '--maxWorkers=2', file,
-  ]))
+    if (args.includes(admission)) throw original
+  }), error => error instanceof AggregateError && error.errors[0] === original)
+  assert.deepEqual(calls, [admission, other].map(file => ['run', '--maxWorkers=2', file]))
 })
 
 test('documentation and workflow-only changes avoid dependency installation', () => {
@@ -103,44 +94,20 @@ test('direct consumers use the module path, including aliases and directories', 
   assert.deepEqual(directTests(['src/lib/project/index.ts'], files, file => imports[files.indexOf(file)]), files.slice(0, 2))
 })
 
-test('the manual AVG media workflow owns its production harnesses; ordinary product unit tests stay scoped', () => {
-  const list = 'scripts/quality/avg-media-harnesses.txt'
-  const suites = readFileSync(list, 'utf8').trim().split(/\r?\n/)
-  const visual = 'tests/regression/R-AVG-04A5-visual-planning-harness.test.ts'
-  const unit = 'tests/regression/R-AVG-05A-production-assembly.test.ts'
-  assert.ok(suites.includes(visual))
-  assert.ok(suites.includes('tests/regression/R-AVG-05A-combined-media-stage.test.ts'))
-  assert.ok(suites.includes('tests/regression/R-AVG-04A15-v5-current-assembly.test.ts'))
-  assert.ok(suites.includes('tests/regression/R-AVG-04B-processed-sound-flow.test.ts'))
-  assert.equal(suites.length, new Set(suites).size)
-  assert.ok(suites.every(file => /^tests\/regression\/R-AVG-[a-zA-Z0-9-]+\.test\.ts$/.test(file) && existsSync(file)))
-  assert.deepEqual(plan([...suites, unit], present).units, [unit])
-  assert.deepEqual(directTests(['src/lib/product-production/plan.ts'], [...suites, unit],
-    () => ['../../src/lib/product-production/plan']), [unit])
-  assert.ok(plan([list], present).nodeTests.includes('scripts/quality/check-merge-scope.test.mjs'))
-  const manualWorkflow = readFileSync('.github/workflows/avg-media.yml', 'utf8')
-  assert.ok(manualWorkflow.includes('vitest run < ' + list))
-  const mixed = 'tests/regression/R-OPEN-WORLD3-experience-design.test.ts'
-  assert.deepEqual(plan([mixed], present).units, [mixed])
-  assert.ok(manualWorkflow.includes('vitest run --tagsFilter manual-media ' + mixed))
+test('retained product suites are included in the ordinary scoped PR plan', () => {
+  const retained = 'tests/regression/R-ANDROID-focused-product-scope.test.tsx'
+  assert.deepEqual(plan([retained], present).units, [retained])
+  assert.deepEqual(directTests(['src/lib/product/product-catalog.ts'], [retained],
+    () => ['../../src/lib/product/product-catalog']), [retained])
 })
 
 test('ordinary PRs only trigger the scoped check and releases retain their tagged entry', () => {
-  // Ruby may decode the Actions key "on" as the YAML 1.1 boolean true.
-  const data = JSON.parse(execFileSync('ruby', ['-ryaml', '-rjson', '-e', `
-    workflows = Dir['.github/workflows/*.yml'].to_h { |file|
-      doc = YAML.load_file(file)
-      events = doc.fetch('on') { doc.fetch(true) }
-      [File.basename(file), events]
-    }
-    puts JSON.generate(workflows)
-  `], { encoding: 'utf8' }))
+  const data = Object.fromEntries(readdirSync('.github/workflows').filter(file => file.endsWith('.yml'))
+    .map(file => [file, yaml.load(readFileSync(`.github/workflows/${file}`, 'utf8')).on]))
   /** @param {string | object} value */
   const events = value => typeof value === 'string' ? [value] : Object.keys(value)
   assert.deepEqual(Object.keys(data).filter(file => events(data[file]).some(e => e === 'pull_request' || e === 'pull_request_target')), ['ci.yml'])
   assert.deepEqual(events(data['ci.yml']), ['pull_request'])
-  assert.deepEqual(events(data['ttrpg-open-preview.yml']), ['workflow_dispatch'])
-  assert.deepEqual(events(data['avg-media.yml']), ['workflow_dispatch'])
   assert.deepEqual(data['release.yml'].push.tags, ['v*'])
   for (const file of ['clients.yml', 'client-release-upgrade.yml']) assert.ok(events(data[file]).includes('workflow_call'))
 })
@@ -174,15 +141,14 @@ test('a runner reads only its group for the exact checked-out revision and rejec
   assert.throws(() => readUnitShard(file, '2', head))
   assert.throws(() => readUnitShard(file, '0', 'other'))
   for (const invalid of [[], [[one], []], [[one], [one]], [[one], ['tests/not-a-suite.md']],
-    [[one], ['tests/regression/R-AVG-04A5-visual-planning-harness.test.ts']]]) {
+    [[one], ['tests/regression/not-present.test.ts']]]) {
     save(invalid)
     assert.throws(() => readUnitShard(file, '0', head))
   }
 })
 
 test('only the aggregate publishes Changed files and rejects failed, cancelled or missing work', () => {
-  const jobs = JSON.parse(execFileSync('ruby', ['-ryaml', '-rjson', '-e',
-    "puts JSON.generate(YAML.load_file('.github/workflows/ci.yml').fetch('jobs'))"], { encoding: 'utf8' }))
+  const jobs = yaml.load(readFileSync('.github/workflows/ci.yml', 'utf8')).jobs
   assert.deepEqual(jobs['changed-files'].needs, ['scope', 'unit'])
   assert.match(jobs['changed-files'].if, /always\(\)/)
   assert.match(jobs['changed-files'].name, /Unrelated label.*Changed files/)
