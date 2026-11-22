@@ -77,3 +77,13 @@ test('old-package baseline failure stops before replacement even when instrument
     assert.match(readFileSync(path.join(probe.directory, 'release-test/baseline-restart.txt'), 'utf8'), /FAILURES/)
   } finally { rmSync(probe.directory, { recursive: true, force: true }) }
 })
+
+test('release workflow builds the test runner before publication instead of downloading its own future release', () => {
+  const workflow = readFileSync(new URL('../../.github/workflows/client-release-upgrade.yml', import.meta.url), 'utf8')
+  assert.match(workflow, /assembleReleaseAndroidTest/)
+  assert.match(workflow, /upgrade-test-runner\.apk/)
+  assert.doesNotMatch(workflow, /gh release download [^\n]*upgrade-test-runner\.apk/)
+  assert.match(workflow, /if \[ -n "\$previous_tag" \]/)
+  assert.match(workflow, /cp release-test\/upgrade-test-new\.apk release-test\/upgrade-test-old\.apk/)
+  assert.match(workflow, /Signer #1 certificate SHA-256 digest/)
+})
