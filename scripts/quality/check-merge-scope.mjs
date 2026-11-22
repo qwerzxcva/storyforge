@@ -11,9 +11,7 @@ const workflow = /^\.github\/workflows\/[^/]+\.ya?ml$/
 const scopeChecker = 'scripts/quality/check-merge-scope.mjs'
 const routingTest = 'scripts/quality/check-merge-scope.test.mjs'
 const databaseSchema = 'src/lib/db/schema.ts'
-const mediaList = 'scripts/quality/avg-media-harnesses.txt'
-const ordinaryVitest = ['run', '--tagsFilter', '!manual-media']
-const manualMedia = new Set(readFileSync(new URL('./avg-media-harnesses.txt', import.meta.url), 'utf8').trim().split(/\r?\n/))
+const ordinaryVitest = ['run']
 const tsConfig = /^tsconfig(?:\.[\w.-]+)?\.json$/
 
 /** @param {string} command @param {string[]} args */
@@ -44,7 +42,7 @@ function importedModule(importer, specifier) {
  * @param {(test:string, specifier:string, source:string)=>boolean} affected */
 export function directTests(changed, tests, importsOf, affected = () => true) {
   const modules = new Map(changed.map(path => [moduleName(path), path]))
-  return tests.filter(test => !manualMedia.has(test) && importsOf(test).some(specifier => {
+  return tests.filter(test => importsOf(test).some(specifier => {
     const name = importedModule(test, specifier)
     const source = name && modules.get(name)
     return source && affected(test, specifier, source)
@@ -66,10 +64,10 @@ export function plan(paths, exists = existsSync) {
     const sibling = path.replace(/(\.[cm]?js)$/, '.test$1')
     if (exists(sibling)) nodeTests.add(sibling)
   }
-  if (paths.some(path => workflow.test(path) || path === scopeChecker || path === mediaList)) nodeTests.add(routingTest)
+  if (paths.some(path => workflow.test(path) || path === scopeChecker)) nodeTests.add(routingTest)
   const typeConfigs = present.filter(path => tsConfig.test(path))
   if (source.some(path => !exists(path)) || paths.some(path => ['package.json', 'package-lock.json'].includes(path))) typeConfigs.push('tsconfig.json')
-  const units = present.filter(path => unit.test(path) && !manualMedia.has(path))
+  const units = present.filter(path => unit.test(path))
   if (paths.includes(databaseSchema)) {
     typeConfigs.push('tsconfig.json')
     units.push('tests/registry/project-tables.test.ts')
@@ -111,7 +109,7 @@ export function readUnitShard(file, index, head) {
   for (const group of plan.groups) {
     if (!Array.isArray(group) || !group.length) throw new Error('Empty scoped test shard')
     for (const path of group) {
-      if (typeof path !== 'string' || !unit.test(path) || posix.normalize(path) !== path || manualMedia.has(path)
+      if (typeof path !== 'string' || !unit.test(path) || posix.normalize(path) !== path
           || !existsSync(path) || seen.has(path)) throw new Error('Invalid scoped test path: ' + path)
       seen.add(path)
     }
@@ -122,11 +120,10 @@ export function readUnitShard(file, index, head) {
 // These suites replay complete governed Builds with bounded recovery/production
 // cases. Give each its own process, then continue every other selected file.
 const editAdmissionSuite = 'tests/regression/R-SFQA004-product-entry-admission.test.tsx'
-const soundLocalRepairSuite = 'tests/regression/R-AVG-04B-sound-local-repair-flow.test.ts'
 
 /** @param {string[]} files */
 export function runnerBatches(files) {
-  const isolated = [editAdmissionSuite, soundLocalRepairSuite]
+  const isolated = [editAdmissionSuite]
   const batches = isolated.filter(file => files.includes(file)).map(file => [file])
   const others = files.filter(file => !isolated.includes(file))
   return others.length ? [...batches, others] : batches

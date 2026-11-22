@@ -9,8 +9,6 @@ on:
         default: false
 permissions:
   contents: read
-env:
-  PREVIOUS_CLIENT_VERSION: 4.0.8
 jobs:
   signed-apk-upgrade:
     permissions:
@@ -24,28 +22,80 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
-      - uses: android-actions/setup-android@v4
-        with:
-          packages: 'platform-tools platforms;android-36 build-tools;35.0.0'
       - uses: actions/download-artifact@v4
         if: ${{ inputs.client-artifact }}
         with:
           name: client-android
           path: release-test/current-client/
-      - name: Fetch the locally signed release test set without uploading the signing key
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Restore the permanent signing identity for the test runner
+        env:
+          ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/storyforge-fork-release.p12
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          ANDROID_SIGNING_CERT_SHA256: ${{ vars.ANDROID_SIGNING_CERT_SHA256 }}
+        shell: bash
+        run: |
+          test -n "$ANDROID_KEYSTORE_BASE64"
+          test -n "$ANDROID_KEYSTORE_PASSWORD"
+          test -n "$ANDROID_KEY_ALIAS"
+          test -n "$ANDROID_KEY_PASSWORD"
+          [[ "$ANDROID_SIGNING_CERT_SHA256" =~ ^[a-f0-9]{64}$ ]]
+          umask 077
+          printf '%s' "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$ANDROID_KEYSTORE_PATH"
+          printf 'ANDROID_KEYSTORE_PATH=%s\n' "$ANDROID_KEYSTORE_PATH" >> "$GITHUB_ENV"
+      - name: Fetch the last stable client APK and build the signed instrumentation runner
         env:
           GH_TOKEN: ${{ github.token }}
           USE_CLIENT_ARTIFACT: ${{ inputs.client-artifact }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          ANDROID_SIGNING_CERT_SHA256: ${{ vars.ANDROID_SIGNING_CERT_SHA256 }}
+        shell: bash
         run: |
           version=$(node -p "require('./package.json').version")
-          mkdir -p release-test
-          gh release download "v$PREVIOUS_CLIENT_VERSION" --pattern "StoryForge-$PREVIOUS_CLIENT_VERSION-android.apk" --output release-test/upgrade-test-old.apk
+          mkdir -p release-test release/test-fixtures
           if [ "$USE_CLIENT_ARTIFACT" = true ]; then
             cp "release-test/current-client/StoryForge-$version-android.apk" release-test/upgrade-test-new.apk
           else
             gh release download "v$version" --pattern "StoryForge-$version-android.apk" --output release-test/upgrade-test-new.apk
           fi
-          gh release download "v$version" --pattern 'upgrade-test-runner.apk' --dir release-test
+          previous_tag=$(gh release list --limit 100 --json tagName,isDraft,isPrerelease | node --input-type=module -e '
+            let input = ""; for await (const chunk of process.stdin) input += chunk;
+            const versions = JSON.parse(input).filter(row => !row.isDraft && !row.isPrerelease && /^v\d+\.\d+\.\d+$/.test(row.tagName));
+            versions.sort((left, right) => {
+              const a = left.tagName.slice(1).split(".").map(Number), b = right.tagName.slice(1).split(".").map(Number);
+              return b[0] - a[0] || b[1] - a[1] || b[2] - a[2];
+            });
+            process.stdout.write(versions[0]?.tagName ?? "");
+          ')
+          if [ -n "$previous_tag" ]; then
+            previous_version=${previous_tag#v}
+            gh release download "$previous_tag" --pattern "StoryForge-$previous_version-android.apk" --output release-test/upgrade-test-old.apk
+            git fetch origin "refs/tags/$previous_tag:refs/tags/$previous_tag"
+            git worktree add "$RUNNER_TEMP/storyforge-previous" "$previous_tag"
+            node scripts/desktop/build-upgrade-fixture.mjs "$RUNNER_TEMP/storyforge-previous" release/test-fixtures/native-upgrade-old.js "$previous_version"
+          else
+            previous_version=$version
+            cp release-test/upgrade-test-new.apk release-test/upgrade-test-old.apk
+            node scripts/desktop/build-upgrade-fixture.mjs . release/test-fixtures/native-upgrade-old.js "$version"
+          fi
+          PREVIOUS_CLIENT_VERSION=$previous_version node scripts/desktop/build-upgrade-fixture.mjs . release/test-fixtures/native-upgrade.js "$version"
+          mkdir -p android/app/src/androidTest/assets
+          cp release/test-fixtures/native-upgrade*.js android/app/src/androidTest/assets/
+          (cd android && ./gradlew -PclientTestBuildType=release :app:assembleReleaseAndroidTest --no-daemon)
+          cp android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk release-test/upgrade-test-runner.apk
+          for apk in release-test/upgrade-test-old.apk release-test/upgrade-test-new.apk release-test/upgrade-test-runner.apk; do
+            "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --print-certs "$apk" > "$apk.certificate.txt"
+            grep -Fq "Signer #1 certificate SHA-256 digest: $ANDROID_SIGNING_CERT_SHA256" "$apk.certificate.txt"
+          done
       - name: Verify exact source before installing the new signed APK
         env:
           RELEASE_SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
