@@ -1,6 +1,6 @@
 # StoryForge · 故事熔炉
 
-> Android fork scope: world engine, longform, and longform nodes. Links marked “historical source” document retired implementations; they do not indicate available production or runtime features.
+> Alcance actual: solo novelas largas. El modo de nodos comparte el mismo flujo de escritura; la edición del mundo es una función auxiliar. Las demás descripciones de productos son referencias históricas, no funciones disponibles.
 
 **Escribe historias. Entra en sus mundos.**
 
@@ -12,9 +12,9 @@
 
 [Empieza a crear](#quick-start) · [Prueba Fog Harbor](#try-a-story) · [Explora la arquitectura](#architecture)
 
-StoryForge es una herramienta de código abierto para crear y vivir historias con IA, diseñada para conservar los datos en local. Escribe novelas y relatos breves, adapta novelas a guiones o cómics, construye mundos reutilizables y explora experiencias interactivas. Tú eliges el proceso y apruebas las propuestas de la IA antes de incorporarlas a tu obra.
+StoryForge es una herramienta de código abierto y local para escribir novelas largas con IA. Desarrolla ambientación, esquemas, escenas, capítulos y continuidad en la misma obra; el modo de nodos usa el mismo flujo.
 
-> Estado de `main` comprobado el 13 de octubre de 2026: novela, narrativa breve, guion, cómic, preproducción animada y motor de mundos tienen entradas oficiales. El modo de nodos y los productos interactivos son versiones preliminares. Este README está traducido; no significa que toda la interfaz o los documentos enlazados estén disponibles en español. Las capturas y muchas guías están en chino.
+> El alcance actual se limita a las novelas largas y su modo de nodos. Las demás secciones de productos son referencias históricas. Este README está traducido; la interfaz y los documentos enlazados no están necesariamente disponibles en español.
 
 <a id="try-a-story"></a>
 

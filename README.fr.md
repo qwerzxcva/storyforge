@@ -1,6 +1,6 @@
 # StoryForge · 故事熔炉
 
-> Android fork scope: world engine, longform, and longform nodes. Links marked “historical source” document retired implementations; they do not indicate available production or runtime features.
+> Périmètre actuel : romans longs uniquement. Le mode nœuds partage le même processus d’écriture ; l’édition du monde est une fonction auxiliaire. Les autres descriptions de produits ci-dessous sont des références historiques, pas des fonctions disponibles.
 
 **Écrivez des histoires. Entrez dans leur univers.**
 
@@ -12,9 +12,9 @@
 
 [Commencer à créer](#quick-start) · [Découvrir Fog Harbor](#try-a-story) · [Explorer l’architecture](#architecture)
 
-StoryForge est un outil open source de création et d’expérience narrative assistées par IA, conçu pour conserver les données en local. Écrivez des romans ou des récits courts, adaptez un roman en scénario ou en bande dessinée, créez des mondes réutilisables et explorez des histoires interactives. Vous choisissez le parcours et validez les propositions de l’IA avant leur intégration à votre œuvre.
+StoryForge est un outil open source, local, dédié à l’écriture de romans longs avec l’IA. Développez les univers, plans, scènes, chapitres et leur continuité dans une même œuvre ; le mode nœuds compose le même processus.
 
-> État vérifié sur `main` le 13 octobre 2026 : roman, récit court, scénario, bande dessinée, préproduction animée et moteur de monde disposent d’entrées officielles. Le mode nœuds et les produits interactifs sont en préversion. Ce README est traduit ; cela ne signifie pas que toute l’interface ou les documents liés sont disponibles en français. Les captures et de nombreux guides sont en chinois.
+> Le périmètre actuel se limite aux romans longs et à leur mode nœuds. Les autres sections produits ci-dessous sont des références historiques. Ce README est traduit ; l’interface et les documents liés ne sont pas nécessairement disponibles en français.
 
 <a id="try-a-story"></a>
 

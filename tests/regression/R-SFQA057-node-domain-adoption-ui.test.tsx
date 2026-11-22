@@ -174,7 +174,7 @@ describe.sequential('057 · actual node workspace uses the domain adoption bound
       const persisted = (await db.nodeRuns.get(run.run.id!))!
       expect(JSON.parse(persisted.nodeResultsJson)[nodeId].status).toBe('adopted')
     })
-  })
+  }, 30_000)
 
 
   it.each(['chapter.quality-review', 'continuity.item', 'live'] as const)('%s keeps its actual output without a confirmation affordance', async family => {

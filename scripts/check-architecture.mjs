@@ -1091,8 +1091,8 @@ if (!gatewayToolsSource.includes('sourceRefCount: descriptor.sourceRefs.length')
 if (/\bdb\./.test(gatewayToolsSource)) {
   violations.push('[㉕工具只读] Context Gateway tool adapter 不得直接访问或写数据库')
 }
-if (!agentExecutionBindingSource.includes("AGENT_TOOL_SCHEMA_VERSION_V1 = 'agent-read-tools-v23-positioning-preparation-v1'")
-  || !agentExecutionBindingSource.includes("AGENT_TOOL_SCHEMA_HASH_V1 = '928c30e82de8cb1dfe69540e9ddf140b190c2cd189c501bcaff6731a06550874'")
+if (!agentExecutionBindingSource.includes("AGENT_TOOL_SCHEMA_VERSION_V1 = 'agent-read-tools-v24-longform-scope-v1'")
+  || !agentExecutionBindingSource.includes("AGENT_TOOL_SCHEMA_HASH_V1 = '13809a0695026642fd77a574682890a8252ac421d08204065c320d6e9029c8d8'")
   || !agentExecutionBindingSource.includes('verifyAgentToolSchemaBindingV1')) {
   violations.push('[㉕工具版本] 当前 Gateway 工具必须冻结并校验 Agent tool schema version/hash')
 }
@@ -2093,7 +2093,7 @@ if (/key:\s*['"](?:runtime|media|assets|gameplay|sessions?)['"]/.test(worldDomai
 }
 for (const token of [
   'PRODUCT_CATALOG_V1', "status: 'released'", "status: 'preview'",
-  "'experimental'", "'internal'", 'requiresWorldReference',
+  "'experimental'", "'internal'",
   'ownsRuntime', 'ownsMedia', 'experimentalOptIn',
 ]) {
   if (!productCatalogSource.includes(token)) violations.push(`[㉟产品目录] 缺少 ${token}`)
@@ -2102,16 +2102,14 @@ if (!productCatalogSource.includes("input.channel === 'local-development' || inp
   || !productCatalogSource.includes("entry.status === 'released'")) {
   violations.push('[㉟生产入口] 产品目录必须以 released 为生产可见基线，并把预览/内部限制在本地或测试环境')
 }
-if (!productCatalogSource.includes("item.family === 'world-engine' && (item.ownsRuntime || item.ownsMedia)")) {
-  violations.push('[㉟世界产品所有权] 产品目录必须拒绝世界引擎拥有运行态或产品媒资')
-}
 const productCatalogAst = parseSource('src/lib/product/product-catalog.ts')
-const expectedCatalogIds = ['world-engine', 'independent.longform', 'authoring.nodes']
+const expectedCatalogIds = ['independent.longform', 'authoring.nodes']
+/** @type {string[]} */
 const actualCatalogIds = []
-visit(productCatalogAst, node => {
+visit(productCatalogAst, /** @param {import('typescript').Node} node */ node => {
   if (!ts.isVariableDeclaration(node) || !ts.isIdentifier(node.name)
     || node.name.text !== 'PRODUCT_CATALOG_V1' || !node.initializer) return
-  visit(node.initializer, child => {
+  visit(node.initializer, /** @param {import('typescript').Node} child */ child => {
     if (!ts.isObjectLiteralExpression(child)) return
     const id = stringValue(objectProperty(child, 'id')?.initializer)
     if (id != null) actualCatalogIds.push(id)
@@ -2119,6 +2117,11 @@ visit(productCatalogAst, node => {
 })
 if (JSON.stringify(actualCatalogIds) !== JSON.stringify(expectedCatalogIds)) {
   violations.push(`[㉟保留产品目录] 产品目录必须且只能依次登记 ${expectedCatalogIds.join('/')}`)
+}
+for (const retiredId of ['world-engine', 'independent.shortform', 'independent.screenplay', 'independent.comic', 'independent.motion-drama',
+  'upper.ttrpg', 'upper.character-interaction', 'upper.ai-town', 'upper.text-adventure', 'upper.avg', 'upper.text-open-world',
+  'platform.marketplace']) {
+  if (productCatalogSource.includes(`'${retiredId}'`)) violations.push(`[㉟退役产品目录] 不得保留 ${retiredId}`)
 }
 const nodeAuthoringEntrySource = read('src/components/node-authoring/NodeAuthoringWorkspace.tsx')
 if (!nodeAuthoringEntrySource.includes("evaluateCurrentProductEntryV1('authoring.nodes')")

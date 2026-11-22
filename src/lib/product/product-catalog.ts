@@ -18,44 +18,22 @@ export const PRODUCT_RELEASE_STATUSES_V1 = [
 export type ProductReleaseStatusV1 = typeof PRODUCT_RELEASE_STATUSES_V1[number]
 export type ProductCatalogChannelV1 = 'local-development' | 'production' | 'test'
 
-export const PRODUCT_SOURCE_POLICIES_V1 = [
-  'world-engine-content',
-  'independent-work',
-  'world-release-required',
-  'world-release-or-novel',
-  'distribution-bundle',
-] as const
+export const PRODUCT_SOURCE_POLICIES_V1 = ['independent-work'] as const
 
 export type ProductSourcePolicyV1 = typeof PRODUCT_SOURCE_POLICIES_V1[number]
 
-export type StoryForgeProductIdV1 =
-  | 'world-engine'
-  | 'independent.longform'
-  | 'independent.shortform'
-  | 'independent.screenplay'
-  | 'independent.comic'
-  | 'independent.motion-drama'
-  | 'authoring.nodes'
-  | 'upper.ttrpg'
-  | 'upper.character-interaction'
-  | 'upper.ai-town'
-  | 'upper.text-adventure'
-  | 'upper.avg'
-  | 'upper.text-open-world'
-  | 'platform.marketplace'
+export type StoryForgeProductIdV1 = 'independent.longform' | 'authoring.nodes'
 
 export interface ProductCatalogEntryV1 {
   version: 1
   id: StoryForgeProductIdV1
   label: string
-  family: 'world-engine' | 'independent-creation' | 'authoring-view' | 'upper-product' | 'platform'
+  family: 'independent-creation' | 'authoring-view'
   status: ProductReleaseStatusV1
   /** Governing charter phase; this is not a claim that the phase is complete. */
   charterPhase: 'B' | 'C' | 'D' | 'E' | 'F'
   /** The authoritative source families from which this product may be created. */
   sourcePolicy: ProductSourcePolicyV1
-  /** Compatibility projection. Source selection must use sourcePolicy instead. */
-  requiresWorldReference: boolean
   ownsRuntime: boolean
   ownsMedia: boolean
   /** Every non-released surface must state why it is not a production promise. */
@@ -68,15 +46,7 @@ export interface ProductCatalogEntryV1 {
  * registry is therefore derived from explicit product identities and every
  * product is still checked again when the author enters or creates it.
  */
-export type ProductSurfaceIdV1 =
-  | 'world-engine'
-  | 'independent-works'
-  | 'node-authoring'
-  | 'ttrpg'
-  | 'character-interaction'
-  | 'ai-town'
-  | 'text-games'
-  | 'marketplace'
+export type ProductSurfaceIdV1 = 'independent-works' | 'node-authoring'
 
 export interface ProductSurfaceEntryV1 {
   version: 1
@@ -85,14 +55,8 @@ export interface ProductSurfaceEntryV1 {
   productIds: readonly StoryForgeProductIdV1[]
 }
 
-function entry(
-  input: Omit<ProductCatalogEntryV1, 'version' | 'requiresWorldReference'>,
-): ProductCatalogEntryV1 {
-  return Object.freeze({
-    version: 1,
-    ...input,
-    requiresWorldReference: input.sourcePolicy === 'world-release-required',
-  })
+function entry(input: Omit<ProductCatalogEntryV1, 'version'>): ProductCatalogEntryV1 {
+  return Object.freeze({ version: 1, ...input })
 }
 
 function surface(input: Omit<ProductSurfaceEntryV1, 'version'>): ProductSurfaceEntryV1 {
@@ -100,8 +64,7 @@ function surface(input: Omit<ProductSurfaceEntryV1, 'version'>): ProductSurfaceE
 }
 
 export const PRODUCT_CATALOG_V1: readonly ProductCatalogEntryV1[] = Object.freeze([
-entry({ id: 'world-engine', label: '世界引擎', family: 'world-engine', status: 'released', charterPhase: 'D', sourcePolicy: 'world-engine-content', ownsRuntime: false, ownsMedia: false, maturityNote: '语义编辑、显式派生、冻结版本与中立读取出口。' }),
-entry({ id: 'independent.longform', label: '分步骤长篇', family: 'independent-creation', status: 'released', charterPhase: 'B', sourcePolicy: 'independent-work', ownsRuntime: false, ownsMedia: false, maturityNote: '工程主链已验收；文学质量继续增量研究。' }),
+entry({ id: 'independent.longform', label: '长篇小说', family: 'independent-creation', status: 'released', charterPhase: 'B', sourcePolicy: 'independent-work', ownsRuntime: false, ownsMedia: false, maturityNote: '工程主链已验收；文学质量继续增量研究。' }),
 entry({ id: 'authoring.nodes', label: '节点创作', family: 'authoring-view', status: 'preview', charterPhase: 'B', sourcePolicy: 'independent-work', ownsRuntime: false, ownsMedia: false, maturityNote: '已与分步骤领域后端同源；完整跨模式真实 UI 验收仍持续。' })
 ])
 
@@ -110,8 +73,7 @@ export const PRODUCT_CATALOG_BY_ID_V1: ReadonlyMap<StoryForgeProductIdV1, Produc
 )
 
 export const PRODUCT_SURFACES_V1: readonly ProductSurfaceEntryV1[] = Object.freeze([
-surface({ id: 'world-engine', label: '世界引擎', productIds: ['world-engine'] }),
-surface({ id: 'independent-works', label: '作品创作', productIds: ['independent.longform'] }),
+surface({ id: 'independent-works', label: '长篇小说', productIds: ['independent.longform'] }),
 surface({ id: 'node-authoring', label: '节点创作', productIds: ['authoring.nodes'] })
 ])
 
@@ -134,7 +96,7 @@ export function evaluateProductEntryV1(input: {
   if (!entry) throw new Error(`[product-catalog] 未登记产品：${input.productId}`)
   if (!isProductAvailableInBuild(entry.id)) {
     return { entry, channel: input.channel, visible: false, enterable: false, badge: null,
-      blockers: ['Android 版仅开放世界引擎与长篇创作。'] }
+      blockers: ['Android 版仅开放长篇创作；世界设定为辅助能力，节点模式复用同一创作链。'] }
   }
   const local = input.channel === 'local-development' || input.channel === 'test'
   const released = entry.status === 'released'
@@ -201,29 +163,9 @@ function validateProductCatalogV1(): void {
     if (ids.has(item.id)) throw new Error(`[product-catalog] 重复产品 ID：${item.id}`)
     ids.add(item.id)
     if (!item.maturityNote.trim()) throw new Error(`[product-catalog] ${item.id} 缺少成熟度边界说明`)
-    if (item.family === 'world-engine' && (item.ownsRuntime || item.ownsMedia)) {
-      throw new Error('[product-catalog] 世界引擎不得拥有 runtime 或产品媒资')
-    }
-    if (item.requiresWorldReference !== (item.sourcePolicy === 'world-release-required')) {
-      throw new Error(`[product-catalog] 来源策略与WorldReference投影不一致：${item.id}`)
-    }
-    if (item.family === 'world-engine' && item.sourcePolicy !== 'world-engine-content') {
-      throw new Error('[product-catalog] 世界引擎来源策略无效')
-    }
     if ((item.family === 'independent-creation' || item.family === 'authoring-view')
       && item.sourcePolicy !== 'independent-work') {
       throw new Error(`[product-catalog] 独立创作来源策略无效：${item.id}`)
-    }
-    if (item.family === 'upper-product'
-      && item.sourcePolicy !== 'world-release-required'
-      && item.sourcePolicy !== 'world-release-or-novel') {
-      throw new Error(`[product-catalog] 上层产品来源策略无效：${item.id}`)
-    }
-    if (item.sourcePolicy === 'world-release-or-novel' && item.id !== 'upper.text-open-world') {
-      throw new Error(`[product-catalog] 双来源策略只属于文字开放世界：${item.id}`)
-    }
-    if (item.family === 'platform' && item.sourcePolicy !== 'distribution-bundle') {
-      throw new Error(`[product-catalog] 平台来源策略无效：${item.id}`)
     }
   }
   const covered = new Set<StoryForgeProductIdV1>()

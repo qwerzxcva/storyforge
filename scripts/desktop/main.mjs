@@ -32,8 +32,7 @@ else {
   })
   app.on('second-instance', () => { window?.restore(); window?.focus() })
   app.whenReady().then(async () => {
-    server = createPortableServer({ webRoot: join(root, '../../dist'),
-      ...(app.isPackaged ? { localTtsRoot: join(process.resourcesPath, 'local-tts') } : {}) })
+    server = createPortableServer({ webRoot: join(root, '../../dist') })
     await new Promise((resolve, reject) => { server.once('error', reject); server.listen(17831, '127.0.0.1', resolve) })
     const mainWindow = new BrowserWindow({
       width: 1440, height: 960, minWidth: 800, minHeight: 600, show: false,

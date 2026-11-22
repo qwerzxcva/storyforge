@@ -18,6 +18,7 @@ const SURROGATE_UNIT = /[\ud800-\udfff]/
 // JSON escapes only quotes, backslashes and C0 controls once lone surrogates
 // have been rejected. Ordinary text can retain its existing string storage.
 const JSON_ESCAPE = /["\\\u0000-\u001f]/
+const NON_ASCII_UTF8 = /[^\x00-\x7f]/
 // Reuse this stateless expression for every emitted segment.
 const WIDE_JSON_TEXT = /[\u0100-\uffff]/
 export function compareUnicodeCodePointsV1(a: string, b: string): number {
@@ -49,6 +50,7 @@ export function assertUnicodeV1(text: string): void {
 }
 /** Exact raw UTF-8 length, without allocating a byte array. */
 export function narrativeUtf8ByteLengthV1(text: string): number {
+  if (!NON_ASCII_UTF8.test(text)) return text.length
   let bytes = 0
   for (let index = 0; index < text.length; index++) {
     const unit = text.charCodeAt(index)
@@ -279,6 +281,12 @@ function encodeNarrativeJsonV1(value: unknown, maxBytes?: number, writeChunk?: (
   const flush = () => {
     if (!parts.length) return
     let chunk = parts.join('')
+    if (maxBytes !== undefined) {
+      if (chunk.length > maxBytes - bytes) throw exhausted
+      const chunkBytes = narrativeUtf8ByteLengthV1(chunk)
+      if (chunkBytes > maxBytes - bytes) throw exhausted
+      bytes += chunkBytes
+    }
     writeChunk?.(chunk)
     // Binary merging bounds the concatenation depth and releases individual
     // segment references. The result remains an ordinary, complete string.
@@ -292,16 +300,14 @@ function encodeNarrativeJsonV1(value: unknown, maxBytes?: number, writeChunk?: (
   const exhausted = Symbol('cache JSON budget exhausted')
   try {
     walkNarrativeJsonV1(value, part => {
-      if (maxBytes !== undefined) {
-        if (part.length > maxBytes - bytes || (bytes += narrativeUtf8ByteLengthV1(part)) > maxBytes) throw exhausted
-      }
+      if (maxBytes !== undefined && part.length > maxBytes - bytes - length) throw exhausted
       const partWide = WIDE_JSON_TEXT.test(part)
       if (partWide !== wide) { flush(); wide = partWide }
       parts.push(part); length += part.length
       if (length >= 32_768) flush()
     })
+    if (parts.length) flush()
   } catch (error) { if (error === exhausted) return null; throw error }
-  if (parts.length) flush()
   let result = ''
   for (let level = segments.length - 1; level >= 0; level--) if (segments[level] !== undefined) result += segments[level]
   return result

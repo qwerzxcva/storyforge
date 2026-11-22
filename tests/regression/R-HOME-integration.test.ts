@@ -39,14 +39,3 @@ it('reads longform library word counts from saved canonical prose, scoped to eac
  await db.chapters.delete(chapterId)
  expect((await readHomeCatalog()).works.find(row => row.work.id === a.work.id)?.work.currentWordCount).toBe(0)
 })
-
-
-it('integrated products resume their own editor and reject another work or product',async()=>{
- await create('导航归属');const [original]=(await readHomeCatalog()).works;
- for(const [kind,route] of [['comic','comic'],['motion-drama','motion'],['character-interaction','chat']] as const){
-  const row={...original,work:{...original.work,kind,novelProfile:null}};
-  const path=workPath(row);expect(path.startsWith(`/${route}/`)).toBe(true);expect(validWorkPath(row,path)).toBe(true);
-  const url=new URL(path,'https://storyforge.local');url.searchParams.set('work',String(row.work.id!+1));expect(validWorkPath(row,url.pathname+url.search)).toBe(false);
-  expect(validWorkPath(row,`/short/intent?project=${row.project.id}`)).toBe(false);
- }
-})

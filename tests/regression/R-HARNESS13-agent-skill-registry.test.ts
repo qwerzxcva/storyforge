@@ -39,18 +39,12 @@ describe('R-HARNESS13 · Agent Skill 单一事实源', () => {
     ]))
     expect(REGISTERED_AGENT_IDS.map(agentId => getDefaultAgentSkillV1(agentId).defaultForAgent))
       .toEqual(REGISTERED_AGENT_IDS.map(() => true))
-    expect(AGENT_SKILLS.filter(skill => skill.owner === 'short-novel-production-agent')).toHaveLength(6)
-    expect(AGENT_SKILLS.filter(skill => skill.owner === 'screenplay-product')).toHaveLength(8)
-    expect(AGENT_SKILLS.filter(skill => skill.owner === 'adaptation-products')).toHaveLength(2)
-    expect(AGENT_SKILLS.filter(skill => skill.owner === 'comic-product')).toHaveLength(10)
-    expect(AGENT_SKILLS.filter(skill => skill.owner === 'motion-drama-product')).toHaveLength(8)
     expect([...new Set(AGENT_SKILLS.map(skill => skill.owner))]).toEqual(expect.arrayContaining([
       'world-foundation-agent',
       'character-agent',
       'inspiration-agent',
       'outline-agent',
       'prose-agent',
-      'text-open-world-production',
     ]))
   })
 

@@ -91,7 +91,6 @@ export type AgentSkillExecutionModeV1 =
   | 'ttrpg-open-fact-normalize'
   | 'ttrpg-open-companion'
   | 'ttrpg-open-kp'
-  | 'ttrpg-open-local-voice'
   | 'ttrpg-open-brief'
   | 'ttrpg-open-situation-propose'
   | 'ttrpg-open-public-situation-propose'
@@ -1789,7 +1788,7 @@ export const AGENT_SKILLS = [
       { table: 'references', fields: ['analysisSummary'], adoptionExtension: 'reference-analysis-reference-lifecycle' },
     ],
     lastVerifiedAt: '2026-11-18',
-    regressionTests: ['R-HARNESS74-reference-derived-durable'],
+    regressionTests: ['R-HARNESS74-reference-derived-controller', 'R-HARNESS74-reference-derived-ui'],
   },
 {
     version: 1,
@@ -1812,7 +1811,7 @@ export const AGENT_SKILLS = [
       { table: 'references', fields: ['mergedCharacters'], adoptionExtension: 'reference-analysis-reference-lifecycle' },
     ],
     lastVerifiedAt: '2026-11-18',
-    regressionTests: ['R-HARNESS74-reference-derived-durable'],
+    regressionTests: ['R-HARNESS74-reference-derived-controller', 'R-HARNESS74-reference-derived-ui'],
   },
 {
     version: 1,

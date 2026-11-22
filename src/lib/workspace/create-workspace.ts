@@ -49,6 +49,5 @@ export async function createWorkspace(
   assertCurrentProductEntryV1(productCatalogIdForWorkV1(normalizeNewWorkClassification({
     kind: options.kind, novelProfile: options.novelProfile, targetWordCount: input.targetWordCount,
   })))
-  if ((options.purpose ?? input.workspacePurpose) === 'world-engine') assertCurrentProductEntryV1('world-engine')
   return allocateWorkspace(input, options)
 }

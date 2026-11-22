@@ -1,6 +1,6 @@
 # StoryForge · 故事熔炉
 
-> Android fork scope: world engine, longform, and longform nodes. Links marked “historical source” document retired implementations; they do not indicate available production or runtime features.
+> 현재 범위는 장편 소설만입니다. 노드 모드는 같은 집필 흐름을 공유하며, 세계 편집은 보조 기능입니다. 아래의 다른 제품 설명은 과거 자료일 뿐 현재 사용할 수 있는 기능을 뜻하지 않습니다.
 
 **이야기를 쓰고, 그 세계로 들어가세요.**
 
@@ -12,9 +12,9 @@
 
 [창작 시작하기](#quick-start) · [Fog Harbor 체험하기](#try-a-story) · [아키텍처 살펴보기](#architecture)
 
-StoryForge는 데이터를 로컬에 보관하는 방식을 기본으로 하는 오픈 소스 AI 서사 창작·체험 도구입니다. 장편과 단편을 쓰고, 소설을 시나리오나 만화로 각색하고, 재사용할 세계를 만들고, 상호작용형 이야기를 탐색할 수 있습니다. 작업 방식은 작가가 선택하며, AI 제안은 작가의 확인과 승인을 거쳐 작품에 반영됩니다.
+StoryForge는 로컬 우선 오픈 소스 AI 장편 소설 집필 도구입니다. 하나의 작품에서 세계관, 구성, 장면, 장과 장기 연속성을 발전시킬 수 있으며, 노드 모드도 같은 집필 흐름을 사용합니다.
 
-> 2026년 10월 13일의 `main`을 기준으로 확인했습니다. 장편, 단편, 시나리오, 만화, 애니메이션 사전 제작, 세계 엔진에는 정식 진입점이 있습니다. 노드 모드와 상호작용형 제품은 미리보기입니다. 이 README의 번역이 전체 화면과 연결 문서의 한국어 지원을 뜻하지는 않습니다. 스크린샷과 많은 안내서는 중국어입니다.
+> 현재 범위는 장편 소설과 공통 노드 모드뿐입니다. 아래의 다른 제품 설명은 과거 자료입니다. 이 README의 번역이 전체 화면과 연결 문서의 한국어 지원을 뜻하지는 않습니다.
 
 <a id="try-a-story"></a>
 

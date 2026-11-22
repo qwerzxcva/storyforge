@@ -85,8 +85,8 @@ def main():
     if claim.get('kind') != 'start-authorized' or sha(payload['jobKey'].encode()) != job.name or e['profile'] != p or e['profileHash'] != sha(canonical(p).encode()) or payload['inputArtifactHash'] != sha(canonical(e).encode()) or claim['inputArtifactHash'] != payload['inputArtifactHash'] or claim['jobKey'] != payload['jobKey']:
         raise ValueError('Original job, profile or launch claim changed')
     sources = p['implementation']['sources']
-    expected = ['scripts/ttrpg-local-tts/product-contract.mjs', 'scripts/ttrpg-local-tts/product-worker.py', 'scripts/ttrpg-local-tts/product-jobs.mjs', 'scripts/ttrpg-local-tts/product-bridge.mjs', 'scripts/ttrpg-local-tts/engine.py', 'scripts/ttrpg-local-tts/reading_frontend.py', 'scripts/ttrpg-local-tts/reading-preview.mjs', 'src/lib/ttrpg/open-local-voice-transport.ts', 'src/lib/ttrpg/open-voice-execution.ts']
-    if is_qwen: expected+=['scripts/ttrpg-local-tts/qwen-product.py','scripts/ttrpg-local-tts/qwen-native-eval-profile.json','src/lib/ttrpg/open-voice-execution-input.ts','src/lib/ttrpg/open-voice-product-profile.ts']
+    expected = ['scripts/ttrpg-local-tts/product-contract.mjs', 'scripts/ttrpg-local-tts/product-worker.py', 'scripts/ttrpg-local-tts/product-jobs.mjs', 'scripts/ttrpg-local-tts/product-bridge.mjs', 'scripts/ttrpg-local-tts/engine.py', 'scripts/ttrpg-local-tts/reading_frontend.py', 'scripts/ttrpg-local-tts/reading-preview.mjs']
+    if is_qwen: expected+=['scripts/ttrpg-local-tts/qwen-product.py','scripts/ttrpg-local-tts/qwen-native-eval-profile.json']
     def source_check():
         if json.loads(profile_file.read_text()) != p or [r['path'] for r in sources] != expected or any(sha((repo / r['path']).read_bytes()) != r['sha256'] for r in sources): raise ValueError('Pinned product implementation changed')
     source_check()

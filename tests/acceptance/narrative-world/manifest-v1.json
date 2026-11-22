@@ -1631,7 +1631,6 @@
     "tests/e2e/narrative-impact.spec.ts",
     "tests/e2e/narrative-query.spec.ts",
     "tests/e2e/narrative-scale.spec.ts",
-    "tests/e2e/narrative-source-plan.spec.ts",
     "tests/helpers/narrative-production-protocol-fixture.ts",
     "tests/helpers/narrative-reader-cli-fixture.mjs",
     "tests/helpers/narrative-reader-evaluation.ts",

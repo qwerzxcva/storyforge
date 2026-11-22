@@ -24,10 +24,9 @@ function node(id: number, parentId: number | null, type: OutlineNode['type'], or
   return { id, projectId: 1, workId: 1, parentId, type, order, title: `${type}:${id}`, summary: '', createdAt: 1, updatedAt: 1 }
 }
 
-async function workspace(profile: 'long' | 'short' = 'long') {
-  return createWorkspace({ name: '027章列表', description: '', genres: [], status: 'drafting', targetWordCount: profile === 'long' ? 100_000 : 8_000 }, {
-    kind: 'novel', novelProfile: profile,
-    ...(profile === 'long' ? { importedNovelText: 'ROOT/作者完整原文。' } : { initialChapterContent: 'SHORT/作者原文。' }),
+async function workspace() {
+  return createWorkspace({ name: '027章列表', description: '', genres: [], status: 'drafting', targetWordCount: 100_000 }, {
+    kind: 'novel', novelProfile: 'long', importedNovelText: 'ROOT/作者完整原文。',
   })
 }
 
@@ -135,17 +134,5 @@ describe('SFQA-027 · every canonical chapter remains reachable in the existing 
     expect(host.querySelector('[data-editor-id]')?.getAttribute('data-editor-id')).toBe(String(chapterB))
     expect(host.querySelector('[data-editor-id]')?.getAttribute('data-editor-id')).not.toBe(String(firstA))
     expect(Array.from(host.querySelectorAll('aside button p')).map(label => label.textContent)).toEqual(['B私域章'])
-  })
-
-  it('ordinary short-novel real volume title and first chapter selection remain unchanged', async () => {
-    const created = await workspace('short')
-    const nodes = await db.outlineNodes.where('projectId').equals(created.scope.projectId).toArray()
-    const volume = nodes.find(row => row.type === 'volume')!
-    const first = walkOutlineChaptersInCanonicalOrder(nodes).chapters[0].outlineNode.id!
-    const host = await mount(created.project)
-    expect(host.textContent).toContain(volume.title)
-    expect(host.querySelector('[data-editor-id]')?.getAttribute('data-editor-id')).toBe(String(first))
-    expect(groupOutlineChaptersByTopLevelVolume(nodes).flatMap(group => group.chapters).map(row => row.id))
-      .toEqual(walkOutlineChaptersInCanonicalOrder(nodes).chapters.map(row => row.outlineNode.id))
   })
 })

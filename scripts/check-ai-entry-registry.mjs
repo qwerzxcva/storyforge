@@ -1,4 +1,3 @@
-/* global console, process */
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -37,8 +36,15 @@ for (const entry of registry.offlineEvaluations ?? []) {
   if (!contract.includes(`'${entry.entryId}'`) || !bound) failures.push('离线评测缺少实际合同绑定: ' + entry.entryId)
 }
 
+const optionalWalkDirectories = new Set(['src/lib/extensions'])
+/** @param {string} dir @param {string[]} [acc] */
 function walk(dir, acc = []) {
-  for (const entry of fs.readdirSync(path.join(root, dir), { withFileTypes: true })) {
+  const target = path.join(root, dir)
+  if (!fs.existsSync(target)) {
+    if (optionalWalkDirectories.has(dir)) return acc
+    throw new Error(`AI entry scan directory is missing: ${dir}`)
+  }
+  for (const entry of fs.readdirSync(target, { withFileTypes: true })) {
     const file = `${dir}/${entry.name}`
     if (entry.isDirectory()) walk(file, acc)
     else if (/\.(ts|tsx)$/.test(entry.name) && !/\.test\./.test(entry.name)) acc.push(file)
@@ -67,6 +73,7 @@ function objectProperty(node, name) {
   return /** @type {ts.PropertyAssignment | undefined} */ (property)?.initializer
 }
 
+/** @param {ts.SourceFile} ast @param {ts.Node} node */
 function lineOf(ast, node) {
   return ast.getLineAndCharacterOfPosition(node.getStart(ast)).line + 1
 }
@@ -188,6 +195,7 @@ if (registry.version !== 2 || registry.bindingVersion !== 1
 
 const skillSource = fs.readFileSync(path.join(root, 'src/lib/agent/skill-registry.ts'), 'utf8')
 const skillIds = new Set([...skillSource.matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1]))
+/** @type {Map<string, {entryKind: 'formal' | 'auxiliary' | 'evaluation' | 'experimental', allowedCallers: string[], categories: string[]}>} */
 const registered = new Map()
 for (const entry of registry.entries ?? []) {
   if (!entry?.entryId || registered.has(entry.entryId) || offlineIds.has(entry.entryId)) {
@@ -217,9 +225,8 @@ const scannedFiles = [
   'src/lib/ai/batch-detail-runner.ts',
   'src/lib/prose/quality-transport.ts',
   ...governedSourceFiles,
-  ...(registry.entries ?? []).flatMap(entry => entry.allowedCallers ?? []),
-  ...(registry.limitedTransports ?? []).flatMap(entry => entry.allowedCallers ?? []),
-  ...walk('src/lib/longform-voice'),
+  ...(registry.entries ?? []).flatMap(/** @param {{allowedCallers?: string[]}} entry */ entry => entry.allowedCallers ?? []),
+  ...(registry.limitedTransports ?? []).flatMap(/** @param {{allowedCallers?: string[]}} entry */ entry => entry.allowedCallers ?? []),
   ...walk('src/lib/extensions'),
 ]
 for (const file of [...new Set(scannedFiles)]) {
@@ -241,7 +248,7 @@ for (const entry of registry.limitedTransports ?? []) {
     failures.push('有限语音入口边界无效: ' + entry.entryId)
   }
   if (entry.boundary === 'offline-fixture-audio-eval'
-    && entry.allowedCallers.some(caller => !/^scripts\/ttrpg-local-tts\/[a-z-]+\.mjs$/.test(caller))) {
+    && entry.allowedCallers.some(/** @param {string} caller */ caller => !/^scripts\/ttrpg-local-tts\/[a-z-]+\.mjs$/.test(caller))) {
     failures.push('离线语音评测不能成为产品入口: ' + entry.entryId)
   }
   limited.set(entry.entryId, entry)

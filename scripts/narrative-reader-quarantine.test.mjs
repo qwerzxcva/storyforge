@@ -177,6 +177,8 @@ test('current CLI with a synthetic parent excludes every attempted input, reject
     assert.equal(summary.counts.actualCalls, 70); assert.equal(summary.counts.recordedAttempts, 71)
     assert.equal(summary.counts.unknownDispatchAttempts, 1); assert.equal(summary.counts.unattempted, 390)
     assert.equal(summary.cohort.newRecordedAttempts, 0); assert.equal(summary.executionComplete, false); assert.equal(summary.accepted, false)
+    assert.equal(summary.sourceUnchangedAtSummary, false)
+    assert.ok(summary.sourceDrift.includes('src/components/product/ProductProductionStudio.tsx'))
     assert.equal(summary.historicalEvidenceUnchanged, true)
   }
   assert.equal(readdirSync(resolve(root, output, 'calls')).filter(name => !name.endsWith('.request.json')).length, 0)

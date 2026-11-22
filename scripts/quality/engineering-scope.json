@@ -29,7 +29,7 @@
     "scripts/quality/check-dev-dependency-report.mjs",
     "scripts/quality/check-dev-dependency-report.test.mjs",
     "eslint.tooling.config.mjs",
-    "tests/regression/R-OPEN-WORLD3-experience-design.test.ts",
-    "tests/helpers/text-open-world-delivery-recognition-assertions.ts"
+    "tests/regression/R-LONGFORM-companion-preferences.test.ts",
+    "tests/regression/R-SFQA021-v17-narrative-backup-compatibility.test.ts"
   ]
 }

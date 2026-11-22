@@ -1,6 +1,6 @@
 # StoryForge · 故事熔炉
 
-> Android fork scope: world engine, longform, and longform nodes. Links marked “historical source” document retired implementations; they do not indicate available production or runtime features.
+> Aktueller Umfang: nur Langromane. Der Knotenmodus nutzt dieselbe Schreibkette; die Weltbearbeitung ist eine Hilfsfunktion. Andere Produktbeschreibungen unten sind historische Hinweise, keine verfügbaren Funktionen.
 
 **Schreibe Geschichten. Tauche in sie ein.**
 
@@ -12,9 +12,9 @@
 
 [Mit dem Schreiben beginnen](#quick-start) · [Fog Harbor ausprobieren](#try-a-story) · [Architektur ansehen](#architecture)
 
-StoryForge ist ein quelloffenes, lokal orientiertes Werkzeug für KI-gestütztes Erzählen und interaktive Geschichten. Schreibe Romane und kürzere Erzählungen, adaptiere einen Roman als Drehbuch oder Comic, entwickle wiederverwendbare Welten und erprobe interaktive Erlebnisse. Du wählst den Arbeitsablauf und bestätigst KI-Vorschläge, bevor sie Teil deines Werks werden.
+StoryForge ist ein quelloffenes, lokal orientiertes KI-Schreibwerkzeug für Langromane. Entwickle Setting, Gliederung, Szenen, Kapitel und Kontinuität im selben Werk; der Knotenmodus nutzt dieselbe Schreibkette.
 
-> Stand von `main`, geprüft am 13. Oktober 2026: Roman, Kurzroman, Drehbuch, Comic, Motion-Drama-Vorproduktion und Welt-Engine haben reguläre Produkteinstiege. Knotenmodus und interaktive Produkte sind Vorschauen. Dieses README ist übersetzt; das bedeutet keine vollständige deutsche Übersetzung der Oberfläche oder verlinkter Dokumente. Screenshots und viele Anleitungen sind chinesisch.
+> Der aktuelle Umfang umfasst nur Langromane und den gemeinsamen Knotenmodus. Die übrigen Produktabschnitte unten sind historische Referenzen. Dieses README ist übersetzt; Oberfläche und verlinkte Dokumente sind nicht vollständig auf Deutsch verfügbar.
 
 <a id="try-a-story"></a>
 

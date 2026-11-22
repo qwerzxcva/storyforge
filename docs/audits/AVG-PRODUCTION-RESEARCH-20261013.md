@@ -73,7 +73,7 @@ Git 归档中的 `AVG-1-VISUAL-NARRATIVE-DESIGN.md` 已经明确背景、多人�
 | 媒资检查 | [media-quality-policy — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/product-production/media-quality-policy.ts)、runtime verifier：尺寸、alpha、音频响度/峰值/循环及 hash 证据 | 技术可用已有门；人物一致、构图、情绪和声音表现还需实际内容评审 |
 | 玩家路径 | [AvgGamePlayer — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/components/text-game/AvgGamePlayer.tsx)：目录、详情、舞台、历史、快进、自动、检查点、独立存档 | 日常阅读基础已有；作品封面、路线回放、鉴赏、分通道声音和演出体验可继续完善 |
 | 分发 | [ProductDistributionBundleV2 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/product-platform/distribution-bundle.ts) 已有冻结 release 与媒资的自包含分发基础 | AVG 作者备份、可导入分发包、独立离线播放器、Steam 发行是不同交付；最后两项仍需专项验证 |
-| 测试 | [AVG E2E](../../tests/e2e/avg-integration.spec.ts)、R-AVG2～5 与生产/媒资回归 | 证明相应路径有测试；其中会谈拦截和预写 fixture 不能证明真实模型文学/视听质量 |
+| 测试 | [AVG E2E](https://github.com/qwerzxcva/storyforge/blob/83ae1680d500/tests/e2e/avg-integration.spec.ts)、R-AVG2～5 与生产/媒资回归 | 证明相应路径有测试；其中会谈拦截和预写 fixture 不能证明真实模型文学/视听质量 |
 
 最应优先处理的五个具体差距：
 

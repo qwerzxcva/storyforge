@@ -6,11 +6,7 @@ import {
   readWorldResourceV1, searchWorldReleaseV1, WORLD_RELEASE_RESOURCE_PROVIDER_V1, WorldReleaseResourceProviderErrorV1,
 } from '../../src/lib/context-gateway/world-release-provider'
 import { buildEditImpactGraphV1, propagateChapterEditStale } from '../../src/lib/consistency/impact-analysis'
-import { getUpperProductWorldRequirementAdapterV1 } from '../../src/lib/product/world-requirement-adapters'
-import { freezeProductSourcePlanV1, resolveProductSourceReadBoundaryV1 } from '../../src/lib/product/source-contracts'
-import { resolveProductProductionWorldCompilationDescriptorsV2 } from '../../src/lib/product-production/world-source'
 import type { ResourceSearchInputV1 } from '../../src/lib/registry/types'
-import type { ProductionProductKindV1 } from '../../src/lib/types'
 
 export { seedNarrativeFamily, type NarrativeFamily } from './narrative-world-fixture'
 type Query = NarrativeFamily['queries'][number]
@@ -224,45 +220,4 @@ async function observeControls(family: NarrativeFamily, fixture: Fixture) {
   }
   add('hypothesis-private-tables', 'release-owner-boundary', forbiddenTables, rejectedTables)
   return result
-}
-
-export async function evaluateAdapterBaselines(family: NarrativeFamily) {
-  const fixture = await seedNarrativeFamily(family)
-  const observations: BaselineObservation[] = []
-  const selected = ['character-a', 'character-b'].map(s => fixture.descriptor(`${family.id}:${s}`).resourceKey)
-  for (const productType of ['character-interaction', 'ttrpg', 'ai-town', 'text-adventure', 'avg', 'text-open-world'] as ProductionProductKindV1[]) {
-    const adapter = getUpperProductWorldRequirementAdapterV1(productType)
-    const goal = { selectedAreas: ['characters'] as const, selectedResourceKinds: ['character'], selectedContextKinds: ['character'] as const,
-      selectedResourceCount: selected.length, participantCount: 0, includeSelectedRelations: false, inheritStoryContinuity: false, allowCrossWorld: false }
-    const plan = await freezeProductSourcePlanV1({ productInstanceKey: `nw0b:${productType}`, worldReference: fixture.reference,
-      adapter, goal: { ...goal, selectedAreas: [...goal.selectedAreas], selectedContextKinds: [...goal.selectedContextKinds] },
-      missingStrategy: 'block', initialResourceKeys: selected, createdAt: 100 })
-    const boundary = await resolveProductSourceReadBoundaryV1(plan)
-    const actual = fixture.logicalKeys(fixture.descriptors.filter(d => boundary.mandatoryResourceKeys.includes(d.resourceKey)))
-    const expected = selected.map(key => fixture.byKey.get(key)!).sort()
-    observations.push({ id: `adapter:${productType}:selected`, family: family.id, split: family.split,
-      operation: 'generic-source-plan-selected-completeness', status: equalSet(actual, expected) ? 'pass' : 'gap', expected,
-      observed: actual, evidence: [family.queries[3]!.evidence[0]!.spanHash], issue: equalSet(actual, expected) ? null : 'NW-G06' })
-    const countOnlyPlan = await freezeProductSourcePlanV1({ productInstanceKey: `nw0b-count:${productType}`, worldReference: fixture.reference,
-      adapter, goal: { ...goal, selectedAreas: [...goal.selectedAreas], selectedContextKinds: [...goal.selectedContextKinds] },
-      missingStrategy: 'block', createdAt: 100 })
-    const countOnlyBoundary = await resolveProductSourceReadBoundaryV1(countOnlyPlan)
-    const sufficient = countOnlyBoundary.mandatoryResourceKeys.length >= selected.length
-    observations.push({ id: `adapter:${productType}:count-only`, family: family.id, split: family.split,
-      operation: 'source-plan-count-only-completeness', status: sufficient ? 'pass' : 'gap',
-      expected: { minimumSelectedCount: selected.length }, observed: { mandatoryCount: countOnlyBoundary.mandatoryResourceKeys.length },
-      evidence: [family.queries[3]!.evidence[0]!.spanHash], issue: sufficient ? null : 'NW-G06' })
-    const compilation = resolveProductProductionWorldCompilationDescriptorsV2({ descriptors: fixture.descriptors as any,
-      selection: { resourceKeys: selected } })
-    const compiled = fixture.logicalKeys(compilation)
-    check(equalSet(compiled, expected), 'existing stronger compilation closure lost a selected resource')
-    observations.push({ id: `adapter:${productType}:compilation`, family: family.id, split: family.split,
-      operation: 'production-compilation-selected-completeness', status: 'pass', expected, observed: compiled,
-      evidence: [family.queries[3]!.evidence[0]!.spanHash], issue: null })
-    observations.push({ id: `adapter:${productType}:prohibited`, family: family.id, split: family.split,
-      operation: 'product-prohibited-rule-coverage', status: plan.permission.prohibitedSelectors.length ? 'pass' : 'gap',
-      expected: 'product-specific prohibited selectors', observed: plan.permission.prohibitedSelectors.length,
-      evidence: [family.queries[3]!.evidence[0]!.spanHash], issue: plan.permission.prohibitedSelectors.length ? null : 'NW-G06' })
-  }
-  return observations
 }

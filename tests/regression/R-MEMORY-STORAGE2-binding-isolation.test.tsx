@@ -29,7 +29,7 @@ vi.mock('../../src/lib/storage/folder-backup', async importOriginal => ({
   writeProjectSnapshotToFolder: mocks.write,
 }))
 
-globalThis.IS_REACT_ACT_ENVIRONMENT = true
+Reflect.set(globalThis, 'IS_REACT_ACT_ENVIRONMENT', true)
 const mounted: Array<{ host: HTMLDivElement; root: ReturnType<typeof createRoot> }> = []
 const projects: Array<{ workspaceUid: string }> = []
 const folder = (name: string) => ({ name, kind: 'directory' }) as FileSystemDirectoryHandle
@@ -207,7 +207,7 @@ describe('MEMORY-STORAGE-2 · 绑定异步隔离', () => {
     vi.spyOn(db.projects, 'get').mockImplementationOnce((() => {
       entered.resolve()
       return read.promise
-    }) as typeof db.projects.get)
+    }) as unknown as typeof db.projects.get)
     let current = true
     const loading = useProjectStore.getState().loadProject(a.id!, () => current)
     await entered.promise

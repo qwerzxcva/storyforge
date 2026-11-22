@@ -141,8 +141,8 @@ describe('NW-2A · 显式复制的 namespace、确认与来源对照', () => {
     expect(await db.chapters.bulkGet(chapterIds)).toEqual(sourceChapters)
   })
 
-  it.each(['long', 'short'] as const)('%s 小说派生新世界：同名不合并，原文/引用保持，源 owner 和旧确认不变', async profile => {
-    const source = await seed(profile)
+  it('长篇小说派生新世界：同名不合并，原文/引用保持，源 owner 和旧确认不变', async () => {
+    const source = await seed('long')
     const original = { project: await db.projects.get(source.scope.projectId), work: await db.works.get(source.scope.workId),
       characters: await db.characters.where('projectId').equals(source.scope.projectId).toArray(), event: await db.storyTimelineEvents.get(source.eventId) }
     const derived = await deriveNovelToWorld({ sourceScope: source.scope, formatVersion: 4, publish: true,
@@ -157,7 +157,7 @@ describe('NW-2A · 显式复制的 namespace、确认与来源对照', () => {
     expect(lineage.sourceOwner).toEqual({ kind: 'work', workCode: source.work.code })
     expect(bundle.aliases.every(a => a.from.kind === 'semantic' && a.from.semanticId !== a.toSemanticId)).toBe(true)
     expect(verified.manifest.records.storyTimelineEvents[0].description).toBe(source.text)
-    expect(derived.derivation.sourceKind).toBe(profile === 'long' ? 'long-novel' : 'short-novel')
+    expect(derived.derivation.sourceKind).toBe('long-novel')
     expect(await db.notes.where('projectId').equals(derived.targetProjectId).toArray()).toEqual([])
     expect({ project: await db.projects.get(source.scope.projectId), work: await db.works.get(source.scope.workId),
       characters: await db.characters.where('projectId').equals(source.scope.projectId).toArray(), event: await db.storyTimelineEvents.get(source.eventId) }).toEqual(original)

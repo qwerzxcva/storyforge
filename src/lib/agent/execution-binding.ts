@@ -6,10 +6,10 @@ import type { AgentOptionalContextActivationV2, AgentRunWriteTargetV1, AgentSkil
 import type { AssembleContextResult } from '../registry/types';
 
 export const AGENT_EXECUTION_BINDING_VERSION_V1 = 1 as const
-export const AGENT_TOOL_SCHEMA_VERSION_V1 = 'agent-read-tools-v23-positioning-preparation-v1' as const
+export const AGENT_TOOL_SCHEMA_VERSION_V1 = 'agent-read-tools-v24-longform-scope-v1' as const
 // Updated only together with AGENT_TOOL_SCHEMA_VERSION_V1 after the runtime
 // snapshot and regression evidence have been reviewed.
-export const AGENT_TOOL_SCHEMA_HASH_V1 = '928c30e82de8cb1dfe69540e9ddf140b190c2cd189c501bcaff6731a06550874'
+export const AGENT_TOOL_SCHEMA_HASH_V1 = '13809a0695026642fd77a574682890a8252ac421d08204065c320d6e9029c8d8'
 
 export type AgentSkillDefinitionV2 = Omit<AgentSkillDefinitionV1, 'version'> & {
   version: 2

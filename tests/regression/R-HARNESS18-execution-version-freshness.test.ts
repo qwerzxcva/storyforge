@@ -128,7 +128,7 @@ describe.sequential('R-HARNESS18 · Skill、Prompt 与 Tool 执行版本绑定',
     })
     expect(binding.toolSchemaVersion).toBe(AGENT_TOOL_SCHEMA_VERSION_V1)
     expect(binding.toolSchemaHash).toBe(AGENT_TOOL_SCHEMA_HASH_V1)
-    expect(await hashCanonicalValue(legacyAgentToolsV22(getAgentToolSchemaSnapshotV1()))).toBe('3672ecfc10d949b52c7518f9600d9887bc32290d6982115a6a579b95f636673b')
+    expect(await hashCanonicalValue(legacyAgentToolsV22(getAgentToolSchemaSnapshotV1()))).toBe('c0964e26ea65b4ec1a0fb9843e2f54aa5b18a88c1208ba4aae175281f57b82c9')
     expect(await hashCanonicalValue(getAgentToolSchemaSnapshotV1())).toBe(AGENT_TOOL_SCHEMA_HASH_V1)
     expect(await verifyAgentToolSchemaBindingV1()).toBe(true)
 

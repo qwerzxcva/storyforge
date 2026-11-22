@@ -16,8 +16,6 @@ const declaredInputs = [
   'src/lib/ai/prompt-seeds-novel.ts', 'src/lib/registry/context-sources.ts',
   'src/lib/registry/project-tables.ts', 'src/lib/registry/field-registry.ts',
   'src/lib/registry/adoption-schema.ts', 'src/lib/agent/ai-entry-registry.json',
-  'src/lib/character-interaction/source-budgets.ts',
-  'src/lib/open-world/responsibility-contract.ts',
 ]
 
 async function scan(source: string): Promise<string> {

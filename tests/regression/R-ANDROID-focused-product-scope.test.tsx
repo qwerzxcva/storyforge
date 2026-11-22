@@ -9,7 +9,7 @@ import { listLegacyCreationReleasesV1, readLegacyCreationManifestV1, renderLegac
 import { useNodeFlowStore } from '../../src/stores/node-flow'
 import { useProjectStore } from '../../src/stores/project'
 import { AUTHORING_NODE_BY_ID, defaultConfigForTemplate } from '../../src/lib/node-authoring/catalog'
-import { emptyAuthoringGraph } from '../../src/lib/node-authoring/contracts'
+import { emptyAuthoringGraph, type AuthoringNodeInstance } from '../../src/lib/node-authoring/contracts'
 import { createWorkspace } from '../../src/lib/workspace/create-workspace'
 import { createWorldWork, switchActiveWork, switchNovelProfile } from '../../src/lib/workspace/works'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
@@ -68,10 +68,11 @@ async function render(element: React.ReactNode) {
 }
 
 describe('StoryForge fork: world engine and longform only', () => {
-  it('admits only the requested products and preserves longform node maturity', () => {
-    const retained = ['authoring.nodes', 'independent.longform', 'world-engine']
-    expect([...ANDROID_APP_PRODUCT_IDS].sort()).toEqual(retained)
-    expect(PRODUCT_CATALOG_V1.map(product => product.id).sort()).toEqual(retained)
+  it('registers only longform and nodes while retaining world-data support in the build', () => {
+    const products = ['authoring.nodes', 'independent.longform']
+    const buildSupport = [...products, 'world-engine']
+    expect([...ANDROID_APP_PRODUCT_IDS].sort()).toEqual(buildSupport)
+    expect(PRODUCT_CATALOG_V1.map(product => product.id).sort()).toEqual(products)
     expect(JSON.parse(readFileSync('package.json', 'utf8')).scripts['build:android:web']).not.toContain('build:adventure-player')
     for (const product of PRODUCT_CATALOG_V1) {
       for (const channel of ['production', 'local-development', 'test'] as const) {
@@ -88,7 +89,8 @@ describe('StoryForge fork: world engine and longform only', () => {
   it('allows a longform node graph to be created and saved in the Android build', async () => {
     const owner = await createLong('节点长篇')
     const template = AUTHORING_NODE_BY_ID.get('input.manual-text')!
-    const graph = { ...emptyAuthoringGraph(), nodes: [{ id: 'manual', templateId: template.id, templateVersion: 1, title: template.label, x: 0, y: 0, config: { ...defaultConfigForTemplate(template), text: '长篇节点输入' }, inputs: structuredClone(template.inputs), outputs: structuredClone(template.outputs) }] }
+    const node: AuthoringNodeInstance = { id: 'manual', templateId: template.id, templateVersion: 1, title: template.label, x: 0, y: 0, config: { ...defaultConfigForTemplate(template), text: '长篇节点输入' }, inputs: structuredClone(template.inputs), outputs: structuredClone(template.outputs) }
+    const graph = { ...emptyAuthoringGraph(), nodes: [node] }
     const id = await useNodeFlowStore.getState().createFlow(owner.scope.projectId, null, { graph })
     const saved = await db.nodeFlows.get(id)
     expect(saved?.graphJson).toContain('长篇节点输入')
@@ -123,9 +125,9 @@ describe('StoryForge fork: world engine and longform only', () => {
 
   it.each(['android', 'test', 'production', 'development'])('rejects retired products in %s mode', async mode => {
     vi.stubEnv('MODE', mode)
-    for (const id of ['independent.shortform', 'upper.ttrpg', 'upper.text-open-world', 'platform.marketplace'] as const) {
+    for (const id of ['independent.shortform', 'upper.ttrpg', 'upper.text-open-world', 'platform.marketplace']) {
       expect(isProductAvailableInBuild(id, mode)).toBe(false)
-      expect(() => evaluateProductEntryV1({ productId: id, channel: 'local-development', experimentalOptIn: true })).toThrow('未登记产品')
+      expect(PRODUCT_CATALOG_V1.some(product => product.id === id)).toBe(false)
     }
     const owner = await createLong('历史短篇')
     await db.works.update(owner.work.id!, { novelProfile: 'short' })
@@ -167,7 +169,7 @@ describe('StoryForge fork: world engine and longform only', () => {
     const { ToastProvider } = await import('../../src/components/shared/Toast')
     const view = await render(createElement(MemoryRouter, { initialEntries: [`/workspace/${owner.project.id}`] },
       createElement(ToastProvider, null, createElement(Routes, null,
-        createElement(Route, { path: '/workspace/:projectId', element: createElement(RealWorkspace, { embeddedProjectId: owner.project.id!, embeddedModule: 'world-rules' }) }),
+        createElement(Route, { path: '/workspace/:projectId', element: <RealWorkspace embeddedProjectId={owner.project.id!} embeddedModule="world-rules" /> }),
         createElement(Route, { path: '/home/library', element: createElement('p', null, '退役作品库') }),
       ))))
     await vi.waitFor(() => expect(view.querySelector('[data-workspace-ready="world"]')).not.toBeNull(), { timeout: 10000 })
@@ -246,7 +248,7 @@ describe('StoryForge fork: world engine and longform only', () => {
     expect(await readHomeData()).not.toHaveProperty('products')
   })
 
-  it('retires old bookmarks and settings returns while retaining world, longform and nodes', () => {
+  it('retires old bookmarks and settings returns while retaining longform and nodes', () => {
     for (const tab of ['short', 'script', 'comic', 'motion', 'town', 'ttrpg', 'chat', 'avg', 'text-games', 'play', 'community']) {
       expect(retiredHomeDestination(new URLSearchParams({ tab, project: '42', session: '9' })), tab).toBe('/home/library')
     }
@@ -260,7 +262,7 @@ describe('StoryForge fork: world engine and longform only', () => {
 
   it('renders only retained navigation, sample categories and result sections', async () => {
     const { PRODUCT_NAVIGATION } = await import('../../src/components/navigation/product-navigation')
-    expect(PRODUCT_NAVIGATION.map(item => item.id)).toEqual(['home', 'world', 'long'])
+    expect(PRODUCT_NAVIGATION.map(item => item.id)).toEqual(['home', 'long'])
     const { ExampleShelf } = await import('../../src/components/examples/ExampleLibrary')
     const view = await render(createElement(MemoryRouter, null, createElement(ExampleShelf)))
     expect(view.textContent).toContain('长篇')
@@ -276,7 +278,7 @@ describe('StoryForge fork: world engine and longform only', () => {
     const view = await render(createElement(MemoryRouter, null, createElement(RealHomePage)))
     await vi.waitFor(() => expect(view.textContent).toContain('开始我的第一部长篇'))
     for (const label of ['短篇', '剧本', '漫画', '漫剧', 'AVG', '跑团', '小镇', '文字开放世界', '失潮钟声', '断流之夜', '创意工坊']) expect(view.textContent).not.toContain(label)
-    expect(Array.from(view.querySelectorAll('nav[aria-label="产品导航"] a')).map(link => link.textContent)).toEqual(['首页', '世界引擎', '长篇'])
+    expect(Array.from(view.querySelectorAll('nav[aria-label="产品导航"] a')).map(link => link.textContent)).toEqual(['首页', '长篇'])
   })
 
   const retiredPaths = ['/short/editor', '/script/source', '/comic/source', '/motion', '/ttrpg', '/town', '/chat', '/avg',

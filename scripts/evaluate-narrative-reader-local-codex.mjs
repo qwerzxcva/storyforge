@@ -238,7 +238,13 @@ try {
       answer: result.answer, usage: result.usage, durationMs: result.durationMs,
       score: scoreReader(item, request, result.answer, corpus.families.find(family => family.id === item.familyId)) }]
   })
-  const sourceDrift = (await Promise.all(Object.entries(inputs.sourceHashes).map(async ([path, hash]) => sha256(await readFile(resolve(root, path))) === hash ? null : path))).filter(Boolean)
+  const sourceDrift = (await Promise.all(Object.entries(inputs.sourceHashes).map(async ([path, hash]) => {
+    try { return sha256(await readFile(resolve(root, path))) === hash ? null : path }
+    catch (error) {
+      if (error instanceof Error && 'code' in error && error.code === 'ENOENT') return path
+      throw error
+    }
+  }))).filter(Boolean)
   const sourceUnchanged = sourceDrift.length === 0
   let finalEvidenceUnchanged = true
   try { await assertRuntimeUnchanged() }
@@ -265,7 +271,7 @@ try {
     cohort: { inheritedAttempts: inherited.size, quarantinedUnknownAttempts: quarantined.size,
       newRecordedAttempts: results.size - inherited.size,
       completed: !stopped && !runError && results.size + quarantined.size === unique.size },
-    executionComplete: !stopped && !runError && finalEvidenceUnchanged && unpersistedAttempts.size === 0
+    executionComplete: !stopped && !runError && sourceUnchanged && finalEvidenceUnchanged && unpersistedAttempts.size === 0
       && rawResults.length === unique.size && rawResults.every(value => value.status === 'completed'),
     totalObservedUsage: { inputTokens: rawResults.reduce((sum, result) => sum + (result.usage?.inputTokens ?? 0), 0),
       outputTokens: rawResults.reduce((sum, result) => sum + (result.usage?.outputTokens ?? 0), 0) },
