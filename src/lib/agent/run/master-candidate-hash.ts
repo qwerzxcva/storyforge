@@ -1,7 +1,7 @@
-import type { MasterCandidatePayload } from '../orchestrator'
-import { resolveAgentSkillV1 } from '../skill-registry'
-import { isContextGatewayRequiredForWriteTargetV1 } from '../../context-gateway/skill-policy'
-import { hashCanonicalValue } from './hash'
+import type { MasterCandidatePayload } from '../orchestrator';
+import { resolveAgentSkillV1 } from '../skill-registry';
+import { isContextGatewayRequiredForWriteTargetV1 } from '../../context-gateway/skill-policy';
+import { hashCanonicalValue } from './hash';
 
 export function masterCandidateWriteTargetV1(payload: MasterCandidatePayload): string | undefined {
   if (payload.skillId === 'world-origin.worldview-field' && payload.worldviewField) {

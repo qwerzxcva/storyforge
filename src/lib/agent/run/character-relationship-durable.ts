@@ -1,26 +1,21 @@
-import { modelDispatchWasCancelledV1, ModelDispatchGuardRejectedV1 } from '../../ai/codex-transport'
-import { db } from '../../db/schema'
-import type { AIConfig, Character, CharacterRelation, ChatMessage, WorkspaceScope } from '../../types'
-import { chat, type ChatResult } from '../../ai/client'
-import { assembleContext } from '../../registry/assemble-context'
-import { adopt } from '../../registry/adopt'
-import { readOwnedRows } from '../../workspace/scope'
-import { usePromptStore } from '../../../stores/prompt'
-import { renderPrompt } from '../../ai/prompt-engine'
-import { matchRelations, type ExtractedRelation, type MatchedRelation } from '../../ai/relation-extractor'
-import { syncRelationToCharacterFields } from '../../relations/relationship-summary'
-import { getAgentSkillV1 } from '../skill-registry'
-import { createAgentSkillExecutionBindingV1 } from '../execution-binding'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import { hashCanonicalValue } from './hash'
+import { modelDispatchWasCancelledV1, ModelDispatchGuardRejectedV1 } from '../../ai/codex-transport';
+import { db } from '../../db/schema';
+import type { AIConfig, Character, CharacterRelation, ChatMessage, WorkspaceScope } from '../../types';
+import { chat, type ChatResult } from '../../ai/client';
+import { assembleContext } from '../../registry/assemble-context';
+import { adopt } from '../../registry/adopt';
+import { readOwnedRows } from '../../workspace/scope';
+import { usePromptStore } from '../../../stores/prompt';
+import { renderPrompt } from '../../ai/prompt-engine';
+import { matchRelations, type ExtractedRelation, type MatchedRelation } from '../../ai/relation-extractor';
+import { syncRelationToCharacterFields } from '../../relations/relationship-summary';
+import { getAgentSkillV1 } from '../skill-registry';
+import { createAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, type AgentRunSnapshotV1 } from './event-store';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { hashCanonicalValue } from './hash';
 
 export const CHARACTER_RELATIONSHIP_STEP_ID_V1 = 'character:relationships' as const
 export const CHARACTER_RELATIONSHIP_VERIFIER_SET_V1 = 'character-relationships-terminal-v1' as const

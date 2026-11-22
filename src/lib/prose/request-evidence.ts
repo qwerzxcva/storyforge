@@ -1,7 +1,7 @@
-import { parseModelCapacityV1 } from '../ai/model-capacity'
-import type { AIRequestSettingsV1 } from '../ai/client'
-import type { ChatMessage } from '../types'
-import { supportsAgnesThinkingModeV1 } from '../ai/agnes-parameters'
+import { parseModelCapacityV1 } from '../ai/model-capacity';
+import type { AIRequestSettingsV1 } from '../ai/client';
+import type { ChatMessage } from '../types';
+import { supportsAgnesThinkingModeV1 } from '../ai/agnes-parameters';
 
 export interface ProseRenderedRequestV1 {
   version: 'prose-rendered-request-v1'

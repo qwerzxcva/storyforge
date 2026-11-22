@@ -8,13 +8,12 @@
  * 调用方仍然使用 `create` 返回的 hook，API 与原手写 store 100%
  * 一致：`{ [key]: T | null, loading, loadAll(projectId), save(data) }`。
  */
-
-import { create } from 'zustand'
-import type { Table, UpdateSpec } from 'dexie'
-import type { WorkspaceScope } from '../lib/types'
-import { db } from '../lib/db/schema'
-import { assertRecordInScope, getTableSpec, readOwnedRows, resolveScopeLike, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope'
-import { coordinatePendingEditV1 } from '../lib/authoring/pending-edit-coordinator'
+import { create } from 'zustand';
+import type { Table, UpdateSpec } from 'dexie';
+import type { WorkspaceScope } from '../lib/types';
+import { db } from '../lib/db/schema';
+import { assertRecordInScope, getTableSpec, readOwnedRows, resolveScopeLike, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope';
+import { coordinatePendingEditV1 } from '../lib/authoring/pending-edit-coordinator';
 
 const now = () => Date.now()
 

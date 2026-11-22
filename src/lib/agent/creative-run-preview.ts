@@ -1,18 +1,7 @@
-import {
-  getMasterWorkflowV1,
-  selectMasterWorkflowV1,
-  classifyRequestedDomainIdsV1,
-  type MasterWorkflowIdV1,
-} from './workflow-catalog'
-import {
-  resolveAgentTeamBudgetPolicy,
-  type AgentTeamBudgetProfile,
-} from './team-budget'
-import {
-  resolveCreativeQualityPolicyV1,
-  type CreativeQualityModeV1,
-} from './creative-reliability'
-import type { DomainAgentId } from './skill-registry'
+import { getMasterWorkflowV1, selectMasterWorkflowV1, classifyRequestedDomainIdsV1, type MasterWorkflowIdV1 } from './workflow-catalog';
+import { resolveAgentTeamBudgetPolicy, type AgentTeamBudgetProfile } from './team-budget';
+import { resolveCreativeQualityPolicyV1, type CreativeQualityModeV1 } from './creative-reliability';
+import type { DomainAgentId } from './skill-registry';
 
 const DOMAIN_LABELS: Record<DomainAgentId, string> = {
   'world-origin': '世界设定',

@@ -4,28 +4,14 @@
  * StoryArc / StoryStage 是作者维护的静态闭集；模型只能把一章正文映射到闭集，
  * 结果先停留在内存候选，作者调用 accept* 后才经 adopt() 写入权威表。
  */
-import type {
-  ChatMessage,
-  StoryArc,
-  StoryStage,
-  StorylineCrossing,
-  StorylineProgress,
-  StorylineProgressStatus,
-  WorkspaceScope,
-} from '../types'
-import { STORYLINE_PROGRESS_STATUSES, parseStages } from '../types'
-import { adopt } from '../registry/adopt'
-import { db } from '../db/schema'
-import { htmlToPlainText } from '../utils/html'
-import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveScope,
-  scopeTransactionTables,
-} from '../workspace/scope'
-import { hashCanonicalValue } from '../agent/run/hash'
+import type { ChatMessage, StoryArc, StoryStage, StorylineCrossing, StorylineProgress, StorylineProgressStatus, WorkspaceScope } from '../types';
+import { STORYLINE_PROGRESS_STATUSES, parseStages } from '../types';
+import { adopt } from '../registry/adopt';
+import { db } from '../db/schema';
+import { htmlToPlainText } from '../utils/html';
+import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScope, scopeTransactionTables } from '../workspace/scope';
+import { hashCanonicalValue } from '../agent/run/hash';
 
 export interface StorylineProgressCandidate {
   kind: 'progress'

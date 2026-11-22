@@ -1,6 +1,6 @@
-import type { AIConfig, MediaProviderReceiptV1 } from '../types'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { normalizeOpenAIBaseUrl } from '../ai/openai-endpoint'
+import type { AIConfig, MediaProviderReceiptV1 } from '../types';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { normalizeOpenAIBaseUrl } from '../ai/openai-endpoint';
 
 export interface ImageProviderCapabilityV1 {
   version: 1

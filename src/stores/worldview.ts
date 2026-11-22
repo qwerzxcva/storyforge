@@ -1,16 +1,16 @@
 import Dexie from 'dexie'
-import { isPortableResourceUidV1 } from '../lib/context-gateway/resource-uid'
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import type { Worldview, StoryCore, PowerSystem, WorkspaceScope, DivineDesign, NaturalResources, WorldGroup } from '../lib/types'
-import { EMPTY_DIVINE_DESIGN, EMPTY_NATURAL_RESOURCES } from '../lib/types/worldview'
-import type { AdoptResult } from '../lib/registry/types'
-import { adopt, adoptionTransactionTablesV1, hashAdoptFieldValueV1 } from '../lib/registry/adopt'
-import { refreshSettingAssertionSourceStatus } from '../lib/fact-ledger/setting-assertions'
-import { assertRecordInScope, scopeTransactionTables, readOwnedRows, resolveScope, resolveScopeLike, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope'
-import { coordinatePendingEditV1 } from '../lib/authoring/pending-edit-coordinator'
+import { isPortableResourceUidV1 } from '../lib/context-gateway/resource-uid';
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import type { Worldview, StoryCore, PowerSystem, WorkspaceScope, DivineDesign, NaturalResources, WorldGroup } from '../lib/types';
+import { EMPTY_DIVINE_DESIGN, EMPTY_NATURAL_RESOURCES } from '../lib/types/worldview';
+import type { AdoptResult } from '../lib/registry/types';
+import { adopt, adoptionTransactionTablesV1, hashAdoptFieldValueV1 } from '../lib/registry/adopt';
+import { refreshSettingAssertionSourceStatus } from '../lib/fact-ledger/setting-assertions';
+import { assertRecordInScope, scopeTransactionTables, readOwnedRows, resolveScope, resolveScopeLike, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope';
+import { coordinatePendingEditV1 } from '../lib/authoring/pending-edit-coordinator';
 
-import { LOCAL_SAVE_NATURAL_FIELDS_V1, type LocalSaveAckV1, type LocalSaveIntentV1, type LocalSaveWitnessV1, type LocalSaveNaturalFieldV1 } from '../lib/authoring/local-save-evidence'
+import { LOCAL_SAVE_NATURAL_FIELDS_V1, type LocalSaveAckV1, type LocalSaveIntentV1, type LocalSaveWitnessV1, type LocalSaveNaturalFieldV1 } from '../lib/authoring/local-save-evidence';
 
 interface SaveWorldview {
   (data: WorldviewAuthorPatch, scope?: WorkspaceScope): Promise<void>

@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { EMPTY_PRODUCT_RUNTIME_STATE, type ProductRuntimeEvent } from '../../src/lib/types'
-import { replayProductRuntimeEventsVerifiedAsyncV1 as replay } from '../../src/lib/product/runtime-core'
-import * as adapters from '../../src/lib/product/runtime-product-adapters'
+import { replayProductRuntimeEventsVerifiedAsyncV1 as replay } from '../../src/lib/legacy-compat/product/runtime-core'
+import * as adapters from '../../src/lib/legacy-compat/product/runtime-product-adapters'
 
 let scenario = 0
 function initial() { return { ...structuredClone(EMPTY_PRODUCT_RUNTIME_STATE), clock: ++scenario * 100 } }

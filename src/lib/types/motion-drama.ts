@@ -1,4 +1,4 @@
-import type { MediaRightsV1 } from './comic'
+import type { MediaRightsV1 } from './comic';
 
 export const MOTION_DRAMA_PROVIDER_TARGETS_V1 = ['seedance', 'runway', 'ltx', 'generic'] as const
 export type MotionDramaProviderTargetV1 = typeof MOTION_DRAMA_PROVIDER_TARGETS_V1[number]

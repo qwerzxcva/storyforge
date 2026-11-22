@@ -1,4 +1,4 @@
-import type { NovelWorkflowProfile, Work, WorkKind } from '../types/world-ownership'
+import type { NovelWorkflowProfile, Work, WorkKind } from '../types/world-ownership';
 
 export const SHORT_NOVEL_MIN_WORDS = 5_000
 export const SHORT_NOVEL_MAX_WORDS = 25_000

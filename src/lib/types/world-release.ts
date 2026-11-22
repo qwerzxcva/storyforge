@@ -1,5 +1,5 @@
-import type { WorldSourceReceiptBindingV1 } from './world-source-receipt'
-import type { WorldCapabilityArea } from '../registry/types'
+import type { WorldSourceReceiptBindingV1 } from './world-source-receipt';
+import type { WorldCapabilityArea } from '../registry/types';
 
 /** Local writer provenance, outside immutable semantic release bytes. A
  * transported claim is checked against the complete frozen owner roots. */

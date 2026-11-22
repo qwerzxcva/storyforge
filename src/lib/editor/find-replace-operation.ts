@@ -1,14 +1,9 @@
-import type { Chapter } from '../types'
-import { db } from '../db/schema'
-import { assertRecordInScope, resolveScope } from '../workspace/scope'
-import { canonicalStringify } from '../agent/run/hash'
-import { commitAuthorTextChangesV1, undoTextReplacementV1, type AuthorTextEditReceiptV1, type AuthorTextChangeV1 } from './registered-text-replacement'
-import {
-  findChapterMatches,
-  replaceChapterContent,
-  type ChapterSearchTarget,
-  type FindReplaceOptions,
-} from './find-replace'
+import type { Chapter } from '../types';
+import { db } from '../db/schema';
+import { assertRecordInScope, resolveScope } from '../workspace/scope';
+import { canonicalStringify } from '../agent/run/hash';
+import { commitAuthorTextChangesV1, undoTextReplacementV1, type AuthorTextEditReceiptV1, type AuthorTextChangeV1 } from './registered-text-replacement';
+import { findChapterMatches, replaceChapterContent, type ChapterSearchTarget, type FindReplaceOptions } from './find-replace';
 
 export type ReplaceMode = 'one' | 'chapter' | 'book'
 

@@ -7,13 +7,9 @@
  * - 产出一律 status:'candidate'（Evidence Observation），由作者确认后才升 confirmed（Canon）；
  * - factKind 以谓词注册表为准（event 只增不改）；不在此处做主体 FK 解析（留给 adopt 写回按 name 匹配）。
  */
-import type { ChatMessage } from '../../types'
-import type { TemporalFact } from '../../types/temporal-fact'
-import {
-  normalizeFactPredicate,
-  normalizeFactValue,
-  FACT_PREDICATE_REGISTRY,
-} from '../../registry/fact-predicate-registry'
+import type { ChatMessage } from '../../types';
+import type { TemporalFact } from '../../types/temporal-fact';
+import { normalizeFactPredicate, normalizeFactValue, FACT_PREDICATE_REGISTRY } from '../../registry/fact-predicate-registry';
 
 export interface ExtractedFactCandidate {
   subjectName: string

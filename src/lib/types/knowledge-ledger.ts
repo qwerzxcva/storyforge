@@ -1,4 +1,4 @@
-import type { NarrativeDomainMetadataV1, NarrativeDomainFieldsV1 } from './narrative-domain'
+import type { NarrativeDomainMetadataV1, NarrativeDomainFieldsV1 } from './narrative-domain';
 /**
  * CONSISTENCY-2 · 角色认知事件账本。
  *

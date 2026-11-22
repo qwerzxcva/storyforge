@@ -1,4 +1,4 @@
-import type { TextOpenWorldRuntimeAIExecutionObservationV1 } from '../../open-world/runtime-ai-error'
+import type { TextOpenWorldRuntimeAIExecutionObservationV1 } from '../../legacy-compat/open-world/runtime-ai-error'
 
 export const TEXT_OPEN_WORLD_RUNTIME_AI_EVAL_VERSION_V1 = 'text-open-world-runtime-ai-eval-v1' as const
 

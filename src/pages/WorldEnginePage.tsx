@@ -1,24 +1,24 @@
-import { canonicalPowerModule } from '../lib/workspace/module-alias'
+import { canonicalPowerModule } from '../lib/workspace/module-alias';
 import BrandIcon from '../components/shared/BrandIcon'
 import WorldDraftSummary from '../components/world-engine/WorldDraftSummary'
-import { lazy, Suspense, useEffect, useRef, useState } from 'react'
-import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
-import { liveQuery } from 'dexie'
-import { ArrowRight, BookOpen, CheckCircle2, Database, Globe2, Layers, Map, ScrollText, Sparkles, Users, Waypoints } from 'lucide-react'
-import { db } from '../lib/db/schema'
-import type { Project, World, Work, ProductProductionHandoffV1 } from '../lib/types'
-import { isShareableWorld } from '../lib/world-engine/world-identity'
-import { createWorkspace } from '../lib/workspace/create-workspace'
-import { updateWorldDraftMetadata } from '../lib/world-engine/draft'
-import { useWorldGroupStore } from '../stores/world-group'
-import { useProjectStore } from '../stores/project'
-import { flushPendingEditsV1 } from '../lib/authoring/pending-edit-coordinator'
-import { useDialog } from '../components/shared/Dialog'
-import { WORLD_PAGES, WORLD_CONTENT_PAGES, WORLD_PRIMARY_PAGES, worldPrimaryPage, worldModulePath } from '../components/world-engine/navigation'
-import { PRODUCT_NAVIGATION } from '../components/navigation/product-navigation'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router';
+import { liveQuery } from 'dexie';
+import { ArrowRight, BookOpen, CheckCircle2, Database, Globe2, Layers, Map, ScrollText, Sparkles, Users, Waypoints } from 'lucide-react';
+import { db } from '../lib/db/schema';
+import type { Project, World, Work } from '../lib/types';
+import { isShareableWorld } from '../lib/world-engine/world-identity';
+import { createWorkspace } from '../lib/workspace/create-workspace';
+import { updateWorldDraftMetadata } from '../lib/world-engine/draft';
+import { useWorldGroupStore } from '../stores/world-group';
+import { useProjectStore } from '../stores/project';
+import { flushPendingEditsV1 } from '../lib/authoring/pending-edit-coordinator';
+import { useDialog } from '../components/shared/Dialog';
+import { WORLD_PAGES, WORLD_CONTENT_PAGES, WORLD_PRIMARY_PAGES, worldPrimaryPage, worldModulePath } from '../components/world-engine/navigation';
+import { PRODUCT_NAVIGATION } from '../components/navigation/product-navigation';
 import WorldWorkManager from '../components/world-engine/WorldWorkManager'
-import { useAutoBackup } from '../hooks/useAutoBackup'
-import { useGistAutoBackup } from '../hooks/useGistAutoBackup'
+import { useAutoBackup } from '../hooks/useAutoBackup';
+import { useGistAutoBackup } from '../hooks/useGistAutoBackup';
 import '../components/longform/longform.css'
 import '../components/world-engine/panels.css'
 import '../components/world-engine/world-engine.css'
@@ -67,7 +67,6 @@ export default function WorldEnginePage(){
  }catch(c){setError(String(c))}}
  const enableMultiWorld=async()=>{if(!row||busy)return;setBusy(true);try{await flushPendingEditsV1();if(await useWorldGroupStore.getState().enableMultiWorld(row.project.id!)){await refresh()}}catch(c){setError(String(c))}finally{setBusy(false)}}
  const remove=async(target:Row)=>{try{await flushPendingEditsV1();await useProjectStore.getState().deleteProject(target.project.id!);if(projectId===target.project.id&&!(await db.projects.get(projectId!)))await go('/world/worlds')}catch(c){setError(String(c))}}
- const handoff=(value:ProductProductionHandoffV1)=>{const base=value.productType==='ttrpg'?'ttrpg/source':value.productType==='avg'?'avg/source':value.productType==='text-open-world'?'openworld/runtime':'adventure/runtime';void go(`/${base}?worldHandoff=${encodeURIComponent(JSON.stringify(value))}`)}
  const modules=definition.modules??[]
  const primaryId=worldPrimaryPage(definition.id)
  const isWorldbuilding=primaryId==='worldbuilding'
@@ -89,18 +88,18 @@ export default function WorldEnginePage(){
     {error&&<p className="we-error" role="alert">{error}</p>}
     {choosing&&<section className="lf-paper"><h3>选择或创建世界</h3><p>浏览页面不需要世界；保存、生成与封存时需要一个明确的世界。</p><div className="we-actions">{rows.map(r=><button className="lf-action" key={r.world.id} onClick={()=>void go(path(definition.id,r.project.id!))}>{r.world.name} · {r.world.code}</button>)}</div><form onSubmit={e=>{e.preventDefault();void create()}}><fieldset disabled={busy}><label>世界名称<input aria-label="新世界名称" value={title} maxLength={200} onChange={e=>setTitle(e.target.value)}/></label><label>世界简介<textarea aria-label="新世界简介" value={description} maxLength={20000} onChange={e=>setDescription(e.target.value)}/></label><div className="we-actions"><button className="lf-action lf-action-primary" disabled={!title.trim()}>{busy?'正在创建…':'创建世界'}</button><button className="lf-action" type="button" onClick={()=>setChoosing(false)}>继续浏览</button></div></fieldset></form></section>}
     {loading?<p role="status">读取世界…</p>:definition.id==='worlds'?<>
-     <section className="we-library-tools"><div className="we-actions"><button className="lf-action lf-action-primary" onClick={()=>setChoosing(true)}>新建世界</button><button className="lf-action" onClick={()=>void go(path('sharing'))}>导入世界包</button><input aria-label="搜索本地世界" placeholder="搜索世界名称、简介或编号" value={search} onChange={e=>setSearch(e.target.value)}/></div><p>本地世界可编辑；封存版本供其他产品引用。当前编号搜索仅查找本地已保存的世界。</p></section>
+     <section className="we-library-tools"><div className="we-actions"><button className="lf-action lf-action-primary" onClick={()=>setChoosing(true)}>新建世界</button><button className="lf-action" onClick={()=>void go(path('sharing'))}>导入世界包</button><input aria-label="搜索本地世界" placeholder="搜索世界名称、简介或编号" value={search} onChange={e=>setSearch(e.target.value)}/></div><p>本地世界可编辑；封存版本可查看、分享与导出。当前编号搜索仅查找本地已保存的世界。</p></section>
      <div className="lf-library-grid">{visibleRows.map(r=><article className="lf-paper" key={r.world.id}><small>{r.world.code} · {r.world.currentVersion?`已发布 v${r.world.currentVersion}`:'尚未发布'}</small><h3>{r.world.name}</h3><p>{r.world.description||'尚未填写世界简介'}</p><div className="we-actions"><button className="lf-action lf-action-primary" onClick={()=>void go(path('basics',r.project.id!))}>编辑世界</button><button className="lf-action" onClick={()=>void go(path('versions',r.project.id!))}>版本与封存</button><button onClick={()=>void editMetadata(r)}>名称与简介</button><button onClick={()=>void remove(r)}>删除世界</button></div></article>)}</div>{!rows.length?<p className="we-library-empty">还没有本地世界，可新建或导入；也可以先浏览内容页。</p>:!visibleRows.length&&<p className="we-library-empty" role="status">没有找到匹配的本地世界，请更换搜索词。</p>}
     </>:definition.id==='worldbuilding'?<div className="we-overview-layout">
      <section className="lf-paper we-setting-overview"><h3>{row?.world.name??'让世界逐渐成形'}</h3><p>{row?.world.description||definition.description}</p><div className="we-setting-grid">{WORLD_CONTENT_PAGES.map((group,index)=>{const Icon=contentIcons[index];return <button key={group.id} className="we-setting-card" onClick={()=>void go(path(group.id))}><span className="we-setting-icon"><Icon size={22}/></span><span><strong>{group.label}</strong><small>{group.description}</small></span><ArrowRight size={17}/></button>})}</div></section>
      <aside className="we-overview-context" aria-label="世界状态与出口">
       {row&&<details className="lf-paper"><summary>草稿内容概览</summary><WorldDraftSummary project={row.project}/></details>}
       <section className="lf-paper we-world-status"><h3><CheckCircle2 size={21}/>世界状态</h3>{row?<><dl><div><dt>当前世界</dt><dd>{row.world.name}</dd></div><div><dt>正在编辑</dt><dd>世界草稿</dd></div><div><dt>封存版本</dt><dd>{row.world.currentVersion?`v${row.world.currentVersion}`:'尚未封存'}</dd></div><div><dt>世界信息更新</dt><dd>{new Date(row.world.updatedAt).toLocaleDateString('zh-CN')}</dd></div></dl><p>编辑草稿后，需重新封存才会更新可供引用的版本。</p></>:<p>可以先浏览设定分类；准备保存内容时，再选择或创建世界。</p>}<button className="lf-action lf-action-primary" onClick={()=>row?void go(path('versions')):setChoosing(true)}>{row?'检查与封存':'选择或创建世界'}</button></section>
-      <section className="lf-paper we-world-outlet"><h3><Database size={21}/>数据出口</h3><p>查看封存版本的资源目录、能力范围和原文；供各产品按需引用。</p><button className="lf-action" onClick={()=>void go(path('outlet'))}>查看数据出口<ArrowRight size={16}/></button></section>
+      <section className="lf-paper we-world-outlet"><h3><Database size={21}/>数据出口</h3><p>查看封存版本的资源目录、能力范围和原文。</p><button className="lf-action" onClick={()=>void go(path('outlet'))}>查看数据出口<ArrowRight size={16}/></button></section>
      </aside>
     </div>:<Suspense fallback={<p role="status">打开世界功能…</p>}>
      {['sharing','community'].includes(definition.id)?<>{definition.id==='community'&&<section className="lf-paper"><h3>世界分享与发行准备</h3><p>先封存世界版本，再配置署名、许可和用途，通过文件交给其他作者。在线社区发布和社区数据尚未接入。</p><button className="lf-action" onClick={()=>void go(path('versions'))}>管理封存版本</button></section>}<Sharing key={projectId??'empty'} project={row?.project} worldReleaseRevision={revision} onImported={async id=>{await refresh();await go(path('basics',id))}}/></>:definition.id==='settings'&&!row?<Settings/>:!row?<section className="lf-paper"><h3>{module?modules.find(([id])=>id===module)?.[1]:definition.label}</h3>{!isWorldbuilding&&<p>{definition.description}</p>}<p>{projectId?'指定世界不存在或不属于可编辑的世界目录。':'尚未选择世界，仍可浏览所有页面。'}</p><button className="lf-action lf-action-primary" onClick={()=>setChoosing(true)}>选择或创建世界</button></section>:<>
-      {definition.id==='versions'?<Versions key={`${projectId}:${row.work.id}`} projectId={projectId!} activeWorkId={row.work.id} onChanged={refresh} onOpenProductProduction={handoff}/>:definition.id==='outlet'?<Outlet key={`${projectId}:${revision}`} projectId={projectId!} worldId={row.world.id!} onEdit={()=>void go(path('basics'))} onVersions={()=>void go(path('versions'))}/>:module?<>
+      {definition.id==='versions'?<Versions key={`${projectId}:${row.work.id}`} projectId={projectId!} activeWorkId={row.work.id} onChanged={refresh}/>:definition.id==='outlet'?<Outlet key={`${projectId}:${revision}`} projectId={projectId!} worldId={row.world.id!} onEdit={()=>void go(path('basics'))} onVersions={()=>void go(path('versions'))}/>:module?<>
        {definition.id==='story'&&module==='info'&&<section className="lf-paper"><p>此处管理世界内的叙事内容。世界名称与简介在“我的世界”修改。</p><WorldWorkManager projectId={projectId!} activeWorkId={row.work.id} onChanged={refresh}/></section>}
        {definition.id==='multiverse'&&!row.project.enableMultiWorld?<section className="lf-paper"><h3>启用多世界管理</h3><p>将现有设定归入主世界，再添加其他世界、位面与通道。</p><button className="lf-action lf-action-primary" disabled={busy} onClick={()=>void enableMultiWorld()}>启用多世界</button></section>:<div className={`we-editor we-module-${module} ${definition.id==='map'?'we-map-editor':''}`}><Workspace key={`${projectId}:${row.work.id}`} embeddedProjectId={projectId!} embeddedModule={module} embeddedToolsTarget={toolsTarget}/></div>}
       </>:null}

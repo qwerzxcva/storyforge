@@ -1,7 +1,7 @@
-import { hashCanonicalValue } from '../agent/run/hash'
+import { hashCanonicalValue } from '../agent/run/hash';
 import Dexie from 'dexie'
-import type { StoryArc, StoryCore } from '../types'
-import { readOwnedRows, resolveScopeLike, type WorkspaceScopeLike } from '../workspace/scope'
+import type { StoryArc, StoryCore } from '../types';
+import { readOwnedRows, resolveScopeLike, type WorkspaceScopeLike } from '../workspace/scope';
 
 export const STORY_INTENT_FIELDS_V1 = [
   'logline',

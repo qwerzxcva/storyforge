@@ -1,5 +1,5 @@
-import { sha256 } from '@noble/hashes/sha2.js'
-import { createSHA256, type IHasher } from 'hash-wasm'
+import { sha256 } from '@noble/hashes/sha2.js';
+import { createSHA256, type IHasher } from 'hash-wasm';
 
 const MAX_STATES = 4
 const HEX_BYTES = Array.from({ length: 256 }, (_, byte) => byte.toString(16).padStart(2, '0'))

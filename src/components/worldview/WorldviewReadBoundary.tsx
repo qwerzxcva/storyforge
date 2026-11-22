@@ -1,5 +1,5 @@
-import { useState, type ReactNode } from 'react'
-import { useWorldviewStore } from '../../stores/worldview'
+import { useState, type ReactNode } from 'react';
+import { useWorldviewStore } from '../../stores/worldview';
 
 /** Preserve the previous readback while an explicit retry verifies current data. */
 export default function WorldviewReadBoundary({ onRetry, children, ready = true }: { onRetry: () => Promise<void>; children: ReactNode; ready?: boolean }) {

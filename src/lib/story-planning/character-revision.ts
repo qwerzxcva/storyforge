@@ -1,13 +1,9 @@
-import { normalizeChapterText } from '../ai/chapter-memory/text-normalization'
-import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk'
-import { buildBestChapterByOutlineMap } from '../chapters/selectors'
-import {
-  readOwnedRows,
-  resolveReadScopeLike,
-  type WorkspaceScopeLike,
-} from '../workspace/scope'
-import type { Chapter, OutlineNode } from '../types'
-import type { WorkspaceScope } from '../types/world-ownership'
+import { normalizeChapterText } from '../ai/chapter-memory/text-normalization';
+import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk';
+import { buildBestChapterByOutlineMap } from '../chapters/selectors';
+import { readOwnedRows, resolveReadScopeLike, type WorkspaceScopeLike } from '../workspace/scope';
+import type { Chapter, OutlineNode } from '../types';
+import type { WorkspaceScope } from '../types/world-ownership';
 
 export type CharacterRevisionChangeType =
   | 'add-character'

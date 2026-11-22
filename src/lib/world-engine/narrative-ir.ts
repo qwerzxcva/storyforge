@@ -1,14 +1,12 @@
-import type {
-  EvidenceSpanV1, NarrativeEvidenceSourceV1, NarrativeIRBundleV1, NarrativeRecordV1, SemanticRefV1,
-} from '../types/narrative-ir'
-import { FACT_PREDICATE_REGISTRY } from '../registry/fact-predicate-registry'
-import { PROJECT_TABLES } from '../registry/project-tables'
-import type { FactPredicateSpec } from '../types/temporal-fact'
-import { isPublicWorldCode } from '../workspace/identity'
-import { narrativeOwnerKeyV1, parseNarrativeSemanticIdV1 } from './narrative-identity'
-import { parseNarrativeIRBundleV1, parseNarrativeRecordV1 } from './narrative-ir-codec'
-import { arrayV1, assertNarrativeJsonV1, canonicalNarrativeJsonV1, freezeNarrativeJsonV1, freezeAndHashNarrativeJsonV1, hashNarrativeBytesV1, hashNarrativeValueV1, hashNarrativeValueWithoutKeysV1, keyV1, narrativeFail, objectV1, pointerV1, textV1 } from './narrative-json'
-import { validateNarrativeTimeReferencesV1 } from './narrative-time'
+import type { EvidenceSpanV1, NarrativeEvidenceSourceV1, NarrativeIRBundleV1, NarrativeRecordV1, SemanticRefV1 } from '../types/narrative-ir';
+import { FACT_PREDICATE_REGISTRY } from '../registry/fact-predicate-registry';
+import { PROJECT_TABLES } from '../registry/project-tables';
+import type { FactPredicateSpec } from '../types/temporal-fact';
+import { isPublicWorldCode } from '../workspace/identity';
+import { narrativeOwnerKeyV1, parseNarrativeSemanticIdV1 } from './narrative-identity';
+import { parseNarrativeIRBundleV1, parseNarrativeRecordV1 } from './narrative-ir-codec';
+import { arrayV1, assertNarrativeJsonV1, canonicalNarrativeJsonV1, freezeNarrativeJsonV1, freezeAndHashNarrativeJsonV1, hashNarrativeBytesV1, hashNarrativeValueV1, hashNarrativeValueWithoutKeysV1, keyV1, narrativeFail, objectV1, pointerV1, textV1 } from './narrative-json';
+import { validateNarrativeTimeReferencesV1 } from './narrative-time';
 
 const UNBOUND_HASH = '0'.repeat(64)
 const sourceKey = (source: Pick<NarrativeEvidenceSourceV1, 'sourceResourceKey' | 'sourceRevision' | 'fieldPointer'>) =>

@@ -1,68 +1,31 @@
-import { usePromptStore } from '../../stores/prompt'
-import { renderPrompt } from '../ai/prompt-engine'
-import { worldviewContentTemplateVariablesV1 } from '../creation/worldview-content-skill'
-import { supportsVerifiedJsonObjectResponseForModelV1 } from '../ai/provider-capabilities'
-import { getModelCapacityLimitsV1 } from '../ai/model-capacity'
-import { resolveFieldGenerationRequestModeV1 } from './field-generation-request-mode'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { chat, resolveRequestConfig, type ChatResult } from '../ai/client'
-import type { FieldGenerationMode } from '../ai/field-generation-context'
-import { db } from '../db/schema'
-import type {
-  GenerationGateIssue,
-  GenerationNode,
-  PreparedGenerationNode,
-} from '../generation/generation-node'
-import { prepareGenerationNode } from '../generation/generation-node'
-import { adopt } from '../registry/adopt'
-import { assembleContext } from '../registry/assemble-context'
-import {
-  WORLDVIEW_GENERATABLE_FIELD_SPECS,
-  type WorldviewGeneratableField,
-} from '../registry/field-registry'
-import type { AdoptResult, AssembleContextResult } from '../registry/types'
-import type { AIConfig, ChatMessage, DivineDesign, NaturalResources, Worldview, PowerSystem } from '../types'
-import type { WorkspaceScope } from '../types/world-ownership'
-import {
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveScope,
-  scopeTransactionTables,
-} from '../workspace/scope'
-import {
-  createAgentContextCompressionSessionV1,
-  type AgentContextCompressionRuntimeV1,
-} from './context-compression'
-import {
-  attachAgentContextInputStateV1,
-  evidenceFromContextResult,
-  resolveAgentContextPolicy,
-  type AgentContextEvidence,
-  type AgentContextProfile,
-} from './context-policy'
-import type { MasterCandidateModelIdentityV1 } from './master-candidate-semantic-review'
-import {
-  buildAgentSkillInputGuidanceV1,
-  resolveAgentSkillInputStateV1,
-  resolveAgentSkillV1,
-  type AgentSkillId,
-} from './skill-registry'
-import { parseStructuredOutputV1 } from './structured-output-pipeline'
-import {
-  renderFrozenPromptExecutionV1,
-  type PromptExecutionEvidenceV1,
-  type PromptExecutionOptionsV1,
-} from './prompt-execution'
-import {
-  executeContextGatewayV1,
-  type ContextGatewayExecutionV1,
-} from '../context-gateway/execution'
-import { isContextGatewayRequiredForWriteTargetV1 } from '../context-gateway/skill-policy'
-import {
-  assembleContextGatewayPacketV1,
-  contextGatewayInputStateSourceKeysV1,
-  projectContextGatewayInputStateV1,
-} from './context-gateway-input'
+import { usePromptStore } from '../../stores/prompt';
+import { renderPrompt } from '../ai/prompt-engine';
+import { worldviewContentTemplateVariablesV1 } from '../creation/worldview-content-skill';
+import { supportsVerifiedJsonObjectResponseForModelV1 } from '../ai/provider-capabilities';
+import { getModelCapacityLimitsV1 } from '../ai/model-capacity';
+import { resolveFieldGenerationRequestModeV1 } from './field-generation-request-mode';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { chat, resolveRequestConfig, type ChatResult } from '../ai/client';
+import type { FieldGenerationMode } from '../ai/field-generation-context';
+import { db } from '../db/schema';
+import type { GenerationGateIssue, GenerationNode, PreparedGenerationNode } from '../generation/generation-node';
+import { prepareGenerationNode } from '../generation/generation-node';
+import { adopt } from '../registry/adopt';
+import { assembleContext } from '../registry/assemble-context';
+import { WORLDVIEW_GENERATABLE_FIELD_SPECS, type WorldviewGeneratableField } from '../registry/field-registry';
+import type { AdoptResult, AssembleContextResult } from '../registry/types';
+import type { AIConfig, ChatMessage, DivineDesign, NaturalResources, Worldview, PowerSystem } from '../types';
+import type { WorkspaceScope } from '../types/world-ownership';
+import { readOwnedRows, resolveReadScopeLike, resolveScope, scopeTransactionTables } from '../workspace/scope';
+import { createAgentContextCompressionSessionV1, type AgentContextCompressionRuntimeV1 } from './context-compression';
+import { attachAgentContextInputStateV1, evidenceFromContextResult, resolveAgentContextPolicy, type AgentContextEvidence, type AgentContextProfile } from './context-policy';
+import type { MasterCandidateModelIdentityV1 } from './master-candidate-semantic-review';
+import { buildAgentSkillInputGuidanceV1, resolveAgentSkillInputStateV1, resolveAgentSkillV1, type AgentSkillId } from './skill-registry';
+import { parseStructuredOutputV1 } from './structured-output-pipeline';
+import { renderFrozenPromptExecutionV1, type PromptExecutionEvidenceV1, type PromptExecutionOptionsV1 } from './prompt-execution';
+import { executeContextGatewayV1, type ContextGatewayExecutionV1 } from '../context-gateway/execution';
+import { isContextGatewayRequiredForWriteTargetV1 } from '../context-gateway/skill-policy';
+import { assembleContextGatewayPacketV1, contextGatewayInputStateSourceKeysV1, projectContextGatewayInputStateV1 } from './context-gateway-input';
 
 export const WORLDVIEW_AGENT_FIELDS = WORLDVIEW_GENERATABLE_FIELD_SPECS
   .map(spec => spec.field) as readonly WorldviewGeneratableField[]

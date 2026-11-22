@@ -1,7 +1,7 @@
-import { seedRandom } from '../engine/random'
-import { atlasIslandInsideWater } from './inspect'
-import { atlasShorelinePoints } from './shoreline'
-import type { AtlasGeometry, Point } from './geometry'
+import { seedRandom } from '../engine/random';
+import { atlasIslandInsideWater } from './inspect';
+import { atlasShorelinePoints } from './shoreline';
+import type { AtlasGeometry, Point } from './geometry';
 
 export function line(points: Point[], closed = false) {
   const path = new Path2D()

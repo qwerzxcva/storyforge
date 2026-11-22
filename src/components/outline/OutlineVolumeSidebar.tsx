@@ -1,19 +1,11 @@
-import { useEffect, useState } from 'react'
-import { Check, GripVertical, Layers, Loader2, Plus, Sparkles, X } from 'lucide-react'
-import type { ParsedChapter } from '../../lib/ai/parse-outline-output'
-import type { BatchOutlineProgress } from '../../lib/ai/batch-outline-runner'
-import type { OutlineNode, WorldGroup } from '../../lib/types'
-import { useDragReorder } from './useDragReorder'
-import {
-  chapterDropProps,
-  hasChapterDragPayload,
-  type ChapterDragPayload,
-  type GetActiveChapterDrag,
-} from './chapter-drag'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-} from '../shared/initial-record-target'
+import { useEffect, useState } from 'react';
+import { Check, GripVertical, Layers, Loader2, Plus, Sparkles, X } from 'lucide-react';
+import type { ParsedChapter } from '../../lib/ai/parse-outline-output';
+import type { BatchOutlineProgress } from '../../lib/ai/batch-outline-runner';
+import type { OutlineNode, WorldGroup } from '../../lib/types';
+import { useDragReorder } from './useDragReorder';
+import { chapterDropProps, hasChapterDragPayload, type ChapterDragPayload, type GetActiveChapterDrag } from './chapter-drag';
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes } from '../shared/initial-record-target';
 
 interface OutlineVolumeSidebarProps {
   volumes: OutlineNode[]

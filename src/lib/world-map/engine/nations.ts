@@ -3,20 +3,9 @@
  * 城市：按适宜度评分放置
  * 国家：从首都 Dijkstra 扩张
  */
-
-import type {
-  GridCells,
-  Burg,
-  State,
-  Culture,
-  Province,
-  Road,
-  MapSpatialEntity,
-  SpatialPlacement,
-  SpatialScaleTier,
-} from './types'
-import { BIOMES } from './climate'
-import { getStateName, getCapitalName, getTownName, getCultureName, getProvinceName } from './name-pool'
+import type { GridCells, Burg, State, Culture, Province, Road, MapSpatialEntity, SpatialPlacement, SpatialScaleTier } from './types';
+import { BIOMES } from './climate';
+import { getStateName, getCapitalName, getTownName, getCultureName, getProvinceName } from './name-pool';
 
 const SEA_LEVEL = 20
 

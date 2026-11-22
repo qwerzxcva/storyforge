@@ -1,10 +1,7 @@
-import type { DetailedOutline, EmotionArc } from '../types'
-import {
-  normalizeParsedScenes,
-  parseEnhancedDetailResult,
-} from '../ai/adapters/detail-scene-adapter'
-import { adopt } from '../registry/adopt'
-import type { WorkspaceScope } from '../types/world-ownership'
+import type { DetailedOutline, EmotionArc } from '../types';
+import { normalizeParsedScenes, parseEnhancedDetailResult } from '../ai/adapters/detail-scene-adapter';
+import { adopt } from '../registry/adopt';
+import type { WorkspaceScope } from '../types/world-ownership';
 
 export interface AdoptWorkshopResult {
   ok: boolean

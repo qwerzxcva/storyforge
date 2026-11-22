@@ -1,4 +1,4 @@
-import type { WorldviewGeneratableField } from '../registry/field-registry'
+import type { WorldviewGeneratableField } from '../registry/field-registry';
 
 // Content methods for the existing single-field contract, shared by step and Agent entry points.
 // These are creative guidance, not new required fields or a mechanical quality gate.

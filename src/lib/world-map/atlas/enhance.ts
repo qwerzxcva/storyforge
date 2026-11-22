@@ -1,8 +1,8 @@
-import { drawTerrain } from './paint'
-import { along, atlasSurfacePaths, line, watercourse } from './paths'
-import type { AtlasGeometry } from './geometry'
-import type { AtlasLayers } from './layers'
-import type { AtlasViewStyle } from './view-style'
+import { drawTerrain } from './paint';
+import { along, atlasSurfacePaths, line, watercourse } from './paths';
+import type { AtlasGeometry } from './geometry';
+import type { AtlasLayers } from './layers';
+import type { AtlasViewStyle } from './view-style';
 
 type Material = 'ridge' | 'wood' | 'desert' | 'marsh'
 const masks = new WeakMap<AtlasGeometry, Map<string, HTMLCanvasElement>>()

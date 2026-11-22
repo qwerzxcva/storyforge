@@ -1,4 +1,4 @@
-import type { NarrativeDomainMetadataV1, NarrativeDomainFieldsV1 } from './narrative-domain'
+import type { NarrativeDomainMetadataV1, NarrativeDomainFieldsV1 } from './narrative-domain';
 /**
  * 全局故事线 — Phase B
  * 给全书一条从开篇到结局的主线剧情锚点

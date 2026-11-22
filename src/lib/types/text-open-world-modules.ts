@@ -1,5 +1,5 @@
-import type { TextOpenWorldConditionExpressionV1 } from './text-open-world-condition'
-import type { TextOpenWorldCombatStatModifierV2, TextOpenWorldEffectDefinitionV1 } from './text-open-world-effect'
+import type { TextOpenWorldConditionExpressionV1 } from './text-open-world-condition';
+import type { TextOpenWorldCombatStatModifierV2, TextOpenWorldEffectDefinitionV1 } from './text-open-world-effect';
 
 export type TextOpenWorldStorylineKindV1 = 'mainline' | 'significant'
 export type TextOpenWorldStorylineOwnerKindV1 = 'core' | 'character' | 'faction' | 'region'

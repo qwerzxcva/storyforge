@@ -5,17 +5,13 @@
  * 采用迭代式交互：每次生成一个剧情走向方案，用户可收藏/重生成/选定。
  * 5轨引擎仅在生成章节细纲时使用，不在走向规划阶段使用。
  */
-import type { ChatMessage } from '../types'
-import { executeRegisteredAIEntryV1 } from '../agent/formal-ai-entry'
-import { parseChapterOutlineOutput, type ParsedChapter } from '../ai/parse-outline-output'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { divideChaptersIntoBlocks, getBlockLabels, type ChunkedGenerationConfig } from './generation-modes'
-import { NarrativeEngine, type ChapterFocus } from './narrative-engine'
-import {
-  type DirectionTemplate,
-  parseDirectionTemplate,
-  DIRECTION_TEMPLATE_PROMPT,
-} from './direction-template'
+import type { ChatMessage } from '../types';
+import { executeRegisteredAIEntryV1 } from '../agent/formal-ai-entry';
+import { parseChapterOutlineOutput, type ParsedChapter } from '../ai/parse-outline-output';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { divideChaptersIntoBlocks, getBlockLabels, type ChunkedGenerationConfig } from './generation-modes';
+import { NarrativeEngine, type ChapterFocus } from './narrative-engine';
+import { type DirectionTemplate, parseDirectionTemplate, DIRECTION_TEMPLATE_PROMPT } from './direction-template';
 
 export interface StoryArcCompliance {
   score: number | null             // 0-100, 故事线符合度评分

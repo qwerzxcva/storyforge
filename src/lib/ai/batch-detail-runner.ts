@@ -5,43 +5,20 @@
  * batchGenerateDetails: 对无细纲的章节批量生成 durable 候选，经作者确认后受控采纳。
  * 支持进度回调、AbortSignal 中途停止、单章失败留证和父任务终态验证。
  */
-
-import { useAIConfigStore } from '../../stores/ai-config'
-import { buildEnhancedDetailPrompt } from './adapters/detail-scene-adapter'
-import type { OutlineNode, DetailedOutline, WorkspaceScope } from '../types'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { hashDetailedOutlineSourceSummaryV1 } from '../agent/run/detailed-outline-generation-durable'
-import {
-  beginDetailedOutlineBatchGatewayStepV1,
-  cancelDetailedOutlineBatchRunV1,
-  commitDetailedOutlineBatchCandidateV1,
-  createDetailedOutlineBatchDurableRunV1,
-  detailedOutlineBatchStepIdV1,
-  failDetailedOutlineBatchStepV1,
-  finalizeDetailedOutlineBatchGatewayStepV1,
-  pauseDetailedOutlineBatchRunV1,
-  persistDetailedOutlineBatchCandidateV1,
-  recordDetailedOutlineBatchCandidateV1,
-  rejectDetailedOutlineBatchCandidateV1,
-  verifyDetailedOutlineBatchRunV1,
-  DETAILED_OUTLINE_BATCH_GENERATION_CANDIDATE_TYPE_V1,
-  type DetailedOutlineBatchCandidateV1,
-} from '../agent/run/detailed-outline-batch-durable'
-import { executeRegisteredAIEntryV1 } from '../agent/formal-ai-entry'
-import {
-  buildAgentSkillInputGuidanceV1,
-  getAgentSkillV1,
-} from '../agent/skill-registry'
-import { projectContextGatewayInputStateV1 } from '../agent/context-gateway-input'
-import {
-  buildDetailedOutlineCopilotPatchV1,
-  buildDetailedOutlineSceneMergeGuidanceV1,
-  detailedOutlinePostStateMatchesPatchV1,
-} from '../agent/detailed-outline-copilot'
-import { prepareDetailedOutlineGatewayAssemblyV1 } from '../outline/detail-gateway-context'
-import { readOwnedRows } from '../workspace/scope'
-import { flushPendingEditsV1 } from '../authoring/pending-edit-coordinator'
-import { db } from '../db/schema'
+import { useAIConfigStore } from '../../stores/ai-config';
+import { buildEnhancedDetailPrompt } from './adapters/detail-scene-adapter';
+import type { OutlineNode, DetailedOutline, WorkspaceScope } from '../types';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { hashDetailedOutlineSourceSummaryV1 } from '../agent/run/detailed-outline-generation-durable';
+import { beginDetailedOutlineBatchGatewayStepV1, cancelDetailedOutlineBatchRunV1, commitDetailedOutlineBatchCandidateV1, createDetailedOutlineBatchDurableRunV1, detailedOutlineBatchStepIdV1, failDetailedOutlineBatchStepV1, finalizeDetailedOutlineBatchGatewayStepV1, pauseDetailedOutlineBatchRunV1, persistDetailedOutlineBatchCandidateV1, recordDetailedOutlineBatchCandidateV1, rejectDetailedOutlineBatchCandidateV1, verifyDetailedOutlineBatchRunV1, DETAILED_OUTLINE_BATCH_GENERATION_CANDIDATE_TYPE_V1, type DetailedOutlineBatchCandidateV1 } from '../agent/run/detailed-outline-batch-durable';
+import { executeRegisteredAIEntryV1 } from '../agent/formal-ai-entry';
+import { buildAgentSkillInputGuidanceV1, getAgentSkillV1 } from '../agent/skill-registry';
+import { projectContextGatewayInputStateV1 } from '../agent/context-gateway-input';
+import { buildDetailedOutlineCopilotPatchV1, buildDetailedOutlineSceneMergeGuidanceV1, detailedOutlinePostStateMatchesPatchV1 } from '../agent/detailed-outline-copilot';
+import { prepareDetailedOutlineGatewayAssemblyV1 } from '../outline/detail-gateway-context';
+import { readOwnedRows } from '../workspace/scope';
+import { flushPendingEditsV1 } from '../authoring/pending-edit-coordinator';
+import { db } from '../db/schema';
 
 // ── 公共类型 ─────────────────────────────────────────────────────
 

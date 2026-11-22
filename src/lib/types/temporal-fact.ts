@@ -1,4 +1,4 @@
-import type { NarrativeDomainMetadataV1, NarrativeDomainFieldsV1 } from './narrative-domain'
+import type { NarrativeDomainMetadataV1, NarrativeDomainFieldsV1 } from './narrative-domain';
 /**
  * NS-4 · 双层事实记忆 — 时序事实账本数据模型。
  *

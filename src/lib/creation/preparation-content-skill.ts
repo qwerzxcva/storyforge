@@ -1,4 +1,4 @@
-import type { ChatMessage } from '../types'
+import type { ChatMessage } from '../types';
 
 export const STYLE_LEARNING_CONTENT_GUIDANCE = `【样本证据与文风边界】
 从实际提供的文本、改稿对照和明确反馈归纳。每个主要判断给一处短引文或具体措辞作依据；引文逐字保留原文，不能换人称或拼接成原文没有的话，区分跨样本倾向、当前场景所需和个别角色声音；每项用“作者明确要求”“本次样本观察”或“暂定倾向”标清范围；样本只有安静场景时，不外推行动场景。单段现象只算暂定观察。角色口头禅不能升级为全书旁白的固定腔调。

@@ -28,11 +28,10 @@ export const IMPLEMENTATION_PATHS = [
   'scripts/ttrpg-local-tts/product-contract.mjs', 'scripts/ttrpg-local-tts/product-worker.py',
   'scripts/ttrpg-local-tts/product-jobs.mjs', 'scripts/ttrpg-local-tts/product-bridge.mjs',
   'scripts/ttrpg-local-tts/engine.py', 'scripts/ttrpg-local-tts/reading_frontend.py',
-  'scripts/ttrpg-local-tts/reading-preview.mjs', 'src/lib/ttrpg/open-local-voice-transport.ts',
-  'src/lib/ttrpg/open-voice-execution.ts',
+  'scripts/ttrpg-local-tts/reading-preview.mjs',
 ]
 export const QWEN_IMPLEMENTATION_PATHS = [...IMPLEMENTATION_PATHS, 'scripts/ttrpg-local-tts/qwen-product.py',
-  'scripts/ttrpg-local-tts/qwen-native-eval-profile.json', 'src/lib/ttrpg/open-voice-execution-input.ts', 'src/lib/ttrpg/open-voice-product-profile.ts']
+  'scripts/ttrpg-local-tts/qwen-native-eval-profile.json']
 export function assertProductImplementation(profile = productProfile) {
   const p = currentProductProfile(profile), sources = p.implementation?.sources, qwen = isQwenProfile(p)
   const file = qwen ? `product-qwen-${p.speaker}-v1.json` : 'product-profile.json'
@@ -48,10 +47,6 @@ export function assertProductImplementation(profile = productProfile) {
   for (const row of sources) {
     if (!exact(row, ['path', 'sha256']) || digest(readFileSync(path.join(repo, row.path))) !== row.sha256) throw new Error('Product implementation bytes changed')
   }
-  const entry = JSON.parse(readFileSync(path.join(repo, 'src/lib/agent/ai-entry-registry.json'), 'utf8')).entries.filter(row => row.entryId === 'ttrpg.open.local-voice')
-  if (entry.length !== 1 || entry[0].outputModality !== 'audio' || entry[0].adoptAllowed !== false
-    || entry[0].skillId !== 'prose.ttrpg-open-local-voice' || entry[0].executionBoundary !== 'product-runtime'
-    || stable(entry[0].allowedCallers) !== stable(['src/lib/ttrpg/open-voice-execution.ts'])) throw new Error('Product audio entry is not registered')
 }
 const hash = v => typeof v === 'string' && /^[a-f0-9]{64}$/.test(v)
 const key = v => typeof v === 'string' && v.length > 0 && v.length <= 500 && !/[\x00-\x1f]/.test(v)

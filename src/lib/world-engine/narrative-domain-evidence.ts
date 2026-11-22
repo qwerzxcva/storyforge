@@ -1,12 +1,12 @@
-import type { NarrativeDomainRegistryV1 } from '../types/narrative-domain-registry'
-import { currentNarrativeDomainRegistryV1, narrativeDomainTableV1 } from './narrative-domain-registry'
-import type { NarrativeDomainEvidenceV1, NarrativeDomainSourceRefV1 } from '../types/narrative-domain'
-import type { NarrativeEvidenceSourceV1, EvidenceSpanV1, VisibilityV1 } from '../types/narrative-ir'
-import type { NarrativeDomainCaptureV1, NarrativeDomainRowV1 } from './narrative-domain-capture'
-import { narrativeDomainReferenceTargetV1 } from '../narrative-domain/references'
-import { hashNarrativeBytesV1, narrativeFail, pointerV1 } from './narrative-json'
-import { verifyNarrativeEvidenceV1 } from './narrative-ir'
-import { intersectNarrativeVisibilityV1 } from '../narrative-domain/visibility'
+import type { NarrativeDomainRegistryV1 } from '../types/narrative-domain-registry';
+import { currentNarrativeDomainRegistryV1, narrativeDomainTableV1 } from './narrative-domain-registry';
+import type { NarrativeDomainEvidenceV1, NarrativeDomainSourceRefV1 } from '../types/narrative-domain';
+import type { NarrativeEvidenceSourceV1, EvidenceSpanV1, VisibilityV1 } from '../types/narrative-ir';
+import type { NarrativeDomainCaptureV1, NarrativeDomainRowV1 } from './narrative-domain-capture';
+import { narrativeDomainReferenceTargetV1 } from '../narrative-domain/references';
+import { hashNarrativeBytesV1, narrativeFail, pointerV1 } from './narrative-json';
+import { verifyNarrativeEvidenceV1 } from './narrative-ir';
+import { intersectNarrativeVisibilityV1 } from '../narrative-domain/visibility';
 
 /** Logical field pointer into a keyed subrecord, never an array position. The
  * resolver returns the exact stored statement bytes without normalization. */

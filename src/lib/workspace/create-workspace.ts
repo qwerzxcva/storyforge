@@ -1,7 +1,7 @@
-import type { CreateWorkspaceInput, NovelWorkflowProfile, Project, Work, WorkKind, WorkspacePurpose, WorkspaceScope, World, CommunityWorldOrigin } from '../types'
-import { assertCurrentProductEntryV1, productCatalogIdForWorkV1 } from '../product/product-catalog'
-import { normalizeNewWorkClassification } from './work-kind'
-import { allocateWorkspace, workspaceCreationTransactionTablesV1 as allocationTables } from './workspace-allocation'
+import type { CreateWorkspaceInput, NovelWorkflowProfile, Project, Work, WorkKind, WorkspacePurpose, WorkspaceScope, World, CommunityWorldOrigin } from '../types';
+import { assertCurrentProductEntryV1, productCatalogIdForWorkV1 } from '../product/product-catalog';
+import { normalizeNewWorkClassification } from './work-kind';
+import { allocateWorkspace, workspaceCreationTransactionTablesV1 as allocationTables } from './workspace-allocation';
 
 
 export interface CreateWorkspaceOptions {
@@ -49,6 +49,5 @@ export async function createWorkspace(
   assertCurrentProductEntryV1(productCatalogIdForWorkV1(normalizeNewWorkClassification({
     kind: options.kind, novelProfile: options.novelProfile, targetWordCount: input.targetWordCount,
   })))
-  if ((options.purpose ?? input.workspacePurpose) === 'world-engine') assertCurrentProductEntryV1('world-engine')
   return allocateWorkspace(input, options)
 }

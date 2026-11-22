@@ -1,11 +1,5 @@
-import { RACES_GATEWAY_EVAL_FIXTURES_V1 } from './fixtures'
-import type {
-  RacesGatewayBlindGradeV1,
-  RacesGatewayEvalAttemptFailureV1,
-  RacesGatewayEvalResultV1,
-  RacesGatewayEvalScoreV1,
-  RacesGatewayEvalThresholdsV1,
-} from './types'
+import { RACES_GATEWAY_EVAL_FIXTURES_V1 } from './fixtures';
+import type { RacesGatewayBlindGradeV1, RacesGatewayEvalAttemptFailureV1, RacesGatewayEvalResultV1, RacesGatewayEvalScoreV1, RacesGatewayEvalThresholdsV1 } from './types';
 
 export const RACES_GATEWAY_EVAL_THRESHOLDS_V1: RacesGatewayEvalThresholdsV1 = {
   emptyPlaceholderMax: 0.05,

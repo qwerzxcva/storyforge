@@ -1,33 +1,15 @@
-import { chat } from '../../ai/client'
-import {
-  adoptCultivationProgressExtractionAtomicV1,
-  buildCultivationProgressExpectedProjectionV1,
-  buildCultivationProgressExtractionMessagesV1,
-  formatCultivationProgressExtractionBaselineV1,
-  parseCultivationProgressExtractionStrictV1,
-  readCultivationProgressExtractionBaselineV1,
-  readCultivationProgressExtractionPromptTemplateSnapshotV1,
-  type CultivationProgressExpectedProjectionV1,
-  type CultivationProgressExtractionBaselineV1,
-  type CultivationProgressExtractionCandidateItemV1,
-  type CultivationProgressFormalItemV1,
-} from '../../cultivation/progress'
-import { assembleContext } from '../../registry/assemble-context'
-import type { AIConfig, ChatMessage, WorkspaceScope } from '../../types'
-import { readOwnedRows } from '../../workspace/scope'
-import { createAgentSkillExecutionBindingV1 } from '../execution-binding'
-import { getAgentSkillV1 } from '../skill-registry'
-import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  staleAgentRunVerificationV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { canonicalStringify, hashCanonicalValue } from './hash'
-import { createVerificationReceiptV1 } from './verification-receipt'
+import { chat } from '../../ai/client';
+import { adoptCultivationProgressExtractionAtomicV1, buildCultivationProgressExpectedProjectionV1, buildCultivationProgressExtractionMessagesV1, formatCultivationProgressExtractionBaselineV1, parseCultivationProgressExtractionStrictV1, readCultivationProgressExtractionBaselineV1, readCultivationProgressExtractionPromptTemplateSnapshotV1, type CultivationProgressExpectedProjectionV1, type CultivationProgressExtractionBaselineV1, type CultivationProgressExtractionCandidateItemV1, type CultivationProgressFormalItemV1 } from '../../cultivation/progress';
+import { assembleContext } from '../../registry/assemble-context';
+import type { AIConfig, ChatMessage, WorkspaceScope } from '../../types';
+import { readOwnedRows } from '../../workspace/scope';
+import { createAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { getAgentSkillV1 } from '../skill-registry';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, staleAgentRunVerificationV1, type AgentRunSnapshotV1 } from './event-store';
+import { canonicalStringify, hashCanonicalValue } from './hash';
+import { createVerificationReceiptV1 } from './verification-receipt';
 
 export const CULTIVATION_PROGRESS_EXTRACTION_STEP_ID_V1 = 'prose:cultivation-progress-extraction' as const
 export const CULTIVATION_PROGRESS_EXTRACTION_VERIFIER_SET_V1 = 'cultivation-progress-extraction-terminal-v1' as const

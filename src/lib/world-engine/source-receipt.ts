@@ -1,13 +1,13 @@
-import { db } from '../db/schema'
-import type { World, WorldDerivationV1, WorldOwnerScope, WorldRelease, WorldSourceReceiptV1 } from '../types'
-import { PROJECT_TABLES } from '../registry/project-tables'
-import { canonicalStringify } from '../agent/run/hash'
-import { resolveWorldOwnerScopeLike, scopeTransactionTables } from '../workspace/scope'
-import { cacheFrozenWorldReleaseInTransactionV1 } from './reference-cache'
-import { assertCapturedWorldSourceWireV1, captureWorldSourceWireV1, type CapturedWorldSourceWireV1 } from './world-package'
-import { assertWorldSourceReceiptBindingV1, assertWorldSourceReceiptRowV1 } from './source-receipt-contract'
-import { inspectCommunityWorldOriginV1 } from './source-declaration'
-import type { VerifiedWorldReleaseV1 } from './release-codec'
+import { db } from '../db/schema';
+import type { World, WorldDerivationV1, WorldOwnerScope, WorldRelease, WorldSourceReceiptV1 } from '../types';
+import { PROJECT_TABLES } from '../registry/project-tables';
+import { canonicalStringify } from '../agent/run/hash';
+import { resolveWorldOwnerScopeLike, scopeTransactionTables } from '../workspace/scope';
+import { cacheFrozenWorldReleaseInTransactionV1 } from './reference-cache';
+import { assertCapturedWorldSourceWireV1, captureWorldSourceWireV1, type CapturedWorldSourceWireV1 } from './world-package';
+import { assertWorldSourceReceiptBindingV1, assertWorldSourceReceiptRowV1 } from './source-receipt-contract';
+import { inspectCommunityWorldOriginV1 } from './source-declaration';
+import type { VerifiedWorldReleaseV1 } from './release-codec';
 
 type Row = Record<string, unknown>
 type Rows = ReadonlyMap<string, readonly Row[]>

@@ -1,11 +1,7 @@
-import type {
-  Character,
-  ImportantLocation,
-  ItemLedgerEntry,
-} from '../types'
-import type { CodexCategory, CodexEntry } from '../types/codex'
-import { codexEntryInWorld, parseEntryFields, parseFieldSchema } from '../types/codex'
-import { aggregateInventory } from '../types/item-ledger'
+import type { Character, ImportantLocation, ItemLedgerEntry } from '../types';
+import type { CodexCategory, CodexEntry } from '../types/codex';
+import { codexEntryInWorld, parseEntryFields, parseFieldSchema } from '../types/codex';
+import { aggregateInventory } from '../types/item-ledger';
 
 export type EditorEntityKind = 'character' | 'item' | 'location' | 'codex'
 

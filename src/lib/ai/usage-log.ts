@@ -5,9 +5,9 @@
  * 类型来源于各 AI 行为的 moduleKey（如 chapter.content / worldview.dimension），
  * 映射为友好中文标签展示。
  */
-import { db } from '../db/schema'
-import type { AIProvider } from '../types'
-import type { AITaskKind } from './task-routing'
+import { db } from '../db/schema';
+import type { AIProvider } from '../types';
+import type { AITaskKind } from './task-routing';
 
 /** 一条 AI 消耗记录 */
 export interface AIUsageEntry {

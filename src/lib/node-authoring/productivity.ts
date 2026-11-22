@@ -1,5 +1,5 @@
-import { nanoid } from 'nanoid'
-import type { AuthoringEdge, AuthoringNodeGraph, AuthoringNodeInstance } from './contracts'
+import { nanoid } from 'nanoid';
+import type { AuthoringEdge, AuthoringNodeGraph, AuthoringNodeInstance } from './contracts';
 
 const NODE_WIDTH = 238
 const NODE_HEIGHT = 168
@@ -60,6 +60,7 @@ export function autoLayoutAuthoringGraph(graph: AuthoringNodeGraph): AuthoringNo
   const indegree = new Map(Array.from(incoming, ([id, values]) => [id, values.length]))
   const layers = new Map<string, number>()
   const queue = graph.nodes.filter(node => indegree.get(node.id) === 0).map(node => node.id)
+  queue.forEach(id => layers.set(id, 0))
   while (queue.length) {
     const id = queue.shift()!
     const layer = layers.get(id) ?? 0

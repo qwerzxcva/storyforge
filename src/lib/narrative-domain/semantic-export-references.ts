@@ -1,4 +1,4 @@
-import type { TableSpec } from '../registry/types'
+import type { TableSpec } from '../registry/types';
 
 type ExportReferences = Pick<TableSpec, 'exportRemap' | 'exportRefRemap'>
 

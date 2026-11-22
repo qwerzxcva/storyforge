@@ -1,7 +1,7 @@
-import type { VerifiedWorldReleaseV1 } from './release-codec'
-import { isWorkspaceUid } from '../memory/identity'
-import { isPublicWorldCode } from '../workspace/identity'
-import type { WorldRevisionOriginV1 } from '../types/world-release'
+import type { VerifiedWorldReleaseV1 } from './release-codec';
+import { isWorkspaceUid } from '../memory/identity';
+import { isPublicWorldCode } from '../workspace/identity';
+import type { WorldRevisionOriginV1 } from '../types/world-release';
 
 export function assertWorldRevisionOriginV1(value: unknown): asserts value is WorldRevisionOriginV1 {
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw Error('[world-publication-origin] 来源记录无效')

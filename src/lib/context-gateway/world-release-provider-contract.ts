@@ -1,4 +1,4 @@
-import type { ContextResourceKind } from '../registry/types'
+import type { ContextResourceKind } from '../registry/types';
 
 /** Lightweight contract shared by CONTEXT_SOURCES and the implementation.
  * Keep this module dependency-free so registry initialization cannot recurse

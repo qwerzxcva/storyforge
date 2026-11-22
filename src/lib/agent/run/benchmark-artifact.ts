@@ -1,17 +1,6 @@
-import type { AgentHarnessBenchmarkArtifactV1 } from '../../types/agent-run'
-import { hashCanonicalValue } from './hash'
-import {
-  assertExactKeys,
-  assertUnique,
-  failSchema,
-  readArray,
-  readEnum,
-  readHash,
-  readInteger,
-  readNonNegativeNumber,
-  readRecord,
-  readString,
-} from './schema-utils'
+import type { AgentHarnessBenchmarkArtifactV1 } from '../../types/agent-run';
+import { hashCanonicalValue } from './hash';
+import { assertExactKeys, assertUnique, failSchema, readArray, readEnum, readHash, readInteger, readNonNegativeNumber, readRecord, readString } from './schema-utils';
 
 type BenchmarkArtifactBodyV1 = Omit<AgentHarnessBenchmarkArtifactV1, 'artifactHash'>
 

@@ -1,5 +1,5 @@
-import { collectMapBoundarySegments } from '../engine/boundaries'
-import type { VoronoiMapData } from '../engine/types'
+import { collectMapBoundarySegments } from '../engine/boundaries';
+import type { VoronoiMapData } from '../engine/types';
 export type Point = [number, number]
 const kinds = [
   'land',

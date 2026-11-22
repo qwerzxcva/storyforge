@@ -1,18 +1,11 @@
-import { useCallback, useMemo, useRef, useState } from 'react'
-import { resolveRequestConfig, type StreamResult, type AIRequestConfigResolution } from '../lib/ai/client'
-import {
-  streamRegisteredAIEntryV1,
-  type FormalAICallMetaV1,
-} from '../lib/agent/formal-ai-entry'
-import { getAIConfigRequiredMessage, isAIConfigReady } from '../lib/ai/config-readiness'
-import { useAIConfigStore } from '../stores/ai-config'
-import {
-  type AIGenerationSession,
-  selectAIGenerationSession,
-  useAIGenerationSessionStore,
-} from '../stores/ai-generation-session'
-import type { AIConfig, ChatMessage } from '../lib/types'
-import type { TokenUsage } from '../lib/ai/logger'
+import { useCallback, useMemo, useRef, useState } from 'react';
+import { resolveRequestConfig, type StreamResult, type AIRequestConfigResolution } from '../lib/ai/client';
+import { streamRegisteredAIEntryV1, type FormalAICallMetaV1 } from '../lib/agent/formal-ai-entry';
+import { getAIConfigRequiredMessage, isAIConfigReady } from '../lib/ai/config-readiness';
+import { useAIConfigStore } from '../stores/ai-config';
+import { type AIGenerationSession, selectAIGenerationSession, useAIGenerationSessionStore } from '../stores/ai-generation-session';
+import type { AIConfig, ChatMessage } from '../lib/types';
+import type { TokenUsage } from '../lib/ai/logger';
 
 export interface UseAIStreamReturn {
   /** 当前累积的输出文本 */

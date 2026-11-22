@@ -1,6 +1,6 @@
-import type { TextOpenWorldActionUnavailableCodeV1, TextOpenWorldActionAvailabilityV1 } from './text-open-world-action'
-import type { TextOpenWorldEffectChangeV1 } from './text-open-world-effect'
-import type { TextOpenWorldDegradationV1, TextOpenWorldRandomEvidenceV1 } from './text-open-world-event'
+import type { TextOpenWorldActionUnavailableCodeV1, TextOpenWorldActionAvailabilityV1 } from './text-open-world-action';
+import type { TextOpenWorldEffectChangeV1 } from './text-open-world-effect';
+import type { TextOpenWorldDegradationV1, TextOpenWorldRandomEvidenceV1 } from './text-open-world-event';
 
 export type TextOpenWorldFeedbackStatusV1 =
   | 'rejected' | 'confirmation-required' | 'pending'

@@ -6,15 +6,9 @@
  * - 超窗口自动告警 + 建议裁剪
  * - 鼠标 hover 显示各段详情
  */
-import { useState } from 'react'
-import { AlertTriangle, ChevronDown, ChevronUp, Zap, Eye } from 'lucide-react'
-import {
-  formatTokenCount,
-  getBudgetColorClass,
-  autoTrimToFit,
-  type ContextBudget,
-  type ContextLayer,
-} from '../../lib/ai/context-budget'
+import { useState } from 'react';
+import { AlertTriangle, ChevronDown, ChevronUp, Zap, Eye } from 'lucide-react';
+import { formatTokenCount, getBudgetColorClass, autoTrimToFit, type ContextBudget, type ContextLayer } from '../../lib/ai/context-budget';
 
 interface Props {
   budget: ContextBudget

@@ -1,25 +1,19 @@
 /** Author confirmation for the exact paid import candidate. No model calls here. */
 import Dexie from 'dexie'
-import { db } from '../db/schema'
-import {
-  hashImportChunkTextV1, readImportSessionAuthorityInTransactionV1, readImportSessionAuthorityV1,
-} from '../../stores/import-session'
-import { addReferenceInTransactionV1, importedReferenceDataV1, referenceCreationTablesV1, useReferenceStore } from '../../stores/reference'
-import { readLatestVerifiedAgentRunCheckpointV1 } from '../agent/run/checkpoint'
-import { parseAgentRunEventV1 } from '../agent/run/event-schema'
-import {
-  agentRunScopeTransactionTablesV1, appendAgentRunEventWithSettlementInTransactionV1,
-  readVerifiedAgentRunInTransactionV1, withAgentRunMutationLockV1,
-  type AgentRunSnapshotV1, type appendAgentRunEventV1,
-} from '../agent/run/event-store'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { createVerificationReceiptV1, verifyVerificationReceiptIntegrityV1 } from '../agent/run/verification-receipt'
-import { REGISTRY_BY_NAME } from '../registry/project-tables'
-import type { ImportSession, UnifiedParseResult, WorkspaceScope } from '../types'
-import { applyChunkResult, importChunkAdoptionTablesV1, refreshImportedChunkStoresV1 } from './chunk-writer'
-import { getChunkText } from './chunk-text-registry'
-import { readDocumentImportChunkEvidenceV1 } from './document-parse-durable'
-import { buildFinalReport, mergeUnified, normalizeUnified } from './unified-merge'
+import { db } from '../db/schema';
+import { hashImportChunkTextV1, readImportSessionAuthorityInTransactionV1, readImportSessionAuthorityV1 } from '../../stores/import-session';
+import { addReferenceInTransactionV1, importedReferenceDataV1, referenceCreationTablesV1, useReferenceStore } from '../../stores/reference';
+import { readLatestVerifiedAgentRunCheckpointV1 } from '../agent/run/checkpoint';
+import { parseAgentRunEventV1 } from '../agent/run/event-schema';
+import { agentRunScopeTransactionTablesV1, appendAgentRunEventWithSettlementInTransactionV1, readVerifiedAgentRunInTransactionV1, withAgentRunMutationLockV1, type AgentRunSnapshotV1, type appendAgentRunEventV1 } from '../agent/run/event-store';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { createVerificationReceiptV1, verifyVerificationReceiptIntegrityV1 } from '../agent/run/verification-receipt';
+import { REGISTRY_BY_NAME } from '../registry/project-tables';
+import type { ImportSession, UnifiedParseResult, WorkspaceScope } from '../types';
+import { applyChunkResult, importChunkAdoptionTablesV1, refreshImportedChunkStoresV1 } from './chunk-writer';
+import { getChunkText } from './chunk-text-registry';
+import { readDocumentImportChunkEvidenceV1 } from './document-parse-durable';
+import { buildFinalReport, mergeUnified, normalizeUnified } from './unified-merge';
 
 const STEP = 'document-import.parse'
 const VERIFIER = 'document-import-terminal-v1'

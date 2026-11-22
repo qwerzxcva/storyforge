@@ -1,34 +1,18 @@
-import { chat } from '../../ai/client'
-import {
-  buildWorldExpandPromptFromRegisteredContextV1,
-  parseWorldExpandOutputStrictV1,
-  readWorldExpandPromptTemplateSnapshotV1,
-  WORLDVIEW_EXPAND_FIELDS_V1,
-  type ExpandedWorldview,
-} from '../../ai/world-group-ai'
-import { db } from '../../db/schema'
-import { adopt } from '../../registry/adopt'
-import { assembleContext } from '../../registry/assemble-context'
-import type { AIConfig, ChatMessage, WorkspaceScope, WorldGroup, Worldview } from '../../types'
-import { WORLD_GROUP_TYPE_LABELS } from '../../types/world-group'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  scopeTransactionTables,
-} from '../../workspace/scope'
-import { createAgentSkillExecutionBindingV1 } from '../execution-binding'
-import { getAgentSkillV1, WORLDVIEW_EXPAND_CONTEXT_SOURCE_KEYS } from '../skill-registry'
-import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  staleAgentRunVerificationV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { canonicalStringify, hashCanonicalValue } from './hash'
-import { createVerificationReceiptV1 } from './verification-receipt'
+import { chat } from '../../ai/client';
+import { buildWorldExpandPromptFromRegisteredContextV1, parseWorldExpandOutputStrictV1, readWorldExpandPromptTemplateSnapshotV1, WORLDVIEW_EXPAND_FIELDS_V1, type ExpandedWorldview } from '../../ai/world-group-ai';
+import { db } from '../../db/schema';
+import { adopt } from '../../registry/adopt';
+import { assembleContext } from '../../registry/assemble-context';
+import type { AIConfig, ChatMessage, WorkspaceScope, WorldGroup, Worldview } from '../../types';
+import { WORLD_GROUP_TYPE_LABELS } from '../../types/world-group';
+import { assertRecordInScope, readOwnedRows, scopeTransactionTables } from '../../workspace/scope';
+import { createAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { getAgentSkillV1, WORLDVIEW_EXPAND_CONTEXT_SOURCE_KEYS } from '../skill-registry';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, staleAgentRunVerificationV1, type AgentRunSnapshotV1 } from './event-store';
+import { canonicalStringify, hashCanonicalValue } from './hash';
+import { createVerificationReceiptV1 } from './verification-receipt';
 
 export const WORLDVIEW_EXPAND_STEP_ID_V1 = 'world-origin:worldview-expand' as const
 export const WORLDVIEW_EXPAND_VERIFIER_SET_V1 = 'worldview-expand-terminal-v1' as const

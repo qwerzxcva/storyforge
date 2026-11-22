@@ -1,25 +1,18 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { Check, Loader2, Network, RefreshCw, Sparkles, Trash2 } from 'lucide-react'
-import { useStorylineProgressStore } from '../../stores/storyline-progress'
-import { useMasterCopilot } from '../agent/useMasterCopilot'
-import { CTextarea } from '../shared/CompositionInput'
-import type { Chapter, StoryArc } from '../../lib/types'
-import { parseStages } from '../../lib/types'
-import { htmlToPlainText } from '../../lib/utils/html'
-import { resolveCanonicalChapterSequence } from '../../lib/ai/chapter-memory/canonical-chapter-sequence'
-import { readOwnedRows, resolveReadScopeLike } from '../../lib/workspace/scope'
-import {
-  validateCanonicalStorylineCandidateV1,
-  type StorylineAnalysisCandidates,
-} from '../../lib/storyline/storyline-progress'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-  useInitialRecordTarget,
-} from '../shared/initial-record-target'
-import type { StoryArcInitialRecordTarget } from './StoryArcPanel'
-import { useBeforeUnload } from '../../hooks/useBeforeUnload'
-import { registerPendingDraftFlusherV1 } from '../../lib/authoring/pending-edit-coordinator'
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Check, Loader2, Network, RefreshCw, Sparkles, Trash2 } from 'lucide-react';
+import { useStorylineProgressStore } from '../../stores/storyline-progress';
+import { useMasterCopilot } from '../agent/useMasterCopilot';
+import { CTextarea } from '../shared/CompositionInput';
+import type { Chapter, StoryArc } from '../../lib/types';
+import { parseStages } from '../../lib/types';
+import { htmlToPlainText } from '../../lib/utils/html';
+import { resolveCanonicalChapterSequence } from '../../lib/ai/chapter-memory/canonical-chapter-sequence';
+import { readOwnedRows, resolveReadScopeLike } from '../../lib/workspace/scope';
+import { validateCanonicalStorylineCandidateV1, type StorylineAnalysisCandidates } from '../../lib/storyline/storyline-progress';
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes, useInitialRecordTarget } from '../shared/initial-record-target';
+import type { StoryArcInitialRecordTarget } from './StoryArcPanel';
+import { useBeforeUnload } from '../../hooks/useBeforeUnload';
+import { registerPendingDraftFlusherV1 } from '../../lib/authoring/pending-edit-coordinator';
 
 const EMPTY: StorylineAnalysisCandidates = { progress: [], crossings: [], newArcs: [] }
 const STATUS_LABELS = {

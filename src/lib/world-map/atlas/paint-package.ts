@@ -1,7 +1,7 @@
-import { hashCanonicalValue } from '../../agent/run/hash'
-import type { AtlasGeometry } from './geometry'
-import type { AtlasViewStyle } from './view-style'
-import type { AtlasSymbolStyle } from './symbols'
+import { hashCanonicalValue } from '../../agent/run/hash';
+import type { AtlasGeometry } from './geometry';
+import type { AtlasViewStyle } from './view-style';
+import type { AtlasSymbolStyle } from './symbols';
 
 export const ATLAS_PAINT_REVISION = 'atlas-masked-20261119-v2'
 export interface AtlasPaintPackageV2 {

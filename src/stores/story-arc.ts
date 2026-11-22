@@ -1,14 +1,14 @@
 /** Scoped manual story-arc authoring; AI adoption keeps its registered path. */
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import type { StoryArc, WorkspaceScope } from '../lib/types'
-import { inspectStages, parseStages, stringifyStages, parseAuthorStoryStagesV1, validateAuthorStoryStagesV1, type StoryStage } from '../lib/types/story-arc'
-import { deleteStoryArcLifecycle, updateStoryArcStagesLifecycle } from '../lib/storyline/lifecycle'
-import { readStoryCoreIntentSnapshotV1, storyArcIntentAlignmentV1, type StoryArcIntentAlignmentV1 } from '../lib/storyline/intent-projection'
-import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope'
-import { coordinatePendingEditV1 } from '../lib/authoring/pending-edit-coordinator'
-import { FIELD_BY_TARGET } from '../lib/registry/field-registry'
-import { transactionTablesForReferenceCascade } from '../lib/registry/lifecycle'
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import type { StoryArc, WorkspaceScope } from '../lib/types';
+import { inspectStages, parseStages, stringifyStages, parseAuthorStoryStagesV1, validateAuthorStoryStagesV1, type StoryStage } from '../lib/types/story-arc';
+import { deleteStoryArcLifecycle, updateStoryArcStagesLifecycle } from '../lib/storyline/lifecycle';
+import { readStoryCoreIntentSnapshotV1, storyArcIntentAlignmentV1, type StoryArcIntentAlignmentV1 } from '../lib/storyline/intent-projection';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope';
+import { coordinatePendingEditV1 } from '../lib/authoring/pending-edit-coordinator';
+import { FIELD_BY_TARGET } from '../lib/registry/field-registry';
+import { transactionTablesForReferenceCascade } from '../lib/registry/lifecycle';
 
 type ArcPatch = Partial<Pick<StoryArc, 'name' | 'description' | 'type'>>
 type StagePatch = Partial<Omit<StoryStage, 'id'>>

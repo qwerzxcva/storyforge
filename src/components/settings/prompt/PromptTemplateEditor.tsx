@@ -1,17 +1,15 @@
-import { INSPIRATION_PREPARATION_MODES, INSPIRATION_PREPARATION_LABELS, INSPIRATION_PREPARATION_MODULES } from '../../../lib/inspiration/preparation-contract'
-import { useState, useEffect, useMemo, useRef } from 'react'
-import {
-  Save, Trash2, Copy, Download, CheckCircle2, Lock, Plus, X,
-} from 'lucide-react'
-import { usePromptStore } from '../../../stores/prompt'
-import { renderPrompt } from '../../../lib/ai/prompt-engine'
-import { PREVIEW_VARS } from '../../../lib/ai/prompt-preview-vars'
-import { encodePromptTemplateExchange } from '../../../lib/ai/prompt-template-exchange'
-import type { PromptTemplate, PromptModuleKey, PromptParameter } from '../../../lib/types/prompt'
+import { INSPIRATION_PREPARATION_MODES, INSPIRATION_PREPARATION_LABELS, INSPIRATION_PREPARATION_MODULES } from '../../../lib/inspiration/preparation-contract';
+import { useState, useEffect, useMemo, useRef } from 'react';
+import { Save, Trash2, Copy, Download, CheckCircle2, Lock, Plus, X } from 'lucide-react';
+import { usePromptStore } from '../../../stores/prompt';
+import { renderPrompt } from '../../../lib/ai/prompt-engine';
+import { PREVIEW_VARS } from '../../../lib/ai/prompt-preview-vars';
+import { encodePromptTemplateExchange } from '../../../lib/ai/prompt-template-exchange';
+import type { PromptTemplate, PromptModuleKey, PromptParameter } from '../../../lib/types/prompt';
 import PromptParametersEditor from './PromptParametersEditor'
 import PromptExamplesEditor from './PromptExamplesEditor'
-import { useDialog } from '../../shared/Dialog'
-import { useToast } from '../../shared/Toast'
+import { useDialog } from '../../shared/Dialog';
+import { useToast } from '../../shared/Toast';
 
 const ALL_MODULE_KEYS: { value: PromptModuleKey; label: string }[] = [
   { value: 'inspiration.reverse', label: '灵感 · 单世界完整反推' },

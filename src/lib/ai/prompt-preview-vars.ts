@@ -1,4 +1,4 @@
-import type { PromptVariableContext } from '../types'
+import type { PromptVariableContext } from '../types';
 
 /**
  * 实时预览用的样例变量字典。

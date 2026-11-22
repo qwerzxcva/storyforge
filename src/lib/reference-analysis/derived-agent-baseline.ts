@@ -1,15 +1,7 @@
-import type {
-  AnalysisDimension,
-  Reference,
-  ReferenceAnalysisRun,
-  ReferenceChunkAnalysis,
-  WorkspaceScope,
-} from '../types'
-import { ANALYSIS_DIMENSIONS, DIMENSION_LABELS, HISTORY_DIMENSIONS } from '../types/reference'
-import { readOwnedRows } from '../workspace/scope'
-import {
-  collectCharacterCraftTexts,
-} from './merge-analysis'
+import type { AnalysisDimension, Reference, ReferenceAnalysisRun, ReferenceChunkAnalysis, WorkspaceScope } from '../types';
+import { ANALYSIS_DIMENSIONS, DIMENSION_LABELS, HISTORY_DIMENSIONS } from '../types/reference';
+import { readOwnedRows } from '../workspace/scope';
+import { collectCharacterCraftTexts } from './merge-analysis';
 
 export type ReferenceDerivedModeV1 = 'summary' | 'characters'
 

@@ -1,46 +1,23 @@
-import { useAIConfigStore } from '../../stores/ai-config'
-import { usePromptStore } from '../../stores/prompt'
-import { appendSimplifiedChineseOutputConstraint, appendUserConstraint } from '../ai/adapters/prompt-guards'
-import { chat, resolveRequestConfig } from '../ai/client'
-import { renderPrompt } from '../ai/prompt-engine'
-import { db } from '../db/schema'
-import type {
-  GenerationGateIssue,
-  GenerationNode,
-  PreparedGenerationNode,
-} from '../generation/generation-node'
-import { prepareGenerationNode } from '../generation/generation-node'
-import { adopt } from '../registry/adopt'
-import { assembleContext } from '../registry/assemble-context'
-import type { AdoptResult, AssembleContextResult } from '../registry/types'
-import type { AIConfig, ChatMessage, CreativeRules, WorkspaceScope } from '../types'
-import {
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveScope,
-  scopeTransactionTables,
-} from '../workspace/scope'
-import {
-  createAgentContextCompressionSessionV1,
-  type AgentContextCompressionRuntimeV1,
-} from './context-compression'
-import {
-  attachAgentContextInputStateV1,
-  evidenceFromContextResult,
-  resolveAgentContextPolicy,
-  type AgentContextEvidence,
-  type AgentContextProfile,
-} from './context-policy'
-import type { MasterCandidateModelIdentityV1 } from './master-candidate-semantic-review'
-import {
-  buildAgentSkillInputGuidanceV1,
-  resolveAgentSkillInputStateV1,
-  resolveAgentSkillV1,
-  type AgentSkillId,
-} from './skill-registry'
-import { parseStructuredOutputV1 } from './structured-output-pipeline'
-import type { SystemFictionElementsV1 } from '../types/creative-rules'
-import { createSystemFictionElementsV1, parseSystemFictionElementsV1 } from '../prose/system-fiction-contract'
+import { useAIConfigStore } from '../../stores/ai-config';
+import { usePromptStore } from '../../stores/prompt';
+import { appendSimplifiedChineseOutputConstraint, appendUserConstraint } from '../ai/adapters/prompt-guards';
+import { chat, resolveRequestConfig } from '../ai/client';
+import { renderPrompt } from '../ai/prompt-engine';
+import { db } from '../db/schema';
+import type { GenerationGateIssue, GenerationNode, PreparedGenerationNode } from '../generation/generation-node';
+import { prepareGenerationNode } from '../generation/generation-node';
+import { adopt } from '../registry/adopt';
+import { assembleContext } from '../registry/assemble-context';
+import type { AdoptResult, AssembleContextResult } from '../registry/types';
+import type { AIConfig, ChatMessage, CreativeRules, WorkspaceScope } from '../types';
+import { readOwnedRows, resolveReadScopeLike, resolveScope, scopeTransactionTables } from '../workspace/scope';
+import { createAgentContextCompressionSessionV1, type AgentContextCompressionRuntimeV1 } from './context-compression';
+import { attachAgentContextInputStateV1, evidenceFromContextResult, resolveAgentContextPolicy, type AgentContextEvidence, type AgentContextProfile } from './context-policy';
+import type { MasterCandidateModelIdentityV1 } from './master-candidate-semantic-review';
+import { buildAgentSkillInputGuidanceV1, resolveAgentSkillInputStateV1, resolveAgentSkillV1, type AgentSkillId } from './skill-registry';
+import { parseStructuredOutputV1 } from './structured-output-pipeline';
+import type { SystemFictionElementsV1 } from '../types/creative-rules';
+import { createSystemFictionElementsV1, parseSystemFictionElementsV1 } from '../prose/system-fiction-contract';
 
 export const CREATIVE_RULES_FIELDS = [
   'writingStyle',

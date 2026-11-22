@@ -1,8 +1,8 @@
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import type { PromptTemplate, PromptModuleKey } from '../lib/types/prompt'
-import { SYSTEM_PROMPT_SEEDS } from '../lib/ai/prompt-seeds'
-import { decodePromptTemplateExchange, readPromptTemplateContent } from '../lib/ai/prompt-template-exchange'
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import type { PromptTemplate, PromptModuleKey } from '../lib/types/prompt';
+import { SYSTEM_PROMPT_SEEDS } from '../lib/ai/prompt-seeds';
+import { decodePromptTemplateExchange, readPromptTemplateContent } from '../lib/ai/prompt-template-exchange';
 
 interface PromptStore {
   templates: PromptTemplate[]

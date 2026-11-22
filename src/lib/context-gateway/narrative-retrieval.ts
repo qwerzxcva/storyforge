@@ -1,10 +1,10 @@
-import { hashChapterText } from '../ai/chapter-memory/text-normalization'
-import { buildLongTermConsistencyDossierV1 } from '../memory/consistency-dossier'
-import type { ContextSourceRefV1, FrozenResourceScopeV1, ContextTimeRangeV1 } from '../registry/types'
-import type { Chapter, OutlineNode, WorkspaceScope } from '../types'
-import type { NarrativeSummaryNode } from '../types/narrative-summary'
-import type { RetrievalChunk } from '../types/retrieval-chunk'
-import { readOwnedRows, resolveScope } from '../workspace/scope'
+import { hashChapterText } from '../ai/chapter-memory/text-normalization';
+import { buildLongTermConsistencyDossierV1 } from '../memory/consistency-dossier';
+import type { ContextSourceRefV1, FrozenResourceScopeV1, ContextTimeRangeV1 } from '../registry/types';
+import type { Chapter, OutlineNode, WorkspaceScope } from '../types';
+import type { NarrativeSummaryNode } from '../types/narrative-summary';
+import type { RetrievalChunk } from '../types/retrieval-chunk';
+import { readOwnedRows, resolveScope } from '../workspace/scope';
 
 function normalizedTerms(query: string): string[] {
   const normalized = query.toLocaleLowerCase('zh-CN').trim()

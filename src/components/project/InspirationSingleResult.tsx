@@ -1,16 +1,7 @@
-import {
-  ArrowDownToLine,
-  BookOpen,
-  Check,
-  ChevronDown,
-  ChevronRight,
-  Globe,
-  Loader2,
-  UserCircle,
-} from 'lucide-react'
-import type { ReactNode } from 'react'
-import type { ReverseCharacter, ReverseResult } from '../../lib/ai/inspiration-reverse'
-import { characterAxesLabel } from '../../lib/character/character-axes'
+import { ArrowDownToLine, BookOpen, Check, ChevronDown, ChevronRight, Globe, Loader2, UserCircle } from 'lucide-react';
+import type { ReactNode } from 'react';
+import type { ReverseCharacter, ReverseResult } from '../../lib/ai/inspiration-reverse';
+import { characterAxesLabel } from '../../lib/character/character-axes';
 
 interface Props {
   result: ReverseResult

@@ -1,20 +1,6 @@
-import type { MouseEventHandler } from 'react'
-import {
-  Bold as BoldIcon,
-  Heading2,
-  Heading3,
-  Italic as ItalicIcon,
-  List as ListIcon,
-  ListOrdered,
-  Minus,
-  PaintBucket,
-  Palette,
-  Quote,
-  Redo2,
-  Strikethrough,
-  Undo2,
-} from 'lucide-react'
-import type { EditorTypography } from '../../lib/editor-typography'
+import type { MouseEventHandler } from 'react';
+import { Bold as BoldIcon, Heading2, Heading3, Italic as ItalicIcon, List as ListIcon, ListOrdered, Minus, PaintBucket, Palette, Quote, Redo2, Strikethrough, Undo2 } from 'lucide-react';
+import type { EditorTypography } from '../../lib/editor-typography';
 
 const FONT_FAMILY_OPTIONS = [
   { label: '默认正文', value: '', preview: 'var(--font-serif)' },

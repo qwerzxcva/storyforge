@@ -6,7 +6,7 @@ import { createWorldRevision, publishWorldRevision } from '../../src/lib/world-e
 import { verifyWorldReleaseRecordV1 } from '../../src/lib/world-engine/release-codec'
 import { authorWorldQueryV1, openAuthorWorldQueryAccessV1, describeWorldQueryAccessV1, queryWorldReleaseV1, closeWorldQueryAccessV1 } from '../../src/lib/context-gateway/world-query-client'
 import { searchWorldReleaseV1, readWorldOriginalEvidenceV1, listAllWorldReleaseResourceDescriptorsV1 } from '../../src/lib/context-gateway/world-release-provider'
-import { seedNarrativeFamily, type NarrativeFamily } from './narrative-world-evaluation'
+import { seedNarrativeFamily, type NarrativeFamily } from './narrative-world-fixture'
 import type { NarrativeDomainFieldsV1 } from '../../src/lib/types/narrative-domain'
 import type { WorldQueryItemV1, WorldQueryV1 } from '../../src/lib/types/world-query'
 import type { TimePointV1 } from '../../src/lib/types/narrative-time'

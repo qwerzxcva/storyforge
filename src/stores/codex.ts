@@ -1,22 +1,19 @@
-import { transactionTablesForReferences, transactionTablesForReferenceCascade } from '../lib/registry/lifecycle'
+import { transactionTablesForReferences, transactionTablesForReferenceCascade } from '../lib/registry/lifecycle';
 /**
  * Phase 35-a — 词条系统 store
  *
  * 管理词条分类（内置 + 自定义，树状）与词条条目。
  * 首次加载某项目时自动播种 7 类内置分类（幂等）。
  */
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import type { WorkspaceScope } from '../lib/types'
-import { coordinatePendingEditV1 } from '../lib/authoring/pending-edit-coordinator'
-import { removeCodexEntryReferences } from '../lib/codex/references'
-import { cascadeRegisteredReferences } from '../lib/workspace/lifecycle'
-import { assertRegisteredTreeParentV1 } from '../lib/registry/tree-relations'
-import {
-  BUILTIN_CATEGORIES, stringifyFieldSchema, codexCategoryFormatIssueV1, codexEntryFormatIssueV1,
-  type CodexCategory, type CodexEntry, type CodexDomain, type CodexFieldDef,
-} from '../lib/types/codex'
-import { assertRecordInScope, getTableSpec, readOwnedRows, resolveReadScopeLike, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope'
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import type { WorkspaceScope } from '../lib/types';
+import { coordinatePendingEditV1 } from '../lib/authoring/pending-edit-coordinator';
+import { removeCodexEntryReferences } from '../lib/codex/references';
+import { cascadeRegisteredReferences } from '../lib/workspace/lifecycle';
+import { assertRegisteredTreeParentV1 } from '../lib/registry/tree-relations';
+import { BUILTIN_CATEGORIES, stringifyFieldSchema, codexCategoryFormatIssueV1, codexEntryFormatIssueV1, type CodexCategory, type CodexEntry, type CodexDomain, type CodexFieldDef } from '../lib/types/codex';
+import { assertRecordInScope, getTableSpec, readOwnedRows, resolveReadScopeLike, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope';
 
 interface CodexStore {
   categories: CodexCategory[]

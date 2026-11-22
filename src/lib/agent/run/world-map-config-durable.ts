@@ -1,29 +1,19 @@
-import { chat } from '../../ai/client'
-import {
-  buildVoronoiMapPromptFromRegisteredContextV1,
-  parseVoronoiMapConfig,
-  readVoronoiMapPromptTemplateSnapshotV1,
-} from '../../ai/adapters/voronoi-map-adapter'
-import type { AIConfig, ChatMessage, WorkspaceScope, WorldNode } from '../../types'
-import { atlasDraftPrompt, parseAtlasDraft } from '../../world-map/atlas/draft'
-import type { MapGenConfig } from '../../world-map/engine'
-import { assembleContext } from '../../registry/assemble-context'
-import { adopt, hashAdoptFieldValueV1 } from '../../registry/adopt'
-import { db } from '../../db/schema'
-import { assertRecordInScope, readOwnedRows } from '../../workspace/scope'
-import { getAgentSkillV1 } from '../skill-registry'
-import { createAgentSkillExecutionBindingV1 } from '../execution-binding'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  staleAgentRunVerificationV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import { canonicalStringify, hashCanonicalValue } from './hash'
+import { chat } from '../../ai/client';
+import { buildVoronoiMapPromptFromRegisteredContextV1, parseVoronoiMapConfig, readVoronoiMapPromptTemplateSnapshotV1 } from '../../ai/adapters/voronoi-map-adapter';
+import type { AIConfig, ChatMessage, WorkspaceScope, WorldNode } from '../../types';
+import { atlasDraftPrompt, parseAtlasDraft } from '../../world-map/atlas/draft';
+import type { MapGenConfig } from '../../world-map/engine';
+import { assembleContext } from '../../registry/assemble-context';
+import { adopt, hashAdoptFieldValueV1 } from '../../registry/adopt';
+import { db } from '../../db/schema';
+import { assertRecordInScope, readOwnedRows } from '../../workspace/scope';
+import { getAgentSkillV1 } from '../skill-registry';
+import { createAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, staleAgentRunVerificationV1, type AgentRunSnapshotV1 } from './event-store';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { canonicalStringify, hashCanonicalValue } from './hash';
 
 export const WORLD_MAP_CONFIG_STEP_ID_V1 = 'world-origin:map-config' as const
 export const WORLD_MAP_CONFIG_VERIFIER_SET_V1 = 'world-map-config-terminal-v1' as const

@@ -1,17 +1,7 @@
-import { isPortableResourceUidV1 } from '../context-gateway/resource-uid'
-import { NARRATIVE_KINDS_V1, type SemanticKindV1, type VisibilityV1 } from '../types/narrative-ir'
-import {
-  NARRATIVE_SOURCE_FKS_V1, type NarrativeSourceFkV1, type NarrativeDomainSourceRefV1,
-  type NarrativeDomainAtomRefV1, type NarrativeDomainValueV1, type NarrativeDomainTimePointV1,
-  type NarrativeDomainIntervalV1, type NarrativeDomainTimeV1, type NarrativeDomainEvidenceV1,
-  type NarrativeDomainDependencyV1, type NarrativeDomainAuthorityV1, type NarrativeDomainMetadataV1,
-  type NarrativeDomainEventV1, type NarrativeDomainEpistemicV1, type NarrativeDomainDevelopmentV1,
-  type NarrativeDomainDisclosureV1, type NarrativeDomainChronologyV1, type NarrativeDomainFieldsV1,
-} from '../types/narrative-domain'
-import {
-  arrayV1, assertNarrativeJsonV1, canonicalNarrativeJsonV1, enumV1, hashV1, integerTextV1, keyV1, narrativeFail,
-  nullableV1, objectV1, pointerV1, textV1, uintV1, uniqueKeysV1, type DecoderV1,
-} from './json'
+import { isPortableResourceUidV1 } from '../context-gateway/resource-uid';
+import { NARRATIVE_KINDS_V1, type SemanticKindV1, type VisibilityV1 } from '../types/narrative-ir';
+import { NARRATIVE_SOURCE_FKS_V1, type NarrativeSourceFkV1, type NarrativeDomainSourceRefV1, type NarrativeDomainAtomRefV1, type NarrativeDomainValueV1, type NarrativeDomainTimePointV1, type NarrativeDomainIntervalV1, type NarrativeDomainTimeV1, type NarrativeDomainEvidenceV1, type NarrativeDomainDependencyV1, type NarrativeDomainAuthorityV1, type NarrativeDomainMetadataV1, type NarrativeDomainEventV1, type NarrativeDomainEpistemicV1, type NarrativeDomainDevelopmentV1, type NarrativeDomainDisclosureV1, type NarrativeDomainChronologyV1, type NarrativeDomainFieldsV1 } from '../types/narrative-domain';
+import { arrayV1, assertNarrativeJsonV1, canonicalNarrativeJsonV1, enumV1, hashV1, integerTextV1, keyV1, narrativeFail, nullableV1, objectV1, pointerV1, textV1, uintV1, uniqueKeysV1, type DecoderV1 } from './json';
 
 const hasOwn = (value: object, key: string) => Object.prototype.hasOwnProperty.call(value, key)
 const sourceFkKeys = Object.keys(NARRATIVE_SOURCE_FKS_V1) as NarrativeSourceFkV1[]

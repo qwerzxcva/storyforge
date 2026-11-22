@@ -1,21 +1,12 @@
-import { currentProviderUsageCountsV1, PROVIDER_USAGE_POLICY_V1 } from './model-usage'
-import { normalizeChapterText } from '../../ai/chapter-memory/text-normalization'
-import { canonicalStringify, hashCanonicalValue } from '../../agent/run/hash'
-import { assertExactKeys, readRecord } from '../../agent/run/schema-utils'
-import type { LongConsistencyEvidenceSpanV1, LongConsistencyIssueV1 } from './report-types'
-import {
-  getH4LongConsistencyFixturesV1,
-  type H4LongConsistencyExpectedIssueV1,
-  type H4LongConsistencyFixtureV1,
-} from './h4-fixtures'
-import {
-  parseH4LongConsistencyRunCheckpointV1,
-  verifyH4LongConsistencyRunCheckpointV1,
-  type H4LongConsistencyRunCheckpointV1,
-  type H4LongConsistencyRunUsageV1,
-} from './h4-runner'
-import { wilsonInterval95V1, type H4WilsonIntervalV1 } from './h4-statistics'
-import type { LongConsistencyEvalTaskV1 } from './report-types'
+import { currentProviderUsageCountsV1, PROVIDER_USAGE_POLICY_V1 } from './model-usage';
+import { normalizeChapterText } from '../../ai/chapter-memory/text-normalization';
+import { canonicalStringify, hashCanonicalValue } from '../../agent/run/hash';
+import { assertExactKeys, readRecord } from '../../agent/run/schema-utils';
+import type { LongConsistencyEvidenceSpanV1, LongConsistencyIssueV1 } from './report-types';
+import { getH4LongConsistencyFixturesV1, type H4LongConsistencyExpectedIssueV1, type H4LongConsistencyFixtureV1 } from './h4-fixtures';
+import { parseH4LongConsistencyRunCheckpointV1, verifyH4LongConsistencyRunCheckpointV1, type H4LongConsistencyRunCheckpointV1, type H4LongConsistencyRunUsageV1 } from './h4-runner';
+import { wilsonInterval95V1, type H4WilsonIntervalV1 } from './h4-statistics';
+import type { LongConsistencyEvalTaskV1 } from './report-types';
 
 export const H4_LONG_CONSISTENCY_SCORING_VERSION_V1 = 'h4-sealed-scoring-v1'
 export const H4_LONG_CONSISTENCY_SCORE_TYPE_V1 = 'storyforge-h4-sealed-score'

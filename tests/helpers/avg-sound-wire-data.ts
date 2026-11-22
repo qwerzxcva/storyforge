@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto'
-import { hashProductProductionValueV2 } from '../../src/lib/product-production/hash'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import { readFileSync } from 'node:fs'
 // Node/Vitest/Playwright share pinned source metadata without requiring a
 // browser module loader or JSON import attributes in the test runner.

@@ -1,9 +1,9 @@
-import { db } from '../db/schema'
-import { isShareableWorld } from './world-identity'
-import { PROJECT_TABLES } from '../registry/project-tables'
-import type { WorldCapabilityArea } from '../registry/types'
-import type { CommunityWorldOrigin, Project, Work, World, WorkspaceScope } from '../types'
-import { assertRecordInScope } from '../workspace/scope'
+import { db } from '../db/schema';
+import { isShareableWorld } from './world-identity';
+import { PROJECT_TABLES } from '../registry/project-tables';
+import type { WorldCapabilityArea } from '../registry/types';
+import type { CommunityWorldOrigin, Project, Work, World, WorkspaceScope } from '../types';
+import { assertRecordInScope } from '../workspace/scope';
 
 /** ARCH-07A: semantic-only capability projection for one explicit world draft. */
 export interface WorldProjection {

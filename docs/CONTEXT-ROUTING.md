@@ -25,18 +25,19 @@
 | AI 写回、解析、采纳 | Skill `writes`、field/schema/extension、候选和 stale | Field Registry、Adoption、durable run、目标领域仓储与测试 | 无关表与面板 |
 | Agent/Harness、恢复、长程一致性 | run/step/attempt、contract、checkpoint、receipt、context/write scope | `HARNESS-QUALITY-STANDARD.md`；命中的 `src/lib/agent`、Gateway、registry、memory/retrieval 与 eval/test | 旧 Harness 蓝图、完成卡、评测流水 |
 | schema、迁移、删除、导入导出 | 表、owner、refs、schema 版本、blob | `DATA-GOVERNANCE.md`；`project-tables.ts`、schema、迁移、export、lifecycle 及正反例 | 手写历史表清单 |
-| 分步骤长篇或节点 | 具体模块、Skill、领域数据、节点 adapter | `products/LONGFORM-AND-NODE.md`、能力基线相关行、入口→下游闭包；系统文质量优化再读 `roadmap/LONGFORM-SYSTEM-FICTION-QUALITY-PLAN.md` 对应单元；崩溃、保存/采纳和全流程稳定性再读 `roadmap/LONGFORM-STEP-STABILITY-PLAN.md` 及其执行矩阵 | 上层产品完整实现 |
-| 短篇、剧本、漫画 | work/adaptation kind、source manifest、产物 owner | `products/INDEPENDENT-CREATION.md`、`roadmap/INDEPENDENT-CREATION-DEVELOPMENT-PLAN.md` 和且仅和目标产品的专项方案、对应领域代码和表/Skill | 另外两个独立创作产品内部实现、世界引擎或游戏媒资的无关实现 |
-| 漫剧前期生产 | MotionDrama Work、source manifest、series/episode、asset/shot/reference、Image/Video Prompt IR | `products/MOTION-DRAMA.md`、`roadmap/MOTION-DRAMA-PREPRODUCTION-DEVELOPMENT-PLAN.md`、对应 motion-drama 代码与三注册表 | 页漫排字/页面、最终视频/剪辑、世界与上层产品媒资内部实现 |
-| 世界引擎、WorldRelease、世界版本/封存/出口 | World draft/release、codec/hash、source gateway | `products/WORLD-ENGINE.md` §1～11、§13、§18；数据治理、world-engine 代码与三注册表 | 上层运行状态、产品媒资实现 |
+| 长篇小说或节点模式 | 具体模块、Skill、领域数据、节点 adapter | `products/LONGFORM-AND-NODE.md`、能力基线相关行、入口→下游闭包；写作质量、崩溃、保存/采纳和稳定性只读对应长篇路线单元 | 历史产品专项方案 |
+| 历史非长篇 Work/备份 | 既有 WorkKind、owner、schema 与备份版本 | 数据治理、当前迁移/导入导出代码和定向兼容测试；只读、迁移或恢复，不开放生产入口 | 对应历史产品 UI、Agent 和生产实现 |
+
+
+| 长篇世界设定/显式派生 | 当前长篇 Work、世界 draft/release、版本与来源证据 | `products/LONGFORM-AND-NODE.md`、`products/WORLD-ENGINE.md` 中的语义/版本/显式派生片段、数据治理和长篇调用链 | 独立世界市场、上层游戏产品和 world-runtime 实现 |
 | Narrative IR、角色知识、时间与因果 | temporalFacts、knowledgeLedger、事件/故事线、source UID/证据、projector | `products/WORLD-ENGINE.md` §10～14、§16、§18～19、§22～30（基线、领域投影、候选、冻结索引、查询、精确来源计划、修改影响与规模诊断）；命中的领域类型/采纳/生命周期与反例 | 将 Work 缓存或产品私域当冻结 Canon |
 | 世界检索、世界推演、人物视角/秘密 | world-release-provider、typed query、policy/manifest、hypothesis owner | `products/WORLD-ENGINE.md` §13～16、§19；Gateway、source-contracts、对应测试 | 未实现 query/validate/simulate 不得按现成功能调用 |
-| 产品 Requirement Compiler、上层产品读取世界 | product adapter、精确 selection/依赖闭包、SourcePlan/Manifest | `products/WORLD-ENGINE.md` §14、§17～20；`products/UPPER-PRODUCTS.md`、目标产品契约 | 不读取或复制世界物理表清单，不引入全产品万能 payload |
-| 跑团/聊天/AI 小镇/文字游戏 | WorldReference、产品 requirement adapter、Brief/SourcePlan/SourceManifest、production/build/release/session | `products/UPPER-PRODUCTS.md`、目标产品代码、中立世界资源协议和 owner；角色聊天按 `roadmap/CHARACTER-CHAT-DEVELOPMENT-PLAN.md` 读取命中的工作包；跑团读取 `products/TTRPG-AI-KP.md` 与 `roadmap/TTRPG-DEVELOPMENT-PLAN.md` 的现行版本头、§23/§24/§31/§32及当前单元，不能只读末尾2.0原稿；文字冒险还须读取 `products/TEXT-ADVENTURE.md`，专业生产任务再由其路由到 `products/text-adventure-production/README.md` | 其它上层产品内部细节 |
-| AVG 内容/系统/媒资/播放器 | AVG Work、scene/line/consumer、工件/规则/媒体 revision、V1/V2 包与存档 | `products/AVG.md`、`products/avg-production/README.md` 路由的命中子规格、`roadmap/AVG-IMPLEMENTATION-PLAN.md` 与当前工作包卡；只读取命中闭包和共同契约片段 | 其他产品内部实现、全部历史研究；L4 不代替施工入口 |
-| 新体系或完整产品 | 总纲阶段、稳定 ID、依赖和当前能力状态 | 总纲、对应产品契约、能力基线、路线图与质量标准 | 旧任务名驱动的历史方案 |
+
+
+
+| 当前新功能 | 长篇作者目标、长篇主链、数据 owner 与恢复路径 | 总纲、长篇契约、能力基线、受影响代码与定向测试 | 新增独立产品身份或唤醒历史产品方案 |
 | PR、合并、发布、交接 | branch/commit/PR/check 状态 | `COLLAB-WORKFLOW.md` 相关段、diff、验证证据 | 协作历史全文 |
-| 并行产品开发 | 产品 ID、共同基线、共享热点、各自 owner | 总纲 §12.1、`COLLAB-WORKFLOW.md` §2.1、产品契约和受影响注册表；涉及世界语义时读 `products/WORLD-ENGINE.md` §18、§20 | 其它产品内部实现；禁止多分支各改一套共享协议 |
+| 并行长篇工作 | 长篇 Work、节点同源契约、共享热点和 owner | 总纲、`COLLAB-WORKFLOW.md`、长篇契约和受影响注册表；涉及历史数据时核迁移及备份路径 | 其它产品内部实现；禁止独立产品分支恢复旧范围 |
 | 项目知识库、官网说明、用户更新日志或反馈入口 | 用户可见变化、产品 ID、当前入口与能力状态 | `website-docs/AGENTS.md`、对应 `website-docs/` 页面、`website-docs/updates/changelog.md`；反馈任务再读 `website-docs/feedback/`、`.github/ISSUE_TEMPLATE/` 和相关表单实现 | 内部工程文档正文、WPS 知识库；不得把分支内容误报为已上线 |
 | 总纲协同、本地 API 配置与调用规则 | 治理提交 SHA、配置根目录、profile ID、用途与预算 | `COLLAB-WORKFLOW.md` §2.2、`LOCAL-API-CONFIG.md`；本机索引按需读取，真实值不回显 | 全量凭据、其他服务配置、浏览器作者密钥 |
 | 历史追溯 | 任务 ID、commit、被删文件名 | `git log` / `git blame`；必要时 WPS 已过时归档 | 把旧文档重新当现行权威 |

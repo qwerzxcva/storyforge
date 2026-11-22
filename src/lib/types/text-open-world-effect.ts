@@ -1,5 +1,5 @@
-import type { TextOpenWorldObjectiveStatusV1, TextOpenWorldQuestStatusV1 } from './text-open-world-condition'
-import type { TextOpenWorldDirectorTriggerV1 } from './text-open-world-modules'
+import type { TextOpenWorldObjectiveStatusV1, TextOpenWorldQuestStatusV1 } from './text-open-world-condition';
+import type { TextOpenWorldDirectorTriggerV1 } from './text-open-world-modules';
 
 /**
  * Complete operation vocabulary understood by the current deterministic G2

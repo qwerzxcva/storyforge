@@ -1,8 +1,8 @@
-import type { ChatMessage } from '../../types'
-import type { PromptModuleKey } from '../../types/prompt'
-import { usePromptStore } from '../../../stores/prompt'
-import { renderPrompt } from '../prompt-engine'
-import { buildExpandPrompt, buildPolishPrompt } from './chapter-adapter'
+import type { ChatMessage } from '../../types';
+import type { PromptModuleKey } from '../../types/prompt';
+import { usePromptStore } from '../../../stores/prompt';
+import { renderPrompt } from '../prompt-engine';
+import { buildExpandPrompt, buildPolishPrompt } from './chapter-adapter';
 
 export const SELECTION_EDIT_ACTIONS = ['polish', 'expand', 'condense', 'rewrite', 'check'] as const
 export type SelectionEditActionV1 = typeof SELECTION_EDIT_ACTIONS[number]

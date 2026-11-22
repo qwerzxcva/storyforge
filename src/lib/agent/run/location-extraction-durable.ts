@@ -1,29 +1,18 @@
-import { chat } from '../../ai/client'
-import {
-  buildLocationExtractPromptFromContext,
-  parseLocations,
-  readLocationExtractPromptTemplateSnapshotV1,
-  type ExtractedLocation,
-} from '../../ai/adapters/structured-extract-adapter'
-import { splitExtractionText, uniqueBy } from '../../ai/structured-extraction'
-import { htmlToPlainText } from '../../utils/html'
-import type { AIConfig, Chapter, ChatMessage, WorkspaceScope } from '../../types'
-import { assembleContext } from '../../registry/assemble-context'
-import { adopt } from '../../registry/adopt'
-import { readOwnedRows } from '../../workspace/scope'
-import { getAgentSkillV1 } from '../skill-registry'
-import { createAgentSkillExecutionBindingV1 } from '../execution-binding'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  staleAgentRunVerificationV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import { hashCanonicalValue } from './hash'
+import { chat } from '../../ai/client';
+import { buildLocationExtractPromptFromContext, parseLocations, readLocationExtractPromptTemplateSnapshotV1, type ExtractedLocation } from '../../ai/adapters/structured-extract-adapter';
+import { splitExtractionText, uniqueBy } from '../../ai/structured-extraction';
+import { htmlToPlainText } from '../../utils/html';
+import type { AIConfig, Chapter, ChatMessage, WorkspaceScope } from '../../types';
+import { assembleContext } from '../../registry/assemble-context';
+import { adopt } from '../../registry/adopt';
+import { readOwnedRows } from '../../workspace/scope';
+import { getAgentSkillV1 } from '../skill-registry';
+import { createAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, staleAgentRunVerificationV1, type AgentRunSnapshotV1 } from './event-store';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { hashCanonicalValue } from './hash';
 
 export const LOCATION_EXTRACTION_STEP_ID_V1 = 'world-origin:locations' as const
 export const LOCATION_EXTRACTION_VERIFIER_SET_V1 = 'location-extraction-terminal-v1' as const

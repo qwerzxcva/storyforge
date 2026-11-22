@@ -8,19 +8,13 @@ import Dexie from 'dexie'
  *   绝不自动删事实、绝不动 locked。
  * - 影响分析：列出"引用了该章事实/紧随其后的"后续章节，交作者复核——只提示、不自动改正文。
  */
-import { db } from '../db/schema'
-import type { TemporalFact } from '../types/temporal-fact'
-import { hashChapterText, normalizeChapterText } from '../ai/chapter-memory/text-normalization'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveScopeLike,
-  type WorkspaceScopeLike,
-} from '../workspace/scope'
-import type { Chapter, OutlineNode } from '../types'
+import { db } from '../db/schema';
+import type { TemporalFact } from '../types/temporal-fact';
+import { hashChapterText, normalizeChapterText } from '../ai/chapter-memory/text-normalization';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, type WorkspaceScopeLike } from '../workspace/scope';
+import type { Chapter, OutlineNode } from '../types';
 
 /**
  * 正文改动后传播 stale：源自该章、证据已失效的【已确认】事实标记 stale（待作者重新确认）。

@@ -109,31 +109,4 @@ describe('ARCH-01 · 长短篇显式派生世界', () => {
     expect(await db.projects.get(restoredId)).toBeTruthy()
   })
 
-  it('短篇记录正确来源类型；剧本和漫画不能借内部作用域伪装成世界', async () => {
-    const short = await createWorkspace(projectInput('一夜潮声', 10_000), {
-      purpose: 'independent-work',
-      kind: 'novel',
-      novelProfile: 'short',
-    })
-    const derived = await deriveNovelToWorld({ sourceScope: short.scope })
-    expect(derived.derivation.sourceKind).toBe('short-novel')
-    expect(derived.release).toBeNull()
-    expect((await db.worlds.get(derived.targetScope.worldId))?.currentVersion).toBe(0)
-
-    const screenplay = await createWorkspace(projectInput('独立剧本'), {
-      purpose: 'independent-work',
-      kind: 'screenplay',
-    })
-    const countBefore = await db.projects.count()
-    await expect(deriveNovelToWorld({ sourceScope: screenplay.scope })).rejects.toThrow('只有长篇或短篇小说')
-    expect(await db.projects.count()).toBe(countBefore)
-
-    const comic = await createWorkspace(projectInput('独立漫画'), {
-      purpose: 'independent-work',
-      kind: 'comic',
-    })
-    const countWithComic = await db.projects.count()
-    await expect(deriveNovelToWorld({ sourceScope: comic.scope })).rejects.toThrow('只有长篇或短篇小说')
-    expect(await db.projects.count()).toBe(countWithComic)
-  })
 })

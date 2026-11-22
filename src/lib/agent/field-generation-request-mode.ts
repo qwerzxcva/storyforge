@@ -1,4 +1,4 @@
-import type { FieldGenerationMode } from '../ai/field-generation-context'
+import type { FieldGenerationMode } from '../ai/field-generation-context';
 
 export function resolveFieldGenerationRequestModeV1(request: string): FieldGenerationMode {
   const explicit = /生成模式\s*=\s*(expand|rewrite|polish)\b/i.exec(request)?.[1]?.toLowerCase()

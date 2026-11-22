@@ -5,8 +5,8 @@
  * Product-specific feature acceptance remains in each product contract; a page
  * or route existing in the bundle never upgrades its maturity automatically.
  */
-import type { ProductionProductKindV1 } from '../types/product-identity'
-import type { NovelWorkflowProfile, WorkKind } from '../types/world-ownership'
+import type { NovelWorkflowProfile, WorkKind } from '../types/world-ownership';
+import { isProductAvailableInBuild } from '../runtime/app-mode';
 
 export const PRODUCT_RELEASE_STATUSES_V1 = [
   'experimental',
@@ -18,44 +18,22 @@ export const PRODUCT_RELEASE_STATUSES_V1 = [
 export type ProductReleaseStatusV1 = typeof PRODUCT_RELEASE_STATUSES_V1[number]
 export type ProductCatalogChannelV1 = 'local-development' | 'production' | 'test'
 
-export const PRODUCT_SOURCE_POLICIES_V1 = [
-  'world-engine-content',
-  'independent-work',
-  'world-release-required',
-  'world-release-or-novel',
-  'distribution-bundle',
-] as const
+export const PRODUCT_SOURCE_POLICIES_V1 = ['independent-work'] as const
 
 export type ProductSourcePolicyV1 = typeof PRODUCT_SOURCE_POLICIES_V1[number]
 
-export type StoryForgeProductIdV1 =
-  | 'world-engine'
-  | 'independent.longform'
-  | 'independent.shortform'
-  | 'independent.screenplay'
-  | 'independent.comic'
-  | 'independent.motion-drama'
-  | 'authoring.nodes'
-  | 'upper.ttrpg'
-  | 'upper.character-interaction'
-  | 'upper.ai-town'
-  | 'upper.text-adventure'
-  | 'upper.avg'
-  | 'upper.text-open-world'
-  | 'platform.marketplace'
+export type StoryForgeProductIdV1 = 'independent.longform' | 'authoring.nodes'
 
 export interface ProductCatalogEntryV1 {
   version: 1
   id: StoryForgeProductIdV1
   label: string
-  family: 'world-engine' | 'independent-creation' | 'authoring-view' | 'upper-product' | 'platform'
+  family: 'independent-creation' | 'authoring-view'
   status: ProductReleaseStatusV1
   /** Governing charter phase; this is not a claim that the phase is complete. */
   charterPhase: 'B' | 'C' | 'D' | 'E' | 'F'
   /** The authoritative source families from which this product may be created. */
   sourcePolicy: ProductSourcePolicyV1
-  /** Compatibility projection. Source selection must use sourcePolicy instead. */
-  requiresWorldReference: boolean
   ownsRuntime: boolean
   ownsMedia: boolean
   /** Every non-released surface must state why it is not a production promise. */
@@ -68,15 +46,7 @@ export interface ProductCatalogEntryV1 {
  * registry is therefore derived from explicit product identities and every
  * product is still checked again when the author enters or creates it.
  */
-export type ProductSurfaceIdV1 =
-  | 'world-engine'
-  | 'independent-works'
-  | 'node-authoring'
-  | 'ttrpg'
-  | 'character-interaction'
-  | 'ai-town'
-  | 'text-games'
-  | 'marketplace'
+export type ProductSurfaceIdV1 = 'independent-works' | 'node-authoring'
 
 export interface ProductSurfaceEntryV1 {
   version: 1
@@ -85,14 +55,8 @@ export interface ProductSurfaceEntryV1 {
   productIds: readonly StoryForgeProductIdV1[]
 }
 
-function entry(
-  input: Omit<ProductCatalogEntryV1, 'version' | 'requiresWorldReference'>,
-): ProductCatalogEntryV1 {
-  return Object.freeze({
-    version: 1,
-    ...input,
-    requiresWorldReference: input.sourcePolicy === 'world-release-required',
-  })
+function entry(input: Omit<ProductCatalogEntryV1, 'version'>): ProductCatalogEntryV1 {
+  return Object.freeze({ version: 1, ...input })
 }
 
 function surface(input: Omit<ProductSurfaceEntryV1, 'version'>): ProductSurfaceEntryV1 {
@@ -100,20 +64,8 @@ function surface(input: Omit<ProductSurfaceEntryV1, 'version'>): ProductSurfaceE
 }
 
 export const PRODUCT_CATALOG_V1: readonly ProductCatalogEntryV1[] = Object.freeze([
-  entry({ id: 'world-engine', label: '世界引擎', family: 'world-engine', status: 'released', charterPhase: 'D', sourcePolicy: 'world-engine-content', ownsRuntime: false, ownsMedia: false, maturityNote: '语义编辑、显式派生、冻结版本与中立读取出口。' }),
-  entry({ id: 'independent.longform', label: '分步骤长篇', family: 'independent-creation', status: 'released', charterPhase: 'B', sourcePolicy: 'independent-work', ownsRuntime: false, ownsMedia: false, maturityNote: '工程主链已验收；文学质量继续增量研究。' }),
-  entry({ id: 'independent.shortform', label: '短篇小说', family: 'independent-creation', status: 'released', charterPhase: 'C', sourcePolicy: 'independent-work', ownsRuntime: false, ownsMedia: false, maturityNote: '独立 Brief、故事设计、章节卡、逐章正文、审校、定向重写、冻结发布与三格式导出已形成闭环。' }),
-  entry({ id: 'independent.screenplay', label: '小说转剧本', family: 'independent-creation', status: 'released', charterPhase: 'C', sourcePolicy: 'independent-work', ownsRuntime: false, ownsMedia: false, maturityNote: '来源冻结、十步专业改编、双重审查、定点修订、不可变版本与 Fountain/FDX/打印导出已形成闭环。' }),
-  entry({ id: 'independent.comic', label: '小说转漫画', family: 'independent-creation', status: 'released', charterPhase: 'C', sourcePolicy: 'independent-work', ownsRuntime: false, ownsMedia: true, maturityNote: '十二步专业改编、页格与本地排字、双层审查、分镜/视觉不可变发布及 PNG/WebP/CBZ/PDF 导出已形成闭环；视觉版按 provider 实际能力和媒资权利严格放行。' }),
-  entry({ id: 'independent.motion-drama', label: '漫剧素材', family: 'independent-creation', status: 'released', charterPhase: 'C', sourcePolicy: 'independent-work', ownsRuntime: false, ownsMedia: true, maturityNote: '一句话或小说来源冻结、系列与物料圣经、逐集剧本、分镜、双 Prompt IR、Seedance 逐镜执行包、Runway/LTX 适配包、质量门与不可变发布已形成闭环；不包含视频生成和成片制作。' }),
-  entry({ id: 'authoring.nodes', label: '节点创作', family: 'authoring-view', status: 'preview', charterPhase: 'B', sourcePolicy: 'independent-work', ownsRuntime: false, ownsMedia: false, maturityNote: '已与分步骤领域后端同源；完整跨模式真实 UI 验收仍持续。' }),
-  entry({ id: 'upper.ttrpg', label: '跑团', family: 'upper-product', status: 'preview', charterPhase: 'E', sourcePolicy: 'world-release-required', ownsRuntime: true, ownsMedia: true, maturityNote: '架构入口与既有功能可预览，玩法和多人体验尚未专项封板。' }),
-  entry({ id: 'upper.character-interaction', label: '角色聊天', family: 'upper-product', status: 'preview', charterPhase: 'E', sourcePolicy: 'world-release-required', ownsRuntime: true, ownsMedia: true, maturityNote: '冻结来源生产与运行纵切面可预览，完整长期体验待专项验收。' }),
-  entry({ id: 'upper.ai-town', label: '后日谈 AI 小镇', family: 'upper-product', status: 'preview', charterPhase: 'E', sourcePolicy: 'world-release-required', ownsRuntime: true, ownsMedia: true, maturityNote: '冻结来源生产、发布、单机运行与私域演化纵切面可预览；长期内容量与商业化媒资仍待专项验收。' }),
-  entry({ id: 'upper.text-adventure', label: '文字冒险', family: 'upper-product', status: 'preview', charterPhase: 'E', sourcePolicy: 'world-release-required', ownsRuntime: true, ownsMedia: true, maturityNote: '专业生产、媒资、发布与确定性运行纵切面可验证；真实模型内容质量、真人试玩和首个社区推荐成品仍待专项验收。' }),
-  entry({ id: 'upper.avg', label: 'AVG', family: 'upper-product', status: 'preview', charterPhase: 'E', sourcePolicy: 'world-release-required', ownsRuntime: true, ownsMedia: true, maturityNote: '制作与运行基础可预览，真实视听资产和演出交付待专项验收。' }),
-  entry({ id: 'upper.text-open-world', label: '文字开放世界', family: 'upper-product', status: 'preview', charterPhase: 'E', sourcePolicy: 'world-release-required', ownsRuntime: true, ownsMedia: true, maturityNote: '正式生产引用封存世界版本；小说须先显式派生世界草稿、检查并封存。专属 Creator、确定性玩法、运行时 AI 与玩家端已有工程链路，仍待真实模型校准和真人双结局验收。' }),
-  entry({ id: 'platform.marketplace', label: '社区市场', family: 'platform', status: 'experimental', charterPhase: 'F', sourcePolicy: 'distribution-bundle', ownsRuntime: false, ownsMedia: false, maturityNote: '平台与商业化阶段后置，默认隐藏，仅允许本地显式研究。' }),
+entry({ id: 'independent.longform', label: '长篇小说', family: 'independent-creation', status: 'released', charterPhase: 'B', sourcePolicy: 'independent-work', ownsRuntime: false, ownsMedia: false, maturityNote: '工程主链已验收；文学质量继续增量研究。' }),
+entry({ id: 'authoring.nodes', label: '节点创作', family: 'authoring-view', status: 'preview', charterPhase: 'B', sourcePolicy: 'independent-work', ownsRuntime: false, ownsMedia: false, maturityNote: '已与分步骤领域后端同源；完整跨模式真实 UI 验收仍持续。' })
 ])
 
 export const PRODUCT_CATALOG_BY_ID_V1: ReadonlyMap<StoryForgeProductIdV1, ProductCatalogEntryV1> = new Map(
@@ -121,36 +73,13 @@ export const PRODUCT_CATALOG_BY_ID_V1: ReadonlyMap<StoryForgeProductIdV1, Produc
 )
 
 export const PRODUCT_SURFACES_V1: readonly ProductSurfaceEntryV1[] = Object.freeze([
-  surface({ id: 'world-engine', label: '世界引擎', productIds: ['world-engine'] }),
-  surface({ id: 'independent-works', label: '作品创作', productIds: [
-    'independent.longform', 'independent.shortform', 'independent.screenplay', 'independent.comic', 'independent.motion-drama',
-  ] }),
-  surface({ id: 'node-authoring', label: '节点创作', productIds: ['authoring.nodes'] }),
-  surface({ id: 'ttrpg', label: '跑团', productIds: ['upper.ttrpg'] }),
-  surface({ id: 'character-interaction', label: '角色互动', productIds: ['upper.character-interaction'] }),
-  surface({ id: 'ai-town', label: '后日谈 AI 小镇', productIds: ['upper.ai-town'] }),
-  surface({ id: 'text-games', label: '文字游戏', productIds: [
-    'upper.text-adventure', 'upper.avg', 'upper.text-open-world',
-  ] }),
-  surface({ id: 'marketplace', label: '社区市场', productIds: ['platform.marketplace'] }),
+surface({ id: 'independent-works', label: '长篇小说', productIds: ['independent.longform'] }),
+surface({ id: 'node-authoring', label: '节点创作', productIds: ['authoring.nodes'] })
 ])
-
-export const PRODUCT_SURFACE_BY_ID_V1: ReadonlyMap<ProductSurfaceIdV1, ProductSurfaceEntryV1> = new Map(
-  PRODUCT_SURFACES_V1.map(item => [item.id, item] as const),
-)
 
 export interface ProductEntryDecisionV1 {
   entry: ProductCatalogEntryV1
   channel: ProductCatalogChannelV1
-  visible: boolean
-  enterable: boolean
-  badge: string | null
-  blockers: string[]
-}
-
-export interface ProductSurfaceDecisionV1 {
-  surface: ProductSurfaceEntryV1
-  products: ProductEntryDecisionV1[]
   visible: boolean
   enterable: boolean
   badge: string | null
@@ -165,6 +94,10 @@ export function evaluateProductEntryV1(input: {
 }): ProductEntryDecisionV1 {
   const entry = PRODUCT_CATALOG_BY_ID_V1.get(input.productId)
   if (!entry) throw new Error(`[product-catalog] 未登记产品：${input.productId}`)
+  if (!isProductAvailableInBuild(entry.id)) {
+    return { entry, channel: input.channel, visible: false, enterable: false, badge: null,
+      blockers: ['Android 版仅开放长篇创作；世界设定为辅助能力，节点模式复用同一创作链。'] }
+  }
   const local = input.channel === 'local-development' || input.channel === 'test'
   const released = entry.status === 'released'
   const experimentalAllowed = local && input.experimentalOptIn === true
@@ -183,36 +116,6 @@ export function evaluateProductEntryV1(input: {
     enterable: visible,
     badge: released ? null : entry.status === 'preview' ? '预览' : entry.status === 'internal' ? '内部' : '实验',
     blockers,
-  }
-}
-
-export function evaluateProductSurfaceV1(input: {
-  surfaceId: ProductSurfaceIdV1
-  channel: ProductCatalogChannelV1
-  experimentalOptIn?: boolean
-}): ProductSurfaceDecisionV1 {
-  const surface = PRODUCT_SURFACE_BY_ID_V1.get(input.surfaceId)
-  if (!surface) throw new Error(`[product-catalog] 未登记产品界面：${input.surfaceId}`)
-  const products = surface.productIds.map(productId => evaluateProductEntryV1({
-    productId,
-    channel: input.channel,
-    experimentalOptIn: input.experimentalOptIn,
-  }))
-  const visibleProducts = products.filter(item => item.visible)
-  const nonReleasedVisible = visibleProducts.filter(item => item.entry.status !== 'released')
-  return {
-    surface,
-    products,
-    visible: visibleProducts.length > 0,
-    enterable: visibleProducts.length > 0,
-    badge: nonReleasedVisible.length === 0
-      ? null
-      : visibleProducts.length === 1
-        ? nonReleasedVisible[0]?.badge ?? null
-        : `${nonReleasedVisible.length} 项预览`,
-    blockers: visibleProducts.length > 0
-      ? []
-      : products.flatMap(item => item.blockers),
   }
 }
 
@@ -250,53 +153,8 @@ export function productCatalogIdForWorkV1(work: {
   kind: WorkKind
   novelProfile: NovelWorkflowProfile | null
 }): StoryForgeProductIdV1 {
-  switch (work.kind) {
-    case 'novel':
-      if (work.novelProfile === 'long') return 'independent.longform'
-      if (work.novelProfile === 'short') return 'independent.shortform'
-      break
-    case 'screenplay': return 'independent.screenplay'
-    case 'comic': return 'independent.comic'
-    case 'motion-drama': return 'independent.motion-drama'
-    case 'avg': return 'upper.avg'
-    case 'ttrpg': return 'upper.ttrpg'
-    case 'ai-town': return 'upper.ai-town'
-    case 'character-interaction': return 'upper.character-interaction'
-  }
-  throw new Error(`[product-catalog] 未登记的作品分类：${work.kind}/${work.novelProfile}`)
-}
-
-export function productCatalogIdForProductionV1(kind: ProductionProductKindV1): StoryForgeProductIdV1 {
-  switch (kind) {
-    case 'ttrpg': return 'upper.ttrpg'
-    case 'character-interaction': return 'upper.character-interaction'
-    case 'ai-town': return 'upper.ai-town'
-    case 'text-adventure': return 'upper.text-adventure'
-    case 'avg': return 'upper.avg'
-    case 'text-open-world': return 'upper.text-open-world'
-  }
-  throw new Error(`[product-catalog] 未登记的生产产品：${String(kind)}`)
-}
-
-/** Navigation names are UI identities, never implicit catalog aliases. */
-export function productCatalogIdForNavigationV1(id: string): StoryForgeProductIdV1 | null {
-  switch (id) {
-    case 'home': return null
-    case 'world': return 'world-engine'
-    case 'long': return 'independent.longform'
-    case 'short': return 'independent.shortform'
-    case 'script': return 'independent.screenplay'
-    case 'comic': return 'independent.comic'
-    case 'motion': return 'independent.motion-drama'
-    case 'ttrpg': return 'upper.ttrpg'
-    case 'chat': return 'upper.character-interaction'
-    case 'town': return 'upper.ai-town'
-    case 'adventure': return 'upper.text-adventure'
-    case 'avg': return 'upper.avg'
-    case 'openworld': return 'upper.text-open-world'
-    case 'community': return 'platform.marketplace'
-  }
-  throw new Error(`[product-catalog] 未登记的导航产品：${id}`)
+  if (work.kind === 'novel' && work.novelProfile === 'long') return 'independent.longform'
+  throw new Error(`[product-catalog] 当前 fork 不支持作品分类：${work.kind}/${work.novelProfile}`)
 }
 
 function validateProductCatalogV1(): void {
@@ -305,29 +163,9 @@ function validateProductCatalogV1(): void {
     if (ids.has(item.id)) throw new Error(`[product-catalog] 重复产品 ID：${item.id}`)
     ids.add(item.id)
     if (!item.maturityNote.trim()) throw new Error(`[product-catalog] ${item.id} 缺少成熟度边界说明`)
-    if (item.family === 'world-engine' && (item.ownsRuntime || item.ownsMedia)) {
-      throw new Error('[product-catalog] 世界引擎不得拥有 runtime 或产品媒资')
-    }
-    if (item.requiresWorldReference !== (item.sourcePolicy === 'world-release-required')) {
-      throw new Error(`[product-catalog] 来源策略与WorldReference投影不一致：${item.id}`)
-    }
-    if (item.family === 'world-engine' && item.sourcePolicy !== 'world-engine-content') {
-      throw new Error('[product-catalog] 世界引擎来源策略无效')
-    }
     if ((item.family === 'independent-creation' || item.family === 'authoring-view')
       && item.sourcePolicy !== 'independent-work') {
       throw new Error(`[product-catalog] 独立创作来源策略无效：${item.id}`)
-    }
-    if (item.family === 'upper-product'
-      && item.sourcePolicy !== 'world-release-required'
-      && item.sourcePolicy !== 'world-release-or-novel') {
-      throw new Error(`[product-catalog] 上层产品来源策略无效：${item.id}`)
-    }
-    if (item.sourcePolicy === 'world-release-or-novel' && item.id !== 'upper.text-open-world') {
-      throw new Error(`[product-catalog] 双来源策略只属于文字开放世界：${item.id}`)
-    }
-    if (item.family === 'platform' && item.sourcePolicy !== 'distribution-bundle') {
-      throw new Error(`[product-catalog] 平台来源策略无效：${item.id}`)
     }
   }
   const covered = new Set<StoryForgeProductIdV1>()

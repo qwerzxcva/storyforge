@@ -1,5 +1,7 @@
 # StoryForge · 故事熔炉
 
+> Current product scope: long-form novels only. Node mode shares the same authoring chain; world editing is auxiliary. Other product descriptions below are historical references, not available features.
+
 **Write stories. Step inside them.**
 
 <!-- readme-languages:start -->
@@ -10,9 +12,9 @@
 
 [Start creating](#quick-start) · [Try Fog Harbor](#try-an-original-story) · [Explore the architecture](#shared-execution-and-data-architecture)
 
-StoryForge is an open-source, local-first AI narrative creation and experience toolkit. Write long or short fiction, adapt a novel into a screenplay or comic, build reusable worlds, and explore character interaction and playable stories. You choose the workflow and approve AI candidates before they become part of your work.
+StoryForge is an open-source, local-first AI writing tool for long-form novels. Develop settings, outlines, scenes, prose and long-term continuity in one work; node mode composes the same authoring chain.
 
-> Long fiction, short fiction, screenplays, comics, motion-drama preproduction, and the world engine have released entries. Nodes and interactive products are previews. This README is available in nine languages; this does not imply matching coverage in the interface or linked documents. Screenshots and many guides are in Chinese.
+> Current scope is long-form novels, with nodes as a shared authoring mode. The other product sections below are historical references only. This README is available in nine languages; that does not imply equivalent interface coverage. Screenshots and many guides are in Chinese.
 
 
 **Run without a development setup:** [Download the latest portable release](https://github.com/yuanbw2025/storyforge/releases/latest). Extract the ZIP for Windows x64, Apple Silicon/Intel Mac or Linux x64 and launch `Start-StoryForge`. The built app, media and Node.js runtime are included; no npm installation is required. AI requires your own provider, and preview products keep their maturity labels. [Installation guide](https://docs.storyforge-lab.com/en/getting-started/install).
@@ -72,7 +74,7 @@ The knowledge base is available in Chinese and English. Preview data uses separa
 
 ## Recent capabilities and how to use them
 
-Reviewed against remote main on October 13, 2026. Long fiction, short fiction, screenplays, comics, motion-drama materials, and the world engine have released entries. Nodes and interactive products remain previews; plugin API 1 / SDK 0.1 is a developer preview.
+Historical product record checked against remote main on October 13, 2026. The sections below are retained for archival context and do not describe current product entries. Current scope is long-form novel authoring; node mode shares its authoring chain, and world editing is auxiliary.
 
 ### Motion-drama preproduction: story to shot packages
 
@@ -114,6 +116,8 @@ See the architecture and evidence below for implementation boundaries. Engineeri
 
 ## Try an original story
 
+> The TTRPG and game demos below, including their routes and setup instructions, are from retired versions and are not available in the current release. They remain as historical records.
+
 ### Fog Harbor: The Last Light — community TTRPG preview
 
 Investigate an old shipwreck with two AI companions, protect your character's secrets and decide how tonight's ships will return. An AI KP hosts the adventure using original 2d6 rules, with seven scenes, six clues and three endings.
@@ -124,20 +128,20 @@ The game bundle ships with the repository. Configure your own model API to begin
 
 **Play loop:** propose an action → resolve rules → read the KP response → inspect clues → save and continue.
 
-[Setup and model configuration](#quick-start) · [Player guide](./examples/ttrpg/README.md) · [Production/playthrough evidence](./examples/ttrpg/fog-harbor/production-status.md)
+[Setup and model configuration](#quick-start) · [Player guide — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/examples/ttrpg/README.md) · [Production/playthrough evidence — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/examples/ttrpg/fog-harbor/production-status.md)
 
 <details>
 <summary>How to play and current scope</summary>
 
-Run current `main`, open **TTRPG** (`跑团`) and choose the adventure below the production section. The standalone route `/storyforge/play` also works. The game bundle, cover and included media ship with the repository. Configure your model API, choose a character and start.
+This is a historical play guide for a retired product. Its old route, included game bundle and setup steps are not available in the current product. Current StoryForge usage is limited to long-form novel authoring and its shared node mode.
 
-Play solo with AI companions or use same-device handoff. Progress is local, with resume and checkpoints. Public online multiplayer is not deployed, and same-device secrets are not protected from the device owner. Read the [player guide](./examples/ttrpg/README.md) and [production/playthrough evidence](./examples/ttrpg/fog-harbor/production-status.md).
+Play solo with AI companions or use same-device handoff. Progress is local, with resume and checkpoints. Public online multiplayer is not deployed, and same-device secrets are not protected from the device owner. Read the [player guide — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/examples/ttrpg/README.md) and [production/playthrough evidence — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/examples/ttrpg/fog-harbor/production-status.md).
 
 </details>
 
-### Three 3D narrative games in Text open world
+### Three 3D narrative games in Text open world (historical)
 
-Run a current `main` checkout and open **Text open world → Built-in narrative games (内置叙事游戏)**. These three games have no homepage cards. No API, extra model, or external game engine is required.
+These retired games and their routes are documented for historical reference only; they are not available in the current product.
 
 | Game | Content | Local path |
 |---|---|---|
@@ -152,14 +156,14 @@ The games use frozen scripts without free-form AI dialogue or voice acting, and 
 ## Why StoryForge
 
 - **Traceable long-form memory.** Original text, facts, summaries and retrieval help recover earlier clues; confirmed chapter changes feed later writing. [Long fiction](#long-fiction-and-nodes)
-- **Dedicated production workflows.** Short fiction has length and completion gates; screenplays retain adaptation evidence; comics separate panels, images and lettering. [Creation products](#short-fiction-screenplays-and-comics)
+- **One continuous long-form workflow.** Develop settings, outlines, scenes, prose and long-term continuity in one work; node mode uses the same authoring chain. [Long fiction and nodes](#long-fiction-and-nodes)
 - **Author control over AI output.** Formal authoring produces candidates for approval. Harness adds revision protection, execution evidence and recovery. [Architecture and regression evidence](#shared-execution-and-data-architecture)
 
 [Quick start](#quick-start) · [Choose a product](#choose-your-starting-point) · [First session](#your-first-writing-session) · [Worlds and experiences](#worlds-and-interactive-products) · [Models and privacy](#models-storage-and-privacy) · [Community](#community-and-contributing)
 
 ## Quick start
 
-> This introduction describes `main`, checked on October 13, 2026. Long-form writing, short fiction, screenplay adaptation, comic adaptation, motion-drama preproduction, and the world engine have released product entries. Nodes and interactive products are previews. Historical GitHub Releases do not include subsequent changes; the hosted site may lag behind `main`. Use current source for the features shown here. Screenshots are from an isolated local workspace, not an author's private manuscript.
+> **Historical documentation:** Some screenshots and product workflows below describe the October 13, 2026 `main`; they are retained for archival context, not as current entry points. Current product scope is long-form novel authoring, with nodes sharing its authoring chain and world editing as an auxiliary capability. Releases are fixed snapshots; check the latest formal release for currently available features.
 
 Open the [web app](https://yuanbw.vercel.app/storyforge/) or run the source locally. Core local creation does not require a StoryForge account. AI generation uses your own provider credentials; cloud API charges are separate.
 
@@ -182,19 +186,12 @@ On the home page, open the top-right model/settings button (`模型与本地设�
 
 ![Current StoryForge product hub](./docs/assets/readme/home-current.png)
 
-| Goal | Entry | Result and maturity |
+| Goal | Entry | Result |
 |---|---|---|
-| Write a novel | Long novel | Settings, characters, outlines, chapters, continuity and revision; current engineering workflow accepted |
-| Finish short fiction | Short novel | Story design, chapter cards, drafting, review, frozen release, Markdown/TXT/JSON export |
-| Adapt a novel into a screenplay | Novel to screenplay | Frozen source, adaptation decisions, beats, scene writing, review, Fountain/FDX/print export |
-| Adapt a novel into a comic | Novel to comic | Pages, panels, visual references, lettering, storyboard/visual releases and PNG/WebP/CBZ/PDF export; visual output depends on supported image services or suitable author assets |
-| Prepare an animated series | Motion-drama materials | Series bible, episodes, materials, storyboards, reference frames, and tool packages; video production remains external |
-| Build a world | World engine | Semantic content, explicit derivation, frozen world versions and read access |
-| Compose a visual workflow | Node authoring | Preview; shares the long-form backend and work data |
-| Play an original adventure | TTRPG → Published adventures | Community preview of *Fog Harbor: The Last Light* |
-| Create interactive experiences | Character chat / Afterstory town / Text games | Preview; each product has its own production and runtime lifecycle |
+| Write a long-form novel | Long novel → Library → New novel | Develop settings, characters, outlines, chapters and long-term continuity in one work |
+| Compose a visual workflow | Long novel → Node authoring | Connect authoring steps while reusing the same work data and domain capabilities |
 
-Novel writing does **not** require the world engine. Long and short fiction may optionally be derived into a world by their author. Screenplays and comics are independent adaptations. A published adventure can be played without creating a world first.
+Node mode is another way to work with the same long-form novel data. World editing is an auxiliary capability, not a separate product.
 
 ## Your first writing session
 
@@ -254,7 +251,7 @@ The dedicated workflow targets **5,000–25,000 Chinese characters across 3–8 
 - Review issues point to chapters and supporting text. Reviews bind to the manuscript hash; edits require a current review before publication. Rewrites target specific chapters.
 - Blocking issues prevent release. An accepted manuscript becomes a new frozen edition, preserving earlier releases while revision continues. Export Markdown, TXT or JSON.
 
-Implementation: [production and completion gates](./src/lib/short-novel/service.ts), [dedicated durable AI runs](./src/lib/agent/run/short-novel-durable.ts).
+Implementation: [production and completion gates — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/short-novel/service.ts), [dedicated durable AI runs — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/agent/run/short-novel-durable.ts).
 
 ### Screenplays: traceable adaptation, structured scenes
 
@@ -265,7 +262,7 @@ The pipeline freezes selected novel sources, then connects facts and causal rela
 - Source fidelity and dramatic structure have separate reviews. Revision patches name the scene, issues and expected revision; locked scenes must be unlocked first, and stale patches are blocked.
 - Releases freeze sources, decisions and scenes. Later novel edits do not silently change a published screenplay.
 
-When turning internal monologue into a confrontation, the author can inspect both the retained source information and the resulting dramatic scene. Implementation: [production and targeted revisions](./src/lib/screenplay/production.ts), [release snapshots](./src/lib/screenplay/release.ts), [renderers](./src/lib/screenplay/renderers.ts).
+When turning internal monologue into a confrontation, the author can inspect both the retained source information and the resulting dramatic scene. Implementation: [production and targeted revisions — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/screenplay/production.ts), [release snapshots — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/screenplay/release.ts), [renderers — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/screenplay/renderers.ts).
 
 ### Comics: script, visual assets and lettering as separate layers
 
@@ -278,7 +275,7 @@ Comic production first develops script beats, page plans and panels, then images
 
 **Current image adapter limit:** the built-in generic OpenAI-compatible adapter sends text only and declares no reference-image, fixed-seed or inpainting capability. The app reports these limits; naming a reference in a prompt is not recorded as transmitting an image. Visual production needs a configured image service or suitable author assets, with human selection and continuity review.
 
-Implementation: [production](./src/lib/comic/production.ts), [media evidence](./src/lib/comic/media-service.ts), [lettering](./src/lib/comic/renderers.ts), [quality gates](./src/lib/comic/qa.ts).
+Implementation: [production — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/production.ts), [media evidence — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/media-service.ts), [lettering — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/renderers.ts), [quality gates — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/qa.ts).
 
 All three have their current engineering workflows implemented on `main`. Provider performance and content quality continue to be evaluated. See the [capability baseline](./docs/roadmap/CAPABILITY-BASELINE.md) for evidence and limits.
 
@@ -294,12 +291,12 @@ Interactive products use dedicated runtime mechanisms. **All remain previews**; 
 
 | Product | Implemented mechanisms and their purpose | Current limit |
 |---|---|---|
-| [TTRPG / AI KP](./src/lib/ttrpg/information-boundary.ts) | Rules, dice/effect resolution, separate KP/player/NPC contexts, recipient-filtered secrets, events and checkpoints give actions inspectable consequences | Fog Harbor has real-model production/playthrough evidence; public online multiplayer is not deployed |
-| [Character chat](./src/lib/character-interaction/runtime.ts) | Frozen profiles, voice rules, scene goals, commitments/secrets/conflicts as memory, and trust/closeness/wariness/respect state preserve conversation consequences | Long-term character quality remains under evaluation |
-| [Afterstory AI town](./src/lib/ai-town/runtime.ts) | Six daily time slots, place access and travel, resident knowledge and memories, relationships, light management and offline-time catch-up organize life after the original ending | 14-day replay validation exists; longitudinal model and non-fixture media quality remain under evaluation |
-| [Text adventure](./src/lib/adventure/runtime.ts) | Action prerequisites, inventory, resources, abilities, quests and code-resolved checks connect progress to available actions | Complete experiences require work-specific validation |
-| [AVG](./src/lib/avg/runtime.ts) | Declarative cues bind story beats to layered backgrounds, actors and audio; asset checks and stage snapshots support presentation recovery | Full audiovisual delivery remains under validation |
-| [Text open world](./src/lib/open-world/runtime.ts) | Regions, travel, resources, faction influence, actor schedules, task cards/templates and time-based regional changes support persistent exploration state | Full production and long-term play remain in development |
+| [TTRPG / AI KP — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/ttrpg/information-boundary.ts) | Rules, dice/effect resolution, separate KP/player/NPC contexts, recipient-filtered secrets, events and checkpoints give actions inspectable consequences | Fog Harbor has real-model production/playthrough evidence; public online multiplayer is not deployed |
+| [Character chat — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/character-interaction/runtime.ts) | Frozen profiles, voice rules, scene goals, commitments/secrets/conflicts as memory, and trust/closeness/wariness/respect state preserve conversation consequences | Long-term character quality remains under evaluation |
+| [Afterstory AI town — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/ai-town/runtime.ts) | Six daily time slots, place access and travel, resident knowledge and memories, relationships, light management and offline-time catch-up organize life after the original ending | 14-day replay validation exists; longitudinal model and non-fixture media quality remain under evaluation |
+| [Text adventure — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/adventure/runtime.ts) | Action prerequisites, inventory, resources, abilities, quests and code-resolved checks connect progress to available actions | Complete experiences require work-specific validation |
+| [AVG — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/avg/runtime.ts) | Declarative cues bind story beats to layered backgrounds, actors and audio; asset checks and stage snapshots support presentation recovery | Full audiovisual delivery remains under validation |
+| [Text open world — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/runtime.ts) | Regions, travel, resources, faction influence, actor schedules, task cards/templates and time-based regional changes support persistent exploration state | Full production and long-term play remain in development |
 
 Online community and commercial services are later-stage work.
 

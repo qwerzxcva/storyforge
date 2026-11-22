@@ -1,10 +1,10 @@
 /**
  * 物品流水 store — Phase 25.5.2-b
  */
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import type { ItemLedgerEntry } from '../lib/types'
-import { assertRecordInScope, readOwnedRows, resolveScopeLike, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope'
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import type { ItemLedgerEntry } from '../lib/types';
+import { assertRecordInScope, readOwnedRows, resolveScopeLike, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope';
 
 interface ItemLedgerStore {
   entries: ItemLedgerEntry[]

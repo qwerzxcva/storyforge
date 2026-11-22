@@ -1,8 +1,8 @@
-import { PROJECT_TABLES } from '../registry/project-tables'
-import { FACT_PREDICATE_REGISTRY } from '../registry/fact-predicate-registry'
-import { CANON_ASSERTION_SOURCE_REGISTRY } from '../registry/canon-assertion-source-registry'
-import type { NarrativeDomainRegistryV1, NarrativeDomainTableContractV1 } from '../types/narrative-domain-registry'
-import { narrativeSemanticExportReferencesV1 } from '../narrative-domain/semantic-export-references'
+import { PROJECT_TABLES } from '../registry/project-tables';
+import { FACT_PREDICATE_REGISTRY } from '../registry/fact-predicate-registry';
+import { CANON_ASSERTION_SOURCE_REGISTRY } from '../registry/canon-assertion-source-registry';
+import type { NarrativeDomainRegistryV1, NarrativeDomainTableContractV1 } from '../types/narrative-domain-registry';
+import { narrativeSemanticExportReferencesV1 } from '../narrative-domain/semantic-export-references';
 
 /** Capture only interpretation metadata, never database handles or user rows. */
 export function currentNarrativeDomainRegistryV1(): NarrativeDomainRegistryV1 {

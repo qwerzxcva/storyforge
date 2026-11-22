@@ -1,4 +1,4 @@
-import {z} from 'zod'
+import { z } from 'zod';
 
 /** A matched provider turn outcome, not permission to replay or evidence of zero cost. */
 export const CodexTerminalFailureV1Schema = z.object({

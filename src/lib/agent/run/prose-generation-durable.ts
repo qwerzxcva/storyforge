@@ -1,93 +1,39 @@
 import Dexie from 'dexie'
-import { db } from '../../db/schema'
-import { observeDuplicatedProseFrameV1 } from '../../prose/provider-frame-observation'
-import { normalizeProseForEditorV1, plainTextToHtml } from '../../utils/html'
-import { adopt, adoptionTransactionTablesV1 } from '../../registry/adopt'
-import { hashChapterText, normalizeChapterText, sha256Text, CHAPTER_TEXT_NORMALIZATION_VERSION } from '../../ai/chapter-memory/text-normalization'
-import type { AgentConversation, AgentEvent, Chapter, ChatMessage, WorkspaceScope } from '../../types'
-import type {
-  AgentRunFormalAIEntryBindingV1,
-  ContextManifestV1,
-  ContextManifestV2,
-  ContextManifestV3,
-  VerificationReceiptV1,
-} from '../../types/agent-run'
-import type { AssembleContextResult } from '../../registry/types'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  readVerifiedAgentRunInTransactionV1,
-  appendPrivilegedAgentRunEventInTransactionV1,
-  appendAgentRunEventWithSettlementInTransactionV1,
-  withAgentRunMutationLockV1,
-  agentRunScopeTransactionTablesV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { parseAgentRunEventV1 } from './event-schema'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import { canonicalStringify, hashCanonicalValue } from './hash'
-import type { TokenUsage } from '../../ai/logger'
-import { createContextManifestFromAssemblyV1, createContextManifestV2FromV1 } from './context-manifest'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  scopeTransactionTables,
-  stampNewRecord,
-} from '../../workspace/scope'
-import {
-  buildChapterInformationBoundaryV1,
-  validateProseInformationBoundaryV1,
-} from '../information-boundary'
-import {
-  verifyProseSemanticReviewArtifactV1,
-  verifyProseSemanticRevisionArtifactV1,
-  type ProseSemanticReviewArtifactV1,
-  type ProseSemanticRevisionArtifactV1,
-} from '../prose-semantic-review'
-import { AgentTeamBudgetTracker, type AgentTeamBudgetEvidence } from '../team-budget'
-import {
-  assertAgentSkillExecutionBindingV1,
-  assertAgentSkillExecutionBindingIntegrityV2,
-  createAgentSkillExecutionBindingV1,
-  createAgentSkillExecutionBindingV2,
-} from '../execution-binding'
-import { getAgentSkillV1, resolveAgentSkillContextSourceKeysV1 } from '../skill-registry'
-import type {
-  AgentRunContractV2,
-  AgentRunContractV3,
-  AgentRunStepExecutionBindingV2,
-  AgentRunRecord,
-  AgentSkillExecutionBindingV1,
-  AgentSkillExecutionBindingV2,
-} from '../../types/agent-run'
-import {
-  assertWorkspaceContentRevisionFreshV1,
-  contentRevisionTableSpecsV1,
-  parseWorkspaceContentRevisionV1,
-  type WorkspaceContentRevisionVectorV1,
-} from '../../authoring/content-revision'
-import {
-  assertFormalAIEntrySnapshotIntegrityV1,
-  freezeFormalAIEntryBindingV1,
-} from '../formal-ai-entry'
-import {
-  finalizeContextGatewayAttemptEvidenceV1,
-  recordContextGatewayPreflightEvidenceV1,
-  verifyContextGatewayCandidateEvidenceV1,
-  type ContextGatewayPreflightEvidenceV1,
-} from '../../context-gateway/attempt-evidence'
-import type { ContextGatewayExecutionV1 } from '../../context-gateway/execution'
-import { assertContextGatewayCandidateAdoptableV1 } from '../../context-gateway/execution'
-import { proseGatewayExecutionFromAssemblyV1 } from '../../prose/gateway-context'
-import { proseRenderedRequestV1 } from '../../prose/request-evidence'
-import type { AIRequestSettingsV1, ChatResult } from '../../ai/client'
-import { recordCreationModelRequestV1, recordCreationModelResponseV1 } from './creation-response-evidence'
-import { parseProseLengthObservationV1, type ProseLengthObservationV1 } from '../../prose/length-observation'
-import { recordAgentRunArtifactV1, readAgentRunArtifactExactV1 } from '../../memory/artifact-store'
-import { QUALITY_RECHECK_STEP_V1, verifyQualityRevisionEvidenceV1, type QualityRevisionEvidenceV1 } from '../../prose/quality-revision-evidence'
-import { qualityRevisionProtectionErrorV1 } from '../../prose/quality-revision'
-import { parseQualityRecheckV1 } from '../../prose/quality-recheck'
+import { db } from '../../db/schema';
+import { observeDuplicatedProseFrameV1 } from '../../prose/provider-frame-observation';
+import { normalizeProseForEditorV1, plainTextToHtml } from '../../utils/html';
+import { adopt, adoptionTransactionTablesV1 } from '../../registry/adopt';
+import { hashChapterText, normalizeChapterText, sha256Text, CHAPTER_TEXT_NORMALIZATION_VERSION } from '../../ai/chapter-memory/text-normalization';
+import type { AgentConversation, AgentEvent, Chapter, ChatMessage, WorkspaceScope } from '../../types';
+import type { AgentRunFormalAIEntryBindingV1, ContextManifestV1, ContextManifestV2, ContextManifestV3, VerificationReceiptV1 } from '../../types/agent-run';
+import type { AssembleContextResult } from '../../registry/types';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, readVerifiedAgentRunInTransactionV1, appendPrivilegedAgentRunEventInTransactionV1, appendAgentRunEventWithSettlementInTransactionV1, withAgentRunMutationLockV1, agentRunScopeTransactionTablesV1, type AgentRunSnapshotV1 } from './event-store';
+import { parseAgentRunEventV1 } from './event-schema';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { canonicalStringify, hashCanonicalValue } from './hash';
+import type { TokenUsage } from '../../ai/logger';
+import { createContextManifestFromAssemblyV1, createContextManifestV2FromV1 } from './context-manifest';
+import { assertRecordInScope, readOwnedRows, scopeTransactionTables, stampNewRecord } from '../../workspace/scope';
+import { buildChapterInformationBoundaryV1, validateProseInformationBoundaryV1 } from '../information-boundary';
+import { verifyProseSemanticReviewArtifactV1, verifyProseSemanticRevisionArtifactV1, type ProseSemanticReviewArtifactV1, type ProseSemanticRevisionArtifactV1 } from '../prose-semantic-review';
+import { AgentTeamBudgetTracker, type AgentTeamBudgetEvidence } from '../team-budget';
+import { assertAgentSkillExecutionBindingV1, assertAgentSkillExecutionBindingIntegrityV2, createAgentSkillExecutionBindingV1, createAgentSkillExecutionBindingV2 } from '../execution-binding';
+import { getAgentSkillV1, resolveAgentSkillContextSourceKeysV1 } from '../skill-registry';
+import type { AgentRunContractV2, AgentRunContractV3, AgentRunStepExecutionBindingV2, AgentRunRecord, AgentSkillExecutionBindingV1, AgentSkillExecutionBindingV2 } from '../../types/agent-run';
+import { assertWorkspaceContentRevisionFreshV1, contentRevisionTableSpecsV1, parseWorkspaceContentRevisionV1, type WorkspaceContentRevisionVectorV1 } from '../../authoring/content-revision';
+import { assertFormalAIEntrySnapshotIntegrityV1, freezeFormalAIEntryBindingV1 } from '../formal-ai-entry';
+import { finalizeContextGatewayAttemptEvidenceV1, recordContextGatewayPreflightEvidenceV1, verifyContextGatewayCandidateEvidenceV1, type ContextGatewayPreflightEvidenceV1 } from '../../context-gateway/attempt-evidence';
+import type { ContextGatewayExecutionV1 } from '../../context-gateway/execution';
+import { assertContextGatewayCandidateAdoptableV1 } from '../../context-gateway/execution';
+import { proseGatewayExecutionFromAssemblyV1 } from '../../prose/gateway-context';
+import { proseRenderedRequestV1 } from '../../prose/request-evidence';
+import type { AIRequestSettingsV1, ChatResult } from '../../ai/client';
+import { recordCreationModelRequestV1, recordCreationModelResponseV1 } from './creation-response-evidence';
+import { parseProseLengthObservationV1, type ProseLengthObservationV1 } from '../../prose/length-observation';
+import { recordAgentRunArtifactV1, readAgentRunArtifactExactV1 } from '../../memory/artifact-store';
+import { QUALITY_RECHECK_STEP_V1, verifyQualityRevisionEvidenceV1, type QualityRevisionEvidenceV1 } from '../../prose/quality-revision-evidence';
+import { qualityRevisionProtectionErrorV1 } from '../../prose/quality-revision';
+import { parseQualityRecheckV1 } from '../../prose/quality-recheck';
 
 export const PROSE_GENERATION_STEP_ID_V1 = 'prose-generation'
 export const PROSE_SEMANTIC_REVIEW_STEP_ID_V1 = 'prose-semantic-review'

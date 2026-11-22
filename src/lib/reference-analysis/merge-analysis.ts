@@ -6,9 +6,8 @@
  *   原 Phase 28.1 用正则从分析文本抠人名 + 句子切分，准确率低、同一角色会重复，
  *   现按"文本提取一律用 AI 不用正则"原则改为 AI 聚合。
  */
-
-import type { ReferenceChunkAnalysis, AnalysisDimension } from '../types/reference'
-import { ANALYSIS_DIMENSIONS, DIMENSION_LABELS } from '../types/reference'
+import type { ReferenceChunkAnalysis, AnalysisDimension } from '../types/reference';
+import { ANALYSIS_DIMENSIONS, DIMENSION_LABELS } from '../types/reference';
 
 /** AI 聚合后的角色卡（去重合并好的，同一人的不同称呼/不同块归为一个） */
 export interface AIMergedCharacter {

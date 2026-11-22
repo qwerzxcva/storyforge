@@ -1,8 +1,8 @@
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import type { PromptWorkflow } from '../lib/types/workflow'
-import { SYSTEM_WORKFLOW_SEEDS } from '../lib/ai/workflow-seeds'
-import { validateWorkflowGraph } from '../lib/workflow/graph'
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import type { PromptWorkflow } from '../lib/types/workflow';
+import { SYSTEM_WORKFLOW_SEEDS } from '../lib/ai/workflow-seeds';
+import { validateWorkflowGraph } from '../lib/workflow/graph';
 
 interface WorkflowStore {
   workflows: PromptWorkflow[]

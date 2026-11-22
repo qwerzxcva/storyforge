@@ -1,17 +1,9 @@
-import { useEffect, useMemo, useRef, useState, type CompositionEvent, type FormEvent, type UIEvent } from 'react'
-import { CTextarea } from '../shared/CompositionInput'
-import { inputAreaLayoutV1, worldviewInputAreaFieldV1 } from '../../lib/input-area-layout'
-import type { PendingMasterCandidate, VisibleMasterCandidateDraftV1 } from '../agent/useMasterCopilot'
-import {
-  parseWorldviewFieldCandidateDraft,
-  type WorldviewFieldCopilotCandidate,
-  type WorldviewFieldOperationV1,
-} from '../../lib/agent/worldview-field-copilot'
-import {
-  compareWorldviewTextBlocksV1,
-  WORLDVIEW_TEXT_COMPARISON_VERSION_V1,
-  type WorldviewTextBlockStatusV1,
-} from '../../lib/agent/worldview-text-comparison'
+import { useEffect, useMemo, useRef, useState, type CompositionEvent, type FormEvent, type UIEvent } from 'react';
+import { CTextarea } from '../shared/CompositionInput';
+import { inputAreaLayoutV1, worldviewInputAreaFieldV1 } from '../../lib/input-area-layout';
+import type { PendingMasterCandidate, VisibleMasterCandidateDraftV1 } from '../agent/useMasterCopilot';
+import { parseWorldviewFieldCandidateDraft, type WorldviewFieldCopilotCandidate, type WorldviewFieldOperationV1 } from '../../lib/agent/worldview-field-copilot';
+import { compareWorldviewTextBlocksV1, WORLDVIEW_TEXT_COMPARISON_VERSION_V1, type WorldviewTextBlockStatusV1 } from '../../lib/agent/worldview-text-comparison';
 
 const STATUS_LABELS: Record<WorldviewTextBlockStatusV1, string> = {
   unchanged: '原块保留',

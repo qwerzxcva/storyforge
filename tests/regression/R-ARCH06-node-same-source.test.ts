@@ -43,7 +43,7 @@ describe('ARCH-06 · 节点模式与分步骤模式同源', () => {
   })
 
   it('官方创作链把独立地理、历史和世界规则作为只读 Canon 来源显式接入', () => {
-    for (const officialId of ['world-foundation', 'long-novel', 'short-novel'] as const) {
+    for (const officialId of ['world-foundation', 'long-novel'] as const) {
       const graph = buildOfficialAuthoringTemplate(officialId)
       const templateIds = new Set(graph.nodes.map(node => node.templateId))
       expect(templateIds.has('source.world-geography'), officialId).toBe(true)

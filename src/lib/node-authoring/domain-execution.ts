@@ -1,95 +1,36 @@
-import { modelDispatchWasCancelledV1, ModelDispatchGuardRejectedV1 } from '../ai/codex-transport'
-import { chat, resolveRequestConfig, type ChatResult } from '../ai/client'
-import {
-  adoptCharacterCopilotCandidate,
-  parseCharacterCandidateDraft,
-  prepareCharacterCopilot,
-} from '../agent/character-copilot'
-import {
-  WORLDVIEW_AGENT_FIELDS,
-  adoptRestoredWorldviewFieldCandidate,
-  formatWorldviewFieldGenerationRequestV1,
-  prepareWorldviewFieldCopilot,
-  type WorldviewAgentField,
-} from '../agent/worldview-field-copilot'
-import {
-  STORY_CORE_FIELDS,
-  adoptRestoredStoryCoreCandidate,
-  formatStoryCoreGenerationRequestV1,
-  prepareStoryCoreCopilot,
-  type StoryCoreField,
-} from '../agent/story-core-copilot'
-import {
-  adoptRestoredCharacterSupplementCandidateV1,
-  prepareCharacterSupplementCopilotV1,
-} from '../agent/character-supplement-copilot'
-import {
-  adoptRestoredStoryArcCandidate,
-  prepareStoryArcCopilot,
-  runStoryArcCreativeReliabilityV1,
-} from '../agent/story-arc-copilot'
-import {
-  adoptCharacterRelationshipCandidateV1,
-  generateCharacterRelationshipCandidateV1,
-} from '../agent/run/character-relationship-durable'
-import {
-  CHARACTER_DIMENSIONS,
-  type CharacterDimensionKey,
-} from '../character/character-dimensions'
-import { hashCanonicalValue } from '../agent/run/hash'
-import {
-  prepareOutlineCopilot,
-  adoptRestoredOutlineCandidate,
-  runOutlineCreativeReliabilityV1,
-  type OutlineCopilotMode,
-} from '../agent/outline-copilot'
-import {
-  prepareProseCopilot,
-  adoptRestoredProseCandidate,
-  runProseCreativeReliabilityV1,
-} from '../agent/prose-copilot'
-import { buildEnhancedDetailPrompt } from '../ai/adapters/detail-scene-adapter'
-import { createDetailedOutlineCreativeArtifactV1 } from '../agent/detailed-outline-copilot'
-import {
-  type CreativeArtifactV1,
-  type CreativeQualityModeV1,
-} from '../agent/creative-reliability'
-import { buildNarrativeBriefV1, formatNarrativeBriefForPromptV1 } from '../agent/narrative-brief'
-import {
-  isChapterOrganizationCurrent,
-  persistChapterOrganizationCandidate,
-  adoptChapterOrganizationSelection,
-  selectAllChapterOrganizationCandidates,
-  type ChapterOrganizationCandidate,
-} from '../agent/chapter-organization'
-import { AgentTeamBudgetTracker, type AgentTeamBudgetProfile } from '../agent/team-budget'
-import { hashChapterText, normalizeChapterText } from '../ai/chapter-memory/text-normalization'
-import {
-  parseCanonicalFactCandidateDraftV1,
-  parseFactExtractResult,
-} from '../ai/adapters/fact-extract-adapter'
-import { adoptFactCandidates } from '../fact-ledger/fact-ledger'
-import { adoptChapterOutlineWorkshopResult } from '../outline/adopt-workshop'
-import { assembleContext } from '../registry/assemble-context'
-import { db } from '../db/schema'
-import type { AIConfig, WorkspaceScope } from '../types'
-import type { AdoptResult } from '../registry/types'
-import { AUTHORING_NODE_BY_ID } from './catalog'
-import {
-  readAuthoringCanonBinding,
-  resolveAuthoringBoundRecordId,
-  type AuthoringSourceEvidenceV1,
-} from './bindings'
-import { chapterNodeContextPolicy, readFactNodeSource, readOrganizationNodeSource } from './chapter-source'
-import type {
-  AuthoringCandidateDomain,
-  AuthoringInputEnvelope,
-  AuthoringNodeInstance,
-  AuthoringSemantic,
-} from './contracts'
-import { assertRecordInScope, readOwnedRows, resolveScopeLike } from '../workspace/scope'
-import { executeQualityAuthoringNodeV1, executeQualityRevisionAuthoringNodeV1, adoptQualityAuthoringRevisionV1 } from './quality-execution'
-import { createNodeFieldProducerV1 } from './field-producer'
+import { modelDispatchWasCancelledV1, ModelDispatchGuardRejectedV1 } from '../ai/codex-transport';
+import { chat, resolveRequestConfig, type ChatResult } from '../ai/client';
+import { adoptCharacterCopilotCandidate, parseCharacterCandidateDraft, prepareCharacterCopilot } from '../agent/character-copilot';
+import { WORLDVIEW_AGENT_FIELDS, adoptRestoredWorldviewFieldCandidate, formatWorldviewFieldGenerationRequestV1, prepareWorldviewFieldCopilot, type WorldviewAgentField } from '../agent/worldview-field-copilot';
+import { STORY_CORE_FIELDS, adoptRestoredStoryCoreCandidate, formatStoryCoreGenerationRequestV1, prepareStoryCoreCopilot, type StoryCoreField } from '../agent/story-core-copilot';
+import { adoptRestoredCharacterSupplementCandidateV1, prepareCharacterSupplementCopilotV1 } from '../agent/character-supplement-copilot';
+import { adoptRestoredStoryArcCandidate, prepareStoryArcCopilot, runStoryArcCreativeReliabilityV1 } from '../agent/story-arc-copilot';
+import { adoptCharacterRelationshipCandidateV1, generateCharacterRelationshipCandidateV1 } from '../agent/run/character-relationship-durable';
+import { CHARACTER_DIMENSIONS, type CharacterDimensionKey } from '../character/character-dimensions';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { prepareOutlineCopilot, adoptRestoredOutlineCandidate, runOutlineCreativeReliabilityV1, type OutlineCopilotMode } from '../agent/outline-copilot';
+import { prepareProseCopilot, adoptRestoredProseCandidate, runProseCreativeReliabilityV1 } from '../agent/prose-copilot';
+import { buildEnhancedDetailPrompt } from '../ai/adapters/detail-scene-adapter';
+import { createDetailedOutlineCreativeArtifactV1 } from '../agent/detailed-outline-copilot';
+import { type CreativeArtifactV1, type CreativeQualityModeV1 } from '../agent/creative-reliability';
+import { buildNarrativeBriefV1, formatNarrativeBriefForPromptV1 } from '../agent/narrative-brief';
+import { isChapterOrganizationCurrent, persistChapterOrganizationCandidate, adoptChapterOrganizationSelection, selectAllChapterOrganizationCandidates, type ChapterOrganizationCandidate } from '../agent/chapter-organization';
+import { AgentTeamBudgetTracker, type AgentTeamBudgetProfile } from '../agent/team-budget';
+import { hashChapterText, normalizeChapterText } from '../ai/chapter-memory/text-normalization';
+import { parseCanonicalFactCandidateDraftV1, parseFactExtractResult } from '../ai/adapters/fact-extract-adapter';
+import { adoptFactCandidates } from '../fact-ledger/fact-ledger';
+import { adoptChapterOutlineWorkshopResult } from '../outline/adopt-workshop';
+import { assembleContext } from '../registry/assemble-context';
+import { db } from '../db/schema';
+import type { AIConfig, WorkspaceScope } from '../types';
+import type { AdoptResult } from '../registry/types';
+import { AUTHORING_NODE_BY_ID } from './catalog';
+import { readAuthoringCanonBinding, resolveAuthoringBoundRecordId, type AuthoringSourceEvidenceV1 } from './bindings';
+import { chapterNodeContextPolicy, readFactNodeSource, readOrganizationNodeSource } from './chapter-source';
+import type { AuthoringCandidateDomain, AuthoringInputEnvelope, AuthoringNodeInstance, AuthoringSemantic } from './contracts';
+import { assertRecordInScope, readOwnedRows, resolveScopeLike } from '../workspace/scope';
+import { executeQualityAuthoringNodeV1, executeQualityRevisionAuthoringNodeV1, adoptQualityAuthoringRevisionV1 } from './quality-execution';
+import { createNodeFieldProducerV1 } from './field-producer';
 
 export interface DomainExecutionResult {
   output: string

@@ -1,17 +1,9 @@
-import { useEffect, useState } from 'react'
-import { FolderOpen, HardDrive, Loader2, RefreshCw, ShieldAlert, Unplug } from 'lucide-react'
-import type { Project } from '../../lib/types'
-import {
-  ensureFolderPermission,
-  folderPermissionGranted,
-  isFSASupported,
-  pickFolder,
-} from '../../lib/storage/folder-backup'
-import {
-  clearProjectFolderHandle,
-  loadProjectFolderHandle,
-} from '../../lib/storage/folder-handle-store'
-import { bindProjectStorageWorkspace } from '../../lib/storage/project-storage-workspace'
+import { useEffect, useRef, useState } from 'react';
+import { FolderOpen, HardDrive, Loader2, RefreshCw, ShieldAlert, Unplug } from 'lucide-react';
+import type { Project } from '../../lib/types';
+import { ensureFolderPermission, folderPermissionGranted, isFSASupported, pickFolder } from '../../lib/storage/folder-backup';
+import { clearProjectFolderHandle, loadProjectFolderHandle } from '../../lib/storage/folder-handle-store';
+import { bindProjectStorageWorkspace } from '../../lib/storage/project-storage-workspace';
 
 interface Props {
   project?: Project
@@ -27,25 +19,49 @@ export default function ProjectStorageWorkspacePanel({ project, onOpenDataManage
   const [notice, setNotice] = useState<Notice>(null)
   const supported = isFSASupported()
 
+  const workspaceUid = project?.workspaceUid
+  const identity = `${project?.id}:${workspaceUid}`
+  const scope = useRef({ identity, generation: 0 })
+  if (scope.current.identity !== identity) scope.current = { identity, generation: 0 }
+
   useEffect(() => {
-    let cancelled = false
-    setHandle(null)
-    setNeedsAuth(false)
-    setNotice(null)
-    if (!project) return () => { cancelled = true }
+    const currentScope = scope.current
+    const reset = () => {
+      currentScope.generation += 1
+      setHandle(null)
+      setNeedsAuth(false)
+      setNotice(null)
+      setBusy(false)
+    }
+    reset()
+    const generation = currentScope.generation
+    const current = () => scope.current === currentScope && currentScope.generation === generation
+    const cleared = (event: Event) => {
+      if ((event as CustomEvent<string>).detail !== workspaceUid) return
+      reset()
+    }
+    window.addEventListener('storyforge-folder-binding-cleared', cleared)
     void (async () => {
-      const stored = await loadProjectFolderHandle(project)
-      if (!stored || cancelled) return
-      const granted = await folderPermissionGranted(stored)
-      if (cancelled) return
-      setHandle(stored)
-      setNeedsAuth(!granted)
-    })()
-    return () => { cancelled = true }
-  }, [project])
+      if (!workspaceUid) return
+      const saved = await loadProjectFolderHandle({ workspaceUid })
+      if (!saved || !current()) return
+      setHandle(saved)
+      const granted = await folderPermissionGranted(saved)
+      if (current()) setNeedsAuth(!granted)
+    })().catch(error => {
+      if (current()) setNotice({ kind: 'error', text: `读取文件夹失败：${(error as Error).message}` })
+    })
+    return () => {
+      currentScope.generation += 1
+      window.removeEventListener('storyforge-folder-binding-cleared', cleared)
+    }
+  }, [identity, workspaceUid])
 
   const chooseLocation = async () => {
     if (!project) return
+    const currentScope = scope.current
+    const generation = ++currentScope.generation
+    const current = () => scope.current === currentScope && currentScope.generation === generation
     setBusy(true)
     setNotice(null)
     try {
@@ -53,13 +69,16 @@ export default function ProjectStorageWorkspacePanel({ project, onOpenDataManage
         id: 'storyforge-project-location',
         startIn: handle ?? undefined,
       })
-      if (!selected) return
-      if (!(await ensureFolderPermission(selected))) {
+      if (!current() || !selected) return
+      const granted = await ensureFolderPermission(selected)
+      if (!current()) return
+      if (!granted) {
         setNotice({ kind: 'error', text: '没有获得该文件夹的读写权限。' })
         return
       }
       const replaced = handle != null
       await bindProjectStorageWorkspace(project, selected)
+      if (!current()) return
       setHandle(selected)
       setNeedsAuth(false)
       setNotice({
@@ -69,40 +88,50 @@ export default function ProjectStorageWorkspacePanel({ project, onOpenDataManage
           : `已将“${selected.name}”设为项目存储工作区。尚未写入任何文件。`,
       })
     } catch (error) {
+      if (!current()) return
       setNotice({ kind: 'error', text: `保存位置失败：${error instanceof Error ? error.message : '请重试或检查系统权限。'}` })
     } finally {
-      setBusy(false)
+      if (current()) setBusy(false)
     }
   }
 
   const reauthorize = async () => {
     if (!handle) return
+    const currentScope = scope.current
+    const generation = ++currentScope.generation
+    const current = () => scope.current === currentScope && currentScope.generation === generation
     setBusy(true)
     setNotice(null)
     try {
       const granted = await ensureFolderPermission(handle)
+      if (!current()) return
       setNeedsAuth(!granted)
       setNotice(granted
         ? { kind: 'success', text: '文件夹权限已恢复；没有自动读取或写入文件。' }
         : { kind: 'error', text: '没有获得该文件夹的读写权限。' })
     } finally {
-      setBusy(false)
+      if (current()) setBusy(false)
     }
   }
 
   const disconnect = async () => {
     if (!project) return
+    const currentScope = scope.current
+    const generation = ++currentScope.generation
+    const current = () => scope.current === currentScope && currentScope.generation === generation
     setBusy(true)
     setNotice(null)
     try {
       await clearProjectFolderHandle(project)
+      if (scope.current !== currentScope) return
       setHandle(null)
       setNeedsAuth(false)
       setNotice({ kind: 'success', text: '已解除关联；硬盘上的原文件不会被删除。' })
     } catch (error) {
+      if (!current()) return
       setNotice({ kind: 'error', text: `解除关联失败：${(error as Error).message}` })
     } finally {
-      setBusy(false)
+      if (current()) setBusy(false)
     }
   }
 

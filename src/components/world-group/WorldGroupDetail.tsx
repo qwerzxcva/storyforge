@@ -1,27 +1,19 @@
 /**
  * 世界组详情面板 — 编辑单个世界的基础信息和穿越规则
  */
-import { CTextarea, CInput } from '../shared/CompositionInput'
-import { useState, useEffect, useCallback, useRef } from 'react'
-import { ArrowLeft, Save, Loader2, Sparkles, Check, X } from 'lucide-react'
-import { useWorldGroupStore } from '../../stores/world-group'
-import { useAIConfigStore } from '../../stores/ai-config'
-import {
-  abandonWorldviewExpandRunV1,
-  adoptWorldviewExpandCandidateV1,
-  generateWorldviewExpandCandidateV1,
-  readPendingWorldviewExpandCandidateV1,
-  readRecoverableWorldviewExpandRunV1,
-  rejectWorldviewExpandCandidateV1,
-  type WorldviewExpandCandidateV1,
-} from '../../lib/agent/run/worldview-expand-durable'
-import { resolveScopeLike } from '../../lib/workspace/scope'
-import type { WorkspaceScope, WorldGroup, WorldGroupType } from '../../lib/types'
-import { WORLD_GROUP_TYPE_LABELS } from '../../lib/types/world-group'
-import { useBeforeUnload } from '../../hooks/useBeforeUnload'
-import { coordinatePendingEditV1, flushPendingEditsV1, registerPendingDraftFlusherV1 } from '../../lib/authoring/pending-edit-coordinator'
-import { WORLDVIEW_EXPAND_FIELDS_V1 } from '../../lib/ai/world-group-ai'
-import { FIELD_BY_TARGET } from '../../lib/registry/field-registry'
+import { CTextarea, CInput } from '../shared/CompositionInput';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { ArrowLeft, Save, Loader2, Sparkles, Check, X } from 'lucide-react';
+import { useWorldGroupStore } from '../../stores/world-group';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { abandonWorldviewExpandRunV1, adoptWorldviewExpandCandidateV1, generateWorldviewExpandCandidateV1, readPendingWorldviewExpandCandidateV1, readRecoverableWorldviewExpandRunV1, rejectWorldviewExpandCandidateV1, type WorldviewExpandCandidateV1 } from '../../lib/agent/run/worldview-expand-durable';
+import { resolveScopeLike } from '../../lib/workspace/scope';
+import type { WorkspaceScope, WorldGroup, WorldGroupType } from '../../lib/types';
+import { WORLD_GROUP_TYPE_LABELS } from '../../lib/types/world-group';
+import { useBeforeUnload } from '../../hooks/useBeforeUnload';
+import { coordinatePendingEditV1, flushPendingEditsV1, registerPendingDraftFlusherV1 } from '../../lib/authoring/pending-edit-coordinator';
+import { WORLDVIEW_EXPAND_FIELDS_V1 } from '../../lib/ai/world-group-ai';
+import { FIELD_BY_TARGET } from '../../lib/registry/field-registry';
 
 const TYPE_OPTIONS: { value: WorldGroupType; label: string }[] = [
   { value: 'primary', label: '主世界' },

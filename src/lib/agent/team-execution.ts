@@ -1,25 +1,8 @@
-import type {
-  GenerationGateIssue,
-  GenerationGateResult,
-  GenerationNode,
-  GenerationNodeRunResult,
-  PreparedGenerationNode,
-} from '../generation/generation-node'
-import { runGenerationNode } from '../generation/generation-node'
-import type { ChatMessage } from '../types'
-import {
-  AgentTeamBudgetTracker,
-  type AgentTeamCallReservation,
-} from './team-budget'
-import {
-  buildStructuredOutputRepairMessagesV1,
-  classifyStructuredGateIssueV1,
-  readStructuredOutputEvidenceV1,
-  StructuredOutputPipelineErrorV1,
-  StructuredOutputRepairFailedErrorV1,
-  type StructuredOutputAttemptEvidenceV1,
-  type StructuredOutputRunEvidenceV1,
-} from './structured-output-pipeline'
+import type { GenerationGateIssue, GenerationGateResult, GenerationNode, GenerationNodeRunResult, PreparedGenerationNode } from '../generation/generation-node';
+import { runGenerationNode } from '../generation/generation-node';
+import type { ChatMessage } from '../types';
+import { AgentTeamBudgetTracker, type AgentTeamCallReservation } from './team-budget';
+import { buildStructuredOutputRepairMessagesV1, classifyStructuredGateIssueV1, readStructuredOutputEvidenceV1, StructuredOutputPipelineErrorV1, StructuredOutputRepairFailedErrorV1, type StructuredOutputAttemptEvidenceV1, type StructuredOutputRunEvidenceV1 } from './structured-output-pipeline';
 
 export type BudgetedGenerationNodeResultV1<TOutput, TAdoption> =
   GenerationNodeRunResult<TOutput, TAdoption> & {

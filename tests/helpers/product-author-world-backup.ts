@@ -1,6 +1,6 @@
 import { db } from '../../src/lib/db/schema'
 import { exportProjectJSON } from '../../src/lib/export/json-export'
-import { parseProductProductionBriefV3 } from '../../src/lib/product-production/contracts'
+import { parseProductProductionBriefV3 } from '../../src/lib/legacy-compat/product-production/contracts'
 import { parseWorldSourcePurposeProofV1 } from '../../src/lib/world-engine/source-purpose-contract'
 
 export async function readOriginalAuthorWorld(sourcePurpose: unknown, productProjectId: number) {

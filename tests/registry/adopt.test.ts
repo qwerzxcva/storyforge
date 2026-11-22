@@ -58,17 +58,11 @@ describe('Phase 1.2a · 统一写回层', () => {
       'workspace-root-lifecycle',
       'world-root-lifecycle',
       'work-root-lifecycle',
-      'product-production-roots',
-      'product-production-briefs',
-      'product-production-commands',
-      'product-production-builds',
-      'product-production-artifacts',
-      'product-production-release-adoption',
-      'ttrpg-rule-pack-library',
     ]))
     expect(extensionIds.some(id => id.startsWith('world-game-'))).toBe(false)
     expect(extensionIds.some(id => id.startsWith('character-interaction-production-'))).toBe(false)
-    expect(extensionIds.some(id => id.startsWith('ttrpg-product-') || id.startsWith('ttrpg-campaign-'))).toBe(false)
+    expect(extensionIds.some(id => id.startsWith('product-'))).toBe(false)
+    expect(extensionIds.some(id => id.startsWith('ttrpg-'))).toBe(false)
     for (const extension of ADOPTION_EXTENSIONS) {
       expect(REGISTRY_BY_NAME.has(extension.target), `ADOPTION_EXTENSION target 缺表:${extension.target}`).toBe(true)
       expect(extension.entrypoints.length).toBeGreaterThan(0)

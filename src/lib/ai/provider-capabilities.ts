@@ -1,4 +1,4 @@
-import type { AIConfig, AIProvider } from '../types'
+import type { AIConfig, AIProvider } from '../types';
 
 export const AI_PROVIDER_CAPABILITY_PROFILE_VERSION_V1 = 'ai-provider-capabilities-v1' as const
 

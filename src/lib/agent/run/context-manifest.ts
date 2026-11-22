@@ -1,43 +1,14 @@
-import { sha256Text } from '../../ai/chapter-memory/text-normalization'
-import { CONTEXT_SOURCE_BY_KEY } from '../../registry/context-sources'
-import type { AssembleContextResult, ContextCompressionEvidenceV1 } from '../../registry/types'
-import type {
-  ContextManifestArtifactRefV3,
-  ContextManifestBoundaryV1,
-  ContextManifestSourceDeliveryV1,
-  ContextManifestSourceStatus,
-  ContextManifestSourceV1,
-  ContextManifestV1,
-  ContextManifestV2,
-  ContextManifestV3,
-  ContextManifestSourceV2,
-} from '../../types/agent-run'
-import type {
-  ContextSourceRefV1,
-  ContextSufficiencyObligationV1,
-  ContextSufficiencyReportV1,
-  RetrievalDecisionV1,
-  RetrievalOmissionV1,
-  RetrievalQueryTraceV1,
-  RetrievalTraceV1,
-} from '../../registry/types'
-import { assertContextSourceRefV1 } from '../../context-gateway/contracts'
-import type { WorkspaceScope } from '../../types'
-import { db } from '../../db/schema'
-import { isWorkspaceUid, isWorkCode } from '../../memory/identity'
-import { hashCanonicalValue } from './hash'
-import {
-  assertExactKeys,
-  assertUnique,
-  failSchema,
-  readArray,
-  readBoolean,
-  readEnum,
-  readHash,
-  readInteger,
-  readRecord,
-  readString,
-} from './schema-utils'
+import { sha256Text } from '../../ai/chapter-memory/text-normalization';
+import { CONTEXT_SOURCE_BY_KEY } from '../../registry/context-sources';
+import type { AssembleContextResult, ContextCompressionEvidenceV1 } from '../../registry/types';
+import type { ContextManifestArtifactRefV3, ContextManifestBoundaryV1, ContextManifestSourceDeliveryV1, ContextManifestSourceStatus, ContextManifestSourceV1, ContextManifestV1, ContextManifestV2, ContextManifestV3, ContextManifestSourceV2 } from '../../types/agent-run';
+import type { ContextSourceRefV1, ContextSufficiencyObligationV1, ContextSufficiencyReportV1, RetrievalDecisionV1, RetrievalOmissionV1, RetrievalQueryTraceV1, RetrievalTraceV1 } from '../../registry/types';
+import { assertContextSourceRefV1 } from '../../context-gateway/contracts';
+import type { WorkspaceScope } from '../../types';
+import { db } from '../../db/schema';
+import { isWorkspaceUid, isWorkCode } from '../../memory/identity';
+import { hashCanonicalValue } from './hash';
+import { assertExactKeys, assertUnique, failSchema, readArray, readBoolean, readEnum, readHash, readInteger, readRecord, readString } from './schema-utils';
 
 const SOURCE_STATUSES: readonly ContextManifestSourceStatus[] = ['included', 'omitted', 'trimmed']
 const SOURCE_DELIVERIES: readonly ContextManifestSourceDeliveryV1[] = ['full', 'compressed', 'truncated']

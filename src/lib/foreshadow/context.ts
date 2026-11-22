@@ -1,5 +1,5 @@
-import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence'
-import type { Chapter, Foreshadow, OutlineNode } from '../types'
+import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence';
+import type { Chapter, Foreshadow, OutlineNode } from '../types';
 
 const FORESHADOW_TYPE_LABELS: Record<string, string> = {
   chekhov: '契诃夫之枪',

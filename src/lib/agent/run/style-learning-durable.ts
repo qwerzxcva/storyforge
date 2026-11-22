@@ -1,35 +1,18 @@
-import { chat, resolveRequestConfig } from '../../ai/client'
-import { getAIConfigRequiredMessage, isAIConfigReady } from '../../ai/config-readiness'
-import { db } from '../../db/schema'
-import { assembleContext } from '../../registry/assemble-context'
-import { adopt } from '../../registry/adopt'
-import {
-  buildStyleLearningAgentMessagesV1,
-  formatStyleLearningBaselineV1,
-  normalizeStyleLearningChapterIdsV1,
-  parseStyleLearningResultStrictV1,
-  readStyleLearningBaselineV1,
-  readStyleLearningPromptTemplateSnapshotV1,
-  readStyleLearningPromptTemplateV1,
-  styleLearningSourceStateV1,
-  styleLearningTargetStateV1,
-  type StyleLearningBaselineV1,
-} from '../../style/learning-agent'
-import type { AIConfig, ChatMessage, WorkspaceScope } from '../../types'
-import { readOwnedRows, scopeTransactionTables } from '../../workspace/scope'
-import { createAgentSkillExecutionBindingV1 } from '../execution-binding'
-import { getAgentSkillV1 } from '../skill-registry'
-import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  staleAgentRunVerificationV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { canonicalStringify, hashCanonicalValue } from './hash'
-import { createVerificationReceiptV1 } from './verification-receipt'
+import { chat, resolveRequestConfig } from '../../ai/client';
+import { getAIConfigRequiredMessage, isAIConfigReady } from '../../ai/config-readiness';
+import { db } from '../../db/schema';
+import { assembleContext } from '../../registry/assemble-context';
+import { adopt } from '../../registry/adopt';
+import { buildStyleLearningAgentMessagesV1, formatStyleLearningBaselineV1, normalizeStyleLearningChapterIdsV1, parseStyleLearningResultStrictV1, readStyleLearningBaselineV1, readStyleLearningPromptTemplateSnapshotV1, readStyleLearningPromptTemplateV1, styleLearningSourceStateV1, styleLearningTargetStateV1, type StyleLearningBaselineV1 } from '../../style/learning-agent';
+import type { AIConfig, ChatMessage, WorkspaceScope } from '../../types';
+import { readOwnedRows, scopeTransactionTables } from '../../workspace/scope';
+import { createAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { getAgentSkillV1 } from '../skill-registry';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, staleAgentRunVerificationV1, type AgentRunSnapshotV1 } from './event-store';
+import { canonicalStringify, hashCanonicalValue } from './hash';
+import { createVerificationReceiptV1 } from './verification-receipt';
 
 export const STYLE_LEARNING_STEP_ID_V1 = 'prose:style-learn' as const
 export const STYLE_LEARNING_SKILL_ID_V1 = 'prose.style-learn' as const

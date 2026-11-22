@@ -1,53 +1,25 @@
-import { REFERENCE_APPLICATION_SKILL } from '../reference-analysis/content-skill'
-import Dexie, { type Transaction } from 'dexie'
-import { estimateTokens } from '../ai/context-budget'
-import { CHAPTER_TEXT_NORMALIZATION_VERSION, getChapterDerivedMemoryStatus, normalizeChapterText, sha256Text } from '../ai/chapter-memory/text-normalization'
-import type { Chapter } from '../types'
-import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash'
-import { db } from '../db/schema'
-import { getFactPredicate } from '../registry/fact-predicate-registry'
-import { FIELD_BY_TARGET } from '../registry/field-registry'
-import { PROJECT_TABLES, REGISTRY_BY_NAME } from '../registry/project-tables'
-import type {
-  ContextResourceAuthorityV1,
-  ContextResourceDescriptorV1,
-  ContextResourceKind,
-  ContextResourceProviderV1,
-  ContextResourceReadV1,
-  ContextResourceRelationV1,
-  ContextSourceRefV1,
-  ContextTimeRangeV1,
-  FieldSpec,
-  FrozenResourceScopeV1,
-  OriginalEvidenceReadInputV1,
-  OriginalEvidenceReadV1,
-  ResourceListInputV1,
-  ResourcePageV1,
-  ResourceReadInputV1,
-  ResourceSearchInputV1,
-  TableSpec,
-} from '../registry/types'
-import type { RagDocumentPolicy, RagFieldPolicy } from '../types/rag-library'
-import { parseEntryFields, parseFieldSchema } from '../types/codex'
-import { normalizeDetailedScenes } from '../types/detailed-outline'
-import { parseStages } from '../types/story-arc'
-import { isRagSelectionEnabledV1, ragSourceFieldPolicyKeysV1 } from '../retrieval/rag-policy'
-import {
-  buildLongTermConsistencyDossierV1,
-  formatLongTermConsistencyDossierV1,
-} from '../memory/consistency-dossier'
-import { htmlToPlainText } from '../utils/html'
-import { assertRecordInScope, resolveScope, scopeTransactionTables } from '../workspace/scope'
-import { isPortableResourceUidV1 } from './resource-uid'
-import {
-  narrativePlanMatchesSourceRefsV1,
-  planNarrativeRetrievalV1,
-} from './narrative-retrieval'
-import {
-  contextGatewayCacheEpochV1,
-  contextGatewayTableMutationEpochV1,
-  createCachedContextResourceProviderV1,
-} from './provider-cache'
+import { REFERENCE_APPLICATION_SKILL } from '../reference-analysis/content-skill';
+import Dexie, { type Transaction } from 'dexie';
+import { estimateTokens } from '../ai/context-budget';
+import { CHAPTER_TEXT_NORMALIZATION_VERSION, getChapterDerivedMemoryStatus, normalizeChapterText, sha256Text } from '../ai/chapter-memory/text-normalization';
+import type { Chapter } from '../types';
+import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash';
+import { db } from '../db/schema';
+import { getFactPredicate } from '../registry/fact-predicate-registry';
+import { FIELD_BY_TARGET } from '../registry/field-registry';
+import { PROJECT_TABLES, REGISTRY_BY_NAME } from '../registry/project-tables';
+import type { ContextResourceAuthorityV1, ContextResourceDescriptorV1, ContextResourceKind, ContextResourceProviderV1, ContextResourceReadV1, ContextResourceRelationV1, ContextSourceRefV1, ContextTimeRangeV1, FieldSpec, FrozenResourceScopeV1, OriginalEvidenceReadInputV1, OriginalEvidenceReadV1, ResourceListInputV1, ResourcePageV1, ResourceReadInputV1, ResourceSearchInputV1, TableSpec } from '../registry/types';
+import type { RagDocumentPolicy, RagFieldPolicy } from '../types/rag-library';
+import { parseEntryFields, parseFieldSchema } from '../types/codex';
+import { normalizeDetailedScenes } from '../types/detailed-outline';
+import { parseStages } from '../types/story-arc';
+import { isRagSelectionEnabledV1, ragSourceFieldPolicyKeysV1 } from '../retrieval/rag-policy';
+import { buildLongTermConsistencyDossierV1, formatLongTermConsistencyDossierV1 } from '../memory/consistency-dossier';
+import { htmlToPlainText } from '../utils/html';
+import { assertRecordInScope, resolveScope, scopeTransactionTables } from '../workspace/scope';
+import { isPortableResourceUidV1 } from './resource-uid';
+import { narrativePlanMatchesSourceRefsV1, planNarrativeRetrievalV1 } from './narrative-retrieval';
+import { contextGatewayCacheEpochV1, contextGatewayTableMutationEpochV1, createCachedContextResourceProviderV1 } from './provider-cache';
 
 // Authoritative reads may run in the caller's Dexie snapshot. Keep only the
 // pure digest leaves alive. Projection fans out in parallel, so serialize its

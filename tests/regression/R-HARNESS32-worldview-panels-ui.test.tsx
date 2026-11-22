@@ -1,5 +1,5 @@
 import StoryCorePanel from '../../src/components/worldview/StoryCorePanel'
-import { act, createElement } from 'react'
+import { act, createElement, type FunctionComponent } from 'react'
 import { createRoot } from 'react-dom/client'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Project } from '../../src/lib/types'
@@ -13,12 +13,12 @@ const mocks = vi.hoisted(() => ({
     busy: false,
     error: null as string | null,
     submitRequest: vi.fn(async () => undefined),
-    submitTargetedRequest: vi.fn(async () => undefined),
+    submitTargetedRequest: vi.fn(async (_request: string) => undefined),
     updateCandidate: vi.fn(async () => undefined),
     readVisibleCandidateDraft: vi.fn(() => undefined),
     discardVisibleCandidateDraft: vi.fn(async () => undefined),
     rejectCandidate: vi.fn(async () => undefined),
-    adoptCandidate: vi.fn(async () => undefined),
+    adoptCandidate: vi.fn(async (): Promise<void> => undefined),
   },
   worldviewStore: {
     loadedScope: { projectId: 1, worldId: 11, workId: 12 },
@@ -91,7 +91,7 @@ import WorldviewHumanityPanel from '../../src/components/worldview/WorldviewHuma
 import WorldviewNaturalPanel from '../../src/components/worldview/WorldviewNaturalPanel'
 import WorldviewOriginPanel from '../../src/components/worldview/WorldviewOriginPanel'
 
-globalThis.IS_REACT_ACT_ENVIRONMENT = true
+Reflect.set(globalThis, 'IS_REACT_ACT_ENVIRONMENT', true)
 
 const mounted: Array<{ host: HTMLDivElement; root: ReturnType<typeof createRoot> }> = []
 
@@ -137,12 +137,12 @@ function candidate(field: string, label: string, value: unknown = `候选的${la
   }
 }
 
-async function renderPanel(component: Parameters<typeof createElement>[0], props: Record<string, unknown> = {}) {
+async function renderPanel<P extends { project: Project }>(component: FunctionComponent<P>, props: Partial<P> = {}) {
   const host = document.createElement('div')
   document.body.append(host)
   const root = createRoot(host)
   mounted.push({ host, root })
-  await act(async () => root.render(createElement(component, { project, ...props })))
+  await act(async () => { root.render(createElement<P>(component, { project, ...props } as P)) })
   return host
 }
 
@@ -153,7 +153,7 @@ it('a late adoption cannot reload the old workspace after this panel switches ow
   const host = await renderPanel(WorldviewOriginPanel)
   await act(async () => Array.from(host.querySelectorAll('button')).find(button => button.textContent?.includes('采纳'))!.click())
   const next = { ...project, id: 2, activeWorldId: 21, activeWorkId: 22 }
-  await act(async () => mounted.at(-1)!.root.render(createElement(WorldviewOriginPanel, { project: next })))
+  await act(async () => mounted[mounted.length - 1]!.root.render(createElement(WorldviewOriginPanel, { project: next })))
   await act(async () => release())
   expect(mocks.worldviewStore.loadAll).toHaveBeenLastCalledWith({ projectId: 2, worldId: 21, workId: 22 }, null)
   expect(mocks.worldviewStore.loadAll).toHaveBeenCalledTimes(2)
@@ -242,11 +242,11 @@ describe('R-HARNESS32 · 三个世界基座面板统一进入主 Agent Harness',
   it('世界起源、自然环境和人文环境都提交固定单字段 Skill 请求', async () => {
     const origin = await renderPanel(WorldviewOriginPanel)
     await act(async () => generateButton(origin).click())
-    expect(mocks.copilot.submitTargetedRequest.mock.calls.at(-1)?.[0]).toContain('目标字段=worldOrigin')
+    expect(mocks.copilot.submitTargetedRequest.mock.calls[mocks.copilot.submitTargetedRequest.mock.calls.length - 1]?.[0]).toContain('目标字段=worldOrigin')
 
     const natural = await renderPanel(WorldviewNaturalPanel)
     await act(async () => generateButton(natural).click())
-    expect(mocks.copilot.submitTargetedRequest.mock.calls.at(-1)?.[0]).toContain('目标字段=worldStructure')
+    expect(mocks.copilot.submitTargetedRequest.mock.calls[mocks.copilot.submitTargetedRequest.mock.calls.length - 1]?.[0]).toContain('目标字段=worldStructure')
 
     const humanity = await renderPanel(WorldviewHumanityPanel)
     const politics = Array.from(humanity.querySelectorAll('button'))
@@ -258,7 +258,7 @@ describe('R-HARNESS32 · 三个世界基座面板统一进入主 Agent Harness',
     const hint = politicsSection.querySelector<HTMLInputElement>('input[placeholder="给 AI 的补充说明（可选）"]')!
     await act(async () => setInputValue(hint, '权力必须受到潮汐历法约束'))
     await act(async () => generateButton(politicsSection).click())
-    const request = mocks.copilot.submitTargetedRequest.mock.calls.at(-1)?.[0]
+    const request = mocks.copilot.submitTargetedRequest.mock.calls[mocks.copilot.submitTargetedRequest.mock.calls.length - 1]?.[0]
     expect(request).toContain('目标字段=politicsOverview')
     expect(request).toContain('生成模式=expand')
     expect(request).toContain('潮汐历法约束')
@@ -312,8 +312,8 @@ describe('R-HARNESS32 · 三个世界基座面板统一进入主 Agent Harness',
       .find(heading => heading.textContent?.includes('气候环境'))!
     const climateSection = climateHeading.closest<HTMLDivElement>('div.max-w-3xl')!
     const manualDisplay = Array.from(climateSection.querySelectorAll('div.cursor-text'))
-      .find(element => element.textContent?.includes('不同区域的气候类型'))!
-    await act(async () => manualDisplay.click())
+      .find(element => element.textContent?.includes('不同区域的气候类型')) as HTMLDivElement
+    await act(async () => (manualDisplay as HTMLDivElement).click())
     const manual = climateSection.querySelector<HTMLTextAreaElement>('textarea[placeholder*="不同区域的气候类型"]')!
     await act(async () => setInputValue(manual, '盐雾季会让北岸连续失温七日。'))
     await act(async () => manual.dispatchEvent(new FocusEvent('focusout', { bubbles: true })))

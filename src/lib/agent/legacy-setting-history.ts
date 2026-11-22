@@ -1,8 +1,8 @@
-import { db } from '../db/schema'
-import { resolveScope, scopeTransactionTables } from '../workspace/scope'
-import { canonicalStringify, hashCanonicalValue } from './run/hash'
-import { appendAgentEvent, getOrCreateAgentConversation, readAgentEvents } from './conversations'
-import type { WorkspaceScope } from '../types/world-ownership'
+import { db } from '../db/schema';
+import { resolveScope, scopeTransactionTables } from '../workspace/scope';
+import { canonicalStringify, hashCanonicalValue } from './run/hash';
+import { appendAgentEvent, getOrCreateAgentConversation, readAgentEvents } from './conversations';
+import type { WorkspaceScope } from '../types/world-ownership';
 
 export const LEGACY_SETTING_HISTORY_KEY = 'storyforge-setting-qa-messages'
 export interface LegacySettingMessage { role: 'user' | 'assistant'; content: string }

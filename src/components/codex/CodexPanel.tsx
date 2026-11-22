@@ -4,36 +4,21 @@
  * 三栏：领域分类树（左） → 词条列表（中） → 词条详情表单（右，由 fieldSchema 驱动）。
  * 支持内置分类播种、自定义分类增删、词条 CRUD、词条间 ref 关联。
  */
-import { useEffect, useMemo, useState } from 'react'
-import {
-  Plus, Trash2, EyeOff, Eye, FolderPlus, Boxes, Settings2, X,
-  Sparkles, Loader2,
-} from 'lucide-react'
-import { useCodexStore } from '../../stores/codex'
-import {
-  CODEX_DOMAIN_LABELS,
-  parseFieldSchema, filterCodexEntriesByWorld,
-  type CodexDomain, type CodexCategory, type CodexEntry,
-} from '../../lib/types/codex'
-import type { Project } from '../../lib/types'
-import { useDialog } from '../shared/Dialog'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { useWorldGroupStore } from '../../stores/world-group'
-import { resolveRequestConfig } from '../../lib/ai/client'
-import { getAIConfigRequiredMessage, isAIConfigReady } from '../../lib/ai/config-readiness'
-import type { ExtractedCodexEntry } from '../../lib/ai/adapters/structured-extract-adapter'
-import { useToast } from '../shared/Toast'
-import { resolveScopeLike } from '../../lib/workspace/scope'
-import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator'
-import {
-  abandonCodexExtractionV1,
-  adoptCodexExtractionCandidateV1,
-  generateCodexEnrichmentCandidateV1,
-  generateCodexExtractionCandidateV1,
-  readPendingCodexExtractionCandidateV1,
-  readRecoverableCodexExtractionV1,
-  resumeCodexExtractionCandidateV1,
-} from '../../lib/agent/run/codex-extraction-durable'
+import { useEffect, useMemo, useState } from 'react';
+import { Plus, Trash2, EyeOff, Eye, FolderPlus, Boxes, Settings2, X, Sparkles, Loader2 } from 'lucide-react';
+import { useCodexStore } from '../../stores/codex';
+import { CODEX_DOMAIN_LABELS, parseFieldSchema, filterCodexEntriesByWorld, type CodexDomain, type CodexCategory, type CodexEntry } from '../../lib/types/codex';
+import type { Project } from '../../lib/types';
+import { useDialog } from '../shared/Dialog';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { useWorldGroupStore } from '../../stores/world-group';
+import { resolveRequestConfig } from '../../lib/ai/client';
+import { getAIConfigRequiredMessage, isAIConfigReady } from '../../lib/ai/config-readiness';
+import type { ExtractedCodexEntry } from '../../lib/ai/adapters/structured-extract-adapter';
+import { useToast } from '../shared/Toast';
+import { resolveScopeLike } from '../../lib/workspace/scope';
+import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator';
+import { abandonCodexExtractionV1, adoptCodexExtractionCandidateV1, generateCodexEnrichmentCandidateV1, generateCodexExtractionCandidateV1, readPendingCodexExtractionCandidateV1, readRecoverableCodexExtractionV1, resumeCodexExtractionCandidateV1 } from '../../lib/agent/run/codex-extraction-durable';
 import CodexCategoryFieldsEditor from './CodexCategoryFieldsEditor'
 import CodexEntryDetail from './CodexEntryDetail'
 

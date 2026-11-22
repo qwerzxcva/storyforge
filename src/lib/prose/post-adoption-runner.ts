@@ -1,26 +1,26 @@
-import { buildPostAdoptionAuthorizationSnapshotV1, invalidateChapterPostAdoptionDerivativesV1, preflightPostAdoptionAutoV1, readWorkPostAdoptionSettingsV1 } from './post-adoption-policy'
-import { db } from '../db/schema'
-import type { Project, AIConfig, Character, CharacterRelation, Foreshadow, StoryArc, ItemLedgerEntry } from '../types'
-import { assertRecordInScope, readOwnedRows, resolveScopeLike } from '../workspace/scope'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { assembleContext } from '../registry/assemble-context'
-import { resolveRequestConfig, describeResolvedAIRequestSettingsV1 } from '../ai/client'
-import { chapterOrganizationRequestOptionsV1, CHAPTER_ORGANIZATION_MODEL_PROMPT_VERSION_V4 } from '../agent/chapter-organization-model'
-import { recordAgentRunArtifactV1 } from '../memory/artifact-store'
-import { executeRegisteredAIEntryV1 } from '../agent/formal-ai-entry'
-import { runChapterMemoryTask } from '../ai/chapter-memory/run-chapter-memory'
-import { hashChapterText } from '../ai/chapter-memory/text-normalization'
-import { runChapterOrganization, persistChapterOrganizationCandidate, type ChapterOrganizationRun } from '../agent/chapter-organization'
-import { hashChapterOrganizationCandidateV1 } from '../agent/run/chapter-organization-durable'
-import { runBackgroundConsistencyAgent, persistConsistencyAgentCandidate, hashConsistencyAgentCandidateV1 } from '../agent/consistency-agent'
-import { AgentTeamBudgetTracker } from '../agent/team-budget'
-import { createContextManifestFromAssemblyV1 } from '../agent/run/context-manifest'
-import { readAgentRunV1, type AgentRunSnapshotV1 } from '../agent/run/event-store'
-import { classifyAgentRunFailureV1 } from '../agent/run/failure-policy'
-import { buildChapterPostAdoptionResumePlanV1, isChapterPostAdoptionStepRunnableV1 } from '../agent/run/chapter-post-adoption-resume'
-import { nextChapterPostAdoptionAttemptV1, beginChapterPostAdoptionStepV1, createChapterPostAdoptionDurableRunV1, failChapterPostAdoptionStepV1, recordChapterPostAdoptionOutputV1, scheduleChapterPostAdoptionStepsV1, succeedChapterPostAdoptionStepV1, verifyChapterPostAdoptionRunV1, CHAPTER_POST_ADOPTION_STEP_SOURCE_KEYS_V1, CHAPTER_POST_ADOPTION_STEP_IDS_V1, type ChapterPostAdoptionStepIdV1 } from '../agent/run/chapter-post-adoption-durable'
-import { rebuildChapterChunks, ensureChunkEmbeddings, rebuildProjectNarrativeSummaries } from '../retrieval/retrieval'
-import { isEmbeddingReady } from '../ai/adapters/embedding-adapter'
+import { buildPostAdoptionAuthorizationSnapshotV1, invalidateChapterPostAdoptionDerivativesV1, preflightPostAdoptionAutoV1, readWorkPostAdoptionSettingsV1 } from './post-adoption-policy';
+import { db } from '../db/schema';
+import type { Project, AIConfig, Character, CharacterRelation, Foreshadow, StoryArc, ItemLedgerEntry } from '../types';
+import { assertRecordInScope, readOwnedRows, resolveScopeLike } from '../workspace/scope';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { assembleContext } from '../registry/assemble-context';
+import { resolveRequestConfig, describeResolvedAIRequestSettingsV1 } from '../ai/client';
+import { chapterOrganizationRequestOptionsV1, CHAPTER_ORGANIZATION_MODEL_PROMPT_VERSION_V4 } from '../agent/chapter-organization-model';
+import { recordAgentRunArtifactV1 } from '../memory/artifact-store';
+import { executeRegisteredAIEntryV1 } from '../agent/formal-ai-entry';
+import { runChapterMemoryTask } from '../ai/chapter-memory/run-chapter-memory';
+import { hashChapterText } from '../ai/chapter-memory/text-normalization';
+import { runChapterOrganization, persistChapterOrganizationCandidate, type ChapterOrganizationRun } from '../agent/chapter-organization';
+import { hashChapterOrganizationCandidateV1 } from '../agent/run/chapter-organization-durable';
+import { runBackgroundConsistencyAgent, persistConsistencyAgentCandidate, hashConsistencyAgentCandidateV1 } from '../agent/consistency-agent';
+import { AgentTeamBudgetTracker } from '../agent/team-budget';
+import { createContextManifestFromAssemblyV1 } from '../agent/run/context-manifest';
+import { readAgentRunV1, type AgentRunSnapshotV1 } from '../agent/run/event-store';
+import { classifyAgentRunFailureV1 } from '../agent/run/failure-policy';
+import { buildChapterPostAdoptionResumePlanV1, isChapterPostAdoptionStepRunnableV1 } from '../agent/run/chapter-post-adoption-resume';
+import { nextChapterPostAdoptionAttemptV1, beginChapterPostAdoptionStepV1, createChapterPostAdoptionDurableRunV1, failChapterPostAdoptionStepV1, recordChapterPostAdoptionOutputV1, scheduleChapterPostAdoptionStepsV1, succeedChapterPostAdoptionStepV1, verifyChapterPostAdoptionRunV1, CHAPTER_POST_ADOPTION_STEP_SOURCE_KEYS_V1, CHAPTER_POST_ADOPTION_STEP_IDS_V1, type ChapterPostAdoptionStepIdV1 } from '../agent/run/chapter-post-adoption-durable';
+import { rebuildChapterChunks, ensureChunkEmbeddings, rebuildProjectNarrativeSummaries } from '../retrieval/retrieval';
+import { isEmbeddingReady } from '../ai/adapters/embedding-adapter';
 
 export interface ChapterPostAdoptionTaskV1 {
   chapterId: number

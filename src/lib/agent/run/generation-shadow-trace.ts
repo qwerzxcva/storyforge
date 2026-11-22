@@ -1,19 +1,9 @@
-import type {
-  GenerationNodeShadowTrace,
-  PreparedGenerationNode,
-} from '../../generation/generation-node'
-import type {
-  AcceptedAgentRunContract,
-  AgentRunEventPayloadByTypeV1,
-  AgentRunEventTypeV1,
-  AgentRunProjectionV1,
-  AnyAgentRunEventV1,
-  ContextManifestV1,
-} from '../../types/agent-run'
-import type { ChatMessage } from '../../types'
-import { parseAgentRunEventV1 } from './event-schema'
-import { hashCanonicalValue } from './hash'
-import { replayAgentRunEventsV1 } from './projection'
+import type { GenerationNodeShadowTrace, PreparedGenerationNode } from '../../generation/generation-node';
+import type { AcceptedAgentRunContract, AgentRunEventPayloadByTypeV1, AgentRunEventTypeV1, AgentRunProjectionV1, AnyAgentRunEventV1, ContextManifestV1 } from '../../types/agent-run';
+import type { ChatMessage } from '../../types';
+import { parseAgentRunEventV1 } from './event-schema';
+import { hashCanonicalValue } from './hash';
+import { replayAgentRunEventsV1 } from './projection';
 
 export interface GenerationNodeShadowTraceV1 extends GenerationNodeShadowTrace {
   readonly runId: number

@@ -1,4 +1,4 @@
-import type { LayerVisibility } from '../engine/types'
+import type { LayerVisibility } from '../engine/types';
 
 export interface AtlasLayers extends Required<LayerVisibility> {
   mountains: boolean

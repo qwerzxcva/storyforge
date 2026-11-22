@@ -8,10 +8,10 @@
  *
  * 句柄持久化在 folder-handle-store.ts（独立 IndexedDB），与本模块配合。
  */
-import { exportProjectJSON, type ProjectExportData } from '../export/json-export'
-import { inspectProjectBackup } from '../export/backup-trust'
-import { db } from '../db/schema'
-import { isWorkspaceUid } from '../memory/identity'
+import { exportProjectJSON, type ProjectExportData } from '../export/json-export';
+import { inspectProjectBackup } from '../export/backup-trust';
+import { db } from '../db/schema';
+import { isWorkspaceUid } from '../memory/identity';
 
 interface WindowWithFSA extends Window {
   showDirectoryPicker?: (opts?: {
@@ -124,18 +124,27 @@ function assertSnapshotOwner(text: string, workspaceUid: string): void {
 export async function writeProjectSnapshotToFolder(
   handle: FileSystemDirectoryHandle,
   projectId: number,
+  isCurrent: () => boolean = () => true,
 ): Promise<boolean> {
+  const assertCurrent = () => {
+    if (!isCurrent()) throw new Error('文件夹操作已失效，已停止保存快照。')
+  }
+  assertCurrent()
   const project = await db.projects.get(projectId)
+  assertCurrent()
   if (!project) return false
   const filename = backupFilename(project.workspaceUid)
   const data = await exportProjectJSON(projectId)
+  assertCurrent()
   if (data.project.workspaceUid !== project.workspaceUid) throw new Error('工作区身份已变化，请重新保存快照。')
   const payload = JSON.stringify(data, null, 2)
   const original = await readSnapshotText(handle, filename)
   // Creating the first writable handle can leave an empty file if the staged
   // write fails. Only this UID-specific path is eligible for the next attempt.
   if (original !== null && original !== '') assertSnapshotOwner(original, project.workspaceUid)
+  assertCurrent()
   const fileHandle = await handle.getFileHandle(filename, { create: true })
+  assertCurrent()
   const writable = await fileHandle.createWritable()
   // FSA stages data until close(). Recheck the visible file after opening and
   // before committing; an unrelated replacement must not become our snapshot.
@@ -146,9 +155,13 @@ export async function writeProjectSnapshotToFolder(
     }
   }
   try {
+    assertCurrent()
     await assertUnchanged()
+    assertCurrent()
     await writable.write(payload)
+    assertCurrent()
     await assertUnchanged()
+    assertCurrent()
     await writable.close()
   } catch (cause) {
     try { await writable.abort() } catch { /* The stream may already be closed. */ }

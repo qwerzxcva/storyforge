@@ -1,10 +1,10 @@
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import type { DetailedOutline, DetailedScene, WorkspaceScope } from '../lib/types'
-import { DETAILED_SCENE_TASK_FIELDS, normalizeDetailedScenes } from '../lib/types/detailed-outline'
-import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope'
-import { coordinatePendingEditV1 } from '../lib/authoring/pending-edit-coordinator'
-import { FIELD_BY_TARGET } from '../lib/registry/field-registry'
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import type { DetailedOutline, DetailedScene, WorkspaceScope } from '../lib/types';
+import { DETAILED_SCENE_TASK_FIELDS, normalizeDetailedScenes } from '../lib/types/detailed-outline';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope';
+import { coordinatePendingEditV1 } from '../lib/authoring/pending-edit-coordinator';
+import { FIELD_BY_TARGET } from '../lib/registry/field-registry';
 
 export type DetailedSceneEditV1 =
   | { kind: 'add'; scene: DetailedScene }

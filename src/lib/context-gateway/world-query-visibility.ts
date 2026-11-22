@@ -1,9 +1,9 @@
-import type { NarrativeRecordV1, TypedValueV1, VisibilityV1 } from '../types/narrative-ir'
-import type { NarrativeIndexV1 } from '../types/narrative-index'
-import type { NarrativeTimeContextV1 } from '../types/narrative-time'
-import type { WorldQueryGrantV1, WorldQueryItemV1, WorldQueryV1 } from '../types/world-query'
-import { canonicalNarrativeJsonV1 } from '../world-engine/narrative-json'
-import { sequenceOrdinalV1, timeAtOrBeforeV1 } from './world-query-time'
+import type { NarrativeRecordV1, TypedValueV1, VisibilityV1 } from '../types/narrative-ir';
+import type { NarrativeIndexV1 } from '../types/narrative-index';
+import type { NarrativeTimeContextV1 } from '../types/narrative-time';
+import type { WorldQueryGrantV1, WorldQueryItemV1, WorldQueryV1 } from '../types/world-query';
+import { canonicalNarrativeJsonV1 } from '../world-engine/narrative-json';
+import { sequenceOrdinalV1, timeAtOrBeforeV1 } from './world-query-time';
 
 export function queryVisibilityAllowsV1(visibility: VisibilityV1, grant: WorldQueryGrantV1): boolean {
   if (grant.perspective.kind === 'author') return grant.purpose === 'author-review' || visibility.class !== 'unclassified'

@@ -1,6 +1,6 @@
-import { db } from '../db/schema'
-import type { WorldRelease } from '../types/world-release'
-import type { VerifiedWorldReleaseV1 } from './release-codec'
+import { db } from '../db/schema';
+import type { WorldRelease } from '../types/world-release';
+import type { VerifiedWorldReleaseV1 } from './release-codec';
 
 type Row = Record<string, unknown>
 type Manifest = VerifiedWorldReleaseV1['manifest']

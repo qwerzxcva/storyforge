@@ -1,6 +1,6 @@
-import type { Chapter, OutlineNode } from '../../types'
-import { walkOutlineChaptersInCanonicalOrder } from '../../outline/canonical-outline-walk'
-import { pickBestChapterForOutline } from '../../chapters/selectors'
+import type { Chapter, OutlineNode } from '../../types';
+import { walkOutlineChaptersInCanonicalOrder } from '../../outline/canonical-outline-walk';
+import { pickBestChapterForOutline } from '../../chapters/selectors';
 
 export interface ChapterSequenceAnomaly {
   kind:

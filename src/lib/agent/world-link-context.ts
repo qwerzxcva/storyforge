@@ -1,9 +1,9 @@
-import { db } from '../db/schema'
-import { executeContextGatewayV1, type ContextGatewayExecutionV1 } from '../context-gateway/execution'
-import { isPortableResourceUidV1 } from '../context-gateway/resource-uid'
-import type { WorkspaceScope } from '../types'
-import { assertRecordInScope } from '../workspace/scope'
-import { getAgentSkillV1 } from './skill-registry'
+import { db } from '../db/schema';
+import { executeContextGatewayV1, type ContextGatewayExecutionV1 } from '../context-gateway/execution';
+import { isPortableResourceUidV1 } from '../context-gateway/resource-uid';
+import type { WorkspaceScope } from '../types';
+import { assertRecordInScope } from '../workspace/scope';
+import { getAgentSkillV1 } from './skill-registry';
 
 /**
  * MW-1 read boundary for a channel-specific task.

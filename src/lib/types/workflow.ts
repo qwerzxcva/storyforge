@@ -6,7 +6,7 @@
  *
  * 工作流让用户一键跑完整条链，每步可以审核 / 修改 / 跳过 / 重生成。
  */
-import type { PromptModuleKey } from './prompt'
+import type { PromptModuleKey } from './prompt';
 
 /**
  * 步骤输出的"自动写回"目标（Phase 17）

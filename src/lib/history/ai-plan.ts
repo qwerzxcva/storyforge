@@ -1,15 +1,8 @@
-import { renderPrompt } from '../ai/prompt-engine'
-import { usePromptStore } from '../../stores/prompt'
-import type {
-  ChatMessage,
-  HistoricalEra,
-  HistoricalKeyword,
-  HistoricalKeywordCategory,
-  HistoricalTimelineEvent,
-  PromptTemplate,
-} from '../types'
-import { HISTORICAL_ERA_LABELS, KEYWORD_CATEGORY_LABELS } from '../types/history'
-import { formatHistoricalYear } from './year'
+import { renderPrompt } from '../ai/prompt-engine';
+import { usePromptStore } from '../../stores/prompt';
+import type { ChatMessage, HistoricalEra, HistoricalKeyword, HistoricalKeywordCategory, HistoricalTimelineEvent, PromptTemplate } from '../types';
+import { HISTORICAL_ERA_LABELS, KEYWORD_CATEGORY_LABELS } from '../types/history';
+import { formatHistoricalYear } from './year';
 
 export type HistoryAIMode = 'consult' | 'storm'
 export type HistoryAITarget =

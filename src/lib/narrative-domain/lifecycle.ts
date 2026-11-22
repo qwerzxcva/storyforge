@@ -1,6 +1,6 @@
-import { PROJECT_TABLES, REGISTRY_BY_NAME } from '../registry/project-tables'
-import { replaceNarrativeDomainReferenceV1 } from './references'
-import { narrativeFail } from './json'
+import { PROJECT_TABLES, REGISTRY_BY_NAME } from '../registry/project-tables';
+import { replaceNarrativeDomainReferenceV1 } from './references';
+import { narrativeFail } from './json';
 
 /** Called inside the existing registered deletion/merge transaction. The
  * evidence and old UID stay present after deletion. Reviewed identities cannot

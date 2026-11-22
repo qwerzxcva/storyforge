@@ -1,4 +1,7 @@
 <p align="center">
+
+> 当前产品范围仅为长篇小说；节点模式复用同一创作链，世界编辑只作辅助能力。下文涉及其他产品的内容均为历史资料，不表示当前仍可使用。
+
   <img src="./public/brand/storyforge-icon.png" alt="StoryForge 标志" width="80" />
 </p>
 
@@ -12,7 +15,7 @@
 
 **教程与交流：** [B 站视频教程](https://www.bilibili.com/video/BV1q37j6QExh/) · [知乎专栏](https://zhuanlan.zhihu.com/p/2038714210188780594) · **QQ 交流群：1082374587** · [更多联系方式](#交流与支持)
 
-<p align="center">开源、本地优先的 AI 叙事创作与体验工具。创作长短篇小说，将小说改编成剧本、漫画与漫剧素材；通过插件组合自己的工具，也可以派生世界，制作跑团等互动体验。</p>
+<p align="center">开源、本地优先的 AI 长篇小说创作工具。从设定、大纲、细纲到正文和长程记忆，在同一作品中持续创作；可使用节点模式编排同一条创作链。</p>
 
 <p align="center">
   <a href="https://storyforge-lab.com/">官网</a> ·
@@ -30,7 +33,7 @@
   <img src="https://img.shields.io/badge/AI-API_or_Local_Codex-32776B" alt="自选模型 API 或本机 Codex" />
 </p>
 
-> 长篇、短篇、剧本、漫画、漫剧素材和世界引擎提供正式入口；节点与互动产品为预览。README 提供九种语言；界面及关联文档的语言覆盖请以实际内容为准。
+> 当前仅提供长篇小说创作，节点模式复用同一创作链，世界设定为辅助能力。下文旧产品与互动体验说明仅供历史参考，均不表示当前版本可用。README 提供九种语言；界面及关联文档的语言覆盖请以实际内容为准。
 
 ## 第一次使用？先选择下载方式，再让本地 AI 帮你安装
 
@@ -95,7 +98,7 @@ Agent 可以把排查、整理和提交反馈一起完成，维护者也能根�
 
 ## 近期能力与使用方式
 
-以下依据 2026-10-13 远程 main 核对。长篇、短篇、剧本、漫画、漫剧素材和世界引擎提供正式入口；节点与互动产品保持预览，插件 API 1 / SDK 0.1 为开发预览。
+以下内容为 2026-10-13 核对的历史产品记录，不代表当前版本入口或功能。当前产品范围仅为长篇小说；节点模式复用同一创作链，世界设定为辅助能力。
 
 ### 漫剧前期生产：从故事到逐镜交付包
 
@@ -143,6 +146,8 @@ Agent 可以把排查、整理和提交反馈一起完成，维护者也能根�
 
 ## 先体验一个故事
 
+> 以下跑团与游戏作品、入口和操作步骤来自旧版本，当前发行不提供这些产品或运行时；仅作历史档案保留。
+
 ### 《雾港：失潮钟声》· 无需 API 的内置作品
 
 启动项目后，在首页点击 **雾港：失潮钟声**，或打开本地站点的 `/storyforge/play/mist-harbor`。选择视觉小说或文字冒险，点击“开始故事”即可游玩，不需要模型 API。
@@ -161,7 +166,7 @@ Agent 可以把排查、整理和提交反馈一起完成，维护者也能根�
 
 **体验过程：** 提出行动 → 规则结算 → KP 回应 → 查看线索 → 保存并继续。
 
-[运行与模型配置](#快速开始) · [玩家说明](./examples/ttrpg/README.md) · [真实制作及试玩记录](./examples/ttrpg/fog-harbor/production-status.md)
+[运行与模型配置](#快速开始) · [玩家说明 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/examples/ttrpg/README.md) · [真实制作及试玩记录 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/examples/ttrpg/fog-harbor/production-status.md)
 
 <details>
 <summary>试玩方式与当前范围</summary>
@@ -173,13 +178,13 @@ Agent 可以把排查、整理和提交反馈一起完成，维护者也能根�
 
 **开始方式：** 运行最新主干 → 首页“跑团” → 下方“跑团作品” → “开始一场新冒险”。也可打开本站 `/storyforge/play`。配置自己的模型 API，选择角色与参与方式后开始。
 
-本作是本地社区预览，公共联网多人尚未部署。同机交接也不提供针对设备拥有者的秘密保护。详见[玩家说明](./examples/ttrpg/README.md)与[真实制作及试玩记录](./examples/ttrpg/fog-harbor/production-status.md)。
+本作是本地社区预览，公共联网多人尚未部署。同机交接也不提供针对设备拥有者的秘密保护。详见[玩家说明 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/examples/ttrpg/README.md)与[真实制作及试玩记录 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/examples/ttrpg/fog-harbor/production-status.md)。
 
 </details>
 
 ### 三款 3D 叙事游戏 · 在文字开放世界中体验
 
-启动最新 `main` 源码后，进入 **文字开放世界 → 内置叙事游戏**。无需 API、额外模型或外部游戏引擎；首页不展示这三款游戏的卡片。
+**历史操作记录：** 旧版 `main` 曾可进入“文字开放世界 → 内置叙事游戏”。当前发行不提供这些游戏或对应入口；此处仅存档旧作品说明。
 
 | 作品 | 内容 | 本地路径 |
 |---|---|---|
@@ -194,14 +199,14 @@ Agent 可以把排查、整理和提交反馈一起完成，维护者也能根�
 ## 为什么选择 StoryForge
 
 - **长篇有可追溯的记忆。** 原文、事实、摘要和按需检索帮助找回早期伏笔；章后整理让已确认的变化进入后续创作。[了解长篇](#长篇与节点)
-- **每种作品都有专用生产流程。** 短篇有篇幅与成稿检查，剧本保留改编依据，漫画分别管理页格、画面与排字。[了解独立创作产品](#短篇剧本与漫画)
+- **长篇创作链完整连续。** 从世界设定、故事规划、细纲到章节正文与长程记忆，在同一作品中持续推进；节点模式复用同一链路。[了解长篇与节点](#长篇与节点)
 - **AI 生成由你掌控。** 正式创作先产出候选，作者确认后写回；Harness 提供版本保护、运行证据与恢复机制。[查看架构与测试证据](#共享技术底座)
 
 **本页导航：** [快速开始](#快速开始) · [选择产品](#从你的目标开始) · [第一次创作](#第一次创作) · [长篇与节点](#长篇与节点) · [短篇剧本与漫画](#短篇剧本与漫画) · [世界与互动体验](#世界与互动体验) · [Harness](#共享技术底座) · [模型与费用](#模型与费用) · [备份与隐私](#备份与隐私) · [交流与支持](#交流与支持)
 
 ## 快速开始
 
-> **版本说明**：本文按 2026-10-13 的 main 核对；现有界面截图保留 2026-09-15 的青绿 UI 展示。长篇、短篇、剧本、漫画、漫剧素材和世界引擎已提供正式入口；文字冒险和文字开放世界仍在开发；在线服务与各产品专项能力以页面说明为准。旧 Release 是固定版本，不包含后续主干全部功能；在线站点可能有部署时差。体验本文新功能，推荐使用最新主干源码。
+> **历史资料说明**：下文部分界面截图和产品流程来自 2026-10-13 的旧版 `main`，现保留作开发与历史参考，不代表当前可用入口。当前产品仅为长篇小说创作，节点模式复用同一创作链，世界设定为辅助能力。旧 Release 是固定版本；当前可用能力以最新正式发行及项目总纲为准。
 
 ### 官网项目体验
 
@@ -211,7 +216,7 @@ Agent 可以把排查、整理和提交反馈一起完成，维护者也能根�
 
 ### 在线打开
 
-访问 **[StoryForge 在线版](https://yuanbw.vercel.app/storyforge/)**。当前源码以新版青绿 UI 为正式入口，各产品在自己的页面内创建与管理作品；首页「示例作品」提供已有作品的阅读与体验。文字冒险和文字开放世界仍标注为开发中、非正式功能。
+[StoryForge 在线版](https://yuanbw.vercel.app/storyforge/)是旧版线上体验入口，部署状态与当前发行不保证一致。当前产品范围以长篇小说创作为主；节点复用同一创作链，世界设定为辅助能力。
 
 核心本地创作无需注册 StoryForge 账号；AI 生成需要你配置模型服务。第一次使用可以先手工创建作品、填写设定，再接入 AI。
 
@@ -249,19 +254,12 @@ Windows 请使用 Git for Windows，并选择较短的目录路径。上述克�
 
 ## 从你的目标开始
 
-![StoryForge 当前首页：独立作品、世界引擎和互动体验入口](./docs/assets/readme/home-current.png)
+当前产品范围仅为长篇小说创作；节点模式复用同一创作链，世界设定与编辑是辅助能力，不作为独立产品入口。
 
 | 你想做什么 | 从哪里进入 | 你能得到什么 |
 |---|---|---|
 | 写长篇小说、网文或系列故事 | 长篇 → 作品库 → 新建长篇 | 从设定、角色、卷章大纲到正文，并持续管理伏笔、事实和角色状态 |
-| 完成一篇结构紧凑的故事 | 短篇 → 作品库 → 新建短篇 | 故事设计、章节卡、逐章创作、审校与成稿导出 |
-| 把已有小说改成剧本 | 剧本 → 作品库 | 来源分析、改编规划、场景写作与 Fountain / FDX / 打印导出 |
-| 把已有小说改成漫画 | 漫画 → 作品库 | 分页、分镜、角色视觉资料、图像与排字、分镜版或视觉版导出 |
-| 准备漫剧、短剧的视频制作资料 | 漫剧素材 → 作品库 → 漫剧制作台 | 系列设定、逐集剧本、版本化物料、分镜、参考帧与外部工具输入包 |
-| 搭建可复用的故事世界 | 世界引擎 → 我的世界 → 新建世界 | 独立设定、角色与规则；确认后封存为可引用的世界版本 |
 | 自由组合长篇创作步骤 | 长篇 → 长篇工作台 → 节点创作 | 在可视节点中连接资料与生成动作，复用长篇的数据与能力 |
-| 先玩一段现成的故事 | 跑团 → 作品库 / 游玩 | 《雾港：最后一盏灯》：AI KP、调查、同伴、秘密与结局选择 |
-| 制作角色互动或文字游戏 | 角色聊天 / AI 小镇 / AVG；文字冒险与开放世界开发中 | 基于已封存世界制作自己的独立体验，按各产品成熟度试用 |
 
 **只写小说不需要先建立世界引擎。** 长篇和短篇可以在作者确认后派生世界；剧本、漫画有各自独立的改编流程。游玩已提供的跑团作品也不需要先制作世界。
 
@@ -343,7 +341,7 @@ Windows 请使用 Git for Windows，并选择较短的目录路径。上述克�
 
 ## 短篇、剧本与漫画
 
-三种产品在“新建”中各有入口，拥有自己的作品结构、审校和导出方式。
+以下内容描述旧版本中的独立创作产品和生产流程，当前发行不提供这些产品入口。
 
 ### 短篇小说
 
@@ -353,7 +351,7 @@ Windows 请使用 Git for Windows，并选择较短的目录路径。上述克�
 - **让审校意见落到原文。** 问题带有章节和证据，重写针对具体章节；审校记录绑定本次手稿的内容指纹。正文改动后需要重新审校，避免拿旧报告给新稿盖章。
 - **保留可交付的定稿。** 缺失章节、待处理候选和未解决的严重问题会阻止发布。通过检查后新增冻结作品版本，后续继续修订可保留原版，导出 **Markdown、TXT、JSON**。
 
-对作者而言，工作台持续回答三个问题：还差哪一章、哪里需要修改、这一版是否已经完成。实现入口：[短篇生产与完成检查](./src/lib/short-novel/service.ts)、[独立 AI 运行链](./src/lib/agent/run/short-novel-durable.ts)。
+对作者而言，工作台持续回答三个问题：还差哪一章、哪里需要修改、这一版是否已经完成。实现入口：[短篇生产与完成检查 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/short-novel/service.ts)、[独立 AI 运行链 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/agent/run/short-novel-durable.ts)。
 
 ### 小说转剧本
 
@@ -365,7 +363,7 @@ Windows 请使用 Git for Windows，并选择较短的目录路径。上述克�
 
 例如把小说中的内心独白改成一场对峙，作者可沿来源与场景映射核对信息是否保留，再审查动作、冲突和节奏是否成立。发布时冻结来源、改编决定与场景，后续改小说不会悄悄改变已导出的剧本。
 
-实现入口：[剧本生产与定向修订](./src/lib/screenplay/production.ts)、[版本封存](./src/lib/screenplay/release.ts)、[格式渲染](./src/lib/screenplay/renderers.ts)。
+实现入口：[剧本生产与定向修订 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/screenplay/production.ts)、[版本封存 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/screenplay/release.ts)、[格式渲染 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/screenplay/renderers.ts)。
 
 ### 小说转漫画
 
@@ -378,13 +376,13 @@ Windows 请使用 Git for Windows，并选择较短的目录路径。上述克�
 
 **当前图像接入边界：** 内置通用 OpenAI 兼容图像适配器当前只发送文本，未声明参考图、固定 seed 或局部重绘能力。系统会提示限制，不能把“在提示词中提到参考图”记作已传图的证据。视觉制作需要单独配置图像服务或采用符合要求的作者素材；角色一致性仍需要人工选图与审校。
 
-实现入口：[漫画生产](./src/lib/comic/production.ts)、[媒资与生成证据](./src/lib/comic/media-service.ts)、[本地排字](./src/lib/comic/renderers.ts)、[双版本质量检查](./src/lib/comic/qa.ts)。
+实现入口：[漫画生产 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/production.ts)、[媒资与生成证据 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/media-service.ts)、[本地排字 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/renderers.ts)、[双版本质量检查 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/qa.ts)。
 
 以上三个产品已完成当前主干的工程闭环，内容质量和不同服务商的实际效果仍持续评测。各格式的具体适用条件以产品工作台为准。
 
 ## 世界与互动体验
 
-世界引擎用于把设定、角色、关系与规则整理成可以被重复引用的世界。你可以从零构建，也可以由长篇或短篇显式派生；封存后，互动产品使用确定的世界版本。
+以下内容记录旧版本中的世界与互动产品设计，不代表当前提供这些独立产品或运行时。当前世界设定与编辑仅作为长篇创作辅助能力。
 
 ```mermaid
 flowchart LR
@@ -412,7 +410,7 @@ flowchart LR
 
 ### 互动产品：为不同体验建立专用运行机制
 
-以下机制已经进入当前主干实现；**各产品仍为预览**，工程结构与完整体验的验收进度分别列出。
+以下内容记录旧版互动产品的设计与实现状态，仅供历史参考；不表示当前发行提供这些产品或运行时。
 
 | 产品 | 已实现的具体机制 | 带来的体验价值与当前边界 |
 |---|---|---|
@@ -425,14 +423,14 @@ flowchart LR
 
 以跑团的秘密为例，系统区分主持人掌握的事实和玩家已得知的信息，按接收者组织上下文；规则允许的状态变化再通过事件写入存档。小镇则按居民日程与可知信息组织生活过程。这些机制为“角色为什么知道这件事、这次行动改变了什么”提供了可检查的依据。
 
-实现入口：[跑团信息边界](./src/lib/ttrpg/information-boundary.ts)、[角色互动](./src/lib/character-interaction/runtime.ts)、[小镇](./src/lib/ai-town/runtime.ts)、[文字冒险](./src/lib/adventure/runtime.ts)、[AVG 演出](./src/lib/avg/runtime.ts)、[开放世界](./src/lib/open-world/runtime.ts)。
+实现入口：[跑团信息边界 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/ttrpg/information-boundary.ts)、[角色互动 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/character-interaction/runtime.ts)、[小镇 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/ai-town/runtime.ts)、[文字冒险 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/adventure/runtime.ts)、[AVG 演出 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/avg/runtime.ts)、[开放世界 — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/runtime.ts)。
 
 <details>
 <summary>查看产品入口与成熟度</summary>
 
 | 产品 | 体验方向 | 当前阶段 |
 |---|---|---|
-| 世界引擎 | 设定编辑、独立世界身份、作者显式派生、封存版本与查询 | 正式入口，语义与版本工程基线已完成 |
+| 世界引擎 | 设定编辑、独立世界身份、作者显式派生、封存版本与查询 | 历史正式入口；不代表当前仍提供独立产品入口 |
 | 跑团 | 制作战役、AI 主持、规则判定、线索与存档 | 预览；可先体验《雾港》，完整多人体验继续验证 |
 | 角色聊天 | 使用确定的角色与世界背景展开对话，保留独立会话与分支 | 预览；长期记忆、角色表现与完整体验继续验收 |
 | 后日谈 AI 小镇 | 让原作结局后的角色继续生活、相遇，发展关系与新故事 | 预览；已有日程、关系、轻经营与恢复链路，长期模型与媒资质量继续验证 |
@@ -587,7 +585,7 @@ StoryForge 使用你自己的模型服务，API 费用由相应服务商收取�
 
 **能不能只写小说，不碰世界引擎或游戏？**
 
-可以。长篇、短篇和两种改编产品独立成立。世界与互动路线是可选能力。
+可以。当前产品仅提供长篇小说创作；节点模式复用同一创作链，世界设定是可选辅助能力。短篇、改编和互动产品的下文说明仅作历史资料，不表示当前提供对应生产入口。
 
 **AI 会自动覆盖我的正文或设定吗？**
 

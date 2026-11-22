@@ -1,8 +1,8 @@
-import type { WorkCoverDraftV1, WorkCoverAssetV1, WorkCoverAdoptionV1 } from '../work-cover/types'
-import { saveFile } from '../platform/save-file'
-import type { ExtensionProfile, ExtensionRecord, ExtensionContract, ExtensionOperation } from '../extensions/types'
-import type { AvgAuthoringDraftV1, AvgDraftMediaV1 } from '../avg/authoring-contract'
-import type { TtrpgNarrativeMemoryV1 } from '../ttrpg/narrative-memory'
+import type { WorkCoverDraftV1, WorkCoverAssetV1, WorkCoverAdoptionV1 } from '../work-cover/types';
+import { saveFile } from '../platform/save-file';
+import type { ExtensionProfile, ExtensionRecord, ExtensionContract, ExtensionOperation } from '../legacy-compat/extensions/types';
+import type { AvgAuthoringDraftV1, AvgDraftMediaV1 } from '../legacy-compat/avg/authoring-contract';
+import type { TtrpgNarrativeMemoryV1 } from '../legacy-compat/ttrpg/narrative-memory';
 /**
  * 项目 JSON 导出/导入 · 对外门面
  *
@@ -12,95 +12,11 @@ import type { TtrpgNarrativeMemoryV1 } from '../ttrpg/narrative-memory'
  *
  * 当前格式的完整往返、所有权重映射与全表覆盖由回归测试锁死。
  */
-import { deriveExportProjectJSON } from './registry-export'
-import { assertTrustedProjectBackup } from './backup-trust'
-import { createProjectJSONBlob } from './json-file'
-import type {
-  Project, Worldview, StoryCore, PowerSystem,
-  Character, OutlineNode, Chapter,
-  Foreshadow, Geography, History,
-  CreativeRules, CharacterRelation,
-  DetailedOutline, EmotionBeatCard, StateCard,
-  StoryArc, WorldNode, Note,
-  Reference, ReferenceAnalysisRun, ReferenceChunkAnalysis,
-  HistoricalTimelineEvent, HistoricalKeyword,
-  WorldGroup, WorldGroupLink, ItemLedgerEntry, StoryTimelineEvent,
-  ImportantLocation, WorldRulesProfile, CodexCategory, CodexEntry,
-  UserStyleProfile,
-  KnowledgeLedgerEntry,
-  StorylineProgress,
-  StorylineCrossing,
-  CultivationSystem,
-  CultivationProgress,
-  CharacterDrivenPlan,
-  InspirationWorkspace,
-  AgentConversation,
-  AgentEvent,
-  AgentRunRecord,
-  AgentRunEventRecord,
-  AgentRunCheckpointRecord,
-  AgentRunArtifactRecordV1,
-  NodeFlow,
-  NodeRunRecord,
-  ProductRuntimeSession,
-  ProductRuntimeEvent,
-  ProductRuntimeCheckpoint,
-  World,
-  Work,
-  WorkCharacterBinding,
-  NarrativeModule,
-  NarrativeNode,
-  WorldRevision,
-  WorldRelease,
-  WorldDerivationV1,
-  ProductRelease,
-  NarrativeBeat,
-  NarrativeChoice,
-  ProductMediaAsset,
-  ProductMediaBlob,
-  AdaptationProject,
-  AdaptationCausalEdgeV1,
-  AdaptationDecisionV1,
-  AdaptationSourceFactV1,
-  AdaptationSourceUnit,
-  ScreenplayScene,
-  ScreenplayBeatV1,
-  ScreenplayReviewIssueV1,
-  ScreenplaySceneCardV1,
-  ComicPage,
-  ComicPanel,
-  ComicVisualSubject,
-  ComicMediaAsset,
-  ComicScriptBeatV1,
-  ComicPagePlanV1,
-  ComicReviewIssueV1,
-  TtrpgRulePackRecordV1,
-  TtrpgSessionParticipantRecordV2,
-  TtrpgRuntimeAssetRequestRecordV1,
-  ProductProductionRecordV1,
-  ProductProductionBriefRecordV1,
-  ProductProductionCommandRecordV1,
-  ProductBuildRecordV1,
-  ProductBuildArtifactRecordV1,
-  ProductQualityGateReceiptRecordV1,
-  MediaBlobObjectRecordV1,
-  MotionDramaAssetBindingV1,
-  MotionDramaAssetSubjectV1,
-  MotionDramaAssetVersionV1,
-  MotionDramaEpisodeV1,
-  MotionDramaProductionV1,
-  MotionDramaPromptOverrideV1,
-  MotionDramaPromptPackV1,
-  MotionDramaReviewIssueV1,
-  MotionDramaScriptSceneV1,
-  MotionDramaSeriesBibleRecordV1,
-  MotionDramaShotReferenceV1,
-  MotionDramaShotV1,
-  ShortNovelProductionV1,
-  CreationReleaseV1,
-  CreationReleaseAssetV1,
-} from '../types'
-import type { TemporalFact } from '../types/temporal-fact'
+import { deriveExportProjectJSON } from './registry-export';
+import { assertTrustedProjectBackup } from './backup-trust';
+import { createProjectJSONBlob } from './json-file';
+import type { Project, Worldview, StoryCore, PowerSystem, Character, OutlineNode, Chapter, Foreshadow, Geography, History, CreativeRules, CharacterRelation, DetailedOutline, EmotionBeatCard, StateCard, StoryArc, WorldNode, Note, Reference, ReferenceAnalysisRun, ReferenceChunkAnalysis, HistoricalTimelineEvent, HistoricalKeyword, WorldGroup, WorldGroupLink, ItemLedgerEntry, StoryTimelineEvent, ImportantLocation, WorldRulesProfile, CodexCategory, CodexEntry, UserStyleProfile, KnowledgeLedgerEntry, StorylineProgress, StorylineCrossing, CultivationSystem, CultivationProgress, CharacterDrivenPlan, InspirationWorkspace, AgentConversation, AgentEvent, AgentRunRecord, AgentRunEventRecord, AgentRunCheckpointRecord, AgentRunArtifactRecordV1, NodeFlow, NodeRunRecord, ProductRuntimeSession, ProductRuntimeEvent, ProductRuntimeCheckpoint, World, Work, WorkCharacterBinding, NarrativeModule, NarrativeNode, WorldRevision, WorldRelease, WorldDerivationV1, ProductRelease, NarrativeBeat, NarrativeChoice, ProductMediaAsset, ProductMediaBlob, AdaptationProject, AdaptationCausalEdgeV1, AdaptationDecisionV1, AdaptationSourceFactV1, AdaptationSourceUnit, ScreenplayScene, ScreenplayBeatV1, ScreenplayReviewIssueV1, ScreenplaySceneCardV1, ComicPage, ComicPanel, ComicVisualSubject, ComicMediaAsset, ComicScriptBeatV1, ComicPagePlanV1, ComicReviewIssueV1, TtrpgRulePackRecordV1, TtrpgSessionParticipantRecordV2, TtrpgRuntimeAssetRequestRecordV1, ProductProductionRecordV1, ProductProductionBriefRecordV1, ProductProductionCommandRecordV1, ProductBuildRecordV1, ProductBuildArtifactRecordV1, ProductQualityGateReceiptRecordV1, MediaBlobObjectRecordV1, MotionDramaAssetBindingV1, MotionDramaAssetSubjectV1, MotionDramaAssetVersionV1, MotionDramaEpisodeV1, MotionDramaProductionV1, MotionDramaPromptOverrideV1, MotionDramaPromptPackV1, MotionDramaReviewIssueV1, MotionDramaScriptSceneV1, MotionDramaSeriesBibleRecordV1, MotionDramaShotReferenceV1, MotionDramaShotV1, ShortNovelProductionV1, CreationReleaseV1, CreationReleaseAssetV1 } from '../types';
+import type { TemporalFact } from '../types/temporal-fact';
 
 type WorldGroupExportRef = {
   _worldGroupExportId?: number | null

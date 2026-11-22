@@ -2,23 +2,16 @@
  * 地图生成主管线
  * 按顺序执行所有生成步骤
  */
-
-import type {
-  MapGenConfig,
-  VoronoiMapData,
-  MapSpatialEntity,
-  SpatialPlacement,
-  River,
-} from './types'
-import { seedRandom } from './random'
-import { generatePoints, buildVoronoi } from './grid'
-import { generateHeightmap } from './heightmap'
-import { detectFeatures } from './features'
-import { calculateTemperature, calculatePrecipitation, assignBiomes, rankCells } from './climate'
-import { generateRivers } from './rivers'
-import { generateCultures, generateBurgs, generateStates, generateProvinces, generateRoads } from './nations'
-import { setNamingStyle } from './name-pool'
-import { solveSpatialLayout } from '../spatial-layout'
+import type { MapGenConfig, VoronoiMapData, MapSpatialEntity, SpatialPlacement, River } from './types';
+import { seedRandom } from './random';
+import { generatePoints, buildVoronoi } from './grid';
+import { generateHeightmap } from './heightmap';
+import { detectFeatures } from './features';
+import { calculateTemperature, calculatePrecipitation, assignBiomes, rankCells } from './climate';
+import { generateRivers } from './rivers';
+import { generateCultures, generateBurgs, generateStates, generateProvinces, generateRoads } from './nations';
+import { setNamingStyle } from './name-pool';
+import { solveSpatialLayout } from '../spatial-layout';
 
 /** 生成完整地图 */
 export function generateMap(config: MapGenConfig = {}): VoronoiMapData {

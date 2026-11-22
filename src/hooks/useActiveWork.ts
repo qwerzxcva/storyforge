@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
-import { liveQuery } from 'dexie'
-import { db } from '../lib/db/schema'
-import type { Project, Work } from '../lib/types'
+import { useEffect, useState } from 'react';
+import { liveQuery } from 'dexie';
+import { db } from '../lib/db/schema';
+import type { Project, Work } from '../lib/types';
 
 /** Read the active Work from the current Project identity. */
 export function useActiveWork(project?: Project | null): Work | null {

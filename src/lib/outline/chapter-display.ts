@@ -1,5 +1,5 @@
-import type { Chapter, OutlineNode } from '../types'
-import { walkOutlineChaptersInCanonicalOrder } from './canonical-outline-walk'
+import type { Chapter, OutlineNode } from '../types';
+import { walkOutlineChaptersInCanonicalOrder } from './canonical-outline-walk';
 
 export interface ChapterDisplayMeta {
   title: string

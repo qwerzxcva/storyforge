@@ -9,13 +9,11 @@
  * 这样页面刷新 / 部署更新后绑定不丢，但绑定本身不授权任何自动写入；
  * 所有文件写入仍必须来自用户明确触发的快照或记忆自检流程。
  */
+import type { Project } from '../types/project';
+import { IS_SHOWCASE, SHOWCASE_DATABASE } from '../showcase/policy';
 
-import type { Project } from '../types/project'
-import { IS_SHOWCASE, SHOWCASE_DATABASE } from '../showcase/policy'
 
-import { IS_ADVENTURE_WEB_PLAYER, adventureWebPlayerIdentity, adventureWebPlayerStorageName } from '../adventure/web-player-policy'
-
-const DB_NAME = IS_ADVENTURE_WEB_PLAYER ? `${adventureWebPlayerStorageName(adventureWebPlayerIdentity())}-fsa` : IS_SHOWCASE ? `${SHOWCASE_DATABASE}-fsa` : 'storyforge-fsa'
+const DB_NAME = IS_SHOWCASE ? `${SHOWCASE_DATABASE}-fsa` : 'storyforge-fsa'
 const STORE = 'handles'
 
 // A handle selected in the current document does not need an immediate
@@ -25,6 +23,16 @@ const STORE = 'handles'
 // other tabs still recover from IndexedDB, so durable binding semantics stay
 // unchanged.
 const liveHandles = new Map<string, FileSystemDirectoryHandle>()
+const operationVersions = new Map<string, number>()
+
+function beginOperation(keys: string[]): () => boolean {
+  const versions = keys.map(key => {
+    const version = (operationVersions.get(key) ?? 0) + 1
+    operationVersions.set(key, version)
+    return version
+  })
+  return () => keys.every((key, index) => operationVersions.get(key) === versions[index])
+}
 
 /** Stable workspace key; survives numeric project id remapping. */
 export const workspaceFolderKey = (workspaceUid: string) => `workspace-${workspaceUid}`
@@ -43,22 +51,45 @@ function openDB(): Promise<IDBDatabase> {
   })
 }
 
-export async function saveFolderHandle(key: string, handle: FileSystemDirectoryHandle): Promise<void> {
+async function saveFolderHandles(keys: string[], handle: FileSystemDirectoryHandle): Promise<void> {
+  // The shared recent-directory hint must not invalidate another workspace's binding.
+  const current = beginOperation(keys.length > 1 ? keys.filter(key => key !== LAST_FOLDER_KEY) : keys)
   const db = await openDB()
   try {
+    if (!current()) throw new Error('文件夹绑定操作已失效')
     await new Promise<void>((resolve, reject) => {
       const tx = db.transaction(STORE, 'readwrite')
-      tx.objectStore(STORE).put(handle, key)
       tx.oncomplete = () => resolve()
       tx.onerror = () => reject(tx.error)
+      tx.onabort = () => reject(tx.error ?? new Error('文件夹绑定事务已中止'))
+      try {
+        for (const key of keys) tx.objectStore(STORE).put(handle, key)
+      } catch (error) {
+        tx.abort()
+        reject(error)
+      }
     })
-    liveHandles.set(key, handle)
+    if (!current()) throw new Error('文件夹绑定操作已失效')
+    for (const key of keys) liveHandles.set(key, handle)
   } finally {
     db.close()
   }
 }
 
+export async function saveFolderHandle(key: string, handle: FileSystemDirectoryHandle): Promise<void> {
+  await saveFolderHandles([key], handle)
+}
+
+/** Both references must commit before either becomes visible in the live cache. */
+export async function saveProjectStorageFolderHandle(
+  project: Pick<Project, 'workspaceUid'>,
+  handle: FileSystemDirectoryHandle,
+): Promise<void> {
+  await saveFolderHandles([stableProjectFolderKey(project), LAST_FOLDER_KEY], handle)
+}
+
 export async function loadFolderHandle(key: string): Promise<FileSystemDirectoryHandle | null> {
+  const version = operationVersions.get(key)
   const live = liveHandles.get(key)
   if (live) return live
   const db = await openDB()
@@ -69,6 +100,7 @@ export async function loadFolderHandle(key: string): Promise<FileSystemDirectory
       r.onsuccess = () => resolve((r.result as FileSystemDirectoryHandle) ?? null)
       r.onerror = () => reject(r.error)
     })
+    if (operationVersions.get(key) !== version) return null
     if (handle) liveHandles.set(key, handle)
     return handle
   } finally {
@@ -77,15 +109,17 @@ export async function loadFolderHandle(key: string): Promise<FileSystemDirectory
 }
 
 export async function clearFolderHandle(key: string): Promise<void> {
+  const current = beginOperation([key])
   const db = await openDB()
   try {
+    if (!current()) return
     await new Promise<void>((resolve, reject) => {
       const tx = db.transaction(STORE, 'readwrite')
       tx.objectStore(STORE).delete(key)
       tx.oncomplete = () => resolve()
       tx.onerror = () => reject(tx.error)
     })
-    liveHandles.delete(key)
+    if (current()) liveHandles.delete(key)
   } finally {
     db.close()
   }
@@ -113,4 +147,7 @@ export async function clearProjectFolderHandle(
   project: Pick<Project, 'workspaceUid'>,
 ): Promise<void> {
   await clearFolderHandle(stableProjectFolderKey(project))
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('storyforge-folder-binding-cleared', { detail: project.workspaceUid }))
+  }
 }

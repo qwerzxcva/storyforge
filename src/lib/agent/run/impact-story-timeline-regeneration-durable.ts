@@ -1,52 +1,26 @@
 import Dexie from 'dexie'
-import { chat, resolveRequestConfig, type ChatResult } from '../../ai/client'
-import { getAIConfigRequiredMessage, isAIConfigReady } from '../../ai/config-readiness'
-import { hashChapterText } from '../../ai/chapter-memory/text-normalization'
-import {
-  buildImpactStoryTimelineRegenerationMessagesV1,
-  parseImpactStoryTimelineRegenerationResultStrictV1,
-  readImpactStoryTimelineRegenerationPromptTemplateSnapshotV1,
-  readImpactStoryTimelineRegenerationPromptTemplateV1,
-  type ImpactStoryTimelineRegenerationResultV1,
-  type ImpactStoryTimelineTargetV1,
-} from '../../consistency/impact-story-timeline-regeneration'
-import type { ImpactRemediationItemV1 } from '../../consistency/impact-remediation-plan'
-import { db } from '../../db/schema'
-import { assembleContext } from '../../registry/assemble-context'
-import { adopt } from '../../registry/adopt'
-import type { AIConfig, ChatMessage, WorkspaceScope } from '../../types'
-import type { AgentRunRecord } from '../../types/agent-run'
-import { assertRecordInScope, readOwnedRows, scopeTransactionTables } from '../../workspace/scope'
-import { createAgentSkillExecutionBindingV1 } from '../execution-binding'
-import { getAgentSkillV1 } from '../skill-registry'
-import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  staleAgentRunVerificationV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { canonicalStringify, hashCanonicalValue } from './hash'
-import {
-  assertExpectedImpactReplanCurrentV1,
-  assertImpactDependencyProofV1,
-  resolveImpactDependencyReadinessV1,
-  type ImpactDependencyProofV1,
-  type ImpactTargetReadinessV1,
-} from './impact-dependency-readiness'
-import {
-  readCurrentImpactPostCorrectionReplanV1,
-  type ImpactPostCorrectionReplanResultV1,
-} from './impact-post-correction-replan-durable'
-import { nextImpactGenerativeSlotRelationV1 } from './impact-generative-slot'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import {
-  recordCreationModelRequestV1,
-  recordCreationModelResponseV1,
-  recordUnavailableCreationResponseV1,
-} from './creation-response-evidence'
+import { chat, resolveRequestConfig, type ChatResult } from '../../ai/client';
+import { getAIConfigRequiredMessage, isAIConfigReady } from '../../ai/config-readiness';
+import { hashChapterText } from '../../ai/chapter-memory/text-normalization';
+import { buildImpactStoryTimelineRegenerationMessagesV1, parseImpactStoryTimelineRegenerationResultStrictV1, readImpactStoryTimelineRegenerationPromptTemplateSnapshotV1, readImpactStoryTimelineRegenerationPromptTemplateV1, type ImpactStoryTimelineRegenerationResultV1, type ImpactStoryTimelineTargetV1 } from '../../consistency/impact-story-timeline-regeneration';
+import type { ImpactRemediationItemV1 } from '../../consistency/impact-remediation-plan';
+import { db } from '../../db/schema';
+import { assembleContext } from '../../registry/assemble-context';
+import { adopt } from '../../registry/adopt';
+import type { AIConfig, ChatMessage, WorkspaceScope } from '../../types';
+import type { AgentRunRecord } from '../../types/agent-run';
+import { assertRecordInScope, readOwnedRows, scopeTransactionTables } from '../../workspace/scope';
+import { createAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { getAgentSkillV1 } from '../skill-registry';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, staleAgentRunVerificationV1, type AgentRunSnapshotV1 } from './event-store';
+import { canonicalStringify, hashCanonicalValue } from './hash';
+import { assertExpectedImpactReplanCurrentV1, assertImpactDependencyProofV1, resolveImpactDependencyReadinessV1, type ImpactDependencyProofV1, type ImpactTargetReadinessV1 } from './impact-dependency-readiness';
+import { readCurrentImpactPostCorrectionReplanV1, type ImpactPostCorrectionReplanResultV1 } from './impact-post-correction-replan-durable';
+import { nextImpactGenerativeSlotRelationV1 } from './impact-generative-slot';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { recordCreationModelRequestV1, recordCreationModelResponseV1, recordUnavailableCreationResponseV1 } from './creation-response-evidence';
 
 export const IMPACT_STORY_TIMELINE_REGENERATION_STEP_ID_V1 = 'impact-remediation:story-timeline-regenerate' as const
 export const IMPACT_STORY_TIMELINE_REGENERATION_SKILL_ID_V1 = 'prose.story-timeline-extraction' as const

@@ -1,6 +1,6 @@
-import type { AssembleContextResult } from '../registry/types'
-import type { WorkspaceContentRevisionVectorV1 } from '../authoring/content-revision'
-import type { GenerationMode, ChunkedGenerationConfig } from './generation-modes'
+import type { AssembleContextResult } from '../registry/types';
+import type { WorkspaceContentRevisionVectorV1 } from '../authoring/content-revision';
+import type { GenerationMode, ChunkedGenerationConfig } from './generation-modes';
 
 export type OutlineGenerationRequest =
   | { kind: 'volumes' }

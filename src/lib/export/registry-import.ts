@@ -1,11 +1,11 @@
-import { assertFrozenRuntimePackageSessionV1, parseProductRuntimeState } from '../product/runtime-core'
-import type { AnyProductBuildPreviewManifest } from '../types'
-import { avgExecutableModule } from '../avg/executable-module'
-import { verifyAvgBranchOriginV1 } from '../avg/branch-origin'
-import {validateImportedChatNarrativeEvidenceStateV1, validateImportedChatNarrativeEvidenceEventV1} from '../character-interaction/narrative-evidence-import'
-import { isTtrpgRuntimeContentV2 } from '../ttrpg/content-version'
-import { validateExtensionBackup } from '../extensions/portable'
-import {parseChatComposerDraftV1} from '../character-interaction/composer-draft-contract'
+import { assertFrozenRuntimePackageSessionV1, parseProductRuntimeState } from '../legacy-compat/product/runtime-core';
+import type { AnyProductBuildPreviewManifest } from '../types';
+import { avgExecutableModule } from '../legacy-compat/avg/executable-module';
+import { verifyAvgBranchOriginV1 } from '../legacy-compat/avg/branch-origin';
+import { validateImportedChatNarrativeEvidenceStateV1, validateImportedChatNarrativeEvidenceEventV1 } from '../legacy-compat/character-interaction/narrative-evidence-import';
+import { isTtrpgRuntimeContentV2 } from '../legacy-compat/ttrpg/content-version';
+import { validateExtensionBackup } from '../legacy-compat/extensions/portable';
+import { parseChatComposerDraftV1 } from '../legacy-compat/character-interaction/composer-draft-contract';
 /**
  * 注册表派生的项目导入引擎(AUDIT-1)
  *
@@ -17,95 +17,50 @@ import {parseChatComposerDraftV1} from '../character-interaction/composer-draft-
  * 'drop')跳过该行;portals 等 JSON 自引用走两阶段(先建全表映射,再回填重映射)。
  */
 import Dexie from 'dexie'
-import { db } from '../db/schema'
-import { PROJECT_TABLES } from '../registry/project-tables'
-import { isPortableResourceUidV1 } from '../context-gateway/resource-uid'
-import { assertProductRuntimeSourceSnapshotV3 } from '../product/runtime-source-branch'
-import { remapWorldPortalTargets } from '../utils/world-portals'
-import { transactionTablesFor } from '../registry/lifecycle'
-import { inspectPortableTableStructure, readPortableOwnerShadowV1 } from './portable-table-structure'
-import type { ExportRefRemap, TableSpec } from '../registry/types'
-import type { ProjectExportData, ProjectImportOptionsV1 } from './json-export'
-import { stampNewRecord } from '../workspace/scope'
-import { type BackupReferenceIssue, BACKUP_REFERENCE_REVIEW_TITLE, CURRENT_BACKUP_VERSION, normalizeProjectBackup, reviewPortableLocalReferencesV1 } from './backup-trust'
-import { assertTtrpgNarrativeMemoryBackupV1 } from '../ttrpg/narrative-memory-backup'
-import { remapNarrativeDomainFieldV1 } from '../narrative-domain/references'
-import { assertNarrativeLineageRowsV1 } from '../world-engine/narrative-lineage-lifecycle'
-import { rebindPortableAgentRunContractV1 } from '../agent/run/contract-portability'
-import {
-  finalizeImportedAgentRunLedgersV1,
-  verifyPortableCompletedAgentRunEvidenceV1,
-} from '../agent/run/ledger-portability'
-import {
-  generateWorkspaceUid,
-  isWorkspaceUid,
-  isWorkCode,
-} from '../memory/identity'
-import { assertAgentRunArtifactRecordIntegrityV1 } from '../memory/artifact-record'
-import { assertStoredWorkClassification } from '../workspace/work-kind'
-import { isCompleteCharacterAxes } from '../character/character-axes'
-import { isCurrentWorldCode } from '../workspace/identity'
-import {
-  assertAdaptationCausalEdgeV1,
-  assertAdaptationDecisionV1,
-  assertAdaptationProjectInvariant,
-  assertAdaptationSourceFactV1,
-} from '../adaptation/contracts'
-import {
-  assertScreenplayBeatCandidateV1,
-  assertScreenplayReviewIssueCandidateV1,
-  assertScreenplaySceneCardCandidateV1,
-} from '../screenplay/production-contracts'
-import { assertScreenplayReleaseManifestV1 } from '../screenplay/release-contracts'
-import { assertComicReleaseManifestV1 } from '../comic/release-contracts'
-import { validateScreenplayBlocksV1 } from '../screenplay/contracts'
-import { assertComicLetteringV1, assertComicMediaAssetV1, assertNormalizedFrameV1, framesOverlap } from '../comic/contracts'
-import { assertComicPagePlanCandidateV1, assertComicReviewIssueCandidateV1, assertComicScriptBeatCandidateV1 } from '../comic/production-contracts'
-import type {
-  AdaptationProject,
-  ComicLetteringItemV1,
-  ComicMediaAsset,
-  CreationReleaseV1,
-  ProductQualityGateReceiptRecordV1,
-  ProductBuildRecordV1,
-  AnyProductReleaseManifest,
-  ProductRuntimeEvent,
-  ScreenplayBlock,
-  Work,
-} from '../types'
-import { PRODUCT_RUNTIME_CHECKPOINT_PURPOSES_V1, PRODUCTION_PRODUCT_KINDS_V1 } from '../types'
-import { verifyStoredProductBuildPreview } from '../product-production/preview-manifest'
-import { parseAndVerifyCreationReleaseManifestV1 } from '../creation-release/contracts'
-import { assertMotionDramaReleaseManifestV1 } from '../motion-drama/release-contracts'
-import {
-  assertMotionDramaAssetSubjectCandidateV1,
-  assertMotionDramaEpisodeCandidateV1,
-  assertMotionDramaReviewIssueCandidateV1,
-  assertMotionDramaScriptSceneCandidateV1,
-  assertMotionDramaSeriesBibleV1,
-  assertMotionDramaShotCandidateV1,
-} from '../motion-drama/contracts'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { assertMediaRightsV1 } from '../media/rights'
-import { assertMotionDramaPromptPackManifest } from '../motion-drama/prompt-pack-contracts'
-import { parseAgentRunContract } from '../agent/run/contract'
-import {
-  parseTextOpenWorldCreatorSourceBindingV1,
-  TEXT_OPEN_WORLD_CREATOR_BRIEF_STEP_ID_V1,
-  verifyTextOpenWorldCreatorBriefV1,
-} from '../open-world/creator-brief-persistence'
-import {
-  validateTextOpenWorldSourcePinBundleV1,
-  validateTextOpenWorldSourcePinUnitV1,
-  validateTextOpenWorldSourcePinV1,
-} from '../open-world/source-pin'
-import { hashProductProductionValueV2 } from '../product-production/hash'
-import { verifyProductQualityGateReceiptRecordV1 } from '../product-production/quality-receipts'
-import { verifyProductReleaseManifest, parseProductReleaseManifestV1 } from '../product-production/runtime-package'
-import {
-  replayTextOpenWorldMigrationSourceStateHashV1,
-  verifyTextOpenWorldSaveMigrationBranchV1,
-} from '../open-world/player-save-migration-contract'
+import { db } from '../db/schema';
+import { PROJECT_TABLES } from '../registry/project-tables';
+import { isPortableResourceUidV1 } from '../context-gateway/resource-uid';
+import { assertProductRuntimeSourceSnapshotV3 } from '../legacy-compat/product/runtime-source-branch';
+import { remapWorldPortalTargets } from '../utils/world-portals';
+import { transactionTablesFor } from '../registry/lifecycle';
+import { inspectPortableTableStructure, readPortableOwnerShadowV1 } from './portable-table-structure';
+import type { ExportRefRemap, TableSpec } from '../registry/types';
+import type { ProjectExportData, ProjectImportOptionsV1 } from './json-export';
+import { stampNewRecord } from '../workspace/scope';
+import { type BackupReferenceIssue, BACKUP_REFERENCE_REVIEW_TITLE, CURRENT_BACKUP_VERSION, normalizeProjectBackup, reviewPortableLocalReferencesV1 } from './backup-trust';
+import { assertTtrpgNarrativeMemoryBackupV1 } from '../legacy-compat/ttrpg/narrative-memory-backup';
+import { remapNarrativeDomainFieldV1 } from '../narrative-domain/references';
+import { assertNarrativeLineageRowsV1 } from '../world-engine/narrative-lineage-lifecycle';
+import { rebindPortableAgentRunContractV1 } from '../agent/run/contract-portability';
+import { finalizeImportedAgentRunLedgersV1, verifyPortableCompletedAgentRunEvidenceV1 } from '../agent/run/ledger-portability';
+import { generateWorkspaceUid, isWorkspaceUid, isWorkCode } from '../memory/identity';
+import { assertAgentRunArtifactRecordIntegrityV1 } from '../memory/artifact-record';
+import { assertStoredWorkClassification } from '../workspace/work-kind';
+import { isCompleteCharacterAxes } from '../character/character-axes';
+import { isCurrentWorldCode } from '../workspace/identity';
+import { assertAdaptationCausalEdgeV1, assertAdaptationDecisionV1, assertAdaptationProjectInvariant, assertAdaptationSourceFactV1 } from '../legacy-compat/adaptation/contracts';
+import { assertScreenplayBeatCandidateV1, assertScreenplayReviewIssueCandidateV1, assertScreenplaySceneCardCandidateV1 } from '../legacy-compat/screenplay/production-contracts';
+import { assertScreenplayReleaseManifestV1 } from '../legacy-compat/screenplay/release-contracts';
+import { assertComicReleaseManifestV1 } from '../legacy-compat/comic/release-contracts';
+import { validateScreenplayBlocksV1 } from '../legacy-compat/screenplay/contracts';
+import { assertComicLetteringV1, assertComicMediaAssetV1, assertNormalizedFrameV1, framesOverlap } from '../legacy-compat/comic/contracts';
+import { assertComicPagePlanCandidateV1, assertComicReviewIssueCandidateV1, assertComicScriptBeatCandidateV1 } from '../legacy-compat/comic/production-contracts';
+import type { AdaptationProject, ComicLetteringItemV1, ComicMediaAsset, CreationReleaseV1, ProductQualityGateReceiptRecordV1, ProductBuildRecordV1, AnyProductReleaseManifest, ProductRuntimeEvent, ScreenplayBlock, Work } from '../types';
+import { PRODUCT_RUNTIME_CHECKPOINT_PURPOSES_V1, PRODUCTION_PRODUCT_KINDS_V1 } from '../types';
+import { verifyStoredProductBuildPreview } from '../legacy-compat/product-production/preview-manifest';
+import { parseAndVerifyCreationReleaseManifestV1 } from '../creation-release/contracts';
+import { assertMotionDramaReleaseManifestV1 } from '../legacy-compat/motion-drama/release-contracts';
+import { assertMotionDramaAssetSubjectCandidateV1, assertMotionDramaEpisodeCandidateV1, assertMotionDramaReviewIssueCandidateV1, assertMotionDramaScriptSceneCandidateV1, assertMotionDramaSeriesBibleV1, assertMotionDramaShotCandidateV1 } from '../legacy-compat/motion-drama/contracts';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { assertMediaRightsV1 } from '../media/rights';
+import { assertMotionDramaPromptPackManifest } from '../legacy-compat/motion-drama/prompt-pack-contracts';
+import { parseAgentRunContract } from '../agent/run/contract';
+import { parseTextOpenWorldCreatorSourceBindingV1, TEXT_OPEN_WORLD_CREATOR_BRIEF_STEP_ID_V1, verifyTextOpenWorldCreatorBriefV1 } from '../legacy-compat/open-world/creator-brief-persistence';
+import { validateTextOpenWorldSourcePinBundleV1, validateTextOpenWorldSourcePinUnitV1, validateTextOpenWorldSourcePinV1 } from '../legacy-compat/open-world/source-pin';
+import { hashProductProductionValueV2 } from '../legacy-compat/product-production/hash';
+import { verifyProductQualityGateReceiptRecordV1 } from '../legacy-compat/product-production/quality-receipts';
+import { verifyProductReleaseManifest, parseProductReleaseManifestV1 } from '../legacy-compat/product-production/runtime-package';
+import { replayTextOpenWorldMigrationSourceStateHashV1, verifyTextOpenWorldSaveMigrationBranchV1 } from '../legacy-compat/open-world/player-save-migration-contract';
 
 type JsonIdPathsExportRefRemapV1 = Extract<ExportRefRemap, { kind: 'json-id-paths' }>
 
@@ -513,7 +468,7 @@ async function validateProductArchitectureBackup(value: Record<string, any>): Pr
       throw new Error('[deriveImport] v10 ProductRelease 内容、身份或Hash无效')
     }
   }
-  const runtimeSourceContract = await import('../product/runtime-source-manifest')
+  const runtimeSourceContract = await import('../legacy-compat/product/runtime-source-manifest')
   const sourceBriefsByRevision = new Map(briefs.map(brief => [`${brief._productionExportId}:${brief.revision}`, brief]))
   for (const session of runtimeSessions) {
     validateImportedChatNarrativeEvidenceStateV1(session.initialStateJson, session.kind)
@@ -642,8 +597,8 @@ async function validateProductArchitectureBackup(value: Record<string, any>): Pr
       if (childManifest.version !== 1 || childManifest.productType !== 'character-interaction') {
         throw new Error('[deriveImport] 角色聊天升级副本的发布协议或产品类型不匹配')
       }
-      const contract = await import('../character-interaction/release-upgrade-branch')
-      const {parseProductReleaseManifestV1} = await import('../product-production/runtime-package')
+      const contract = await import('../legacy-compat/character-interaction/release-upgrade-branch')
+      const {parseProductReleaseManifestV1} = await import('../legacy-compat/product-production/runtime-package')
 
       await contract.verifyChatReleaseUpgradeReceiptV1({childSession: session as unknown as import('../types').ProductRuntimeSession, childManifest: parseProductReleaseManifestV1(childManifest), receipt: upgradeReceipt})
     }
@@ -675,7 +630,7 @@ async function validateProductArchitectureBackup(value: Record<string, any>): Pr
       throw new Error('[deriveImport] v10 ProductRuntime 迁移Release缺失')
     }
     if (parent.kind === 'ttrpg' && JSON.parse(session.initialStateJson).ttrpg?.openRun?.releaseContinuation) {
-      const { assertTtrpgOpenContinuationParentV1 } = await import('../ttrpg/open-release-continuation-backup')
+      const { assertTtrpgOpenContinuationParentV1 } = await import('../legacy-compat/ttrpg/open-release-continuation-backup')
       const parentContent = parentManifest.runtimePackage.ttrpg, targetContent = childManifest.runtimePackage.ttrpg
       if (!parentContent || !targetContent || !isTtrpgRuntimeContentV2(parentContent) || !isTtrpgRuntimeContentV2(targetContent)
         || parent.runtimeSourceHash !== parentManifest.packageHash || session.runtimeSourceHash !== childManifest.packageHash) {
@@ -692,8 +647,8 @@ async function validateProductArchitectureBackup(value: Record<string, any>): Pr
           || parentManifest.productType !== 'character-interaction' || childManifest.productType !== 'character-interaction') {
           throw new Error('[deriveImport] 角色聊天升级分支的发布协议或产品类型不匹配')
         }
-        const contract = await import('../character-interaction/release-upgrade-branch')
-        const {parseProductReleaseManifestV1} = await import('../product-production/runtime-package')
+        const contract = await import('../legacy-compat/character-interaction/release-upgrade-branch')
+        const {parseProductReleaseManifestV1} = await import('../legacy-compat/product-production/runtime-package')
 
         await contract.verifyChatReleaseUpgradeBranchV1({parentSession: parent as unknown as import('../types').ProductRuntimeSession,
           childSession: session as unknown as import('../types').ProductRuntimeSession, parentManifest: parseProductReleaseManifestV1(parentManifest), childManifest: parseProductReleaseManifestV1(childManifest),
@@ -955,10 +910,10 @@ async function validateCurrentBackup(data: Record<string, unknown>): Promise<voi
   await validateMotionDramaBackup(value)
   await validateProductArchitectureBackup(value)
   await assertTtrpgNarrativeMemoryBackupV1(value)
-  await (await import('../ttrpg/stage-opening-backup')).assertTtrpgStageOpeningBackupV1(value)
-  await (await import('../ttrpg/open-release-continuation-backup')).assertTtrpgOpenContinuationBackupV1(value)
+  await (await import('../legacy-compat/ttrpg/stage-opening-backup')).assertTtrpgStageOpeningBackupV1(value)
+  await (await import('../legacy-compat/ttrpg/open-release-continuation-backup')).assertTtrpgOpenContinuationBackupV1(value)
   if (PROJECT_TABLES.some(spec => spec.portableData?.kind === 'product-build-root-budget')) {
-    const { verifyPortableProductBuildRootBudgetEvidenceV1 } = await import('../product-production/root-budget-evidence-portability')
+    const { verifyPortableProductBuildRootBudgetEvidenceV1 } = await import('../legacy-compat/product-production/root-budget-evidence-portability')
     await verifyPortableProductBuildRootBudgetEvidenceV1(value as unknown as ProjectExportData)
   }
   await validateIndependentCreationBackup(value)

@@ -1,8 +1,5 @@
-import { BookOpenCheck, DatabaseZap, Gamepad2, PenLine, Settings2, WandSparkles } from 'lucide-react'
-import {
-  MODULE_CONTENT_TYPE_DEFINITIONS,
-  type ModuleContentType,
-} from './sidebar-tree'
+import { BookOpenCheck, DatabaseZap, Gamepad2, PenLine, Settings2, WandSparkles } from 'lucide-react';
+import { MODULE_CONTENT_TYPE_DEFINITIONS, type ModuleContentType } from './sidebar-tree';
 
 interface Props {
   contentType: ModuleContentType

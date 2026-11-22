@@ -1,5 +1,5 @@
-import { estimateTokens } from '../ai/context-budget'
-import type { ChatMessage } from '../types'
+import { estimateTokens } from '../ai/context-budget';
+import type { ChatMessage } from '../types';
 
 export const AGENT_TEAM_BUDGET_PROFILES = ['economy', 'balanced', 'expanded'] as const
 export type AgentTeamBudgetProfile = typeof AGENT_TEAM_BUDGET_PROFILES[number]

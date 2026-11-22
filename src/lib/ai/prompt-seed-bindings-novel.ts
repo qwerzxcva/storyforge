@@ -1,4 +1,4 @@
-import type { PromptApplicability, PromptVariableBinding } from '../types/prompt'
+import type { PromptApplicability, PromptVariableBinding } from '../types/prompt';
 
 export interface NovelPromptSeedBinding {
   assetId: string

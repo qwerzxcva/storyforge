@@ -1,23 +1,16 @@
-import { type WorldSourcePurposeProofV1 } from '../world-engine/source-purpose-contract'
-import type {
-  ProductProductionTaskExecutionModeV1,
-  ProductProductionTaskLaneV1,
-  ProductTaskBudgetReservationV1,
-} from './product-production'
-import type { AdaptationSourceSelectionV1 } from './adaptation'
-import type { OutlineNodeType } from './outline'
-import type {
-  WorldReferenceV1,
-  WorldRequirementResolutionV1,
-} from './world-product-contracts'
-import type { WorldCapabilityArea } from '../registry/types'
-import type { TextOpenWorldActionDefinitionV1 } from './text-open-world-action'
-import type { TextOpenWorldConditionDefinitionV1 } from './text-open-world-condition'
-import type { TextOpenWorldEffectDefinitionV1, TextOpenWorldEffectOperationV1 } from './text-open-world-effect'
-import type { TextOpenWorldRuntimeModuleKeyV1 } from './text-open-world-runtime'
-import type { WorkspaceScope } from './world-ownership'
-import type { AIProvider } from './ai'
-import type { TextOpenWorldResponsibilitySnapshotV1 } from '../open-world/responsibility-assembly'
+import { type WorldSourcePurposeProofV1 } from '../world-engine/source-purpose-contract';
+import type { ProductProductionTaskExecutionModeV1, ProductProductionTaskLaneV1, ProductTaskBudgetReservationV1 } from './product-production';
+import type { AdaptationSourceSelectionV1 } from './adaptation';
+import type { OutlineNodeType } from './outline';
+import type { WorldReferenceV1, WorldRequirementResolutionV1 } from './world-product-contracts';
+import type { WorldCapabilityArea } from '../registry/types';
+import type { TextOpenWorldActionDefinitionV1 } from './text-open-world-action';
+import type { TextOpenWorldConditionDefinitionV1 } from './text-open-world-condition';
+import type { TextOpenWorldEffectDefinitionV1, TextOpenWorldEffectOperationV1 } from './text-open-world-effect';
+import type { TextOpenWorldRuntimeModuleKeyV1 } from './text-open-world-runtime';
+import type { WorkspaceScope } from './world-ownership';
+import type { AIProvider } from './ai';
+import type { TextOpenWorldResponsibilitySnapshotV1 } from '../legacy-compat/open-world/responsibility-assembly';
 
 /**
  * Stable, product-owned artifacts in the text-open-world production compiler.
@@ -834,7 +827,7 @@ export interface TextOpenWorldCreatorReleaseSourceContractsV1 {
     gateId: 'text-open-world.creator.release-quality'
     status: 'passed'
     receiptHash: string
-    evidence: import('../open-world/creator-quality-contract').TextOpenWorldCreatorReleaseQualityEvidenceV1
+    evidence: import('../legacy-compat/open-world/creator-quality-contract').TextOpenWorldCreatorReleaseQualityEvidenceV1
     createdAt: number
   }
   releaseAuthorization: TextOpenWorldCreatorReleaseAuthorizationV1

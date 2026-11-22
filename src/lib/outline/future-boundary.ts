@@ -1,8 +1,8 @@
-import { db } from '../db/schema'
-import { normalizeChapterText } from '../ai/chapter-memory/text-normalization'
-import type { Chapter, OutlineNode, WorkspaceScope } from '../types'
-import { assertRecordInScope, readOwnedRows } from '../workspace/scope'
-import type { OutlineGenerationRequest } from './generation-request'
+import { db } from '../db/schema';
+import { normalizeChapterText } from '../ai/chapter-memory/text-normalization';
+import type { Chapter, OutlineNode, WorkspaceScope } from '../types';
+import { assertRecordInScope, readOwnedRows } from '../workspace/scope';
+import type { OutlineGenerationRequest } from './generation-request';
 
 function sameWorldGroup(row: OutlineNode, worldGroupId: number | null): boolean {
   return (row.worldGroupId ?? null) === worldGroupId

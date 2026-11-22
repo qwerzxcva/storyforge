@@ -1,34 +1,18 @@
-import { chat, resolveRequestConfig } from '../../ai/client'
-import { getAIConfigRequiredMessage, isAIConfigReady } from '../../ai/config-readiness'
-import {
-  formatReferenceDerivedBaselineV1,
-  readReferenceDerivedBaselineV1,
-  type ReferenceDerivedBaselineV1,
-  type ReferenceDerivedModeV1,
-} from '../../reference-analysis/derived-agent-baseline'
-import {
-  buildReferenceDerivedMessagesV1,
-  parseReferenceDerivedResultStrictV1,
-  readReferenceDerivedPromptTemplateSnapshotV1,
-  readReferenceDerivedPromptTemplateV1,
-} from '../../reference-analysis/derived-agent-plan'
-import { assembleContext } from '../../registry/assemble-context'
-import { adopt, hashAdoptFieldValueV1 } from '../../registry/adopt'
-import type { AIConfig, ChatMessage, WorkspaceScope } from '../../types'
-import { readOwnedRows } from '../../workspace/scope'
-import { createAgentSkillExecutionBindingV1 } from '../execution-binding'
-import { getAgentSkillV1 } from '../skill-registry'
-import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  staleAgentRunVerificationV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { canonicalStringify, hashCanonicalValue } from './hash'
-import { createVerificationReceiptV1 } from './verification-receipt'
+import { chat, resolveRequestConfig } from '../../ai/client';
+import { getAIConfigRequiredMessage, isAIConfigReady } from '../../ai/config-readiness';
+import { formatReferenceDerivedBaselineV1, readReferenceDerivedBaselineV1, type ReferenceDerivedBaselineV1, type ReferenceDerivedModeV1 } from '../../reference-analysis/derived-agent-baseline';
+import { buildReferenceDerivedMessagesV1, parseReferenceDerivedResultStrictV1, readReferenceDerivedPromptTemplateSnapshotV1, readReferenceDerivedPromptTemplateV1 } from '../../reference-analysis/derived-agent-plan';
+import { assembleContext } from '../../registry/assemble-context';
+import { adopt, hashAdoptFieldValueV1 } from '../../registry/adopt';
+import type { AIConfig, ChatMessage, WorkspaceScope } from '../../types';
+import { readOwnedRows } from '../../workspace/scope';
+import { createAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { getAgentSkillV1 } from '../skill-registry';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, staleAgentRunVerificationV1, type AgentRunSnapshotV1 } from './event-store';
+import { canonicalStringify, hashCanonicalValue } from './hash';
+import { createVerificationReceiptV1 } from './verification-receipt';
 
 export const REFERENCE_DERIVED_VERIFIER_SET_V1 = 'reference-derived-terminal-v1' as const
 export const REFERENCE_DERIVED_CONTEXT_SOURCE_KEYS_V1 = ['referenceDerivedBaseline'] as const

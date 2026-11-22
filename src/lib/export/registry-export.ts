@@ -1,5 +1,5 @@
-import { BACKUP_REFERENCE_REVIEW_TITLE, CURRENT_BACKUP_VERSION, referenceReviewScopeMatchesV1 } from './backup-trust'
-import { parseLegacyIdArray } from '../utils/legacy-id-array'
+import { BACKUP_REFERENCE_REVIEW_TITLE, CURRENT_BACKUP_VERSION, referenceReviewScopeMatchesV1 } from './backup-trust';
+import { parseLegacyIdArray } from '../utils/legacy-id-array';
 /**
  * 注册表派生的项目导出引擎(AUDIT-1)
  *
@@ -10,25 +10,25 @@ import { parseLegacyIdArray } from '../utils/legacy-id-array'
  * 输出只遵循当前便携备份契约；不存在历史格式分支。
  */
 import Dexie from 'dexie'
-import { prepareProductBuildRootBudgetEvidenceExportV1 } from '../product-production/root-budget-evidence-portability'
-import { db } from '../db/schema'
-import { PROJECT_TABLES, REGISTRY_BY_NAME } from '../registry/project-tables'
-import { parseWorldPortals, remapWorldPortalTargets } from '../utils/world-portals'
-import type { TableSpec } from '../registry/types'
-import type { ProjectExportData } from './json-export'
-import { redactAuthoringSecrets } from '../node-authoring/contracts'
-import { resolveWorkspaceOwnership } from '../workspace/ownership'
-import { excludePrivateReferenceExecutionFromBackupV1, portableizeAgentRunLedgerExportV1 } from '../agent/run/ledger-portability'
-import { assertAgentRunArtifactRecordIntegrityV1 } from '../memory/artifact-record'
-import { readVerifiedMediaBlobObjectData } from '../product-production/media-blob-store'
-import { remapNarrativeDomainFieldV1 } from '../narrative-domain/references'
-import { assertNarrativeDomainReferenceRowsV1 } from '../narrative-domain/integrity'
-import { assertNarrativeLineageRowsV1 } from '../world-engine/narrative-lineage-lifecycle'
-import { mapNarrativeDomainReferencesV1 } from '../narrative-domain/codec'
-import { narrativeDomainReferenceTargetV1 } from '../narrative-domain/references'
-import { canonicalNarrativeJsonV1, compareUnicodeCodePointsV1 } from '../narrative-domain/json'
-import { narrativeSemanticExportReferencesV1 } from '../narrative-domain/semantic-export-references'
-import { isPortableResourceUidV1 } from '../context-gateway/resource-uid'
+import { prepareProductBuildRootBudgetEvidenceExportV1 } from '../legacy-compat/product-production/root-budget-evidence-portability';
+import { db } from '../db/schema';
+import { PROJECT_TABLES, REGISTRY_BY_NAME } from '../registry/project-tables';
+import { parseWorldPortals, remapWorldPortalTargets } from '../utils/world-portals';
+import type { TableSpec } from '../registry/types';
+import type { ProjectExportData } from './json-export';
+import { redactAuthoringSecrets } from '../node-authoring/contracts';
+import { resolveWorkspaceOwnership } from '../workspace/ownership';
+import { excludePrivateReferenceExecutionFromBackupV1, portableizeAgentRunLedgerExportV1 } from '../agent/run/ledger-portability';
+import { assertAgentRunArtifactRecordIntegrityV1 } from '../memory/artifact-record';
+import { readVerifiedMediaBlobObjectData } from '../legacy-compat/product-production/media-blob-store';
+import { remapNarrativeDomainFieldV1 } from '../narrative-domain/references';
+import { assertNarrativeDomainReferenceRowsV1 } from '../narrative-domain/integrity';
+import { assertNarrativeLineageRowsV1 } from '../world-engine/narrative-lineage-lifecycle';
+import { mapNarrativeDomainReferencesV1 } from '../narrative-domain/codec';
+import { narrativeDomainReferenceTargetV1 } from '../narrative-domain/references';
+import { canonicalNarrativeJsonV1, compareUnicodeCodePointsV1 } from '../narrative-domain/json';
+import { narrativeSemanticExportReferencesV1 } from '../narrative-domain/semantic-export-references';
+import { isPortableResourceUidV1 } from '../context-gateway/resource-uid';
 
 /** 当前完整便携备份契约。 */
 export const CURRENT_EXPORT_VERSION = CURRENT_BACKUP_VERSION

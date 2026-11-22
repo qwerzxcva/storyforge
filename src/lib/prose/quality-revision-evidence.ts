@@ -1,9 +1,9 @@
-import type { ChatMessage } from '../types'
-import { sha256Text } from '../ai/chapter-memory/text-normalization'
-import { previewQualityRevisionHTMLV1 } from './quality-revision-html'
-import { normalizeRichEditorHTMLV1 } from '../editor/rich-editor-schema'
-import { qualityRevisionProtectionErrorV1, type QualityRevisionPlanV1 } from './quality-revision'
-import { verifyQualityRecheckV1, type QualityRecheckArtifactV1 } from './quality-recheck'
+import type { ChatMessage } from '../types';
+import { sha256Text } from '../ai/chapter-memory/text-normalization';
+import { previewQualityRevisionHTMLV1 } from './quality-revision-html';
+import { normalizeRichEditorHTMLV1 } from '../editor/rich-editor-schema';
+import { qualityRevisionProtectionErrorV1, type QualityRevisionPlanV1 } from './quality-revision';
+import { verifyQualityRecheckV1, type QualityRecheckArtifactV1 } from './quality-recheck';
 
 export const QUALITY_RECHECK_STEP_V1 = 'quality-revision-recheck'
 export interface QualityRevisionEvidenceV1 {

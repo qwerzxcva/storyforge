@@ -7,22 +7,16 @@
  *   硬过滤：未来章不泄漏（规范章序）、世界隔离、按时间重组；去重、邻接保留、top-K。
  * - embedding 不可用时只走关键词通道（优雅降级）。
  */
-import { db } from '../db/schema'
-import type { RetrievalChunk } from '../types/retrieval-chunk'
-import type { NarrativeSummaryNode } from '../types/narrative-summary'
-import { cosineSimilarity } from '../types/retrieval-chunk'
-import type { Chapter, EmbeddingConfig, OutlineNode } from '../types'
-import { normalizeChapterText, hashChapterText, getChapterDerivedMemoryStatus, sha256Text } from '../ai/chapter-memory/text-normalization'
-import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence'
-import { embedTexts, embeddingModelTag, isEmbeddingReady } from '../ai/adapters/embedding-adapter'
-import type { WorkspaceScope } from '../types/world-ownership'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveScopeLike,
-  stampNewRecord,
-} from '../workspace/scope'
+import { db } from '../db/schema';
+import type { RetrievalChunk } from '../types/retrieval-chunk';
+import type { NarrativeSummaryNode } from '../types/narrative-summary';
+import { cosineSimilarity } from '../types/retrieval-chunk';
+import type { Chapter, EmbeddingConfig, OutlineNode } from '../types';
+import { normalizeChapterText, hashChapterText, getChapterDerivedMemoryStatus, sha256Text } from '../ai/chapter-memory/text-normalization';
+import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence';
+import { embedTexts, embeddingModelTag, isEmbeddingReady } from '../ai/adapters/embedding-adapter';
+import type { WorkspaceScope } from '../types/world-ownership';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, stampNewRecord } from '../workspace/scope';
 
 const CHUNK_SIZE = 400
 const SUMMARY_EXCERPT_CHARS = 220

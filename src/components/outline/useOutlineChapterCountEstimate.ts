@@ -1,8 +1,5 @@
-import { useEffect, useRef, type Dispatch, type SetStateAction } from 'react'
-import {
-  DEFAULT_WORDS_PER_CHAPTER,
-  estimateChaptersPerVolume,
-} from '../../lib/outline/selectors'
+import { useEffect, useRef, type Dispatch, type SetStateAction } from 'react';
+import { DEFAULT_WORDS_PER_CHAPTER, estimateChaptersPerVolume } from '../../lib/outline/selectors';
 
 interface Options {
   selectedVolumeId: number | null

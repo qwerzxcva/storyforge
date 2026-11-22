@@ -1,4 +1,4 @@
-import type { AIConfig } from '../types'
+import type { AIConfig } from '../types';
 
 export function providerApiFormat(config: Pick<AIConfig, 'provider' | 'apiFormat'>): NonNullable<AIConfig['apiFormat']> {
   return config.apiFormat ?? 'chat-completions'

@@ -1,6 +1,6 @@
-import type { ImportSession } from '../types'
-import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash'
-import { documentImportChunkBindingProjectionV1, hashDocumentImportChunkBindingV1 } from './document-parse-binding'
+import type { ImportSession } from '../types';
+import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash';
+import { documentImportChunkBindingProjectionV1, hashDocumentImportChunkBindingV1 } from './document-parse-binding';
 
 const privateEntries = new Set(['reference.analysis.private-chunk', 'import.reference-chunk.parse.private'])
 const legacyEntry = 'import.document-chunk.parse'

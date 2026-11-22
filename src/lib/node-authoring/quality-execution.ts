@@ -1,19 +1,19 @@
-import type { Chapter, OutlineNode, WorkspaceScope } from '../types'
-import { readOwnedRows, resolveScopeLike } from '../workspace/scope'
-import { readLatestWholeChapterQualityReviewV1, runWholeChapterQualityReviewV1 } from '../agent/run/quality-review-durable'
-import { createWholeChapterQualityCallV1, createQualityRevisionCallV1 } from '../prose/quality-transport'
-import { runQualityRevisionV1, readLatestQualityRevisionV1, adoptQualityRevisionV1, rejectQualityRevisionV1 } from '../agent/run/quality-revision-durable'
-import { htmlToPlainText } from '../utils/html'
-import type { AuthoringInputEnvelope, AuthoringNodeInstance, AuthoringCandidateDomain } from './contracts'
-import type { DomainExecutionInput, DomainExecutionResult } from './domain-execution'
-import { readAuthoringCanonBinding } from './bindings'
-import { describeResolvedAIRequestSettingsV1, resolveRequestConfig } from '../ai/client'
-import { prepareQualityResolutionV1 } from '../prose/quality-request-budget'
-import { wholeChapterQualityRequestOptionsV1 } from '../prose/quality-review-request-options'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { freezeQualityRevisionPlanV1 } from '../prose/quality-revision'
-import { verifyContextGatewayCandidateEvidenceV1 } from '../context-gateway/attempt-evidence'
-import { readAgentRunArtifactExactV1 } from '../memory/artifact-store'
+import type { Chapter, OutlineNode, WorkspaceScope } from '../types';
+import { readOwnedRows, resolveScopeLike } from '../workspace/scope';
+import { readLatestWholeChapterQualityReviewV1, runWholeChapterQualityReviewV1 } from '../agent/run/quality-review-durable';
+import { createWholeChapterQualityCallV1, createQualityRevisionCallV1 } from '../prose/quality-transport';
+import { runQualityRevisionV1, readLatestQualityRevisionV1, adoptQualityRevisionV1, rejectQualityRevisionV1 } from '../agent/run/quality-revision-durable';
+import { htmlToPlainText } from '../utils/html';
+import type { AuthoringInputEnvelope, AuthoringNodeInstance, AuthoringCandidateDomain } from './contracts';
+import type { DomainExecutionInput, DomainExecutionResult } from './domain-execution';
+import { readAuthoringCanonBinding } from './bindings';
+import { describeResolvedAIRequestSettingsV1, resolveRequestConfig } from '../ai/client';
+import { prepareQualityResolutionV1 } from '../prose/quality-request-budget';
+import { wholeChapterQualityRequestOptionsV1 } from '../prose/quality-review-request-options';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { freezeQualityRevisionPlanV1 } from '../prose/quality-revision';
+import { verifyContextGatewayCandidateEvidenceV1 } from '../context-gateway/attempt-evidence';
+import { readAgentRunArtifactExactV1 } from '../memory/artifact-store';
 
 export function qualityAuthoringModeV1(value: unknown): 'quality' | 'style' | 'readability' {
   if (value == null || value === 'quality' || value === '审校') return 'quality'

@@ -1,6 +1,6 @@
-import type { OutlineNode } from '../types'
-import { adopt, hashAdoptRecordFieldsV1 } from '../registry/adopt'
-import { resolveScopeLike } from '../workspace/scope'
+import type { OutlineNode } from '../types';
+import { adopt, hashAdoptRecordFieldsV1 } from '../registry/adopt';
+import { resolveScopeLike } from '../workspace/scope';
 
 const REVIEW_FIELDS = ['title', 'summary', 'order', 'parentId']
 export interface OutlineReviewTarget { id: number; projectId: number; hash: string; sourceSummary: string }

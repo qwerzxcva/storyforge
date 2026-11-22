@@ -12,7 +12,6 @@ describe('NW-2E · 低临时分配的精确 JSON 合同（不是内存性能验�
     const encoded = canonicalNarrativeJsonWithHashV1(rows)
     expect(encoded.json).toBe(expected)
     expect(JSON.parse(encoded.json)).toEqual(rows)
-    expect(Buffer.from(encoded.json, 'utf8')).toEqual(Buffer.from(expected, 'utf8'))
     expect(encoded.hash).toBe(createHash('sha256').update(expected).digest('hex'))
     const bytes = Buffer.byteLength(expected)
     expect(boundedCanonicalNarrativeJsonV1(rows, bytes)).toBe(expected)
@@ -220,6 +219,17 @@ describe('NW-2E · 低临时分配的精确 JSON 合同（不是内存性能验�
     const pending = hashNarrativeBytesV1(bytes)
     bytes.fill(255)
     expect(await pending).toBe(reference)
+  })
+
+  it('UTF-8 长度保留 ASCII、控制字符、多字节边界和 surrogate 拒绝语义', () => {
+    expect(narrativeUtf8ByteLengthV1('')).toBe(0)
+    expect(narrativeUtf8ByteLengthV1(`ASCII${String.fromCharCode(0, 0x7f)}`)).toBe(7)
+    expect(narrativeUtf8ByteLengthV1(String.fromCharCode(0x80, 0x7ff))).toBe(4)
+    expect(narrativeUtf8ByteLengthV1(String.fromCharCode(0x800, 0xd7ff, 0xe000))).toBe(9)
+    expect(narrativeUtf8ByteLengthV1('𐀀')).toBe(4)
+    for (const invalid of [String.fromCharCode(0xd800), String.fromCharCode(0xdc00)]) {
+      expect(() => narrativeUtf8ByteLengthV1(invalid)).toThrow()
+    }
   })
 
   it('缓存编码以真实 UTF-8 字节为界；拒绝超限，不把截断前缀交付为完整 JSON', () => {

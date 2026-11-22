@@ -1,10 +1,6 @@
-import {
-  NARRATIVE_SOURCE_FKS_V1, type NarrativeDomainSourceRefV1, type NarrativeSourceFkV1,
-} from '../types/narrative-domain'
-import { canonicalNarrativeJsonV1, narrativeFail } from './json'
-import {
-  mapNarrativeDomainReferencesV1, parseNarrativeDomainFieldV1, type NarrativeDomainFieldV1,
-} from './codec'
+import { NARRATIVE_SOURCE_FKS_V1, type NarrativeDomainSourceRefV1, type NarrativeSourceFkV1 } from '../types/narrative-domain';
+import { canonicalNarrativeJsonV1, narrativeFail } from './json';
+import { mapNarrativeDomainReferencesV1, parseNarrativeDomainFieldV1, type NarrativeDomainFieldV1 } from './codec';
 
 export function narrativeDomainReferenceTargetV1(source: NarrativeDomainSourceRefV1): {
   field: NarrativeSourceFkV1; table: string; id: number | null; sourceUid: string

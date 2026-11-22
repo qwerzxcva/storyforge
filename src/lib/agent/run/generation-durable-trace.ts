@@ -1,24 +1,11 @@
-import type {
-  GenerationNodeShadowTrace,
-  PreparedGenerationNode,
-} from '../../generation/generation-node'
-import type {
-  AgentRunEventPayloadByTypeV1,
-  AgentRunEventTypeV1,
-  AgentRunProjectionV1,
-  AnyAgentRunEventV1,
-  ContextManifestV1,
-  WorkspaceScope,
-} from '../../types'
-import type { ChatMessage } from '../../types'
-import { db } from '../../db/schema'
-import { scopeTransactionTables } from '../../workspace/scope'
-import {
-  appendAgentRunEventV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { canonicalStringify, hashCanonicalValue } from './hash'
-import { recordAgentRunArtifactV1 } from '../../memory/artifact-store'
+import type { GenerationNodeShadowTrace, PreparedGenerationNode } from '../../generation/generation-node';
+import type { AgentRunEventPayloadByTypeV1, AgentRunEventTypeV1, AgentRunProjectionV1, AnyAgentRunEventV1, ContextManifestV1, WorkspaceScope } from '../../types';
+import type { ChatMessage } from '../../types';
+import { db } from '../../db/schema';
+import { scopeTransactionTables } from '../../workspace/scope';
+import { appendAgentRunEventV1, type AgentRunSnapshotV1 } from './event-store';
+import { canonicalStringify, hashCanonicalValue } from './hash';
+import { recordAgentRunArtifactV1 } from '../../memory/artifact-store';
 
 export interface GenerationNodeDurableTraceV1 extends GenerationNodeShadowTrace {
   readonly runId: number

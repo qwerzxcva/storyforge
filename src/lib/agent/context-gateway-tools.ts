@@ -1,40 +1,15 @@
-import { estimateTokens } from '../ai/context-budget'
-import { sha256Text } from '../ai/chapter-memory/text-normalization'
-import {
-  assertContextReadPermissionV1,
-  assertContextResourceDescriptorV1,
-  assertResourcePageV1,
-  filterContextResourcePageV1,
-} from '../context-gateway/contracts'
-import {
-  assertContextGatewayTokenRequestV1,
-  claimContextGatewayReadCallV1,
-  isContextGatewayResourceAllowedV1,
-  issueContextSourceRefCapabilitiesV1,
-  resolveContextSourceRefCapabilityV1,
-  settleContextGatewayTokensV1,
-  type ContextGatewayProviderBindingV1,
-  type ContextGatewayToolSessionV1,
-} from '../context-gateway/tool-session'
-import { hashCanonicalValue } from './run/hash'
-import type {
-  ContextResourceDepthV1,
-  ContextResourceDescriptorV1,
-  ContextResourceKind,
-  ContextSourceRefV1,
-  ContextTimeRangeV1,
-  ResourcePageV1,
-} from '../registry/types'
-import { CONTEXT_RESOURCE_KINDS_V1 } from '../registry/types'
-import { CONTEXT_SOURCES } from '../registry/context-sources'
-import { authorWorldQueryV1 } from '../context-gateway/world-query-client'
-import { parseWorldQueryV1 } from '../context-gateway/world-query-contract'
-import { WORLD_QUERY_TOOL_SCHEMA_V1 } from './world-query-tool-schema'
-import type {
-  AgentToolDefinition,
-  AgentToolExecutionContext,
-  AgentToolResult,
-} from './types'
+import { estimateTokens } from '../ai/context-budget';
+import { sha256Text } from '../ai/chapter-memory/text-normalization';
+import { assertContextReadPermissionV1, assertContextResourceDescriptorV1, assertResourcePageV1, filterContextResourcePageV1 } from '../context-gateway/contracts';
+import { assertContextGatewayTokenRequestV1, claimContextGatewayReadCallV1, isContextGatewayResourceAllowedV1, issueContextSourceRefCapabilitiesV1, resolveContextSourceRefCapabilityV1, settleContextGatewayTokensV1, type ContextGatewayProviderBindingV1, type ContextGatewayToolSessionV1 } from '../context-gateway/tool-session';
+import { hashCanonicalValue } from './run/hash';
+import type { ContextResourceDepthV1, ContextResourceDescriptorV1, ContextResourceKind, ContextSourceRefV1, ContextTimeRangeV1, ResourcePageV1 } from '../registry/types';
+import { CONTEXT_RESOURCE_KINDS_V1 } from '../registry/types';
+import { CONTEXT_SOURCES } from '../registry/context-sources';
+import { authorWorldQueryV1 } from '../context-gateway/world-query-client';
+import { parseWorldQueryV1 } from '../context-gateway/world-query-contract';
+import { WORLD_QUERY_TOOL_SCHEMA_V1 } from './world-query-tool-schema';
+import type { AgentToolDefinition, AgentToolExecutionContext, AgentToolResult } from './types';
 
 const MAX_PAGE_SIZE = 20
 const MAX_RESOURCE_READ_TOKENS = 50_000

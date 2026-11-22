@@ -1,8 +1,5 @@
-import type { EvalSplit } from './types'
-import type {
-  LongConsistencyCategoryV1,
-  LongConsistencySubtypeV1,
-} from './taxonomy'
+import type { EvalSplit } from './types';
+import type { LongConsistencyCategoryV1, LongConsistencySubtypeV1 } from './taxonomy';
 
 export const LONG_CONSISTENCY_REPORT_SOURCE_KINDS_V1 = [
   'narrative',

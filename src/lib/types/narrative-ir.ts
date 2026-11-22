@@ -1,4 +1,4 @@
-import type { NarrativeTimeContextV1, NarrativeTimeV1 } from './narrative-time'
+import type { NarrativeTimeContextV1, NarrativeTimeV1 } from './narrative-time';
 
 export const NARRATIVE_KINDS_V1 = [
   'entity', 'event', 'assertion', 'relation', 'rule', 'epistemic-event', 'development', 'disclosure',

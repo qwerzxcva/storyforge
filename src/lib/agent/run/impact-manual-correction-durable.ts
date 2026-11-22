@@ -1,40 +1,20 @@
 import Dexie from 'dexie'
-import { db } from '../../db/schema'
-import { adoptionTransactionTablesV1 } from '../../registry/adopt'
-import type { WorkspaceScope } from '../../types'
-import { assembleContext } from '../../registry/assemble-context'
-import type { ImpactHandoffV2 } from '../../consistency/impact-handoff'
-import type { ImpactRemediationPlanV1 } from '../../consistency/impact-remediation-plan'
-import { hashChapterText } from '../../ai/chapter-memory/text-normalization'
-import { assertRecordInScope, getTableSpec } from '../../workspace/scope'
-import {
-  resolveCurrentImpactHandoffTargetV2,
-  validateCurrentImpactHandoffV2,
-  type CurrentImpactHandoffTargetV2,
-} from './impact-handoff-durable'
-import { readFrozenImpactAuthorReviewsV1 } from './impact-review-durable'
-import {
-  appendAgentRunEventV1,
-  appendAgentRunEventWithSettlementInTransactionV1,
-  withAgentRunMutationLockV1,
-  agentRunScopeTransactionTablesV1,
-  readVerifiedAgentRunInTransactionV1,
-  createAgentRunV1,
-  readAgentRunChildV1,
-  readAgentRunV1,
-  staleAgentRunVerificationV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import {
-  beginAgentRunRecoveryV1,
-  completeAgentRunRecoveryV1,
-  createAgentRunCheckpointV1,
-  readLatestVerifiedAgentRunCheckpointV1,
-} from './checkpoint'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import { parseAgentRunEventV1 } from './event-schema'
-import { hashCanonicalValue } from './hash'
+import { db } from '../../db/schema';
+import { adoptionTransactionTablesV1 } from '../../registry/adopt';
+import type { WorkspaceScope } from '../../types';
+import { assembleContext } from '../../registry/assemble-context';
+import type { ImpactHandoffV2 } from '../../consistency/impact-handoff';
+import type { ImpactRemediationPlanV1 } from '../../consistency/impact-remediation-plan';
+import { hashChapterText } from '../../ai/chapter-memory/text-normalization';
+import { assertRecordInScope, getTableSpec } from '../../workspace/scope';
+import { resolveCurrentImpactHandoffTargetV2, validateCurrentImpactHandoffV2, type CurrentImpactHandoffTargetV2 } from './impact-handoff-durable';
+import { readFrozenImpactAuthorReviewsV1 } from './impact-review-durable';
+import { appendAgentRunEventV1, appendAgentRunEventWithSettlementInTransactionV1, withAgentRunMutationLockV1, agentRunScopeTransactionTablesV1, readVerifiedAgentRunInTransactionV1, createAgentRunV1, readAgentRunChildV1, readAgentRunV1, staleAgentRunVerificationV1, type AgentRunSnapshotV1 } from './event-store';
+import { beginAgentRunRecoveryV1, completeAgentRunRecoveryV1, createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { parseAgentRunEventV1 } from './event-schema';
+import { hashCanonicalValue } from './hash';
 
 export const IMPACT_MANUAL_CORRECTION_STEP_ID_V1 = 'impact-remediation:manual-correction' as const
 export const IMPACT_MANUAL_CORRECTION_VERIFIER_SET_V1 = 'impact-manual-correction-terminal-v1' as const

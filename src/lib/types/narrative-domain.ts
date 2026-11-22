@@ -1,4 +1,4 @@
-import type { SemanticKindV1, VisibilityV1 } from './narrative-ir'
+import type { SemanticKindV1, VisibilityV1 } from './narrative-ir';
 
 /** Typed physical FK vocabulary. PROJECT_TABLES declares which domain fields
  * carry these references and derives their portable/deletion lifecycle. This

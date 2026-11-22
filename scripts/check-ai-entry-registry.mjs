@@ -1,4 +1,3 @@
-/* global console, process */
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -37,8 +36,15 @@ for (const entry of registry.offlineEvaluations ?? []) {
   if (!contract.includes(`'${entry.entryId}'`) || !bound) failures.push('离线评测缺少实际合同绑定: ' + entry.entryId)
 }
 
+const optionalWalkDirectories = new Set(['src/lib/extensions'])
+/** @param {string} dir @param {string[]} [acc] */
 function walk(dir, acc = []) {
-  for (const entry of fs.readdirSync(path.join(root, dir), { withFileTypes: true })) {
+  const target = path.join(root, dir)
+  if (!fs.existsSync(target)) {
+    if (optionalWalkDirectories.has(dir)) return acc
+    throw new Error(`AI entry scan directory is missing: ${dir}`)
+  }
+  for (const entry of fs.readdirSync(target, { withFileTypes: true })) {
     const file = `${dir}/${entry.name}`
     if (entry.isDirectory()) walk(file, acc)
     else if (/\.(ts|tsx)$/.test(entry.name) && !/\.test\./.test(entry.name)) acc.push(file)
@@ -67,6 +73,7 @@ function objectProperty(node, name) {
   return /** @type {ts.PropertyAssignment | undefined} */ (property)?.initializer
 }
 
+/** @param {ts.SourceFile} ast @param {ts.Node} node */
 function lineOf(ast, node) {
   return ast.getLineAndCharacterOfPosition(node.getStart(ast)).line + 1
 }
@@ -188,6 +195,7 @@ if (registry.version !== 2 || registry.bindingVersion !== 1
 
 const skillSource = fs.readFileSync(path.join(root, 'src/lib/agent/skill-registry.ts'), 'utf8')
 const skillIds = new Set([...skillSource.matchAll(/\bid:\s*'([^']+)'/g)].map(match => match[1]))
+/** @type {Map<string, {entryKind: 'formal' | 'auxiliary' | 'evaluation' | 'experimental', allowedCallers: string[], categories: string[]}>} */
 const registered = new Map()
 for (const entry of registry.entries ?? []) {
   if (!entry?.entryId || registered.has(entry.entryId) || offlineIds.has(entry.entryId)) {
@@ -207,55 +215,18 @@ for (const entry of registry.entries ?? []) {
 
 const actualCalls = []
 const actualTransports = []
+const governedSourceFiles = walk('src').filter(file => {
+  const source = fs.readFileSync(path.join(root, file), 'utf8')
+  return /(?:from|import\s*\()\s*['"][^'"]*(?:formal-ai-entry|useAIStream|limited-ai-transport|longform-voice\/contract)['"]/.test(source)
+})
 const scannedFiles = [
-  'src/lib/world-map/atlas/paint-preview.ts',
   ...['src/components', 'src/hooks', 'src/pages', 'src/lib/generation', 'src/lib/outline'].flatMap(dir => walk(dir)),
-  // DETAIL-1: this service is itself a formal generation entry and must not
-  // remain outside the UI/generation scanners merely because it predates them.
+  'src/lib/world-map/atlas/paint-preview.ts',
   'src/lib/ai/batch-detail-runner.ts',
-  // Q07/Q08: step and node review/revision share this formal provider service.
   'src/lib/prose/quality-transport.ts',
-  // The independently-integrated Node producer must obey the same literal
-  // entry/category/physical-caller gate once its module exists. A registered
-  // entry without any real call remains an error below, including a missing module.
-  ...(fs.existsSync(path.join(root, 'src/lib/node-authoring/field-producer.ts'))
-    ? ['src/lib/node-authoring/field-producer.ts'] : []),
-  'src/lib/ai-town/consultation.ts',
-  // CHAT-01: source suggestions remain read-only; role profiles require explicit governed adoption.
-  'src/lib/character-interaction/source-review-harness.ts',
-  'src/lib/character-interaction/role-profile-harness.ts',
-  'src/lib/character-interaction/source-units-harness.ts',
-  'src/lib/character-interaction/source-unit-confirmation-harness.ts',
-  'src/lib/character-interaction/consultation-harness.ts',
-  // G5-02 creator consultation is a formal durable service rather than a UI
-  // hook; keep its literal entry/category binding under the same machine gate.
-  'src/lib/reference-analysis/pipeline.ts',
-  // Import candidate transport is governed even though its owner is not a UI component.
-  'src/lib/import/document-parse-durable.ts',
-  'src/lib/open-world/creator-brief.ts',
-  // G5-06 Creator Artifact Agent edits are a formal durable service; direct
-  // edits share its candidate pipeline but never cross this AI entry.
-  'src/lib/open-world/creator-artifact-edit.ts',
-  // G6-01 owns the only frozen provider gateway for all six vNext open-world
-  // runtime AI skills. Later UI work must call this governed service.
-  'src/lib/open-world/runtime-ai-execution.ts',
-  // Open TTRPG has its own actor-scoped, one-send governed transport boundary.
-  'src/lib/ttrpg/open-intent-harness.ts',
-  // S2 author proposals use their own frozen Work-owned request and raw receipt.
-  'src/lib/ttrpg/open-authoring-design-harness.ts',
-  'src/lib/ttrpg/open-voice-execution.ts',
-  // Fixed-fixture offline speech evaluation is a limited transport, never a
-  // creative binding or an application/provider fallback.
-  'scripts/ttrpg-local-tts/evaluate.mjs',
-  'scripts/ttrpg-local-tts/timbre-evaluate.mjs',
-  'scripts/ttrpg-local-tts/native-voice-evaluate.mjs',
-  // G6-10's independent semantic grader is an eval-only formal model entry.
-  // It may judge redacted observations, but can never adopt product content.
-  'src/lib/evals/open-world-runtime/judge.ts',
-  // G7-11's independent release calibrator is an explicit paid eval-only call.
-  // Its output may only become Build-bound quality evidence.
-  'src/lib/open-world/creator-quality-calibration.ts',
-  ...walk('src/lib/longform-voice'),
+  ...governedSourceFiles,
+  ...(registry.entries ?? []).flatMap(/** @param {{allowedCallers?: string[]}} entry */ entry => entry.allowedCallers ?? []),
+  ...(registry.limitedTransports ?? []).flatMap(/** @param {{allowedCallers?: string[]}} entry */ entry => entry.allowedCallers ?? []),
   ...walk('src/lib/extensions'),
 ]
 for (const file of [...new Set(scannedFiles)]) {
@@ -277,7 +248,7 @@ for (const entry of registry.limitedTransports ?? []) {
     failures.push('有限语音入口边界无效: ' + entry.entryId)
   }
   if (entry.boundary === 'offline-fixture-audio-eval'
-    && entry.allowedCallers.some(caller => !/^scripts\/ttrpg-local-tts\/[a-z-]+\.mjs$/.test(caller))) {
+    && entry.allowedCallers.some(/** @param {string} caller */ caller => !/^scripts\/ttrpg-local-tts\/[a-z-]+\.mjs$/.test(caller))) {
     failures.push('离线语音评测不能成为产品入口: ' + entry.entryId)
   }
   limited.set(entry.entryId, entry)

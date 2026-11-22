@@ -5,93 +5,43 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-
-const plans = [
-  {
-    file: 'docs/roadmap/SHORT-NOVEL-DEVELOPMENT-PLAN.md',
-    productId: 'independent.shortform',
-    branch: 'feat/shortform-production',
-    owner: 'Short Work',
-    forbiddenBranches: ['feat/screenplay-production', 'feat/comic-production'],
-  },
-  {
-    file: 'docs/roadmap/NOVEL-TO-SCREENPLAY-DEVELOPMENT-PLAN.md',
-    productId: 'independent.screenplay',
-    branch: 'feat/screenplay-production',
-    owner: 'Screenplay Work',
-    forbiddenBranches: ['feat/shortform-production', 'feat/comic-production'],
-  },
-  {
-    file: 'docs/roadmap/NOVEL-TO-COMIC-DEVELOPMENT-PLAN.md',
-    productId: 'independent.comic',
-    branch: 'feat/comic-production',
-    owner: 'Comic Work',
-    forbiddenBranches: ['feat/shortform-production', 'feat/screenplay-production'],
-  },
-]
-
-const requiredSections = [
-  '开工卡与边界',
-  '数据模型',
-  '三注册表',
-  'Agent/Skill',
-  'Prompt',
-  '工作台',
-  '测试',
-  '施工顺序与分支',
-  '完成定义',
-]
-
+const files = {
+  contract: 'docs/products/LONGFORM-AND-NODE.md',
+  charter: 'docs/PROJECT-MASTER-CHARTER.md',
+  catalog: 'src/lib/product/product-catalog.ts',
+  navigation: 'src/components/navigation/product-navigation.ts',
+}
+const contents = /** @type {Record<keyof typeof files, string | null>} */ (Object.fromEntries(
+  Object.entries(files).map(([name, relative]) => {
+    const absolute = path.join(root, relative)
+    return [name, fs.existsSync(absolute) ? fs.readFileSync(absolute, 'utf8') : null]
+  }),
+))
 const failures = []
-
-for (const plan of plans) {
-  const absolute = path.join(root, plan.file)
-  if (!fs.existsSync(absolute)) {
-    failures.push(`missing independent product plan: ${plan.file}`)
-    continue
-  }
-  const source = fs.readFileSync(absolute, 'utf8')
-  for (const marker of [plan.productId, plan.branch, plan.owner, '世界引擎', 'PROJECT_TABLES', '唯一功能分支']) {
-    if (!source.includes(marker)) failures.push(`${plan.file} missing marker: ${marker}`)
-  }
-  for (const section of requiredSections) {
-    if (!source.includes(section)) failures.push(`${plan.file} missing required section: ${section}`)
-  }
-  for (const forbidden of plan.forbiddenBranches) {
-    if (source.includes(forbidden)) failures.push(`${plan.file} references sibling implementation branch: ${forbidden}`)
-  }
+for (const name of /** @type {(keyof typeof files)[]} */ (Object.keys(files))) {
+  if (contents[name] === null) failures.push(`missing ${name}: ${files[name]}`)
 }
 
-const indexPath = path.join(root, 'docs/roadmap/INDEPENDENT-CREATION-DEVELOPMENT-PLAN.md')
-const auditPath = path.join(root, 'docs/roadmap/INDEPENDENT-CREATION-PLAN-AUDIT.md')
-if (fs.existsSync(indexPath)) {
-  const index = fs.readFileSync(indexPath, 'utf8')
-  for (const plan of plans) {
-    const basename = path.basename(plan.file)
-    if (!index.includes(basename)) failures.push(`independent creation index missing plan link: ${basename}`)
-  }
-  if (!index.includes('INDEPENDENT-CREATION-PLAN-AUDIT.md')) failures.push('independent creation index missing plan audit link')
-} else {
-  failures.push('missing independent creation index')
+for (const marker of ['分步骤长篇', '节点模式', '大纲', '正文', '长程']) {
+  if (!contents.contract?.includes(marker)) failures.push(`longform contract missing marker: ${marker}`)
 }
-
-if (fs.existsSync(auditPath)) {
-  const audit = fs.readFileSync(auditPath, 'utf8')
-  for (const marker of [
-    '通过，附带施工时必须持续执行的共享底座和串行集成条件',
-    'feat/independent-creation-integration',
-    ...plans.map(plan => plan.branch),
-  ]) {
-    if (!audit.includes(marker)) failures.push(`independent creation plan audit missing marker: ${marker}`)
-  }
-} else {
-  failures.push('missing independent creation plan audit')
+for (const marker of ['当前只支持长篇小说创作', '节点模式', '世界设定、显式世界派生、共享工程底座']) {
+  if (!contents.charter?.includes(marker)) failures.push(`master charter missing current product boundary: ${marker}`)
 }
+for (const id of ['independent.shortform', 'independent.screenplay', 'independent.comic', 'independent.motion-drama',
+  'upper.ttrpg', 'upper.character-interaction', 'upper.ai-town', 'upper.text-adventure', 'upper.avg', 'upper.text-open-world',
+  'platform.marketplace']) {
+  if (contents.catalog?.includes(`'${id}'`)) failures.push(`retired product remains in catalog: ${id}`)
+}
+if (!contents.navigation?.includes("{ id: 'long', label: '长篇', path: '/long' }")) {
+  failures.push('longform is missing from product navigation')
+}
+if (contents.navigation?.includes("id: 'world'")) failures.push('world engine must not be a standalone product navigation entry')
 
 if (failures.length) {
-  console.error('independent creation plan check failed:')
+  console.error('longform product scope check failed:')
   for (const failure of failures) console.error(`- ${failure}`)
   process.exit(1)
 }
 
-console.log(`independent creation plan check passed: ${plans.length} isolated product plans and one cross-plan audit`)
+console.log('longform product scope check passed: one product surface, shared novel authoring modes')

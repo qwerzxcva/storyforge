@@ -1,11 +1,11 @@
 import Dexie from 'dexie'
-import { db } from '../db/schema'
-import type { MediaBlobObject, MediaBlobObjectRecordV1, WorkspaceScope } from '../types'
-import { assertRecordInScope, resolveScope, stampNewRecord } from '../workspace/scope'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { assertMediaBlobObjectV1 } from '../comic/contracts'
-import { PROJECT_TABLES } from '../registry/project-tables'
-import { decodeRasterImageV1, isRasterImageMimeV1, MAX_RASTER_IMAGE_BYTES_V1 } from './raster-image'
+import { db } from '../db/schema';
+import type { MediaBlobObject, MediaBlobObjectRecordV1, WorkspaceScope } from '../types';
+import { assertRecordInScope, resolveScope, stampNewRecord } from '../workspace/scope';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { assertMediaBlobObjectV1 } from '../legacy-compat/comic/contracts';
+import { PROJECT_TABLES } from '../registry/project-tables';
+import { decodeRasterImageV1, isRasterImageMimeV1, MAX_RASTER_IMAGE_BYTES_V1 } from './raster-image';
 
 const MAX_AUDIO_BYTES = 50 * 1024 * 1024
 

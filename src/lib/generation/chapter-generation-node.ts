@@ -1,7 +1,7 @@
-import type { UseAIStreamReturn } from '../../hooks/useAIStream'
-import type { ChatMessage } from '../types'
-import type { AIRequestConfigResolution, StreamResult } from '../ai/client'
-import type { GenerationGateResult, GenerationNode } from './generation-node'
+import type { UseAIStreamReturn } from '../../hooks/useAIStream';
+import type { ChatMessage } from '../types';
+import type { AIRequestConfigResolution, StreamResult } from '../ai/client';
+import type { GenerationGateResult, GenerationNode } from './generation-node';
 
 export type ChapterGenerationOperation = 'generate' | 'continue'
 

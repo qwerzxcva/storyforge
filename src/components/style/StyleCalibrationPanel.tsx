@@ -1,19 +1,14 @@
-import { useMemo, useState } from 'react'
-import { Check, Loader2, MessageSquareText, Save, Sparkles, Wrench } from 'lucide-react'
-import { buildStyleCalibrationPrompt } from '../../lib/ai/adapters/style-adapter'
-import { resolveRequestConfig } from '../../lib/ai/client'
-import { executeRegisteredAIEntryV1 } from '../../lib/agent/formal-ai-entry'
-import { getAIConfigRequiredMessage, isAIConfigReady } from '../../lib/ai/config-readiness'
-import {
-  formatStyleCalibrationFeedback,
-  formatStyleFewShotPairs,
-  parseStyleCalibrationFeedback,
-  parseStyleRevisionPairs,
-} from '../../lib/style/style-learning'
-import type { StyleCalibrationVerdict, UserStyleProfile } from '../../lib/types/user-style'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { useUserStyleStore } from '../../stores/user-style'
-import { useToast } from '../shared/Toast'
+import { useMemo, useState } from 'react';
+import { Check, Loader2, MessageSquareText, Save, Sparkles, Wrench } from 'lucide-react';
+import { buildStyleCalibrationPrompt } from '../../lib/ai/adapters/style-adapter';
+import { resolveRequestConfig } from '../../lib/ai/client';
+import { executeRegisteredAIEntryV1 } from '../../lib/agent/formal-ai-entry';
+import { getAIConfigRequiredMessage, isAIConfigReady } from '../../lib/ai/config-readiness';
+import { formatStyleCalibrationFeedback, formatStyleFewShotPairs, parseStyleCalibrationFeedback, parseStyleRevisionPairs } from '../../lib/style/style-learning';
+import type { StyleCalibrationVerdict, UserStyleProfile } from '../../lib/types/user-style';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { useUserStyleStore } from '../../stores/user-style';
+import { useToast } from '../shared/Toast';
 
 const MAX_CALIBRATION_SOURCE_CHARS = 1600
 

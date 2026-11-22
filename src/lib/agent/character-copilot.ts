@@ -1,70 +1,26 @@
-import { useAIConfigStore } from '../../stores/ai-config'
-import { buildCharacterPrompt } from '../ai/adapters/character-adapter'
-import { chat, resolveRequestConfig } from '../ai/client'
-import {
-  MORAL_AXES,
-  ORDER_AXES,
-  ROLE_WEIGHTS,
-} from '../character/character-axes'
-import {
-  CHARACTER_DIMENSIONS,
-  type CharacterDimensionKey,
-} from '../character/character-dimensions'
-import { db } from '../db/schema'
-import type {
-  GenerationGateIssue,
-  GenerationNode,
-  PreparedGenerationNode,
-} from '../generation/generation-node'
-import { prepareGenerationNode } from '../generation/generation-node'
-import { adopt } from '../registry/adopt'
-import type { AdoptResult } from '../registry/types'
-import type { AssembleContextResult } from '../registry/types'
-import type {
-  AIConfig,
-  Character,
-  CharacterMoralAxis,
-  CharacterOrderAxis,
-  CharacterRoleWeight,
-  WorkspaceScope,
-} from '../types'
-import {
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveScope,
-  scopeTransactionTables,
-} from '../workspace/scope'
-import {
-  attachAgentContextInputStateV1,
-  evidenceFromContextResult,
-  resolveAgentContextPolicy,
-  type AgentContextEvidence,
-  type AgentContextProfile,
-} from './context-policy'
-import type { AgentContextCompressionRuntimeV1 } from './context-compression'
-import {
-  buildAgentSkillInputGuidanceV1,
-  resolveAgentSkillV1,
-  type AgentSkillId,
-} from './skill-registry'
-import {
-  executeContextGatewayV1,
-  type ContextGatewayExecutionV1,
-} from '../context-gateway/execution'
-import { isContextGatewayRequiredForWriteTargetV1 } from '../context-gateway/skill-policy'
-import {
-  assembleContextGatewayPacketV1,
-  contextGatewayInputStateSourceKeysV1,
-  projectContextGatewayInputStateV1,
-} from './context-gateway-input'
-import type { MasterCandidateModelIdentityV1 } from './master-candidate-semantic-review'
-import { parseStructuredOutputV1 } from './structured-output-pipeline'
-import {
-  renderFrozenPromptExecutionV1,
-  type PromptExecutionEvidenceV1,
-  type PromptExecutionOptionsV1,
-} from './prompt-execution'
-import type { ChatMessage } from '../types'
+import { useAIConfigStore } from '../../stores/ai-config';
+import { buildCharacterPrompt } from '../ai/adapters/character-adapter';
+import { chat, resolveRequestConfig } from '../ai/client';
+import { MORAL_AXES, ORDER_AXES, ROLE_WEIGHTS } from '../character/character-axes';
+import { CHARACTER_DIMENSIONS, type CharacterDimensionKey } from '../character/character-dimensions';
+import { db } from '../db/schema';
+import type { GenerationGateIssue, GenerationNode, PreparedGenerationNode } from '../generation/generation-node';
+import { prepareGenerationNode } from '../generation/generation-node';
+import { adopt } from '../registry/adopt';
+import type { AdoptResult } from '../registry/types';
+import type { AssembleContextResult } from '../registry/types';
+import type { AIConfig, Character, CharacterMoralAxis, CharacterOrderAxis, CharacterRoleWeight, WorkspaceScope } from '../types';
+import { readOwnedRows, resolveReadScopeLike, resolveScope, scopeTransactionTables } from '../workspace/scope';
+import { attachAgentContextInputStateV1, evidenceFromContextResult, resolveAgentContextPolicy, type AgentContextEvidence, type AgentContextProfile } from './context-policy';
+import type { AgentContextCompressionRuntimeV1 } from './context-compression';
+import { buildAgentSkillInputGuidanceV1, resolveAgentSkillV1, type AgentSkillId } from './skill-registry';
+import { executeContextGatewayV1, type ContextGatewayExecutionV1 } from '../context-gateway/execution';
+import { isContextGatewayRequiredForWriteTargetV1 } from '../context-gateway/skill-policy';
+import { assembleContextGatewayPacketV1, contextGatewayInputStateSourceKeysV1, projectContextGatewayInputStateV1 } from './context-gateway-input';
+import type { MasterCandidateModelIdentityV1 } from './master-candidate-semantic-review';
+import { parseStructuredOutputV1 } from './structured-output-pipeline';
+import { renderFrozenPromptExecutionV1, type PromptExecutionEvidenceV1, type PromptExecutionOptionsV1 } from './prompt-execution';
+import type { ChatMessage } from '../types';
 
 export const MAX_CHARACTER_CANDIDATE_CHARS = 40_000
 const MAX_CHARACTER_NAME_CHARS = 80

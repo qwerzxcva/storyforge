@@ -1,4 +1,4 @@
-import type { TemporalFact } from '../types/temporal-fact'
+import type { TemporalFact } from '../types/temporal-fact';
 
 /**
  * Eligibility for Canon interval projection, including bounded historical Canon.

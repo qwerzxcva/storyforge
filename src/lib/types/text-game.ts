@@ -1,4 +1,4 @@
-import type { NarrativeCondition, NarrativeEffect } from './narrative-blueprint'
+import type { NarrativeCondition, NarrativeEffect } from './narrative-blueprint';
 
 /** Runtime interaction types shared only by the three declared text-game products. */
 export interface NarrativeChoiceEvaluation {

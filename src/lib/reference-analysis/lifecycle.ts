@@ -1,29 +1,13 @@
-import Dexie, { type Table } from 'dexie'
-import { parseLegacyIdArray } from '../utils/legacy-id-array'
-import { db } from '../db/schema'
-import { sha256Text } from '../ai/chapter-memory/text-normalization'
-import { adopt } from '../registry/adopt'
-import type {
-  AnalysisDimension,
-  Reference,
-  ReferenceAnalysisDepth,
-  ReferenceAnalysisRun,
-  ReferenceAnalysisSource,
-  ReferenceChunkAnalysis,
-  ReferenceSourceKind,
-  ReferenceUsageScope,
-} from '../types'
-import { ANALYSIS_DIMENSIONS } from '../types/reference'
-import type { ChunkPlan } from '../import/chunker'
-import type { WorkspaceScope } from '../types/world-ownership'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveScopeLike,
-  scopeTransactionTables,
-  stampNewRecord,
-} from '../workspace/scope'
+import Dexie, { type Table } from 'dexie';
+import { parseLegacyIdArray } from '../utils/legacy-id-array';
+import { db } from '../db/schema';
+import { sha256Text } from '../ai/chapter-memory/text-normalization';
+import { adopt } from '../registry/adopt';
+import type { AnalysisDimension, Reference, ReferenceAnalysisDepth, ReferenceAnalysisRun, ReferenceAnalysisSource, ReferenceChunkAnalysis, ReferenceSourceKind, ReferenceUsageScope } from '../types';
+import { ANALYSIS_DIMENSIONS } from '../types/reference';
+import type { ChunkPlan } from '../import/chunker';
+import type { WorkspaceScope } from '../types/world-ownership';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, scopeTransactionTables, stampNewRecord } from '../workspace/scope';
 
 
 export const REFERENCE_ANALYSIS_RUN_POLICY = Object.freeze({

@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react'
-import type { Project } from '../lib/types'
-import { useWorldviewStore } from '../stores/worldview'
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import type { Project } from '../lib/types';
+import { useWorldviewStore } from '../stores/worldview';
 
 /** Bind readback to the rendered author view, including late adoption callbacks. */
 export function useScopedWorldviewReadback(project: Project, activeGroupId: number | null) {

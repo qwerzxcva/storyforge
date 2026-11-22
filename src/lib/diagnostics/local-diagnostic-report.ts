@@ -1,10 +1,10 @@
-import type { Table } from 'dexie'
-import { db } from '../db/schema'
-import { PROJECT_TABLES } from '../registry/project-tables'
-import { APP_BUILD_ID } from '../version'
+import type { Table } from 'dexie';
+import { db } from '../db/schema';
+import { PROJECT_TABLES } from '../registry/project-tables';
+import { APP_BUILD_ID } from '../version';
 
-import { readRuntimeDiagnosticErrors } from './runtime-errors'
-import type { RuntimeDiagnosticError } from './runtime-errors'
+import { readRuntimeDiagnosticErrors } from './runtime-errors';
+import type { RuntimeDiagnosticError } from './runtime-errors';
 export { recordRuntimeDiagnosticError, installRuntimeDiagnostics, resetRuntimeDiagnostics } from './runtime-errors'
 export type { RuntimeDiagnosticError } from './runtime-errors'
 

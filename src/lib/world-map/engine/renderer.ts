@@ -2,11 +2,10 @@
  * Voronoi 地图 Canvas 渲染器
  * 支持风格预设、图层显隐、省份、道路
  */
-
-import { collectMapBoundarySegments } from './boundaries'
-import type { VoronoiMapData, LayerVisibility, BiomeOverride, MapStylePreset } from './types'
-import { BIOMES } from './climate'
-import { getStyleConfig, type StyleConfig } from './style-presets'
+import { collectMapBoundarySegments } from './boundaries';
+import type { VoronoiMapData, LayerVisibility, BiomeOverride, MapStylePreset } from './types';
+import { BIOMES } from './climate';
+import { getStyleConfig, type StyleConfig } from './style-presets';
 
 /** 渲染选项 */
 export interface RenderOptions {

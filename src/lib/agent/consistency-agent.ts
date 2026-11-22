@@ -1,54 +1,20 @@
-import { db } from '../db/schema'
-import { assembleContext } from '../registry/assemble-context'
-import { normalizeChapterText, hashChapterText, sha256Text } from '../ai/chapter-memory/text-normalization'
-import { estimateTokens } from '../ai/context-budget'
-import {
-  buildConsistencyAuditPrompt,
-  consistencyAuditEvidenceOffsetV1,
-  parseConsistencyAuditResult,
-  type ConsistencyAuditResult,
-  type ConsistencyAuditCitationSourceV1,
-  type ConsistencyFinding,
-} from '../ai/adapters/consistency-audit-adapter'
-import {
-  checkHeldItemAcquisition,
-  readProjectHeldItems,
-} from '../consistency/held-items'
-import {
-  checkCognitionBoundary,
-  formatCognitionCatalog,
-  parseCognitionReferences,
-  readCognitionAuditSnapshot,
-} from '../knowledge-ledger/knowledge-ledger'
-import {
-  checkCharacterLifecycleBoundary,
-  formatLifecycleCatalog,
-  parseLifecycleActivityReferences,
-  readLifecycleAuditSnapshot,
-} from '../consistency/lifecycle-boundary'
-import type {
-  AgentConversation,
-  AgentEvent,
-  ChatMessage,
-  OutlineNode,
-} from '../types'
-import { parseAgentEventPayload } from '../types'
-import {
-  AgentTeamBudgetTracker,
-  type AgentTeamBudgetEvidence,
-} from './team-budget'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveScopeLike,
-  stampNewRecord,
-} from '../workspace/scope'
-import type { WorkspaceScope } from '../types/world-ownership'
-import type { ConsistencyAuditSourceReadV1 } from '../registry/types'
-import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk'
-import { hashCanonicalValue } from './run/hash'
-import { readAgentRunV1 } from './run/event-store'
+import { db } from '../db/schema';
+import { assembleContext } from '../registry/assemble-context';
+import { normalizeChapterText, hashChapterText, sha256Text } from '../ai/chapter-memory/text-normalization';
+import { estimateTokens } from '../ai/context-budget';
+import { buildConsistencyAuditPrompt, consistencyAuditEvidenceOffsetV1, parseConsistencyAuditResult, type ConsistencyAuditResult, type ConsistencyAuditCitationSourceV1, type ConsistencyFinding } from '../ai/adapters/consistency-audit-adapter';
+import { checkHeldItemAcquisition, readProjectHeldItems } from '../consistency/held-items';
+import { checkCognitionBoundary, formatCognitionCatalog, parseCognitionReferences, readCognitionAuditSnapshot } from '../knowledge-ledger/knowledge-ledger';
+import { checkCharacterLifecycleBoundary, formatLifecycleCatalog, parseLifecycleActivityReferences, readLifecycleAuditSnapshot } from '../consistency/lifecycle-boundary';
+import type { AgentConversation, AgentEvent, ChatMessage, OutlineNode } from '../types';
+import { parseAgentEventPayload } from '../types';
+import { AgentTeamBudgetTracker, type AgentTeamBudgetEvidence } from './team-budget';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, stampNewRecord } from '../workspace/scope';
+import type { WorkspaceScope } from '../types/world-ownership';
+import type { ConsistencyAuditSourceReadV1 } from '../registry/types';
+import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk';
+import { hashCanonicalValue } from './run/hash';
+import { readAgentRunV1 } from './run/event-store';
 
 export const CONSISTENCY_AGENT_VERSION = 1
 export const CONSISTENCY_AGENT_PAYLOAD_TYPE = 'consistency-agent'

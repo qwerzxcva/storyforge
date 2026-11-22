@@ -1,10 +1,6 @@
-import { readOwnedRows, resolveScope } from '../workspace/scope'
-import type { WorkspaceScope } from '../types/world-ownership'
-import {
-  cultivationStageTiers,
-  parseCultivationStages,
-  type CultivationSystem,
-} from '../types/cultivation'
+import { readOwnedRows, resolveScope } from '../workspace/scope';
+import type { WorkspaceScope } from '../types/world-ownership';
+import { cultivationStageTiers, parseCultivationStages, type CultivationSystem } from '../types/cultivation';
 
 function formatSystem(
   system: CultivationSystem,

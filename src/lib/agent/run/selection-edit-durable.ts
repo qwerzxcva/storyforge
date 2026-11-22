@@ -1,37 +1,21 @@
-import { db } from '../../db/schema'
-import type { AIConfig, Chapter, ChatMessage, WorkspaceScope } from '../../types'
-import { chat } from '../../ai/client'
-import {
-  buildSelectionEditPromptV1,
-  isSelectionEditActionV1,
-  selectionPromptModuleKeyV1,
-  type SelectionEditActionV1,
-} from '../../ai/adapters/selection-edit-adapter'
-import {
-  CHAPTER_TEXT_NORMALIZATION_VERSION,
-  hashChapterText,
-  normalizeChapterText,
-  sha256Text,
-} from '../../ai/chapter-memory/text-normalization'
-import { countWords, htmlToPlainText } from '../../utils/html'
-import { assembleContext } from '../../registry/assemble-context'
-import { adopt } from '../../registry/adopt'
-import { assertRecordInScope, readOwnedRows } from '../../workspace/scope'
-import { usePromptStore } from '../../../stores/prompt'
-import { propagateChapterEditStale } from '../../consistency/impact-analysis'
-import { getAgentSkillV1 } from '../skill-registry'
-import { createAgentSkillExecutionBindingV1 } from '../execution-binding'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  staleAgentRunVerificationV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import { hashCanonicalValue } from './hash'
+import { db } from '../../db/schema';
+import type { AIConfig, Chapter, ChatMessage, WorkspaceScope } from '../../types';
+import { chat } from '../../ai/client';
+import { buildSelectionEditPromptV1, isSelectionEditActionV1, selectionPromptModuleKeyV1, type SelectionEditActionV1 } from '../../ai/adapters/selection-edit-adapter';
+import { CHAPTER_TEXT_NORMALIZATION_VERSION, hashChapterText, normalizeChapterText, sha256Text } from '../../ai/chapter-memory/text-normalization';
+import { countWords, htmlToPlainText } from '../../utils/html';
+import { assembleContext } from '../../registry/assemble-context';
+import { adopt } from '../../registry/adopt';
+import { assertRecordInScope, readOwnedRows } from '../../workspace/scope';
+import { usePromptStore } from '../../../stores/prompt';
+import { propagateChapterEditStale } from '../../consistency/impact-analysis';
+import { getAgentSkillV1 } from '../skill-registry';
+import { createAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, staleAgentRunVerificationV1, type AgentRunSnapshotV1 } from './event-store';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { hashCanonicalValue } from './hash';
 
 export const SELECTION_EDIT_STEP_ID_V1 = 'prose:selection-edit' as const
 export const SELECTION_CHECK_STEP_ID_V1 = 'prose:selection-check' as const

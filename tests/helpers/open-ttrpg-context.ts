@@ -1,5 +1,5 @@
 /** Authored JSON fixture only; no claim of live context injection or model acceptance. */
-import type { TtrpgOpenContextPolicyV1 } from '../../src/lib/ttrpg/open-context-policy'
+import type { TtrpgOpenContextPolicyV1 } from '../../src/lib/legacy-compat/ttrpg/open-context-policy'
 export function openContextPolicyFixtureV1(): TtrpgOpenContextPolicyV1 {
   return { schema: 'storyforge.ttrpg-open-context-policy', version: 1,
     normalization: 'nfkc-unicode-lowercase-whitespace-v1', maximumContextTokens: 8000, cjkTextMatching: 'disabled',

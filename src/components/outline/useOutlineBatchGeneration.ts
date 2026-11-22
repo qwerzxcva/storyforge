@@ -1,26 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import {
-  runBatchOutlineGeneration,
-  type BatchOutlineProgress,
-} from '../../lib/ai/batch-outline-runner'
-import {
-  parseChapterOutlineOutput,
-  type ParsedChapter,
-} from '../../lib/ai/parse-outline-output'
-import type { RunOptions } from '../../lib/ai/adapters/outline-adapter'
-import {
-  adoptOutlineGenerationCandidateV1,
-  beginOutlineGenerationBatchAdoptionV1,
-  rejectOutlineGenerationCandidateV1,
-  restoreLatestOutlineGenerationBatchV1,
-  type OutlineGenerationCandidateV1,
-  type OutlineGenerationAdoptionIntentV1,
-} from '../../lib/outline/harness'
-import { decodeGenerationOperation } from '../../lib/outline/generation-request'
-import type { OutlineGenerationRequest } from '../../lib/outline/generation-request'
-import type { AssembleContextResult } from '../../lib/registry/types'
-import type { OutlineNode, Project, Work } from '../../lib/types'
-import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator'
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { runBatchOutlineGeneration, type BatchOutlineProgress } from '../../lib/ai/batch-outline-runner';
+import { parseChapterOutlineOutput, type ParsedChapter } from '../../lib/ai/parse-outline-output';
+import type { RunOptions } from '../../lib/ai/adapters/outline-adapter';
+import { adoptOutlineGenerationCandidateV1, beginOutlineGenerationBatchAdoptionV1, rejectOutlineGenerationCandidateV1, restoreLatestOutlineGenerationBatchV1, type OutlineGenerationCandidateV1, type OutlineGenerationAdoptionIntentV1 } from '../../lib/outline/harness';
+import { decodeGenerationOperation } from '../../lib/outline/generation-request';
+import type { OutlineGenerationRequest } from '../../lib/outline/generation-request';
+import type { AssembleContextResult } from '../../lib/registry/types';
+import type { OutlineNode, Project, Work } from '../../lib/types';
+import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator';
 
 interface Options {
   project: Project

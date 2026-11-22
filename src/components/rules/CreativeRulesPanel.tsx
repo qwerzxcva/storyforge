@@ -1,26 +1,18 @@
-import { CTextarea } from '../shared/CompositionInput'
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
-import { Check, Loader2, Microscope, Plus, RotateCcw, Sparkles, Trash2, X } from 'lucide-react'
-import { useCreativeRulesStore } from '../../stores/project-singletons'
-import { useWorldGroupStore } from '../../stores/world-group'
-import { useReferenceStore } from '../../stores/reference'
-import {
-  formatCreativeRulesGenerationRequestV1,
-  parseCreativeRulesCandidateDraftV1,
-  type CreativeRulesField,
-} from '../../lib/agent/creative-rules-copilot'
-import { useMasterCopilot, type PendingMasterCandidate } from '../agent/useMasterCopilot'
-import type { Project, NarrativePOV, WorkspaceScope } from '../../lib/types'
-import type { SystemFictionElementsV1 } from '../../lib/types/creative-rules'
-import { createSystemFictionElementsV1, parseSystemFictionElementsV1 } from '../../lib/prose/system-fiction-contract'
+import { CTextarea } from '../shared/CompositionInput';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { Check, Loader2, Microscope, Plus, RotateCcw, Sparkles, Trash2, X } from 'lucide-react';
+import { useCreativeRulesStore } from '../../stores/project-singletons';
+import { useWorldGroupStore } from '../../stores/world-group';
+import { useReferenceStore } from '../../stores/reference';
+import { formatCreativeRulesGenerationRequestV1, parseCreativeRulesCandidateDraftV1, type CreativeRulesField } from '../../lib/agent/creative-rules-copilot';
+import { useMasterCopilot, type PendingMasterCandidate } from '../agent/useMasterCopilot';
+import type { Project, NarrativePOV, WorkspaceScope } from '../../lib/types';
+import type { SystemFictionElementsV1 } from '../../lib/types/creative-rules';
+import { createSystemFictionElementsV1, parseSystemFictionElementsV1 } from '../../lib/prose/system-fiction-contract';
 import SystemFictionElementsEditor from './SystemFictionElementsEditor'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-  useInitialRecordTarget,
-} from '../shared/initial-record-target'
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes, useInitialRecordTarget } from '../shared/initial-record-target';
 import HarnessEvidencePanel from '../agent/HarnessEvidencePanel'
-import { useActiveWork } from '../../hooks/useActiveWork'
+import { useActiveWork } from '../../hooks/useActiveWork';
 
 const POV_OPTIONS: { value: NarrativePOV; label: string; desc: string }[] = [
   { value: 'first-person', label: '第一人称', desc: '以"我"的视角叙述' },

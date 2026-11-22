@@ -1,5 +1,5 @@
 import captured from './semantic-registry-v4.json'
-import type { NarrativeDomainRegistryV1 } from '../types/narrative-domain-registry'
+import type { NarrativeDomainRegistryV1 } from '../types/narrative-domain-registry';
 
 /** Historical wire rules captured for semanticContract=4. New current domains
  * never modify this snapshot. A changed interpretation needs a new version. */

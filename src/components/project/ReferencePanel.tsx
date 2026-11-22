@@ -1,18 +1,11 @@
-import { useEffect, useState } from 'react'
-import { Library, Upload } from 'lucide-react'
-import { useReferenceStore } from '../../stores/reference'
-import type { Project, Reference, ReferenceType } from '../../lib/types'
-import { useDialog } from '../shared/Dialog'
+import { useEffect, useState } from 'react';
+import { Library, Upload } from 'lucide-react';
+import { useReferenceStore } from '../../stores/reference';
+import type { Project, Reference, ReferenceType } from '../../lib/types';
+import { useDialog } from '../shared/Dialog';
 import ReferenceDetailCard from './ReferenceDetailCard'
-import {
-  REFERENCE_GLYPH_COLORS,
-  REFERENCE_TYPE_CONFIG,
-} from './reference-view'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-  useInitialRecordTarget,
-} from '../shared/initial-record-target'
+import { REFERENCE_GLYPH_COLORS, REFERENCE_TYPE_CONFIG } from './reference-view';
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes, useInitialRecordTarget } from '../shared/initial-record-target';
 
 // ── 常量 ─────────────────────────────────────────────────────────
 

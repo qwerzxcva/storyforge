@@ -4,33 +4,21 @@
  * 下游提取产物：AI 从已写正文中提取剧情大事，按故事进程排列。
  * 与「历史年表（世界背景）」「故事线（结构）」严格区分。
  */
-import { useState, useEffect, useMemo } from 'react'
-import { CalendarClock, Sparkles, Loader2, Trash2, Plus, BookOpen, Flag, AlertTriangle, RotateCcw } from 'lucide-react'
-import { useStoryTimelineStore } from '../../stores/story-timeline'
-import { useChapterStore } from '../../stores/chapter'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { resolveRequestConfig } from '../../lib/ai/client'
-import { getAIConfigRequiredMessage, isAIConfigReady } from '../../lib/ai/config-readiness'
-import { htmlToPlainText } from '../../lib/utils/html'
-import { STORY_IMPORTANCE_LABELS } from '../../lib/types/story-timeline'
-import type { Project } from '../../lib/types'
-import { resolveScopeLike } from '../../lib/workspace/scope'
+import { useState, useEffect, useMemo } from 'react';
+import { CalendarClock, Sparkles, Loader2, Trash2, Plus, BookOpen, Flag, AlertTriangle, RotateCcw } from 'lucide-react';
+import { useStoryTimelineStore } from '../../stores/story-timeline';
+import { useChapterStore } from '../../stores/chapter';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { resolveRequestConfig } from '../../lib/ai/client';
+import { getAIConfigRequiredMessage, isAIConfigReady } from '../../lib/ai/config-readiness';
+import { htmlToPlainText } from '../../lib/utils/html';
+import { STORY_IMPORTANCE_LABELS } from '../../lib/types/story-timeline';
+import type { Project } from '../../lib/types';
+import { resolveScopeLike } from '../../lib/workspace/scope';
 import ExtractionReviewPanel from '../shared/ExtractionReviewPanel'
-import { readExtractionPanelRecovery } from '../shared/readExtractionPanelRecovery'
-import {
-  abandonStoryTimelineExtractionV1,
-  adoptStoryTimelineExtractionCandidateV1,
-  generateStoryTimelineExtractionCandidateV1,
-  readPendingStoryTimelineExtractionCandidateV1,
-  readRecoverableStoryTimelineExtractionV1,
-  resumeStoryTimelineExtractionCandidateV1,
-  type StoryTimelineExtractionCandidateItemV1,
-} from '../../lib/agent/run/story-timeline-extraction-durable'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-  useInitialRecordTarget,
-} from '../shared/initial-record-target'
+import { readExtractionPanelRecovery } from '../shared/readExtractionPanelRecovery';
+import { abandonStoryTimelineExtractionV1, adoptStoryTimelineExtractionCandidateV1, generateStoryTimelineExtractionCandidateV1, readPendingStoryTimelineExtractionCandidateV1, readRecoverableStoryTimelineExtractionV1, resumeStoryTimelineExtractionCandidateV1, type StoryTimelineExtractionCandidateItemV1 } from '../../lib/agent/run/story-timeline-extraction-durable';
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes, useInitialRecordTarget } from '../shared/initial-record-target';
 
 interface Props {
   project: Project

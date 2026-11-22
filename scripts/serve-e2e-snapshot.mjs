@@ -10,19 +10,6 @@ const configuredPort = Number(portFlagIndex >= 0 ? process.argv[portFlagIndex + 
 const port = Number.isInteger(configuredPort) && configuredPort > 0 ? configuredPort : 4178
 const snapshotEntries = [
   'scripts/local-codex',
-  // Local voice replay imports this pinned, model-free reading descriptor.
-  'scripts/ttrpg-local-tts/reading-profile.json',
-  'scripts/ttrpg-local-tts/product-profile.json',
-  // The browser verifies historical raw against this immutable V2 wire core.
-  'scripts/ttrpg-local-tts/product-profile-v2.json',
-  'scripts/ttrpg-local-tts/product-qwen-uncle_fu-v1.json',
-  'scripts/ttrpg-local-tts/product-qwen-serena-v1.json',
-  // Vite's inactive local transport still needs its Node module imports.
-  // Python inference and installed assets remain outside ordinary E2E.
-  'scripts/ttrpg-local-tts/product-bridge.mjs',
-  'scripts/ttrpg-local-tts/product-jobs.mjs',
-  'scripts/ttrpg-local-tts/product-contract.mjs',
-  'scripts/ttrpg-local-tts/reading-preview.mjs',
   'scripts/distribution/proxies.mjs',
   'scripts/distribution/diagnostics.mjs',
   // Browser sound contracts import these pinned public metadata files. Copy
@@ -31,14 +18,7 @@ const snapshotEntries = [
   'scripts/avg-local-music/library-source.json',
   'scripts/avg-local-music/publisher-library-source.json',
   'data',
-  'showcase/short-novel',
-  'showcase/screenplay',
-  'showcase/motion-drama',
-  // The example readers need source text, full comic pages and downloadable archives.
-  ...['before-rain-stops', 'borrowed-flame', 'before-the-gun', 'moon-buys-bread'].flatMap(slug => [
-    `showcase/comic/${slug}/source-novel.md`,
-    `showcase/comic/${slug}/art/final`,
-  ]),
+  'showcase/longform-sources',
   'index.html',
   'ui-preview',
   'package.json',

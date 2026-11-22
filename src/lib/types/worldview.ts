@@ -1,4 +1,4 @@
-import type { RagDocumentMetadata } from './rag-library'
+import type { RagDocumentMetadata } from './rag-library';
 
 /**
  * 神明设定（嵌入 Worldview.divineDesign）

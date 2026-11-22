@@ -3,7 +3,7 @@
  * 输入：当前状态表 + 章节正文
  * 输出：JSON 格式的 StateDiffItem[]
  */
-import type { ChatMessage } from '../../types'
+import type { ChatMessage } from '../../types';
 
 /**
  * 构建状态提取 prompt

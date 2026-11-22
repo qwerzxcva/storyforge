@@ -1,6 +1,6 @@
-import { compileNarrativeReleaseIncrementalV1, type NarrativeIncrementalBaseV1 } from './narrative-incremental'
-import { compileWorldReleaseContentV4 } from './narrative-release-v4'
-import type { WorldReleaseSemanticContentV4 } from '../types/narrative-release'
+import { compileNarrativeReleaseIncrementalV1, type NarrativeIncrementalBaseV1 } from './narrative-incremental';
+import { compileWorldReleaseContentV4 } from './narrative-release-v4';
+import type { WorldReleaseSemanticContentV4 } from '../types/narrative-release';
 
 // One dedicated worker per bounded task. No database mutations or model calls.
 const endpoint = self as unknown as { onmessage: ((event: MessageEvent) => void) | null; postMessage: (value: unknown) => void }

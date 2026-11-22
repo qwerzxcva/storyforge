@@ -1,6 +1,6 @@
-import { db } from '../db/schema'
-import { PROJECT_TABLES, REGISTRY_BY_NAME } from './project-tables'
-import type { ArrayRef, DomainOwnerKind, ScopedScalarRef, TableSpec } from './types'
+import { db } from '../db/schema';
+import { PROJECT_TABLES, REGISTRY_BY_NAME } from './project-tables';
+import type { ArrayRef, DomainOwnerKind, ScopedScalarRef, TableSpec } from './types';
 
 /** Array declarations belong to the holder; their items point to the source. */
 export function registeredArrayReferencesTo(sourceTableName: string): { holder: TableSpec; ref: ArrayRef | ScopedScalarRef }[] {

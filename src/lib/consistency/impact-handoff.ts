@@ -1,9 +1,5 @@
-import { canonicalPowerModule } from '../workspace/module-alias'
-import type {
-  ImpactRemediationActionV1,
-  ImpactRemediationItemV1,
-  ImpactRemediationPlanV1,
-} from './impact-remediation-plan'
+import { canonicalPowerModule } from '../workspace/module-alias';
+import type { ImpactRemediationActionV1, ImpactRemediationItemV1, ImpactRemediationPlanV1 } from './impact-remediation-plan';
 
 export const IMPACT_HANDOFF_VERSION_V2 = 2 as const
 

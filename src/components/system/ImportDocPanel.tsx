@@ -1,37 +1,27 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { chunkDocument, quickHash } from '../../lib/import/chunker'
-import {
-  runSession, pausePipeline, cancelPipeline, isPipelineRunning, cancelPausedDocumentImportV1,
-  readPendingDocumentImportV1, runPublishedReferenceAnalysisV1,
-  registerChunkTexts, hasChunkTexts, clearChunkTexts,
-  applyReferenceFromSession, applyProjectFromSession,
-} from '../../lib/import/pipeline'
-import { confirmDocumentImportChunkV1 } from '../../lib/import/document-parse-adoption'
-import type { UnifiedParseResult, ReferenceAnalysisDepth } from '../../lib/types'
-import { hashImportChunkTextV1, hasFrozenImportIdentityV1, ImportSessionAuthorityError, ImportSessionUnavailableError,
-  readImportSessionAuthorityV1, useImportSessionStore, verifyImportProjectTargetGroupV1 } from '../../stores/import-session'
-import { useImportStatusStore } from '../../stores/import-status'
-import { useWorldGroupStore } from '../../stores/world-group'
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { chunkDocument, quickHash } from '../../lib/import/chunker';
+import { runSession, pausePipeline, cancelPipeline, isPipelineRunning, cancelPausedDocumentImportV1, readPendingDocumentImportV1, runPublishedReferenceAnalysisV1, registerChunkTexts, hasChunkTexts, clearChunkTexts, applyReferenceFromSession, applyProjectFromSession } from '../../lib/import/pipeline';
+import { confirmDocumentImportChunkV1 } from '../../lib/import/document-parse-adoption';
+import type { UnifiedParseResult, ReferenceAnalysisDepth } from '../../lib/types';
+import { hashImportChunkTextV1, hasFrozenImportIdentityV1, ImportSessionAuthorityError, ImportSessionUnavailableError, readImportSessionAuthorityV1, useImportSessionStore, verifyImportProjectTargetGroupV1 } from '../../stores/import-session';
+import { useImportStatusStore } from '../../stores/import-status';
+import { useWorldGroupStore } from '../../stores/world-group';
 import ImportConfirmModal from './import/ImportConfirmModal'
 import ImportReportModal from './import/ImportReportModal'
 import CodexImportReviewModal from './import/CodexImportReviewModal'
-import { ImportDocIntro, ImportReusableSessionBanner } from './import/ImportDocOverview'
-import ImportRuntimeView, { ImportPipelineControls } from './import/ImportRuntimeView'
+import { ImportDocIntro, ImportReusableSessionBanner } from './import/ImportDocOverview';
+import ImportRuntimeView, { ImportPipelineControls } from './import/ImportRuntimeView';
 import ImportUnfinishedBanner from './import/ImportUnfinishedBanner'
 import ImportUploadZone from './import/ImportUploadZone'
 import useImportDocumentPreparation from './import/useImportDocumentPreparation'
 import useImportSessionRecovery from './import/useImportSessionRecovery'
-import type { Project, WorkspaceScope } from '../../lib/types'
-import { resolveScope } from '../../lib/workspace/scope'
-import type { ImportSession, ChunkState, ImportTarget } from '../../lib/types/import-session'
-import type { SidebarModule } from '../layout/sidebar-tree'
-import { useDialog } from '../shared/Dialog'
-import { useToast } from '../shared/Toast'
-import {
-  applyCodexImportCandidates,
-  loadCodexImportCategoryOptions,
-  type CodexImportCategoryOption,
-} from '../../lib/import/codex-classification'
+import type { Project, WorkspaceScope } from '../../lib/types';
+import { resolveScope } from '../../lib/workspace/scope';
+import type { ImportSession, ChunkState, ImportTarget } from '../../lib/types/import-session';
+import type { SidebarModule } from '../layout/sidebar-tree';
+import { useDialog } from '../shared/Dialog';
+import { useToast } from '../shared/Toast';
+import { applyCodexImportCandidates, loadCodexImportCategoryOptions, type CodexImportCategoryOption } from '../../lib/import/codex-classification';
 
 interface Props {
   project: Project

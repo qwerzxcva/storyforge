@@ -1,29 +1,15 @@
-import { db } from '../db/schema'
-import { importProjectJSON } from '../export/json-export'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { isWorkCode, isWorkspaceUid } from '../memory/identity'
-import {
-  captureWorkspaceContentRevisionV1,
-  verifyWorkspaceContentRevisionV1,
-  type WorkspaceContentRevisionVectorV1,
-} from '../authoring/content-revision'
-import { cascadeDeleteProject } from '../registry/lifecycle'
-import type {
-  WorldDerivationV1,
-  WorldRelease,
-  WorldRevision,
-  WorkspaceScope,
-} from '../types'
-import { promoteNovelWorkspaceToWorldEngine } from './promotion'
-import {
-  buildIndependentWorkWorldSnapshot,
-  createWorldRevision,
-  publishWorldRevision,
-  stableJson,
-} from './releases'
-import { resolveScope, scopeTransactionTables } from '../workspace/scope'
-import { effectiveNovelProfile, effectiveWorkKind } from '../workspace/work-kind'
-import { materializeWorldReleaseBackupV1 } from './semantic-snapshot'
+import { db } from '../db/schema';
+import { importProjectJSON } from '../export/json-export';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { isWorkCode, isWorkspaceUid } from '../memory/identity';
+import { captureWorkspaceContentRevisionV1, verifyWorkspaceContentRevisionV1, type WorkspaceContentRevisionVectorV1 } from '../authoring/content-revision';
+import { cascadeDeleteProject } from '../registry/lifecycle';
+import type { WorldDerivationV1, WorldRelease, WorldRevision, WorkspaceScope } from '../types';
+import { promoteNovelWorkspaceToWorldEngine } from './promotion';
+import { buildIndependentWorkWorldSnapshot, createWorldRevision, publishWorldRevision, stableJson } from './releases';
+import { resolveScope, scopeTransactionTables } from '../workspace/scope';
+import { effectiveNovelProfile, effectiveWorkKind } from '../workspace/work-kind';
+import { materializeWorldReleaseBackupV1 } from './semantic-snapshot';
 
 export type WorldDerivationRangeV1 =
   | { kind: 'all-confirmed-canon' }

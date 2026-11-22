@@ -1,31 +1,31 @@
-import { createPortal } from 'react-dom'
-import ExtensionSurface from '../components/extensions/ExtensionOutlet'
-import { canonicalPowerModule } from '../lib/workspace/module-alias'
-import { resolveLongformChapterNavigationV1, type LongformChapterModuleV1 } from '../lib/authoring/longform-chapter-navigation'
-import ShortNovelHistory from '../components/short-novel/ShortNovelHistory'
+import { createPortal } from 'react-dom';
+import { canonicalPowerModule } from '../lib/workspace/module-alias';
+import { resolveLongformChapterNavigationV1, type LongformChapterModuleV1 } from '../lib/authoring/longform-chapter-navigation';
+import LegacyCreationHistory from '../components/longform/LegacyCreationHistory'
 import LongformCompletion from '../components/longform/LongformCompletion'
-import { worldModulePath } from '../components/world-engine/navigation'
-import { useCallback, useEffect, useRef, useState, useMemo, lazy, Suspense, Fragment } from 'react'
-import { Navigate, useLocation, useNavigate, useParams } from 'react-router'
-import { useProjectStore } from '../stores/project'
-import { useWorldviewStore } from '../stores/worldview'
-import { useCharacterStore } from '../stores/character'
-import { useOutlineStore } from '../stores/outline'
-import { useChapterStore } from '../stores/chapter'
-import { useForeshadowStore } from '../stores/foreshadow'
-import { useGeographyStore } from '../stores/project-singletons'
-import { useHistoryStore } from '../stores/project-singletons'
-import { useCreativeRulesStore } from '../stores/project-singletons'
-import { useCharacterRelationStore } from '../stores/character-relation'
-import { useReferenceStore } from '../stores/reference'
-import { useEmotionBeatStore } from '../stores/emotion-beat'
-import { useWorldRulesStore } from '../stores/world-rules'
-import { useAutoBackup } from '../hooks/useAutoBackup'
-import { useGistAutoBackup } from '../hooks/useGistAutoBackup'
-import { MessageSquare, PanelRight } from 'lucide-react'
-import type { SidebarModule } from '../components/layout/sidebar-tree'
+import { worldModulePath } from '../components/world-engine/navigation';
+import { isWorkAvailableInBuild } from '../lib/runtime/app-mode';
+import { useCallback, useEffect, useRef, useState, useMemo, lazy, Suspense, Fragment } from 'react';
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router';
+import { useProjectStore } from '../stores/project';
+import { useWorldviewStore } from '../stores/worldview';
+import { useCharacterStore } from '../stores/character';
+import { useOutlineStore } from '../stores/outline';
+import { useChapterStore } from '../stores/chapter';
+import { useForeshadowStore } from '../stores/foreshadow';
+import { useGeographyStore } from '../stores/project-singletons';
+import { useHistoryStore } from '../stores/project-singletons';
+import { useCreativeRulesStore } from '../stores/project-singletons';
+import { useCharacterRelationStore } from '../stores/character-relation';
+import { useReferenceStore } from '../stores/reference';
+import { useEmotionBeatStore } from '../stores/emotion-beat';
+import { useWorldRulesStore } from '../stores/world-rules';
+import { useAutoBackup } from '../hooks/useAutoBackup';
+import { useGistAutoBackup } from '../hooks/useGistAutoBackup';
+import { MessageSquare, PanelRight } from 'lucide-react';
+import type { SidebarModule } from '../components/layout/sidebar-tree';
 import ContentTypeBadge from '../components/layout/ContentTypeBadge'
-import { getModuleContentType, MODULE_CONTENT_TYPES } from '../components/layout/sidebar-tree'
+import { getModuleContentType, MODULE_CONTENT_TYPES } from '../components/layout/sidebar-tree';
 import PropertiesPanel from '../components/layout/PropertiesPanel'
 import ProjectInfoPanel from '../components/project/ProjectInfoPanel'
 const ReferencePanel = lazy(() => import('../components/project/ReferencePanel'))
@@ -53,7 +53,7 @@ const ChaptersListPanel = lazy(() => import('../components/editor/ChaptersListPa
 const ForeshadowPanel = lazy(() => import('../components/foreshadow/ForeshadowPanel'))
 const StyleLearningPanel = lazy(() => import('../components/style/StyleLearningPanel'))
 const PlacesWorkspace = lazy(() => import('../components/location/PlacesWorkspace'))
-import type { PlacesTab } from '../components/location/PlacesWorkspace'
+import type { PlacesTab } from '../components/location/PlacesWorkspace';
 const HistoryPanel = lazy(() => import('../components/history/HistoryPanel'))
 const CreativeRulesPanel = lazy(() => import('../components/rules/CreativeRulesPanel'))
 const CharacterRelationPanel = lazy(() => import('../components/relations/CharacterRelationPanel'))
@@ -69,31 +69,22 @@ const SceneVerifyPanel = lazy(() => import('../components/scene/SceneVerifyPanel
 const WorldGroupOverview = lazy(() => import('../components/world-group/WorldGroupOverview'))
 const GlobalReplacePanel = lazy(() => import('../components/tools/GlobalReplacePanel'))
 const ChatCopilotPanel = lazy(() => import('../components/agent/ChatCopilotPanel'))
-import { useLocationStore } from '../stores/location'
-import { useWorldGroupStore } from '../stores/world-group'
-import { resolveScopeLike } from '../lib/workspace/scope'
-import {
-  isImpactHandoffRouteModuleV2,
-  parseImpactHandoffV2,
-  type ImpactHandoffV2,
-} from '../lib/consistency/impact-handoff'
-import {
-  type CurrentImpactHandoffTargetV2,
-} from '../lib/agent/run/impact-handoff-durable'
-import {
-  beginImpactManualCorrectionV1,
-  completeImpactManualCorrectionV1,
-} from '../lib/agent/run/impact-manual-correction-durable'
-import { executeImpactPostCorrectionReplanV1 } from '../lib/agent/run/impact-post-correction-replan-durable'
-import { flushPendingEditsV1 } from '../lib/authoring/pending-edit-coordinator'
-import { useToast } from '../components/shared/Toast'
-import { useActiveWork } from '../hooks/useActiveWork'
+import { useLocationStore } from '../stores/location';
+import { useWorldGroupStore } from '../stores/world-group';
+import { resolveScopeLike } from '../lib/workspace/scope';
+import { isImpactHandoffRouteModuleV2, parseImpactHandoffV2, type ImpactHandoffV2 } from '../lib/consistency/impact-handoff';
+import { type CurrentImpactHandoffTargetV2 } from '../lib/agent/run/impact-handoff-durable';
+import { beginImpactManualCorrectionV1, completeImpactManualCorrectionV1 } from '../lib/agent/run/impact-manual-correction-durable';
+import { executeImpactPostCorrectionReplanV1 } from '../lib/agent/run/impact-post-correction-replan-durable';
+import { flushPendingEditsV1 } from '../lib/authoring/pending-edit-coordinator';
+import { useToast } from '../components/shared/Toast';
+import { useActiveWork } from '../hooks/useActiveWork';
 import WorkKindBadge from '../components/work/WorkKindBadge'
-import { WorldSettingsLayoutProvider } from '../components/longform/WorldSettingsLayout'
-import { effectiveNovelProfile, effectiveWorkKind } from '../lib/workspace/work-kind'
+import { WorldSettingsLayoutProvider } from '../components/longform/WorldSettingsLayout';
+import { effectiveNovelProfile, effectiveWorkKind } from '../lib/workspace/work-kind';
 
 import LongformLayout from '../components/longform/LongformLayout'
-import { LONGFORM_SECTIONS, sectionForModule, type LongformSection, type LongformMode } from '../components/longform/navigation'
+import { LONGFORM_SECTIONS, sectionForModule, type LongformSection, type LongformMode } from '../components/longform/navigation';
 const LongformWorlds = lazy(() => import('../components/longform/LongformWorlds'))
 
 export default function WorkspacePage({ embeddedProjectId, embeddedModule, embeddedToolsTarget }: { embeddedProjectId?: number; embeddedModule?: SidebarModule; embeddedToolsTarget?: HTMLElement | null } = {}) {
@@ -620,14 +611,12 @@ export default function WorkspacePage({ embeddedProjectId, embeddedModule, embed
     }
   }
 
-  if (activeWork && effectiveWorkKind(activeWork)==='screenplay') return <Navigate replace to={`/script/editor?work=${activeWork.id}`}/>
-  if (project.workspacePurpose === 'independent-work' && activeWork && effectiveWorkKind(activeWork) === 'novel' && effectiveNovelProfile(activeWork) === 'short') return <Navigate replace to={`/short/${activeModule === 'chapters-list' ? 'editor' : activeModule === 'version-history' || activeModule === 'export' ? 'versions' : 'intent'}?project=${project.id}`}/>
+  if (project.workspacePurpose !== 'world-engine' && activeWork && !isWorkAvailableInBuild(activeWork)) {
+    return <Navigate replace to="/home/library"/>
+  }
 
   if (!embeddedProjectId && project.workspacePurpose === 'world-engine') return <Navigate replace to={worldModulePath(project.id!, activeModule, query)}/>
-  if (!embeddedProjectId && !isLongform) {
-    const product = activeWork ? ({ comic: 'comic', 'motion-drama': 'motion', avg: 'avg', ttrpg: 'ttrpg', 'character-interaction': 'chat', 'ai-town': 'town', 'text-adventure': 'adventure', 'text-open-world': 'openworld' } as Record<string,string>)[effectiveWorkKind(activeWork)] : undefined
-    return <Navigate replace to={product ? `/${product}/library?project=${project.id}&work=${activeWork?.id}` : '/long'}/>
-  }
+  if (!embeddedProjectId && !isLongform) return <Navigate replace to="/home/library"/>
   const copilotButton = (
     <button
       onClick={() => {
@@ -737,12 +726,10 @@ export default function WorkspacePage({ embeddedProjectId, embeddedModule, embed
           {/* Phase 3.5: 懒加载面板(地图类)加载时显示 fallback */}
           <Suspense fallback={<div className="flex items-center justify-center h-64 text-text-muted text-sm">面板加载中…</div>}>
             {isLongform && longSection === 'versions' && <nav className="lf-subtabs" aria-label="版本与导出">{([['version-history', '版本历史'], ['export', '导出与备份']] as const).map(([id, label]) => <button key={id} aria-current={activeModule === id ? 'page' : undefined} onClick={() => selectModule(id)}>{label}</button>)}</nav>}
-            {isLongform && longSection === 'versions' && <><LongformCompletion project={project}/><ShortNovelHistory project={project}/></>}
+            {isLongform && longSection === 'versions' && <><LongformCompletion project={project}/><LegacyCreationHistory key={activeWork?.id} project={project}/></>}
             {isLongform && longSection === 'settings' && <nav className="lf-subtabs" aria-label="通用设置">{([['settings', '通用设置'], ['usage-stats', '用量统计']] as const).map(([id, label]) => <button key={id} aria-current={activeModule === id ? 'page' : undefined} onClick={() => selectModule(id)}>{label}</button>)}</nav>}
             <WorldSettingsLayoutProvider value={compactWorldSettings ? { tools: copilotButton } : null}>
-            <ExtensionSurface projectId={project.id!} owner={activeModule === 'history' || project.workspacePurpose === 'world-engine' && activeModule !== 'story-timeline' ? 'world' : 'work'} workId={activeWork?.id} target={activeModule}>
-            {isLongform && ['derive', 'community'].includes(longSection) ? <LongformWorlds project={project} community={longSection === 'community'} onOpen={id => navigate(`/workspace/${id}`)} /> : isLongform && longMode === 'agent' ? <ChatCopilotPanel initialDiscussionMode={query.get('discussion') === 'free' ? 'free' : 'plan'} embedded project={project} worldGroupId={copilotWorldGroupId} worldName={copilotWorldName} onClose={() => changeLongMode('steps')} onOpenModule={(module, chapter) => afterPendingEdits(() => navigate(`/workspace/${project.id}?module=${module}${chapter ? `&chapter=${chapter}` : ''}`), '编辑保存失败')} /> : renderMainPanel()}
-            </ExtensionSurface>
+              {isLongform && ['derive', 'community'].includes(longSection) ? <LongformWorlds project={project} community={longSection === 'community'} onOpen={id => navigate(`/workspace/${id}`)} /> : isLongform && longMode === 'agent' ? <ChatCopilotPanel initialDiscussionMode={query.get('discussion') === 'free' ? 'free' : 'plan'} embedded project={project} worldGroupId={copilotWorldGroupId} worldName={copilotWorldName} onClose={() => changeLongMode('steps')} onOpenModule={(module, chapter) => afterPendingEdits(() => navigate(`/workspace/${project.id}?module=${module}${chapter ? `&chapter=${chapter}` : ''}`), '编辑保存失败')} /> : renderMainPanel()}
             </WorldSettingsLayoutProvider>
           </Suspense>
         </div>

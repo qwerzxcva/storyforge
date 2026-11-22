@@ -1,21 +1,21 @@
-import { assembleContext } from '../registry/assemble-context'
-import { FIELD_BY_TARGET } from '../registry/field-registry'
-import { REGISTRY_BY_NAME } from '../registry/project-tables'
-import { historicalCanonFieldPolicyHashV1 } from '../context-gateway/canon-provider'
-import { isPortableResourceUidV1 } from '../context-gateway/resource-uid'
-import type { RagOriginalFieldV1 } from '../retrieval/rag-library'
-import type { RagAnnotationTargetStateV1 } from '../types/rag-library'
-import { deriveNarrativeTargetStateV1 } from '../retrieval/narrative-target-state'
-import type { WorkspaceScope } from '../types/world-ownership'
-import type { NarrativeOwnerV1 } from '../types/narrative-ir'
-import type { NarrativeDomainFieldsV1, NarrativeSourceFkV1 } from '../types/narrative-domain'
-import { NARRATIVE_SOURCE_FKS_V1 } from '../types/narrative-domain'
-import { mapNarrativeDomainReferencesV1, parseNarrativeDomainFieldV1, type NarrativeDomainFieldV1 } from '../narrative-domain/codec'
-import { narrativeDomainReferenceTargetV1, portableNarrativeDomainFieldJsonV1 } from '../narrative-domain/references'
-import { captureNarrativeDomainV1, hashNarrativeDomainSourceV1, type NarrativeDomainCaptureV1, type NarrativeDomainRowV1, resolveNarrativeDomainGroupV1 } from './narrative-domain-capture'
-import { compileNarrativeDomainEvidenceV1, resolveNarrativeDomainReferenceV1 } from './narrative-domain-evidence'
-import { projectNarrativeDomainCaptureV1 } from './narrative-domain-projection'
-import { canonicalNarrativeJsonV1, compareUnicodeCodePointsV1, hashNarrativeBytesV1, hashNarrativeValueV1, narrativeFail } from './narrative-json'
+import { assembleContext } from '../registry/assemble-context';
+import { FIELD_BY_TARGET } from '../registry/field-registry';
+import { REGISTRY_BY_NAME } from '../registry/project-tables';
+import { historicalCanonFieldPolicyHashV1 } from '../context-gateway/canon-provider';
+import { isPortableResourceUidV1 } from '../context-gateway/resource-uid';
+import type { RagOriginalFieldV1 } from '../retrieval/rag-library';
+import type { RagAnnotationTargetStateV1 } from '../types/rag-library';
+import { deriveNarrativeTargetStateV1 } from '../retrieval/narrative-target-state';
+import type { WorkspaceScope } from '../types/world-ownership';
+import type { NarrativeOwnerV1 } from '../types/narrative-ir';
+import type { NarrativeDomainFieldsV1, NarrativeSourceFkV1 } from '../types/narrative-domain';
+import { NARRATIVE_SOURCE_FKS_V1 } from '../types/narrative-domain';
+import { mapNarrativeDomainReferencesV1, parseNarrativeDomainFieldV1, type NarrativeDomainFieldV1 } from '../narrative-domain/codec';
+import { narrativeDomainReferenceTargetV1, portableNarrativeDomainFieldJsonV1 } from '../narrative-domain/references';
+import { captureNarrativeDomainV1, hashNarrativeDomainSourceV1, type NarrativeDomainCaptureV1, type NarrativeDomainRowV1, resolveNarrativeDomainGroupV1 } from './narrative-domain-capture';
+import { compileNarrativeDomainEvidenceV1, resolveNarrativeDomainReferenceV1 } from './narrative-domain-evidence';
+import { projectNarrativeDomainCaptureV1 } from './narrative-domain-projection';
+import { canonicalNarrativeJsonV1, compareUnicodeCodePointsV1, hashNarrativeBytesV1, hashNarrativeValueV1, narrativeFail } from './narrative-json';
 
 export interface NarrativeCandidateSelectionV1 {
   table: string

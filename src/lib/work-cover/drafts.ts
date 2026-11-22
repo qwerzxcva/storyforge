@@ -1,9 +1,9 @@
-import { db } from '../db/schema'
-import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash'
-import { resolveScope, scopeTransactionTables } from '../workspace/scope'
-import type { WorkspaceScope, Work } from '../types'
-import type { WorkCoverBriefV1, WorkCoverDraftV1 } from './types'
-import { parseWorkCoverBriefV1 } from './contracts'
+import { db } from '../db/schema';
+import { canonicalStringify, hashCanonicalValue } from '../agent/run/hash';
+import { resolveScope, scopeTransactionTables } from '../workspace/scope';
+import type { WorkspaceScope, Work } from '../types';
+import type { WorkCoverBriefV1, WorkCoverDraftV1 } from './types';
+import { parseWorkCoverBriefV1 } from './contracts';
 
 export function coverRecordInScopeV1(scope: WorkspaceScope, row: WorkspaceScope): boolean {
   return row.projectId === scope.projectId && row.worldId === scope.worldId && row.workId === scope.workId

@@ -1,6 +1,6 @@
-import type { ChatMessage } from '../../types'
-import { normalizeCreativeJsonEnvelopeV1 } from '../../agent/creative-json-normalizer'
-import type { CreativeReliabilityFixtureV1 } from './fixtures'
+import type { ChatMessage } from '../../types';
+import { normalizeCreativeJsonEnvelopeV1 } from '../../agent/creative-json-normalizer';
+import type { CreativeReliabilityFixtureV1 } from './fixtures';
 
 export const CREATIVE_RELIABILITY_BASELINE_PROMPT_VERSION_V1 =
   'crel-story-arc-baseline-direct-v1'

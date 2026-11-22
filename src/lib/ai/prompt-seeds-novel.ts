@@ -1,5 +1,5 @@
-import type { PromptSeed } from './prompt-seed-type'
-import { NOVEL_PROMPT_SEED_BINDINGS } from './prompt-seed-bindings-novel'
+import type { PromptSeed } from './prompt-seed-type';
+import { NOVEL_PROMPT_SEED_BINDINGS } from './prompt-seed-bindings-novel';
 
 /**
  * 从一次性 Prompt 资产实验中整理回主线模板体系的小说创作内容。

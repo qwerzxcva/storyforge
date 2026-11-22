@@ -1,6 +1,6 @@
-import type { ChatMessage } from '../../types'
-import type { MapGenConfig, SpatialEntityKind } from '../engine/types'
-import { parseAtlasReference, type AtlasKind } from './geometry'
+import type { ChatMessage } from '../../types';
+import type { MapGenConfig, SpatialEntityKind } from '../engine/types';
+import { parseAtlasReference, type AtlasKind } from './geometry';
 
 /** In this experimental view the model proposes spatial composition. Coordinates
  * remain inferred, including when a feature's name occurs in the source. */

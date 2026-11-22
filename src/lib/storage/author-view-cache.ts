@@ -1,4 +1,4 @@
-import { IS_SHOWCASE, SHOWCASE_DATABASE } from '../showcase/policy'
+import { IS_SHOWCASE, SHOWCASE_DATABASE } from '../showcase/policy';
 
 /** Disposable browser author-view cache, like the separate folder-handle store.
  * This is infrastructure, not a PROJECT_TABLES domain/semantic/media table.

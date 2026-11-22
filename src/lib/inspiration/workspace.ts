@@ -1,10 +1,5 @@
-import { isInspirationPreparationMode } from './preparation'
-import type {
-  InspirationFragment,
-  InspirationResultMode,
-  InspirationSourceKind,
-  InspirationVersion,
-} from '../types/inspiration-workspace'
+import { isInspirationPreparationMode } from './preparation';
+import type { InspirationFragment, InspirationResultMode, InspirationSourceKind, InspirationVersion } from '../types/inspiration-workspace';
 
 export const MAX_INSPIRATION_FRAGMENTS = 24
 export const MAX_INSPIRATION_VERSIONS = 12

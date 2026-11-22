@@ -1,22 +1,16 @@
-import { CInput } from '../../components/shared/CompositionInput'
+import { CInput } from '../../components/shared/CompositionInput';
 /**
  * 情感节拍卡组件 — 嵌入 ChapterEditor，在写作前/中展示和编辑情感节奏规划
  * 支持：AI 生成、手动编辑、展开/折叠、删除
  */
-import { useState, useEffect } from 'react'
-import { Heart, Sparkles, ChevronUp, Trash2, Edit3, Save, Plus, X, RotateCcw } from 'lucide-react'
-import { useEmotionBeatStore } from '../../stores/emotion-beat'
-import type { EmotionBeat } from '../../lib/types'
-import { useDialog } from '../shared/Dialog'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { resolveScopeLike } from '../../lib/workspace/scope'
-import {
-  adoptEmotionBeatCandidateV1,
-  generateEmotionBeatCandidateV1,
-  readPendingEmotionBeatCandidateV1,
-  rejectEmotionBeatCandidateV1,
-  type EmotionBeatCandidateV1,
-} from '../../lib/agent/run/emotion-beat-durable'
+import { useState, useEffect } from 'react';
+import { Heart, Sparkles, ChevronUp, Trash2, Edit3, Save, Plus, X, RotateCcw } from 'lucide-react';
+import { useEmotionBeatStore } from '../../stores/emotion-beat';
+import type { EmotionBeat } from '../../lib/types';
+import { useDialog } from '../shared/Dialog';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { resolveScopeLike } from '../../lib/workspace/scope';
+import { adoptEmotionBeatCandidateV1, generateEmotionBeatCandidateV1, readPendingEmotionBeatCandidateV1, rejectEmotionBeatCandidateV1, type EmotionBeatCandidateV1 } from '../../lib/agent/run/emotion-beat-durable';
 
 interface Props {
   projectId: number

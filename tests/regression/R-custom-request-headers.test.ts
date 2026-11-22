@@ -172,7 +172,7 @@ describe('custom model request headers', () => {
     const { chat } = await import('../../src/lib/ai/client')
     const fetchImpl = mockCompletion()
     await chat([{ role: 'user', content: 'hello' }], { ...config(), provider: 'openai' })
-    expect(new Headers(fetchImpl.mock.calls.at(-1)?.[1]?.headers).get('X-Gateway-Token')).toBeNull()
+    expect(new Headers(fetchImpl.mock.calls[fetchImpl.mock.calls.length - 1]?.[1]?.headers).get('X-Gateway-Token')).toBeNull()
   })
 
   it('treats header changes as a different model-capacity identity without exposing their values', async () => {
@@ -201,7 +201,7 @@ describe('custom model request headers', () => {
     const secret = 'synthetic/gateway-secret'
     const requestConfig = { ...config(), customHeaders: [{ name: 'X-Gateway-Token', value: secret }] }
     const escapedJson = JSON.stringify({ error: { message: `provider echoed ${secret}` } })
-      .replaceAll('/', '\\/')
+      .replace(/\//g, '\\/')
       .replace('secret', '\\u0073ecret')
     vi.stubGlobal('fetch', vi.fn(async () => new Response(escapedJson, { status: 401 })))
     const expectRedacted = async (request: () => Promise<unknown>) => {
@@ -217,7 +217,9 @@ describe('custom model request headers', () => {
       { label: 'test', dataUrl: 'data:image/png;base64,dGVzdA==', detail: 'low' },
     ], requestConfig))
     await expectRedacted(async () => {
-      for await (const _part of streamChat([{ role: 'user', content: 'hello' }], requestConfig)) { }
+      for await (const part of streamChat([{ role: 'user', content: 'hello' }], requestConfig)) {
+        expect(part).toBeDefined()
+      }
     })
   })
 

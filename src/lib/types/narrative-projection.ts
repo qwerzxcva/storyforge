@@ -1,4 +1,4 @@
-import type { NarrativeIRBundleV1, NarrativeEvidenceSourceV1 } from './narrative-ir'
+import type { NarrativeIRBundleV1, NarrativeEvidenceSourceV1 } from './narrative-ir';
 
 export interface NarrativeProjectionGapV1 { sourceKey: string; table: string; code: string; detail: string }
 export interface NarrativeProjectionCoverageV1 {

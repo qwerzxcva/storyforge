@@ -1,30 +1,27 @@
-import { narrativeDomainTableV1 } from './narrative-domain-registry'
-import type { NarrativeDomainRegistryV1 } from '../types/narrative-domain-registry'
-import { isPortableResourceUidV1 } from '../context-gateway/resource-uid'
-import type { Chapter, OutlineNode } from '../types'
-import type { WorkspaceScope } from '../types/world-ownership'
-import type { NarrativeDomainAtomRefV1, NarrativeDomainMetadataV1, NarrativeDomainValueV1, NarrativeDomainTimePointV1 } from '../types/narrative-domain'
-import type { NarrativeEvidenceSourceV1, EvidenceSpanV1, NarrativeOwnerV1, NarrativeRecordV1,
-  SemanticKindV1, SemanticRefV1, TypedValueV1, NarrativeEnvelopeV1 } from '../types/narrative-ir'
-import type { NarrativeTimeContextV1, NarrativeTimeV1, TimePointV1 } from '../types/narrative-time'
-import { captureNarrativeDomainV1, hashNarrativeDomainSourceV1, resolveNarrativeDomainGroupV1, type NarrativeDomainCaptureV1, type NarrativeDomainRowV1 } from './narrative-domain-capture'
-import { compileNarrativeDomainEvidenceV1, narrativeDomainEvidenceSourceV1, resolveNarrativeDomainReferenceV1,
-  narrativeDevelopmentStatementPointerV1, narrativeDomainEvidenceVisibilityV1 } from './narrative-domain-evidence'
-import { createNarrativeSemanticIdV1, freezeNarrativeChapterSequenceV1, narrativeOwnerKeyV1 } from './narrative-identity'
-import { compileImmutableNarrativeIRV1, compileNarrativeIRBundleV1 } from './narrative-ir'
-import { forEachNarrativeReferenceV1, parseNarrativeRecordV1 } from './narrative-ir-codec'
-import { mapNarrativeDomainReferencesV1 } from '../narrative-domain/codec'
-import { canonicalNarrativeJsonV1, compareUnicodeCodePointsV1, hashNarrativeBytesV1, hashNarrativeValueV1,
-  NarrativeContractErrorV1, narrativeFail } from './narrative-json'
-import { parseNarrativeTimeContextV1, validateNarrativeTimeReferencesV1 } from './narrative-time'
-import { intersectNarrativeVisibilityV1 } from '../narrative-domain/visibility'
+import { narrativeDomainTableV1 } from './narrative-domain-registry';
+import type { NarrativeDomainRegistryV1 } from '../types/narrative-domain-registry';
+import { isPortableResourceUidV1 } from '../context-gateway/resource-uid';
+import type { Chapter, OutlineNode } from '../types';
+import type { WorkspaceScope } from '../types/world-ownership';
+import type { NarrativeDomainAtomRefV1, NarrativeDomainMetadataV1, NarrativeDomainValueV1, NarrativeDomainTimePointV1 } from '../types/narrative-domain';
+import type { NarrativeEvidenceSourceV1, EvidenceSpanV1, NarrativeOwnerV1, NarrativeRecordV1, SemanticKindV1, SemanticRefV1, TypedValueV1, NarrativeEnvelopeV1 } from '../types/narrative-ir';
+import type { NarrativeTimeContextV1, NarrativeTimeV1, TimePointV1 } from '../types/narrative-time';
+import { captureNarrativeDomainV1, hashNarrativeDomainSourceV1, resolveNarrativeDomainGroupV1, type NarrativeDomainCaptureV1, type NarrativeDomainRowV1 } from './narrative-domain-capture';
+import { compileNarrativeDomainEvidenceV1, narrativeDomainEvidenceSourceV1, resolveNarrativeDomainReferenceV1, narrativeDevelopmentStatementPointerV1, narrativeDomainEvidenceVisibilityV1 } from './narrative-domain-evidence';
+import { createNarrativeSemanticIdV1, freezeNarrativeChapterSequenceV1, narrativeOwnerKeyV1 } from './narrative-identity';
+import { compileImmutableNarrativeIRV1, compileNarrativeIRBundleV1 } from './narrative-ir';
+import { forEachNarrativeReferenceV1, parseNarrativeRecordV1 } from './narrative-ir-codec';
+import { mapNarrativeDomainReferencesV1 } from '../narrative-domain/codec';
+import { canonicalNarrativeJsonV1, compareUnicodeCodePointsV1, hashNarrativeBytesV1, hashNarrativeValueV1, NarrativeContractErrorV1, narrativeFail } from './narrative-json';
+import { parseNarrativeTimeContextV1, validateNarrativeTimeReferencesV1 } from './narrative-time';
+import { intersectNarrativeVisibilityV1 } from '../narrative-domain/visibility';
 
 const UNBOUND = '0'.repeat(64)
 const emptyTime = (): NarrativeTimeV1 => ({ occurred: null, valid: null, narratedAt: null, disclosedAt: [], acquiredAt: null })
 type Source = { table: string; key: string; row: NarrativeDomainRowV1; hash: string }
 export type { NarrativeProjectionGapV1, NarrativeProjectionCoverageV1, NarrativeDomainProjectionV1 } from '../types/narrative-projection'
-import { NARRATIVE_DOMAIN_COMPILERS_V4, type NarrativeDomainCompilerV4 } from '../types/narrative-release'
-import type { NarrativeProjectionCoverageV1, NarrativeDomainProjectionV1 } from '../types/narrative-projection'
+import { NARRATIVE_DOMAIN_COMPILERS_V4, type NarrativeDomainCompilerV4 } from '../types/narrative-release';
+import type { NarrativeProjectionCoverageV1, NarrativeDomainProjectionV1 } from '../types/narrative-projection';
 
 function reason(error: unknown): { code: string; detail: string } {
   if (!(error instanceof NarrativeContractErrorV1)) throw error

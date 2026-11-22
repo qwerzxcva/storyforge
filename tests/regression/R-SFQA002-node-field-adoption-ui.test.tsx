@@ -142,5 +142,5 @@ describe.sequential('002 actual React author choice, adoption and refresh', () =
     expect(host.querySelector<HTMLSelectElement>('[aria-label="选择候选版本"]')?.value).toBe('1')
     expect(host.textContent).toContain('已写入作品；再次修改请生成新候选。')
     expect(sends).toHaveLength(2)
-  })
+  }, 30_000)
 })

@@ -1,4 +1,4 @@
-import type { Project, WorkspacePurpose } from '../types'
+import type { Project, WorkspacePurpose } from '../types';
 
 /** Public identifier primitive used only when a workspace creates/promotes a shareable World. */
 export function generateWorldCode(now = Date.now(), entropy = Math.random()): string {

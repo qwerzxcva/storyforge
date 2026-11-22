@@ -1,4 +1,4 @@
-import { AGENT_TOOL_BY_NAME } from './tool-registry'
+import { AGENT_TOOL_BY_NAME } from './tool-registry';
 
 export interface AgentProtocolToolCall {
   name: string

@@ -1,11 +1,11 @@
-import { db } from '../db/schema'
-import { PROJECT_TABLES } from '../registry/project-tables'
-import { isPortableResourceUidV1 } from '../context-gateway/resource-uid'
-import type { WorkspaceScope } from '../types/world-ownership'
-import type { NarrativeRecordV1 } from '../types/narrative-ir'
-import { captureNarrativeDomainV1, resolveNarrativeDomainGroupV1 } from './narrative-domain-capture'
-import { projectNarrativeDomainCaptureV1 } from './narrative-domain-projection'
-import { canonicalNarrativeJsonV1, compareUnicodeCodePointsV1, narrativeFail } from './narrative-json'
+import { db } from '../db/schema';
+import { PROJECT_TABLES } from '../registry/project-tables';
+import { isPortableResourceUidV1 } from '../context-gateway/resource-uid';
+import type { WorkspaceScope } from '../types/world-ownership';
+import type { NarrativeRecordV1 } from '../types/narrative-ir';
+import { captureNarrativeDomainV1, resolveNarrativeDomainGroupV1 } from './narrative-domain-capture';
+import { projectNarrativeDomainCaptureV1 } from './narrative-domain-projection';
+import { canonicalNarrativeJsonV1, compareUnicodeCodePointsV1, narrativeFail } from './narrative-json';
 
 const KIND_LABELS: Record<NarrativeRecordV1['kind'], string> = {
   entity: '实体', event: '事件', assertion: '断言', relation: '关系', rule: '规则',

@@ -1,7 +1,7 @@
-import { transactionTablesForReferenceCascade } from '../registry/lifecycle'
-import { cascadeRegisteredReferences } from '../workspace/lifecycle'
-import { db } from '../db/schema'
-import { inspectStages } from '../types/story-arc'
+import { transactionTablesForReferenceCascade } from '../registry/lifecycle';
+import { cascadeRegisteredReferences } from '../workspace/lifecycle';
+import { db } from '../db/schema';
+import { inspectStages } from '../types/story-arc';
 
 /** 删章时保留作者确认的数据和冗余章名，只断开可能悬空的 FK。 */
 export async function detachStorylineForDeletedChapters(

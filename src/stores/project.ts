@@ -1,17 +1,12 @@
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import type { Project, CreateWorkspaceInput, WorkspaceScope, Work } from '../lib/types'
-import { requireBackupBefore } from '../lib/safety/require-backup-before'
-import { cascadeDeleteProject } from '../lib/registry/lifecycle'
-import { resolveWorkspaceOwnership } from '../lib/workspace/ownership'
-import {
-  updateActiveWork,
-  updateWorkspace,
-  type ActiveWorkPatch,
-  type WorkspacePatch,
-} from '../lib/workspace/works'
-import { clearProjectFolderHandle } from '../lib/storage/folder-handle-store'
-import { createWorkspace, type CreateWorkspaceOptions } from '../lib/workspace/create-workspace'
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import type { Project, CreateWorkspaceInput, WorkspaceScope, Work } from '../lib/types';
+import { requireBackupBefore } from '../lib/safety/require-backup-before';
+import { cascadeDeleteProject } from '../lib/registry/lifecycle';
+import { resolveWorkspaceOwnership } from '../lib/workspace/ownership';
+import { updateActiveWork, updateWorkspace, type ActiveWorkPatch, type WorkspacePatch } from '../lib/workspace/works';
+import { clearProjectFolderHandle } from '../lib/storage/folder-handle-store';
+import { createWorkspace, type CreateWorkspaceOptions } from '../lib/workspace/create-workspace';
 
 interface ProjectStore {
   projects: Project[]
@@ -19,7 +14,7 @@ interface ProjectStore {
   loading: boolean
 
   loadProjects: () => Promise<void>
-  loadProject: (id: number) => Promise<Project | undefined>
+  loadProject: (id: number, isCurrent?: () => boolean) => Promise<Project | undefined>
   createWorkspace: (data: CreateWorkspaceInput, options?: CreateWorkspaceOptions) => Promise<number>
   updateWorkspace: (id: number, data: WorkspacePatch) => Promise<void>
   updateActiveWork: (id: number, data: ActiveWorkPatch, frozenScope?: WorkspaceScope) => Promise<Work>
@@ -38,9 +33,10 @@ export const useProjectStore = create<ProjectStore>((set, get) => ({
     set({ projects: raw, loading: false })
   },
 
-  loadProject: async (id: number) => {
+  loadProject: async (id: number, isCurrent = () => true) => {
+    if (!isCurrent()) return undefined
     const raw = await db.projects.get(id)
-    if (!raw) return undefined
+    if (!raw || !isCurrent()) return undefined
     // Project routes resolve through the sole current ownership service before
     // any project-scoped store begins reading the workspace.
     const project = (await resolveWorkspaceOwnership(id)).project
@@ -49,6 +45,7 @@ export const useProjectStore = create<ProjectStore>((set, get) => ({
     const nextProjects = exists
       ? projects.map(p => p.id === id ? project : p)
       : [...projects, project].sort((a, b) => (b.updatedAt ?? 0) - (a.updatedAt ?? 0))
+    if (!isCurrent()) return undefined
     set({ currentProjectId: id, projects: nextProjects })
     return project
   },

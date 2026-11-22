@@ -1,15 +1,15 @@
-import { freezeFormalAIEntryBindingV1, executeFrozenFormalImagePreviewV1 } from '../../agent/formal-ai-entry'
-import { getAgentSkillV1 } from '../../agent/skill-registry'
-import { hashCanonicalValue } from '../../agent/run/hash'
-import { referenceImageBindingFromAIConfigV1 } from '../../media/capability'
-import { requestAgnesReferenceImageV1, requestGeminiReferenceImageV1, requestOpenAICompatibleImageEditV1 } from '../../media/transport'
-import { decodeRasterImageV1, MAX_RASTER_IMAGE_BYTES_V1 } from '../../media/raster-image'
-import type { AIConfig } from '../../types'
-import { parseAtlasReference, type AtlasGeometry } from './geometry'
-import { atlasPaintFrame, cropAtlasPaintFrame, frameAtlasPaintReference } from './paint-frame'
-import { ATLAS_PAINT_REVISION, assertAtlasPaintPackageV2, atlasTerrainHash, type AtlasPaintPackageV2 } from './paint-package'
-import type { AtlasSymbolStyle } from './symbols'
-import type { AtlasImageProtocol } from './image-connection'
+import { freezeFormalAIEntryBindingV1, executeFrozenFormalImagePreviewV1 } from '../../agent/formal-ai-entry';
+import { getAgentSkillV1 } from '../../agent/skill-registry';
+import { hashCanonicalValue } from '../../agent/run/hash';
+import { referenceImageBindingFromAIConfigV1 } from '../../media/capability';
+import { requestAgnesReferenceImageV1, requestGeminiReferenceImageV1, requestOpenAICompatibleImageEditV1 } from '../../media/transport';
+import { decodeRasterImageV1, MAX_RASTER_IMAGE_BYTES_V1 } from '../../media/raster-image';
+import type { AIConfig } from '../../types';
+import { parseAtlasReference, type AtlasGeometry } from './geometry';
+import { atlasPaintFrame, cropAtlasPaintFrame, frameAtlasPaintReference } from './paint-frame';
+import { ATLAS_PAINT_REVISION, assertAtlasPaintPackageV2, atlasTerrainHash, type AtlasPaintPackageV2 } from './paint-package';
+import type { AtlasSymbolStyle } from './symbols';
+import type { AtlasImageProtocol } from './image-connection';
 
 export interface AtlasLegacyPaintPreview {
   kind: 'storyforge.atlas-paint'

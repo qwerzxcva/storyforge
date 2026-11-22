@@ -1,22 +1,10 @@
-import { db } from '../db/schema'
-import { getFactPredicate, isConstitutionPredicate } from '../registry/fact-predicate-registry'
-import {
-  CANON_ASSERTION_SOURCE_REGISTRY,
-  getCanonAssertionSourceField,
-  isAllowedCanonAssertionSource,
-  type CanonAssertionSourceTable,
-} from '../registry/canon-assertion-source-registry'
-import type { FactEntityType, TemporalFact } from '../types/temporal-fact'
-import type { ChatMessage } from '../types'
-import type { WorkspaceScope } from '../types/world-ownership'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveScopeLike,
-  scopeTransactionTables,
-  stampNewRecord,
-} from '../workspace/scope'
+import { db } from '../db/schema';
+import { getFactPredicate, isConstitutionPredicate } from '../registry/fact-predicate-registry';
+import { CANON_ASSERTION_SOURCE_REGISTRY, getCanonAssertionSourceField, isAllowedCanonAssertionSource, type CanonAssertionSourceTable } from '../registry/canon-assertion-source-registry';
+import type { FactEntityType, TemporalFact } from '../types/temporal-fact';
+import type { ChatMessage } from '../types';
+import type { WorkspaceScope } from '../types/world-ownership';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, scopeTransactionTables, stampNewRecord } from '../workspace/scope';
 
 export interface SettingAssertionSource {
   sourceKey: string

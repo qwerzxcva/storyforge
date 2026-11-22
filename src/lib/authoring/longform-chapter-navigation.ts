@@ -1,6 +1,6 @@
-import { db } from '../db/schema'
-import type { WorkspaceScope } from '../types'
-import { assertRecordInScope, resolveScopeLike } from '../workspace/scope'
+import { db } from '../db/schema';
+import type { WorkspaceScope } from '../types';
+import { assertRecordInScope, resolveScopeLike } from '../workspace/scope';
 
 export type LongformChapterModuleV1 = 'outline' | 'detailed-outline' | 'chapters-list'
 

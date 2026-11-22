@@ -1,31 +1,28 @@
 import Dexie from 'dexie'
-import { db } from '../../db/schema'
-import { chat, resolveRequestConfig, type ChatResult } from '../../ai/client'
-import type { AIConfig, ChatMessage, WorkspaceScope } from '../../types'
-import type { AgentRunEventTypeV1, AgentRunEventPayloadByTypeV1, ContextManifestSourceV1 } from '../../types/agent-run'
-import type { NarrativeDomainAuthorityV1 } from '../../types/narrative-domain'
-import { NARRATIVE_SOURCE_FKS_V1 } from '../../types/narrative-domain'
-import { REGISTRY_BY_NAME } from '../../registry/project-tables'
-import { adopt } from '../../registry/adopt'
-import type { AdoptInput, AdoptResult } from '../../registry/types'
-import { readOwnedRows } from '../../workspace/scope'
-import { createAgentSkillExecutionBindingV1 } from '../execution-binding'
-import { getAgentSkillV1 } from '../skill-registry'
-import { runCreativeExecutionV1, type CreativeRawModelResultV1 } from '../creative-execution'
-import { parseCreativeArtifactV1, creativeArtifactCanAdoptV1, type CreativeArtifactV1, type CreativeQualityModeV1 } from '../creative-reliability'
-import { AgentTeamBudgetTracker } from '../team-budget'
-import { canonicalStringify, hashCanonicalValue } from './hash'
-import { createAgentRunCheckpointV1, createAgentRunCheckpointInTransactionV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import { appendAgentRunEventV1, appendAgentRunEventWithSettlementInTransactionV1, createAgentRunV1, readAgentRunV1,
-  readVerifiedAgentRunInTransactionV1, staleAgentRunVerificationV1, withAgentRunMutationLockV1, type AgentRunSnapshotV1 } from './event-store'
-import { parseAgentRunEventV1 } from './event-schema'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import { captureNarrativeDomainV1, captureNarrativeDomainInTransactionV1, hashNarrativeDomainSourceV1, narrativeDomainCaptureTablesV1,
-  type NarrativeDomainCaptureV1 } from '../../world-engine/narrative-domain-capture'
-import { assertNarrativeCandidateBaselineV1, compileNarrativeAnnotationProposalV1, findNarrativeCandidateSourceV1, prepareNarrativeCandidateV1, matchesSavedNarrativeBaselineV1, narrativeAnnotationTargetContractV1,
-  type NarrativeCandidateSelectionV1, type NarrativeCandidateBaselineV1, type NarrativeAnnotationProposalV1 } from '../../world-engine/narrative-domain-candidate'
-import { canonicalNarrativeJsonV1, hashNarrativeValueV1 } from '../../world-engine/narrative-json'
+import { db } from '../../db/schema';
+import { chat, resolveRequestConfig, type ChatResult } from '../../ai/client';
+import type { AIConfig, ChatMessage, WorkspaceScope } from '../../types';
+import type { AgentRunEventTypeV1, AgentRunEventPayloadByTypeV1, ContextManifestSourceV1 } from '../../types/agent-run';
+import type { NarrativeDomainAuthorityV1 } from '../../types/narrative-domain';
+import { NARRATIVE_SOURCE_FKS_V1 } from '../../types/narrative-domain';
+import { REGISTRY_BY_NAME } from '../../registry/project-tables';
+import { adopt } from '../../registry/adopt';
+import type { AdoptInput, AdoptResult } from '../../registry/types';
+import { readOwnedRows } from '../../workspace/scope';
+import { createAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { getAgentSkillV1 } from '../skill-registry';
+import { runCreativeExecutionV1, type CreativeRawModelResultV1 } from '../creative-execution';
+import { parseCreativeArtifactV1, creativeArtifactCanAdoptV1, type CreativeArtifactV1, type CreativeQualityModeV1 } from '../creative-reliability';
+import { AgentTeamBudgetTracker } from '../team-budget';
+import { canonicalStringify, hashCanonicalValue } from './hash';
+import { createAgentRunCheckpointV1, createAgentRunCheckpointInTransactionV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { appendAgentRunEventV1, appendAgentRunEventWithSettlementInTransactionV1, createAgentRunV1, readAgentRunV1, readVerifiedAgentRunInTransactionV1, staleAgentRunVerificationV1, withAgentRunMutationLockV1, type AgentRunSnapshotV1 } from './event-store';
+import { parseAgentRunEventV1 } from './event-schema';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { captureNarrativeDomainV1, captureNarrativeDomainInTransactionV1, hashNarrativeDomainSourceV1, narrativeDomainCaptureTablesV1, type NarrativeDomainCaptureV1 } from '../../world-engine/narrative-domain-capture';
+import { assertNarrativeCandidateBaselineV1, compileNarrativeAnnotationProposalV1, findNarrativeCandidateSourceV1, prepareNarrativeCandidateV1, matchesSavedNarrativeBaselineV1, narrativeAnnotationTargetContractV1, type NarrativeCandidateSelectionV1, type NarrativeCandidateBaselineV1, type NarrativeAnnotationProposalV1 } from '../../world-engine/narrative-domain-candidate';
+import { canonicalNarrativeJsonV1, hashNarrativeValueV1 } from '../../world-engine/narrative-json';
 
 export const NARRATIVE_ANNOTATION_SKILL_V1 = 'world-origin.narrative-annotation-extract'
 export const NARRATIVE_ANNOTATION_STEP_V1 = 'world-origin:narrative-annotation-extract'

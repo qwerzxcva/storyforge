@@ -1,21 +1,7 @@
-import type {
-  AgentRunStepVerificationReceiptV1,
-  VerificationCriterionReceiptV1,
-  VerificationReceiptV1,
-} from '../../types/agent-run'
-import { hashCanonicalValue, canonicalStringify } from './hash'
-import { parseAgentRunContract } from './contract'
-import {
-  assertExactKeys,
-  assertUnique,
-  failSchema,
-  readArray,
-  readEnum,
-  readHash,
-  readInteger,
-  readRecord,
-  readString,
-} from './schema-utils'
+import type { AgentRunStepVerificationReceiptV1, VerificationCriterionReceiptV1, VerificationReceiptV1 } from '../../types/agent-run';
+import { hashCanonicalValue, canonicalStringify } from './hash';
+import { parseAgentRunContract } from './contract';
+import { assertExactKeys, assertUnique, failSchema, readArray, readEnum, readHash, readInteger, readRecord, readString } from './schema-utils';
 
 type VerificationReceiptBodyV1 = Omit<VerificationReceiptV1, 'receiptHash'>
 type StepVerificationReceiptBodyV1 = Omit<AgentRunStepVerificationReceiptV1, 'receiptHash'>

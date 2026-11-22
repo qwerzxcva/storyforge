@@ -1,37 +1,11 @@
-import type {
-  AgentRunContractV1,
-  AgentRunEventTypeV1,
-  AgentRunProjectionV1,
-  WorkspaceScope,
-} from '../../types'
-import {
-  AGENT_READ_CONTEXT_SOURCE_KEYS,
-  AGENT_READ_TOOLS,
-} from '../tool-registry'
-import type { AgentToolExecutionContext } from '../types'
-import {
-  resolveReadOnlyAgentLimits,
-  runReadOnlyAgent,
-  type ReadOnlyAgentExecutionSummary,
-  type ReadOnlyAgentExecutionTrace,
-  type ReadOnlyAgentLimits,
-  type ReadOnlyAgentResult,
-  type RunReadOnlyAgentInput,
-} from '../runner'
-import {
-  beginAgentRunRecoveryV1,
-  completeAgentRunRecoveryV1,
-  createAgentRunCheckpointV1,
-  readLatestVerifiedAgentRunCheckpointV1,
-} from './checkpoint'
-import { acceptAgentRunContractV1 } from './contract'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { hashCanonicalValue } from './hash'
+import type { AgentRunContractV1, AgentRunEventTypeV1, AgentRunProjectionV1, WorkspaceScope } from '../../types';
+import { AGENT_READ_CONTEXT_SOURCE_KEYS, AGENT_READ_TOOLS } from '../tool-registry';
+import type { AgentToolExecutionContext } from '../types';
+import { resolveReadOnlyAgentLimits, runReadOnlyAgent, type ReadOnlyAgentExecutionSummary, type ReadOnlyAgentExecutionTrace, type ReadOnlyAgentLimits, type ReadOnlyAgentResult, type RunReadOnlyAgentInput } from '../runner';
+import { beginAgentRunRecoveryV1, completeAgentRunRecoveryV1, createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { acceptAgentRunContractV1 } from './contract';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, type AgentRunSnapshotV1 } from './event-store';
+import { hashCanonicalValue } from './hash';
 
 export const READ_ONLY_AGENT_DURABLE_STEP_ID_V1 = 'read-only-audit'
 export const READ_ONLY_AGENT_DURABLE_ADAPTER_VERSION_V1 = 'read-only-durable-v1'

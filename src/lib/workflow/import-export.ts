@@ -1,11 +1,5 @@
-import type {
-  PromptWorkflow,
-  PromptWorkflowGraph,
-  PromptWorkflowGraphEdge,
-  PromptWorkflowGraphNode,
-  PromptWorkflowStep,
-} from '../types/workflow'
-import { validateWorkflowGraph } from './graph'
+import type { PromptWorkflow, PromptWorkflowGraph, PromptWorkflowGraphEdge, PromptWorkflowGraphNode, PromptWorkflowStep } from '../types/workflow';
+import { validateWorkflowGraph } from './graph';
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)

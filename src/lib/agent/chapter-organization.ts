@@ -1,65 +1,29 @@
-import { db } from '../db/schema'
-import { normalizeChapterText, hashChapterText } from '../ai/chapter-memory/text-normalization'
-import { CHAPTER_ORGANIZATION_MODEL_PROMPT_VERSION_V4, CHAPTER_ORGANIZATION_MODEL_ARRAYS_V1, resolveChapterOrganizationModelEvidenceV1 } from './chapter-organization-model'
-import { storylineEvidenceAnchorsV1 } from '../storyline/evidence-anchors'
-import { parseAuthorStoryStagesV1 } from '../types/story-arc'
-import { parseStateDiffs } from '../ai/adapters/state-extract-adapter'
-import {
-  parseFactExtractResult,
-  type ExtractedFactCandidate,
-} from '../ai/adapters/fact-extract-adapter'
-import {
-  parseInventoryEvents,
-  type ExtractedItemEvent,
-} from '../ai/adapters/inventory-extract-adapter'
-import {
-  parseStoryEvents,
-  type ExtractedStoryEvent,
-} from '../ai/adapters/story-timeline-adapter'
-import {
-  matchRelations,
-  parseRelationOutput,
-  type MatchedRelation,
-} from '../ai/relation-extractor'
-import type {
-  AgentConversation,
-  AgentEvent,
-  Character,
-  CharacterRelation,
-  ChatMessage,
-  Foreshadow,
-  ForeshadowStatus,
-  StateDiffItem,
-  StoryArc,
-} from '../types'
-import { parseAgentEventPayload } from '../types'
-import {
-  AgentTeamBudgetTracker,
-  type AgentTeamBudgetEvidence,
-} from './team-budget'
-import { adopt, replaceAdoptedCollection } from '../registry/adopt'
-import { useStateCardStore } from '../../stores/state-card'
-import { useFactLedgerStore } from '../../stores/fact-ledger'
-import { useItemLedgerStore } from '../../stores/item-ledger'
-import { useStoryTimelineStore } from '../../stores/story-timeline'
-import { useCharacterRelationStore } from '../../stores/character-relation'
-import { useCharacterStore } from '../../stores/character'
-import { useForeshadowStore } from '../../stores/foreshadow'
-import { syncRelationToCharacterFields } from '../relations/relationship-summary'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveScopeLike,
-  stampNewRecord,
-} from '../workspace/scope'
-import {
-  adoptStorylineAnalysisCandidates,
-  parseStorylineProgressResult,
-  type StorylineAnalysisCandidates,
-} from '../storyline/storyline-progress'
-import { htmlToPlainText } from '../utils/html'
-import { hashCanonicalValue } from './run/hash'
+import { db } from '../db/schema';
+import { normalizeChapterText, hashChapterText } from '../ai/chapter-memory/text-normalization';
+import { CHAPTER_ORGANIZATION_MODEL_PROMPT_VERSION_V4, CHAPTER_ORGANIZATION_MODEL_ARRAYS_V1, resolveChapterOrganizationModelEvidenceV1 } from './chapter-organization-model';
+import { storylineEvidenceAnchorsV1 } from '../storyline/evidence-anchors';
+import { parseAuthorStoryStagesV1 } from '../types/story-arc';
+import { parseStateDiffs } from '../ai/adapters/state-extract-adapter';
+import { parseFactExtractResult, type ExtractedFactCandidate } from '../ai/adapters/fact-extract-adapter';
+import { parseInventoryEvents, type ExtractedItemEvent } from '../ai/adapters/inventory-extract-adapter';
+import { parseStoryEvents, type ExtractedStoryEvent } from '../ai/adapters/story-timeline-adapter';
+import { matchRelations, parseRelationOutput, type MatchedRelation } from '../ai/relation-extractor';
+import type { AgentConversation, AgentEvent, Character, CharacterRelation, ChatMessage, Foreshadow, ForeshadowStatus, StateDiffItem, StoryArc } from '../types';
+import { parseAgentEventPayload } from '../types';
+import { AgentTeamBudgetTracker, type AgentTeamBudgetEvidence } from './team-budget';
+import { adopt, replaceAdoptedCollection } from '../registry/adopt';
+import { useStateCardStore } from '../../stores/state-card';
+import { useFactLedgerStore } from '../../stores/fact-ledger';
+import { useItemLedgerStore } from '../../stores/item-ledger';
+import { useStoryTimelineStore } from '../../stores/story-timeline';
+import { useCharacterRelationStore } from '../../stores/character-relation';
+import { useCharacterStore } from '../../stores/character';
+import { useForeshadowStore } from '../../stores/foreshadow';
+import { syncRelationToCharacterFields } from '../relations/relationship-summary';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, stampNewRecord } from '../workspace/scope';
+import { adoptStorylineAnalysisCandidates, parseStorylineProgressResult, type StorylineAnalysisCandidates } from '../storyline/storyline-progress';
+import { htmlToPlainText } from '../utils/html';
+import { hashCanonicalValue } from './run/hash';
 
 export const CHAPTER_ORGANIZATION_VERSION = 1
 export const CHAPTER_ORGANIZATION_PAYLOAD_TYPE = 'chapter-organization'

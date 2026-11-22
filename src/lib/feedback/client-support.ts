@@ -1,8 +1,8 @@
-import { rememberFeedback, acknowledgeFeedback } from './followup-storage'
-import { APP_BUILD_ID } from '../version'
-import { safeFailureBuild, parseFailureEvent, type FailureEvent } from '../diagnostics/failure-summary'
-import { diagnosticDetailsSupported, diagnosticWireError } from './diagnostic-wire'
-import type { FeedbackImage } from './attachments'
+import { rememberFeedback, acknowledgeFeedback } from './followup-storage';
+import { APP_BUILD_ID } from '../version';
+import { safeFailureBuild, parseFailureEvent, type FailureEvent } from '../diagnostics/failure-summary';
+import { diagnosticDetailsSupported, diagnosticWireError } from './diagnostic-wire';
+import type { FeedbackImage } from './attachments';
 
 export const CLIENT_SUPPORT_URL = 'https://storyforge-lab.com/v1/client-support'
 export interface ClientMetadata {

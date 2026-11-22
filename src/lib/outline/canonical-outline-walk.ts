@@ -1,4 +1,4 @@
-import type { OutlineNode } from '../types'
+import type { OutlineNode } from '../types';
 
 export type OutlineWalkAnomalyKind =
   | 'orphan-outline-node'

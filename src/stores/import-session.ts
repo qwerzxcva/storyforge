@@ -3,14 +3,14 @@
  *
  * 薄薄地封一层 Dexie 访问，让 pipeline.ts 和 UI 都不用直接摸 db。
  */
-import { create } from 'zustand'
+import { create } from 'zustand';
 import Dexie from 'dexie'
-import { db } from '../lib/db/schema'
-import type { ImportSession, ImportLog, ChunkState } from '../lib/types/import-session'
-import type { ImportFileBlob } from '../lib/types/import-file'
-import type { WorkspaceScope } from '../lib/types/world-ownership'
-import { resolveScope, scopeTransactionTables } from '../lib/workspace/scope'
-import { sha256BinaryV1 } from '../lib/media/blob-store'
+import { db } from '../lib/db/schema';
+import type { ImportSession, ImportLog, ChunkState } from '../lib/types/import-session';
+import type { ImportFileBlob } from '../lib/types/import-file';
+import type { WorkspaceScope } from '../lib/types/world-ownership';
+import { resolveScope, scopeTransactionTables } from '../lib/workspace/scope';
+import { sha256BinaryV1 } from '../lib/media/blob-store';
 
 interface ImportSessionStore {
   /** 当前激活的 session（null = 没跑任何任务） */

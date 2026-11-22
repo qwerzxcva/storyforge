@@ -1,30 +1,27 @@
 import PromptRunPanel from '../shared/PromptRunPanel'
-import { INSPIRATION_PREPARATION_MODULES } from '../../lib/inspiration/preparation-contract'
-import { INSPIRATION_PREPARATION_LABELS, isInspirationPreparationMode } from '../../lib/inspiration/preparation'
+import { INSPIRATION_PREPARATION_MODULES } from '../../lib/inspiration/preparation-contract';
+import { INSPIRATION_PREPARATION_LABELS, isInspirationPreparationMode } from '../../lib/inspiration/preparation';
 /**
  * Phase 26.4 — 灵感反推面板
  *
  * 用户写碎片灵感 → AI 反向生成世界观草稿 + 故事核心 + 初始角色卡 → 选择性采纳
  */
-
-import { useState } from 'react'
-import {
-  Lightbulb, Sparkles, Loader2, Download, Plus,
-} from 'lucide-react'
-import { useWorldGroupStore } from '../../stores/world-group'
-import { adopt } from '../../lib/registry/adopt'
-import { CHARACTER_DIMENSIONS } from '../../lib/character/character-dimensions'
+import { useState } from 'react';
+import { Lightbulb, Sparkles, Loader2, Download, Plus } from 'lucide-react';
+import { useWorldGroupStore } from '../../stores/world-group';
+import { adopt } from '../../lib/registry/adopt';
+import { CHARACTER_DIMENSIONS } from '../../lib/character/character-dimensions';
 import AIStreamOutput from '../shared/AIStreamOutput'
 import AutoResizeTextarea from '../shared/AutoResizeTextarea'
-import type { Project } from '../../lib/types'
-import { characterAxesLabel } from '../../lib/character/character-axes'
+import type { Project } from '../../lib/types';
+import { characterAxesLabel } from '../../lib/character/character-axes';
 import InspirationMultiWorldResult from './InspirationMultiWorldResult'
 import InspirationSingleResult from './InspirationSingleResult'
 import InspirationFusionReview from './InspirationFusionReview'
-import type { InspirationSourceKind } from '../../lib/types/inspiration-workspace'
-import { useIncrementalInspiration } from '../../hooks/useIncrementalInspiration'
-import { MAX_INSPIRATION_FRAGMENT_CHARS, MAX_INSPIRATION_FRAGMENTS } from '../../lib/inspiration/workspace'
-import { useActiveWork } from '../../hooks/useActiveWork'
+import type { InspirationSourceKind } from '../../lib/types/inspiration-workspace';
+import { useIncrementalInspiration } from '../../hooks/useIncrementalInspiration';
+import { MAX_INSPIRATION_FRAGMENT_CHARS, MAX_INSPIRATION_FRAGMENTS } from '../../lib/inspiration/workspace';
+import { useActiveWork } from '../../hooks/useActiveWork';
 
 interface Props {
   project: Project

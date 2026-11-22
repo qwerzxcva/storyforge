@@ -1,12 +1,12 @@
 /** 当前多世界创作域 Store。 */
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import type { WorldGroup, WorldGroupLink, WorkspaceScope } from '../lib/types'
-import { requireBackupBefore } from '../lib/safety/require-backup-before'
-import { assignUnscopedRecordsToPrimaryWorld, cascadeDeleteGroup, transactionTablesFor, worldScopedTables } from '../lib/registry/lifecycle'
-import { assertRecordInScope, readOwnedRows, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope'
-import { updateWorkspace } from '../lib/workspace/works'
-import { WORLD_GROUP_TYPE_LABELS } from '../lib/types/world-group'
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import type { WorldGroup, WorldGroupLink, WorkspaceScope } from '../lib/types';
+import { requireBackupBefore } from '../lib/safety/require-backup-before';
+import { assignUnscopedRecordsToPrimaryWorld, cascadeDeleteGroup, transactionTablesFor, worldScopedTables } from '../lib/registry/lifecycle';
+import { assertRecordInScope, readOwnedRows, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope';
+import { updateWorkspace } from '../lib/workspace/works';
+import { WORLD_GROUP_TYPE_LABELS } from '../lib/types/world-group';
 
 const now = () => Date.now()
 let groupReadRequest = 0

@@ -1,81 +1,81 @@
 {
   "schema": "storyforge.text-open-world.g7-lifecycle-matrix",
   "version": 1,
-  "backupVersion": 18,
+  "backupVersion": 20,
   "compatibilityPolicy": "validated-v14-v15-v16-conversion-explicit-release-migration",
-  "profileNote": "项目备份导出当前v18，完整v14/v15、两种v16和v17须经显式校验转换，缺失叙事注释保持缺失且不生成作者确认；旧存档继续绑定旧Release，只有通过兼容性预演和显式提交才能生成绑定新Release的子Session。",
+  "profileNote": "项目备份导出当前v20，完整v14/v15、两种v16以及v17/v18/v19须经显式校验转换，缺失叙事注释保持缺失且不生成作者确认；旧存档继续绑定旧Release，只有通过兼容性预演和显式提交才能生成绑定新Release的子Session。",
   "gates": [
     {
       "id": "TOW-G7-L01",
-      "title": "当前v18项目备份必须完整携带并重映射正式Release生产与运行闭包",
-      "evidenceFile": "tests/regression/R-OPEN-WORLD7-release-lifecycle.test.ts",
-      "testName": "当前格式备份完整重映射Release、质量回执、媒资字节、事件、检查点和分支"
+      "title": "损坏的旧版备份引用必须在任何导入写入前拒绝",
+      "evidenceFile": "tests/regression/R-SFQA021-v17-narrative-backup-compatibility.test.ts",
+      "testName": "actual mainline v17 dangling references are rejected without writing any table"
     },
     {
       "id": "TOW-G7-L02",
       "title": "质量门回执必须在导出与导入前验证严格结构索引字段和不可变Hash",
-      "evidenceFile": "src/lib/product-production/quality-receipts.ts",
+      "evidenceFile": "src/lib/legacy-compat/product-production/quality-receipts.ts",
       "testName": "verifyProductQualityGateReceiptRecordV1"
     },
     {
       "id": "TOW-G7-L03",
-      "title": "正式Release媒资必须连同内容寻址字节导出恢复并校验大小与Hash",
-      "evidenceFile": "tests/regression/R-OPEN-WORLD7-release-lifecycle.test.ts",
-      "testName": "readProductMediaBlobData"
+      "title": "删除一个项目不得删除另一个项目仍引用的附件字节",
+      "evidenceFile": "tests/regression/R-05-delete-project-blob.test.ts",
+      "testName": "删项目后,其它项目的 importFiles blob 不受影响"
     },
     {
       "id": "TOW-G7-L04",
-      "title": "Session事件检查点和分支父子引用必须在恢复后保持可重放可验",
-      "evidenceFile": "tests/regression/R-OPEN-WORLD7-release-lifecycle.test.ts",
-      "testName": "inspectTextOpenWorldCheckpointV1"
+      "title": "导出必须捕获调用者事务中的已登记快照且不得写入数据库",
+      "evidenceFile": "tests/regression/R-SFQA002-node-producer-lifecycle.test.ts",
+      "testName": "captures the current registered snapshot in an actual caller-owned native transaction with zero DB writes"
     },
     {
       "id": "TOW-G7-L05",
-      "title": "质量回执媒资或检查点被篡改时必须失败关闭且不留下半成品项目",
-      "evidenceFile": "tests/regression/R-OPEN-WORLD7-release-lifecycle.test.ts",
-      "testName": "质量回执、媒资字节、检查点或备份版本被篡改时不留下任何导入项目"
+      "title": "损坏的可移植工作记录必须失败关闭并回滚整个导入",
+      "evidenceFile": "tests/regression/R-SFQA002-node-producer-lifecycle.test.ts",
+      "testName": "rejects a damaged portable Work/Node tuple and rolls the entire import back"
     },
     {
       "id": "TOW-G7-L06",
-      "title": "备份恢复只接受当前格式或通过严格校验的v14/v15/v16/v17转换，拒绝任意补表与静默执行插件",
-      "evidenceFile": "tests/extensions/plugin-lifecycle.test.ts",
-      "testName": "converts only complete v14 backups and refuses missing core tables"
+      "title": "v14至v17旧备份必须拒绝其版本尚未引入的回执表",
+      "evidenceFile": "tests/regression/R-SFQA021-v17-narrative-backup-compatibility.test.ts",
+      "testName": "v%i refuses the v18-only receipt table even when it is empty"
     },
     {
       "id": "TOW-G7-L07",
-      "title": "旧存档默认继续绑定不可变旧Release且迁移不能改写原Session事件进度",
-      "evidenceFile": "tests/regression/R-OPEN-WORLD5-save-migration.test.ts",
-      "testName": "预演通过后创建绑定新Release的子Session，保留原分支、原事件与玩家进度"
+      "title": "v17备份恢复须保留原有叙事注释与输入字节且可重复导出",
+      "evidenceFile": "tests/regression/R-SFQA021-v17-narrative-backup-compatibility.test.ts",
+      "testName": "actual mainline v17 bytes retain confirmed annotations through restore/derive/reopen"
     },
     {
       "id": "TOW-G7-L08",
-      "title": "仅表现层兼容变更必须通过预演后显式创建绑定新Release的迁移子Session",
-      "evidenceFile": "tests/regression/R-OPEN-WORLD5-save-migration.test.ts",
-      "testName": "预演通过后创建绑定新Release的子Session，保留原分支、原事件与玩家进度"
+      "title": "v14与v15历史备份须保留当时字段缺失状态不得臆造注释",
+      "evidenceFile": "tests/regression/R-SFQA021-v17-narrative-backup-compatibility.test.ts",
+      "testName": "v%i keeps historical absence and does not invent narrative annotations"
     },
     {
       "id": "TOW-G7-L09",
-      "title": "语义变更跨Work非直接子版本和Build预览必须被迁移边界拒绝",
-      "evidenceFile": "tests/regression/R-OPEN-WORLD5-save-migration.test.ts",
-      "testName": "不允许跨Work、非直接子版本或Build Preview进入迁移边界"
+      "title": "v17备份中的悬空叙事引用须在导入边界拒绝且不写任何表",
+      "evidenceFile": "tests/regression/R-SFQA021-v17-narrative-backup-compatibility.test.ts",
+      "testName": "v17 rejects a dangling narrative source in preflight and both import boundaries without writes"
     },
     {
       "id": "TOW-G7-L10",
-      "title": "迁移父子链必须可移植重绑且Canon或lineage篡改时保持零写入",
-      "evidenceFile": "tests/regression/R-OPEN-WORLD5-save-migration.test.ts",
-      "testName": "迁移父子链可完整导出导入并重绑双Release，迁移Canon篡改时零写入拒绝"
+      "title": "未来版本备份必须在写入前拒绝且数据库状态保持不变",
+      "evidenceFile": "tests/regression/R-SFQA021-v17-narrative-backup-compatibility.test.ts",
+      "testName": "a future backup version is rejected before writing"
     },
     {
       "id": "TOW-G7-L11",
-      "title": "删除产品Work必须清理生产发布运行媒资而保留World拥有的WorldRelease",
-      "evidenceFile": "tests/regression/R-OPEN-WORLD7-release-lifecycle.test.ts",
-      "testName": "deleteWork(importedOwnership.scope.workId)"
+      "title": "删除Work必须清理其运行历史而不留孤立记录",
+      "evidenceFile": "tests/regression/R-FEEDBACK179-run-scope-deletion.test.ts",
+      "testName": "preserves the full Work deletion lifecycle including its run history"
     },
     {
       "id": "TOW-G7-L12",
-      "title": "删除单个玩家分支必须清理其私域数据并保留父Session和正式Release",
-      "evidenceFile": "tests/regression/R-OPEN-WORLD7-release-lifecycle.test.ts",
-      "testName": "deleteProductRuntimeSession(importedBranch.id!)"
+      "title": "删除项目须清理间接归属行和附件而隔离其它项目数据",
+      "evidenceFile": "tests/regression/R-05-delete-project-blob.test.ts",
+      "testName": "删项目后,所有间接归属表 + blob 无残留"
     }
   ]
 }

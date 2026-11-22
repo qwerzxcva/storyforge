@@ -1,4 +1,4 @@
-import type { ChapterContinuityHandoff } from '../../types'
+import type { ChapterContinuityHandoff } from '../../types';
 
 /**
  * 把结构化 handoff 序列化为提示词行。纯函数、无 DB 依赖：

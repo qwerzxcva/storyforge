@@ -1,64 +1,25 @@
-import { splitLongformPlanAtChapterV1, persistLongformContinuationV1, publishLongformContinuationV1 } from '../../lib/agent/longform-stage-queue'
-import { prepareMasterChapterPostAdoptionV1, recoverLongformPhaseHandoffV1 } from '../../lib/agent/master-post-adoption'
-import { revalidateDetailedOutlineCreativeDraftV1 } from '../../lib/agent/detailed-outline-copilot'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import {
-  appendAgentEvent,
-  getOrCreateAgentConversation,
-  readAgentEvents,
-  saveLongformPlanningSummaryV1,
-  updateAgentEventCandidate,
-} from '../../lib/agent/conversations'
-import {
-  createMasterAgentPlan,
-  type ExecutedMasterCandidate,
-  type MasterAgentTask,
-  type MasterAgentPlan,
-  type PinnedMasterAgentTaskV1,
-  type MasterCandidatePayload,
-} from '../../lib/agent/orchestrator'
-import {
-  findResumableMasterAgentRunV1,
-  runDurableMasterAgentPlanV1,
-} from '../../lib/agent/run/master-durable'
-import {
-  commitMasterAgentCandidateAdoptionV1,
-  recoverPendingMasterAgentAdoptionsV1,
-  rejectMasterAgentCandidateV1,
-} from '../../lib/agent/run/master-adoption'
-import { verifyMasterAgentRunV1 } from '../../lib/agent/run/master-verification'
-import type { AgentEvent, Project, WorkspaceScope } from '../../lib/types'
-import { parseAgentEventPayload } from '../../lib/types'
-import { AgentTeamBudgetTracker } from '../../lib/agent/team-budget'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { revalidateStoryArcCreativeDraftV1 } from '../../lib/agent/story-arc-copilot'
-import { revalidateOutlineCreativeDraftV1 } from '../../lib/agent/outline-copilot'
-import { revalidateProseCreativeDraftV1 } from '../../lib/agent/prose-copilot'
-import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator'
-import {
-  CandidateDraftSyncErrorV1,
-  flushCandidateDraftV1,
-  flushCandidateDraftsV1,
-  hasPendingCandidateDraftsV1,
-  queueCandidateDraftV1,
-} from '../../lib/agent/candidate-draft-coordinator'
-import {
-  creativeArtifactCanAdoptV1,
-  type CreativeArtifactV1,
-} from '../../lib/agent/creative-reliability'
-import {
-  buildPendingHarnessLifecycleEvidenceV1,
-  buildSettledHarnessLifecycleEvidenceV1,
-  type HarnessLifecycleEvidenceV1,
-} from '../../lib/agent/harness-evidence'
-import {
-  classifyHarnessFailureV1,
-  type HarnessFailureClassV1,
-} from '../../lib/agent/run/harness-failure'
-import {
-  StructuredOutputPipelineErrorV1,
-  StructuredOutputRepairFailedErrorV1,
-} from '../../lib/agent/structured-output-pipeline'
+import { splitLongformPlanAtChapterV1, persistLongformContinuationV1, publishLongformContinuationV1 } from '../../lib/agent/longform-stage-queue';
+import { prepareMasterChapterPostAdoptionV1, recoverLongformPhaseHandoffV1 } from '../../lib/agent/master-post-adoption';
+import { revalidateDetailedOutlineCreativeDraftV1 } from '../../lib/agent/detailed-outline-copilot';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { appendAgentEvent, getOrCreateAgentConversation, readAgentEvents, saveLongformPlanningSummaryV1, updateAgentEventCandidate } from '../../lib/agent/conversations';
+import { createMasterAgentPlan, type ExecutedMasterCandidate, type MasterAgentTask, type MasterAgentPlan, type PinnedMasterAgentTaskV1, type MasterCandidatePayload } from '../../lib/agent/orchestrator';
+import { findResumableMasterAgentRunV1, runDurableMasterAgentPlanV1 } from '../../lib/agent/run/master-durable';
+import { commitMasterAgentCandidateAdoptionV1, recoverPendingMasterAgentAdoptionsV1, rejectMasterAgentCandidateV1 } from '../../lib/agent/run/master-adoption';
+import { verifyMasterAgentRunV1 } from '../../lib/agent/run/master-verification';
+import type { AgentEvent, Project, WorkspaceScope } from '../../lib/types';
+import { parseAgentEventPayload } from '../../lib/types';
+import { AgentTeamBudgetTracker } from '../../lib/agent/team-budget';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { revalidateStoryArcCreativeDraftV1 } from '../../lib/agent/story-arc-copilot';
+import { revalidateOutlineCreativeDraftV1 } from '../../lib/agent/outline-copilot';
+import { revalidateProseCreativeDraftV1 } from '../../lib/agent/prose-copilot';
+import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator';
+import { CandidateDraftSyncErrorV1, flushCandidateDraftV1, flushCandidateDraftsV1, hasPendingCandidateDraftsV1, queueCandidateDraftV1 } from '../../lib/agent/candidate-draft-coordinator';
+import { creativeArtifactCanAdoptV1, type CreativeArtifactV1 } from '../../lib/agent/creative-reliability';
+import { buildPendingHarnessLifecycleEvidenceV1, buildSettledHarnessLifecycleEvidenceV1, type HarnessLifecycleEvidenceV1 } from '../../lib/agent/harness-evidence';
+import { classifyHarnessFailureV1, type HarnessFailureClassV1 } from '../../lib/agent/run/harness-failure';
+import { StructuredOutputPipelineErrorV1, StructuredOutputRepairFailedErrorV1 } from '../../lib/agent/structured-output-pipeline';
 
 function errorMessage(error: unknown): string {
   if (error instanceof Error && error.message.trim()) return error.message

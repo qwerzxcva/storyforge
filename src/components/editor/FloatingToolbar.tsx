@@ -4,22 +4,12 @@
  * 模型只读取冻结选区；编辑结果先落 durable 候选，作者确认后由 runner
  * 经 adopt(chapters) 精确写回。查漏是只读 terminal report。
  */
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { Check, Expand, Loader2, Minimize2, RefreshCw, Search, Wand2, X } from 'lucide-react'
-import type { AIConfig, WorkspaceScope } from '../../lib/types'
-import type { SelectionEditActionV1 } from '../../lib/ai/adapters/selection-edit-adapter'
-import { sha256Text } from '../../lib/ai/chapter-memory/text-normalization'
-import {
-  abandonSelectionEditRunV1,
-  acknowledgeSelectionCheckReportV1,
-  adoptSelectionEditCandidateV1,
-  generateSelectionEditCandidateV1,
-  readPendingSelectionEditCandidateV1,
-  readRecoverableSelectionEditRunV1,
-  rejectSelectionEditCandidateV1,
-  type SelectionEditCandidateV1,
-  type SelectionSnapshotV1,
-} from '../../lib/agent/run/selection-edit-durable'
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Check, Expand, Loader2, Minimize2, RefreshCw, Search, Wand2, X } from 'lucide-react';
+import type { AIConfig, WorkspaceScope } from '../../lib/types';
+import type { SelectionEditActionV1 } from '../../lib/ai/adapters/selection-edit-adapter';
+import { sha256Text } from '../../lib/ai/chapter-memory/text-normalization';
+import { abandonSelectionEditRunV1, acknowledgeSelectionCheckReportV1, adoptSelectionEditCandidateV1, generateSelectionEditCandidateV1, readPendingSelectionEditCandidateV1, readRecoverableSelectionEditRunV1, rejectSelectionEditCandidateV1, type SelectionEditCandidateV1, type SelectionSnapshotV1 } from '../../lib/agent/run/selection-edit-durable';
 
 interface Props {
   scope: WorkspaceScope

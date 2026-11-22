@@ -12,11 +12,10 @@
  * - 历史关键词按分类注入为时代质感约束
  * - 不设硬性 token 上限，仅提供估算供 UI 展示
  */
-
-import type { WorldRulesProfile, WorldRuleEntry, ConflictPriority } from '../types/world-rules'
-import { WORLD_RULE_TREE, CONFLICT_PRIORITY_LABELS } from '../types/world-rules'
-import type { HistoricalTimelineEvent, HistoricalKeyword, HistoricalKeywordCategory } from '../types/history'
-import { KEYWORD_CATEGORY_LABELS } from '../types/history'
+import type { WorldRulesProfile, WorldRuleEntry, ConflictPriority } from '../types/world-rules';
+import { WORLD_RULE_TREE, CONFLICT_PRIORITY_LABELS } from '../types/world-rules';
+import type { HistoricalTimelineEvent, HistoricalKeyword, HistoricalKeywordCategory } from '../types/history';
+import { KEYWORD_CATEGORY_LABELS } from '../types/history';
 
 // ── 节点标签查找 ──────────────────────────────────────────────
 
@@ -243,8 +242,15 @@ export function estimateManifestTokens(manifestText: string): number {
 
 // ── 便捷：从 DB 读取并生成完整清单 ────────────────────────────
 
-import { readOwnedRows, resolveScope } from '../workspace/scope'
-import type { WorkspaceScope } from '../types/world-ownership'
+// ── 便捷：从 DB 读取并生成完整清单 ────────────────────────────
+// ── 便捷：从 DB 读取并生成完整清单 ────────────────────────────
+// ── 便捷：从 DB 读取并生成完整清单 ────────────────────────────
+// ── 便捷：从 DB 读取并生成完整清单 ────────────────────────────
+// ── 便捷：从 DB 读取并生成完整清单 ────────────────────────────
+// ── 便捷：从 DB 读取并生成完整清单 ────────────────────────────
+// ── 便捷：从 DB 读取并生成完整清单 ────────────────────────────
+import { readOwnedRows, resolveScope } from '../workspace/scope';
+import type { WorkspaceScope } from '../types/world-ownership';
 
 /**
  * 一站式：从 DB 读取项目的世界规则 + 时间线 + 关键词，生成完整清单。

@@ -1,15 +1,7 @@
-import type {
-  ChapterContinuityHandoff,
-  ChapterPlanReconciliation,
-  ChatMessage,
-} from '../../types'
-import { usePromptStore } from '../../../stores/prompt'
-import { renderPrompt } from '../prompt-engine'
-import {
-  CHAPTER_TEXT_NORMALIZATION_VERSION,
-  hashChapterText,
-  normalizeChapterText,
-} from '../chapter-memory/text-normalization'
+import type { ChapterContinuityHandoff, ChapterPlanReconciliation, ChatMessage } from '../../types';
+import { usePromptStore } from '../../../stores/prompt';
+import { renderPrompt } from '../prompt-engine';
+import { CHAPTER_TEXT_NORMALIZATION_VERSION, hashChapterText, normalizeChapterText } from '../chapter-memory/text-normalization';
 
 export const CHAPTER_MEMORY_SCHEMA_VERSION = 1
 export const CHAPTER_MEMORY_EXTRACTOR_VERSION = 'chapter-memory-v1'

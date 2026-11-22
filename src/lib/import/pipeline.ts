@@ -1,26 +1,14 @@
 /** File admission and explicit progress for the author-confirmed import. */
-import {
-  cancelImportSessionInScopeV1, claimImportedReferenceAnalysisInTransactionV1, importedReferenceAnalysisStartTablesV1, hashImportChunkTextV1, ImportSessionAuthorityError, ImportSessionUnavailableError,
-  readImportSessionAuthorityV1, verifyImportProjectTargetGroupV1, useImportSessionStore,
-} from '../../stores/import-session'
-import { useImportStatusStore } from '../../stores/import-status'
-import type { ImportSession } from '../types'
-import {
-  registerChunkTexts as _registerChunkTexts,
-  hasChunkTexts as _hasChunkTexts,
-  clearChunkTexts as _clearChunkTexts,
-  getChunkText,
-} from './chunk-text-registry'
-import { applyChunkResult, type ApplyChunkCounts } from './chunk-writer'
-import { createDocumentImportChunkCandidateV1, readDocumentImportChunkEvidenceV1 } from './document-parse-durable'
-import { importedReferenceDataV1, useReferenceStore } from '../../stores/reference'
-import {
-  writeShallowAnalysisFromTechniques,
-  registerRefChunks,
-  runRefAnalysis,
-} from '../reference-analysis/pipeline'
-import { createReferenceAnalysisRun, listReferenceAnalysisRuns, type ReferenceAnalysisFirstStartGuardV1 } from '../reference-analysis/lifecycle'
-import { runCharacterMerge } from './character-merge'
+import { cancelImportSessionInScopeV1, claimImportedReferenceAnalysisInTransactionV1, importedReferenceAnalysisStartTablesV1, hashImportChunkTextV1, ImportSessionAuthorityError, ImportSessionUnavailableError, readImportSessionAuthorityV1, verifyImportProjectTargetGroupV1, useImportSessionStore } from '../../stores/import-session';
+import { useImportStatusStore } from '../../stores/import-status';
+import type { ImportSession } from '../types';
+import { registerChunkTexts as _registerChunkTexts, hasChunkTexts as _hasChunkTexts, clearChunkTexts as _clearChunkTexts, getChunkText } from './chunk-text-registry';
+import { applyChunkResult, type ApplyChunkCounts } from './chunk-writer';
+import { createDocumentImportChunkCandidateV1, readDocumentImportChunkEvidenceV1 } from './document-parse-durable';
+import { importedReferenceDataV1, useReferenceStore } from '../../stores/reference';
+import { writeShallowAnalysisFromTechniques, registerRefChunks, runRefAnalysis } from '../reference-analysis/pipeline';
+import { createReferenceAnalysisRun, listReferenceAnalysisRuns, type ReferenceAnalysisFirstStartGuardV1 } from '../reference-analysis/lifecycle';
+import { runCharacterMerge } from './character-merge';
 
 // 保留原有 API：UI / 其他模块一直从 pipeline 引入这三个函数。
 export const registerChunkTexts = _registerChunkTexts

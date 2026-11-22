@@ -1,81 +1,33 @@
-import { chapterPostAdoptionChainStateV1, readLatestChapterPostAdoptionRunV1 } from './run/chapter-post-adoption-durable'
-import { readWorkPostAdoptionSettingsV1 } from '../prose/post-adoption-policy'
-import { affirmativeAuthorActionsV1, parseAuthorOrdinalV1 } from './author-intent'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { buildChapterContentRequestV1, buildContinueRequestV1, type ChapterPromptRequestV1 } from '../ai/adapters/chapter-adapter'
-import { chat, resolveRequestConfig, describeResolvedAIRequestSettingsV1, type ChatResult, type AIRequestSettingsV1 } from '../ai/client'
-import { proseRenderedRequestV1, type ProseRenderedRequestV1 } from '../prose/request-evidence'
-import { observeProseLengthV1, proseLengthExpectationV1 } from '../prose/length-observation'
-import { observeDuplicatedProseFrameV1, observeSeparatedProseFrameV1 } from '../prose/provider-frame-observation'
-import { buildBestChapterByOutlineMap } from '../chapters/selectors'
-import { db } from '../db/schema'
-import { verifyWorkspaceContentRevisionV1, captureWorkspaceContentRevisionV1, contentRevisionTableSpecsV1, type WorkspaceContentRevisionVectorV1 } from '../authoring/content-revision'
-import type {
-  GenerationGateIssue,
-  GenerationNode,
-  PreparedGenerationNode,
-} from '../generation/generation-node'
-import { prepareGenerationNode } from '../generation/generation-node'
-import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk'
-import { adopt } from '../registry/adopt'
-import { rebuildChapterChunks } from '../retrieval/retrieval'
-import {
-  prepareProseGatewayAssemblyV1,
-  type ProseGatewayAssemblyV1,
-} from '../prose/gateway-context'
-import {
-  contextGatewayInputStateSourceKeysV1,
-  projectContextGatewayInputStateV1,
-} from './context-gateway-input'
-import type { AIConfig, Chapter, ChatMessage, OutlineNode, Project, WorkspaceScope } from '../types'
-import { countWords, htmlToPlainText, plainTextToHtml } from '../utils/html'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveScope,
-  scopeTransactionTables,
-} from '../workspace/scope'
-import {
-  attachAgentContextInputStateV1,
-  evidenceFromContextResult,
-  type AgentContextEvidence,
-  type AgentContextProfile,
-} from './context-policy'
-import type { AgentContextCompressionRuntimeV1 } from './context-compression'
-import {
-  buildChapterInformationBoundaryV1,
-  buildInformationBoundaryInstructionV1,
-  validateProseInformationBoundaryV1,
-  type InformationBoundaryManifestV1,
-} from './information-boundary'
-import {
-  getDefaultAgentSkillV1,
-  buildAgentSkillInputGuidanceV1,
-  resolveAgentSkillV1,
-  resolveAgentSkillContextSourceKeysV1,
-  type AgentSkillExecutionModeV1,
-  type AgentSkillId,
-} from './skill-registry'
-import {
-  buildNarrativeBriefV1,
-  formatNarrativeBriefForPromptV1,
-  type NarrativeBriefV1,
-} from './narrative-brief'
-import {
-  createCreativeIssueV1,
-  runCreativeExecutionV1,
-  type CreativeExecutionResultV1,
-  type CreativeParseOutcomeV1,
-  type CreativeRawModelResultV1,
-} from './creative-execution'
-import {
-  parseCreativeArtifactV1,
-  type CreativeAssumptionV1,
-  type CreativeArtifactIssueV1,
-  type CreativeArtifactV1,
-  type CreativeQualityModeV1,
-} from './creative-reliability'
-import type { AgentTeamBudgetTracker } from './team-budget'
+import { chapterPostAdoptionChainStateV1, readLatestChapterPostAdoptionRunV1 } from './run/chapter-post-adoption-durable';
+import { readWorkPostAdoptionSettingsV1 } from '../prose/post-adoption-policy';
+import { affirmativeAuthorActionsV1, parseAuthorOrdinalV1 } from './author-intent';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { buildChapterContentRequestV1, buildContinueRequestV1, type ChapterPromptRequestV1 } from '../ai/adapters/chapter-adapter';
+import { chat, resolveRequestConfig, describeResolvedAIRequestSettingsV1, type ChatResult, type AIRequestSettingsV1 } from '../ai/client';
+import { proseRenderedRequestV1, type ProseRenderedRequestV1 } from '../prose/request-evidence';
+import { observeProseLengthV1, proseLengthExpectationV1 } from '../prose/length-observation';
+import { observeDuplicatedProseFrameV1, observeSeparatedProseFrameV1 } from '../prose/provider-frame-observation';
+import { buildBestChapterByOutlineMap } from '../chapters/selectors';
+import { db } from '../db/schema';
+import { verifyWorkspaceContentRevisionV1, captureWorkspaceContentRevisionV1, contentRevisionTableSpecsV1, type WorkspaceContentRevisionVectorV1 } from '../authoring/content-revision';
+import type { GenerationGateIssue, GenerationNode, PreparedGenerationNode } from '../generation/generation-node';
+import { prepareGenerationNode } from '../generation/generation-node';
+import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk';
+import { adopt } from '../registry/adopt';
+import { rebuildChapterChunks } from '../retrieval/retrieval';
+import { prepareProseGatewayAssemblyV1, type ProseGatewayAssemblyV1 } from '../prose/gateway-context';
+import { contextGatewayInputStateSourceKeysV1, projectContextGatewayInputStateV1 } from './context-gateway-input';
+import type { AIConfig, Chapter, ChatMessage, OutlineNode, Project, WorkspaceScope } from '../types';
+import { countWords, htmlToPlainText, plainTextToHtml } from '../utils/html';
+import { assertRecordInScope, readOwnedRows, resolveScope, scopeTransactionTables } from '../workspace/scope';
+import { attachAgentContextInputStateV1, evidenceFromContextResult, type AgentContextEvidence, type AgentContextProfile } from './context-policy';
+import type { AgentContextCompressionRuntimeV1 } from './context-compression';
+import { buildChapterInformationBoundaryV1, buildInformationBoundaryInstructionV1, validateProseInformationBoundaryV1, type InformationBoundaryManifestV1 } from './information-boundary';
+import { getDefaultAgentSkillV1, buildAgentSkillInputGuidanceV1, resolveAgentSkillV1, resolveAgentSkillContextSourceKeysV1, type AgentSkillExecutionModeV1, type AgentSkillId } from './skill-registry';
+import { buildNarrativeBriefV1, formatNarrativeBriefForPromptV1, type NarrativeBriefV1 } from './narrative-brief';
+import { createCreativeIssueV1, runCreativeExecutionV1, type CreativeExecutionResultV1, type CreativeParseOutcomeV1, type CreativeRawModelResultV1 } from './creative-execution';
+import { parseCreativeArtifactV1, type CreativeAssumptionV1, type CreativeArtifactIssueV1, type CreativeArtifactV1, type CreativeQualityModeV1 } from './creative-reliability';
+import type { AgentTeamBudgetTracker } from './team-budget';
 
 export const PROSE_COPILOT_SOURCE_KEYS = resolveAgentSkillContextSourceKeysV1(
   getDefaultAgentSkillV1('prose'),

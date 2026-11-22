@@ -1,8 +1,8 @@
-import type { IntervalV1, NarrativeTimeContextV1, NarrativeTimeV1, TimePointV1 } from '../types/narrative-time'
-import type { NarrativeRecordV1 } from '../types/narrative-ir'
-import type { WorldQueryTimeV1 } from '../types/world-query'
-import { compareNarrativeTimeV1 } from '../world-engine/narrative-time'
-import { worldQueryFailV1 } from './world-query-contract'
+import type { IntervalV1, NarrativeTimeContextV1, NarrativeTimeV1, TimePointV1 } from '../types/narrative-time';
+import type { NarrativeRecordV1 } from '../types/narrative-ir';
+import type { WorldQueryTimeV1 } from '../types/world-query';
+import { compareNarrativeTimeV1 } from '../world-engine/narrative-time';
+import { worldQueryFailV1 } from './world-query-contract';
 
 export type WorldQueryTimeMatchV1 = 'matched' | 'outside' | 'unknown-time' | 'incomparable-time'
 export function sequenceOrdinalV1(context: NarrativeTimeContextV1, sequenceKey: string, unitKey: string): number {

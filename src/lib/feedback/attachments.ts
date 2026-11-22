@@ -1,4 +1,4 @@
-import { imageSize } from 'image-size'
+import { imageSize } from 'image-size';
 
 export const MAX_FEEDBACK_IMAGES = 3
 export const MAX_FEEDBACK_IMAGE_BYTES = 2 * 1024 * 1024

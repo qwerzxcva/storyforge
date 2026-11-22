@@ -1,20 +1,8 @@
-import { useState } from 'react'
-import { Download, ExternalLink, MessageSquareText, ShieldCheck, Trash2 } from 'lucide-react'
-import { downloadTextFile } from '../../lib/export/text-export'
-import {
-  CREATIVE_RELIABILITY_FEEDBACK_OUTCOMES_V1,
-  CREATIVE_RELIABILITY_FEEDBACK_STAGES_V1,
-  CREATIVE_RELIABILITY_FEEDBACK_TAGS_V1,
-  clearCreativeReliabilityFeedbackV1,
-  loadCreativeReliabilityFeedbackV1,
-  saveCreativeReliabilityFeedbackV1,
-  serializeCreativeReliabilityFeedbackV1,
-  type CreativeReliabilityFeedbackOutcomeV1,
-  type CreativeReliabilityFeedbackRatingV1,
-  type CreativeReliabilityFeedbackStageV1,
-  type CreativeReliabilityFeedbackTagV1,
-} from '../../lib/feedback/creative-reliability'
-import { useDialog } from '../shared/Dialog'
+import { useState } from 'react';
+import { Download, ExternalLink, MessageSquareText, ShieldCheck, Trash2 } from 'lucide-react';
+import { downloadTextFile } from '../../lib/export/text-export';
+import { CREATIVE_RELIABILITY_FEEDBACK_OUTCOMES_V1, CREATIVE_RELIABILITY_FEEDBACK_STAGES_V1, CREATIVE_RELIABILITY_FEEDBACK_TAGS_V1, clearCreativeReliabilityFeedbackV1, loadCreativeReliabilityFeedbackV1, saveCreativeReliabilityFeedbackV1, serializeCreativeReliabilityFeedbackV1, type CreativeReliabilityFeedbackOutcomeV1, type CreativeReliabilityFeedbackRatingV1, type CreativeReliabilityFeedbackStageV1, type CreativeReliabilityFeedbackTagV1 } from '../../lib/feedback/creative-reliability';
+import { useDialog } from '../shared/Dialog';
 
 const STAGE_LABELS: Record<CreativeReliabilityFeedbackStageV1, string> = {
   'story-arc': '故事线',

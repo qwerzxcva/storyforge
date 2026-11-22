@@ -1,26 +1,10 @@
-import { estimateTokens } from '../ai/context-budget'
-import { sha256Text } from '../ai/chapter-memory/text-normalization'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { REGISTRY_BY_NAME } from '../registry/project-tables'
-import { CONTEXT_RESOURCE_KINDS_V1 } from '../registry/types'
-import type {
-  AgentRunArtifactV1,
-  ContextAccessPolicyV1,
-  ContextGatewayContractSnapshotV1,
-  ContextGatewayVersionV1,
-  ContextPacketV1,
-  ContextResourceDepthV1,
-  ContextResourceDescriptorV1,
-  ContextResourceKind,
-  ContextSource,
-  ContextSourceRefV1,
-  ContextSufficiencyObligationV1,
-  ContextSufficiencyReportV1,
-  DomainOwnershipSpec,
-  ResourcePageV1,
-  RetrievalTraceV1,
-} from '../registry/types'
-import { assertExactRunArtifactBodySafeV1 } from '../memory/evidence-policy'
+import { estimateTokens } from '../ai/context-budget';
+import { sha256Text } from '../ai/chapter-memory/text-normalization';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { REGISTRY_BY_NAME } from '../registry/project-tables';
+import { CONTEXT_RESOURCE_KINDS_V1 } from '../registry/types';
+import type { AgentRunArtifactV1, ContextAccessPolicyV1, ContextGatewayContractSnapshotV1, ContextGatewayVersionV1, ContextPacketV1, ContextResourceDepthV1, ContextResourceDescriptorV1, ContextResourceKind, ContextSource, ContextSourceRefV1, ContextSufficiencyObligationV1, ContextSufficiencyReportV1, DomainOwnershipSpec, ResourcePageV1, RetrievalTraceV1 } from '../registry/types';
+import { assertExactRunArtifactBodySafeV1 } from '../memory/evidence-policy';
 
 const HASH = /^[a-f0-9]{64}$/
 const RESOURCE_KEY = /^[a-z][a-z0-9-]*:[^\s:]+(?::[^\s:]+)*$/

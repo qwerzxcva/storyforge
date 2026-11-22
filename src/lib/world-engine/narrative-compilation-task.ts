@@ -1,19 +1,17 @@
 import Dexie from 'dexie'
-import { db } from '../db/schema'
-import type { WorkspaceScope, AgentRunEventTypeV1, AgentRunEventPayloadByTypeV1 } from '../types'
-import type { NarrativeCompilationResultV1, NarrativeIncrementalBaseV1 } from './narrative-incremental'
-import { agentRunScopeTransactionTablesV1, appendAgentRunEventV1, appendAgentRunEventWithSettlementInTransactionV1,
-  createAgentRunV1, readAgentRunV1, readVerifiedAgentRunInTransactionV1, withAgentRunMutationLockV1, type AgentRunSnapshotV1 } from '../agent/run/event-store'
-import { createAgentRunCheckpointV1, createAgentRunCheckpointInTransactionV1, readLatestVerifiedAgentRunCheckpointV1,
-  beginAgentRunRecoveryV1, completeAgentRunRecoveryV1 } from '../agent/run/checkpoint'
-import { AGENT_RUN_MAXIMUM_RESUME_PAYLOAD_BYTES_V1, agentRunUtf8ByteLengthV1 } from '../agent/run/checkpoint-contract'
-import { parseAgentRunEventV1 } from '../agent/run/event-schema'
-import { captureWorldReleaseInputV4, type WorldReleaseInputV4 } from './narrative-release-capture'
-import type { NarrativeDomainCompilerV4 } from '../types/narrative-release'
-import { compileNarrativeReleaseInWorkerV1, type NarrativeCompileProgressV1 } from './narrative-release-worker'
-import { canonicalNarrativeJsonV1, hashNarrativeValueV1 } from './narrative-json'
-import { readOwnedRows } from '../workspace/scope'
-import { sealPreparedNarrativeWorldRevisionV4 } from './releases'
+import { db } from '../db/schema';
+import type { WorkspaceScope, AgentRunEventTypeV1, AgentRunEventPayloadByTypeV1 } from '../types';
+import type { NarrativeCompilationResultV1, NarrativeIncrementalBaseV1 } from './narrative-incremental';
+import { agentRunScopeTransactionTablesV1, appendAgentRunEventV1, appendAgentRunEventWithSettlementInTransactionV1, createAgentRunV1, readAgentRunV1, readVerifiedAgentRunInTransactionV1, withAgentRunMutationLockV1, type AgentRunSnapshotV1 } from '../agent/run/event-store';
+import { createAgentRunCheckpointV1, createAgentRunCheckpointInTransactionV1, readLatestVerifiedAgentRunCheckpointV1, beginAgentRunRecoveryV1, completeAgentRunRecoveryV1 } from '../agent/run/checkpoint';
+import { AGENT_RUN_MAXIMUM_RESUME_PAYLOAD_BYTES_V1, agentRunUtf8ByteLengthV1 } from '../agent/run/checkpoint-contract';
+import { parseAgentRunEventV1 } from '../agent/run/event-schema';
+import { captureWorldReleaseInputV4, type WorldReleaseInputV4 } from './narrative-release-capture';
+import type { NarrativeDomainCompilerV4 } from '../types/narrative-release';
+import { compileNarrativeReleaseInWorkerV1, type NarrativeCompileProgressV1 } from './narrative-release-worker';
+import { canonicalNarrativeJsonV1, hashNarrativeValueV1 } from './narrative-json';
+import { readOwnedRows } from '../workspace/scope';
+import { sealPreparedNarrativeWorldRevisionV4 } from './releases';
 
 const STEP = 'world.narrative.compile-v4', MAX_ATTEMPTS = 3
 const OBJECTIVE = '编译并核验作者选定的叙事世界快照；完成只表示编译完成，未发布'

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react';
 
 export function useLocationTreeSize() {
   const [svgSize, setSvgSize] = useState({ width: 700, height: 400 })

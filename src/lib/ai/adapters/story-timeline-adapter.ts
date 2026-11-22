@@ -2,9 +2,9 @@
  * 故事进程年表提取适配器 — Phase 25.5.2-a
  * 从章节正文提取剧情大事。
  */
-import type { ChatMessage } from '../../types'
-import { usePromptStore } from '../../../stores/prompt'
-import { renderPrompt } from '../prompt-engine'
+import type { ChatMessage } from '../../types';
+import { usePromptStore } from '../../../stores/prompt';
+import { renderPrompt } from '../prompt-engine';
 
 export interface ExtractedStoryEvent {
   title: string

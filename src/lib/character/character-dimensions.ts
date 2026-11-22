@@ -9,7 +9,7 @@
  *
  * relationships 走「关系网」面板,不在此重复。
  */
-import type { Character, CharacterRoleWeight } from '../types/character'
+import type { Character, CharacterRoleWeight } from '../types/character';
 
 export type CharacterDimensionKey =
   | 'shortDescription' | 'identity' | 'profile' | 'appearance' | 'location'

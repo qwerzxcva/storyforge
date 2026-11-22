@@ -1,4 +1,4 @@
-import { WORLD_PACKAGE_USES, type CommunityWorldLicense, type WorldPackageManifest } from '../types/world-sharing'
+import { WORLD_PACKAGE_USES, type CommunityWorldLicense, type WorldPackageManifest } from '../types/world-sharing';
 
 const LICENSES = new Set<CommunityWorldLicense>([
   'CC-BY-4.0',

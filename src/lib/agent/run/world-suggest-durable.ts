@@ -1,28 +1,17 @@
-import { chat } from '../../ai/client'
-import {
-  buildWorldSuggestPromptFromRegisteredContextV1,
-  parseWorldSuggestOutputStrictV1,
-  readWorldSuggestPromptTemplateSnapshotV1,
-  type SuggestedWorld,
-} from '../../ai/world-group-ai'
-import { db } from '../../db/schema'
-import { adopt } from '../../registry/adopt'
-import { assembleContext } from '../../registry/assemble-context'
-import type { AIConfig, ChatMessage, Project, Work, WorkspaceScope, WorldGroup, WorldGroupLink } from '../../types'
-import { readOwnedRows, scopeTransactionTables } from '../../workspace/scope'
-import { createAgentSkillExecutionBindingV1 } from '../execution-binding'
-import { getAgentSkillV1 } from '../skill-registry'
-import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  staleAgentRunVerificationV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { canonicalStringify, hashCanonicalValue } from './hash'
-import { createVerificationReceiptV1 } from './verification-receipt'
+import { chat } from '../../ai/client';
+import { buildWorldSuggestPromptFromRegisteredContextV1, parseWorldSuggestOutputStrictV1, readWorldSuggestPromptTemplateSnapshotV1, type SuggestedWorld } from '../../ai/world-group-ai';
+import { db } from '../../db/schema';
+import { adopt } from '../../registry/adopt';
+import { assembleContext } from '../../registry/assemble-context';
+import type { AIConfig, ChatMessage, Project, Work, WorkspaceScope, WorldGroup, WorldGroupLink } from '../../types';
+import { readOwnedRows, scopeTransactionTables } from '../../workspace/scope';
+import { createAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { getAgentSkillV1 } from '../skill-registry';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, staleAgentRunVerificationV1, type AgentRunSnapshotV1 } from './event-store';
+import { canonicalStringify, hashCanonicalValue } from './hash';
+import { createVerificationReceiptV1 } from './verification-receipt';
 
 export const WORLD_SUGGEST_STEP_ID_V1 = 'world-origin:world-suggest' as const
 export const WORLD_SUGGEST_VERIFIER_SET_V1 = 'world-suggest-terminal-v1' as const

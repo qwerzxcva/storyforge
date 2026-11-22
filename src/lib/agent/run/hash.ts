@@ -1,4 +1,4 @@
-import { sha256Text } from '../../ai/chapter-memory/text-normalization'
+import { sha256Text } from '../../ai/chapter-memory/text-normalization';
 
 function canonicalize(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(canonicalize)

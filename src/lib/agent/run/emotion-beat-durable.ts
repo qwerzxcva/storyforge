@@ -1,24 +1,18 @@
-import { db } from '../../db/schema'
-import type { AIConfig, Chapter, ChatMessage, EmotionBeat, OutlineNode, WorkspaceScope } from '../../types'
-import { chat } from '../../ai/client'
-import { buildEmotionBeatPromptFromContext } from '../../ai/adapters/emotion-beat-adapter'
-import { prepareContinuityContext } from '../../ai/chapter-memory/continuity-context'
-import { assembleContext } from '../../registry/assemble-context'
-import { adopt } from '../../registry/adopt'
-import { assertRecordInScope, readOwnedRows } from '../../workspace/scope'
-import { getAgentSkillV1 } from '../skill-registry'
-import { createAgentSkillExecutionBindingV1 } from '../execution-binding'
-import {
-  appendAgentRunEventV1,
-  createAgentRunV1,
-  readAgentRunV1,
-  staleAgentRunVerificationV1,
-  type AgentRunSnapshotV1,
-} from './event-store'
-import { createContextManifestFromAssemblyV1 } from './context-manifest'
-import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint'
-import { createVerificationReceiptV1 } from './verification-receipt'
-import { hashCanonicalValue } from './hash'
+import { db } from '../../db/schema';
+import type { AIConfig, Chapter, ChatMessage, EmotionBeat, OutlineNode, WorkspaceScope } from '../../types';
+import { chat } from '../../ai/client';
+import { buildEmotionBeatPromptFromContext } from '../../ai/adapters/emotion-beat-adapter';
+import { prepareContinuityContext } from '../../ai/chapter-memory/continuity-context';
+import { assembleContext } from '../../registry/assemble-context';
+import { adopt } from '../../registry/adopt';
+import { assertRecordInScope, readOwnedRows } from '../../workspace/scope';
+import { getAgentSkillV1 } from '../skill-registry';
+import { createAgentSkillExecutionBindingV1 } from '../execution-binding';
+import { appendAgentRunEventV1, createAgentRunV1, readAgentRunV1, staleAgentRunVerificationV1, type AgentRunSnapshotV1 } from './event-store';
+import { createContextManifestFromAssemblyV1 } from './context-manifest';
+import { createAgentRunCheckpointV1, readLatestVerifiedAgentRunCheckpointV1 } from './checkpoint';
+import { createVerificationReceiptV1 } from './verification-receipt';
+import { hashCanonicalValue } from './hash';
 
 export const EMOTION_BEAT_STEP_ID_V1 = 'prose:emotion-beats' as const
 export const EMOTION_BEAT_VERIFIER_SET_V1 = 'prose-emotion-beats-terminal-v1' as const

@@ -1,20 +1,11 @@
-import { getAgentSkillV1, type AgentSkillId, type DomainAgentId } from '../agent/skill-registry'
-import { normalizeChapterText } from '../ai/chapter-memory/text-normalization'
-import { buildBestChapterByOutlineMap } from '../chapters/selectors'
-import { hashCanonicalValue } from '../agent/run/hash'
-import type {
-  Chapter,
-  Character,
-  DetailedOutline,
-  OutlineNode,
-  StoryArc,
-  StoryStage,
-  StorylineProgress,
-  WorkspaceScope,
-} from '../types'
-import { parseStages } from '../types'
-import { readOwnedRows } from '../workspace/scope'
-import { walkOutlineChaptersInCanonicalOrder } from './canonical-outline-walk'
+import { getAgentSkillV1, type AgentSkillId, type DomainAgentId } from '../agent/skill-registry';
+import { normalizeChapterText } from '../ai/chapter-memory/text-normalization';
+import { buildBestChapterByOutlineMap } from '../chapters/selectors';
+import { hashCanonicalValue } from '../agent/run/hash';
+import type { Chapter, Character, DetailedOutline, OutlineNode, StoryArc, StoryStage, StorylineProgress, WorkspaceScope } from '../types';
+import { parseStages } from '../types';
+import { readOwnedRows } from '../workspace/scope';
+import { walkOutlineChaptersInCanonicalOrder } from './canonical-outline-walk';
 
 export type FutureEvolutionStageIdV1 =
   | 'foundation'

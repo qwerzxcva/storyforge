@@ -1,19 +1,14 @@
 /**
  * 世界规则由 World 拥有，按 worldGroupId 区分同一世界的规则记录。
  */
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import type { WorkspaceScope } from '../lib/types'
-import type {
-  WorldRulesProfile,
-  WorldRuleEntry,
-  CustomWorldRuleNode,
-  ConflictPriority,
-} from '../lib/types/world-rules'
-import { createEmptyEntry, isEntryEmpty, countFilledEntries } from '../lib/types/world-rules'
-import { assertRecordInScope, getTableSpec, readOwnedRows, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope'
-import { isPortableResourceUidV1 } from '../lib/context-gateway/resource-uid'
-import { acknowledgePendingEditFailureV1, capturePendingEditFailureV1, coordinatePendingEditV1, type PendingEditFailureTokenV1 } from '../lib/authoring/pending-edit-coordinator'
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import type { WorkspaceScope } from '../lib/types';
+import type { WorldRulesProfile, WorldRuleEntry, CustomWorldRuleNode, ConflictPriority } from '../lib/types/world-rules';
+import { createEmptyEntry, isEntryEmpty, countFilledEntries } from '../lib/types/world-rules';
+import { assertRecordInScope, getTableSpec, readOwnedRows, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope';
+import { isPortableResourceUidV1 } from '../lib/context-gateway/resource-uid';
+import { acknowledgePendingEditFailureV1, capturePendingEditFailureV1, coordinatePendingEditV1, type PendingEditFailureTokenV1 } from '../lib/authoring/pending-edit-coordinator';
 
 let profileReadRequest = 0
 let profileEditRevision = 0

@@ -1,13 +1,9 @@
-import { inputAreaLayoutV1 } from '../../lib/input-area-layout'
-import { useWorldviewStore } from '../../stores/worldview'
-import { useWorldGroupStore } from '../../stores/world-group'
-import { InlineInput, InlineTextarea } from '../shared/InlineEdit'
-import type { Project, PowerSystem } from '../../lib/types'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-  useInitialRecordTarget,
-} from '../shared/initial-record-target'
+import { inputAreaLayoutV1 } from '../../lib/input-area-layout';
+import { useWorldviewStore } from '../../stores/worldview';
+import { useWorldGroupStore } from '../../stores/world-group';
+import { InlineInput, InlineTextarea } from '../shared/InlineEdit';
+import type { Project, PowerSystem } from '../../lib/types';
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes, useInitialRecordTarget } from '../shared/initial-record-target';
 
 /** Structured rules belong to the origin/power editor. Keep record IDs stable for
  * character references, source manifests, impact receipts and backup round trips. */

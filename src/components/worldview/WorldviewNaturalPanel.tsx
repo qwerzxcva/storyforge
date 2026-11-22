@@ -1,22 +1,22 @@
-import { inputAreaLayoutV1, worldviewInputAreaFieldV1 } from '../../lib/input-area-layout'
+import { inputAreaLayoutV1, worldviewInputAreaFieldV1 } from '../../lib/input-area-layout';
 import ScopedWorldAuthoringBoundary from '../world-group/ScopedWorldAuthoringBoundary'
-import { useScopedWorldviewReadback } from '../../hooks/useScopedWorldviewReadback'
+import { useScopedWorldviewReadback } from '../../hooks/useScopedWorldviewReadback';
 import WorldviewReadBoundary from './WorldviewReadBoundary'
-import { useState, useEffect } from 'react'
-import { EMPTY_NATURAL_RESOURCES } from '../../lib/types/worldview'
-import { useWorldviewStore, type WorldviewAuthorPatch } from '../../stores/worldview'
-import { useWorldGroupStore } from '../../stores/world-group'
+import { useState, useEffect } from 'react';
+import { EMPTY_NATURAL_RESOURCES } from '../../lib/types/worldview';
+import { useWorldviewStore, type WorldviewAuthorPatch } from '../../stores/worldview';
+import { useWorldGroupStore } from '../../stores/world-group';
 import WorldGroupSwitcher from '../world-group/WorldGroupSwitcher'
 import CodexPanel from '../codex/CodexPanel'
 import CodexSearchBar from '../codex/CodexSearchBar'
-import { InlineTextarea, type InlineSave } from '../shared/InlineEdit'
-import { useMasterCopilot, type PendingMasterCandidate } from '../agent/useMasterCopilot'
+import { InlineTextarea, type InlineSave } from '../shared/InlineEdit';
+import { useMasterCopilot, type PendingMasterCandidate } from '../agent/useMasterCopilot';
 import WorldviewAgentControls from './WorldviewAgentControls'
-import { useWorldSettingsLayout, WorldSettingsToolbar } from '../longform/WorldSettingsLayout'
-import type { Project, NaturalResources } from '../../lib/types'
-import type { WorldviewAgentField } from '../../lib/agent/worldview-field-copilot'
+import { useWorldSettingsLayout, WorldSettingsToolbar } from '../longform/WorldSettingsLayout';
+import type { Project, NaturalResources } from '../../lib/types';
+import type { WorldviewAgentField } from '../../lib/agent/worldview-field-copilot';
 
-import type { LocalSaveContractV1 } from '../../lib/authoring/local-save-evidence'
+import type { LocalSaveContractV1 } from '../../lib/authoring/local-save-evidence';
 
 interface Props { project: Project; resizableInputs?: boolean; confirmedLocalSaves?: boolean }
 

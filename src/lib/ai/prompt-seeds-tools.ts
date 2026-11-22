@@ -1,5 +1,5 @@
-import { withPreparationContentMethods } from './prompt-seeds-content-methods'
-import type { PromptSeed } from './prompt-seed-type'
+import { withPreparationContentMethods } from './prompt-seeds-content-methods';
+import type { PromptSeed } from './prompt-seed-type';
 
 const TOOL_PROMPT_BASE_SEEDS: PromptSeed[] = [
   // 17. AI 导入解析-角色（Phase 10）

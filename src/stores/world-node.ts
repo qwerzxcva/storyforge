@@ -6,19 +6,11 @@
  * - 单世界模式（worldGroupId=null）：加载项目全部节点，行为同旧逻辑
  * - 多世界模式：节点按 worldGroupId 隔离，每个世界组有自己的世界树
  */
-
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import type { WorldNode, WorldPortal } from '../lib/types'
-import { parseWorldPortals, stringifyWorldPortals } from '../lib/utils/world-portals'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveScopeLike,
-  stampNewRecord,
-  type WorkspaceScopeLike,
-} from '../lib/workspace/scope'
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import type { WorldNode, WorldPortal } from '../lib/types';
+import { parseWorldPortals, stringifyWorldPortals } from '../lib/utils/world-portals';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope';
 
 /** 树形节点（带 children） */
 export interface WorldTreeNode extends WorldNode {

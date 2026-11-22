@@ -1,21 +1,7 @@
-import type {
-  AgentRunEventPayloadByTypeV1,
-  AgentRunEventTypeV1,
-  AnyAgentRunEventV1,
-} from '../../types/agent-run'
-import {
-  assertExactKeys,
-  failSchema,
-  readArray,
-  readBoolean,
-  readEnum,
-  readHash,
-  readInteger,
-  readRecord,
-  readString,
-} from './schema-utils'
-import { parseAgentRunStepVerificationReceiptV1 } from './verification-receipt'
-import { readAgentRunContractJsonV1 } from './checkpoint-contract'
+import type { AgentRunEventPayloadByTypeV1, AgentRunEventTypeV1, AnyAgentRunEventV1 } from '../../types/agent-run';
+import { assertExactKeys, failSchema, readArray, readBoolean, readEnum, readHash, readInteger, readRecord, readString } from './schema-utils';
+import { parseAgentRunStepVerificationReceiptV1 } from './verification-receipt';
+import { readAgentRunContractJsonV1 } from './checkpoint-contract';
 
 export const AGENT_RUN_EVENT_TYPES_V1: readonly AgentRunEventTypeV1[] = [
   'run.created',

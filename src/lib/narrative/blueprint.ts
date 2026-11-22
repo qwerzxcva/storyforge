@@ -1,23 +1,7 @@
-import { db } from '../db/schema'
-import { parseStages } from '../types/story-arc'
-import type {
-  NarrativeModule,
-  NarrativeModuleKind,
-  NarrativeCondition,
-  NarrativeEffect,
-  NarrativeExecutionStep,
-  NarrativeNode,
-  NarrativeNodeKind,
-  NarrativeReachabilityReport,
-  WorkspaceScope,
-} from '../types'
-import {
-  assertRecordInScope,
-  readOwnedRows,
-  resolveScope,
-  scopeTransactionTables,
-  stampNewRecord,
-} from '../workspace/scope'
+import { db } from '../db/schema';
+import { parseStages } from '../types/story-arc';
+import type { NarrativeModule, NarrativeModuleKind, NarrativeCondition, NarrativeEffect, NarrativeExecutionStep, NarrativeNode, NarrativeNodeKind, NarrativeReachabilityReport, WorkspaceScope } from '../types';
+import { assertRecordInScope, readOwnedRows, resolveScope, scopeTransactionTables, stampNewRecord } from '../workspace/scope';
 
 function parseStringArray(value: string, label: string): string[] {
   let parsed: unknown

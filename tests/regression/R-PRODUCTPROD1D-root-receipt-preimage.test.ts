@@ -1,6 +1,6 @@
 import {expect,it} from 'vitest'
-import {createProductBuildRootTerminalReceiptV1,projectProductBuildRootTerminalReceiptBodyV2} from '../../src/lib/product-production/receipts'
-import {hashProductProductionValueV2} from '../../src/lib/product-production/hash'
+import {createProductBuildRootTerminalReceiptV1,projectProductBuildRootTerminalReceiptBodyV2} from '../../src/lib/legacy-compat/product-production/receipts'
+import {hashProductProductionValueV2} from '../../src/lib/legacy-compat/product-production/hash'
 import type {ProductBuildArtifactRecordV1} from '../../src/lib/types'
 const hash='a'.repeat(64)
 function fixture(){return {planHash:hash,manifestHash:hash,packageHash:hash,qualityReportHash:hash,controlEpoch:2,

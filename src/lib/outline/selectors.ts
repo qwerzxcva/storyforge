@@ -1,5 +1,5 @@
-import type { OutlineNode } from '../types'
-import { normalizeOutlineNode } from './normalize'
+import type { OutlineNode } from '../types';
+import { normalizeOutlineNode } from './normalize';
 
 type OutlineLike = Pick<OutlineNode, 'type' | 'parentId'>
 

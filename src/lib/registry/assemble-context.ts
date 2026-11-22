@@ -1,20 +1,15 @@
-import { prepareModelCapacityV1, getModelCapacityV1, modelInputBudgetV1, type ModelCapacityV1 } from '../ai/model-capacity'
+import { prepareModelCapacityV1, getModelCapacityV1, modelInputBudgetV1, type ModelCapacityV1 } from '../ai/model-capacity';
 /** assembleContext · 当前唯一上下文装配入口。 */
 import Dexie from 'dexie'
-import { estimateTokens, type ContextLayer, type ContextSegment } from '../ai/context-budget'
-import { assertRuntimeContextOwner, CONTEXT_SOURCES, CONTEXT_SOURCE_BY_KEY } from './context-sources'
-import type {
-  AssembleContextInput,
-  AssembleContextResult,
-  AssembleContextSourceEvidence,
-  ContextSource,
-} from './types'
-import { AtomicContextSourceBudgetErrorV1 } from './types'
-import { prepareContinuityContext } from '../ai/chapter-memory/continuity-context'
-import { sha256Text } from '../ai/chapter-memory/text-normalization'
-import { db } from '../db/schema'
-import { assertRecordInScope, resolveReadScope } from '../workspace/scope'
-import { maybeInjectHarnessFaultV1 } from '../agent/dev-fault-injection'
+import { estimateTokens, type ContextLayer, type ContextSegment } from '../ai/context-budget';
+import { CONTEXT_SOURCES, CONTEXT_SOURCE_BY_KEY } from './context-sources';
+import type { AssembleContextInput, AssembleContextResult, AssembleContextSourceEvidence, ContextSource } from './types';
+import { AtomicContextSourceBudgetErrorV1 } from './types';
+import { prepareContinuityContext } from '../ai/chapter-memory/continuity-context';
+import { sha256Text } from '../ai/chapter-memory/text-normalization';
+import { db } from '../db/schema';
+import { assertRecordInScope, resolveReadScope } from '../workspace/scope';
+import { maybeInjectHarnessFaultV1 } from '../agent/dev-fault-injection';
 
 // CTXG contracts share the existing assembleContext/CONTEXT_SOURCES boundary.
 // Re-exporting keeps callers away from a parallel context entrypoint.
@@ -376,42 +371,7 @@ async function assertContextAnchors(input: AssembleContextInput, selected: Conte
       throw new Error('[assembleContext] outlineNodeId 不属于当前 Work')
     }
   }
-  if (input.adaptationProjectId != null) {
-    const root = await db.adaptationProjects.get(input.adaptationProjectId)
-    if (!root
-      || root.projectId !== input.scope.projectId
-      || root.worldId !== input.scope.worldId
-      || root.workId !== input.scope.workId) {
-      throw new Error('[assembleContext] adaptationProjectId 不属于当前目标 Work')
-    }
-  }
-  if (input.screenplaySceneIds?.length) {
-    if (new Set(input.screenplaySceneIds).size !== input.screenplaySceneIds.length) throw new Error('[assembleContext] screenplaySceneIds 不得重复')
-    for (const sceneId of input.screenplaySceneIds) {
-      const scene = await db.screenplayScenes.get(sceneId)
-      if (!scene || !await assertRecordInScope(input.scope, 'screenplayScenes', scene, { owner: 'work' })) {
-        throw new Error('[assembleContext] screenplaySceneIds 越过当前目标 Work')
-      }
-      if (input.adaptationProjectId != null && scene.adaptationProjectId !== input.adaptationProjectId) {
-        throw new Error('[assembleContext] screenplaySceneIds 不属于指定改编')
-      }
-    }
-  }
-  if (input.comicPageIds?.length) {
-    if (new Set(input.comicPageIds).size !== input.comicPageIds.length) throw new Error('[assembleContext] comicPageIds 不得重复')
-    for (const pageId of input.comicPageIds) {
-      const page = await db.comicPages.get(pageId)
-      if (!page || !await assertRecordInScope(input.scope, 'comicPages', page, { owner: 'work' })) {
-        throw new Error('[assembleContext] comicPageIds 越过当前目标 Work')
-      }
-      if (input.adaptationProjectId != null && page.adaptationProjectId !== input.adaptationProjectId) {
-        throw new Error('[assembleContext] comicPageIds 不属于指定改编')
-      }
-    }
-  }
-  if (input.productRuntimeSessionId != null && selected.some(source => source.requiresProductRuntimeSessionId)) {
-    await assertRuntimeContextOwner(input)
-  }
+
 }
 
 function selectSources(input: AssembleContextInput): ContextSource[] {

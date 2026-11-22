@@ -1,13 +1,13 @@
-import { create } from 'zustand'
-import { db } from '../lib/db/schema'
-import type { Character, WorkspaceScope } from '../lib/types'
-import { applyCharacterReferenceRemap } from '../lib/registry/character-references'
-import { normalizeCharacterAxes } from '../lib/character/character-axes'
-import { transactionTablesFor } from '../lib/registry/lifecycle'
-import { refreshSettingAssertionSourceStatus } from '../lib/fact-ledger/setting-assertions'
-import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope'
-import { coordinatePendingEditV1 } from '../lib/authoring/pending-edit-coordinator'
-import { FIELD_BY_TARGET } from '../lib/registry/field-registry'
+import { create } from 'zustand';
+import { db } from '../lib/db/schema';
+import type { Character, WorkspaceScope } from '../lib/types';
+import { applyCharacterReferenceRemap } from '../lib/registry/character-references';
+import { normalizeCharacterAxes } from '../lib/character/character-axes';
+import { transactionTablesFor } from '../lib/registry/lifecycle';
+import { refreshSettingAssertionSourceStatus } from '../lib/fact-ledger/setting-assertions';
+import { assertRecordInScope, readOwnedRows, resolveReadScopeLike, resolveScopeLike, scopeTransactionTables, stampNewRecord, type WorkspaceScopeLike } from '../lib/workspace/scope';
+import { coordinatePendingEditV1 } from '../lib/authoring/pending-edit-coordinator';
+import { FIELD_BY_TARGET } from '../lib/registry/field-registry';
 
 // 势力由 Codex「势力」词条管理，本 store 只管理角色主档。
 

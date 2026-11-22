@@ -1,9 +1,9 @@
-import { db } from '../db/schema'
-import { readOwnedRows } from '../workspace/scope'
-import type { Chapter, DetailedOutline, OutlineNode, WorkspaceScope } from '../types'
-import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk'
-import { buildBestChapterByOutlineMap } from '../chapters/selectors'
-import { htmlToPlainText, countWords } from '../utils/html'
+import { db } from '../db/schema';
+import { readOwnedRows } from '../workspace/scope';
+import type { Chapter, DetailedOutline, OutlineNode, WorkspaceScope } from '../types';
+import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk';
+import { buildBestChapterByOutlineMap } from '../chapters/selectors';
+import { htmlToPlainText, countWords } from '../utils/html';
 
 /** Read actual saved production state; candidate/run completion is never book completion. */
 export async function readLongformProgressV1(scope: WorkspaceScope, worldGroupId: number | null) {

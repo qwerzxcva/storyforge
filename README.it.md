@@ -1,5 +1,7 @@
 # StoryForge · 故事熔炉
 
+> Ambito attuale: solo romanzi lunghi. La modalità a nodi usa lo stesso flusso di scrittura; la gestione del mondo è una funzione ausiliaria. Le altre descrizioni di prodotto qui sotto sono riferimenti storici, non funzioni disponibili.
+
 **Scrivi storie. Entra nei loro mondi.**
 
 <!-- readme-languages:start -->
@@ -10,9 +12,9 @@
 
 [Inizia a creare](#quick-start) · [Prova Fog Harbor](#try-a-story) · [Esplora l’architettura](#architecture)
 
-StoryForge è uno strumento open source per creare e vivere storie con l’IA, progettato per conservare i dati in locale. Scrivi romanzi e narrativa breve, adatta un romanzo in sceneggiatura o fumetto, costruisci mondi riutilizzabili ed esplora esperienze interattive. Scegli il percorso e approvi le proposte dell’IA prima che entrino nella tua opera.
+StoryForge è uno strumento open source, locale, per scrivere romanzi lunghi con l’IA. Sviluppa ambientazione, scaletta, scene, capitoli e continuità nella stessa opera; la modalità a nodi usa il medesimo flusso.
 
-> Stato verificato su `main` il 13 ottobre 2026: romanzi, narrativa breve, sceneggiature, fumetti, preproduzione animata e motore dei mondi hanno accessi ufficiali. La modalità a nodi e i prodotti interattivi sono anteprime. Questo README è tradotto; non implica una traduzione completa dell’interfaccia o dei documenti collegati. Le schermate e molte guide sono in cinese.
+> L’ambito attuale comprende solo romanzi lunghi e la loro modalità a nodi. Le altre sezioni sui prodotti qui sotto sono riferimenti storici. Questo README è tradotto; l’interfaccia e i documenti collegati non sono necessariamente disponibili in italiano.
 
 <a id="try-a-story"></a>
 
@@ -131,7 +133,7 @@ Il gioco e i contenuti multimediali inclusi sono nel repository. Configura la tu
 
 Avvia il codice aggiornato di `main`, apri **TTRPG** (`跑团`) e scegli l’avventura sotto la sezione di produzione, oppure visita `/storyforge/play`. Configura il modello e scegli un personaggio. Puoi giocare da solo con compagni IA o passandovi lo stesso dispositivo. Progressi, ripresa e checkpoint sono locali. Il multigiocatore pubblico online non è disponibile; sullo stesso dispositivo i segreti non sono protetti dal proprietario.
 
-[Guida del giocatore](./examples/ttrpg/README.md) · [Evidenze di produzione e partite](./examples/ttrpg/fog-harbor/production-status.md)
+[Guida del giocatore — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/examples/ttrpg/README.md) · [Evidenze di produzione e partite — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/examples/ttrpg/fog-harbor/production-status.md)
 
 </details>
 
@@ -211,7 +213,7 @@ I nodi ufficiali riutilizzano gli stessi Skills, dati e processi di approvazione
 
 Il percorso dedicato mira a **5.000–25.000 caratteri cinesi in 3–8 capitoli**: brief, progetto, schede, stesura, revisione, riscrittura e pubblicazione. Controlla lunghezza reale, struttura, testo mancante e proposte in sospeso. I problemi di revisione citano capitoli e brani; la revisione è legata all’hash del manoscritto e deve essere aggiornata dopo modifiche. Le riscritture sono mirate a singoli capitoli. I problemi bloccanti impediscono la pubblicazione; ogni edizione accettata diventa immutabile e conserva quelle precedenti.
 
-[Produzione e criteri di completamento](./src/lib/short-novel/service.ts) · [Esecuzioni IA persistenti dedicate](./src/lib/agent/run/short-novel-durable.ts)
+[Produzione e criteri di completamento — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/short-novel/service.ts) · [Esecuzioni IA persistenti dedicate — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/agent/run/short-novel-durable.ts)
 
 ### Sceneggiature: adattamenti tracciabili e scene strutturate
 
@@ -219,7 +221,7 @@ Il percorso fissa le fonti selezionate e le collega a fatti, causalità, scelte 
 
 Fedeltà alla fonte e struttura drammatica hanno revisioni separate. Le correzioni indicano scena e revisione attesa; le scene bloccate richiedono sblocco e le proposte obsolete vengono respinte. Le edizioni fissano fonti, decisioni e scene: modificare poi il romanzo non cambia automaticamente la sceneggiatura pubblicata.
 
-[Produzione e revisioni](./src/lib/screenplay/production.ts) · [Edizioni](./src/lib/screenplay/release.ts) · [Rendering](./src/lib/screenplay/renderers.ts)
+[Produzione e revisioni — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/screenplay/production.ts) · [Edizioni — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/screenplay/release.ts) · [Rendering — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/screenplay/renderers.ts)
 
 ### Fumetti: immagini e lettering su livelli distinti
 
@@ -229,7 +231,7 @@ Il **lettering SVG locale** aggiunge fumetti, didascalie e onomatopee modificabi
 
 **Limite attuale:** l’adattatore generico di immagini compatibile OpenAI invia solo testo e dichiara assenza di supporto per immagini di riferimento, seed fissi e inpainting. Citare un riferimento nel prompt non equivale a trasmettere l’immagine. Occorre un servizio di immagini configurato o materiale appropriato dell’autore, con selezione e controllo umano della continuità.
 
-[Produzione](./src/lib/comic/production.ts) · [Evidenze dei media](./src/lib/comic/media-service.ts) · [Lettering](./src/lib/comic/renderers.ts) · [Controlli qualità](./src/lib/comic/qa.ts)
+[Produzione — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/production.ts) · [Evidenze dei media — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/media-service.ts) · [Lettering — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/renderers.ts) · [Controlli qualità — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/comic/qa.ts)
 
 I percorsi tecnici attuali sono implementati su `main`; prestazioni dei fornitori e qualità dei contenuti restano in valutazione. Vedi il [quadro delle capacità](./docs/roadmap/CAPABILITY-BASELINE.md).
 
@@ -247,12 +249,12 @@ La derivazione registra opera d’origine, revisione, intervallo e hash. Gli ada
 
 | Prodotto | Meccanismi implementati | Limite attuale |
 |---|---|---|
-| [TTRPG / narratore IA](./src/lib/ttrpg/information-boundary.ts) | Regole, dadi ed effetti risolti dal codice; contesti separati narratore/giocatore/PNG, segreti filtrati per destinatario, eventi e checkpoint | Fog Harbor ha evidenze con modelli reali; nessun multigiocatore pubblico online |
-| [Chat con personaggi](./src/lib/character-interaction/runtime.ts) | Profili e voce fissati, obiettivi di scena, memoria di impegni/segreti/conflitti, fiducia/vicinanza/cautela/rispetto | Qualità dei personaggi a lungo termine in valutazione |
-| [Città IA Afterstory](./src/lib/ai-town/runtime.ts) | Sei fasce giornaliere, luoghi e spostamenti, conoscenze, ricordi, relazioni, gestione leggera e recupero del tempo offline | Replay di 14 giorni validato; modelli nel lungo periodo e media non simulati ancora valutati |
-| [Avventura testuale](./src/lib/adventure/runtime.ts) | Prerequisiti, inventario, risorse, abilità, missioni e conseguenze verificati dal codice | Ogni opera richiede una validazione completa propria |
-| [AVG](./src/lib/avg/runtime.ts) | Indicazioni dichiarative, livelli di sfondo/personaggi/audio, controlli dei media e snapshot di scena | Esperienza audiovisiva completa in validazione |
-| [Mondo aperto testuale](./src/lib/open-world/runtime.ts) | Regioni, viaggi, risorse, fazioni, programmi dei personaggi e cambiamenti regionali nel tempo | Produzione completa e gioco prolungato in sviluppo |
+| [TTRPG / narratore IA — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/ttrpg/information-boundary.ts) | Regole, dadi ed effetti risolti dal codice; contesti separati narratore/giocatore/PNG, segreti filtrati per destinatario, eventi e checkpoint | Fog Harbor ha evidenze con modelli reali; nessun multigiocatore pubblico online |
+| [Chat con personaggi — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/character-interaction/runtime.ts) | Profili e voce fissati, obiettivi di scena, memoria di impegni/segreti/conflitti, fiducia/vicinanza/cautela/rispetto | Qualità dei personaggi a lungo termine in valutazione |
+| [Città IA Afterstory — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/ai-town/runtime.ts) | Sei fasce giornaliere, luoghi e spostamenti, conoscenze, ricordi, relazioni, gestione leggera e recupero del tempo offline | Replay di 14 giorni validato; modelli nel lungo periodo e media non simulati ancora valutati |
+| [Avventura testuale — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/adventure/runtime.ts) | Prerequisiti, inventario, risorse, abilità, missioni e conseguenze verificati dal codice | Ogni opera richiede una validazione completa propria |
+| [AVG — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/avg/runtime.ts) | Indicazioni dichiarative, livelli di sfondo/personaggi/audio, controlli dei media e snapshot di scena | Esperienza audiovisiva completa in validazione |
+| [Mondo aperto testuale — historical source](https://github.com/qwerzxcva/storyforge/blob/ec000b4d95d297c0959706d6940cf902594b5795/src/lib/open-world/runtime.ts) | Regioni, viaggi, risorse, fazioni, programmi dei personaggi e cambiamenti regionali nel tempo | Produzione completa e gioco prolungato in sviluppo |
 
 Comunità online e servizi commerciali sono previsti in fasi successive.
 

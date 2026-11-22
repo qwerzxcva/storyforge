@@ -1,7 +1,7 @@
-import type { PromptSeed } from './prompt-seed-type'
-import { FIELD_METHODS, worldviewFieldContentGuidanceV1 } from '../creation/worldview-content-skill'
-import { FULL_INSPIRATION_CONTENT_GUIDANCE, WORLD_SUGGEST_CONTENT_GUIDANCE, WORLD_EXPAND_CONTENT_GUIDANCE, HISTORY_CONTENT_GUIDANCE, CODEX_CONTENT_METHODS, codexContentGuidance } from '../creation/world-entry-content-skill'
-import { STYLE_LEARNING_CONTENT_GUIDANCE, STYLE_CALIBRATION_CONTENT_GUIDANCE, CREATIVE_RULES_CONTENT_GUIDANCE, researchContentGuidance } from '../creation/preparation-content-skill'
+import type { PromptSeed } from './prompt-seed-type';
+import { FIELD_METHODS, worldviewFieldContentGuidanceV1 } from '../creation/worldview-content-skill';
+import { FULL_INSPIRATION_CONTENT_GUIDANCE, WORLD_SUGGEST_CONTENT_GUIDANCE, WORLD_EXPAND_CONTENT_GUIDANCE, HISTORY_CONTENT_GUIDANCE, CODEX_CONTENT_METHODS, codexContentGuidance } from '../creation/world-entry-content-skill';
+import { STYLE_LEARNING_CONTENT_GUIDANCE, STYLE_CALIBRATION_CONTENT_GUIDANCE, CREATIVE_RULES_CONTENT_GUIDANCE, researchContentGuidance } from '../creation/preparation-content-skill';
 
 /** Build editable seed content once. Runtime only renders the author's active
  * template; content methods are never appended behind that template. */

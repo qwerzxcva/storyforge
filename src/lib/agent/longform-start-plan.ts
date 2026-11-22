@@ -1,8 +1,8 @@
-import type { MasterAgentPlan } from './orchestrator'
-import type { OutlineNode, WorkspaceScope } from '../types'
-import { readOwnedRows } from '../workspace/scope'
-import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk'
-import { parseAuthorOrdinalV1 } from './author-intent'
+import type { MasterAgentPlan } from './orchestrator';
+import type { OutlineNode, WorkspaceScope } from '../types';
+import { readOwnedRows } from '../workspace/scope';
+import { walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk';
+import { parseAuthorOrdinalV1 } from './author-intent';
 
 /** A visible proposal only. Each prerequisite uses the existing outline Skill
  * and must be adopted before the following task can read it. No placeholder

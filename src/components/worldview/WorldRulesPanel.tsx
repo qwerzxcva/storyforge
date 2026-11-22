@@ -4,42 +4,26 @@
  * 三列布局：L1 大类导航 → L2 子类列表 → 编辑区（双文本框 + 优先级）
  * 底部：规则预览 + Token 估算
  */
-import ResizableInputArea, { type AreaControlV1 } from '../shared/ResizableInputArea'
-import { inputAreaLayoutV1 } from '../../lib/input-area-layout'
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
-import { Eye, EyeOff } from 'lucide-react'
-import { useWorldSettingsLayout } from '../longform/WorldSettingsLayout'
-import { useWorldRulesStore } from '../../stores/world-rules'
-import { useWorldGroupStore } from '../../stores/world-group'
-import {
-  WORLD_RULE_TREE,
-  isEntryEmpty,
-  createEmptyEntry,
-} from '../../lib/types/world-rules'
-import type {
-  WorldRuleNodeDef,
-  CustomWorldRuleNode,
-  ConflictPriority,
-  WorldRuleEntry,
-} from '../../lib/types/world-rules'
-import {
-  buildWorldRulesManifest,
-  estimateManifestTokens,
-} from '../../lib/ai/world-rules-manifest'
-import type { Project } from '../../lib/types'
-import type { HistoricalTimelineEvent, HistoricalKeyword } from '../../lib/types/history'
-import { db } from '../../lib/db/schema'
-import { useDialog } from '../shared/Dialog'
+import ResizableInputArea, { type AreaControlV1 } from '../shared/ResizableInputArea';
+import { inputAreaLayoutV1 } from '../../lib/input-area-layout';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
+import { useWorldSettingsLayout } from '../longform/WorldSettingsLayout';
+import { useWorldRulesStore } from '../../stores/world-rules';
+import { useWorldGroupStore } from '../../stores/world-group';
+import { WORLD_RULE_TREE, isEntryEmpty, createEmptyEntry } from '../../lib/types/world-rules';
+import type { WorldRuleNodeDef, CustomWorldRuleNode, ConflictPriority, WorldRuleEntry } from '../../lib/types/world-rules';
+import { buildWorldRulesManifest, estimateManifestTokens } from '../../lib/ai/world-rules-manifest';
+import type { Project } from '../../lib/types';
+import type { HistoricalTimelineEvent, HistoricalKeyword } from '../../lib/types/history';
+import { db } from '../../lib/db/schema';
+import { useDialog } from '../shared/Dialog';
 import WorldRuleEntryEditor from './WorldRuleEntryEditor'
 import WorldRulesNavigation from './WorldRulesNavigation'
-import type { WorldRuleNavigationNode } from './WorldRulesNavigation'
-import { useBeforeUnload } from '../../hooks/useBeforeUnload'
-import { flushPendingEditsV1, registerPendingDraftFlusherV1 } from '../../lib/authoring/pending-edit-coordinator'
-import {
-  INITIAL_RECORD_TARGET_CLASS,
-  initialRecordTargetAttributes,
-  useInitialRecordTarget,
-} from '../shared/initial-record-target'
+import type { WorldRuleNavigationNode } from './WorldRulesNavigation';
+import { useBeforeUnload } from '../../hooks/useBeforeUnload';
+import { flushPendingEditsV1, registerPendingDraftFlusherV1 } from '../../lib/authoring/pending-edit-coordinator';
+import { INITIAL_RECORD_TARGET_CLASS, initialRecordTargetAttributes, useInitialRecordTarget } from '../shared/initial-record-target';
 
 interface Props {
   resizableInputs?: boolean

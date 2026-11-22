@@ -1,16 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
-import type { AIConfig } from '../../lib/types'
-import type { ReferenceDerivedModeV1 } from '../../lib/reference-analysis/derived-agent-baseline'
-import {
-  abandonReferenceDerivedRunV1,
-  adoptReferenceDerivedCandidateV1,
-  generateReferenceDerivedCandidateV1,
-  readPendingReferenceDerivedCandidateV1,
-  readRecoverableReferenceDerivedRunV1,
-  rejectReferenceDerivedCandidateV1,
-  type ReferenceDerivedCandidateV1,
-} from '../../lib/agent/run/reference-derived-durable'
-import { resolveScopeLike } from '../../lib/workspace/scope'
+import { useCallback, useEffect, useRef, useState } from 'react';
+import type { AIConfig } from '../../lib/types';
+import type { ReferenceDerivedModeV1 } from '../../lib/reference-analysis/derived-agent-baseline';
+import { abandonReferenceDerivedRunV1, adoptReferenceDerivedCandidateV1, generateReferenceDerivedCandidateV1, readPendingReferenceDerivedCandidateV1, readRecoverableReferenceDerivedRunV1, rejectReferenceDerivedCandidateV1, type ReferenceDerivedCandidateV1 } from '../../lib/agent/run/reference-derived-durable';
+import { resolveScopeLike } from '../../lib/workspace/scope';
 
 export interface ReferenceDerivedLaneState {
   candidate: ReferenceDerivedCandidateV1 | null

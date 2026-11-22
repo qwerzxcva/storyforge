@@ -1,8 +1,5 @@
-import {
-  resolveImpactHandoffModuleV2,
-  type ImpactHandoffModuleV2,
-} from '../../consistency/impact-handoff'
-import type { ImpactRemediationItemV1 } from '../../consistency/impact-remediation-plan'
+import { resolveImpactHandoffModuleV2, type ImpactHandoffModuleV2 } from '../../consistency/impact-handoff';
+import type { ImpactRemediationItemV1 } from '../../consistency/impact-remediation-plan';
 
 export type ImpactDownstreamExecutorV1 =
   | 'author-review'

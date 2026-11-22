@@ -1,23 +1,23 @@
 import FeedbackInbox from './components/shared/FeedbackInbox'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router'
+import { BrowserRouter } from 'react-router';
 import App from './App'
 import ClientUpdatePanel from './components/settings/ClientUpdatePanel'
-import { collectNativeDiagnostics, nativeTelemetryAllowed } from './lib/platform/native-diagnostics'
-import { installClientTelemetry } from './lib/feedback/client-telemetry'
-import { IS_SHOWCASE } from './lib/showcase/policy'
+import { collectNativeDiagnostics, nativeTelemetryAllowed } from './lib/platform/native-diagnostics';
+import { installClientTelemetry } from './lib/feedback/client-telemetry';
+import { IS_SHOWCASE } from './lib/showcase/policy';
 import ShowcaseShell from './components/showcase/ShowcaseShell'
 import ErrorBoundary from './components/shared/ErrorBoundary'
-import { DialogProvider } from './components/shared/Dialog'
-import { ToastProvider } from './components/shared/Toast'
-import { usePromptStore } from './stores/prompt'
-import { useWorkflowStore } from './stores/workflow'
-import { openCurrentSchema } from './lib/db/ensure-schema'
-import { validateRegistry } from './lib/registry/validate'
-import { applyStoryForgeTheme, resolveStoryForgeTheme } from './lib/theme-bootstrap'
-import { registerStoryForgeServiceWorker } from './lib/pwa/register-service-worker'
-import { installRuntimeDiagnostics, recordRuntimeDiagnosticError } from './lib/diagnostics/runtime-errors'
+import { DialogProvider } from './components/shared/Dialog';
+import { ToastProvider } from './components/shared/Toast';
+import { usePromptStore } from './stores/prompt';
+import { useWorkflowStore } from './stores/workflow';
+import { openCurrentSchema } from './lib/db/ensure-schema';
+import { validateRegistry } from './lib/registry/validate';
+import { applyStoryForgeTheme, resolveStoryForgeTheme } from './lib/theme-bootstrap';
+import { registerStoryForgeServiceWorker } from './lib/pwa/register-service-worker';
+import { installRuntimeDiagnostics, recordRuntimeDiagnosticError } from './lib/diagnostics/runtime-errors';
 import FailureFeedbackPanel from './components/shared/FailureFeedbackPanel'
 import './index.css'
 

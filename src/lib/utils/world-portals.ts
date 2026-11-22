@@ -1,4 +1,4 @@
-import type { WorldPortal } from '../types'
+import type { WorldPortal } from '../types';
 
 function isWorldPortal(value: unknown): value is WorldPortal {
   if (!value || typeof value !== 'object') return false

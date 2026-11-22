@@ -5,8 +5,8 @@
  * 新增 16 个题材包的核心模板（chapter.content + outline.volume）。
  * 每个包聚焦最关键的 2 个模板，其他模块复用通用包。
  */
-import type { PromptSeed } from './prompt-seed-type'
-import { VOLUME_OUTLINE_PARAMETERS } from './prompt-seed-params'
+import type { PromptSeed } from './prompt-seed-type';
+import { VOLUME_OUTLINE_PARAMETERS } from './prompt-seed-params';
 
 // ── 玄幻 ──────────────────────────────────────────
 

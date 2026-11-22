@@ -1,27 +1,27 @@
-import { importProjectJSON } from '../export/json-export'
-import { PROJECT_TABLES } from '../registry/project-tables'
-import { db } from '../db/schema'
+import { importProjectJSON } from '../export/json-export';
+import { PROJECT_TABLES } from '../registry/project-tables';
+import { db } from '../db/schema';
 import Dexie from 'dexie'
-import type { CommunityWorldLicense, WorldRelease, WorldReleaseManifestV3 } from '../types'
-import type { WorldPackageManifest, WorldPackageUse, WorldSourceDeclarationV1 } from '../types/world-sharing'
-import { encodeWorldSourceDeclarationV1 } from './source-declaration'
-import { WORLD_SOURCE_WIRE_MAX_BYTES } from './source-receipt-contract'
-import { inspectWorldPackageMetadata } from './world-package-metadata'
+import type { CommunityWorldLicense, WorldRelease, WorldReleaseManifestV3 } from '../types';
+import type { WorldPackageManifest, WorldPackageUse, WorldSourceDeclarationV1 } from '../types/world-sharing';
+import { encodeWorldSourceDeclarationV1 } from './source-declaration';
+import { WORLD_SOURCE_WIRE_MAX_BYTES } from './source-receipt-contract';
+import { inspectWorldPackageMetadata } from './world-package-metadata';
 export { WORLD_PACKAGE_USES } from '../types/world-sharing'
 export type { WorldPackageManifest, WorldPackageUse } from '../types/world-sharing'
 export { inspectWorldPackageMetadata } from './world-package-metadata'
-import type { WorldReleaseManifestV4 } from '../types/narrative-release'
-import type { NarrativeIndexV1 } from '../types/narrative-index'
-import { canonicalNarrativeJsonV1 } from './narrative-json'
-import { generateWorldCode } from '../workspace/identity'
-import { stableJson, worldReleaseUidV1 } from './releases'
-import { readWorldNarrativeIndexV1 } from './narrative-index-cache'
-import { resolveWorkspaceScope } from '../workspace/ownership'
-import { verifyWorldReleaseManifestV1, type VerifiedWorldReleaseV1 } from './release-codec'
-import { assertWorldSemanticSnapshotV1, materializeWorldReleaseBackupV1 } from './semantic-snapshot'
-import { createNarrativeLineageV1 } from './narrative-lineage'
-import { packNarrativeJsonV1, unpackNarrativeJsonV1, type PackedNarrativeJsonV1 } from './narrative-package-packing'
-import { compressNarrativePackV1, decompressNarrativePackV1, type CompressedNarrativePackV1 } from './narrative-package-compression'
+import type { WorldReleaseManifestV4 } from '../types/narrative-release';
+import type { NarrativeIndexV1 } from '../types/narrative-index';
+import { canonicalNarrativeJsonV1 } from './narrative-json';
+import { generateWorldCode } from '../workspace/identity';
+import { stableJson, worldReleaseUidV1 } from './releases';
+import { readWorldNarrativeIndexV1 } from './narrative-index-cache';
+import { resolveWorkspaceScope } from '../workspace/ownership';
+import { verifyWorldReleaseManifestV1, type VerifiedWorldReleaseV1 } from './release-codec';
+import { assertWorldSemanticSnapshotV1, materializeWorldReleaseBackupV1 } from './semantic-snapshot';
+import { createNarrativeLineageV1 } from './narrative-lineage';
+import { packNarrativeJsonV1, unpackNarrativeJsonV1, type PackedNarrativeJsonV1 } from './narrative-package-packing';
+import { compressNarrativePackV1, decompressNarrativePackV1, type CompressedNarrativePackV1 } from './narrative-package-compression';
 
 export const WORLD_PACKAGE_FORMAT = 'storyforge.world-package'
 export const WORLD_PACKAGE_VERSION = 5

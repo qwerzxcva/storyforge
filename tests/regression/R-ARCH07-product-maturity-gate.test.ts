@@ -5,37 +5,15 @@ import {
 } from '../../src/lib/product/product-catalog'
 
 describe('ARCH-07 · 世界能力边界与产品成熟度入口', () => {
-  it('产品身份唯一，世界引擎只拥有语义内容，上层产品自有运行态与媒资', () => {
-    expect(new Set(PRODUCT_CATALOG_V1.map(item => item.id)).size).toBe(PRODUCT_CATALOG_V1.length)
+  it('只登记长篇小说与长篇节点两个入口', () => {
+    const ids = PRODUCT_CATALOG_V1.map(item => item.id)
+    expect(new Set(ids).size).toBe(ids.length)
+    expect(ids).toEqual(['independent.longform', 'authoring.nodes'])
 
-    const world = PRODUCT_CATALOG_V1.find(item => item.id === 'world-engine')!
-    expect(world).toMatchObject({
-      family: 'world-engine',
-      sourcePolicy: 'world-engine-content',
-      requiresWorldReference: false,
-      ownsRuntime: false,
-      ownsMedia: false,
-    })
-
-    const upperProducts = PRODUCT_CATALOG_V1.filter(item => item.family === 'upper-product')
-    expect(upperProducts.length).toBeGreaterThan(0)
-    expect(upperProducts.every(item => item.ownsRuntime && item.ownsMedia)).toBe(true)
-
-    const openWorld = PRODUCT_CATALOG_V1.find(item => item.id === 'upper.text-open-world')!
-    expect(openWorld).toMatchObject({
-      sourcePolicy: 'world-release-required',
-      requiresWorldReference: true,
-    })
-    expect(upperProducts.filter(item => item.id !== openWorld.id).every(item => (
-      item.sourcePolicy === 'world-release-required' && item.requiresWorldReference
-    ))).toBe(true)
-
-    const independentProducts = PRODUCT_CATALOG_V1.filter(item => item.family === 'independent-creation')
-    expect(independentProducts.every(item => (
-      item.sourcePolicy === 'independent-work' && !item.requiresWorldReference
-    ))).toBe(true)
+    const longform = PRODUCT_CATALOG_V1.find(item => item.id === 'independent.longform')!
+    expect(longform).toMatchObject({ family: 'independent-creation', sourcePolicy: 'independent-work' })
     expect(PRODUCT_CATALOG_V1.find(item => item.id === 'authoring.nodes')?.sourcePolicy).toBe('independent-work')
-    expect(PRODUCT_CATALOG_V1.find(item => item.id === 'platform.marketplace')?.sourcePolicy).toBe('distribution-bundle')
+    expect(PRODUCT_CATALOG_V1.every(item => ['independent.longform', 'authoring.nodes'].includes(item.id))).toBe(true)
   })
 
   it('生产环境只开放 released，预览和内部入口只在本地/测试可见', () => {

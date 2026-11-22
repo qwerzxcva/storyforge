@@ -1,9 +1,4 @@
-import type {
-  PromptWorkflow,
-  PromptWorkflowGraph,
-  PromptWorkflowGraphEdge,
-  PromptWorkflowStep,
-} from '../types/workflow'
+import type { PromptWorkflow, PromptWorkflowGraph, PromptWorkflowGraphEdge, PromptWorkflowStep } from '../types/workflow';
 
 export const WORKFLOW_GRAPH_VERSION = 1 as const
 export const WORKFLOW_NODE_WIDTH = 240

@@ -4,15 +4,15 @@
  * 逻辑归属只从 PROJECT_TABLES.domainOwner 派生。这个模块不维护第二份表清单，
  * 也不允许调用方把 AI 返回的 owner id 当成可信输入。
  */
-import { resolveWorkspaceScope } from './ownership'
-import type { Table } from 'dexie'
-import { db } from '../db/schema'
-import { PROJECT_TABLES } from '../registry/project-tables'
-import type { DomainOwnerKind, TableSpec } from '../registry/types'
-import type { WorkspaceScope, WorldOwnerScope } from '../types/world-ownership'
-import { isWorkspaceUid } from '../memory/identity'
-import { isCurrentWorldCode } from './identity'
-import { stampResourceIdentityV1 } from '../context-gateway/resource-uid'
+import { resolveWorkspaceScope } from './ownership';
+import type { Table } from 'dexie';
+import { db } from '../db/schema';
+import { PROJECT_TABLES } from '../registry/project-tables';
+import type { DomainOwnerKind, TableSpec } from '../registry/types';
+import type { WorkspaceScope, WorldOwnerScope } from '../types/world-ownership';
+import { isWorkspaceUid } from '../memory/identity';
+import { isCurrentWorldCode } from './identity';
+import { stampResourceIdentityV1 } from '../context-gateway/resource-uid';
 
 export type ScopeOwner = Exclude<DomainOwnerKind, 'instance'>
 

@@ -1,10 +1,10 @@
-import { saveFile } from '../platform/save-file'
-import { db } from '../db/schema'
-import type { OutlineNode, Chapter } from '../types'
-import { isHtml, htmlToPlainText } from '../utils/html'
-import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence'
-import { byOutlineOrderThenId, walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk'
-import { readOwnedRows, resolveReadScopeLike, scopeTransactionTables, type WorkspaceScopeLike } from '../workspace/scope'
+import { saveFile } from '../platform/save-file';
+import { db } from '../db/schema';
+import type { OutlineNode, Chapter } from '../types';
+import { isHtml, htmlToPlainText } from '../utils/html';
+import { resolveCanonicalChapterSequence } from '../ai/chapter-memory/canonical-chapter-sequence';
+import { byOutlineOrderThenId, walkOutlineChaptersInCanonicalOrder } from '../outline/canonical-outline-walk';
+import { readOwnedRows, resolveReadScopeLike, scopeTransactionTables, type WorkspaceScopeLike } from '../workspace/scope';
 
 /** HTML → Markdown（简化规则，覆盖 TipTap StarterKit 产出的常见结构） */
 function htmlToMarkdown(html: string): string {

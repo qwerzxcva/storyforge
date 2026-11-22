@@ -1,4 +1,4 @@
-import { sha256MediaData } from '../../src/lib/product-production/media-blob-store'
+import { sha256MediaData } from '../../src/lib/legacy-compat/product-production/media-blob-store'
 import type { FrozenRuntimeMediaAssetV2 } from '../../src/lib/types'
 
 /** Wholly original, fixed safe SVG geometry for technical image decoding and

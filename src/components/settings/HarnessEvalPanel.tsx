@@ -1,47 +1,19 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
-import { ClipboardCopy, Download, FileJson, LoaderCircle, Play, RotateCcw, ShieldCheck, Upload } from 'lucide-react'
-import { classifyEvalTransportErrorV1, H4CheckpointWriteErrorV1 } from '../../lib/evals/long-consistency/h4-runner'
-import { type ChatResult } from '../../lib/ai/client'
-import { executeRegisteredAIEntryV1 } from '../../lib/agent/formal-ai-entry'
-import { isAIConfigReady } from '../../lib/ai/config-readiness'
-import {
-  evaluateContextCompressionNonInferiorityV1,
-  H17_CONTEXT_COMPRESSION_RESULTS_STORAGE_KEY,
-  runContextCompressionEvalMatrixV1,
-  verifyContextCompressionEvalRecordV1,
-} from '../../lib/evals/context-compression/runner'
-import type { ContextCompressionEvalRecordV1 } from '../../lib/evals/context-compression/types'
-import {
-  clearH4LongConsistencyBrowserCheckpointV1,
-  clearH4SubtypeAdjudicationBrowserCheckpointV1,
-  exportH4LongConsistencyRunCheckpointV1,
-  exportH4SubtypeAdjudicationCheckpointV1,
-  H4_LONG_CONSISTENCY_FIXTURE_VERSION_V1,
-  H4_SUBTYPE_ADJUDICATION_PROMPT_VERSION_V1,
-  importH4LongConsistencyRunCheckpointV1,
-  loadH4LongConsistencyBrowserStateV1,
-  loadH4SubtypeAdjudicationBrowserStateV1,
-  LONG_CONSISTENCY_CURRENT_JUDGE_PROMPT_VERSION_V1,
-  persistH4LongConsistencyBrowserCheckpointV1,
-  persistH4SubtypeAdjudicationBrowserCheckpointV1,
-  runH4SubtypeAdjudicationV1,
-  runH4LongConsistencyVerifierV1,
-  scoreH4SubtypeAdjudicationCheckpointV1,
-  scoreH4LongConsistencyCheckpointV1,
-  type H4LongConsistencyRunCheckpointV1,
-  type H4LongConsistencySealedScoreV1,
-  type H4LongConsistencyVerifierCallInputV1,
-  type H4SubtypeAdjudicationCallInputV1,
-  type H4SubtypeAdjudicationCheckpointV1,
-  type H4SubtypeAdjudicationSealedScoreV1,
-} from '../../lib/evals/long-consistency'
-import { measureLongConsistencyProviderUsageV1, PROVIDER_USAGE_POLICY_V1 } from '../../lib/evals/long-consistency/model-usage'
-import { getFixtures } from '../../lib/evals/long-consistency/fixtures'
-import type { EvalSplit } from '../../lib/evals/long-consistency/types'
-import type { AIConfig, ChatMessage } from '../../lib/types'
-import { APP_BUILD_ID } from '../../lib/version'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { useDialog } from '../shared/Dialog'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { ClipboardCopy, Download, FileJson, LoaderCircle, Play, RotateCcw, ShieldCheck, Upload } from 'lucide-react';
+import { classifyEvalTransportErrorV1, H4CheckpointWriteErrorV1 } from '../../lib/evals/long-consistency/h4-runner';
+import { type ChatResult } from '../../lib/ai/client';
+import { executeRegisteredAIEntryV1 } from '../../lib/agent/formal-ai-entry';
+import { isAIConfigReady } from '../../lib/ai/config-readiness';
+import { evaluateContextCompressionNonInferiorityV1, H17_CONTEXT_COMPRESSION_RESULTS_STORAGE_KEY, runContextCompressionEvalMatrixV1, verifyContextCompressionEvalRecordV1 } from '../../lib/evals/context-compression/runner';
+import type { ContextCompressionEvalRecordV1 } from '../../lib/evals/context-compression/types';
+import { clearH4LongConsistencyBrowserCheckpointV1, clearH4SubtypeAdjudicationBrowserCheckpointV1, exportH4LongConsistencyRunCheckpointV1, exportH4SubtypeAdjudicationCheckpointV1, H4_LONG_CONSISTENCY_FIXTURE_VERSION_V1, H4_SUBTYPE_ADJUDICATION_PROMPT_VERSION_V1, importH4LongConsistencyRunCheckpointV1, loadH4LongConsistencyBrowserStateV1, loadH4SubtypeAdjudicationBrowserStateV1, LONG_CONSISTENCY_CURRENT_JUDGE_PROMPT_VERSION_V1, persistH4LongConsistencyBrowserCheckpointV1, persistH4SubtypeAdjudicationBrowserCheckpointV1, runH4SubtypeAdjudicationV1, runH4LongConsistencyVerifierV1, scoreH4SubtypeAdjudicationCheckpointV1, scoreH4LongConsistencyCheckpointV1, type H4LongConsistencyRunCheckpointV1, type H4LongConsistencySealedScoreV1, type H4LongConsistencyVerifierCallInputV1, type H4SubtypeAdjudicationCallInputV1, type H4SubtypeAdjudicationCheckpointV1, type H4SubtypeAdjudicationSealedScoreV1 } from '../../lib/evals/long-consistency';
+import { measureLongConsistencyProviderUsageV1, PROVIDER_USAGE_POLICY_V1 } from '../../lib/evals/long-consistency/model-usage';
+import { getFixtures } from '../../lib/evals/long-consistency/fixtures';
+import type { EvalSplit } from '../../lib/evals/long-consistency/types';
+import type { AIConfig, ChatMessage } from '../../lib/types';
+import { APP_BUILD_ID } from '../../lib/version';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { useDialog } from '../shared/Dialog';
 import H86StoryArcEvalPanel from './H86StoryArcEvalPanel'
 import CreativeReliabilityEvalPanel from './CreativeReliabilityEvalPanel'
 

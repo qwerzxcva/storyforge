@@ -1,5 +1,5 @@
-import type { NarrativeDomainMetadataV1, NarrativeDomainFieldsV1 } from './narrative-domain'
-import type { RagDocumentMetadata } from './rag-library'
+import type { NarrativeDomainMetadataV1, NarrativeDomainFieldsV1 } from './narrative-domain';
+import type { RagDocumentMetadata } from './rag-library';
 
 /** 历史事件 */
 export interface HistoricalEvent {

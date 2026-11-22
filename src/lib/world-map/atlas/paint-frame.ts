@@ -1,4 +1,4 @@
-import { decodeRasterImageV1 } from '../../media/raster-image'
+import { decodeRasterImageV1 } from '../../media/raster-image';
 
 export function atlasPaintFrame(width: number, height: number, protocol: 'native' | 'openai-edit' = 'native') {
   if (![width, height].every(n => Number.isFinite(n) && n > 0)) throw Error('地图画幅无效')

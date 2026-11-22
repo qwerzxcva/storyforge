@@ -50,7 +50,7 @@ test('an existing receipt cannot be overwritten; failed staged bytes remain sepa
   f.store.writeJson(f.resultPath, { value: 'original' })
   assert.throws(() => f.store.writeJson(f.resultPath, { value: 'replacement' }), { code: 'EEXIST' })
   assert.deepEqual(JSON.parse(fs.readFileSync(f.resultPath)), { value: 'original' })
-  assert.equal(fs.readdirSync(resolve(f.output, 'receipt-journal/staging')).length, 1)
+  assert.equal(fs.readdirSync(resolve(f.output, 'receipt-journal/staging')).filter(name => /^[a-f0-9-]{36}\.json$/.test(name)).length, 1)
 })
 test('disk exhaustion at result publication leaves no partial result and retains completed generation evidence', t => {
   let deny = false

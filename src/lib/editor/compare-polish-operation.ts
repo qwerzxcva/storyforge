@@ -1,6 +1,6 @@
-import type { HeldItemProjection } from '../consistency/held-items'
-import { checkHeldItemAcquisition } from '../consistency/held-items'
-import { countWords, htmlToPlainText } from '../utils/html'
+import type { HeldItemProjection } from '../consistency/held-items';
+import { checkHeldItemAcquisition } from '../consistency/held-items';
+import { countWords, htmlToPlainText } from '../utils/html';
 
 export interface ComparePolishSaveArgs {
   projectId: number

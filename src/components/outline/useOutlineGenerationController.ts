@@ -1,48 +1,18 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import type { UseAIStreamReturn } from '../../hooks/useAIStream'
-import type { RunOptions } from '../../lib/ai/adapters/outline-adapter'
-import {
-  prepareGenerationNode,
-  runGenerationNode,
-  type PreparedGenerationNode,
-} from '../../lib/generation/generation-node'
-import {
-  findGenerationTargetVolume,
-  outlineGenerationTargetError,
-} from '../../lib/outline/generation-plan'
-import {
-  createOutlineGenerationNode,
-  OutlineGenerationSkipError,
-} from '../../lib/outline/generation-node'
-import {
-  decodeGenerationOperation,
-  encodeGenerationOperation,
-  outlineGenerationModuleKey,
-  type OutlineGenerationRequest,
-  type PreparedGenerationContext,
-} from '../../lib/outline/generation-request'
-import type { GenerationMode, ChunkedGenerationConfig } from '../../lib/outline/generation-modes'
-import type { AssembleContextResult } from '../../lib/registry/types'
-import {
-  adoptOutlineGenerationCandidateV1,
-  createOutlineGenerationTraceV1,
-  rejectOutlineGenerationCandidateV1,
-  recoverPendingOutlineGenerationAdoptionsV1,
-  restoreLatestOutlineGenerationCandidateV1,
-  staleOutlineGenerationCandidateV1,
-  type OutlineGenerationTraceV1,
-  type OutlineGenerationCandidateV1,
-  type OutlineGenerationAdoptionIntentV1,
-} from '../../lib/outline/harness'
-import type { ChatMessage, OutlineNode, Project, Work } from '../../lib/types'
-import type { AgentExecutionBoundaryV1 } from '../../lib/types'
-import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator'
-import {
-  assertWorkspaceContentRevisionFreshV1,
-  captureWorkspaceContentRevisionV1,
-  type WorkspaceContentRevisionVectorV1,
-} from '../../lib/authoring/content-revision'
-import { resolveScopeLike } from '../../lib/workspace/scope'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { UseAIStreamReturn } from '../../hooks/useAIStream';
+import type { RunOptions } from '../../lib/ai/adapters/outline-adapter';
+import { prepareGenerationNode, runGenerationNode, type PreparedGenerationNode } from '../../lib/generation/generation-node';
+import { findGenerationTargetVolume, outlineGenerationTargetError } from '../../lib/outline/generation-plan';
+import { createOutlineGenerationNode, OutlineGenerationSkipError } from '../../lib/outline/generation-node';
+import { decodeGenerationOperation, encodeGenerationOperation, outlineGenerationModuleKey, type OutlineGenerationRequest, type PreparedGenerationContext } from '../../lib/outline/generation-request';
+import type { GenerationMode, ChunkedGenerationConfig } from '../../lib/outline/generation-modes';
+import type { AssembleContextResult } from '../../lib/registry/types';
+import { adoptOutlineGenerationCandidateV1, createOutlineGenerationTraceV1, rejectOutlineGenerationCandidateV1, recoverPendingOutlineGenerationAdoptionsV1, restoreLatestOutlineGenerationCandidateV1, staleOutlineGenerationCandidateV1, type OutlineGenerationTraceV1, type OutlineGenerationCandidateV1, type OutlineGenerationAdoptionIntentV1 } from '../../lib/outline/harness';
+import type { ChatMessage, OutlineNode, Project, Work } from '../../lib/types';
+import type { AgentExecutionBoundaryV1 } from '../../lib/types';
+import { flushPendingEditsV1 } from '../../lib/authoring/pending-edit-coordinator';
+import { assertWorkspaceContentRevisionFreshV1, captureWorkspaceContentRevisionV1, type WorkspaceContentRevisionVectorV1 } from '../../lib/authoring/content-revision';
+import { resolveScopeLike } from '../../lib/workspace/scope';
 
 type GenerationAI = Pick<
   UseAIStreamReturn,

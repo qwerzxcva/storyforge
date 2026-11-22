@@ -1,4 +1,4 @@
-import { getModelCapacityV1, modelInputBudgetV1, type ModelCapacityV1 } from './model-capacity'
+import { getModelCapacityV1, modelInputBudgetV1, type ModelCapacityV1 } from './model-capacity';
 /**
  * 上下文窗口预算管理
  *
@@ -8,13 +8,9 @@ import { getModelCapacityV1, modelInputBudgetV1, type ModelCapacityV1 } from './
  * - 分层注入策略（L0 常驻 → L1 核心 → L2 扩展 → L3 增强）
  * - 预算计算与自动裁剪
  */
-
-import type { AIConfig, AIProvider, ChatMessage } from '../types'
-import { normalizeProviderModel } from '../types/ai'
-import {
-  CONTINUITY_CORE_END,
-  CONTINUITY_CORE_START,
-} from './chapter-memory/continuity-envelope'
+import type { AIConfig, AIProvider, ChatMessage } from '../types';
+import { normalizeProviderModel } from '../types/ai';
+import { CONTINUITY_CORE_END, CONTINUITY_CORE_START } from './chapter-memory/continuity-envelope';
 
 // ── 模型上下文窗口预设 ──────────────────────────────
 

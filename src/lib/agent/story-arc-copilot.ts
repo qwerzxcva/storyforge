@@ -1,84 +1,35 @@
-import { modelDispatchWasCancelledV1, ModelDispatchGuardRejectedV1 } from '../ai/codex-transport'
-import { buildCreativeCallEvidenceV1, checkCreativeRepairAdmissionV1, creativeRepairRefusalIssueV1 } from './creative-execution'
-import { canonRowResourceKeysV1 } from '../context-gateway/canon-provider'
-import { nanoid } from 'nanoid'
-import { useAIConfigStore } from '../../stores/ai-config'
-import { chat, resolveRequestConfig, type ChatResult } from '../ai/client'
-import { supportsVerifiedJsonObjectResponseV1 } from '../ai/provider-capabilities'
-import { db } from '../db/schema'
-import type {
-  GenerationGateIssue,
-  GenerationNode,
-  PreparedGenerationNode,
-} from '../generation/generation-node'
-import { prepareGenerationNode } from '../generation/generation-node'
-import { adopt } from '../registry/adopt'
-import { assembleContext } from '../registry/assemble-context'
-import type { AssembleContextResult } from '../registry/types'
-import type { AIConfig, ChatMessage, StoryArc, StoryArcType, StoryCore, WorkspaceScope } from '../types'
-import { inspectStages, parseStages, parseAuthorStoryStagesV1, stringifyStages, type StoryStage } from '../types/story-arc'
-import type { StorylineCrossing, StorylineProgress } from '../types/storyline-progress'
-import {
-  readOwnedRows,
-  resolveReadScopeLike,
-  resolveScope,
-  scopeTransactionTables,
-} from '../workspace/scope'
-import {
-  attachAgentContextInputStateV1,
-  evidenceFromContextResult,
-  resolveAgentContextPolicy,
-  type AgentContextEvidence,
-  type AgentContextProfile,
-} from './context-policy'
-import {
-  createAgentContextCompressionSessionV1,
-  type AgentContextCompressionRuntimeV1,
-} from './context-compression'
-import {
-  buildAgentSkillInputGuidanceV1,
-  resolveAgentSkillInputStateV1,
-  resolveAgentSkillV1,
-  type AgentSkillId,
-} from './skill-registry'
-import {
-  parseCreativeArtifactV1,
-  resolveCreativeQualityPolicyV1,
-  type CreativeArtifactFragmentV1,
-  type CreativeAssumptionV1,
-  type CreativeArtifactIssueV1,
-  type CreativeArtifactV1,
-  type CreativeCallEvidenceV1,
-  type CreativeQualityModeV1,
-} from './creative-reliability'
-import { normalizeCreativeJsonEnvelopeV1 } from './creative-json-normalizer'
-import { parseStructuredOutputV1 } from './structured-output-pipeline'
-import {
-  buildNarrativeBriefV1,
-  formatNarrativeBriefForPromptV1,
-  mergeProvisionalAssumptionsV1,
-  type NarrativeBriefV1,
-} from './narrative-brief'
-import { hashCanonicalValue } from './run/hash'
-import type { AgentTeamBudgetTracker } from './team-budget'
-import {
-  executeContextGatewayV1,
-  type ContextGatewayExecutionV1,
-} from '../context-gateway/execution'
-import { isContextGatewayRequiredForWriteTargetV1 } from '../context-gateway/skill-policy'
-import {
-  assembleContextGatewayPacketV1,
-  contextGatewayInputStateSourceKeysV1,
-  projectContextGatewayInputStateV1,
-} from './context-gateway-input'
-import {
-  STORY_INTENT_FIELDS_V1,
-  readStoryCoreIntentSnapshotV1,
-  storyArcIntentProjectionMetadataV1,
-  type StoryCoreIntentSnapshotV1,
-} from '../storyline/intent-projection'
-import { updateStoryArcStagesLifecycle } from '../storyline/lifecycle'
-import { assertStoryArcStageEventCandidatesV1, formatStoryArcStageEventDraftV1, parseStoryArcStageEventDraftV1, readStoryArcStageEventTargetV1, storedStoryArcStageEventsV1, STORY_ARC_STAGE_EVENT_LIMITS_V1, type StoryArcStageEventRequestV1 } from './story-arc-stage-events'
+import { modelDispatchWasCancelledV1, ModelDispatchGuardRejectedV1 } from '../ai/codex-transport';
+import { buildCreativeCallEvidenceV1, checkCreativeRepairAdmissionV1, creativeRepairRefusalIssueV1 } from './creative-execution';
+import { canonRowResourceKeysV1 } from '../context-gateway/canon-provider';
+import { nanoid } from 'nanoid';
+import { useAIConfigStore } from '../../stores/ai-config';
+import { chat, resolveRequestConfig, type ChatResult } from '../ai/client';
+import { supportsVerifiedJsonObjectResponseV1 } from '../ai/provider-capabilities';
+import { db } from '../db/schema';
+import type { GenerationGateIssue, GenerationNode, PreparedGenerationNode } from '../generation/generation-node';
+import { prepareGenerationNode } from '../generation/generation-node';
+import { adopt } from '../registry/adopt';
+import { assembleContext } from '../registry/assemble-context';
+import type { AssembleContextResult } from '../registry/types';
+import type { AIConfig, ChatMessage, StoryArc, StoryArcType, StoryCore, WorkspaceScope } from '../types';
+import { inspectStages, parseStages, parseAuthorStoryStagesV1, stringifyStages, type StoryStage } from '../types/story-arc';
+import type { StorylineCrossing, StorylineProgress } from '../types/storyline-progress';
+import { readOwnedRows, resolveReadScopeLike, resolveScope, scopeTransactionTables } from '../workspace/scope';
+import { attachAgentContextInputStateV1, evidenceFromContextResult, resolveAgentContextPolicy, type AgentContextEvidence, type AgentContextProfile } from './context-policy';
+import { createAgentContextCompressionSessionV1, type AgentContextCompressionRuntimeV1 } from './context-compression';
+import { buildAgentSkillInputGuidanceV1, resolveAgentSkillInputStateV1, resolveAgentSkillV1, type AgentSkillId } from './skill-registry';
+import { parseCreativeArtifactV1, resolveCreativeQualityPolicyV1, type CreativeArtifactFragmentV1, type CreativeAssumptionV1, type CreativeArtifactIssueV1, type CreativeArtifactV1, type CreativeCallEvidenceV1, type CreativeQualityModeV1 } from './creative-reliability';
+import { normalizeCreativeJsonEnvelopeV1 } from './creative-json-normalizer';
+import { parseStructuredOutputV1 } from './structured-output-pipeline';
+import { buildNarrativeBriefV1, formatNarrativeBriefForPromptV1, mergeProvisionalAssumptionsV1, type NarrativeBriefV1 } from './narrative-brief';
+import { hashCanonicalValue } from './run/hash';
+import type { AgentTeamBudgetTracker } from './team-budget';
+import { executeContextGatewayV1, type ContextGatewayExecutionV1 } from '../context-gateway/execution';
+import { isContextGatewayRequiredForWriteTargetV1 } from '../context-gateway/skill-policy';
+import { assembleContextGatewayPacketV1, contextGatewayInputStateSourceKeysV1, projectContextGatewayInputStateV1 } from './context-gateway-input';
+import { STORY_INTENT_FIELDS_V1, readStoryCoreIntentSnapshotV1, storyArcIntentProjectionMetadataV1, type StoryCoreIntentSnapshotV1 } from '../storyline/intent-projection';
+import { updateStoryArcStagesLifecycle } from '../storyline/lifecycle';
+import { assertStoryArcStageEventCandidatesV1, formatStoryArcStageEventDraftV1, parseStoryArcStageEventDraftV1, readStoryArcStageEventTargetV1, storedStoryArcStageEventsV1, STORY_ARC_STAGE_EVENT_LIMITS_V1, type StoryArcStageEventRequestV1 } from './story-arc-stage-events';
 
 export type StoryArcRequestKind = 'main' | 'sub' | 'mixed'
 export const STORY_ARC_OPERATIONS_V1 = ['create', 'expand', 'rewrite', 'polish', 'replan'] as const

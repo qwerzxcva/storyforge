@@ -1,4 +1,4 @@
-import { APP_BUILD_ID } from '../version'
+import { APP_BUILD_ID } from '../version';
 
 export const CREATIVE_RELIABILITY_FEEDBACK_STORAGE_KEY_V1 =
   'storyforge:creative-reliability:community-feedback-v1'

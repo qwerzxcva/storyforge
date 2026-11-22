@@ -1,5 +1,5 @@
-import type { World } from '../types'
-import { isPublicWorldCode } from '../workspace/identity'
+import type { World } from '../types';
+import { isPublicWorldCode } from '../workspace/identity';
 
 export { isPublicWorldCode } from '../workspace/identity'
 

@@ -1,8 +1,8 @@
-import { db } from '../db/schema'
-import { scopeTransactionTables } from '../workspace/scope'
-import { readWorldPublicationAuthorityRowsV1 } from './publication-authority-rows'
-import { fail, readWorldSourcePurposeDeclarationV1, type WorldSourcePurposeInputV1 } from './source-purpose-contract'
-import { revalidateWorldSourcePurposeV1 } from './source-purpose-actions'
+import { db } from '../db/schema';
+import { scopeTransactionTables } from '../workspace/scope';
+import { readWorldPublicationAuthorityRowsV1 } from './publication-authority-rows';
+import { fail, readWorldSourcePurposeDeclarationV1, type WorldSourcePurposeInputV1 } from './source-purpose-contract';
+import { revalidateWorldSourcePurposeV1 } from './source-purpose-actions';
 
 /** Opaque capabilities for an authorization CAS in a product transaction. */
 export function worldSourcePurposeTransactionTablesV1() {

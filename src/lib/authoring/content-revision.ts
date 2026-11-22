@@ -1,14 +1,14 @@
-import { PROJECT_TABLES } from '../registry/project-tables'
-import type { TableSpec } from '../registry/types'
-import type { AgentEvent, AgentRunRecord, OutlineNode, WorkspaceScope } from '../types'
-import { parseAgentEventPayload } from '../types/agent-session'
-import { assertRecordInScope, readOwnedRows } from '../workspace/scope'
-import { hashCanonicalValue } from '../agent/run/hash'
-import { readAgentRunV1, type AgentRunSnapshotV1 } from '../agent/run/event-store'
-import { db } from '../db/schema'
-import { isPortableResourceUidV1 } from '../context-gateway/resource-uid'
-import type { OutlineGenerationAdoptionIntentV1, OutlineGenerationBatchRefV1 } from '../outline/candidate-lifecycle'
-import { resolveCanonicalOutlineAncestry } from '../outline/canonical-outline-walk'
+import { PROJECT_TABLES } from '../registry/project-tables';
+import type { TableSpec } from '../registry/types';
+import type { AgentEvent, AgentRunRecord, OutlineNode, WorkspaceScope } from '../types';
+import { parseAgentEventPayload } from '../types/agent-session';
+import { assertRecordInScope, readOwnedRows } from '../workspace/scope';
+import { hashCanonicalValue } from '../agent/run/hash';
+import { readAgentRunV1, type AgentRunSnapshotV1 } from '../agent/run/event-store';
+import { db } from '../db/schema';
+import { isPortableResourceUidV1 } from '../context-gateway/resource-uid';
+import type { OutlineGenerationAdoptionIntentV1, OutlineGenerationBatchRefV1 } from '../outline/candidate-lifecycle';
+import { resolveCanonicalOutlineAncestry } from '../outline/canonical-outline-walk';
 import Dexie from 'dexie'
 
 export interface WorkspaceContentRevisionEntryV1 {

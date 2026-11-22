@@ -1091,8 +1091,8 @@ if (!gatewayToolsSource.includes('sourceRefCount: descriptor.sourceRefs.length')
 if (/\bdb\./.test(gatewayToolsSource)) {
   violations.push('[㉕工具只读] Context Gateway tool adapter 不得直接访问或写数据库')
 }
-if (!agentExecutionBindingSource.includes("AGENT_TOOL_SCHEMA_VERSION_V1 = 'agent-read-tools-v23-positioning-preparation-v1'")
-  || !agentExecutionBindingSource.includes("AGENT_TOOL_SCHEMA_HASH_V1 = '928c30e82de8cb1dfe69540e9ddf140b190c2cd189c501bcaff6731a06550874'")
+if (!agentExecutionBindingSource.includes("AGENT_TOOL_SCHEMA_VERSION_V1 = 'agent-read-tools-v24-longform-scope-v1'")
+  || !agentExecutionBindingSource.includes("AGENT_TOOL_SCHEMA_HASH_V1 = '13809a0695026642fd77a574682890a8252ac421d08204065c320d6e9029c8d8'")
   || !agentExecutionBindingSource.includes('verifyAgentToolSchemaBindingV1')) {
   violations.push('[㉕工具版本] 当前 Gateway 工具必须冻结并校验 Agent tool schema version/hash')
 }
@@ -1409,186 +1409,10 @@ for (const file of walk('src')) {
   }
 }
 const productRuntimeTypeSource = read('src/lib/types/product-runtime.ts')
-const productRuntimeInstanceSource = read('src/lib/product/runtime-instances.ts')
-const productRuntimeCoreSource = read('src/lib/product/runtime-core.ts')
-const productRuntimeAdapterSource = read('src/lib/product/runtime-product-adapters.ts')
-const productRuntimeApiSource = read('src/lib/product/runtime-api.ts')
-const productRuntimeStoreSource = read('src/stores/ttrpg-runtime-player.ts')
 const sidebarTreeSource = read('src/components/layout/sidebar-tree.ts')
 if (!productRuntimeTypeSource.includes('PRODUCTION_PRODUCT_KINDS_V1')
   || !productRuntimeTypeSource.includes('PRODUCT_RUNTIME_KINDS = [...PRODUCTION_PRODUCT_KINDS_V1]')) {
   violations.push('[㉝正式运行类型] Product Runtime 类型必须直接复用封闭产品身份注册表')
-}
-if (!productRuntimeInstanceSource.includes("input.productSource.kind !== 'release' && input.productSource.kind !== 'build'")
-  || !productRuntimeInstanceSource.includes('verifyProductRuntimeSource({')
-  || !productRuntimeInstanceSource.includes('source: input.productSource')
-  || !productRuntimeInstanceSource.includes('if (input.kind !== expectedKind)')
-  || productRuntimeInstanceSource.includes('explicitLegacyBinding')
-  || /worldReleaseId\??:\s*number/.test(productRuntimeInstanceSource)) {
-  violations.push('[㉝底层实例闸门] 正式产品必须统一拒绝 WorldRelease/草稿直启，禁止恢复 legacy 特例')
-}
-/** Follow this one approved extraction through real TS bindings. The source
- * count guard must belong to the called/exported verifier, not a comment,
- * unrelated module, shadowed local call or merely concatenated source text.
- * @param {string} coreText
- * @param {string} authorityText
- * @returns {boolean}
- */
-function hasBoundFormalRuntimeSourceGuardV1(coreText, authorityText) {
-  const corePath = '/runtime-boundary/runtime-core.ts'
-  const authorityPath = '/runtime-boundary/runtime-source-authority.ts'
-  const files = new Map([[corePath, coreText], [authorityPath, authorityText]])
-  const options = { target: ts.ScriptTarget.Latest, module: ts.ModuleKind.ESNext, noLib: true, noEmit: true }
-  const host = ts.createCompilerHost(options)
-  host.getSourceFile = file => {
-    const text = files.get(file)
-    return text === undefined ? undefined : ts.createSourceFile(file, text, options.target, true, ts.ScriptKind.TS)
-  }
-  host.fileExists = file => files.has(file)
-  host.readFile = file => files.get(file)
-  host.resolveModuleNames = (names, containingFile) => names.map(name => (
-    containingFile === corePath && name === './runtime-source-authority'
-      ? { resolvedFileName: authorityPath, extension: ts.Extension.Ts } : undefined
-  ))
-  const program = ts.createProgram([corePath, authorityPath], options, host)
-  const checker = program.getTypeChecker(), core = program.getSourceFile(corePath)
-  const authority = program.getSourceFile(authorityPath)
-  if (!core || !authority) return false
-  /** @param {import('typescript').Symbol | undefined} symbol
-   * @returns {import('typescript').Symbol | undefined} */
-  const unalias = symbol => symbol && (symbol.flags & ts.SymbolFlags.Alias)
-    ? checker.getAliasedSymbol(symbol) : symbol
-  const verifierName = 'verifyFormalRuntimeSourceV1'
-  const coreModule = checker.getSymbolAtLocation(core)
-  if (!coreModule) return false
-  const exported = checker.getExportsOfModule(coreModule)
-    .find(symbol => symbol.name === verifierName)
-  const target = unalias(exported)
-  const verifier = target?.declarations?.find(node => ts.isFunctionDeclaration(node) && node.body
-    && node.name?.text === verifierName && (node.getSourceFile() === core || node.getSourceFile() === authority))
-  if (!verifier || !ts.isFunctionDeclaration(verifier) || !verifier.body) return false
-  if (verifier.getSourceFile() === authority) {
-    const imported = core.statements.some(node => ts.isImportDeclaration(node)
-      && stringValue(node.moduleSpecifier) === './runtime-source-authority' && !node.importClause?.isTypeOnly
-      && node.importClause?.namedBindings && ts.isNamedImports(node.importClause.namedBindings)
-      && node.importClause.namedBindings.elements.some(entry => !entry.isTypeOnly
-        && (entry.propertyName ?? entry.name).text === verifierName
-        && unalias(checker.getSymbolAtLocation(entry.name)) === target))
-    if (!imported) return false
-  }
-  let called = false
-  visit(core, /** @param {import('typescript').Node} node */ node => {
-    if (!ts.isCallExpression(node) || !ts.isIdentifier(node.expression)
-      || unalias(checker.getSymbolAtLocation(node.expression)) !== target) return
-    let parent = node.parent
-    while (parent && parent !== verifier) parent = parent.parent
-    if (parent !== verifier) called = true
-  })
-  if (!called) return false
-  const parameter = verifier.parameters[0]?.name
-  if (!parameter || !ts.isIdentifier(parameter)) return false
-  const counts = verifier.body.statements.filter(ts.isVariableStatement)
-    .flatMap(node => node.declarationList.flags & ts.NodeFlags.Const ? [...node.declarationList.declarations] : [])
-    .filter(node => ts.isIdentifier(node.name) && node.name.text === 'sourceCount')
-  if (counts.length !== 1) return false
-  const count = counts[0], length = count.initializer
-  if (!length || !ts.isPropertyAccessExpression(length) || length.name.text !== 'length'
-    || !ts.isCallExpression(length.expression)) return false
-  const filter = length.expression, filterAccess = filter.expression
-  if (!ts.isPropertyAccessExpression(filterAccess) || filterAccess.name.text !== 'filter'
-    || !ts.isArrayLiteralExpression(filterAccess.expression) || filter.arguments.length !== 1) return false
-  const elements = filterAccess.expression.elements
-  const releaseElement = elements[0], buildElement = elements[1]
-  if (elements.length !== 2 || !releaseElement || !buildElement
-    || !ts.isPropertyAccessExpression(releaseElement) || !ts.isPropertyAccessExpression(buildElement)
-    || ![releaseElement, buildElement].every(node => ts.isIdentifier(node.expression) && node.expression.text === parameter.text)
-    || releaseElement.name.text !== 'productReleaseId' || buildElement.name.text !== 'productBuildId') return false
-  const predicate = filter.arguments[0]
-  if (!ts.isArrowFunction(predicate) || predicate.parameters.length !== 1
-    || !ts.isIdentifier(predicate.parameters[0].name) || !ts.isBinaryExpression(predicate.body)
-    || !ts.isIdentifier(predicate.body.left) || predicate.body.left.text !== predicate.parameters[0].name.text
-    || predicate.body.operatorToken.kind !== ts.SyntaxKind.ExclamationEqualsToken
-    || predicate.body.right.kind !== ts.SyntaxKind.NullKeyword) return false
-  return verifier.body.statements.some(node => {
-    if (!ts.isIfStatement(node) || !ts.isBlock(node.thenStatement)
-      || !ts.isThrowStatement(node.thenStatement.statements[0])) return false
-    /** @param {import('typescript').Node} part
-     * @returns {boolean} */
-    const rejectsNonUnique = part => {
-      if (ts.isParenthesizedExpression(part)) return rejectsNonUnique(part.expression)
-      if (!ts.isBinaryExpression(part)) return false
-      if (part.operatorToken.kind === ts.SyntaxKind.BarBarToken) {
-        return rejectsNonUnique(part.left) || rejectsNonUnique(part.right)
-      }
-      return part.operatorToken.kind === ts.SyntaxKind.ExclamationEqualsEqualsToken
-        && ts.isIdentifier(part.left) && checker.getSymbolAtLocation(part.left) === checker.getSymbolAtLocation(count.name)
-        && ts.isNumericLiteral(part.right) && part.right.text === '1'
-    }
-    return rejectsNonUnique(node.expression)
-  })
-}
-
-const productRuntimeSourceAuthoritySource = read('src/lib/product/runtime-source-authority.ts')
-if (!hasBoundFormalRuntimeSourceGuardV1(productRuntimeCoreSource, productRuntimeSourceAuthoritySource)
-  || /\bcreateSession\s*:/.test(productRuntimeStoreSource)) {
-  violations.push('[㉝运行核心旁路] ProductRuntime core 必须验证正式分支来源，store 不得暴露无绑定创建入口')
-}
-
-// Narrow guard self-controls. This does not replace the separate global AST
-// anti-bypass work tracked by SFQA-134.
-const sourceGuardBodySelfTestV1 = `
-  const sourceCount = [session.productReleaseId, session.productBuildId].filter(value => value != null).length;
-  if (sourceCount !== 1 || !session.runtimeSourceHash) { throw new Error('unique frozen source required'); }
-  return session;
-`
-const sourceGuardAuthoritySelfTestV1 = `export function verifyFormalRuntimeSourceV1(session) { ${sourceGuardBodySelfTestV1} }`
-const sourceGuardCoreSelfTestV1 = `
-  import { verifyFormalRuntimeSourceV1 } from './runtime-source-authority';
-  export { verifyFormalRuntimeSourceV1 } from './runtime-source-authority';
-  export function appendFormal(session) { return verifyFormalRuntimeSourceV1(session); }
-`
-/** @type {Array<[string, string, string, boolean]>} */
-const sourceGuardSelfTestsV1 = [
-  ['valid-extracted', sourceGuardCoreSelfTestV1, sourceGuardAuthoritySelfTestV1, true],
-  ['valid-inline', `${sourceGuardAuthoritySelfTestV1} export function appendFormal(s) { return verifyFormalRuntimeSourceV1(s); }`, '', true],
-  ['missing-import', sourceGuardCoreSelfTestV1.replace(/import[^;]+;/, ''), sourceGuardAuthoritySelfTestV1, false],
-  ['wrong-module', sourceGuardCoreSelfTestV1.replaceAll('./runtime-source-authority', './unrelated'), sourceGuardAuthoritySelfTestV1, false],
-  ['missing-reexport', sourceGuardCoreSelfTestV1.replace(/export \{[^;]+;/, ''), sourceGuardAuthoritySelfTestV1, false],
-  ['missing-call', sourceGuardCoreSelfTestV1.replace('return verifyFormalRuntimeSourceV1(session)', 'return session'), sourceGuardAuthoritySelfTestV1, false],
-  ['comment-call', sourceGuardCoreSelfTestV1.replace('return verifyFormalRuntimeSourceV1(session)', 'return session /* verifyFormalRuntimeSourceV1(session) */'), sourceGuardAuthoritySelfTestV1, false],
-  ['shadowed-call', sourceGuardCoreSelfTestV1.replace('appendFormal(session)', 'appendFormal(session, verifyFormalRuntimeSourceV1)'), sourceGuardAuthoritySelfTestV1, false],
-  ['missing-rejection', sourceGuardCoreSelfTestV1, sourceGuardAuthoritySelfTestV1.replace('sourceCount !== 1', 'false'), false],
-  ['non-rejecting-condition', sourceGuardCoreSelfTestV1, sourceGuardAuthoritySelfTestV1.replace('sourceCount !== 1 || !session.runtimeSourceHash', 'sourceCount !== 1 && false'), false],
-  ['unreachable-throw', sourceGuardCoreSelfTestV1, sourceGuardAuthoritySelfTestV1.replace("throw new Error('unique frozen source required')", "return session; throw new Error('unique frozen source required')"), false],
-  ['wrong-guarded-tuple', sourceGuardCoreSelfTestV1, sourceGuardAuthoritySelfTestV1.replace('session.productBuildId', 'session.unrelatedId'), false],
-  ['only-comment-and-string', `// verifyFormalRuntimeSourceV1(session); sourceCount !== 1
-const text = 'verifyFormalRuntimeSourceV1(session); sourceCount !== 1'`, sourceGuardAuthoritySelfTestV1, false],
-  ['unrelated-count-check', sourceGuardCoreSelfTestV1, `export function verifyFormalRuntimeSourceV1(session) { return session; } function unrelated(session) { ${sourceGuardBodySelfTestV1} }`, false],
-]
-for (const [name, core, authority, expected] of sourceGuardSelfTestsV1) {
-  if (hasBoundFormalRuntimeSourceGuardV1(core, authority) !== expected) {
-    violations.push(`[㉝来源守卫自测] ${name} 未能区分真实绑定与旁路`)
-  }
-}
-for (const symbol of [
-  'appendProductRuntimeEvent',
-  'resolveProductRuntimeDice',
-  'createPreviewProductRuntimeSession',
-  'createReleasedProductRuntimeSession',
-  'insertPreparedProductRuntimeSessionV1',
-  'preparePreviewProductRuntimeSessionRecordV1',
-  'prepareReleasedProductRuntimeSessionRecordV1',
-]) {
-  if (new RegExp(`\\b${symbol}\\b`).test(productRuntimeApiSource)) {
-    violations.push(`[㉝运行公共边界] product/runtime-api.ts 不得公开底层写入或半成品会话入口 ${symbol}`)
-  }
-}
-for (const file of walk('src')) {
-  if (file === 'src/lib/product/runtime-core.ts' || file === 'src/lib/product/runtime-dice-command.ts') continue
-  const source = read(file)
-  if (/\bappendProductRuntimeEvent\b/.test(source) || /product\/runtime-dice-command/.test(source)) {
-    violations.push(`[㉝运行底层写入] ${file}: 正式产品必须使用产品专用命令，不得导入通用事件写入器或随机事件命令`)
-  }
 }
 const retiredFormalFixtureSymbols = [
   'createProductRuntimeSessionFixtureV1',
@@ -1597,7 +1421,7 @@ const retiredFormalFixtureSymbols = [
   'allowFormalFixture',
 ]
 for (const symbol of retiredFormalFixtureSymbols) {
-  if (productRuntimeCoreSource.includes(symbol) || worldReleaseSource.includes(symbol)) {
+  if (worldReleaseSource.includes(symbol)) {
     violations.push(`[㉝正式入口零夹具] src/ 不得保留可绕过 Product Build/Release 的 ${symbol}`)
   }
 }
@@ -1611,36 +1435,6 @@ for (const dir of UI_DIRS) {
     }
   }
 }
-const retiredTtrpgFreeformCommands = [
-  'openTtrpgScene',
-  'appendTtrpgTurn',
-  'parseTtrpgRuntimeEncounterCandidate',
-  'startTtrpgEncounter',
-  'resolveTtrpgEncounter',
-  'resolveTtrpgCheck',
-  'resolveTtrpgAttack',
-  'changeTtrpgResource',
-  'applyTtrpgCondition',
-  'removeTtrpgCondition',
-  'updateTtrpgCampaignSummary',
-  'upsertTtrpgQuest',
-  'upsertTtrpgNpcSchedule',
-]
-for (const file of [
-  'src/lib/ttrpg/runtime-commands.ts',
-  'src/lib/ttrpg/runtime-api.ts',
-  'src/stores/ttrpg-runtime-player.ts',
-]) {
-  const source = read(file)
-  for (const command of retiredTtrpgFreeformCommands) {
-    if (new RegExp(`\\b${command}\\b`).test(source)) {
-      violations.push(`[㉝跑团正式命令] ${file}: ${command} 会绕过冻结 CampaignPack 与正式命令信封，不得恢复`)
-    }
-  }
-}
-if (/\b(?:appendProductRuntimeEvent|resolveProductRuntimeDice)\b/.test(productRuntimeStoreSource)) {
-  violations.push('[㉝跑团 Store 边界] 跑团 UI Store 只能管理会话投影、检查点与分支；玩法动作必须进入正式 TTRPG 命令 API')
-}
 if (sidebarTreeSource.includes('simulation-runtime')
   || workspacePageSource.includes('simulation-runtime')
   || workspacePageSource.includes("import('../components/simulation/SimulationRuntimePanel')")) {
@@ -1649,62 +1443,19 @@ if (sidebarTreeSource.includes('simulation-runtime')
 
 // ── ㉝B ARCH-04 产品发布谱系必须先于正式 Runtime 校验 ──
 const productSourceContractsSource = read('src/lib/product/source-contracts.ts')
-const productSourcePublicSource = read('src/lib/product/source.ts')
-const requirementAdaptersSource = read('src/lib/product/world-requirement-adapters.ts')
-const productProductionWorldSource = read('src/lib/product-production/world-source.ts')
-const productProductionSourceContractsSource = read('src/lib/product-production/source-contracts.ts')
-const productProductionCommandsSource = read('src/lib/product-production/commands.ts')
-const productProductionServiceSource = read('src/lib/product-production/service.ts')
-const productProductionSchedulerSource = read('src/lib/product-production/scheduler.ts')
-const productProductionAdoptionSource = read('src/lib/product-production/adoption.ts')
-const productProductionExecutorSource = read('src/lib/product-production/production-executor.ts')
-const productProductionStudioSource = read('src/components/product/ProductProductionStudio.tsx')
 const productIdentitySource = read('src/lib/types/product-identity.ts')
 const productProductionTypesSource = read('src/lib/types/product-production.ts')
-const productRuntimePackageSource = read('src/lib/product-production/runtime-package.ts')
 const productReleaseTypesSource = read('src/lib/types/product-release.ts')
 const productRuntimeTypesSource = read('src/lib/types/product-runtime.ts')
 const worldReferenceSource = read('src/lib/world-engine/world-reference.ts')
 const releaseCodecSource = read('src/lib/world-engine/release-codec.ts')
-const productEntryArchitectureSource = read('src/pages/TextGameDevelopmentPage.tsx')
-const distributionBundleSource = read('src/lib/product-platform/distribution-bundle.ts')
 for (const token of [
-  'validateWorldReferenceV1', 'validateProductSourcePlanV1',
-  'validateConfirmedProductBriefV1', 'validateProductSourceManifestV1',
-  'validateProductReleaseLineageV1', 'assertFormalProductProductionStartV1',
+  'validateProductSourcePlan', 'validateConfirmedProductBriefV1',
+  'validateProductSourceManifest', 'validateProductReleaseLineageV1',
 ]) {
   if (!productSourceContractsSource.includes(token)) {
-    violations.push(`[㉝B五契约] product/source-contracts.ts 缺少 ${token}`)
+    violations.push(`[㉝B兼容来源契约] product/source-contracts.ts 缺少 ${token}`)
   }
-}
-if (!productSourcePublicSource.includes("from './source-contracts'")
-  || !productSourcePublicSource.includes("from './world-requirement-adapters'")) {
-  violations.push('[㉝B产品来源公共边界] 五项逻辑契约与产品需求适配器必须从同一 headless 入口导出')
-}
-for (const token of [
-  'TTRPG_WORLD_REQUIREMENT_ADAPTER_V1',
-  'CHARACTER_INTERACTION_WORLD_REQUIREMENT_ADAPTER_V1',
-  'AI_TOWN_WORLD_REQUIREMENT_ADAPTER_V1',
-  'TEXT_ADVENTURE_WORLD_REQUIREMENT_ADAPTER_V1',
-  'AVG_WORLD_REQUIREMENT_ADAPTER_V1',
-  'TEXT_OPEN_WORLD_REQUIREMENT_ADAPTER_V1',
-]) {
-  if (!requirementAdaptersSource.includes(token)) violations.push(`[㉝B需求适配器] 缺少 ${token}`)
-}
-if (!productProductionWorldSource.includes('openWorldSemanticResourceCatalogV1({')
-  || !productProductionWorldSource.includes('readWorldSemanticResourcesV1({')) {
-  violations.push('[㉝B中立世界读取] 统一产品生产必须经语义目录与资源读取协议，不得解析物理 WorldRelease')
-}
-if (!productProductionWorldSource.includes('selection: ProductWorldSourceSelection')
-  || productProductionWorldSource.includes('selection?: ProductWorldSourceSelection')
-  || /input\.selection\s*\?|\?\?\s*opened\.resources|input\.selection\s*==\s*null/.test(productProductionWorldSource)
-  || !productProductionWorldSource.includes('resolveProductProductionWorldCompilationDescriptorsV2({')
-  || !productProductionWorldSource.includes('selection 与冻结 WorldReference 不一致')) {
-  violations.push('[㉝B产品选择强制生效] 世界编译目录必须要求显式产品 selection、校验 WorldReference hash，且不得回退读取完整 release')
-}
-if (!productEntryArchitectureSource.includes("lazy(() => import('../components/product/ProductProductionStudio'))")
-  || !productEntryArchitectureSource.includes('<ProductProductionStudio')) {
-  violations.push('[㉝B统一产品生产] 产品中心必须把上层产品制作统一路由到 ProductProductionStudio')
 }
 for (const token of [
   'PRODUCTION_PRODUCT_KINDS_V1', 'TEXT_GAME_PRODUCT_KINDS_V1',
@@ -1720,55 +1471,8 @@ if (!/PRODUCTION_PRODUCT_KINDS_V1\s*=\s*\[\s*'ttrpg',\s*'character-interaction',
 }
 if (!productProductionTypesSource.includes('productType: ProductionProductKindV1')
   || !productReleaseTypesSource.includes('productType: ProductionProductKindV1')
-  || !productProductionStudioSource.includes('allowedProducts: readonly SupportedProduct[]')
-  || !productProductionStudioSource.includes('props.allowedProducts.includes')
-  || !productProductionServiceSource.includes('allowedProducts.includes(row.productType)')
-) {
-  violations.push('[㉝B产品隔离] Production/Release 根记录及工作台入口必须硬绑定并过滤产品身份')
-}
-if (!productEntryArchitectureSource.includes("'text-adventure'") || !productEntryArchitectureSource.includes("'text-open-world'")
-  || /upper\.(?:storygame|narrative-simulation)/.test(productEntryArchitectureSource)) {
-  violations.push('[㉝B文字游戏收口] 产品中心只能从封闭注册表暴露文字冒险、AVG、文字开放世界')
-}
-if (!productRuntimePackageSource.includes('new Set<ProductionProductKindV1>(PRODUCTION_PRODUCT_KINDS_V1)')
   || !productRuntimeTypesSource.includes('...PRODUCTION_PRODUCT_KINDS_V1')) {
-  violations.push('[㉝B产品身份单一源] RuntimePackage 与正式 Session 必须从 PRODUCTION_PRODUCT_KINDS_V1 派生，不得复制枚举')
-}
-if (!distributionBundleSource.includes("schema: 'storyforge.product-distribution-bundle'")
-  || !distributionBundleSource.includes('sourceWorld: { contentHash: string }')
-  || distributionBundleSource.includes('db.worldReleases')
-  || distributionBundleSource.includes('WorldReleaseManifestV3')) {
-  violations.push('[㉝B自包含分发] 产品分发只能包含 ProductRelease、产品媒资及世界 hash 来源证明')
-}
-for (const token of [
-  'createProductProductionSourcePlanV1', 'createConfirmedProductBriefV1',
-  'assertFormalProductProductionStartV1', 'sourcePlanJson', 'confirmedBriefJson',
-]) {
-  if (!productProductionCommandsSource.includes(token)) {
-    violations.push(`[㉝B阶段二冻结] commands.ts 缺少 ${token}`)
-  }
-}
-for (const token of [
-  'executeProductProductionWorldGatewayV1', 'parseProductProductionSourcePlanV1',
-  'parseConfirmedProductBriefV1', 'recordContextGatewayPreflightEvidenceV1',
-  'finalizeContextGatewayAttemptEvidenceV1', 'sourcePlanHash', 'confirmedBriefHash',
-  'product-production-deterministic-world-integrator',
-  'requireCompilationResources:',
-]) {
-  if (!productProductionSchedulerSource.includes(token)) {
-    violations.push(`[㉝B阶段三证据链] scheduler.ts 缺少 ${token}`)
-  }
-}
-for (const token of [
-  'aggregateProductSourceManifestFromExactRuns', 'portableProductSourcePlan',
-  'createProductReleaseLineageV1', 'createProductReleaseManifestV1',
-]) {
-  if (!productProductionAdoptionSource.includes(token)) {
-    violations.push(`[㉝B发布冻结] adoption.ts 缺少 ${token}`)
-  }
-}
-if (!productProductionExecutorSource.includes('selection: options.brief.source.selection')) {
-  violations.push('[㉝B作者选择生效] 正式产品编译器必须显式读取 Brief 冻结的世界资源 selection')
+  violations.push('[㉝B兼容产品身份] 历史 Production/Release 根记录必须保留封闭产品身份')
 }
 for (const token of [
   'ProductReleaseManifestV1', 'productionProvenance:', 'sourceContracts:',
@@ -1776,6 +1480,7 @@ for (const token of [
 ]) {
   if (!productReleaseTypesSource.includes(token)) violations.push(`[㉝B产品发布协议] product-release.ts 缺少 ${token}`)
 }
+const productRuntimePackageSource = read('src/lib/legacy-compat/product-production/runtime-package.ts')
 for (const token of [
   'verifyProductReleaseManifestV1', 'validateProductSourcePlan',
   'validateConfirmedProductBriefV1', 'validateProductSourceManifest',
@@ -1786,31 +1491,6 @@ for (const token of [
 if (productReleaseTypesSource.includes('productionProvenance: null')
   || productReleaseTypesSource.includes('productionProvenance?:')) {
   violations.push('[㉝B发布来源必填] 当前 ProductRelease 不得允许空或可选 productionProvenance')
-}
-for (const token of [
-  'freezeProductSourcePlanV1', 'freezeExactProductSourcePlanV2', 'resolveProductSourceReadBoundary',
-  'openWorldSemanticResourceCatalogV1', 'productProductionTaskUsesWorldGatewayV1',
-  'resolveProductProductionWorldCompilationDescriptorsV2',
-  'mandatoryOriginalResourceKeys:',
-]) {
-  if (!productProductionSourceContractsSource.includes(token)) {
-    violations.push(`[㉝B产品来源执行器] source-contracts.ts 缺少 ${token}`)
-  }
-}
-if (!productProductionWorldSource.includes('resolveProductProductionWorldCompilationDescriptorsV2')
-  || !productProductionWorldSource.includes("relation.direction === 'outgoing'")
-  || !productProductionWorldSource.includes("relation.direction === 'incoming'")) {
-  violations.push('[①B确定性编译来源] 编译器与 Gateway 必须共用选择及语义依赖闭包')
-}
-for (const retiredCopy of [
-  'ttrpg-upper-layer-development-gate',
-  '正式世界适配完成前',
-  '不会发布为商业 ProductRelease',
-  '正式发布等待最终对接',
-]) {
-  if (productProductionStudioSource.includes(retiredCopy)) {
-    violations.push(`[①B跑团正式链] ProductProductionStudio 不得恢复旧试玩/禁止发布旁路:${retiredCopy}`)
-  }
 }
 if (/关闭[“"]启用创作可靠性工程/.test(read('src/components/settings/CreativeReliabilityCommunityPanel.tsx'))) {
   violations.push('[㉝B可靠性文案] 设置页不得暗示正式 Creative Reliability 链可以关闭')
@@ -1833,61 +1513,7 @@ if (!worldSemanticSnapshotSource.includes('Object.keys(manifest.records).length 
   violations.push('[㉝B世界包精确闭合] 导入必须要求每个 selected table 存在且与冻结 records 一致，包括空表')
 }
 
-const createProductRuntimeInstanceStart = productRuntimeInstanceSource.indexOf('export async function createProductRuntimeInstance')
-const createProductRuntimeInstanceEnd = productRuntimeInstanceSource.indexOf('\nexport ', createProductRuntimeInstanceStart + 1)
-const createProductRuntimeInstanceBody = createProductRuntimeInstanceStart >= 0
-  ? productRuntimeInstanceSource.slice(createProductRuntimeInstanceStart, createProductRuntimeInstanceEnd > createProductRuntimeInstanceStart
-    ? createProductRuntimeInstanceEnd : productRuntimeInstanceSource.length)
-  : ''
-const prepareFormalSessionIndex = createProductRuntimeInstanceBody.indexOf('prepareReleasedProductRuntimeSessionRecordV1({')
-const atomicSessionTransactionIndex = createProductRuntimeInstanceBody.indexOf("return db.transaction('rw'")
-const insertPreparedSessionIndex = createProductRuntimeInstanceBody.indexOf('insertPreparedProductRuntimeSessionV1(preparedSession)')
-if (prepareFormalSessionIndex < 0 || atomicSessionTransactionIndex <= prepareFormalSessionIndex
-  || insertPreparedSessionIndex <= atomicSessionTransactionIndex) {
-  violations.push('[㉝B会话事务边界] 加密发布校验必须在事务外准备；事务内只能 CAS、插入已验证 session 与初始事件')
-}
-for (const token of [
-  'prepareReleasedProductRuntimeSessionRecordV1', 'preparePreviewProductRuntimeSessionRecordV1',
-  'insertPreparedProductRuntimeSessionV1', 'preparedProductRuntimeSessionsV1',
-]) {
-  if (!productRuntimeCoreSource.includes(token)) violations.push(`[㉝B正式会话准备] product/runtime-core.ts 缺少 ${token}`)
-}
-
-// Shared runtime owns only session/event/checkpoint mechanics. Product parsing,
-// reduction, validation and branch extensions enter through one explicit
-// composition root; product commands remain in product-owned modules.
-if (/from\s+['"]\.\.\/(?:ttrpg|character-interaction|adventure|avg|open-world)\//.test(productRuntimeCoreSource)) {
-  violations.push('[㉝B运行核心纯度] product/runtime-core.ts 不得直接依赖任何上层产品实现')
-}
-if (/\bttrpgProtocol\b|\.ttrpg\b|\brunFormat\b/.test(productRuntimeCoreSource)) {
-  violations.push('[㉝B跑团边界] 共享运行核心不得解释跑团格式或协议；通过产品适配器分发')
-}
-for (const token of [
-  'parseProductOwnedRuntimeStateV1', 'applyProductOwnedRuntimeEventV1',
-  'assertFrozenProductRuntimeStateV1', 'assertProductNarrativeChoiceReadyV1',
-  'rebaseProductRuntimeStateForBranchV1', 'cloneProductRuntimeBranchExtensionsV1',
-]) {
-  if (!productRuntimeAdapterSource.includes(token)) {
-    violations.push(`[㉝B产品运行适配器] runtime-product-adapters.ts 缺少 ${token}`)
-  }
-}
-if (productRuntimeCoreSource.split('\n').length > 2400) {
-  violations.push('[㉝B运行核心规模] product/runtime-core.ts 超过 2400 行，疑似重新吸收产品职责')
-}
-for (const file of [
-  'src/lib/product/runtime-api.ts',
-  'src/lib/ttrpg/runtime-api.ts',
-  'src/lib/character-interaction/runtime-api.ts',
-  'src/lib/adventure/runtime-api.ts',
-  'src/lib/avg/runtime-api.ts',
-  'src/lib/open-world/runtime-api.ts',
-]) {
-  if (!fs.existsSync(path.join(root, file))) violations.push(`[㉝B运行 API] 缺少 ${file}`)
-}
-
 const productMediaTypeSource = read('src/lib/types/product-media.ts')
-const productReleaseMediaSource = read('src/lib/product-production/release-media.ts')
-const productRuntimeMediaLibrarySource = read('src/lib/product/runtime-media-library.ts')
 for (const token of [
   "ownerKind: 'release' | 'runtime'",
   'productType: ProductionProductKindV1',
@@ -1899,14 +1525,6 @@ for (const token of [
 if (!registrySrc.includes("target: 'productMediaAssets[productReleaseId]'")
   || !registrySrc.includes("target: 'productMediaAssets[productRuntimeSessionId]'")) {
   violations.push('[㉝B媒资生命周期] ProductRelease 与 ProductRuntimeSession 必须在 PROJECT_TABLES 级联各自媒资')
-}
-if (!productReleaseMediaSource.includes("where('[productReleaseId+assetKey+version]')")
-  || productReleaseMediaSource.includes("where('[workId+assetKey+version]')")) {
-  violations.push('[㉝B发布媒资隔离] 正式媒资必须按 ProductRelease 解析，禁止回退到 Work 级资产键')
-}
-if (!productRuntimeMediaLibrarySource.includes('productRuntimeSessionId: number')
-  || !productRuntimeMediaLibrarySource.includes("ownerKind: 'runtime'")) {
-  violations.push('[㉝B运行媒资隔离] 运行中新生成的媒资必须绑定具体 ProductRuntimeSession')
 }
 /** Exact current baseline, including every frozen compatibility bridge.
  * @param {string} schemaSource */
@@ -1965,30 +1583,11 @@ if (!deriveImportSrc.includes('ProductMedia 必须具有唯一、有效的产品
   violations.push('[㉝B媒资导入验签] 便携导入必须拒绝无 owner、双 owner 和产品身份不一致的媒资')
 }
 
-const PRODUCT_MEDIA_WRITERS = new Set([
-  'src/lib/product-production/adoption.ts',
-  'src/lib/product-platform/distribution-bundle.ts',
-  'src/lib/product/runtime-media-library.ts',
-])
-const PRODUCT_RELEASE_WRITERS = new Set([
-  'src/lib/product-production/adoption.ts',
-  'src/lib/product-platform/distribution-bundle.ts',
-])
-const PRODUCT_RUNTIME_SESSION_WRITERS = new Set([
-  'src/lib/product/runtime-core.ts',
-  'src/lib/product/runtime-instances.ts',
-  'src/lib/ttrpg/runtime-media.ts',
-  'src/lib/ttrpg/runtime-commands.ts',
-  'src/lib/character-interaction/runtime-commands.ts',
-  'src/lib/ai-town/runtime-commands.ts',
-  'src/lib/adventure/runtime-commands.ts',
-  'src/lib/avg/runtime-commands.ts',
-  'src/lib/avg/inventory-commands.ts',
-  'src/lib/avg/reading-commands.ts',
-  // AVG-owned CAS transport command; only appends events and touches updatedAt.
-  'src/lib/avg/once-audio-commands.ts',
-  'src/lib/open-world/runtime-commands.ts',
-])
+// Retired products have no production writers; historical ownership stays in
+// the schema, registry and verified import/export compatibility contracts.
+const PRODUCT_MEDIA_WRITERS = new Set()
+const PRODUCT_RELEASE_WRITERS = new Set()
+const PRODUCT_RUNTIME_SESSION_WRITERS = new Set()
 for (const file of walk('src')) {
   const source = read(file)
   if (/\bdb\.productMediaAssets\.(?:add|put|bulkPut|update|delete|bulkDelete)\s*\(/.test(source)
@@ -2034,23 +1633,13 @@ for (const file of walk('src')) {
     violations.push(`[㉝C世界物理边界] ${file}: 非世界基础设施不得解析物理 WorldRelease`)
   }
 }
-if (requirementAdaptersSource.includes('WorldReleaseManifestV3')
-  || requirementAdaptersSource.includes('selectedTables')
-  || requirementAdaptersSource.includes('.records')) {
-  violations.push('[㉝C需求适配器中立性] 产品 requirement adapter 不得读取物理表、selectedTables 或 WorldRelease records')
-}
-if (productProductionServiceSource.includes("from '../world-engine/releases'")
-  || productProductionServiceSource.includes('WorldRelease[]')
-  || productProductionAdoptionSource.includes('db.worldReleases')) {
-  violations.push('[㉝C产品世界边界] 产品生产不得获取物理 WorldRelease，只能消费中立 WorldReference catalog/source 协议')
-}
 const registeredTableMarkers = [...registrySrc.matchAll(/\btable:\s*db\.([A-Za-z0-9_]+)/g)]
 const worldSemanticTableNames = registeredTableMarkers.flatMap((match, index) => {
   const blockEnd = registeredTableMarkers[index + 1]?.index ?? registrySrc.length
   const block = registrySrc.slice(match.index, blockEnd)
   return block.includes('worldSemantic:') ? [match[1]] : []
 })
-for (const directory of [
+const upperProductDirectories = [
   'src/lib/product',
   'src/lib/product-production',
   'src/lib/product-platform',
@@ -2060,8 +1649,9 @@ for (const directory of [
   'src/lib/adventure',
   'src/lib/avg',
   'src/lib/open-world',
-]) {
-  for (const file of walk(directory)) {
+]
+for (const directory of upperProductDirectories) {
+  for (const file of walk('src').filter(file => file.startsWith(`${directory}/`))) {
     const source = read(file)
     if (/context-gateway\/world-release-provider/.test(source)) {
       violations.push(`[㉝C上层零物理 Provider] ${file}: 上层产品只能依赖 world-release-client/Context Gateway 中立协议`)
@@ -2076,9 +1666,60 @@ for (const directory of [
     }
   }
 }
-if (!productSourcePublicSource.includes('listWorldReferenceCatalogV1')
-  || !worldReferenceSource.includes('listWorldReferenceCatalogV1')) {
-  violations.push('[㉝C世界参考目录] 上层产品选择世界必须走中立、只读 WorldReference catalog')
+if (!worldReferenceSource.includes('listWorldReferenceCatalogV1')) {
+  violations.push('[㉝C世界参考目录] 世界参考必须保留中立、只读 WorldReference catalog')
+}
+
+// Compatibility retains verified replay/hash readers, never formal writers.
+const compatibilityRuntimeSource = read('src/lib/legacy-compat/product/runtime-core.ts')
+for (const token of [
+  'replayProductRuntimeEventsVerifiedAsyncV1', 'hashProductRuntimeStateV1',
+  'parseProductRuntimeCheckpointV1', 'readVerifiedProductRuntimeHeadV1',
+]) {
+  if (!compatibilityRuntimeSource.includes(token)) {
+    violations.push(`[㉝兼容运行证据] legacy-compat/product/runtime-core.ts 缺少 ${token}`)
+  }
+}
+if (compatibilityRuntimeSource.split('\n').length > 2400) {
+  violations.push('[㉝兼容运行核心规模] 兼容核心超过原 2400 行边界')
+}
+if (/\bdb\.\w+\.(?:add|put|bulkAdd|bulkPut|update|delete|bulkDelete|clear)\s*\(/.test(compatibilityRuntimeSource)) {
+  violations.push('[㉝兼容只读边界] 历史 replay/hash 核心不得恢复数据库写入')
+}
+
+const RETIRED_PRODUCTION_ROOTS = [
+  'src/lib/product-production/', 'src/lib/product-platform/',
+  'src/lib/ttrpg/', 'src/lib/character-interaction/', 'src/lib/ai-town/',
+  'src/lib/adventure/', 'src/lib/avg/', 'src/lib/open-world/',
+  'src/lib/screenplay/', 'src/lib/comic/', 'src/lib/motion-drama/',
+  'src/components/ttrpg/', 'src/components/character-interaction/',
+  'src/components/ai-town/', 'src/components/avg/', 'src/components/text-game/',
+  'src/components/comic/', 'src/components/screenplay/', 'src/components/motion-drama/',
+  'src/components/short-novel/', 'src/lib/short-novel/',
+]
+const SHARED_PRODUCT_FILES = new Set([
+  'src/lib/product/exact-source-contracts.ts', 'src/lib/product/narrative-content.ts',
+  'src/lib/product/product-catalog.ts', 'src/lib/product/source-contracts.ts',
+  'src/lib/product/world-context-portability.ts',
+])
+const RETIRED_PRODUCTION_ENTRIES = new Set([
+  'src/pages/AvgPage.tsx', 'src/pages/CharacterChatPage.tsx',
+  'src/pages/ShortformPage.tsx', 'src/pages/MotionMaterialsPage.tsx',
+  'src/pages/TextGameDevelopmentPage.tsx', 'src/pages/TtrpgPage.tsx',
+  'src/pages/CharacterInteractionPage.tsx', 'src/pages/AiTownPage.tsx',
+  'src/pages/ShortNovelPage.tsx', 'src/pages/ScreenplayPage.tsx',
+  'src/pages/ComicPage.tsx', 'src/pages/MotionDramaPage.tsx',
+  'src/components/product/ProductProductionStudio.tsx',
+  'src/stores/ttrpg-runtime-player.ts', 'src/stores/character-interaction-player.ts',
+  'src/stores/adventure-game-player.ts', 'src/stores/avg-game-player.ts',
+  'src/stores/text-open-world-player.ts',
+])
+for (const file of walk('src')) {
+  if (RETIRED_PRODUCTION_ROOTS.some(directory => file.startsWith(directory))
+    || RETIRED_PRODUCTION_ENTRIES.has(file)
+    || (file.startsWith('src/lib/product/') && !SHARED_PRODUCT_FILES.has(file))) {
+    violations.push(`[㉝退役生产根] ${file}: 正式生产实现与入口已退役；历史读取只保留在 legacy-compat`)
+  }
 }
 
 const RETIRED_ARCHITECTURE_FILES = [
@@ -2369,35 +2010,7 @@ for (const file of walk('src')) {
   }
 }
 
-const CURRENT_PRODUCT_PLAYER_STORES = [
-  'src/stores/character-interaction-player.ts',
-  'src/stores/adventure-game-player.ts',
-  'src/stores/avg-game-player.ts',
-  'src/stores/text-open-world-player.ts',
-]
-for (const file of CURRENT_PRODUCT_PLAYER_STORES) {
-  const source = read(file)
-  if (!source.includes('verifyProductRuntimeSessionSourceV1')
-    && !source.includes('resolveProductRuntimeSource')) {
-    violations.push(`[㉝C统一预览运行] ${file}: 玩家端必须同时验证 Product Build Preview 与 ProductRelease`)
-  }
-  if (/session\.productReleaseId\s*==\s*null[^\n]*(?:throw|return)/.test(source)
-    || /row\.productReleaseId\s*!=\s*null\s*&&/.test(source)) {
-    violations.push(`[㉝C统一预览运行] ${file}: 不得把统一 Product Build Preview 当作旧存档排除`)
-  }
-}
 
-// The deterministic no-provider acceptance fixture is test-only. It must never
-// become a second production entry or be imported by UI.
-const productionServiceSource = read('src/lib/product-production/service.ts')
-const productionStudioSource = read('src/components/product/ProductProductionStudio.tsx')
-if (productionServiceSource.includes('runProductProductionPrototypeV1')
-  || productionServiceSource.includes("from './vertical-slice'")) {
-  violations.push('[㊌C唯一生产入口] service.ts 不得暴露确定性验收夹具为正式产品入口')
-}
-if (!productionStudioSource.includes('runAuthorizedProductProductionV1')) {
-  violations.push('[㊌C唯一生产入口] 上层产品工作台必须调用正式 durable production Harness')
-}
 for (const dir of UI_DIRS) {
   for (const file of walk(dir)) {
     if (/product-production\/vertical-slice/.test(read(file))) {
@@ -2467,7 +2080,6 @@ if (!nodeTemplatesSource.includes('assertOfficialAuthoringGraphUsesFormalActions
 // ── ㉟ ARCH-07 世界能力只表达语义；未验收产品必须经过成熟度入口 ──
 const worldDomainSource = read('src/lib/world-engine/domain.ts')
 const productCatalogSource = read('src/lib/product/product-catalog.ts')
-const productEntrySource = read('src/pages/TextGameDevelopmentPage.tsx')
 for (const capability of [
   'foundation', 'story', 'characters', 'relations', 'entities', 'storylines',
   'outline', 'detailed-outline', 'manuscript', 'multi-world',
@@ -2481,7 +2093,7 @@ if (/key:\s*['"](?:runtime|media|assets|gameplay|sessions?)['"]/.test(worldDomai
 }
 for (const token of [
   'PRODUCT_CATALOG_V1', "status: 'released'", "status: 'preview'",
-  "status: 'experimental'", "'internal'", 'requiresWorldReference',
+  "'experimental'", "'internal'",
   'ownsRuntime', 'ownsMedia', 'experimentalOptIn',
 ]) {
   if (!productCatalogSource.includes(token)) violations.push(`[㉟产品目录] 缺少 ${token}`)
@@ -2490,14 +2102,31 @@ if (!productCatalogSource.includes("input.channel === 'local-development' || inp
   || !productCatalogSource.includes("entry.status === 'released'")) {
   violations.push('[㉟生产入口] 产品目录必须以 released 为生产可见基线，并把预览/内部限制在本地或测试环境')
 }
-if (!productCatalogSource.includes("item.family === 'world-engine' && (item.ownsRuntime || item.ownsMedia)")) {
-  violations.push('[㉟世界产品所有权] 产品目录必须拒绝世界引擎拥有运行态或产品媒资')
+const productCatalogAst = parseSource('src/lib/product/product-catalog.ts')
+const expectedCatalogIds = ['independent.longform', 'authoring.nodes']
+/** @type {string[]} */
+const actualCatalogIds = []
+visit(productCatalogAst, /** @param {import('typescript').Node} node */ node => {
+  if (!ts.isVariableDeclaration(node) || !ts.isIdentifier(node.name)
+    || node.name.text !== 'PRODUCT_CATALOG_V1' || !node.initializer) return
+  visit(node.initializer, /** @param {import('typescript').Node} child */ child => {
+    if (!ts.isObjectLiteralExpression(child)) return
+    const id = stringValue(objectProperty(child, 'id')?.initializer)
+    if (id != null) actualCatalogIds.push(id)
+  })
+})
+if (JSON.stringify(actualCatalogIds) !== JSON.stringify(expectedCatalogIds)) {
+  violations.push(`[㉟保留产品目录] 产品目录必须且只能依次登记 ${expectedCatalogIds.join('/')}`)
 }
-for (const token of [
-  'evaluateProductEntryV1', 'decision.enterable', 'decision.entry.maturityNote',
-  'currentProductCatalogChannelV1', 'currentExperimentalProductOptInV1',
-]) {
-  if (!productEntrySource.includes(token)) violations.push(`[㉟入口成熟度闸门] 产品入口缺少 ${token}`)
+for (const retiredId of ['world-engine', 'independent.shortform', 'independent.screenplay', 'independent.comic', 'independent.motion-drama',
+  'upper.ttrpg', 'upper.character-interaction', 'upper.ai-town', 'upper.text-adventure', 'upper.avg', 'upper.text-open-world',
+  'platform.marketplace']) {
+  if (productCatalogSource.includes(`'${retiredId}'`)) violations.push(`[㉟退役产品目录] 不得保留 ${retiredId}`)
+}
+const nodeAuthoringEntrySource = read('src/components/node-authoring/NodeAuthoringWorkspace.tsx')
+if (!nodeAuthoringEntrySource.includes("evaluateCurrentProductEntryV1('authoring.nodes')")
+  || !nodeAuthoringEntrySource.includes('assertCurrentProductEntryV1')) {
+  violations.push('[㉟节点入口成熟度] 节点模式必须保留产品目录判定与正式准入')
 }
 
 // ── ㊱ Phase D 世界引擎：诚实能力画像、关系出口、规模缓存与显式作品派生 ──

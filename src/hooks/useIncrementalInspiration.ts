@@ -1,26 +1,13 @@
-import type { PromptExecutionRequestV1 } from '../lib/agent/prompt-execution'
-import { isInspirationPreparationMode, parseInspirationPreparationDraft, type InspirationPreparationMode, type InspirationPreparationResult } from '../lib/inspiration/preparation'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useInspirationWorkspaceStore } from '../stores/inspiration-workspace'
-import {
-  parseReverseMultiWorldOutput,
-  parseReverseOutput,
-  type ReverseMultiWorldResult,
-  type ReverseResult,
-} from '../lib/ai/inspiration-reverse'
-import {
-  diffInspirationResults,
-  latestInspirationVersion,
-  MAX_INSPIRATION_FRAGMENT_CHARS,
-  type InspirationResultDiff,
-} from '../lib/inspiration/workspace'
-import { useMasterCopilot } from '../components/agent/useMasterCopilot'
-import type { Project } from '../lib/types'
-import type { WorkspaceScope } from '../lib/types/world-ownership'
-import type {
-  InspirationResultMode,
-  InspirationSourceKind,
-} from '../lib/types/inspiration-workspace'
+import type { PromptExecutionRequestV1 } from '../lib/agent/prompt-execution';
+import { isInspirationPreparationMode, parseInspirationPreparationDraft, type InspirationPreparationMode, type InspirationPreparationResult } from '../lib/inspiration/preparation';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useInspirationWorkspaceStore } from '../stores/inspiration-workspace';
+import { parseReverseMultiWorldOutput, parseReverseOutput, type ReverseMultiWorldResult, type ReverseResult } from '../lib/ai/inspiration-reverse';
+import { diffInspirationResults, latestInspirationVersion, MAX_INSPIRATION_FRAGMENT_CHARS, type InspirationResultDiff } from '../lib/inspiration/workspace';
+import { useMasterCopilot } from '../components/agent/useMasterCopilot';
+import type { Project } from '../lib/types';
+import type { WorkspaceScope } from '../lib/types/world-ownership';
+import type { InspirationResultMode, InspirationSourceKind } from '../lib/types/inspiration-workspace';
 
 export function useIncrementalInspiration(
   project: Project,

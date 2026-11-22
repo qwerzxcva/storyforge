@@ -1,20 +1,17 @@
-import { useMemo, useRef, useState } from 'react'
-import { AlertTriangle, Save, X } from 'lucide-react'
-import type { RichEditorHandle } from './RichEditor'
+import { useMemo, useRef, useState } from 'react';
+import { AlertTriangle, Save, X } from 'lucide-react';
+import type { RichEditorHandle } from './RichEditor';
 import RichEditor from './RichEditor'
-import { useBackupStore } from '../../stores/backup'
-import { useChapterStore } from '../../stores/chapter'
-import { useUserStyleStore } from '../../stores/user-style'
-import { useBeforeUnload } from '../../hooks/useBeforeUnload'
-import { useDialog } from '../shared/Dialog'
-import { useToast } from '../shared/Toast'
-import { readProjectHeldItems } from '../../lib/consistency/held-items'
-import {
-  evaluateCompareDraftConsistency,
-  saveComparePolishDraft,
-} from '../../lib/editor/compare-polish-operation'
-import { countWords, htmlToPlainText } from '../../lib/utils/html'
-import type { EditorEntityReference } from '../../lib/editor/entity-reference'
+import { useBackupStore } from '../../stores/backup';
+import { useChapterStore } from '../../stores/chapter';
+import { useUserStyleStore } from '../../stores/user-style';
+import { useBeforeUnload } from '../../hooks/useBeforeUnload';
+import { useDialog } from '../shared/Dialog';
+import { useToast } from '../shared/Toast';
+import { readProjectHeldItems } from '../../lib/consistency/held-items';
+import { evaluateCompareDraftConsistency, saveComparePolishDraft } from '../../lib/editor/compare-polish-operation';
+import { countWords, htmlToPlainText } from '../../lib/utils/html';
+import type { EditorEntityReference } from '../../lib/editor/entity-reference';
 
 interface Props {
   projectId: number
