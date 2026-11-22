@@ -81,6 +81,7 @@ test('old-package baseline failure stops before replacement even when instrument
 test('release workflow builds the test runner before publication instead of downloading its own future release', () => {
   const workflow = readFileSync(new URL('../../.github/workflows/client-release-upgrade.yml', import.meta.url), 'utf8')
   assert.match(workflow, /assembleReleaseAndroidTest/)
+  assert.ok(workflow.indexOf('npm run build:android:web') < workflow.indexOf('assembleReleaseAndroidTest'))
   assert.match(workflow, /upgrade-test-runner\.apk/)
   assert.doesNotMatch(workflow, /gh release download [^\n]*upgrade-test-runner\.apk/)
   assert.match(workflow, /if \[ -n "\$previous_tag" \]/)
