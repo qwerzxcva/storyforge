@@ -394,7 +394,7 @@
     "src/lib/import/document-parse-binding.ts": "81f1cd305d934ddd9d0ed93c764c680ab4e4f46bfab4279fd1b24bbd8632e162",
     "src/lib/narrative-domain/codec.ts": "32022e836fc9eeea93679cbe8cc9f60567b090bbafbfe201f5653cc17693808a",
     "src/lib/narrative-domain/integrity.ts": "b74c3e0066dbece6b58b20397130bfa9484e9b6badf60595a40feecf60522d75",
-    "src/lib/narrative-domain/json.ts": "c7d861e1a57f9473c6625cda79aae022d11d9631582ac9e07115a1a26a521fe7",
+    "src/lib/narrative-domain/json.ts": "dae6bd8885f0e518a785557a002e582b2870cf19bc13683db651625b53e6f224",
     "src/lib/narrative-domain/lifecycle.ts": "47364c3a3b03cf8b3ac9a6e16ea9befbfa390e6d9f7ea716df8a5e0429b33dc5",
     "src/lib/narrative-domain/references.ts": "e9936e8ae38f8af1a485bc991cf8b72c9ffa4626c5132880dec0ef0039015255",
     "src/lib/narrative-domain/semantic-export-references.ts": "bde456fa34c46a66b8b22084d16f246e9b3d4bf13a7aeca5f6ef412943f77546",
