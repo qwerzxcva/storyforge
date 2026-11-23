@@ -72,7 +72,7 @@
     "test:e2e:current-products": "PLAYWRIGHT_FROZEN_WORKSPACE=1 playwright test tests/e2e/longform-*.spec.ts tests/e2e/world-engine-ui.spec.ts tests/e2e/world-package-metadata.spec.ts tests/e2e/home-layout.spec.ts tests/e2e/portable-backup-tree.spec.ts --project=chromium",
     "test:e2e:longform-backup": "PLAYWRIGHT_FROZEN_WORKSPACE=1 playwright test tests/e2e/core-workflow.spec.ts --grep='完整 JSON 导出后可重新导入且正文不丢' --project=chromium",
     "test:e2e:longform-layout": "PLAYWRIGHT_FROZEN_WORKSPACE=1 playwright test tests/e2e/compact-workspaces.spec.ts --grep='longform modes share a compact toolbar' --project=chromium",
-    "test:e2e:world-assistance": "PLAYWRIGHT_FROZEN_WORKSPACE=1 playwright test tests/e2e/core-workflow.spec.ts --grep='产品综合首页可从零创建世界引擎并分配稳定编号|独立长篇保持独立，并可由作者显式派生且封存为世界 v1|世界引擎可在同一 World 创建并切换两部隔离作品|世界引擎发布的纯语义 WorldRelease 保持不可变|世界引擎可生成并预检本地世界分享包|世界修订与产品交接在窄屏纵向排列' --project=chromium",
+    "test:e2e:world-assistance": "PLAYWRIGHT_FROZEN_WORKSPACE=1 playwright test tests/e2e/core-workflow.spec.ts --grep='产品综合首页可从零创建世界引擎并分配稳定编号|独立长篇保持独立，并可由作者显式派生且封存为世界 v1|世界引擎可在同一 World 创建并切换两部隔离作品|发布纯语义世界版本不会自动创建产品运行时|世界引擎可生成并预检本地世界分享包|世界修订与产品交接在窄屏纵向排列' --project=chromium",
     "test:e2e:longform-entry": "PLAYWRIGHT_FROZEN_WORKSPACE=1 playwright test tests/e2e/longform-integration.spec.ts --grep='longform library creates a real work and retains edits across navigation and reload' --project=chromium",
     "plugins:build-examples": "node tools/plugin-sdk/build-examples.mjs",
     "plugins:check": "node tools/plugin-sdk/cli.mjs check",

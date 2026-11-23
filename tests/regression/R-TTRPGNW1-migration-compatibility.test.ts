@@ -102,9 +102,21 @@ describe('TTRPG/NW integration · preserve independent owners through version co
       ['unowned input', (candidate: any) => { candidate.tasks[0].inputArtifactKeys = ['unowned'] }, /输入 Artifact 没有 owner/],
       ['duplicate output owner', (candidate: any) => { candidate.tasks[1].outputArtifactKeys = [candidate.tasks[0].outputArtifactKeys[0]] }, /有多个 owner/],
       ['fallback without task', (candidate: any) => { candidate.tasks[0].failurePolicy = 'fallback' }, /缺少 fallbackTaskKey/],
-      ['deterministic skill', (candidate: any) => { candidate.tasks[0].skillId = 'skill.unexpected' }, /确定性任务不应绑定 skillId/],
-      ['model without skill', (candidate: any) => { candidate.tasks[0].executionMode = 'model' }, /模型任务缺少 skillId/],
-      ['unknown context profile', (candidate: any) => { candidate.tasks[0].contextProfile = 'unknown' }, /contextProfile 枚举无效/],
+      ['deterministic skill', (candidate: any) => {
+        const task = candidate.tasks.find((row: any) => row.executionMode === 'deterministic')
+        if (!task) throw new Error('Fixture has no deterministic task')
+        task.skillId = 'skill.unexpected'
+      }, /确定性任务不应绑定 skillId/],
+      ['model without skill', (candidate: any) => {
+        const task = candidate.tasks.find((row: any) => row.executionMode === 'deterministic' && row.skillId === null)
+        if (!task) throw new Error('Fixture has no unbound deterministic task')
+        task.executionMode = 'model'
+      }, /模型任务缺少 skillId/],
+      ['unknown context profile', (candidate: any) => {
+        const task = candidate.tasks.find((row: any) => row.executionMode === 'deterministic')
+        if (!task) throw new Error('Fixture has no deterministic task')
+        task.contextProfile = 'unknown'
+      }, /contextProfile 枚举无效/],
       ['unjoined task', (candidate: any) => { candidate.tasks.push({ ...structuredClone(candidate.tasks[0]), taskKey: 'orphan-task', outputArtifactKeys: [], inputArtifactKeys: [], dependsOn: [], requiredReceipts: [] }) }, /未进入 terminal join/],
     ] as const
     for (const [label, mutate, expected] of invalidPlans) {
