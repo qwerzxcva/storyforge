@@ -1475,7 +1475,7 @@ export const AGENT_SKILLS = [
       table: 'storyCores',
       fields: STORY_CORE_GENERATABLE_FIELD_SPECS.map(spec => spec.field),
     }],
-    lastVerifiedAt: '2026-10-08',
+    lastVerifiedAt: '2026-11-23',
     regressionTests: [
       'R-HARNESS31-story-core-agent',
       'R-HARNESS31-story-core-panel-ui',
@@ -1741,7 +1741,7 @@ export const AGENT_SKILLS = [
         'statusProducerContractHash', 'statusProducerCandidateHash',
       ],
     }],
-    lastVerifiedAt: '2026-10-08',
+    lastVerifiedAt: '2026-11-23',
     regressionTests: ['R-CHAR1-character-gateway-contract', 'R-CHAR1-character-lifecycle-ui'],
   },
 {
