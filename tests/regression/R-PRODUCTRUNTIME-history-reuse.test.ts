@@ -9,7 +9,10 @@ import {
   assertProductRuntimeSourceSnapshotV2, productRuntimeSourceSnapshotV2, runtimeSourceManifestFromReleaseV1,
 } from '../../src/lib/legacy-compat/product/runtime-source-manifest'
 import { parseProductRuntimePackage } from '../../src/lib/legacy-compat/product-production/runtime-package'
+import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
 import * as adapters from '../../src/lib/legacy-compat/product/runtime-product-adapters'
+import { verifyProductOwnedBranchOriginV1 } from '../../src/lib/legacy-compat/product/runtime-branch-origin'
+import { assertProductRuntimeSourceSnapshotV3 } from '../../src/lib/legacy-compat/product/runtime-source-branch'
 
 let scenario = 0
 function initial() { return { ...structuredClone(EMPTY_PRODUCT_RUNTIME_STATE), clock: ++scenario * 100 } }
@@ -24,6 +27,53 @@ function events(count: number, sessionId = 31): ProductRuntimeEvent[] {
 afterEach(() => vi.restoreAllMocks())
 
 describe('Product runtime exact verified history prefix reuse', () => {
+  it('preserves the legacy non-AVG source path and rejects malformed AVG branch evidence', async () => {
+    await expect(verifyProductOwnedBranchOriginV1({
+      kind: 'character-interaction', initialState: {}, canonSnapshotJson: '{}', runtimeSourceHash: 'a'.repeat(64),
+    })).resolves.toBe(false)
+    await expect(verifyProductOwnedBranchOriginV1({
+      kind: 'avg', initialState: {}, canonSnapshotJson: JSON.stringify({ avgBranchOrigin: {} }), runtimeSourceHash: 'a'.repeat(64),
+    })).rejects.toThrow('AVG branch origin 字段不完整')
+  })
+
+  it('preserves legacy non-AVG source validation and enforces frozen AVG V3 branch evidence', async () => {
+    await expect(assertProductRuntimeSourceSnapshotV3({
+      session: { kind: 'character-interaction', canonSnapshotJson: '{}', initialStateJson: '{}', runtimeSourceHash: 'a'.repeat(64) },
+      manifest: null,
+    })).resolves.toBeUndefined()
+    await expect(assertProductRuntimeSourceSnapshotV3({
+      session: { kind: 'avg', canonSnapshotJson: JSON.stringify({
+        schema: 'storyforge.product-runtime-source', version: 3,
+        source: {}, avgBranchOrigin: {},
+      }), initialStateJson: '{}', runtimeSourceHash: 'a'.repeat(64) },
+      manifest: null,
+    })).rejects.toThrow('[product-runtime-source-manifest]')
+
+    const hash = 'a'.repeat(64)
+    const manifest = { schema: 'storyforge.product-runtime-source-manifest', version: 1,
+      productType: 'avg', sourceKind: 'build-preview', sourceIdentityHash: hash, packageHash: hash,
+      sourceWorldContentHash: hash, sourcePlanHash: hash, worldReferenceHash: hash,
+      inheritedSourceManifestHash: null, readMode: 'frozen-product-package', directWorldReads: [],
+      manifestHash: hash } as const
+    const initialState = { ...structuredClone(EMPTY_PRODUCT_RUNTIME_STATE), avgRules: { schema: 'storyforge.avg.rules-state', version: 1 } }
+    const body = { schema: 'storyforge.avg.branch-origin', version: 1,
+      runtimeSourceHash: hash, initialStateHash: await hashProductProductionValueV2(initialState),
+      parentInitialStateHash: hash, parentEventPrefixHash: hash, parentThroughSequence: 0 }
+    const record = { ...body, receiptHash: await hashProductProductionValueV2(body) }
+    const source = productRuntimeSourceSnapshotV2(manifest)
+    const session = { kind: 'avg' as const, canonSnapshotJson: JSON.stringify({
+      schema: 'storyforge.product-runtime-source', version: 3, source, avgBranchOrigin: record,
+    }), initialStateJson: JSON.stringify(initialState), runtimeSourceHash: hash }
+    await expect(assertProductRuntimeSourceSnapshotV3({ session, manifest })).resolves.toBeUndefined()
+    const mismatchedBody = { ...body, runtimeSourceHash: 'b'.repeat(64) }
+    const mismatchedRecord = { ...mismatchedBody, receiptHash: await hashProductProductionValueV2(mismatchedBody) }
+    const mismatchedSnapshot = JSON.parse(session.canonSnapshotJson)
+    mismatchedSnapshot.avgBranchOrigin = mismatchedRecord
+    await expect(assertProductRuntimeSourceSnapshotV3({
+      session: { ...session, canonSnapshotJson: JSON.stringify(mismatchedSnapshot) }, manifest,
+    })).rejects.toThrow('[avg-branch-origin]')
+  })
+
   it('reduces only new events, returns detached states and preserves exact public results', () => {
     const state = initial(); const history = events(3)
     const spy = vi.spyOn(adapters, 'applyProductOwnedRuntimeEventV1')

@@ -10,7 +10,8 @@ import { assertProductRuntimeIntegerV1, isProductRuntimeJsonObjectV1, stableProd
 import { parseNarrativeCondition, parseNarrativeEffects, evaluateNarrativeCondition, applyNarrativeEffects } from "../../narrative/blueprint";
 import { type ProductRuntimeKind, type ProductRuntimeState, type FrozenNarrativeBeat, NARRATIVE_BEAT_KINDS, type FrozenNarrativeChoice, type ProductNarrativeRuntimeNodeSnapshot, NARRATIVE_NODE_KINDS, type ProductNarrativeRuntimeState, NARRATIVE_MODULE_KINDS, type NarrativeChoiceHistoryEntry, type RuntimeAttributes, type RuntimeEntityState, RUNTIME_ENTITY_KINDS, RUNTIME_LIFECYCLE_STATUSES, type RuntimeMemory, type ProductRuntimeEvent, PRODUCT_RUNTIME_EVENT_TYPES, type ProductRuntimeSession, EMPTY_PRODUCT_RUNTIME_STATE, type AnyProductRuntimePackage, type ProductRuntimeCheckpoint, type ProductRuntimeCheckpointPurposeV1 } from "../../types/index";
 import { verifyProductRuntimeSessionSourceV1 } from "../product-production/preview-source";
-import { applyProductOwnedRuntimeEventV1, assertFrozenProductRuntimeStateV1, parseProductOwnedRuntimeStateV1, verifyProductOwnedBranchOriginV1 } from "./runtime-product-adapters";
+import { applyProductOwnedRuntimeEventV1, assertFrozenProductRuntimeStateV1, parseProductOwnedRuntimeStateV1 } from "./runtime-product-adapters";
+import { verifyProductOwnedBranchOriginV1 } from './runtime-branch-origin';
 export type JsonObject = ProductRuntimeJsonObjectV1;
 export const stableJson = stableProductRuntimeJsonV1;
 

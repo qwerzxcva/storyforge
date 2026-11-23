@@ -1,6 +1,6 @@
 import type { ProductRuntimeSession, ProductRuntimeSourceManifestV1 } from '../../types/index';
-import { verifyProductOwnedBranchOriginV1 } from './runtime-product-adapters';
-import { assertProductRuntimeSourceSnapshotV2 } from './runtime-source-manifest';
+import { verifyProductOwnedBranchOriginV1 } from './runtime-branch-origin';
+import { assertProductRuntimeSourceSnapshotV2 } from './runtime-source-snapshot';
 
 /** V3 composes an unchanged V2 frozen-world receipt with the AVG-owned
  * detached-branch witness. Neither owner can replace the other's evidence. */

@@ -1,6 +1,5 @@
 import { parseAvgReadingStateV1 } from '../avg/reading-contract';
 import { applyAvgOnceAudioEventV1, assertAvgOnceAudioStateV1 } from '../avg/once-audio-runtime';
-import { verifyAvgBranchOriginV1 } from '../avg/branch-origin';
 import { applyAvgVoiceEventV1, recordAvgReadingHistoryV1, createAvgReadingStateV1, assertAvgReadingHistoryV1 } from '../avg/reading-runtime';
 /**
  * Composition root for product-owned runtime adapters.
@@ -32,15 +31,6 @@ import { applyAiTownEventV1, createInitialAiTownStateV1, parseAiTownStateV1 } fr
 import { isTtrpgRuntimeContentV1, isTtrpgRuntimeContentV2 } from '../ttrpg/content-version';
 import type { ProductRuntimeEvent, AnyProductRuntimePackage, ProductRuntimeState } from '../../types/index';
 import { isProductRuntimeJsonObjectV1, stableProductRuntimeJsonV1, type ProductRuntimeJsonObjectV1 } from './runtime-values';
-
-/** Only native AVG snapshots need portable detached-branch admission. Legacy
- * and other products keep their existing contract and serialized bytes. */
-export async function verifyProductOwnedBranchOriginV1(input: {
-  kind: string; initialState: unknown; canonSnapshotJson: string; runtimeSourceHash: string
-}): Promise<boolean> {
-  if (input.kind !== 'avg') return false
-  return verifyAvgBranchOriginV1(input)
-}
 
 export function parseProductOwnedRuntimeStateV1(
   value: ProductRuntimeState,
