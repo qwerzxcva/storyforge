@@ -84,7 +84,7 @@ describe('Product runtime exact verified history prefix reuse', () => {
       .toThrow('检查点状态 Hash 无效。')
   })
   it('creates the frozen initial narrative projection without inventing product-owned state', () => {
-    const fixture = readFileSync(new URL('../helpers/fixtures/text-open-world-legacy-runtime-package-v1.json', import.meta.url), 'utf8')
+    const fixture = readFileSync('tests/helpers/fixtures/text-open-world-legacy-runtime-package-v1.json', 'utf8')
     const runtimePackage = parseProductRuntimePackage(fixture)
     const initialState = createProductInitialStateV1({ runtimePackage, runtimeSourceHash: 'a'.repeat(64) })
     expect(initialState.narrative).toMatchObject({ version: 2, completed: false })
