@@ -118,6 +118,11 @@ test(`rejected ${field} write keeps the draft and retries without a page crash`,
   await expect(editor).not.toBeVisible()
   await page.reload(); await openField(page, module, label)
   expect((await read(page, projectId, table))?.[field]).toBe('写入失败但必须保留的中文草稿')
+  if (module === '自然环境') {
+    await expect(page.locator('.lf-world-panel [data-markdown-read-view]:visible').first()).toContainText('写入失败但必须保留的中文草稿')
+  } else {
+    await expect(page.locator('div.cursor-text:visible').first()).toHaveText('写入失败但必须保留的中文草稿')
+  }
   expect(errors).toEqual([])
 })
 
