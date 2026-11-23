@@ -1972,7 +1972,7 @@ export const AGENT_SKILLS = [
         'lastAlignedHash', 'producerRunId', 'producerCandidateHash',
       ],
     }],
-    lastVerifiedAt: '2026-10-08',
+    lastVerifiedAt: '2026-11-23',
     regressionTests: [
       'R-HARNESS30-story-arc-agent',
       'R-HARNESS30-story-arc-panel-ui',

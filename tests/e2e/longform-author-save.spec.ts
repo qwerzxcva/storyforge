@@ -107,7 +107,7 @@ test(`rejected ${field} write keeps the draft and retries without a page crash`,
   const editor = await openFirstEditor(page)
   await editor.fill('写入失败但必须保留的中文草稿'); await page.getByRole('navigation', { name: '长篇一级导航' }).getByRole('button', { name: '作品库', exact: true }).focus()
   const failedStatus = module === '自然环境'
-    ? page.locator('.lf-world-panel .lf-world-field:visible [data-local-save-status="failed"]')
+    ? page.locator('.lf-world-panel .lf-world-field:visible').filter({ has: editor }).locator('[data-local-save-status="failed"]')
     : page.getByRole('alert').filter({ hasText: '隔离配额耗尽' }).first()
   await expect(failedStatus).toBeVisible()
   if (module === '自然环境') await expect(failedStatus).toContainText('隔离配额耗尽')
