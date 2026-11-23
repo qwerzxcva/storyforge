@@ -33,7 +33,7 @@ describe('Product runtime exact verified history prefix reuse', () => {
     })).resolves.toBe(false)
     await expect(verifyProductOwnedBranchOriginV1({
       kind: 'avg', initialState: {}, canonSnapshotJson: JSON.stringify({ avgBranchOrigin: {} }), runtimeSourceHash: 'a'.repeat(64),
-    })).rejects.toThrow('[avg-branch-origin]')
+    })).rejects.toThrow('AVG branch origin 字段不完整')
   })
 
   it('preserves legacy non-AVG source validation and enforces frozen AVG V3 branch evidence', async () => {
