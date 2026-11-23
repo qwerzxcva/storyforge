@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
+import { mockOllamaCapacity } from './helpers/model-capacity'
 import { routeProviderFixture } from './helpers/provider-route'
 
 const prose = '林舟合上账本，先问苏砚是否愿意留下。苏砚把旧灯放回窗边，答应明天再来，两人这才关门。'
@@ -38,6 +39,7 @@ async function prepare(page: Page) {
       await route.fulfill({ contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { role: 'assistant', content: memory }, finish_reason: 'stop' }] }) })
     }
   })
+  await mockOllamaCapacity(page, [{ baseUrl: 'https://memory-json.invalid/v1', model: 'memory-json-test', contextWindow: 64000 }])
   await createLongform(page, '章节记忆 JSON 真实请求验收')
   await addChapter(page, true)
   return requests

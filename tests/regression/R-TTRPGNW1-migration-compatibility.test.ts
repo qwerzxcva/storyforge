@@ -128,7 +128,7 @@ describe('TTRPG/NW integration · preserve independent owners through version co
 
     const tasks = Object.fromEntries(parsed.tasks.map(task => [task.taskKey, {
       runId: 1, attempt: 0, status: 'settled', idempotencyKey: hash, candidateHash: hash,
-      terminalReceiptHash: hash, passedGateIds: [], usage: {
+      terminalReceiptHash: hash, passedGateIds: [] as string[], usage: {
         modelCalls: 0, inputTokens: 0, outputTokens: 0, mediaCalls: 0,
         costUsd: 0, durationMs: 0, storageBytes: 0,
       }, errorCode: null,

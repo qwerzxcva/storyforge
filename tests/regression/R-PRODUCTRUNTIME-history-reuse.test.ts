@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { EMPTY_PRODUCT_RUNTIME_STATE, type ProductRuntimeEvent } from '../../src/lib/types'
+import { EMPTY_PRODUCT_RUNTIME_STATE, type ProductRuntimeEvent, type ProductRuntimeSourceManifestV1 } from '../../src/lib/types'
 import {
   parseProductRuntimeCheckpointV1, parseProductRuntimeState, replayProductRuntimeEvents,
 } from '../../src/lib/legacy-compat/product/runtime-core'
@@ -53,8 +53,8 @@ describe('Product runtime exact verified history prefix reuse', () => {
     const manifest = { schema: 'storyforge.product-runtime-source-manifest', version: 1,
       productType: 'avg', sourceKind: 'build-preview', sourceIdentityHash: hash, packageHash: hash,
       sourceWorldContentHash: hash, sourcePlanHash: hash, worldReferenceHash: hash,
-      inheritedSourceManifestHash: null, readMode: 'frozen-product-package', directWorldReads: [],
-      manifestHash: hash } as const
+      inheritedSourceManifestHash: null, readMode: 'frozen-product-package', directWorldReads: [] as [],
+      manifestHash: hash } satisfies ProductRuntimeSourceManifestV1
     const initialState = { ...structuredClone(EMPTY_PRODUCT_RUNTIME_STATE), avgRules: { schema: 'storyforge.avg.rules-state', version: 1 } }
     const body = { schema: 'storyforge.avg.branch-origin', version: 1,
       runtimeSourceHash: hash, initialStateHash: await hashProductProductionValueV2(initialState),
@@ -121,17 +121,17 @@ describe('Product runtime exact verified history prefix reuse', () => {
     const original = { ...structuredClone(EMPTY_PRODUCT_RUNTIME_STATE), extraLegacyField: true }
     expect(parseProductRuntimeState(original)).not.toHaveProperty('extraLegacyField')
     expect(() => parseProductRuntimeState('[]')).toThrow(/必须是 JSON 对象/)
-    expect(() => parseProductRuntimeState({ ...original, version: 9 })).toThrow(/版本/)
-    expect(() => parseProductRuntimeState({ ...original, entities: [] })).toThrow(/entities 必须是对象/)
+    expect(() => parseProductRuntimeState({ ...original, version: 9 } as never)).toThrow(/版本/)
+    expect(() => parseProductRuntimeState({ ...original, entities: [] } as never)).toThrow(/entities 必须是对象/)
     expect(() => parseProductRuntimeState({ ...original, entities: { alias: {
       entityKey: 'canonical', kind: 'character', name: '角色', lifecycleStatus: 'active', attributes: {},
-    } } })).toThrow(/实体索引与 entityKey 不一致/)
-    expect(() => parseProductRuntimeState({ ...original, memories: {} })).toThrow(/memories 必须是数组/)
+    } } } as never)).toThrow(/实体索引与 entityKey 不一致/)
+    expect(() => parseProductRuntimeState({ ...original, memories: {} } as never)).toThrow(/memories 必须是数组/)
     expect(() => parseProductRuntimeState({ ...original, memories: [{
       id: 'memory', subjectKey: 'character', content: '记忆', status: 'unknown', sourceEventSequence: 1,
-    }] })).toThrow(/未知运行时记忆状态/)
-    expect(() => parseProductRuntimeState({ ...original, narratives: {} })).toThrow(/narratives 必须是数组/)
-    expect(() => parseProductRuntimeState({ ...original, narratives: [{ eventSequence: 1, text: '  ' }] }))
+    }] as never })).toThrow(/未知运行时记忆状态/)
+    expect(() => parseProductRuntimeState({ ...original, narratives: {} } as never)).toThrow(/narratives 必须是数组/)
+    expect(() => parseProductRuntimeState({ ...original, narratives: [{ eventSequence: 1, text: '  ' }] } as never))
       .toThrow(/运行时叙事文本无效/)
     const stateJson = JSON.stringify(EMPTY_PRODUCT_RUNTIME_STATE)
     expect(parseProductRuntimeCheckpointV1({ projectId: 1, worldGroupId: null, sessionId: 2,
@@ -177,8 +177,8 @@ describe('Product runtime exact verified history prefix reuse', () => {
     const manifest = { schema: 'storyforge.product-runtime-source-manifest', version: 1,
       productType: 'avg', sourceKind: 'build-preview', sourceIdentityHash: hash, packageHash: hash,
       sourceWorldContentHash: hash, sourcePlanHash: hash, worldReferenceHash: hash,
-      inheritedSourceManifestHash: null, readMode: 'frozen-product-package', directWorldReads: [],
-      manifestHash: hash } as const
+      inheritedSourceManifestHash: null, readMode: 'frozen-product-package', directWorldReads: [] as [],
+      manifestHash: hash } satisfies ProductRuntimeSourceManifestV1
     const snapshot = productRuntimeSourceSnapshotV2(manifest)
     expect(() => assertProductRuntimeSourceSnapshotV2({ canonSnapshot: JSON.stringify(snapshot), manifest })).not.toThrow()
     expect(() => assertProductRuntimeSourceSnapshotV2({ canonSnapshot: { ...snapshot, runtimeSourceHash: 'b'.repeat(64) }, manifest })).toThrow(/不一致/)

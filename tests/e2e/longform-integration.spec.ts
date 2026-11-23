@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test'
 import { registerBrowserFixtureAIConfigV1, gotoWithBrowserFixtureAIConfigV1, reloadWithBrowserFixtureAIConfigV1 } from './helpers/browser-ai-config'
 import { routeProviderFixture } from './helpers/provider-route'
+import { mockOllamaCapacity } from './helpers/model-capacity'
 
 test('longform library creates a real work and retains edits across navigation and reload', async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('storyforge_guide_completed', 'e2e'))
@@ -94,6 +95,7 @@ test('chunked outline choices and formal candidates survive reload and adopt int
     }
     await route.fulfill({ contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { content }, finish_reason: 'stop' }], usage: { prompt_tokens: 100, completion_tokens: 120, total_tokens: 220 } }) })
   })
+  await mockOllamaCapacity(page, [{ baseUrl: 'https://longform-chunked.invalid/v1', model: 'chunked-e2e' }])
   await gotoWithBrowserFixtureAIConfigV1(page, './long')
   await page.getByRole('button', { name: '新建长篇', exact: true }).click()
   await page.getByRole('textbox', { name: '新长篇名称' }).fill('精细章纲浏览器验收')

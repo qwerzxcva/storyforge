@@ -1,7 +1,4 @@
-import { assertFrozenRuntimePackageSessionV1, parseProductRuntimeState } from '../legacy-compat/product/runtime-core';
 import type { AnyProductBuildPreviewManifest } from '../types';
-import { avgExecutableModule } from '../legacy-compat/avg/executable-module';
-import { verifyAvgBranchOriginV1 } from '../legacy-compat/avg/branch-origin';
 import { validateImportedChatNarrativeEvidenceStateV1, validateImportedChatNarrativeEvidenceEventV1 } from '../legacy-compat/character-interaction/narrative-evidence-import';
 import { isTtrpgRuntimeContentV2 } from '../legacy-compat/ttrpg/content-version';
 import { validateExtensionBackup } from '../legacy-compat/extensions/portable';
@@ -20,7 +17,6 @@ import Dexie from 'dexie'
 import { db } from '../db/schema';
 import { PROJECT_TABLES } from '../registry/project-tables';
 import { isPortableResourceUidV1 } from '../context-gateway/resource-uid';
-import { assertProductRuntimeSourceSnapshotV3 } from '../legacy-compat/product/runtime-source-branch';
 import { remapWorldPortalTargets } from '../utils/world-portals';
 import { transactionTablesFor } from '../registry/lifecycle';
 import { inspectPortableTableStructure, readPortableOwnerShadowV1 } from './portable-table-structure';
@@ -28,7 +24,6 @@ import type { ExportRefRemap, TableSpec } from '../registry/types';
 import type { ProjectExportData, ProjectImportOptionsV1 } from './json-export';
 import { stampNewRecord } from '../workspace/scope';
 import { type BackupReferenceIssue, BACKUP_REFERENCE_REVIEW_TITLE, CURRENT_BACKUP_VERSION, normalizeProjectBackup, reviewPortableLocalReferencesV1 } from './backup-trust';
-import { assertTtrpgNarrativeMemoryBackupV1 } from '../legacy-compat/ttrpg/narrative-memory-backup';
 import { remapNarrativeDomainFieldV1 } from '../narrative-domain/references';
 import { assertNarrativeLineageRowsV1 } from '../world-engine/narrative-lineage-lifecycle';
 import { rebindPortableAgentRunContractV1 } from '../agent/run/contract-portability';
@@ -47,7 +42,6 @@ import { assertComicLetteringV1, assertComicMediaAssetV1, assertNormalizedFrameV
 import { assertComicPagePlanCandidateV1, assertComicReviewIssueCandidateV1, assertComicScriptBeatCandidateV1 } from '../legacy-compat/comic/production-contracts';
 import type { AdaptationProject, ComicLetteringItemV1, ComicMediaAsset, CreationReleaseV1, ProductQualityGateReceiptRecordV1, ProductBuildRecordV1, AnyProductReleaseManifest, ProductRuntimeEvent, ScreenplayBlock, Work } from '../types';
 import { PRODUCT_RUNTIME_CHECKPOINT_PURPOSES_V1, PRODUCTION_PRODUCT_KINDS_V1 } from '../types';
-import { verifyStoredProductBuildPreview } from '../legacy-compat/product-production/preview-manifest';
 import { parseAndVerifyCreationReleaseManifestV1 } from '../creation-release/contracts';
 import { assertMotionDramaReleaseManifestV1 } from '../legacy-compat/motion-drama/release-contracts';
 import { assertMotionDramaAssetSubjectCandidateV1, assertMotionDramaEpisodeCandidateV1, assertMotionDramaReviewIssueCandidateV1, assertMotionDramaScriptSceneCandidateV1, assertMotionDramaSeriesBibleV1, assertMotionDramaShotCandidateV1 } from '../legacy-compat/motion-drama/contracts';
@@ -59,7 +53,6 @@ import { parseTextOpenWorldCreatorSourceBindingV1, TEXT_OPEN_WORLD_CREATOR_BRIEF
 import { validateTextOpenWorldSourcePinBundleV1, validateTextOpenWorldSourcePinUnitV1, validateTextOpenWorldSourcePinV1 } from '../legacy-compat/open-world/source-pin';
 import { hashProductProductionValueV2 } from '../legacy-compat/product-production/hash';
 import { verifyProductQualityGateReceiptRecordV1 } from '../legacy-compat/product-production/quality-receipts';
-import { verifyProductReleaseManifest, parseProductReleaseManifestV1 } from '../legacy-compat/product-production/runtime-package';
 import { replayTextOpenWorldMigrationSourceStateHashV1, verifyTextOpenWorldSaveMigrationBranchV1 } from '../legacy-compat/open-world/player-save-migration-contract';
 
 type JsonIdPathsExportRefRemapV1 = Extract<ExportRefRemap, { kind: 'json-id-paths' }>
@@ -423,11 +416,13 @@ async function validateProductArchitectureBackup(value: Record<string, any>): Pr
     if (!production) throw new Error('[deriveImport] v12 ProductBuild 生产引用越界')
     sameOwner(build, production, 'ProductBuild')
     try {
+      const { verifyStoredProductBuildPreview } = await import('../legacy-compat/product-production/preview-manifest')
       const preview = await verifyStoredProductBuildPreview(build as ProductBuildRecordV1, { ttrpgProtocol: 2 })
       if (preview) {
         if (preview.productionKey !== production.productionKey
           || preview.runtimePackage.productType !== production.productType) throw new Error('production-mismatch')
         buildPreviewVersions.set(build._exportId, preview.version)
+        const { avgExecutableModule } = await import('../legacy-compat/avg/executable-module')
         if (avgExecutableModule(preview.runtimePackage)) { executableAvgBuilds.add(build._exportId); executableAvgPreviews.set(build._exportId, preview) }
       }
     } catch (error) {
@@ -456,6 +451,7 @@ async function validateProductArchitectureBackup(value: Record<string, any>): Pr
       throw new Error('[deriveImport] v12 ProductRelease 身份或 hash 无效')
     }
     try {
+      const { verifyProductReleaseManifest } = await import('../legacy-compat/product-production/runtime-package')
       const manifest = await verifyProductReleaseManifest(String(release.manifestJson ?? ''), { ttrpgProtocol: 2 })
       if (await hashProductProductionValueV2(manifest) !== release.contentHash
         || manifest.productType !== release.productType
@@ -475,6 +471,7 @@ async function validateProductArchitectureBackup(value: Record<string, any>): Pr
     validateImportedChatNarrativeEvidenceStateV1(session.runtimeHeadStateJson, session.kind)
     if (session.chatComposerDraft !== undefined) {
       if (session.kind !== 'character-interaction') throw new Error('[deriveImport] 聊天输入草稿不能归入其他产品存档')
+      const { parseProductRuntimeState } = await import('../legacy-compat/product/runtime-core')
       parseChatComposerDraftV1(session.chatComposerDraft, parseProductRuntimeState(session.initialStateJson).interaction?.profiles.map(p => p.participantKey) ?? [])
     }
     const releaseId = session._productReleaseExportId
@@ -483,6 +480,7 @@ async function validateProductArchitectureBackup(value: Record<string, any>): Pr
       || !/^[a-f0-9]{64}$/.test(String(session.runtimeSourceHash ?? ''))) {
       throw new Error('[deriveImport] v12 ProductRuntime 必须具有唯一、有效的产品来源')
     }
+    const { avgExecutableModule } = await import('../legacy-compat/avg/executable-module')
     if ((releaseId != null && releaseManifests.get(releaseId)?.version === 2
       && !avgExecutableModule(releaseManifests.get(releaseId)!.runtimePackage))
       || (buildId != null && buildPreviewVersions.get(buildId) === 2 && !executableAvgBuilds.has(buildId))) {
@@ -494,8 +492,10 @@ async function validateProductArchitectureBackup(value: Record<string, any>): Pr
       if (!sourceRow) throw new Error('[deriveImport] AVG 会话来源缺失')
       sameOwner(session, sourceRow, 'AVG runtime')
       if (session.runtimeSourceHash !== avgSource.packageHash) throw new Error('[avg] 备份会话来源 hash 不一致')
+      const { verifyAvgBranchOriginV1 } = await import('../legacy-compat/avg/branch-origin')
       const branchOrigin = await verifyAvgBranchOriginV1({ canonSnapshotJson: session.canonSnapshotJson,
         initialState: JSON.parse(session.initialStateJson), runtimeSourceHash: avgSource.packageHash })
+      const { assertFrozenRuntimePackageSessionV1, parseProductRuntimeState } = await import('../legacy-compat/product/runtime-core')
       assertFrozenRuntimePackageSessionV1({ session: { kind: session.kind, initialState: parseProductRuntimeState(session.initialStateJson) },
         runtimePackage: avgSource.runtimePackage, runtimeSourceHash: avgSource.packageHash,
         origin: session._parentSessionExportId != null || branchOrigin ? 'branch' : releaseId != null ? 'release' : 'preview' })
@@ -523,6 +523,7 @@ async function validateProductArchitectureBackup(value: Record<string, any>): Pr
     if (runtimeSourceManifest && session.runtimeSourceHash !== runtimeSourceManifest.packageHash) {
       throw new Error('[deriveImport] ProductRuntime 来源包身份不一致')
     }
+    const { assertProductRuntimeSourceSnapshotV3 } = await import('../legacy-compat/product/runtime-source-branch')
     await assertProductRuntimeSourceSnapshotV3({ session: {
       kind: session.kind, canonSnapshotJson: session.canonSnapshotJson,
       initialStateJson: session.initialStateJson, runtimeSourceHash: session.runtimeSourceHash,
@@ -660,6 +661,7 @@ async function validateProductArchitectureBackup(value: Record<string, any>): Pr
         events: runtimeEventsBySession.get(parent._exportId) ?? [],
         throughSequence: parentThroughSequence,
       })
+      const { parseProductReleaseManifestV1 } = await import('../legacy-compat/product-production/runtime-package')
       await verifyTextOpenWorldSaveMigrationBranchV1({
         parentSession: parent as unknown as import('../types').ProductRuntimeSession,
         childSession: session as unknown as import('../types').ProductRuntimeSession,
@@ -909,7 +911,7 @@ async function validateCurrentBackup(data: Record<string, unknown>): Promise<voi
   validateComicMediaBackup(value)
   await validateMotionDramaBackup(value)
   await validateProductArchitectureBackup(value)
-  await assertTtrpgNarrativeMemoryBackupV1(value)
+  await (await import('../legacy-compat/ttrpg/narrative-memory-backup')).assertTtrpgNarrativeMemoryBackupV1(value)
   await (await import('../legacy-compat/ttrpg/stage-opening-backup')).assertTtrpgStageOpeningBackupV1(value)
   await (await import('../legacy-compat/ttrpg/open-release-continuation-backup')).assertTtrpgOpenContinuationBackupV1(value)
   if (PROJECT_TABLES.some(spec => spec.portableData?.kind === 'product-build-root-budget')) {

@@ -8,6 +8,20 @@ async function setup(page: Page, incomplete = false) {
     localStorage.setItem('storyforge_guide_completed', 'e2e')
     localStorage.setItem('storyforge-ai-config', JSON.stringify({ provider: 'custom', apiKey: 'isolated-test', model: 'test-model', baseUrl: 'https://node-test.invalid/v1', temperature: 0.7, maxTokens: 2000, contextWindow: 32000 }))
   })
+  await page.route('https://node-test.invalid/api/v1/models', route => {
+    const request = route.request()
+    const requestHeaders = request.headers()
+    const origin = requestHeaders.origin ?? '*'
+    if (request.method() === 'OPTIONS') return route.fulfill({ status: 204, headers: {
+      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Methods': requestHeaders['access-control-request-method'] ?? 'GET',
+      'Access-Control-Allow-Headers': requestHeaders['access-control-request-headers'] ?? 'content-type',
+    } })
+    return route.fulfill({
+      json: { models: [{ key: 'test-model', type: 'llm', loaded_instances: [{ config: { context_length: 32000 } }] }] },
+      headers: { 'Access-Control-Allow-Origin': origin },
+    })
+  })
   await createLongform(page, '节点跨模式验收')
   const projectId = Number(new URL(page.url()).pathname.split('/').pop())
   await page.evaluate(async ({ projectId, incomplete }) => {
