@@ -31,7 +31,18 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  fork-release-guard:
+    if: github.repository == 'qwerzxcva/storyforge' && github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Explain the Fork release path
+        run: |
+          echo 'This Fork publishes Android through the Fork Android Release workflow.' >&2
+          echo 'Do not use Release Current Local Package for qwerzxcva/storyforge.' >&2
+          exit 1
+
   coverage-shards:
+    if: github.repository != 'qwerzxcva/storyforge'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -78,6 +89,7 @@ jobs:
         run: npm run ci
 
   browser-checks:
+    if: github.repository != 'qwerzxcva/storyforge'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -118,6 +130,7 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
   clients:
+    if: github.repository != 'qwerzxcva/storyforge'
     permissions:
       contents: write
     uses: ./.github/workflows/clients.yml
@@ -268,3 +281,4 @@ jobs:
     uses: ./.github/workflows/client-release-upgrade.yml
     with:
       client-artifact: true
+    secrets: inherit

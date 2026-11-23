@@ -14,7 +14,7 @@ for (const {width, rejectSecond} of [{width: 390, rejectSecond: false}, {width: 
     await page.addInitScript(() => {
       localStorage.setItem('storyforge_guide_completed', 'isolated-inquiry-settlement')
     })
-    registerBrowserFixtureAIConfigV1(page, { provider: 'openai', baseUrl: 'https://inquiry-settlement.invalid/v1', model: 'test', maxTokens: 6000, apiKey: 'isolated-fixture-key' })
+    registerBrowserFixtureAIConfigV1(page, { provider: 'custom', contextWindow: 131072, baseUrl: 'https://inquiry-settlement.invalid/v1', model: 'test', maxTokens: 6000, apiKey: 'isolated-fixture-key' })
     let sessionId = 0, actionCount = 0, answerCount = 0, totalCalls = 0, proposal: ChatSituationDraftV1
     const calls: string[] = []
     const read = () => page.evaluate(async id => {

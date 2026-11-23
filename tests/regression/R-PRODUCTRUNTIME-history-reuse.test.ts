@@ -1,6 +1,14 @@
+import { readFileSync } from 'node:fs'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { EMPTY_PRODUCT_RUNTIME_STATE, type ProductRuntimeEvent } from '../../src/lib/types'
-import { replayProductRuntimeEvents } from '../../src/lib/legacy-compat/product/runtime-core'
+import {
+  parseProductRuntimeCheckpointV1, parseProductRuntimeState, replayProductRuntimeEvents,
+} from '../../src/lib/legacy-compat/product/runtime-core'
+import { createProductInitialStateV1 } from '../../src/lib/legacy-compat/product/runtime-instances'
+import {
+  assertProductRuntimeSourceSnapshotV2, productRuntimeSourceSnapshotV2, runtimeSourceManifestFromReleaseV1,
+} from '../../src/lib/legacy-compat/product/runtime-source-manifest'
+import { parseProductRuntimePackage } from '../../src/lib/legacy-compat/product-production/runtime-package'
 import * as adapters from '../../src/lib/legacy-compat/product/runtime-product-adapters'
 
 let scenario = 0
@@ -58,6 +66,53 @@ describe('Product runtime exact verified history prefix reuse', () => {
     const spy = vi.spyOn(adapters, 'applyProductOwnedRuntimeEventV1')
     expect(replayProductRuntimeEvents(state, events(2, 99)).clock).toBe(state.clock + 2)
     expect(spy).toHaveBeenCalledTimes(2)
+  })
+  it('parses legacy runtime state and validates checkpoint fields before replay', () => {
+    const original = { ...structuredClone(EMPTY_PRODUCT_RUNTIME_STATE), extraLegacyField: true }
+    expect(parseProductRuntimeState(original)).not.toHaveProperty('extraLegacyField')
+    expect(() => parseProductRuntimeState('[]')).toThrow(/必须是 JSON 对象/)
+    expect(() => parseProductRuntimeState({ ...original, version: 9 })).toThrow(/版本/)
+    expect(() => parseProductRuntimeState({ ...original, entities: [] })).toThrow(/entities 必须是对象/)
+    expect(() => parseProductRuntimeState({ ...original, memories: {} })).toThrow(/memories 必须是数组/)
+    expect(() => parseProductRuntimeState({ ...original, narratives: {} })).toThrow(/narratives 必须是数组/)
+    const stateJson = JSON.stringify(EMPTY_PRODUCT_RUNTIME_STATE)
+    expect(parseProductRuntimeCheckpointV1({ projectId: 1, worldGroupId: null, sessionId: 2,
+      throughSequence: 0, name: 'Manual', stateJson, stateHash: 'a'.repeat(64), createdAt: 1 }))
+      .toMatchObject({ purpose: 'manual', subjectKey: null })
+    expect(() => parseProductRuntimeCheckpointV1({ projectId: 1, worldGroupId: null, sessionId: 2,
+      throughSequence: 0, name: 'bad', stateJson, stateHash: 'bad', createdAt: 1 }))
+      .toThrow('检查点状态 Hash 无效。')
+  })
+  it('creates the frozen initial narrative projection without inventing product-owned state', () => {
+    const fixture = readFileSync('tests/helpers/fixtures/text-open-world-legacy-runtime-package-v1.json', 'utf8')
+    const runtimePackage = parseProductRuntimePackage(fixture)
+    const initialState = createProductInitialStateV1({ runtimePackage, runtimeSourceHash: 'a'.repeat(64) })
+    expect(initialState.narrative).toMatchObject({ version: 2, completed: false })
+    expect(initialState.town).toBeNull()
+    const ending = structuredClone(runtimePackage)
+    ending.narrative.nodes = ending.narrative.nodes.map(node => node.key === ending.narrative.entryNodeKey
+      ? { ...node, kind: 'ending' } : node)
+    expect(createProductInitialStateV1({ runtimePackage: ending, runtimeSourceHash: 'a'.repeat(64) }).narrative)
+      .toMatchObject({ completed: true, completedAtSequence: 0 })
+    expect(() => createProductInitialStateV1({ runtimePackage: {
+      ...runtimePackage, narrative: { ...runtimePackage.narrative, entryNodeKey: 'missing' },
+    }, runtimeSourceHash: 'a'.repeat(64) })).toThrow(/入口不存在/)
+  })
+  it('compares the frozen source snapshot and preserves the legacy release early exit', async () => {
+    const hash = 'a'.repeat(64)
+    const manifest = { schema: 'storyforge.product-runtime-source-manifest', version: 1,
+      productType: 'avg', sourceKind: 'build-preview', sourceIdentityHash: hash, packageHash: hash,
+      sourceWorldContentHash: hash, sourcePlanHash: hash, worldReferenceHash: hash,
+      inheritedSourceManifestHash: null, readMode: 'frozen-product-package', directWorldReads: [],
+      manifestHash: hash } as const
+    const snapshot = productRuntimeSourceSnapshotV2(manifest)
+    expect(() => assertProductRuntimeSourceSnapshotV2({ canonSnapshot: JSON.stringify(snapshot), manifest })).not.toThrow()
+    expect(() => assertProductRuntimeSourceSnapshotV2({ canonSnapshot: { ...snapshot, runtimeSourceHash: 'b'.repeat(64) }, manifest })).toThrow(/不一致/)
+    expect(() => assertProductRuntimeSourceSnapshotV2({ canonSnapshot: { ...snapshot, version: 3 }, manifest: null })).toThrow(/增强/)
+    expect(() => assertProductRuntimeSourceSnapshotV2({ canonSnapshot: '{', manifest: null })).toThrow(/不是 JSON/)
+    const legacyRelease = { sourceContracts: { sourcePlan: { schema: 'legacy' } }, packageHash: hash,
+      releaseIdentityHash: hash, runtimePackage: { productType: 'avg', sourceWorld: {} } } as never
+    await expect(runtimeSourceManifestFromReleaseV1(legacyRelease)).resolves.toBeNull()
   })
   it('cannot be poisoned by a failed new suffix', () => {
     const state = initial(); const history = events(2)

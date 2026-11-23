@@ -1,3 +1,4 @@
+import { mockOllamaCapacity } from './helpers/model-capacity'
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
 
@@ -466,4 +467,8 @@ test('outline.compose candidate survives refresh and author adoption (feedback 1
   await page.reload()
   expect((await storedCounts(page)).outlines).toHaveLength(2)
   expect(calls).toBe(2)
+})
+
+test.beforeEach(async ({ page }) => {
+  await mockOllamaCapacity(page, [{"baseUrl": "https://agent-experience.invalid/v1","model": "isolated-agent-test"}])
 })

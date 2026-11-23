@@ -1,3 +1,4 @@
+import { mockOllamaCapacity } from './helpers/model-capacity'
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
 
@@ -22,7 +23,7 @@ async function setup(page: Page, includeSummary = false) {
 }
 
 function mock(page: Page, state: { calls: any[]; gate?: Promise<void>; removeWholeParagraph?: boolean }, recheckFails = false) {
-  return page.route('https://quality-revision.invalid/**', async route => {
+  return page.route('https://quality-revision.invalid/v1/chat/completions', async route => {
     const body = route.request().postDataJSON(); state.calls.push(body)
     const system = body.messages[0].content
     let report: any
@@ -218,4 +219,8 @@ test('复核503保留只读预演，原稿不改，刷新不重发且无采纳�
   await page.reload(); await page.getByRole('button', { name: '质量审校', exact: true }).click()
   await expect(page.getByTestId('quality-revision-preview')).toContainText('复核未完成')
   expect(state.calls).toHaveLength(3)
+})
+
+test.beforeEach(async ({ page }) => {
+  await mockOllamaCapacity(page, [{"baseUrl": "https://quality-revision.invalid/v1","model": "quality-revision-test"}])
 })

@@ -6,7 +6,7 @@ test.beforeEach(async ({page}) => {
   await page.addInitScript(() => {
     localStorage.setItem('storyforge_guide_completed', 'e2e')
   })
-  registerBrowserFixtureAIConfigV1(page, { provider: 'openai', baseUrl: 'https://chat-resume.invalid/v1', model: 'test', maxTokens: 6000, apiKey: 'isolated-test-key' })
+  registerBrowserFixtureAIConfigV1(page, { provider: 'custom', contextWindow: 131072, baseUrl: 'https://chat-resume.invalid/v1', model: 'test', maxTokens: 6000, apiKey: 'isolated-test-key' })
 })
 
 async function seed(page: Page, mode: 'partial' | 'unknown' | 'player') {

@@ -1,0 +1,43 @@
+name: Custom Request Headers
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: custom-request-headers-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+  ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
+
+jobs:
+  feature:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Verify header UI, persistence and request consumers
+        run: npx vitest run tests/regression/R-custom-request-headers.test.ts tests/regression/R-custom-request-headers-ui.test.tsx tests/regression/R-custom-request-headers-redirect.test.ts tests/regression/R-SFQA103-ai-model-list-ownership.test.tsx tests/regression/R-CLIENT-native-transport.test.ts --maxWorkers=2
+      - run: npx playwright install --with-deps chromium
+      - name: Verify actual settings and captured HTTP headers
+        run: npm run ci:e2e -- -- tests/e2e/custom-request-headers.spec.ts --reporter=github,blob
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() }}
+        with:
+          name: custom-request-headers-browser-evidence
+          path: |
+            test-results/
+            blob-report/
+          if-no-files-found: ignore
+          retention-days: 5

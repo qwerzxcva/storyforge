@@ -2,12 +2,18 @@ name: Fork Android Release
 
 on:
   workflow_dispatch:
+    inputs:
+      test_scope:
+        description: 'Full release acceptance or focused CI regression verification'
+        type: choice
+        default: full
+        options: [full, regression, audit]
 
 permissions:
   contents: read
 
 concurrency:
-  group: fork-android-release
+  group: fork-android-${{ inputs.test_scope != 'full' && format('{0}-{1}', inputs.test_scope, github.ref) || 'release' }}
   cancel-in-progress: false
 
 env:
@@ -16,6 +22,7 @@ env:
 
 jobs:
   coverage-shards:
+    if: inputs.test_scope == 'full'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     strategy:
@@ -40,9 +47,25 @@ jobs:
           retention-days: 5
 
   checks:
+    if: inputs.test_scope == 'full'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run ci:static
+
+  coverage-merge:
     needs: coverage-shards
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -57,18 +80,50 @@ jobs:
         with:
           pattern: fork-coverage-*
           path: ${{ runner.temp }}/coverage-input/
-      - name: Run the complete non-browser release gate
+      - name: Verify complete merged coverage
         env:
           STORYFORGE_COVERAGE_SHARDS: ${{ runner.temp }}/coverage-input
-        run: npm run ci
+        run: npm run test:coverage
+
+  web-production:
+    if: inputs.test_scope == 'full'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run ci:web
+      - run: npx playwright install --with-deps chromium
+      - name: Verify production model and embedding proxies
+        env:
+          PLAYWRIGHT_FROZEN_WORKSPACE: '1'
+          PLAYWRIGHT_PRODUCTION_PREVIEW: '1'
+        run: npx playwright test tests/e2e/settings-proxy.spec.ts tests/e2e/codex-provider.spec.ts --reporter=github,blob
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() }}
+        with:
+          name: fork-production-proxy
+          path: |
+            test-results/
+            blob-report/
+          if-no-files-found: ignore
+          retention-days: 14
 
   browser-checks:
+    if: inputs.test_scope == 'full'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2, 3, 4]
+        shard: [1, 2, 3, 4, 5, 6, 7, 8]
     env:
       PLAYWRIGHT_FROZEN_WORKSPACE: '1'
     steps:
@@ -82,11 +137,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - run: npm run build
-      - name: Verify production model and embedding proxies
-        if: matrix.shard == 1
-        run: PLAYWRIGHT_PRODUCTION_PREVIEW=1 npx playwright test tests/e2e/settings-proxy.spec.ts tests/e2e/codex-provider.spec.ts
-      - run: npm run ci:e2e -- -- --shard=${{ matrix.shard }}/4 --reporter=github,blob
+      - run: npm run ci:e2e -- -- --shard=${{ matrix.shard }}/8 --reporter=github,blob
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: ${{ !cancelled() }}
         with:
@@ -98,8 +149,130 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
+  regression:
+    if: inputs.test_scope == 'regression'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [inputs, design, runtime, author-recovery]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Verify the failed paths without changing release acceptance
+        env:
+          SUITE: ${{ matrix.suite }}
+          PLAYWRIGHT_FROZEN_WORKSPACE: '1'
+          STORYFORGE_COVERAGE_SHARD_COMPONENT: '1'
+        shell: bash
+        run: |
+          case "$SUITE" in
+            inputs) npm run ci:e2e -- -- tests/e2e/input-area-layout.spec.ts tests/e2e/theme-collection.spec.ts --reporter=github,blob ;;
+            design) npm run ci:e2e -- -- tests/e2e/ttrpg-open-authoring-design-candidate.spec.ts tests/e2e/ttrpg-open-authoring-design-adoption.spec.ts --reporter=github,blob ;;
+            runtime) npm run ci:e2e -- -- tests/e2e/longform-post-authorization-recovery.spec.ts tests/e2e/longform-state-card-recovery.spec.ts --reporter=github,blob ;;
+            author-recovery) npm run ci:e2e -- -- tests/e2e/longform-author-repair.spec.ts --reporter=github,blob ;;
+            *) exit 1 ;;
+          esac
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() }}
+        with:
+          name: fork-regression-${{ matrix.suite }}
+          path: |
+            test-results/
+            blob-report/
+          if-no-files-found: ignore
+          retention-days: 5
+
+  audit:
+    if: inputs.test_scope == 'audit'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Recheck the failed browser files
+        env:
+          SHARD: ${{ matrix.shard }}
+          PLAYWRIGHT_FROZEN_WORKSPACE: '1'
+        shell: bash
+        run: |
+          files=(
+            tests/e2e/character-chat-action-choice.spec.ts
+            tests/e2e/character-chat-action-revision.spec.ts
+            tests/e2e/character-chat-actor-progression.spec.ts
+            tests/e2e/character-chat-choice-message-evidence.spec.ts
+            tests/e2e/character-chat-commitments.spec.ts
+            tests/e2e/character-chat-completed-goal-continuation.spec.ts
+            tests/e2e/character-chat-control-handoff.spec.ts
+            tests/e2e/character-chat-ensemble.spec.ts
+            tests/e2e/character-chat-existing-goal-pause.spec.ts
+            tests/e2e/character-chat-fact-discovery.spec.ts
+            tests/e2e/character-chat-history-edit.spec.ts
+            tests/e2e/character-chat-inquiry-result.spec.ts
+            tests/e2e/character-chat-inquiry-settlement.spec.ts
+            tests/e2e/longform-integration.spec.ts
+            tests/e2e/character-chat-turn-resume.spec.ts
+            tests/e2e/context-compression-transport.spec.ts
+            tests/e2e/core-workflow.spec.ts
+            tests/e2e/failure-reporting.spec.ts
+            tests/e2e/inkwash-theme.spec.ts
+            tests/e2e/input-area-consumers.spec.ts
+            tests/e2e/longform-agent-experience.spec.ts
+            tests/e2e/longform-author-save.spec.ts
+            tests/e2e/longform-batch-adoption.spec.ts
+            tests/e2e/longform-batch-rejection.spec.ts
+            tests/e2e/longform-chapter-review.spec.ts
+            tests/e2e/longform-character-save.spec.ts
+            tests/e2e/longform-post-authorization-recovery.spec.ts
+            tests/e2e/longform-prose-handoff.spec.ts
+            tests/e2e/longform-provider-frame.spec.ts
+            tests/e2e/longform-scene-tasks.spec.ts
+            tests/e2e/longform-selected-revision.spec.ts
+            tests/e2e/longform-setting-read-recovery.spec.ts
+            tests/e2e/longform-state-card-recovery.spec.ts
+            tests/e2e/longform-step-quality.spec.ts
+            tests/e2e/longform-story-arc-save.spec.ts
+            tests/e2e/longform-system-elements.spec.ts
+            tests/e2e/longform-whole-review.spec.ts
+            tests/e2e/longform-work-metadata.spec.ts
+            tests/e2e/longform-worldgroup-flow.spec.ts
+            tests/e2e/markdown-read-safety.spec.ts
+            tests/e2e/new-ui-foundation.spec.ts
+            tests/e2e/longform-author-repair.spec.ts
+            tests/e2e/quality013-import-lifecycle.spec.ts
+          )
+          npm run ci:e2e -- -- "${files[@]}" --shard="$SHARD/10" --max-failures=4 --reporter=github,blob
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: ${{ !cancelled() }}
+        with:
+          name: fork-audit-${{ matrix.shard }}
+          path: |
+            test-results/
+            blob-report/
+          if-no-files-found: ignore
+          retention-days: 5
+
   android:
-    if: github.repository == 'qwerzxcva/storyforge' && github.ref == 'refs/heads/main'
+    if: inputs.test_scope == 'full' && github.repository == 'qwerzxcva/storyforge' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     env:
@@ -204,8 +377,8 @@ jobs:
         run: rm -f "$RUNNER_TEMP/storyforge-fork-release.p12"
 
   publish:
-    needs: [checks, browser-checks, android]
-    if: github.ref == 'refs/heads/main'
+    needs: [checks, coverage-merge, web-production, browser-checks, android]
+    if: inputs.test_scope == 'full' && github.repository == 'qwerzxcva/storyforge' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -229,12 +402,26 @@ jobs:
           python3 scripts/distribution/verify-android-source.py check-tested "$apk" --commit "$GITHUB_SHA" --tree "$(git rev-parse HEAD^{tree})" --version "$version" --receipt verified/release-test/tested-release.json --phases verified/release-test
           git fetch origin main
           test "$(git rev-parse origin/main)" = "$GITHUB_SHA"
-          existing_tag=$(git ls-remote origin "refs/tags/v$version" "refs/tags/v$version^{}")
-          test -z "$existing_tag"
-          npm run check:release-metadata -- "v$version"
+          tag="v$version"
+          npm run check:release-metadata -- "$tag"
+          tag_refs=$(git ls-remote origin "refs/tags/$tag" "refs/tags/$tag^{}")
+          if [[ -n "$tag_refs" ]]; then
+            tag_commit=$(awk -v ref="refs/tags/$tag" '$2 == ref { direct = $1 } $2 == ref "^{}" { peeled = $1 } END { print (peeled ? peeled : direct) }' <<< "$tag_refs")
+            if [[ "$tag_commit" != "$GITHUB_SHA" ]]; then
+              echo 'Release tag points to a different commit.' >&2
+              exit 1
+            fi
+          fi
+          existing_release=$(gh api --paginate "repos/$GITHUB_REPOSITORY/releases?per_page=100" --jq ".[] | select(.tag_name == \"$tag\") | .id")
+          if [[ -n "$existing_release" ]]; then
+            echo 'A Release already exists for this tag. Review it before resuming publication.' >&2
+            exit 1
+          fi
           cd verified/release/android
           sha256sum "StoryForge-$version-android.apk" > SHA256SUMS.txt
           sha256sum --check SHA256SUMS.txt
           cd ../../..
-          gh api --method POST "repos/$GITHUB_REPOSITORY/git/refs" -f "ref=refs/tags/v$version" -f "sha=$GITHUB_SHA"
-          gh release create "v$version" --verify-tag "$apk" verified/release/android/SHA256SUMS.txt verified/release-test/signing-certificate.txt verified/release-test/tested-release.json --target "$GITHUB_SHA" --title "StoryForge $version — Android Fork" --notes-file .github/release-notes/fork-android.md --latest
+          if [[ -z "$tag_refs" ]]; then
+            gh api --method POST "repos/$GITHUB_REPOSITORY/git/refs" -f "ref=refs/tags/$tag" -f "sha=$GITHUB_SHA"
+          fi
+          gh release create "$tag" --verify-tag "$apk" verified/release/android/SHA256SUMS.txt verified/release-test/signing-certificate.txt verified/release-test/tested-release.json --target "$GITHUB_SHA" --title "StoryForge $version — Android Fork" --notes-file .github/release-notes/fork-android.md --latest

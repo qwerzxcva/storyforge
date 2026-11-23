@@ -17,7 +17,7 @@ if (matrix.schema !== 'storyforge.text-open-world.g7-lifecycle-matrix' || matrix
 }
 if (!Number.isInteger(currentBackupVersion)
   || matrix.backupVersion !== currentBackupVersion
-  || matrix.compatibilityPolicy !== 'validated-v14-v15-v16-conversion-explicit-release-migration'
+  || matrix.compatibilityPolicy !== 'validated-v14-v15-v16-v17-v18-conversion-explicit-release-migration'
   || typeof matrix.profileNote !== 'string'
   || !matrix.profileNote.includes('旧存档继续绑定旧Release')) {
   throw new Error('生命周期矩阵必须冻结当前备份与显式Release迁移策略')
@@ -31,13 +31,19 @@ for (let index = 0; index < matrix.gates.length; index += 1) {
   const expectedId = `TOW-G7-L${String(index + 1).padStart(2, '0')}`
   if (gate.id !== expectedId) throw new Error(`文字开放世界G7生命周期门ID顺序无效:${gate.id}`)
   if (typeof gate.title !== 'string' || gate.title.trim().length < 18) throw new Error(`${gate.id}缺少可读标题`)
-  if (typeof gate.evidenceFile !== 'string' || typeof gate.testName !== 'string') throw new Error(`${gate.id}缺少证据定位`)
-  let source = sources.get(gate.evidenceFile)
-  if (source == null) {
-    source = await readFile(resolve(repositoryRoot, gate.evidenceFile), 'utf8')
-    sources.set(gate.evidenceFile, source)
+  const additionalEvidence = gate.additionalEvidence ?? []
+  if (!Array.isArray(additionalEvidence)) throw new Error(`${gate.id}附加证据格式无效`)
+  for (const evidence of [gate, ...additionalEvidence]) {
+    if (typeof evidence?.evidenceFile !== 'string' || typeof evidence?.testName !== 'string' || !evidence.testName.trim()) {
+      throw new Error(`${gate.id}缺少证据定位`)
+    }
+    let source = sources.get(evidence.evidenceFile)
+    if (source == null) {
+      source = await readFile(resolve(repositoryRoot, evidence.evidenceFile), 'utf8')
+      sources.set(evidence.evidenceFile, source)
+    }
+    if (!source.includes(evidence.testName)) throw new Error(`${gate.id}证据已漂移:${evidence.testName}`)
   }
-  if (!source.includes(gate.testName)) throw new Error(`${gate.id}证据已漂移:${gate.testName}`)
 }
 
 const registryExport = await readFile(resolve(repositoryRoot, 'src/lib/export/registry-export.ts'), 'utf8')
