@@ -12,7 +12,10 @@
   "runtime": [
     "src/lib/legacy-compat/product/runtime-core.ts",
     "src/lib/legacy-compat/product/runtime-instances.ts",
-    "src/lib/legacy-compat/product/runtime-source-manifest.ts"
+    "src/lib/legacy-compat/product/runtime-source-manifest.ts",
+    "src/lib/legacy-compat/product/runtime-source-branch.ts",
+    "src/lib/legacy-compat/product/runtime-source-snapshot.ts",
+    "src/lib/legacy-compat/product/runtime-branch-origin.ts"
   ],
   "longform": [
     "src/lib/generation/chapter-generation-node.ts",

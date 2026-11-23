@@ -20,6 +20,7 @@ import Dexie from 'dexie'
 import { db } from '../db/schema';
 import { PROJECT_TABLES } from '../registry/project-tables';
 import { isPortableResourceUidV1 } from '../context-gateway/resource-uid';
+import { assertProductRuntimeSourceSnapshotV3 } from '../legacy-compat/product/runtime-source-branch';
 import { remapWorldPortalTargets } from '../utils/world-portals';
 import { transactionTablesFor } from '../registry/lifecycle';
 import { inspectPortableTableStructure, readPortableOwnerShadowV1 } from './portable-table-structure';
@@ -522,7 +523,6 @@ async function validateProductArchitectureBackup(value: Record<string, any>): Pr
     if (runtimeSourceManifest && session.runtimeSourceHash !== runtimeSourceManifest.packageHash) {
       throw new Error('[deriveImport] ProductRuntime 来源包身份不一致')
     }
-    const { assertProductRuntimeSourceSnapshotV3 } = await import('../legacy-compat/product/runtime-source-branch')
     await assertProductRuntimeSourceSnapshotV3({ session: {
       kind: session.kind, canonSnapshotJson: session.canonSnapshotJson,
       initialStateJson: session.initialStateJson, runtimeSourceHash: session.runtimeSourceHash,
