@@ -12,7 +12,6 @@ type LegacyResolvedRuntimeSource = Omit<ResolvedProductRuntimeSourceV1, 'runtime
 }
 type LegacyVerifiedRuntimeSource = Omit<LegacyResolvedRuntimeSource, 'mediaResolver'>
 type VersionedVerifiedRuntimeSource = Omit<ResolvedProductRuntimeSourceV1, 'mediaResolver'>
-import { runtimeSourceManifestFromBuildRecordsV1, runtimeSourceManifestFromReleaseV1 } from '../product/runtime-source-manifest';
 import { assertProductRuntimeSourceSnapshotV3 } from '../product/runtime-source-branch';
 
 export async function productRuntimeSourceForSessionV1(
@@ -66,6 +65,7 @@ export async function verifyProductRuntimeSourceEnvelope(input: {
     const parsed = await verifyProductReleaseManifest(release.manifestJson, input.ttrpgProtocol === 2 ? { ttrpgProtocol: 2 } : undefined)
     const runtimePackage = parsed.runtimePackage
     const packageHash = parsed.packageHash
+    const { runtimeSourceManifestFromReleaseV1 } = await import('../product/runtime-source-manifest')
     const sourceManifest = await runtimeSourceManifestFromReleaseV1(parsed)
     return {
       source: input.source,
@@ -104,6 +104,7 @@ export async function verifyProductRuntimeSourceEnvelope(input: {
   if (preview.runtimePackage.sourceWorld.contentHash !== brief.sourceWorldContentHash) {
     throw new Error('[product-runtime-source] Build Preview 的冻结世界来源证据损坏')
   }
+  const { runtimeSourceManifestFromBuildRecordsV1 } = await import('../product/runtime-source-manifest')
   const sourceManifest = await runtimeSourceManifestFromBuildRecordsV1({ build, brief })
   return {
     source: input.source,

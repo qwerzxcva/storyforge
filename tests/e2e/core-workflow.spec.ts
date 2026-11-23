@@ -257,10 +257,10 @@ test('世界引擎可在同一 World 创建并切换两部隔离作品', async (
   await expect(manager.locator('.sf-world-work-row.active')).toContainText('双作品世界')
   await openWorldSection(page,'versions')
   await expect(currentWorldReleasePanel(page)).toBeVisible()
-  await expect(page.getByRole('heading', { name: '冻结世界与交给具体产品', exact: true })).toBeVisible()
+  await expect(page.getByRole('heading', { name: '冻结并封存世界版本', exact: true })).toBeVisible()
 })
 
-test('世界引擎只封存纯语义 Release，并显式交给上层产品生产', async ({ page }) => {
+test('发布纯语义世界版本不会自动创建产品运行时', async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.setItem('storyforge_guide_completed', 'e2e')
   })
@@ -276,25 +276,18 @@ test('世界引擎只封存纯语义 Release，并显式交给上层产品生产
   await expect(page.getByText('阶段列表（2）', { exact: true })).toBeVisible()
 
   const pipeline = await publishCurrentWorldRelease(page, 'E2E 纯语义首发')
-  await expect(pipeline.getByLabel('互动实例类型')).toHaveCount(0)
   await expect(pipeline.getByRole('button', { name: /创建实例|直接运行/ })).toHaveCount(0)
-  await pipeline.getByRole('button', { name: '交给文字开放世界', exact: true }).click()
-  await expect(page.getByRole('heading', { name: '文字开放世界', exact: true })).toBeVisible()
-  await page.goBack()
-  await expect(pipeline).toBeVisible()
-  await pipeline.getByRole('button', { name: '交给文字冒险', exact: true }).click()
-  await expect(page.getByRole('heading', { name: '文字冒险', exact: true })).toBeVisible()
-  const enableProduction = page.getByRole('button', { name: '为当前项目显式启用', exact: true })
-  // A fresh workspace requires explicit authorization; wait for its async owner load.
-  await enableProduction.click()
-  await expect(page.getByTestId('product-production-studio')).toBeVisible({ timeout: 15_000 })
-  await expect(page.getByLabel('冻结 WorldRelease')).not.toHaveValue('')
-  const runtimeRows = await page.evaluate(async () => {
+  const projectId = Number(new URL(page.url()).searchParams.get('project'))
+  const published = await page.evaluate(async projectId => {
     const importer = new Function('path', 'return import(path)') as (path: string) => Promise<any>
     const { db } = await importer('/storyforge/src/lib/db/schema.ts')
-    return db.productRuntimeSessions.count()
-  })
-  expect(runtimeRows).toBe(0)
+    return {
+      releases: await db.worldReleases.where('projectId').equals(projectId).count(),
+      productions: await db.productProductions.where('projectId').equals(projectId).count(),
+      sessions: await db.productRuntimeSessions.where('projectId').equals(projectId).count(),
+    }
+  }, projectId)
+  expect(published).toEqual({ releases: 1, productions: 0, sessions: 0 })
 })
 
 test('世界修订与产品交接在窄屏纵向排列且没有横向溢出', async ({ page }) => {
@@ -309,7 +302,7 @@ test('世界修订与产品交接在窄屏纵向排列且没有横向溢出', as
   const pipeline = currentWorldReleasePanel(page)
   await expect(pipeline).toBeVisible()
   await expect(pipeline.getByText('选择语义范围', { exact: true })).toBeVisible()
-  await expect(pipeline.getByText('显式交给产品', { exact: true })).toBeVisible()
+  await expect(pipeline.getByText('选择希望在这个版本中分享的内容', { exact: true })).toBeVisible()
   await expect(pipeline.getByRole('group', { name: '封存范围' })).toBeVisible()
 
   const stageBoxes = await pipeline.locator('.sf-world-pipeline-stage').evaluateAll(elements => (
@@ -1101,6 +1094,7 @@ test('完整 JSON 导出后可重新导入且正文不丢', async ({ page }) => 
   const projectName = 'E2E JSON 往返'
   const chapterText = '这段正文必须跟随完整 JSON 备份恢复。'
   await createBookWithSavedChapter(page, projectName, chapterText)
+  const sourceProjectId = Number(new URL(page.url()).pathname.match(/workspace\/(\d+)/)![1])
   await openWorkspaceLeaf(page, '数据管理')
 
   const exportDownload = page.waitForEvent('download')
@@ -1112,7 +1106,10 @@ test('完整 JSON 导出后可重新导入且正文不丢', async ({ page }) => 
   const fileChooser = page.waitForEvent('filechooser')
   await page.getByRole('button', { name: '导入 JSON', exact: true }).click()
   await (await fileChooser).setFiles(backupPath!)
-  await expect(page).toHaveURL(/\/storyforge\/workspace\/\d+$/)
+  await expect(page).toHaveURL(url => {
+    const restoredProjectId = Number(url.pathname.match(/workspace\/(\d+)$/)?.[1])
+    return url.pathname.startsWith('/storyforge/workspace/') && restoredProjectId !== sourceProjectId
+  })
   await expect(page.locator('[data-workspace-ready=longform]')).toBeVisible()
   await openWorkspaceLeaf(page, '章节')
   await expect(page.locator('.tiptap-editor')).toContainText(chapterText)

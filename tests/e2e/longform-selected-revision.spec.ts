@@ -1,6 +1,7 @@
 import { mockOllamaCapacity } from './helpers/model-capacity'
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
+import { routeProviderFixture } from './helpers/provider-route'
 
 async function setup(page: Page, includeSummary = false) {
   await page.addInitScript(() => localStorage.setItem('storyforge-ai-config', JSON.stringify({ provider: 'ollama', baseUrl: 'https://quality-revision.invalid/v1', model: 'quality-revision-test', maxTokens: 4000, temperature: 0, contextWindow: 128000 })))
@@ -23,7 +24,7 @@ async function setup(page: Page, includeSummary = false) {
 }
 
 function mock(page: Page, state: { calls: any[]; gate?: Promise<void>; removeWholeParagraph?: boolean }, recheckFails = false) {
-  return page.route('https://quality-revision.invalid/v1/chat/completions', async route => {
+  return routeProviderFixture(page, 'https://quality-revision.invalid/v1/chat/completions', async route => {
     const body = route.request().postDataJSON(); state.calls.push(body)
     const system = body.messages[0].content
     let report: any

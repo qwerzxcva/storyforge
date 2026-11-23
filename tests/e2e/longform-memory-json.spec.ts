@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
+import { routeProviderFixture } from './helpers/provider-route'
 
 const prose = '林舟合上账本，先问苏砚是否愿意留下。苏砚把旧灯放回窗边，答应明天再来，两人这才关门。'
 const summary = '林舟先询问苏砚意愿，苏砚答应明日再来，两人关门。'
@@ -28,7 +29,7 @@ async function prepare(page: Page) {
     maxTokens: 4000, contextWindow: 64000, temperature: 0,
   })))
   const requests: Array<Record<string, any>> = []
-  await page.route('https://memory-json.invalid/**', async route => {
+  await routeProviderFixture(page, 'https://memory-json.invalid/**', async route => {
     const body = route.request().postDataJSON()
     requests.push(body)
     if (body.stream) {

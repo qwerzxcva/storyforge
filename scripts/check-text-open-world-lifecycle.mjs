@@ -17,7 +17,7 @@ if (matrix.schema !== 'storyforge.text-open-world.g7-lifecycle-matrix' || matrix
 }
 if (!Number.isInteger(currentBackupVersion)
   || matrix.backupVersion !== currentBackupVersion
-  || matrix.compatibilityPolicy !== 'validated-v14-v15-v16-v17-v18-conversion-explicit-release-migration'
+  || matrix.compatibilityPolicy !== 'validated-v14-v15-v16-v17-v18-v19-conversion-explicit-release-migration'
   || typeof matrix.profileNote !== 'string'
   || !matrix.profileNote.includes('旧存档继续绑定旧Release')) {
   throw new Error('生命周期矩阵必须冻结当前备份与显式Release迁移策略')

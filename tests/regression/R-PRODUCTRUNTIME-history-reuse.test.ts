@@ -141,6 +141,22 @@ describe('Product runtime exact verified history prefix reuse', () => {
       throughSequence: 0, name: 'bad', stateJson, stateHash: 'bad', createdAt: 1 }))
       .toThrow('检查点状态 Hash 无效。')
   })
+  it('creates a legacy character-interaction release state from its frozen profile', () => {
+    const packagePath = 'tests/helpers/fixtures/text-open-world-legacy-runtime-package-v1.json'
+    const fixture = JSON.parse(readFileSync(packagePath, 'utf8'))
+    fixture.productType = 'character-interaction'
+    fixture.definition.enabledCapabilities = ['narrative', 'interaction']
+    fixture.sourceWorld.selection.productType = 'character-interaction'
+    delete fixture.adventure
+    delete fixture.openWorldEvolution
+    delete fixture.openWorld
+    const runtimePackage = parseProductRuntimePackage(fixture)
+    const initialState = createProductInitialStateV1({ runtimePackage, runtimeSourceHash: 'a'.repeat(64) })
+    expect(initialState.interaction?.profiles).toHaveLength(1)
+    expect(parseProductRuntimeState(initialState).interaction?.profiles).toHaveLength(1)
+    expect(initialState.adventure).toBeNull()
+  })
+
   it('creates the frozen initial narrative projection without inventing product-owned state', () => {
     const fixture = readFileSync('tests/helpers/fixtures/text-open-world-legacy-runtime-package-v1.json', 'utf8')
     const runtimePackage = parseProductRuntimePackage(fixture)

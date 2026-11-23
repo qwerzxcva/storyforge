@@ -6,17 +6,17 @@ const repositoryRoot = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const matrixPath = resolve(repositoryRoot, 'tests/acceptance/text-open-world-g7-player-paths.json')
 const matrix = JSON.parse(await readFile(matrixPath, 'utf8'))
 
-if (matrix.schema !== 'storyforge.text-open-world.creator-recovery-matrix' || matrix.version !== 1) {
-  throw new Error('历史 Creator 存档恢复矩阵 Schema 或版本无效')
+if (matrix.schema !== 'storyforge.longform.backup-recovery-matrix' || matrix.version !== 1) {
+  throw new Error('长篇备份恢复矩阵 Schema 或版本无效')
 }
 if (!Array.isArray(matrix.paths) || matrix.paths.length !== 1) {
-  throw new Error(`历史 Creator 存档恢复路径必须精确包含1项，当前为${matrix.paths?.length ?? 0}项`)
+  throw new Error(`长篇备份恢复路径必须精确包含1项，当前为${matrix.paths?.length ?? 0}项`)
 }
 
-const expectedIds = ['TOW-COMPAT-P01']
+const expectedIds = ['LONGFORM-COMPAT-BACKUP-01']
 const actualIds = matrix.paths.map(path => path.id)
 if (new Set(actualIds).size !== expectedIds.length || actualIds.some((id, index) => id !== expectedIds[index])) {
-  throw new Error(`历史 Creator 存档恢复路径 ID 必须唯一：${actualIds.join(', ')}`)
+  throw new Error(`长篇备份恢复路径 ID 必须唯一：${actualIds.join(', ')}`)
 }
 
 const allowedRunners = new Set(['vitest', 'playwright'])
@@ -47,11 +47,11 @@ for (const path of matrix.paths) {
   }
 }
 
-const browserRequiredIds = new Set(['TOW-COMPAT-P01'])
+const browserRequiredIds = new Set(['LONGFORM-COMPAT-BACKUP-01'])
 for (const path of matrix.paths.filter(candidate => browserRequiredIds.has(candidate.id))) {
   if (!path.evidence.some(evidence => evidence.runner === 'playwright')) {
     throw new Error(`${path.id}必须保留真实Chromium玩家路径证据`)
   }
 }
 
-console.log(`Text Open World G7 player paths OK: ${matrix.paths.length} paths, ${playwrightEvidenceCount} Chromium bindings`)
+console.log(`Longform backup recovery paths OK: ${matrix.paths.length} paths, ${playwrightEvidenceCount} Chromium bindings`)

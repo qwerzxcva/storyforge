@@ -1,6 +1,7 @@
 import { mockOllamaCapacity } from './helpers/model-capacity'
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
+import { routeProviderFixture } from './helpers/provider-route'
 
 const endpoint = 'https://agent-experience.invalid/v1/chat/completions'
 
@@ -25,7 +26,7 @@ for (const scenario of ['hot-detail', 'restored-character'] as const) {
       relationships: '帮助港口居民保存来信。', shortDescription: '用怀表记录邮轮抵港时间的修表师。',
     }
     let generations = 0
-    await page.route(endpoint, async route => {
+    await routeProviderFixture(page, endpoint, async route => {
       const messages = route.request().postDataJSON().messages as Array<{ content: string }>
       const planning = messages.some(message => message.content.includes('你只把用户目标拆成幕后领域任务'))
       if (!planning) generations++
@@ -95,7 +96,7 @@ async function storedCounts(page: Page) {
 test('existing world context does not add a world task or misleading plan summary to character work', async ({ page }) => {
   await setup(page, '角色引用世界隔离验收')
   let calls = 0
-  await page.route(endpoint, async route => {
+  await routeProviderFixture(page, endpoint, async route => {
     calls++
     await route.fulfill({ contentType: 'application/json', body: JSON.stringify({
       choices: [{ finish_reason: 'stop', message: { content: JSON.stringify({
@@ -168,7 +169,7 @@ test('sparse chapter can be written, discussed, restored, edited and adopted wit
   await page.getByRole('button', { name: '添加章节', exact: true }).click()
   let generationCalls = 0
   let discussionCalls = 0
-  await page.route(endpoint, async (route) => {
+  await routeProviderFixture(page, endpoint, async (route) => {
     const combined = route
       .request()
       .postDataJSON()
@@ -261,7 +262,7 @@ test('stopping a waiting planner restores input and does not resend or publish i
   const gate = new Promise<void>((resolve) => {
     release = resolve
   })
-  await page.route(endpoint, async (route) => {
+  await routeProviderFixture(page, endpoint, async (route) => {
     calls++
     await gate
     await route
@@ -295,7 +296,7 @@ test('a blank work starts with one visible chapter plan and reaches saved prose 
   await page.setViewportSize({ width: 1366, height: 768 })
   await setup(page, '最小起步隔离验收')
   const calls: string[] = []
-  await page.route(endpoint, async (route) => {
+  await routeProviderFixture(page, endpoint, async (route) => {
     const text = route
       .request()
       .postDataJSON()
@@ -395,7 +396,7 @@ test('a blank work starts with one visible chapter plan and reaches saved prose 
 test('authorization failure explains the next step and never retries behind the author', async ({ page }) => {
   await setup(page, '失败提示隔离验收')
   let calls = 0
-  await page.route(endpoint, async (route) => {
+  await routeProviderFixture(page, endpoint, async (route) => {
     calls++
     await route.fulfill({
       status: 401,
@@ -422,7 +423,7 @@ test('a silent planner times out visibly without retrying or losing the author r
   let calls = 0
   let release: () => void = () => undefined
   const gate = new Promise<void>(resolve => { release = resolve })
-  await page.route(endpoint, async route => {
+  await routeProviderFixture(page, endpoint, async route => {
     calls++
     await gate
     await route.abort().catch(() => undefined)
@@ -443,7 +444,7 @@ test('a silent planner times out visibly without retrying or losing the author r
 test('outline.compose candidate survives refresh and author adoption (feedback 136)', async ({ page }) => {
   await setup(page, '大纲策略身份隔离回归')
   let calls = 0
-  await page.route(endpoint, async route => {
+  await routeProviderFixture(page, endpoint, async route => {
     calls++
     const text = route.request().postDataJSON().messages.map((m: { content: string }) => m.content).join('\n')
     const content = text.includes('你只把用户目标拆成幕后领域任务')

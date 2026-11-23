@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
 import { openLongformLeaf } from './helpers/longform-navigation'
+import { routeProviderFixture } from './helpers/provider-route'
 
 async function setup(page: Page, incomplete = false) {
   await page.addInitScript(() => {
@@ -27,7 +28,7 @@ async function setup(page: Page, incomplete = false) {
 }
 async function mockOrigin(page: Page) {
   const requests: string[] = []
-  await page.route('**/chat/completions', async route => {
+  await routeProviderFixture(page, '**/chat/completions', async route => {
     requests.push(route.request().postData() ?? '')
     await route.fulfill({ contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { content: JSON.stringify({ field: 'worldOrigin', value: '模型描述的海床古城。' }) } }], usage: { prompt_tokens: 12, completion_tokens: 24, total_tokens: 36 } }) })
   })
@@ -44,7 +45,7 @@ async function runOrigin(page: Page) {
 
 test('confirmed upstream Canon continues after reload with current source reads; external edits block reuse without another model call', async ({ page }) => {
   const requests: string[] = []
-  await page.route('**/chat/completions', async route => {
+  await routeProviderFixture(page, '**/chat/completions', async route => {
     requests.push(route.request().postData() ?? '')
     const value = requests.length === 1
       ? { field: 'worldOrigin', value: '潮汐退去后升起的古城。' }
@@ -174,7 +175,7 @@ test('mobile separates canvas, settings and readable candidate review without ho
 })
 
 test('bound character field offers adoption and updates only its selected character', async ({ page }) => {
-  await page.route('**/chat/completions', route => route.fulfill({ contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { content: JSON.stringify({ version: 1, patch: { motivation: '让沉没城市重见天日。' } }) } }] }) }))
+  await routeProviderFixture(page, '**/chat/completions', route => route.fulfill({ contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { content: JSON.stringify({ version: 1, patch: { motivation: '让沉没城市重见天日。' } }) } }] }) }))
   const projectId = await setup(page)
   await page.evaluate(async projectId => {
     const importer = new Function('p', 'return import(p)') as (p: string) => Promise<any>
@@ -342,7 +343,7 @@ test('another tab cannot recover or restart a flow while its original model call
   let release: (() => void) | undefined
   const pending = new Promise<void>(resolve => { release = resolve })
   let requests = 0
-  await page.route('**/chat/completions', async route => {
+  await routeProviderFixture(page, '**/chat/completions', async route => {
     requests += 1
     await pending
     await route.fulfill({ contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { content: JSON.stringify({ field: 'worldOrigin', value: '原页面仍在生成的古城。' }) } }] }) })

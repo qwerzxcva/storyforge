@@ -1,5 +1,6 @@
 import { mockOllamaCapacity } from './helpers/model-capacity'
 import { expect, test, type Page } from '@playwright/test'
+import { routeProviderFixture } from './helpers/provider-route'
 import { createLongform } from './helpers/product-entry'
 import { openLongformLeaf } from './helpers/longform-navigation'
 
@@ -251,7 +252,7 @@ test('same-titled stages and events can enter the Gateway independently without 
   await page.reload(); await page.getByRole('button', { name: /阶段\s*1\s+依据实测数据逐步决定通行/ }).click()
   const reply = [...before.stages[0].keyEvents, '完成本轮核验后保留退路']
   let calls = 0
-  await page.route('https://arc-events.invalid/v1/chat/completions', route => {
+  await routeProviderFixture(page, 'https://arc-events.invalid/v1/chat/completions', route => {
     calls++
     return route.fulfill({ contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { content: JSON.stringify({ keyEvents: reply }) }, finish_reason: 'stop' }], usage: { prompt_tokens: 100, completion_tokens: 100, total_tokens: 200 } }) })
   })
@@ -268,7 +269,7 @@ test('stage-scoped AI appends beyond five existing events and sorts through edit
   const errors: string[] = []; page.on('pageerror', error => errors.push(error.message))
   const id = await eventAISetup(page); const before = (await rows(page, id))[0]; const original = JSON.parse(before.stages)
   let calls = 0; let reply = [...original[0].keyEvents, '按核验结果封闭支路']
-  await page.route('https://arc-events.invalid/v1/chat/completions', route => {
+  await routeProviderFixture(page, 'https://arc-events.invalid/v1/chat/completions', route => {
     calls++
     expect(route.request().postDataJSON().messages[0].content).toContain('唯一字段keyEvents')
     return route.fulfill({ contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { content: JSON.stringify({ keyEvents: reply }) }, finish_reason: 'stop' }], usage: { prompt_tokens: 100, completion_tokens: 100, total_tokens: 200 } }) })
@@ -299,7 +300,7 @@ test('stage-scoped AI appends beyond five existing events and sorts through edit
 test('AI sort cannot rewrite events, stops after bounded repair, and accepts an author-corrected permutation without another model', async ({ page }) => {
   const id = await eventAISetup(page); const before = (await rows(page, id))[0]; const original = JSON.parse(before.stages)[0]
   let calls = 0
-  await page.route('https://arc-events.invalid/v1/chat/completions', route => {
+  await routeProviderFixture(page, 'https://arc-events.invalid/v1/chat/completions', route => {
     calls++
     return route.fulfill({ contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { content: JSON.stringify({ keyEvents: [...original.keyEvents.slice(1), '模型擅自改写'] }) }, finish_reason: 'stop' }] }) })
   })
@@ -342,7 +343,7 @@ for (const stageCount of [1, 8]) {
     const stages = JSON.parse(before.stages)
     const output = [{ name: before.name, type: before.type, description: '按已确认步骤推进核验，结果交给后续作者决策。', stages: stages.map(({ id, authorNote: _authorNote, ...row }: any) => ({ stageId: id, ...row })) }]
     let calls = 0
-    await page.route('https://arc-events.invalid/v1/chat/completions', route => {
+    await routeProviderFixture(page, 'https://arc-events.invalid/v1/chat/completions', route => {
       calls++
       return route.fulfill({ contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { content: JSON.stringify({ storyArcs: output }) }, finish_reason: 'stop' }], usage: { prompt_tokens: 100, completion_tokens: 100, total_tokens: 200 } }) })
     })

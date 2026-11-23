@@ -53,9 +53,16 @@ async function read(page: Page, projectId: number, table: string) {
     return (await readOwnedRows(await resolveScopeLike(projectId), table))[0] ?? null
   }, { projectId, table })
 }
-async function editFirst(page: Page, text: string) {
-  await page.locator('div.cursor-text:visible').first().click()
+async function openFirstEditor(page: Page) {
+  const markdown = page.locator('.lf-world-panel [data-markdown-read-view]:visible').first()
+  if (await markdown.count()) await markdown.getByRole('button', { name: '编辑源码', exact: true }).click()
+  else await page.locator('div.cursor-text:visible').first().click()
   const editor = page.locator('textarea:visible').first()
+  await expect(editor).toBeVisible()
+  return editor
+}
+async function editFirst(page: Page, text: string) {
+  const editor = await openFirstEditor(page)
   await editor.fill(text)
   await page.getByRole('navigation', { name: '长篇一级导航' }).getByRole('button', { name: '作品库', exact: true }).focus()
   await expect(editor).not.toBeVisible()
@@ -72,7 +79,11 @@ test(`scalar author ${field} saves edits and clearing through its real UI and su
     await editFirst(page, text)
     await expect.poll(async () => (await read(page, projectId, table))?.[field]).toBe(text)
     await page.reload(); await openField(page, module, label)
-    await expect(page.locator('div.cursor-text:visible').first()).toHaveText(text)
+    if (module === '自然环境') {
+      await expect(page.locator('.lf-world-panel [data-markdown-read-view]:visible').first()).toContainText(text)
+    } else {
+      await expect(page.locator('div.cursor-text:visible').first()).toHaveText(text)
+    }
     await editFirst(page, '')
     await page.reload(); await openField(page, module, label)
     expect((await read(page, projectId, table))?.[field]).toBe('')
@@ -93,14 +104,17 @@ test(`rejected ${field} write keeps the draft and retries without a page crash`,
     db[table].update = async () => { throw new DOMException('隔离配额耗尽', 'QuotaExceededError') }
     Object.assign(window, { restoreAuthorWrite: () => { db[table].update = original } })
   }, table)
-  await page.locator('div.cursor-text:visible').first().click()
-  const editor = page.locator('textarea:visible').first()
+  const editor = await openFirstEditor(page)
   await editor.fill('写入失败但必须保留的中文草稿'); await page.getByRole('navigation', { name: '长篇一级导航' }).getByRole('button', { name: '作品库', exact: true }).focus()
-  await expect(page.getByRole('alert').filter({ hasText: '隔离配额耗尽' })).toBeVisible()
+  const failedStatus = module === '自然环境'
+    ? page.locator('.lf-world-panel .lf-world-field:visible [data-local-save-status="failed"]')
+    : page.getByRole('alert').filter({ hasText: '隔离配额耗尽' }).first()
+  await expect(failedStatus).toBeVisible()
+  if (module === '自然环境') await expect(failedStatus).toContainText('隔离配额耗尽')
   await expect(editor).toHaveValue('写入失败但必须保留的中文草稿')
   expect((await read(page, projectId, table))?.[field]).toBe('已保存的世界来源')
   await page.evaluate(() => { (window as unknown as { restoreAuthorWrite: () => void }).restoreAuthorWrite() })
-  await page.getByRole('button', { name: '重试保存', exact: true }).click()
+  await failedStatus.getByRole('button', { name: module === '自然环境' ? '重试' : '重试保存', exact: true }).click()
   await expect(editor).not.toBeVisible()
   await page.reload(); await openField(page, module, label)
   expect((await read(page, projectId, table))?.[field]).toBe('写入失败但必须保留的中文草稿')

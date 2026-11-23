@@ -1,15 +1,15 @@
 {
-  "schema": "storyforge.text-open-world.creator-recovery-matrix",
+  "schema": "storyforge.longform.backup-recovery-matrix",
   "version": 1,
   "paths": [
     {
-      "id": "TOW-COMPAT-P01",
-      "title": "从正式 Creator 存档恢复玩家游戏",
+      "id": "LONGFORM-COMPAT-BACKUP-01",
+      "title": "从完整 JSON 备份恢复长篇正文",
       "evidence": [
         {
           "runner": "playwright",
-          "file": "tests/e2e/text-open-world-creator-lifecycle.spec.ts",
-          "testName": "Creator正式游戏经UI篡改拒绝、导出导入、玩家恢复与项目删除保持完整"
+          "file": "tests/e2e/core-workflow.spec.ts",
+          "testName": "完整 JSON 导出后可重新导入且正文不丢"
         }
       ]
     }

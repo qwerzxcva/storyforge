@@ -85,6 +85,34 @@ describe('TTRPG/NW integration · preserve independent owners through version co
     const parsed = parseProductProductionPlanV3(JSON.stringify(plan), undefined, hash)
     expect(parsed).toEqual(plan)
     expect(() => parseProductProductionPlanV3('{')).toThrow(/Plan 不是合法 JSON/)
+    const invalidPlans = [
+      ['zero concurrency', (candidate: any) => { candidate.concurrency.maximumCostBearingTasks = 0 }, /concurrency 必须大于零/],
+      ['missing terminal', (candidate: any) => { candidate.terminalTaskKey = 'missing' }, /terminalTaskKey 不存在/],
+      ['duplicate task key', (candidate: any) => { candidate.tasks[1].taskKey = candidate.tasks[0].taskKey }, /taskKey 重复/],
+      ['unknown dependency', (candidate: any) => {
+        candidate.tasks[1].dependsOn = ['missing']
+        candidate.tasks[1].requiredReceipts = [{ taskKey: 'missing', receiptHash: null }]
+      }, /依赖无效/],
+      ['self dependency', (candidate: any) => {
+        const taskKey = candidate.tasks[0].taskKey
+        candidate.tasks[0].dependsOn = [taskKey]
+        candidate.tasks[0].requiredReceipts = [{ taskKey, receiptHash: null }]
+      }, /依赖无效/],
+      ['unpaired receipts', (candidate: any) => { candidate.tasks[1].requiredReceipts = [] }, /requiredReceipts 未闭合/],
+      ['unowned input', (candidate: any) => { candidate.tasks[0].inputArtifactKeys = ['unowned'] }, /输入 Artifact 没有 owner/],
+      ['duplicate output owner', (candidate: any) => { candidate.tasks[1].outputArtifactKeys = [candidate.tasks[0].outputArtifactKeys[0]] }, /有多个 owner/],
+      ['fallback without task', (candidate: any) => { candidate.tasks[0].failurePolicy = 'fallback' }, /缺少 fallbackTaskKey/],
+      ['deterministic skill', (candidate: any) => { candidate.tasks[0].skillId = 'skill.unexpected' }, /确定性任务不应绑定 skillId/],
+      ['model without skill', (candidate: any) => { candidate.tasks[0].executionMode = 'model' }, /模型任务缺少 skillId/],
+      ['unknown context profile', (candidate: any) => { candidate.tasks[0].contextProfile = 'unknown' }, /contextProfile 枚举无效/],
+      ['unjoined task', (candidate: any) => { candidate.tasks.push({ ...structuredClone(candidate.tasks[0]), taskKey: 'orphan-task', outputArtifactKeys: [], inputArtifactKeys: [], dependsOn: [], requiredReceipts: [] }) }, /未进入 terminal join/],
+    ] as const
+    for (const [label, mutate, expected] of invalidPlans) {
+      const candidate = structuredClone(plan)
+      mutate(candidate)
+      expect(() => parseProductProductionPlanV3(candidate), label).toThrow(expected)
+    }
+    expect(() => parseProductProductionPlanV3(plan, undefined, 'b'.repeat(64))).toThrow(/briefHash 不一致/)
 
     const tasks = Object.fromEntries(parsed.tasks.map(task => [task.taskKey, {
       runId: 1, attempt: 0, status: 'settled', idempotencyKey: hash, candidateHash: hash,

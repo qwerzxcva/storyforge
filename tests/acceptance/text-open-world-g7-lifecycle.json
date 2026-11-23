@@ -2,7 +2,7 @@
   "schema": "storyforge.text-open-world.g7-lifecycle-matrix",
   "version": 1,
   "backupVersion": 20,
-  "compatibilityPolicy": "validated-v14-v15-v16-conversion-explicit-release-migration",
+  "compatibilityPolicy": "validated-v14-v15-v16-v17-v18-v19-conversion-explicit-release-migration",
   "profileNote": "项目备份导出当前v20，完整v14/v15、两种v16以及v17/v18/v19须经显式校验转换，缺失叙事注释保持缺失且不生成作者确认；旧存档继续绑定旧Release，只有通过兼容性预演和显式提交才能生成绑定新Release的子Session。",
   "gates": [
     {
