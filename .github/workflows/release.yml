@@ -268,3 +268,4 @@ jobs:
     uses: ./.github/workflows/client-release-upgrade.yml
     with:
       client-artifact: true
+    secrets: inherit
