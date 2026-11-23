@@ -8,7 +8,6 @@ type LegacyResolvedRuntimeSource = Omit<ResolvedProductRuntimeSourceV1, 'runtime
 }
 type LegacyVerifiedRuntimeSource = Omit<LegacyResolvedRuntimeSource, 'mediaResolver'>
 type VersionedVerifiedRuntimeSource = Omit<ResolvedProductRuntimeSourceV1, 'mediaResolver'>
-import { assertProductRuntimeSourceSnapshotV3 } from '../product/runtime-source-branch';
 
 export async function productRuntimeSourceForSessionV1(
   session: Pick<ProductRuntimeSession, 'productReleaseId' | 'productBuildId'>,
@@ -30,6 +29,7 @@ export async function verifyProductRuntimeSessionSourceV1(input: RuntimeSessionS
     source: await productRuntimeSourceForSessionV1(input.session),
     ttrpgProtocol: input.ttrpgProtocol,
   })
+  const { assertProductRuntimeSourceSnapshotV3 } = await import('../product/runtime-source-branch')
   await assertProductRuntimeSourceSnapshotV3({ session: input.session, manifest: verified.sourceManifest })
   return verified
 }
