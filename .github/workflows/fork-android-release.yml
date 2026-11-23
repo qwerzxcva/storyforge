@@ -139,6 +139,18 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - name: Verify current long-form and auxiliary world browser flows
         run: npm run test:e2e:current-products -- --shard=${{ matrix.shard }}/8 --reporter=github,blob
+      - name: Verify long-form body survives full JSON backup recovery
+        if: matrix.shard == 1
+        run: npm run test:e2e:longform-backup -- --reporter=github,blob
+      - name: Verify long-form compact editor layout
+        if: matrix.shard == 1
+        run: npm run test:e2e:longform-layout -- --reporter=github,blob
+      - name: Verify auxiliary semantic-world authoring and sharing flows
+        if: matrix.shard == 1
+        run: npm run test:e2e:world-assistance -- --reporter=github,blob
+      - name: Verify product home and stable World identity
+        if: matrix.shard == 1
+        run: npm run test:e2e:longform-entry -- --reporter=github,blob
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: ${{ !cancelled() }}
         with:

@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
+import { routeProviderFixture } from './helpers/provider-route'
 import { openLongformLeaf } from './helpers/longform-navigation'
 
 async function setup(page: Page, confirmed = false) {
@@ -46,7 +47,7 @@ async function draftSaved(page: Page, projectId: number, text: string) {
 test('progress read failure is visible, disables mapping and explicitly retries without model dispatch or stale data', async ({ page }) => {
   const errors: string[] = []; page.on('pageerror', error => errors.push(error.message))
   const f = await setup(page, true); let calls = 0
-  await page.route('https://storyline-progress.invalid/**', route => { calls++; return route.abort() })
+  await routeProviderFixture(page, 'https://storyline-progress.invalid/**', route => { calls++; return route.abort() })
   const before = await canon(page, f.projectId)
   await page.evaluate(async () => {
     const { db } = await (new Function('return import("/storyforge/src/lib/db/schema.ts")'))()
@@ -71,7 +72,7 @@ test('progress read failure is visible, disables mapping and explicitly retries 
 test('chapter mapping rejects one candidate, edits the next, refuses invalid adoption, then atomically adopts progress, crossing and new Arc', async ({ page }) => {
   const errors: string[] = []; page.on('pageerror', error => errors.push(error.message))
   const f = await setup(page); const before = await canon(page, f.projectId); let calls = 0
-  await page.route('https://storyline-progress.invalid/**', route => {
+  await routeProviderFixture(page, 'https://storyline-progress.invalid/**', route => {
     calls++
     const body = route.request().postDataJSON()
     expect(body.response_format).toEqual({ type: 'json_object' })
@@ -114,7 +115,7 @@ test('chapter mapping rejects one candidate, edits the next, refuses invalid ado
 
 test('mapping provider failure is one dispatch, retains prose and does not restart on reload', async ({ page }) => {
   const f = await setup(page); const before = await canon(page, f.projectId); let calls = 0
-  await page.route('https://storyline-progress.invalid/**', route => { calls++; return route.fulfill({ status: 503, body: '隔离映射服务故障' }) })
+  await routeProviderFixture(page, 'https://storyline-progress.invalid/**', route => { calls++; return route.fulfill({ status: 503, body: '隔离映射服务故障' }) })
   await panel(page).getByRole('button', { name: '映射本章', exact: true }).click()
   await expect(panel(page).getByRole('alert')).toBeVisible()
   await expect(panel(page).getByLabel('故事线进度候选 JSON', { exact: true })).toHaveCount(0)
@@ -125,7 +126,7 @@ test('mapping provider failure is one dispatch, retains prose and does not resta
 
 test('native IME changes in the mapping candidate participate in close and navigation guards before the parent draft changes', async ({ page, context }) => {
   const f = await setup(page); let calls = 0
-  await page.route('https://storyline-progress.invalid/**', route => {
+  await routeProviderFixture(page, 'https://storyline-progress.invalid/**', route => {
     calls++
     const data = { progress: [{ arcId: f.arcIds[0], currentStageId: 'hand-over', status: 'active', progressNote: '交付后取得路线', involvedEntities: [], anchorId: 'p1' }], crossings: [], newArcs: [] }
     return route.fulfill({ contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { content: JSON.stringify(data) }, finish_reason: 'stop' }], usage: { prompt_tokens: 100, completion_tokens: 100, total_tokens: 200 } }) })

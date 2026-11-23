@@ -1,6 +1,7 @@
 import { mockOllamaCapacity } from './helpers/model-capacity'
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
+import { routeProviderFixture } from './helpers/provider-route'
 
 const original = '<p>原稿仍在，任何读取错误都不能覆盖它。</p>'
 const badFields = '[{"key":"位置","value":"山门"},null]'
@@ -176,7 +177,7 @@ for (const fields of ['[null]', '[{"key":"位置"}]', '[{"key":"位置","value":
 test('坏状态阻止模型请求；修复后生成、编辑候选、刷新采纳、手改保存和下游状态回读', async ({ page }) => {
   const calls: any[] = []
   const generated = '林照站在山门外，右手缠着布条。他用左手拨开草丛，沿溪探查道路，听见断桥下的水声便停了脚步。'.repeat(8)
-  await page.route('https://state-recovery.invalid/v1/chat/completions', route => {
+  await routeProviderFixture(page, 'https://state-recovery.invalid/v1/chat/completions', route => {
     calls.push(route.request().postDataJSON())
     return route.fulfill({ contentType: 'text/event-stream', body: `data: ${JSON.stringify({ choices: [{ delta: { content: generated }, finish_reason: 'stop' }] })}\n\ndata: [DONE]\n\n` })
   })

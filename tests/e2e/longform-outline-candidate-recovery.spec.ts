@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
 import { openLongformLeaf } from './helpers/longform-navigation'
+import { routeProviderFixture } from './helpers/provider-route'
 
 const output = JSON.stringify([{ title: '第1卷', summary: '测绳人先检查绳结，再核算木料与退路；在桥边发现新钉痕，由此追查偷工减料。系统只记录已验证的路径，不预知对手的行动。' }])
 async function generate(page: Page, options: { delayCandidate?: boolean; output?: string; blocked?: boolean } = {}) {
@@ -10,7 +11,7 @@ async function generate(page: Page, options: { delayCandidate?: boolean; output?
     localStorage.setItem('storyforge-ai-config', JSON.stringify({ provider: 'ollama', model: 'isolated-outline-recovery', baseUrl: 'https://outline-recovery.invalid/v1', maxTokens: 4000, contextWindow: 64000 }))
   })
   let calls = 0
-  await page.route('https://outline-recovery.invalid/**', async route => {
+  await routeProviderFixture(page, 'https://outline-recovery.invalid/**', async route => {
     calls++
     await route.fulfill({ contentType: 'text/event-stream', body: `data: ${JSON.stringify({ choices: [{ delta: { content: options.output ?? output }, finish_reason: 'stop' }], usage: { prompt_tokens: 50, completion_tokens: 80, total_tokens: 130 } })}\n\ndata: [DONE]\n\n` })
   })

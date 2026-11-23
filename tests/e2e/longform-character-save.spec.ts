@@ -1,6 +1,7 @@
 import { mockOllamaCapacity } from './helpers/model-capacity'
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
+import { routeProviderFixture } from './helpers/provider-route'
 import { openLongformLeaf } from './helpers/longform-navigation'
 import { CHARACTER_DIMENSIONS } from '../../src/lib/character/character-dimensions'
 
@@ -155,7 +156,7 @@ test('rejecting the last generated character closes its durable run and survives
   await page.addInitScript(() => localStorage.setItem('storyforge-ai-config', JSON.stringify({ provider: 'ollama', model: 'isolated-character', baseUrl: 'https://character-terminal.invalid/v1', maxTokens: 4000, contextWindow: 64000 })))
   const projectId = await createCharacter(page)
   let calls = 0
-  await page.route('https://character-terminal.invalid/v1/chat/completions', async route => {
+  await routeProviderFixture(page, 'https://character-terminal.invalid/v1/chat/completions', async route => {
     calls++
     const candidate = {
       ...Object.fromEntries(CHARACTER_DIMENSIONS.map(d => [d.key, `${d.label}：先测绳再探路。`])),

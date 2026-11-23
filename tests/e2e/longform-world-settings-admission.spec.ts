@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-test('world settings leave the longform layout while the next active Work read is pending', async ({ page }) => {
+test('world settings leave the longform layout while the next active Longform read is pending', async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('storyforge_guide_completed', 'e2e'))
   await page.route('**/*', route => {
     const request = route.request()
@@ -11,12 +11,15 @@ test('world settings leave the longform layout while the next active Work read i
   const ids = await page.evaluate(async () => {
     const imp = new Function('p', 'return import(p)')
     const { seedCurrentWorkspace } = await imp('/storyforge/tests/helpers/current-workspace.ts')
-    const { createWorldWork } = await imp('/storyforge/src/lib/workspace/works.ts')
+    const { db } = await imp('/storyforge/src/lib/db/schema.ts')
+    const { buildWorkRecord } = await imp('/storyforge/src/lib/workspace/works.ts')
     const { scope } = await seedCurrentWorkspace('世界设定布局身份验收')
-    const short = await createWorldWork(scope.projectId, {
-      title: '同工作区短篇', kind: 'novel', novelProfile: 'short', targetWordCount: 10_000,
-    })
-    return { projectId: scope.projectId, longId: scope.workId, shortId: short.id }
+    const fallback = await db.works.get(scope.workId)
+    if (!fallback) throw new Error('Missing current Longform Work fixture')
+    const next = buildWorkRecord({ projectId: scope.projectId, worldId: scope.worldId, fallback,
+      create: { title: '同工作区第二部长篇', kind: 'novel', novelProfile: 'long', targetWordCount: 300_000 }, now: Date.now() })
+    const nextId = await db.works.add(next)
+    return { projectId: scope.projectId, longId: scope.workId, nextId }
   })
   await page.goto(`./workspace/${ids.projectId}?module=worldview-natural`)
   await expect(page.locator('.lf-world-settings')).toBeVisible()
@@ -25,7 +28,7 @@ test('world settings leave the longform layout while the next active Work read i
     const { db } = await imp('/storyforge/src/lib/db/schema.ts')
     const { switchActiveWork } = await imp('/storyforge/src/lib/workspace/works.ts')
     const { useProjectStore } = await imp('/storyforge/src/stores/project.ts')
-    await switchActiveWork(ids.projectId, ids.shortId)
+    await switchActiveWork(ids.projectId, ids.nextId)
     const get = db.works.get.bind(db.works)
     let release!: () => void
     const gate = new Promise<void>(resolve => { release = resolve })
@@ -34,7 +37,7 @@ test('world settings leave the longform layout while the next active Work read i
       release()
     } })
     db.works.get = async (id: unknown) => {
-      if (id === ids.shortId) {
+      if (id === ids.nextId) {
         Object.assign(window, { activeWorkReadStarted: true })
         await gate
       }
@@ -49,7 +52,7 @@ test('world settings leave the longform layout while the next active Work read i
   }).activeWorkReadStarted)).toBe(true)
   await expect(page.locator('.lf-world-settings')).toHaveCount(0)
   await page.evaluate(() => (window as unknown as { releaseActiveWorkRead: () => void }).releaseActiveWorkRead())
-  await expect(page.locator('.short-json-editor')).toBeVisible()
+  await expect(page.locator('.lf-world-settings')).toBeVisible()
   await page.evaluate(async ids => {
     const imp = new Function('p', 'return import(p)')
     const { switchActiveWork } = await imp('/storyforge/src/lib/workspace/works.ts')

@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
+import { routeProviderFixture } from './helpers/provider-route'
 
 async function setup(page: Page) {
   await page.addInitScript(() => {
@@ -17,7 +18,7 @@ test('text discussion works without voice controls and never adopts a plan', asy
   await page.setViewportSize({ width: 1366, height: 768 })
   await setup(page)
   let calls = 0
-  await page.route('https://companion-test.invalid/v1/chat/completions', async (route) => {
+  await routeProviderFixture(page, 'https://companion-test.invalid/v1/chat/completions', async (route) => {
     calls++
     expect(route.request().postData()).toContain('先讨论女主的动机')
     await route.fulfill({ contentType: 'application/json', body: JSON.stringify({

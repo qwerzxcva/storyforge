@@ -23,7 +23,7 @@ export async function publishCurrentWorldRelease(
   const dialog = page.getByRole('dialog')
   await expect(dialog).toContainText(/发布修订 \d+？/)
   await dialog.getByRole('button', { name: '发布世界版本', exact: true }).click()
-  await expect(panel.getByRole('status')).toContainText('不可变 WorldRelease 已发布')
+  await expect(panel.getByRole('status')).toContainText('不可变的世界版本已发布，可在数据出口查看。')
   return panel
 }
 

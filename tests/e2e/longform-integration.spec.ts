@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test'
 import { registerBrowserFixtureAIConfigV1, gotoWithBrowserFixtureAIConfigV1, reloadWithBrowserFixtureAIConfigV1 } from './helpers/browser-ai-config'
+import { routeProviderFixture } from './helpers/provider-route'
 
 test('longform library creates a real work and retains edits across navigation and reload', async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('storyforge_guide_completed', 'e2e'))
@@ -43,7 +44,7 @@ test('Agent discussion and proposed plan survive reload without starting product
   registerBrowserFixtureAIConfigV1(page, { provider: 'openai', baseUrl: 'https://longform-test.invalid/v1', model: 'gpt-4o', temperature: 0.2, maxTokens: 4000, apiKey: 'isolated-test-key' })
   await page.addInitScript(() => localStorage.setItem('storyforge_guide_completed', 'e2e'))
   let calls = 0
-  await page.route('https://longform-test.invalid/**', async route => {
+  await routeProviderFixture(page, 'https://longform-test.invalid/**', async route => {
     calls++
     await route.fulfill({ contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { role: 'assistant', content: JSON.stringify({ summary: '先创建一名寻找旧信的主角，等待作者确认。', tasks: [{ id: 'hero', agentId: 'character', instruction: '创建一名寻找旧信的主角', dependsOn: [] }] }) }, finish_reason: 'stop' }], usage: { prompt_tokens: 100, completion_tokens: 80, total_tokens: 180 } }) })
   })
@@ -78,7 +79,7 @@ test('chunked outline choices and formal candidates survive reload and adopt int
   await page.addInitScript(() => localStorage.setItem('storyforge_guide_completed', 'e2e'))
   let directionCalls = 0
   let chapterCalls = 0
-  await page.route('https://longform-chunked.invalid/**', async route => {
+  await routeProviderFixture(page, 'https://longform-chunked.invalid/**', async route => {
     const body = route.request().postDataJSON()
     const text = body.messages.map((message: { content: string }) => message.content).join('\n')
     let content: string

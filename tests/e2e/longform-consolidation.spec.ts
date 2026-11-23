@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
+import { routeProviderFixture } from './helpers/provider-route'
 
 async function create(page: Page, name: string) {
   await page.addInitScript(() => {
@@ -53,7 +54,7 @@ test('旧全局替换入口统一保存多字段、保留 HTML、可撤销且拦
 
 test('自由试写刷新可恢复，拆分与采纳复用正式候选，未确认前不写入', async ({ page }) => {
   const projectId = await create(page, '自由对话隔离验收'); let calls = 0
-  await page.route('https://consolidation.invalid/v1/chat/completions', async route => {
+  await routeProviderFixture(page, 'https://consolidation.invalid/v1/chat/completions', async route => {
     calls++
     if (calls === 1) expect(route.request().postDataJSON().messages[0].content).toContain('自由讨论与试写')
     const content = calls === 1 ? '海上孤城的钟楼里，修钟师展开了雨中的来信。' : JSON.stringify([{ name: '海上孤城', icon: '', summary: '拥有钟楼的孤城', description: '海上孤城的钟楼里，修钟师展开了雨中的来信。', fields: {}, tags: [], importance: 1, evidenceQuotes: ['海上孤城的钟楼里'], provenance: 'verbatim-extraction' }])

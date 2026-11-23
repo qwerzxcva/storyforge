@@ -1,6 +1,7 @@
 import { mockOllamaCapacity } from './helpers/model-capacity'
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
+import { routeProviderFixture } from './helpers/provider-route'
 import { openLongformLeaf } from './helpers/longform-navigation'
 
 async function prepareBatch(page: Page, count: number) {
@@ -9,7 +10,7 @@ async function prepareBatch(page: Page, count: number) {
     localStorage.setItem('storyforge-ai-config', JSON.stringify({ provider: 'ollama', baseUrl: 'https://batch-adoption-test.invalid/v1', model: 'batch-adoption-e2e', temperature: 0.2, maxTokens: 4000 }))
   })
   let calls = 0
-  await page.route('https://batch-adoption-test.invalid/v1/chat/completions', async route => {
+  await routeProviderFixture(page, 'https://batch-adoption-test.invalid/v1/chat/completions', async route => {
     calls++
     await route.fulfill({ contentType: 'application/json', body: JSON.stringify({
       choices: [{ message: { content: JSON.stringify([{ title: `批量候选章${calls}`, summary: `原始第${calls}卷章纲` }]) }, finish_reason: 'stop' }],

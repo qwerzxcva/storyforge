@@ -1,6 +1,7 @@
 import { mockOllamaCapacity } from './helpers/model-capacity'
 import { expect, test } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
+import { routeProviderFixture } from './helpers/provider-route'
 
 test('同一章从章纲到任务细纲到正文再返回；快速编辑先保存，刷新与窄屏保留任务和备注', async ({ page }) => {
   await createLongform(page, '细纲任务与章节交接')
@@ -56,7 +57,7 @@ test('新任务字段走原细纲 Harness；候选在其它章节仍有标记，
   await page.addInitScript(() => localStorage.setItem('storyforge-ai-config', JSON.stringify({ provider: 'ollama', baseUrl: 'https://scene-tasks.invalid/v1', model: 'task-contract-test', maxTokens: 4000, temperature: 0 })))
   const output = { scenePlanMode: 'replace', scenes: [{ action: 'add', title: '收店约定', summary: '两人收店后安排明天的分工', location: '小店', conflict: '', pace: 'slow', estimatedWords: 600, characterIds: [], entryState: '分工未定', goal: '明确分工', keyChoice: '先问搭档意愿', outcome: '达成约定', exitState: '约定未履行', sceneFunction: '关系缓冲', notes: '不要追加敌人' }] }
   let calls = 0
-  await page.route('https://scene-tasks.invalid/v1/chat/completions', async route => {
+  await routeProviderFixture(page, 'https://scene-tasks.invalid/v1/chat/completions', async route => {
     calls++
     expect(route.request().postDataJSON().messages.map((row: { content: string }) => row.content).join('\n')).toContain('entryState')
     await route.fulfill({ contentType: 'text/event-stream', body: `data: ${JSON.stringify({ choices: [{ delta: { content: JSON.stringify(output) } }] })}\n\ndata: [DONE]\n\n` })
