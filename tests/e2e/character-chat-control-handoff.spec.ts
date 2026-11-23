@@ -8,7 +8,7 @@ test.beforeEach(async ({page}) => {
   await page.addInitScript(() => {
     localStorage.setItem('storyforge_guide_completed', 'e2e')
   })
-  registerBrowserFixtureAIConfigV1(page, { provider: 'openai', baseUrl: 'https://control-handoff.invalid/v1', model: 'control-fixture', maxTokens: 9000, apiKey: 'isolated-test-key' })
+  registerBrowserFixtureAIConfigV1(page, { provider: 'custom', contextWindow: 131072, baseUrl: 'https://control-handoff.invalid/v1', model: 'control-fixture', maxTokens: 9000, apiKey: 'isolated-test-key' })
 
 })
 
@@ -140,7 +140,7 @@ test('refresh resumes a saved control result through review without repeating se
     let runId: number | null = null
     try {
       await harness.generateInteractionRuntimeCandidateV1({scope: f.scope, productRuntimeSessionId: f.sessionId, participantKey: 'guard', skillId: 'character.chat-narrative-action',
-        objective: '核验静默交还控制恢复', aiConfig: {provider: 'openai', baseUrl: 'https://control-handoff.invalid/v1', model: 'control-fixture', apiKey: 'isolated-test-key', maxTokens: 9000},
+        objective: '核验静默交还控制恢复', aiConfig: {provider: 'custom', contextWindow: 131072, baseUrl: 'https://control-handoff.invalid/v1', model: 'control-fixture', apiKey: 'isolated-test-key', maxTokens: 9000},
         onRunCreated: (id: number) => {runId = id}, onActionExpressionBoundary: (name: string) => {if (name === 'candidate.persisted') throw Error('expected-control-interruption')}})
     } catch (error) {if (!String(error).includes('expected-control-interruption')) throw error}
     if (runId == null) throw Error('missing run')

@@ -146,8 +146,9 @@ test('root coverage is exact and a historical exception cannot exclude a new fil
 
 test('the actual CI entry retains production checking and reaches engineering semantics', () => {
   const pkg = JSON.parse(fs.readFileSync(path.join(repository, 'package.json'), 'utf8'))
-  assert.match(pkg.scripts.ci, /npx tsc --noEmit/)
-  assert.match(pkg.scripts.ci, /npm run check:engineering/)
+  const ciScripts = [pkg.scripts.ci, pkg.scripts['ci:static'], pkg.scripts['ci:web']].join('\n')
+  assert.match(ciScripts, /npx tsc --noEmit/)
+  assert.match(ciScripts, /npm run check:engineering/)
   assert.doesNotMatch(pkg.scripts.ci, /npm run check:types:open-world-experience/)
   assert.equal(pkg.scripts['check:engineering'], 'node scripts/quality/check-engineering.mjs')
   assert.equal(pkg.scripts['test:engineering-gate'], 'node --test scripts/quality/check-engineering.test.mjs scripts/quality/check-dev-dependency-report.test.mjs')

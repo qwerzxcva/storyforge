@@ -1,3 +1,4 @@
+import { mockOllamaCapacity } from './helpers/model-capacity'
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
 
@@ -66,7 +67,7 @@ async function authorizationState(page: Page) {
 for (const automatic of [false, true]) {
   test(`${automatic ? '预授权确认' : '建议候选'}准备中断后刷新恢复原 Run，不调用模型并保留显式启动入口`, async ({ page }) => {
     let calls = 0
-    await page.route('https://post-preparation.invalid/**', route => {
+    await page.route('https://post-preparation.invalid/v1/chat/completions', route => {
       calls++
       return route.fulfill({ contentType: 'text/event-stream', body: [
         `data: ${JSON.stringify({ choices: [{ delta: { content: generated }, finish_reason: 'stop' }] })}`,
@@ -103,3 +104,7 @@ for (const automatic of [false, true]) {
     expect(calls).toBe(1)
   })
 }
+
+test.beforeEach(async ({ page }) => {
+  await mockOllamaCapacity(page, [{"baseUrl": "https://post-preparation.invalid/v1","model": "post-recovery-test"}])
+})

@@ -6,6 +6,9 @@ import { openCurrentSchema } from '../../src/lib/db/ensure-schema'
 import { createWorkspace } from '../../src/lib/workspace/create-workspace'
 import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-export'
 import { CURRENT_BACKUP_VERSION, inspectProjectBackup, normalizeProjectBackup } from '../../src/lib/export/backup-trust'
+import { buildAvgAssemblyPlanV1 } from '../../src/lib/legacy-compat/avg/assembly-plan'
+import { parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
+import { parseProductProductionPortableTaskLedgerV1 } from '../../src/lib/legacy-compat/product-production/task-evidence'
 
 afterEach(() => db.close())
 
@@ -71,6 +74,36 @@ describe('TTRPG/NW integration · preserve independent owners through version co
     const restored = await importProjectJSON(legacy as never)
     expect((await db.works.where('projectId').equals(restored).toArray()).map(row => row.title)).toEqual(
       (await db.works.where('projectId').equals(created.scope.projectId).toArray()).map(row => row.title))
+  })
+
+  it('retains exact compatibility parsing for a frozen product plan and portable task ledger', async () => {
+    const hash = 'a'.repeat(64)
+    const plan = buildAvgAssemblyPlanV1({ brief: { avgAssembly: {
+      schema: 'storyforge.avg.assembly-brief', version: 1, title: 'Legacy assembly',
+      sceneKeys: ['scene-1'], mediaAssetKeys: [], basePackageHash: null,
+    } }, briefHash: hash, buildNumber: 1, controlEpoch: 1 })
+    const parsed = parseProductProductionPlanV3(JSON.stringify(plan), undefined, hash)
+    expect(parsed).toEqual(plan)
+    expect(() => parseProductProductionPlanV3('{')).toThrow(/Plan 不是合法 JSON/)
+
+    const tasks = Object.fromEntries(parsed.tasks.map(task => [task.taskKey, {
+      runId: 1, attempt: 0, status: 'settled', idempotencyKey: hash, candidateHash: hash,
+      terminalReceiptHash: hash, passedGateIds: [], usage: {
+        modelCalls: 0, inputTokens: 0, outputTokens: 0, mediaCalls: 0,
+        costUsd: 0, durationMs: 0, storageBytes: 0,
+      }, errorCode: null,
+    }]))
+    const budgetLedgerJson = JSON.stringify({ schema: 'storyforge.product-production-budget-ledger', version: 2, tasks })
+    const portable = parseProductProductionPortableTaskLedgerV1({ budgetLedgerJson, plan: parsed })
+    expect(portable).toHaveLength(parsed.tasks.length)
+    expect(portable[0]).not.toHaveProperty('runId')
+    expect(() => parseProductProductionPortableTaskLedgerV1({ budgetLedgerJson: '{', plan: parsed }))
+      .toThrow(/budget ledger JSON 损坏/)
+    const missingTask = structuredClone(tasks)
+    delete missingTask[parsed.tasks[0].taskKey]
+    await expect(Promise.resolve().then(() => parseProductProductionPortableTaskLedgerV1({
+      budgetLedgerJson: JSON.stringify({ schema: 'storyforge.product-production-budget-ledger', version: 2, tasks: missingTask }), plan: parsed,
+    }))).rejects.toThrow(/未精确覆盖 Plan tasks/)
   })
 
   it('rejects missing current/core tables and malformed legacy memory instead of silently repairing them', async () => {

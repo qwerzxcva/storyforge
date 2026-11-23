@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
 import { openLongformLeaf } from './helpers/longform-navigation'
+import { mockOllamaCapacity } from './helpers/model-capacity'
 
 const output = JSON.stringify({ openingHook: '断桥前的绳结再次松动。', endingCliffhanger: '旧桥钉上出现陌生的印记。', sceneLocation: '断桥', emotionArc: 'rising', appearingCharacterIds: [], foreshadowIds: [], scenes: [
   { title: '试绳探路', summary: '守桥人先用石块测试绳结，确认承重后救下旅客，却因此错过渡船。', location: '断桥', conflict: '救人和赶船不可兼得。', pace: 'medium', characterIds: [], estimatedWords: 1200, notes: '' },
@@ -18,8 +19,10 @@ async function setup(page: Page, chapterCount = 2) {
     localStorage.setItem('storyforge_guide_completed', 'e2e')
     localStorage.setItem('storyforge-ai-config', JSON.stringify({ provider: 'ollama', model: 'isolated-batch-detail', baseUrl: 'https://batch-detail.invalid/v1', maxTokens: 6000, contextWindow: 64000 }))
   })
+  await mockOllamaCapacity(page, [{ baseUrl: 'https://batch-detail.invalid/v1', model: 'isolated-batch-detail', contextWindow: 64000 }])
   let calls = 0
-  await page.route('https://batch-detail.invalid/**', async route => {
+  await page.route('https://batch-detail.invalid/v1/chat/completions', async route => {
+    expect(route.request().method()).toBe('POST')
     calls++
     await route.fulfill({ json: { choices: [{ message: { content: output }, finish_reason: 'stop' }], usage: { prompt_tokens: 50, completion_tokens: 80, total_tokens: 130 } } })
   })

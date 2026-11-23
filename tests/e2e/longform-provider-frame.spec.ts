@@ -1,3 +1,4 @@
+import { mockOllamaCapacity } from './helpers/model-capacity'
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
 
@@ -10,7 +11,7 @@ async function mixedFrame(page: Page) {
   const received = `${before}\n</think>\n${after}`
   await page.addInitScript(() => localStorage.setItem('storyforge-ai-config', JSON.stringify({ provider: 'ollama', model: 'frame-test', baseUrl: 'https://prose-frame.invalid/v1', temperature: .7, maxTokens: 4000, contextWindow: 128000 })))
   let calls = 0
-  await page.route('https://prose-frame.invalid/**', route => { calls++; return route.fulfill({ contentType: 'text/event-stream', body: `data: ${JSON.stringify({ choices: [{ delta: { content: received }, finish_reason: 'stop' }] })}\n\ndata: [DONE]\n\n` }) })
+  await page.route('https://prose-frame.invalid/v1/chat/completions', route => { calls++; return route.fulfill({ contentType: 'text/event-stream', body: `data: ${JSON.stringify({ choices: [{ delta: { content: received }, finish_reason: 'stop' }] })}\n\ndata: [DONE]\n\n` }) })
   await createLongform(page, '不同开篇回复核对')
   const target = await page.evaluate(async () => {
     const [{ db }, { resolveScopeLike, stampNewRecord }] = await Promise.all([import('/storyforge/src/lib/db/schema.ts'), import('/storyforge/src/lib/workspace/scope.ts')])
@@ -55,7 +56,7 @@ test('疑似分隔只是作者提示，作者仍可保留全文及字面标签�
 test('重复回复原文保留并阻止直接采纳，作者选择后段后正式写入，刷新不重发', async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('storyforge-ai-config', JSON.stringify({ provider: 'ollama', model: 'frame-test', baseUrl: 'https://prose-frame.invalid/v1', temperature: .7, maxTokens: 4000, contextWindow: 128000 })))
   let calls = 0
-  await page.route('https://prose-frame.invalid/**', route => { calls++; return route.fulfill({ contentType: 'text/event-stream', body: `data: ${JSON.stringify({ choices: [{ delta: { content: raw }, finish_reason: 'stop' }], usage: { prompt_tokens: 100, completion_tokens: 1000, total_tokens: 1100 } })}\n\ndata: [DONE]\n\n` }) })
+  await page.route('https://prose-frame.invalid/v1/chat/completions', route => { calls++; return route.fulfill({ contentType: 'text/event-stream', body: `data: ${JSON.stringify({ choices: [{ delta: { content: raw }, finish_reason: 'stop' }], usage: { prompt_tokens: 100, completion_tokens: 1000, total_tokens: 1100 } })}\n\ndata: [DONE]\n\n` }) })
   await createLongform(page, '回复核对隔离实验')
   const target = await page.evaluate(async () => {
     const imp = new Function('p', 'return import(p)')
@@ -88,4 +89,8 @@ test('重复回复原文保留并阻止直接采纳，作者选择后段后正�
     const { db } = await import('/storyforge/src/lib/db/schema.ts')
     return (await db.agentRunArtifacts.where('projectId').equals(id).toArray()).some(row => row.content?.includes('</think>'))
   }, target.projectId)).toBe(true)
+})
+
+test.beforeEach(async ({ page }) => {
+  await mockOllamaCapacity(page, [{"baseUrl": "https://prose-frame.invalid/v1","model": "frame-test"}])
 })

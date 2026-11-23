@@ -21,6 +21,9 @@ test('one registered design request preserves raw evidence and reloads the same 
     return { scope: f.scope, revision: draft.revision, settingsJson: draft.settingsJson, clocks: campaign.clocks, fronts: campaign.fronts }
   })
   let requests = 0, rawAnswer = ''
+  await page.route('**/fixture-design/api/v1/models', route => route.fulfill({
+    json: { models: [{ key: 'fixture-model', type: 'llm', loaded_instances: [{ config: { context_length: 131072 } }] }] },
+  }))
   await page.route('**/fixture-design/v1/chat/completions', async route => {
     requests++
     const messages = route.request().postDataJSON().messages

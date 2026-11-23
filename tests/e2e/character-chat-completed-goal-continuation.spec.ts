@@ -12,7 +12,7 @@ async function setup(page: Page) {
   await page.addInitScript(() => {
     localStorage.setItem('storyforge_guide_completed', 'e2e')
   })
-  registerBrowserFixtureAIConfigV1(page, { provider: 'openai', baseUrl: 'https://goal-continuation.invalid/v1', model: 'test', maxTokens: 8000, apiKey: 'isolated-test-key' })
+  registerBrowserFixtureAIConfigV1(page, { provider: 'custom', contextWindow: 131072, baseUrl: 'https://goal-continuation.invalid/v1', model: 'test', maxTokens: 8000, apiKey: 'isolated-test-key' })
   const calls: string[] = []
   await page.route('https://goal-continuation.invalid/**', async route => {
     const messages = route.request().postDataJSON().messages, text = JSON.stringify(messages)

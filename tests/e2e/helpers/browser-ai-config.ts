@@ -40,6 +40,17 @@ export async function prepareBrowserFixtureAIConfigV1(page: Page, destination?: 
   }
   const source = registration.source
   const config = structuredClone(typeof source === 'function' ? source(next) : source)
+  if (config.provider === 'custom' && config.baseUrl && config.model && config.contextWindow) {
+    const endpoint = new URL(config.baseUrl, base)
+    if (!endpoint.hostname.endsWith('.invalid') && endpoint.origin !== base.origin) {
+      throw new Error('Synthetic capacity metadata requires a fixture-only endpoint')
+    }
+    endpoint.pathname = endpoint.pathname.replace(/\/?v1\/?$/, '') + '/api/v1/models'
+    await page.route(endpoint.href, route => route.request().method() === 'GET'
+      ? route.fulfill({ json: { models: [{ key: config.model, type: 'llm',
+        loaded_instances: [{ config: { context_length: config.contextWindow } }] }] } })
+      : route.fallback())
+  }
   await page.evaluate(async ({ input, ifAbsent }) => {
     const load = new Function('path', 'return import(path)') as <T>(path: string) => Promise<T>
     const { useAIConfigStore } = await load<typeof import('../../../src/stores/ai-config')>('/storyforge/src/stores/ai-config.ts')
