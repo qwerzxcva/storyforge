@@ -1,10 +1,6 @@
 import { db } from '../../db/schema';
 import type { ProductRuntimeSourceV1, ResolvedProductRuntimeSourceV1, ProductRuntimeSession, ProductRuntimePackageV1, ProductRuntimePackageV2, VerifiedProductRuntimeSourceEnvelope, WorkspaceScope } from '../../types/index';
-import { assertProductReleaseUnchanged } from '../product/releases';
 import { assertRecordInScope, resolveScope } from '../../workspace/scope';
-import { verifyProductBuildPreviewManifest } from './preview-manifest';
-import { verifyProductReleaseManifest, requirePlayableProductRuntimePackage } from './runtime-package';
-import { avgExecutableModule } from '../avg/executable-module';
 type RuntimeSourceInput = { scope: WorkspaceScope; source: ProductRuntimeSourceV1 }
 type RuntimeSessionSourceInput = { scope: WorkspaceScope; session: ProductRuntimeSession }
 type LegacyResolvedRuntimeSource = Omit<ResolvedProductRuntimeSourceV1, 'runtimePackage'> & {
@@ -46,6 +42,7 @@ export async function verifyProductRuntimeSource(input: {
   source: ProductRuntimeSourceV1
 }): Promise<Omit<ResolvedProductRuntimeSourceV1, 'mediaResolver'>> {
   const verified = await verifyProductRuntimeSourceEnvelope(input)
+  const { requirePlayableProductRuntimePackage } = await import('./runtime-package')
   return { ...verified, runtimePackage: requirePlayableProductRuntimePackage(verified.runtimePackage) }
 }
 
@@ -58,10 +55,12 @@ export async function verifyProductRuntimeSourceEnvelope(input: {
 }): Promise<VerifiedProductRuntimeSourceEnvelope> {
   const scope = await resolveScope({ scope: input.scope })
   if (input.source.kind === 'release') {
+    const { assertProductReleaseUnchanged } = await import('../product/releases')
     const release = await assertProductReleaseUnchanged(input.source.productReleaseId, input.ttrpgProtocol === 2 ? { ttrpgProtocol: 2 } : undefined)
     if (!await assertRecordInScope(scope, 'productReleases', release, { owner: 'work' })) {
       throw new Error('[product-runtime-source] ProductRelease 不属于当前 Work')
     }
+    const { verifyProductReleaseManifest } = await import('./runtime-package')
     const parsed = await verifyProductReleaseManifest(release.manifestJson, input.ttrpgProtocol === 2 ? { ttrpgProtocol: 2 } : undefined)
     const runtimePackage = parsed.runtimePackage
     const packageHash = parsed.packageHash
@@ -93,6 +92,10 @@ export async function verifyProductRuntimeSourceEnvelope(input: {
     || brief.briefHash !== build.briefHash) {
     throw new Error('[product-runtime-source] Build 的 Production/Brief 绑定损坏')
   }
+  const [{ verifyProductBuildPreviewManifest }, { avgExecutableModule }] = await Promise.all([
+    import('./preview-manifest'),
+    import('../avg/executable-module'),
+  ])
   const preview = await verifyProductBuildPreviewManifest(build.previewManifestJson, input.ttrpgProtocol === 2 ? { ttrpgProtocol: 2 } : undefined)
   if (avgExecutableModule(preview.runtimePackage) && preview.runtimePackage.definition.productKey !== production.productionKey) throw new Error('[product-runtime-source] AVG 产品身份与 Production 不一致')
   if (preview.previewHash !== input.source.expectedPreviewHash || preview.previewHash !== build.previewHash
