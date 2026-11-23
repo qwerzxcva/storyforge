@@ -1190,7 +1190,7 @@ export const AGENT_SKILLS = [
       table: 'worldviews',
       fields: WORLDVIEW_GENERATABLE_FIELD_SPECS.map(spec => spec.field),
     }],
-    lastVerifiedAt: '2026-10-08',
+    lastVerifiedAt: '2026-11-23',
     regressionTests: [
       'R-WE1-worldview-generatable-contract',
       'R-HARNESS32-worldview-field-agent',
@@ -1244,7 +1244,7 @@ export const AGENT_SKILLS = [
     },
     maxOutputTokens: 2_000,
     writeTargets: [],
-    lastVerifiedAt: '2026-10-08',
+    lastVerifiedAt: '2026-11-23',
     regressionTests: ['R-MW1-world-link-governance'],
   },
 {
