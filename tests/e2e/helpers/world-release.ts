@@ -2,7 +2,7 @@ import {WORLD_CONTENT_PAGES,WORLD_PAGES} from '../../../src/components/world-eng
 import { expect, type Locator, type Page } from '@playwright/test'
 
 export function currentWorldReleasePanel(page: Page): Locator {
-  return page.getByRole('region', { name: '世界修订、发布与产品交接' })
+  return page.getByRole('region', { name: '世界修订与封存' })
 }
 
 /**

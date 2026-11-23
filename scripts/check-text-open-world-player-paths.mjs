@@ -6,19 +6,17 @@ const repositoryRoot = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const matrixPath = resolve(repositoryRoot, 'tests/acceptance/text-open-world-g7-player-paths.json')
 const matrix = JSON.parse(await readFile(matrixPath, 'utf8'))
 
-if (matrix.schema !== 'storyforge.text-open-world.g7-player-path-matrix' || matrix.version !== 1) {
-  throw new Error('文字开放世界G7玩家路径矩阵Schema或版本无效')
+if (matrix.schema !== 'storyforge.text-open-world.creator-recovery-matrix' || matrix.version !== 1) {
+  throw new Error('历史 Creator 存档恢复矩阵 Schema 或版本无效')
 }
-if (!Array.isArray(matrix.paths) || matrix.paths.length !== 17) {
-  throw new Error(`文字开放世界G7玩家路径必须精确包含17项，当前为${matrix.paths?.length ?? 0}项`)
+if (!Array.isArray(matrix.paths) || matrix.paths.length !== 1) {
+  throw new Error(`历史 Creator 存档恢复路径必须精确包含1项，当前为${matrix.paths?.length ?? 0}项`)
 }
 
-const expectedIds = Array.from({ length: 17 }, (_, index) => (
-  `TOW-G7-P${String(index + 1).padStart(2, '0')}`
-))
+const expectedIds = ['TOW-COMPAT-P01']
 const actualIds = matrix.paths.map(path => path.id)
-if (new Set(actualIds).size !== 17 || actualIds.some((id, index) => id !== expectedIds[index])) {
-  throw new Error(`文字开放世界G7玩家路径ID必须连续且唯一：${actualIds.join(', ')}`)
+if (new Set(actualIds).size !== expectedIds.length || actualIds.some((id, index) => id !== expectedIds[index])) {
+  throw new Error(`历史 Creator 存档恢复路径 ID 必须唯一：${actualIds.join(', ')}`)
 }
 
 const allowedRunners = new Set(['vitest', 'playwright'])
@@ -49,11 +47,7 @@ for (const path of matrix.paths) {
   }
 }
 
-const browserRequiredIds = new Set([
-  'TOW-G7-P01', 'TOW-G7-P02', 'TOW-G7-P04', 'TOW-G7-P05',
-  'TOW-G7-P06', 'TOW-G7-P10', 'TOW-G7-P13', 'TOW-G7-P15',
-  'TOW-G7-P16', 'TOW-G7-P17',
-])
+const browserRequiredIds = new Set(['TOW-COMPAT-P01'])
 for (const path of matrix.paths.filter(candidate => browserRequiredIds.has(candidate.id))) {
   if (!path.evidence.some(evidence => evidence.runner === 'playwright')) {
     throw new Error(`${path.id}必须保留真实Chromium玩家路径证据`)

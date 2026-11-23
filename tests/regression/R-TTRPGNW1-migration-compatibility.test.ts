@@ -99,6 +99,13 @@ describe('TTRPG/NW integration · preserve independent owners through version co
     expect(portable[0]).not.toHaveProperty('runId')
     expect(() => parseProductProductionPortableTaskLedgerV1({ budgetLedgerJson: '{', plan: parsed }))
       .toThrow(/budget ledger JSON 损坏/)
+    const duplicateGate = structuredClone(tasks)
+    const firstTask = parsed.tasks[0].taskKey
+    duplicateGate[firstTask].passedGateIds = ['gate.1', 'gate.1']
+    expect(() => parseProductProductionPortableTaskLedgerV1({
+      budgetLedgerJson: JSON.stringify({ schema: 'storyforge.product-production-budget-ledger', version: 2, tasks: duplicateGate }),
+      plan: parsed,
+    })).toThrow(/terminal ledger task 无效/)
     const missingTask = structuredClone(tasks)
     delete missingTask[parsed.tasks[0].taskKey]
     await expect(Promise.resolve().then(() => parseProductProductionPortableTaskLedgerV1({

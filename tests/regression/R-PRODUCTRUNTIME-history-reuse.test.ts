@@ -73,8 +73,16 @@ describe('Product runtime exact verified history prefix reuse', () => {
     expect(() => parseProductRuntimeState('[]')).toThrow(/必须是 JSON 对象/)
     expect(() => parseProductRuntimeState({ ...original, version: 9 })).toThrow(/版本/)
     expect(() => parseProductRuntimeState({ ...original, entities: [] })).toThrow(/entities 必须是对象/)
+    expect(() => parseProductRuntimeState({ ...original, entities: { alias: {
+      entityKey: 'canonical', kind: 'character', name: '角色', lifecycleStatus: 'active', attributes: {},
+    } } })).toThrow(/实体索引与 entityKey 不一致/)
     expect(() => parseProductRuntimeState({ ...original, memories: {} })).toThrow(/memories 必须是数组/)
+    expect(() => parseProductRuntimeState({ ...original, memories: [{
+      id: 'memory', subjectKey: 'character', content: '记忆', status: 'unknown', sourceEventSequence: 1,
+    }] })).toThrow(/未知运行时记忆状态/)
     expect(() => parseProductRuntimeState({ ...original, narratives: {} })).toThrow(/narratives 必须是数组/)
+    expect(() => parseProductRuntimeState({ ...original, narratives: [{ eventSequence: 1, text: '  ' }] }))
+      .toThrow(/运行时叙事文本无效/)
     const stateJson = JSON.stringify(EMPTY_PRODUCT_RUNTIME_STATE)
     expect(parseProductRuntimeCheckpointV1({ projectId: 1, worldGroupId: null, sessionId: 2,
       throughSequence: 0, name: 'Manual', stateJson, stateHash: 'a'.repeat(64), createdAt: 1 }))
