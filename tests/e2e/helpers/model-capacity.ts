@@ -13,9 +13,10 @@ export async function mockOllamaCapacity(page: Page, services: Array<{ baseUrl: 
       const request = route.request()
       const requestHeaders = request.headers()
       const origin = requestHeaders.origin ?? '*'
-      const allowPrivateNetwork = requestHeaders['access-control-request-private-network'] === 'true'
-        ? { 'Access-Control-Allow-Private-Network': 'true' }
-        : {}
+      const allowPrivateNetwork = /** @type {Record<string, string>} */ ({})
+      if (requestHeaders['access-control-request-private-network'] === 'true') {
+        allowPrivateNetwork['Access-Control-Allow-Private-Network'] = 'true'
+      }
       if (request.method() === 'OPTIONS') {
         await route.fulfill({ status: 204, headers: {
           'Access-Control-Allow-Origin': origin,
