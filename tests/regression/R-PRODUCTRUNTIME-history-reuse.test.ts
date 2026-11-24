@@ -1,12 +1,13 @@
 import { readFileSync } from 'node:fs'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { EMPTY_PRODUCT_RUNTIME_STATE, type ProductRuntimeEvent } from '../../src/lib/types'
+import { EMPTY_PRODUCT_RUNTIME_STATE, type ProductRuntimeEvent, type ProductRuntimeSourceManifestV1 } from '../../src/lib/types'
 import {
-  parseProductRuntimeCheckpointV1, parseProductRuntimeState, replayProductRuntimeEvents,
+  applyProductRuntimeEvent, parseProductRuntimeCheckpointV1, parseProductRuntimeState, replayProductRuntimeEvents,
 } from '../../src/lib/legacy-compat/product/runtime-core'
 import { createProductInitialStateV1 } from '../../src/lib/legacy-compat/product/runtime-instances'
 import {
-  assertProductRuntimeSourceSnapshotV2, productRuntimeSourceSnapshotV2, runtimeSourceManifestFromReleaseV1,
+  assertProductRuntimeSourceSnapshotV2, productRuntimeSourceSnapshotV2,
+  runtimeSourceManifestFromBuildRecordsV1, runtimeSourceManifestFromReleaseV1,
 } from '../../src/lib/legacy-compat/product/runtime-source-manifest'
 import { parseProductRuntimePackage } from '../../src/lib/legacy-compat/product-production/runtime-package'
 import { hashProductProductionValueV2 } from '../../src/lib/legacy-compat/product-production/hash'
@@ -50,7 +51,7 @@ describe('Product runtime exact verified history prefix reuse', () => {
     })).rejects.toThrow('[product-runtime-source-manifest]')
 
     const hash = 'a'.repeat(64)
-    const manifest = { schema: 'storyforge.product-runtime-source-manifest', version: 1,
+    const manifest: ProductRuntimeSourceManifestV1 = { schema: 'storyforge.product-runtime-source-manifest', version: 1,
       productType: 'avg', sourceKind: 'build-preview', sourceIdentityHash: hash, packageHash: hash,
       sourceWorldContentHash: hash, sourcePlanHash: hash, worldReferenceHash: hash,
       inheritedSourceManifestHash: null, readMode: 'frozen-product-package', directWorldReads: [],
@@ -67,11 +68,30 @@ describe('Product runtime exact verified history prefix reuse', () => {
     await expect(assertProductRuntimeSourceSnapshotV3({ session, manifest })).resolves.toBeUndefined()
     const mismatchedBody = { ...body, runtimeSourceHash: 'b'.repeat(64) }
     const mismatchedRecord = { ...mismatchedBody, receiptHash: await hashProductProductionValueV2(mismatchedBody) }
-    const mismatchedSnapshot = JSON.parse(session.canonSnapshotJson)
-    mismatchedSnapshot.avgBranchOrigin = mismatchedRecord
-    await expect(assertProductRuntimeSourceSnapshotV3({
-      session: { ...session, canonSnapshotJson: JSON.stringify(mismatchedSnapshot) }, manifest,
-    })).rejects.toThrow('[avg-branch-origin]')
+    const snapshot = { schema: 'storyforge.product-runtime-source', version: 3, source, avgBranchOrigin: record }
+    const validate = (patch: Partial<typeof session>) =>
+      assertProductRuntimeSourceSnapshotV3({ session: { ...session, ...patch }, manifest })
+    await expect(validate({ canonSnapshotJson: JSON.stringify({ ...snapshot, avgBranchOrigin: mismatchedRecord }) }))
+      .rejects.toThrow('[avg-branch-origin]')
+    await expect(validate({ canonSnapshotJson: '{' })).rejects.toThrow(/会话来源快照不是 JSON/)
+    await expect(validate({ runtimeSourceHash: 'b'.repeat(64) })).rejects.toThrow(/增强分支来源的产品或字段不一致/)
+    await expect(assertProductRuntimeSourceSnapshotV3({ session: { ...session, kind: 'character-interaction' }, manifest }))
+      .rejects.toThrow(/增强分支来源的产品或字段不一致/)
+    await expect(validate({ canonSnapshotJson: JSON.stringify({ ...snapshot, extra: true }) }))
+      .rejects.toThrow(/增强分支来源的产品或字段不一致/)
+    await expect(validate({ canonSnapshotJson: JSON.stringify({ ...snapshot, source: { ...source, sourceWorldContentHash: 'b'.repeat(64) } }) }))
+      .rejects.toThrow(/实际读取记录不一致/)
+    await expect(validate({ initialStateJson: '{}' })).rejects.toThrow(/缺少准确私域来源/)
+    await expect(validate({ initialStateJson: 'null' })).rejects.toThrow(/缺少准确私域来源/)
+    await expect(validate({ initialStateJson: JSON.stringify({ ...initialState, clock: 1 }) })).rejects.toThrow('[avg-branch-origin]')
+    const readingState = { lastSequence: 0, avgReading: { schema: 'storyforge.avg.reading-state', version: 1 } }
+    const readingBody = { ...body, initialStateHash: await hashProductProductionValueV2(readingState) }
+    const readingOrigin = { ...readingBody, receiptHash: await hashProductProductionValueV2(readingBody) }
+    await expect(validate({
+      initialStateJson: JSON.stringify(readingState),
+      canonSnapshotJson: JSON.stringify({ ...snapshot, avgBranchOrigin: readingOrigin }),
+    })).resolves.toBeUndefined()
+    await expect(validate({ canonSnapshotJson: JSON.stringify(source) })).resolves.toBeUndefined()
   })
 
   it('reduces only new events, returns detached states and preserves exact public results', () => {
@@ -121,17 +141,18 @@ describe('Product runtime exact verified history prefix reuse', () => {
     const original = { ...structuredClone(EMPTY_PRODUCT_RUNTIME_STATE), extraLegacyField: true }
     expect(parseProductRuntimeState(original)).not.toHaveProperty('extraLegacyField')
     expect(() => parseProductRuntimeState('[]')).toThrow(/必须是 JSON 对象/)
-    expect(() => parseProductRuntimeState({ ...original, version: 9 })).toThrow(/版本/)
-    expect(() => parseProductRuntimeState({ ...original, entities: [] })).toThrow(/entities 必须是对象/)
-    expect(() => parseProductRuntimeState({ ...original, entities: { alias: {
+    const originalJson = JSON.parse(JSON.stringify(original)) as Record<string, unknown>
+    expect(() => parseProductRuntimeState(JSON.stringify({ ...originalJson, version: 9 }))).toThrow(/版本/)
+    expect(() => parseProductRuntimeState(JSON.stringify({ ...originalJson, entities: [] }))).toThrow(/entities 必须是对象/)
+    expect(() => parseProductRuntimeState(JSON.stringify({ ...originalJson, entities: { alias: {
       entityKey: 'canonical', kind: 'character', name: '角色', lifecycleStatus: 'active', attributes: {},
-    } } })).toThrow(/实体索引与 entityKey 不一致/)
-    expect(() => parseProductRuntimeState({ ...original, memories: {} })).toThrow(/memories 必须是数组/)
-    expect(() => parseProductRuntimeState({ ...original, memories: [{
+    } } }))).toThrow(/实体索引与 entityKey 不一致/)
+    expect(() => parseProductRuntimeState(JSON.stringify({ ...originalJson, memories: {} }))).toThrow(/memories 必须是数组/)
+    expect(() => parseProductRuntimeState(JSON.stringify({ ...originalJson, memories: [{
       id: 'memory', subjectKey: 'character', content: '记忆', status: 'unknown', sourceEventSequence: 1,
-    }] })).toThrow(/未知运行时记忆状态/)
-    expect(() => parseProductRuntimeState({ ...original, narratives: {} })).toThrow(/narratives 必须是数组/)
-    expect(() => parseProductRuntimeState({ ...original, narratives: [{ eventSequence: 1, text: '  ' }] }))
+    }] }))).toThrow(/未知运行时记忆状态/)
+    expect(() => parseProductRuntimeState(JSON.stringify({ ...originalJson, narratives: {} }))).toThrow(/narratives 必须是数组/)
+    expect(() => parseProductRuntimeState(JSON.stringify({ ...originalJson, narratives: [{ eventSequence: 1, text: '  ' }] })))
       .toThrow(/运行时叙事文本无效/)
     const stateJson = JSON.stringify(EMPTY_PRODUCT_RUNTIME_STATE)
     expect(parseProductRuntimeCheckpointV1({ projectId: 1, worldGroupId: null, sessionId: 2,
@@ -141,6 +162,75 @@ describe('Product runtime exact verified history prefix reuse', () => {
       throughSequence: 0, name: 'bad', stateJson, stateHash: 'bad', createdAt: 1 }))
       .toThrow('检查点状态 Hash 无效。')
   })
+  it('normalizes serialized legacy runtime records and rejects invalid entity and memory fields', () => {
+    const entity = { entityKey: 'character', name: '  Guide  ', kind: 'character', lifecycleStatus: 'active',
+      sourceId: 7, locationKey: '  archive  ', attributes: { trust: 2, friendly: true, occupation: 'guide', clue: null } }
+    const memory = { id: ' past ', subjectKey: ' character ', content: ' Found the key ', status: 'known', sourceEventSequence: 2 }
+    const source = { ...EMPTY_PRODUCT_RUNTIME_STATE, clock: 4, lastSequence: 3, entities: { character: entity },
+      memories: [memory], narratives: [{ text: ' The door opens. ', eventSequence: 3 }] }
+    expect(parseProductRuntimeState(JSON.stringify(source))).toEqual({ ...EMPTY_PRODUCT_RUNTIME_STATE, clock: 4, lastSequence: 3,
+      entities: { character: { ...entity, name: 'Guide', locationKey: 'archive' } },
+      memories: [{ ...memory, id: 'past', subjectKey: 'character', content: 'Found the key' }],
+      narratives: [{ text: 'The door opens.', eventSequence: 3 }] })
+    expect(parseProductRuntimeState(JSON.stringify({ ...source, entities: { character: { ...entity, locationKey: ' ' } } }))
+      .entities.character.locationKey).toBeNull()
+    const invalidEntities = [
+      [null, /运行时实体必须是对象/],
+      [{ ...entity, entityKey: ' ' }, /entityKey/],
+      [{ ...entity, name: '' }, /有效名称/],
+      [{ ...entity, kind: 'unknown' }, /未知运行时实体类型/],
+      [{ ...entity, lifecycleStatus: 'unknown' }, /未知运行时生命周期/],
+      [{ ...entity, attributes: [] }, /attributes 必须是对象/],
+      [{ ...entity, attributes: { ' ': true } }, /属性键无效/],
+      [{ ...entity, attributes: { trust: { value: 2 } } }, /只能是标量/],
+    ] as const
+    for (const [invalid, error] of invalidEntities) {
+      expect(() => parseProductRuntimeState(JSON.stringify({ ...source, entities: { character: invalid } }))).toThrow(error)
+    }
+    for (const [invalid, error] of [
+      [null, /运行时记忆必须是对象/],
+      [{ ...memory, id: '' }, /缺少有效 id/],
+      [{ ...memory, subjectKey: '' }, /缺少主体/],
+      [{ ...memory, content: '' }, /记忆内容无效/],
+    ] as const) {
+      expect(() => parseProductRuntimeState(JSON.stringify({ ...source, memories: [invalid] }))).toThrow(error)
+    }
+    expect(() => parseProductRuntimeState(JSON.stringify({ ...source, narratives: [null] })))
+      .toThrow(/叙事记录必须是对象/)
+  })
+
+  it('replays entity and memory changes without allowing invalid patches or fabricated event references', () => {
+    const entity = { entityKey: 'guide', kind: 'character', name: 'Guide', lifecycleStatus: 'active', attributes: { trust: 1 } }
+    const memory = { id: 'key', subjectKey: 'guide', content: 'Look in the archive', status: 'known', sourceEventSequence: 4 }
+    const event = (sequence: number, type: ProductRuntimeEvent['type'], payload: object): ProductRuntimeEvent => ({
+      ...events(1)[0], sequence, type, payloadJson: JSON.stringify(payload),
+    })
+    const inserted = applyProductRuntimeEvent(EMPTY_PRODUCT_RUNTIME_STATE, event(1, 'entity.upserted', { entity }))
+    const history = [event(1, 'entity.upserted', { entity }),
+      event(2, 'entity.patched', { entityKey: 'guide', patch: { name: 'Archivist', attributes: { hasKey: true } } }),
+      event(3, 'entity.patched', { entityKey: 'guide', patch: { locationKey: 'archive' } }),
+      event(4, 'memory.recorded', { memory }),
+      event(5, 'memory.recorded', { memory: { ...memory, status: 'forgotten', sourceEventSequence: 5 } }),
+      event(6, 'narrative.recorded', { text: '  The key is returned.  ' })]
+    const replayed = replayProductRuntimeEvents(EMPTY_PRODUCT_RUNTIME_STATE, history)
+    expect(replayed.entities.guide).toEqual({ ...entity, sourceId: null, name: 'Archivist', locationKey: 'archive', attributes: { trust: 1, hasKey: true } })
+    expect(replayed.memories).toEqual([{ ...memory, status: 'forgotten', sourceEventSequence: 5 }])
+    expect(replayed.narratives).toEqual([{ eventSequence: 6, text: 'The key is returned.' }])
+    expect(applyProductRuntimeEvent(replayed, event(7, 'entity.removed', { entityKey: 'guide' })).entities).toEqual({})
+    expect(replayed.entities.guide.name).toBe('Archivist')
+    expect(inserted.entities.guide.name).toBe('Guide')
+    for (const [invalid, error] of [
+      [event(2, 'entity.patched', { entityKey: 'missing', patch: {} }), /实体不存在/],
+      [event(2, 'entity.patched', { entityKey: 'guide', patch: [] }), /实体补丁必须是对象/],
+      [event(2, 'entity.patched', { entityKey: 'guide', patch: { sourceId: 4 } }), /实体补丁禁止字段: sourceId/],
+      [event(2, 'entity.removed', {}), /实体不存在/],
+      [event(2, 'memory.recorded', { memory }), /必须引用自身事件序号/],
+      [event(2, 'narrative.recorded', { text: ' ' }), /叙事文本无效/],
+    ] as const) expect(() => applyProductRuntimeEvent(inserted, invalid)).toThrow(error)
+    expect(() => applyProductRuntimeEvent({ ...inserted, clock: Number.MAX_SAFE_INTEGER }, event(2, 'time.advanced', { amount: 1 })))
+      .toThrow(/运行时时钟溢出/)
+  })
+
   it('creates a legacy character-interaction release state from its frozen profile', () => {
     const packagePath = 'tests/helpers/fixtures/text-open-world-legacy-runtime-package-v1.json'
     const fixture = JSON.parse(readFileSync(packagePath, 'utf8'))
@@ -174,7 +264,7 @@ describe('Product runtime exact verified history prefix reuse', () => {
   })
   it('compares the frozen source snapshot and preserves the legacy release early exit', async () => {
     const hash = 'a'.repeat(64)
-    const manifest = { schema: 'storyforge.product-runtime-source-manifest', version: 1,
+    const manifest: ProductRuntimeSourceManifestV1 = { schema: 'storyforge.product-runtime-source-manifest', version: 1,
       productType: 'avg', sourceKind: 'build-preview', sourceIdentityHash: hash, packageHash: hash,
       sourceWorldContentHash: hash, sourcePlanHash: hash, worldReferenceHash: hash,
       inheritedSourceManifestHash: null, readMode: 'frozen-product-package', directWorldReads: [],
@@ -188,6 +278,25 @@ describe('Product runtime exact verified history prefix reuse', () => {
       releaseIdentityHash: hash, runtimePackage: { productType: 'avg', sourceWorld: {} } } as never
     await expect(runtimeSourceManifestFromReleaseV1(legacyRelease)).resolves.toBeNull()
   })
+  it('preserves legacy preview source records but refuses a downgraded enhanced selection', async () => {
+    const hash = 'a'.repeat(64)
+    const brief = { briefKind: 'product-production-v3' as const, sourcePlanJson: '{"version":1}',
+      sourcePlanHash: hash, briefHash: hash, briefJson: '{}' }
+    const build = { briefHash: hash, previewHash: hash, packageHash: hash, manifestHash: hash,
+      previewManifestJson: '{"runtimePackage":{"sourceWorld":{"selection":{"version":1}}}}' }
+    await expect(runtimeSourceManifestFromBuildRecordsV1({ build, brief })).resolves.toBeNull()
+    await expect(runtimeSourceManifestFromBuildRecordsV1({ build: { ...build, previewManifestJson: '{}' }, brief })).resolves.toBeNull()
+    await expect(runtimeSourceManifestFromBuildRecordsV1({
+      build: { ...build, previewManifestJson: '{' },
+      brief: { ...brief, briefKind: 'text-open-world-creator-v1', sourcePlanJson: '{' },
+    })).resolves.toBeNull()
+    await expect(runtimeSourceManifestFromBuildRecordsV1({ build, brief: { ...brief, sourcePlanJson: '{' } }))
+      .rejects.toThrow(/预览来源计划不是 JSON/)
+    await expect(runtimeSourceManifestFromBuildRecordsV1({
+      build: { ...build, previewManifestJson: '{"runtimePackage":{"sourceWorld":{"selection":{"version":2}}}}' }, brief,
+    })).rejects.toThrow(/增强选择不能降级为旧来源计划/)
+  })
+
   it('cannot be poisoned by a failed new suffix', () => {
     const state = initial(); const history = events(2)
     replayProductRuntimeEvents(state, history, 1)

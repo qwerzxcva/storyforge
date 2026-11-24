@@ -1,9 +1,11 @@
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
 import { openLongformLeaf } from './helpers/longform-navigation'
+import { mockOllamaCapacity } from './helpers/model-capacity'
 import { routeProviderFixture } from './helpers/provider-route'
 
 async function setup(page: Page, revision = false) {
+  await mockOllamaCapacity(page, [{ baseUrl: 'https://node-quality.invalid/v1', model: 'node-quality-test', contextWindow: 128000 }])
   await page.addInitScript(() => localStorage.setItem('storyforge-ai-config', JSON.stringify({ provider: 'ollama', model: 'node-quality-test', baseUrl: 'https://node-quality.invalid/v1', temperature: .7, maxTokens: 4000, contextWindow: 128000 })))
   await createLongform(page, '节点同源审修')
   const target = await page.evaluate(async revision => {

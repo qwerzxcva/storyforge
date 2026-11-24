@@ -14,8 +14,14 @@ if (!Array.isArray(matrix.paths) || matrix.paths.length !== 1) {
 }
 
 const expectedIds = ['LONGFORM-COMPAT-BACKUP-01']
-const actualIds = matrix.paths.map(path => path.id)
-if (new Set(actualIds).size !== expectedIds.length || actualIds.some((id, index) => id !== expectedIds[index])) {
+const actualIds = matrix.paths.map(
+  /** @param {{ id?: unknown }} path */
+  path => path.id,
+)
+if (new Set(actualIds).size !== expectedIds.length || actualIds.some(
+  /** @param {unknown} id @param {number} index */
+  (id, index) => id !== expectedIds[index],
+)) {
   throw new Error(`长篇备份恢复路径 ID 必须唯一：${actualIds.join(', ')}`)
 }
 

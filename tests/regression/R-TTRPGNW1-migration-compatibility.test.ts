@@ -8,7 +8,7 @@ import { exportProjectJSON, importProjectJSON } from '../../src/lib/export/json-
 import { CURRENT_BACKUP_VERSION, inspectProjectBackup, normalizeProjectBackup } from '../../src/lib/export/backup-trust'
 import { buildAvgAssemblyPlanV1 } from '../../src/lib/legacy-compat/avg/assembly-plan'
 import { parseProductProductionPlanV3 } from '../../src/lib/legacy-compat/product-production/plan'
-import { parseProductProductionPortableTaskLedgerV1 } from '../../src/lib/legacy-compat/product-production/task-evidence'
+import { parseProductProductionPortableTaskLedgerV1, type ProductProductionPortableTaskLedgerEntryV1 } from '../../src/lib/legacy-compat/product-production/task-evidence'
 
 afterEach(() => db.close())
 
@@ -86,38 +86,38 @@ describe('TTRPG/NW integration · preserve independent owners through version co
     expect(parsed).toEqual(plan)
     expect(() => parseProductProductionPlanV3('{')).toThrow(/Plan 不是合法 JSON/)
     const invalidPlans = [
-      ['zero concurrency', (candidate: any) => { candidate.concurrency.maximumCostBearingTasks = 0 }, /concurrency 必须大于零/],
-      ['missing terminal', (candidate: any) => { candidate.terminalTaskKey = 'missing' }, /terminalTaskKey 不存在/],
-      ['duplicate task key', (candidate: any) => { candidate.tasks[1].taskKey = candidate.tasks[0].taskKey }, /taskKey 重复/],
-      ['unknown dependency', (candidate: any) => {
+      ['zero concurrency', (candidate: ReturnType<typeof buildAvgAssemblyPlanV1>) => { candidate.concurrency.maximumCostBearingTasks = 0 }, /concurrency 必须大于零/],
+      ['missing terminal', (candidate: ReturnType<typeof buildAvgAssemblyPlanV1>) => { candidate.terminalTaskKey = 'missing' }, /terminalTaskKey 不存在/],
+      ['duplicate task key', (candidate: ReturnType<typeof buildAvgAssemblyPlanV1>) => { candidate.tasks[1].taskKey = candidate.tasks[0].taskKey }, /taskKey 重复/],
+      ['unknown dependency', (candidate: ReturnType<typeof buildAvgAssemblyPlanV1>) => {
         candidate.tasks[1].dependsOn = ['missing']
         candidate.tasks[1].requiredReceipts = [{ taskKey: 'missing', receiptHash: null }]
       }, /依赖无效/],
-      ['self dependency', (candidate: any) => {
+      ['self dependency', (candidate: ReturnType<typeof buildAvgAssemblyPlanV1>) => {
         const taskKey = candidate.tasks[0].taskKey
         candidate.tasks[0].dependsOn = [taskKey]
         candidate.tasks[0].requiredReceipts = [{ taskKey, receiptHash: null }]
       }, /依赖无效/],
-      ['unpaired receipts', (candidate: any) => { candidate.tasks[1].requiredReceipts = [] }, /requiredReceipts 未闭合/],
-      ['unowned input', (candidate: any) => { candidate.tasks[0].inputArtifactKeys = ['unowned'] }, /输入 Artifact 没有 owner/],
-      ['duplicate output owner', (candidate: any) => { candidate.tasks[1].outputArtifactKeys = [candidate.tasks[0].outputArtifactKeys[0]] }, /有多个 owner/],
-      ['fallback without task', (candidate: any) => { candidate.tasks[0].failurePolicy = 'fallback' }, /缺少 fallbackTaskKey/],
-      ['deterministic skill', (candidate: any) => {
-        const task = candidate.tasks.find((row: any) => row.executionMode === 'deterministic')
+      ['unpaired receipts', (candidate: ReturnType<typeof buildAvgAssemblyPlanV1>) => { candidate.tasks[1].requiredReceipts = [] }, /requiredReceipts 未闭合/],
+      ['unowned input', (candidate: ReturnType<typeof buildAvgAssemblyPlanV1>) => { candidate.tasks[0].inputArtifactKeys = ['unowned'] }, /输入 Artifact 没有 owner/],
+      ['duplicate output owner', (candidate: ReturnType<typeof buildAvgAssemblyPlanV1>) => { candidate.tasks[1].outputArtifactKeys = [candidate.tasks[0].outputArtifactKeys[0]] }, /有多个 owner/],
+      ['fallback without task', (candidate: ReturnType<typeof buildAvgAssemblyPlanV1>) => { candidate.tasks[0].failurePolicy = 'fallback' }, /缺少 fallbackTaskKey/],
+      ['deterministic skill', (candidate: ReturnType<typeof buildAvgAssemblyPlanV1>) => {
+        const task = candidate.tasks.find((row) => row.executionMode === 'deterministic')
         if (!task) throw new Error('Fixture has no deterministic task')
         task.skillId = 'skill.unexpected'
       }, /确定性任务不应绑定 skillId/],
-      ['model without skill', (candidate: any) => {
-        const task = candidate.tasks.find((row: any) => row.executionMode === 'deterministic' && row.skillId === null)
+      ['model without skill', (candidate: ReturnType<typeof buildAvgAssemblyPlanV1>) => {
+        const task = candidate.tasks.find((row) => row.executionMode === 'deterministic' && row.skillId === null)
         if (!task) throw new Error('Fixture has no unbound deterministic task')
         task.executionMode = 'model'
       }, /模型任务缺少 skillId/],
-      ['unknown context profile', (candidate: any) => {
-        const task = candidate.tasks.find((row: any) => row.executionMode === 'deterministic')
+      ['unknown context profile', (candidate: ReturnType<typeof buildAvgAssemblyPlanV1>) => {
+        const task = candidate.tasks.find((row) => row.executionMode === 'deterministic')
         if (!task) throw new Error('Fixture has no deterministic task')
-        task.contextProfile = 'unknown'
+        Object.assign(task, { contextProfile: 'unknown' })
       }, /contextProfile 枚举无效/],
-      ['unjoined task', (candidate: any) => { candidate.tasks.push({ ...structuredClone(candidate.tasks[0]), taskKey: 'orphan-task', outputArtifactKeys: [], inputArtifactKeys: [], dependsOn: [], requiredReceipts: [] }) }, /未进入 terminal join/],
+      ['unjoined task', (candidate: ReturnType<typeof buildAvgAssemblyPlanV1>) => { candidate.tasks.push({ ...structuredClone(candidate.tasks[0]), taskKey: 'orphan-task', outputArtifactKeys: [], inputArtifactKeys: [], dependsOn: [], requiredReceipts: [] }) }, /未进入 terminal join/],
     ] as const
     for (const [label, mutate, expected] of invalidPlans) {
       const candidate = structuredClone(plan)
@@ -126,7 +126,7 @@ describe('TTRPG/NW integration · preserve independent owners through version co
     }
     expect(() => parseProductProductionPlanV3(plan, undefined, 'b'.repeat(64))).toThrow(/briefHash 不一致/)
 
-    const tasks = Object.fromEntries(parsed.tasks.map(task => [task.taskKey, {
+    const tasks = Object.fromEntries<Omit<ProductProductionPortableTaskLedgerEntryV1, 'taskKey'> & { runId: number }>(parsed.tasks.map(task => [task.taskKey, {
       runId: 1, attempt: 0, status: 'settled', idempotencyKey: hash, candidateHash: hash,
       terminalReceiptHash: hash, passedGateIds: [], usage: {
         modelCalls: 0, inputTokens: 0, outputTokens: 0, mediaCalls: 0,
@@ -146,11 +146,94 @@ describe('TTRPG/NW integration · preserve independent owners through version co
       budgetLedgerJson: JSON.stringify({ schema: 'storyforge.product-production-budget-ledger', version: 2, tasks: duplicateGate }),
       plan: parsed,
     })).toThrow(/terminal ledger task 无效/)
+    const usage = tasks[firstTask].usage
+    const budgetLedger = { schema: 'storyforge.product-production-budget-ledger', version: 2, tasks }
+    const parseLedger = (ledger: unknown) => parseProductProductionPortableTaskLedgerV1({
+      budgetLedgerJson: JSON.stringify(ledger), plan: parsed,
+    })
+    const rebound = { ...tasks[firstTask], runId: 900, attempt: 2, passedGateIds: ['gate.z', 'gate.a'],
+      usage: { ...usage, modelCalls: 1, costUsd: null } }
+    const { runId: originalRunId, ...outcome } = rebound
+    const versionOne = { ...budgetLedger, version: 1, tasks: { ...tasks, [firstTask]: rebound } }
+    expect(originalRunId).toBe(900)
+    expect(parseLedger(versionOne).find(row => row.taskKey === firstTask)).toEqual({
+      ...outcome, taskKey: firstTask, passedGateIds: ['gate.a', 'gate.z'],
+    })
+    expect(parseLedger({ ...versionOne, tasks: { ...versionOne.tasks, [firstTask]: { ...rebound, runId: 5 } } }))
+      .toEqual(parseLedger(versionOne))
+    const row = tasks[firstTask]
+    const invalidRows = [
+      [[], /必须是对象/],
+      [{ ...row, unexpected: true }, /terminal ledger task 无效/],
+      [{ ...row, runId: 1.5 }, /terminal ledger task 无效/],
+      [{ ...row, runId: 0 }, /terminal ledger task 无效/],
+      [{ ...row, status: 'running' }, /terminal ledger task 无效/],
+      [{ ...row, errorCode: 'error' }, /terminal ledger task 无效/],
+      [{ ...row, idempotencyKey: 'invalid' }, /terminal ledger task 无效/],
+      [{ ...row, candidateHash: 'invalid' }, /terminal ledger task 无效/],
+      [{ ...row, terminalReceiptHash: 'invalid' }, /terminal ledger task 无效/],
+      [{ ...row, passedGateIds: null }, /terminal ledger task 无效/],
+      [{ ...row, passedGateIds: [7] }, /terminal ledger task 无效/],
+      [{ ...row, passedGateIds: [' '] }, /terminal ledger task 无效/],
+      [{ ...row, attempt: -1 }, /attempt 必须是非负整数/],
+      [{ ...row, usage: {} }, /usage 字段不精确/],
+      [{ ...row, usage: { ...usage, privateField: true } }, /usage 字段不精确/],
+      [{ ...row, usage: { ...usage, costUsd: -1 } }, /costUsd 无效/],
+      [{ ...row, usage: { ...usage, costUsd: '0' } }, /costUsd 无效/],
+      [{ ...row, usage: { ...usage, inputTokens: 0.5 } }, /inputTokens 必须是非负整数/],
+    ] as const
+    for (const [invalidRow, expected] of invalidRows) {
+      expect(() => parseLedger({ ...budgetLedger, tasks: { ...tasks, [firstTask]: invalidRow } })).toThrow(expected)
+    }
+    expect(() => parseLedger({ ...budgetLedger, version: 3 })).toThrow(/budget ledger 版本无效/)
+    expect(() => parseLedger({ ...budgetLedger, tasks: null })).toThrow(/budget ledger\.tasks 必须是对象/)
+
     const missingTask = structuredClone(tasks)
     delete missingTask[parsed.tasks[0].taskKey]
     await expect(Promise.resolve().then(() => parseProductProductionPortableTaskLedgerV1({
       budgetLedgerJson: JSON.stringify({ schema: 'storyforge.product-production-budget-ledger', version: 2, tasks: missingTask }), plan: parsed,
     }))).rejects.toThrow(/未精确覆盖 Plan tasks/)
+  })
+
+  it('preserves valid plan reuse and fallback while rejecting corrupt task graph evidence', () => {
+    const hash = 'a'.repeat(64)
+    const plan = buildAvgAssemblyPlanV1({ brief: { avgAssembly: {
+      schema: 'storyforge.avg.assembly-brief', version: 1, title: 'Legacy assembly',
+      sceneKeys: ['scene-1'], mediaAssetKeys: [], basePackageHash: null,
+    } }, briefHash: hash, buildNumber: 2, controlEpoch: 1 })
+    const [rules, script, stage] = plan.tasks
+    const reuse = { sourceBuildNumber: 1, sourceArtifactKey: rules.outputArtifactKeys[0],
+      sourceContentHash: hash, reuseKey: hash, requiresRevalidation: true, reason: 'same author input' }
+    const reusedRules = { ...rules, reuse: { ...reuse, reason: ` ${reuse.reason} ` },
+      budgetReservation: { ...rules.budgetReservation, maximumCostUsd: null } }
+    const fallbackScript = { ...script, failurePolicy: 'fallback' as const, fallbackTaskKey: rules.taskKey,
+      requiredReceipts: [{ taskKey: rules.taskKey, receiptHash: hash }] }
+    expect(parseProductProductionPlanV3({ ...plan, tasks: [reusedRules, fallbackScript, ...plan.tasks.slice(2)] }).tasks.slice(0, 2))
+      .toEqual([{ ...reusedRules, reuse }, fallbackScript])
+
+    const parseFirst = (task: unknown) => parseProductProductionPlanV3({ ...plan, tasks: [task, ...plan.tasks.slice(1)] })
+    const invalidTasks = [
+      [{ ...rules, taskKey: 'bad key' }, /taskKey 不是稳定 key/],
+      [{ ...rules, maxAttempts: 21 }, /maxAttempts 必须是有界非负整数/],
+      [{ ...rules, timeoutMs: 0 }, /attempt\/timeout 无效/],
+      [{ ...rules, dependsOn: [script.taskKey, script.taskKey] }, /dependsOn 不允许重复/],
+      [{ ...rules, requiredReceipts: [{ taskKey: script.taskKey, receiptHash: 'invalid' }] }, /receiptHash 无效/],
+      [{ ...rules, fallbackTaskKey: script.taskKey }, /非 fallback 任务声明 fallbackTaskKey/],
+      [{ ...rules, failurePolicy: 'fallback', fallbackTaskKey: rules.taskKey }, /fallback 无效/],
+      [{ ...rules, failurePolicy: 'fallback', fallbackTaskKey: 'missing' }, /fallback 无效/],
+      [{ ...rules, reuse: { ...reuse, sourceContentHash: 'invalid' } }, /reuse 无效/],
+      [{ ...rules, reuse: { ...reuse, reuseKey: 'invalid' } }, /reuse 无效/],
+      [{ ...rules, reuse: { ...reuse, requiresRevalidation: null } }, /reuse 无效/],
+      [{ ...rules, reuse: { ...reuse, reason: 1 } }, /reuse 无效/],
+      [{ ...rules, reuse: { ...reuse, reason: ' ' } }, /reuse 无效/],
+      [{ ...rules, budgetReservation: { ...rules.budgetReservation, maximumCostUsd: 1_000_001 } }, /maximumCostUsd 无效/],
+      [{ ...rules, dependsOn: [script.taskKey], requiredReceipts: [{ taskKey: stage.taskKey, receiptHash: null }] }, /requiredReceipts 未闭合/],
+      [{ ...rules, dependsOn: [script.taskKey], requiredReceipts: [{ taskKey: script.taskKey, receiptHash: null }] }, /任务 DAG 有环/],
+    ] as const
+    for (const [task, expected] of invalidTasks) expect(() => parseFirst(task)).toThrow(expected)
+    expect(() => parseProductProductionPlanV3({ ...plan, tasks: [] })).toThrow(/tasks 数量无效/)
+    expect(() => parseProductProductionPlanV3({ ...plan, version: 2 })).toThrow(/schema\/version\/briefHash 无效/)
+    expect(() => parseProductProductionPlanV3({ ...plan, unknown: true })).toThrow(/plan 字段不精确/)
   })
 
   it('rejects missing current/core tables and malformed legacy memory instead of silently repairing them', async () => {
@@ -165,7 +248,7 @@ describe('TTRPG/NW integration · preserve independent owners through version co
       delete missing[spec.name]
     }
     const oldMissingCore = { ...missing, version: 16 }
-    delete oldMissingCore.chapters
+    Reflect.deleteProperty(oldMissingCore, 'chapters')
     expect(inspectProjectBackup(oldMissingCore).valid).toBe(false)
     expect(inspectProjectBackup(oldMissingCore).missingTables).toContain('chapters')
     const malformed = { ...missing, version: 16, ttrpgNarrativeMemories: {} }
