@@ -30,7 +30,7 @@ for (const path of matrix.paths) {
     throw new Error(`${path.id}没有可执行测试证据`)
   }
   for (const evidence of path.evidence) {
-    if (!allowedRunners.has(evidence.runner)) {
+    if (typeof evidence.runner !== 'string' || !allowedRunners.has(evidence.runner)) {
       throw new Error(`${path.id}使用未登记测试运行器:${String(evidence.runner)}`)
     }
     const expectedRoot = evidence.runner === 'playwright' ? 'tests/e2e/' : 'tests/regression/'
