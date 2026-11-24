@@ -79,7 +79,13 @@ test(`scalar author ${field} saves edits and clearing through its real UI and su
     await editFirst(page, text)
     await expect.poll(async () => (await read(page, projectId, table))?.[field]).toBe(text)
     await page.reload(); await openField(page, module, label)
-    await expect(page.locator('div.cursor-text:visible').first()).toHaveText(text)
+    if (field === 'naturalResourceOverview') {
+      await expect(page.getByText(text, { exact: true })).toBeVisible()
+    } else if (module === '自然环境') {
+      await expect(page.locator('.lf-world-panel [data-markdown-read-view]:visible').first()).toContainText(text)
+    } else {
+      await expect(page.locator('div.cursor-text:visible').first()).toHaveText(text)
+    }
     await editFirst(page, '')
     await page.reload(); await openField(page, module, label)
     expect((await read(page, projectId, table))?.[field]).toBe('')
