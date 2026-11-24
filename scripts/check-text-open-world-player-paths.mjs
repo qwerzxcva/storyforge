@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url'
 
 const repositoryRoot = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const matrixPath = resolve(repositoryRoot, 'tests/acceptance/text-open-world-g7-player-paths.json')
-/** @type {{ schema?: unknown, version?: unknown, paths: Array<{ id?: unknown, title?: unknown, evidence?: Array<{ runner?: unknown, file?: unknown, testName?: unknown }> }> }} */
+/** @type {{ schema?: unknown, version?: unknown, paths: Array<{ id: string, title: unknown, evidence?: Array<{ runner: unknown, file: unknown, testName: unknown }> }> }} */
 const matrix = JSON.parse(await readFile(matrixPath, 'utf8'))
 
 if (matrix.schema !== 'storyforge.longform.backup-recovery-matrix' || matrix.version !== 1) {
@@ -20,7 +20,7 @@ if (new Set(actualIds).size !== expectedIds.length || actualIds.some((id, index)
   throw new Error(`长篇备份恢复路径 ID 必须唯一：${actualIds.join(', ')}`)
 }
 
-const allowedRunners = new Set(['vitest', 'playwright'])
+const allowedRunners = new Set(/** @type {unknown[]} */ (['vitest', 'playwright']))
 let playwrightEvidenceCount = 0
 for (const path of matrix.paths) {
   if (typeof path.title !== 'string' || path.title.trim().length < 8) {
@@ -48,9 +48,9 @@ for (const path of matrix.paths) {
   }
 }
 
-const browserRequiredIds = new Set(['LONGFORM-COMPAT-BACKUP-01'])
+const browserRequiredIds = new Set(/** @type {unknown[]} */ (['LONGFORM-COMPAT-BACKUP-01']))
 for (const path of matrix.paths.filter(candidate => browserRequiredIds.has(candidate.id))) {
-  if (!path.evidence.some(evidence => evidence.runner === 'playwright')) {
+  if (!Array.isArray(path.evidence) || !path.evidence.some(evidence => evidence.runner === 'playwright')) {
     throw new Error(`${path.id}必须保留真实Chromium玩家路径证据`)
   }
 }
