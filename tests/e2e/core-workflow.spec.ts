@@ -1111,7 +1111,7 @@ test('完整 JSON 导出后可重新导入且正文不丢', async ({ page }) => 
     return url.pathname.startsWith('/storyforge/workspace/') && restoredProjectId !== sourceProjectId
   })
   await expect(page.locator('[data-workspace-ready=longform]')).toBeVisible()
-  await openWorkspaceLeaf(page, '章节')
+  await openWorkspaceLeaf(page, '正文')
   await expect(page.locator('.tiptap-editor')).toContainText(chapterText)
 })
 
