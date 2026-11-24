@@ -247,7 +247,7 @@ describe('TTRPG/NW integration · preserve independent owners through version co
     for (const spec of PROJECT_TABLES.filter(spec => spec.exportable && (spec.introducedBackupVersion ?? 1) > 16)) {
       delete missing[spec.name]
     }
-    const oldMissingCore = { ...missing, version: 16 }
+    const oldMissingCore: Record<string, unknown> = { ...missing, version: 16 }
     Reflect.deleteProperty(oldMissingCore, 'chapters')
     expect(inspectProjectBackup(oldMissingCore).valid).toBe(false)
     expect(inspectProjectBackup(oldMissingCore).missingTables).toContain('chapters')

@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url'
 
 const repositoryRoot = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const matrixPath = resolve(repositoryRoot, 'tests/acceptance/text-open-world-g7-player-paths.json')
+/** @type {{ schema?: unknown, version?: unknown, paths: Array<{ id?: unknown, title?: unknown, evidence?: Array<{ runner?: unknown, file?: unknown, testName?: unknown }> }> }} */
 const matrix = JSON.parse(await readFile(matrixPath, 'utf8'))
 
 if (matrix.schema !== 'storyforge.longform.backup-recovery-matrix' || matrix.version !== 1) {
@@ -14,14 +15,8 @@ if (!Array.isArray(matrix.paths) || matrix.paths.length !== 1) {
 }
 
 const expectedIds = ['LONGFORM-COMPAT-BACKUP-01']
-const actualIds = matrix.paths.map(
-  /** @param {{ id?: unknown }} path */
-  path => path.id,
-)
-if (new Set(actualIds).size !== expectedIds.length || actualIds.some(
-  /** @param {unknown} id @param {number} index */
-  (id, index) => id !== expectedIds[index],
-)) {
+const actualIds = matrix.paths.map(path => path.id)
+if (new Set(actualIds).size !== expectedIds.length || actualIds.some((id, index) => id !== expectedIds[index])) {
   throw new Error(`长篇备份恢复路径 ID 必须唯一：${actualIds.join(', ')}`)
 }
 
