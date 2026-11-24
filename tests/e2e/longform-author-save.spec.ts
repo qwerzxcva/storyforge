@@ -104,7 +104,7 @@ test(`rejected ${field} write keeps the draft and retries without a page crash`,
     const { db } = await (new Function('return import("/storyforge/src/lib/db/schema.ts")'))()
     const target = table === 'worldviews' ? db.worldviews : db.storyCores
     const original = db.transaction.bind(db)
-    db.transaction = (mode, tables, ...args) => mode === 'rw' && Array.isArray(tables) && tables.includes(target)
+    db.transaction = (mode: string, tables: unknown, ...args: unknown[]) => mode === 'rw' && Array.isArray(tables) && tables.includes(target)
       ? Promise.reject(new DOMException('隔离配额耗尽', 'QuotaExceededError'))
       : original(mode, tables, ...args)
     Object.assign(window, { restoreAuthorWrite: () => { db.transaction = original } })
