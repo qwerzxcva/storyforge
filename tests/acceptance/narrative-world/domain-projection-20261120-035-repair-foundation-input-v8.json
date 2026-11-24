@@ -388,7 +388,7 @@
     "src/lib/export/backup-trust.ts": "0aec3885654037e8f1b1132de2ba00880bb6c5cb64012610d0218c7327cd6f8d",
     "src/lib/export/portable-table-structure.ts": "50306102cd3f7676b80c73ec0edffd0a79deae43a3af3951cced65800bce0ae7",
     "src/lib/export/registry-export.ts": "8c7e0ea23ce265f423fd53a130927d3049bc91411c35fe4edf9ef0dba55af85f",
-    "src/lib/export/registry-import.ts": "d13707abc090dd202ab33371dc04ac81cff1744c425c67c8f4c4d545010c6a75",
+    "src/lib/export/registry-import.ts": "164279042e89bd5a328e2ed1c79d1e409d8c618bfebed67dc0d46d57acfb31a9",
     "src/lib/export/runtime-export-integrity.ts": "8d03ceb91cdd8ab007f53d0f4d233063d0a9e6e38707b11234aec0aeee08c7c6",
     "src/lib/import/document-parse-backup-privacy.ts": "007e568440eb6890fbd778e71bef6f182dae412fb646d653334ff53df7e87790",
     "src/lib/import/document-parse-binding.ts": "81f1cd305d934ddd9d0ed93c764c680ab4e4f46bfab4279fd1b24bbd8632e162",

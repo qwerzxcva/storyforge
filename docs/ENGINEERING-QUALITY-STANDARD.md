@@ -49,7 +49,7 @@
 - 组件：用户事件和可见结果，不只断言内部状态。
 - E2E：隔离数据库中的关键产品纵切面、刷新恢复、真实 API（需要时）与跨产品版本引用。
 
-测试必须能在干净环境重复运行；禁止依赖顺序、作者 localStorage、现有 IndexedDB 或线上不可控状态。
+测试必须能在干净环境重复运行；禁止依赖顺序、作者 localStorage、现有 IndexedDB 或线上不可控状态。绑定源码 SHA-256 的回归回执是冻结输入证据：受测源码变更后，先重跑原回归并核对生成回执；仅当行为观察保持一致时更新发生变化的指纹，不得为消除测试失败而盲改基线。
 
 `npm run check:engineering` 从 Git 当前文件集合枚举全部测试 TS/TSX（含 E2E/helper）、工程 JS 及 TS 配置，分别使用 `tsconfig.tests.json`、`tsconfig.tooling.json` 和独立 Node ESLint 配置。测试保留生产严格选项与 ES2020；Node 工具使用与 CI Node 24 匹配的 ES2022/NodeNext，并检查真实 JS 语义。每批最多160个主根，共享声明和传递依赖正常加载；实际主根必须完整且无重复，编译异常、缺文件、空范围或被 lint 忽略均失败。生产 `src` 与构建中的独立 `ui-preview` 检查继续保留；原 Experience 定向命令保留为局部诊断，不在 CI 重复运行。
 
