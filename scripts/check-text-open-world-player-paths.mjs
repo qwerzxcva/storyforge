@@ -20,7 +20,7 @@ if (new Set(actualIds).size !== expectedIds.length || actualIds.some((id, index)
   throw new Error(`长篇备份恢复路径 ID 必须唯一：${actualIds.join(', ')}`)
 }
 
-const allowedRunners = new Set(/** @type {unknown[]} */ (['vitest', 'playwright']))
+const allowedRunners = new Set(/** @type {string[]} */ (['vitest', 'playwright']))
 let playwrightEvidenceCount = 0
 for (const path of matrix.paths) {
   if (typeof path.title !== 'string' || path.title.trim().length < 8) {
@@ -48,7 +48,7 @@ for (const path of matrix.paths) {
   }
 }
 
-const browserRequiredIds = new Set(/** @type {unknown[]} */ (['LONGFORM-COMPAT-BACKUP-01']))
+const browserRequiredIds = new Set(/** @type {string[]} */ (['LONGFORM-COMPAT-BACKUP-01']))
 for (const path of matrix.paths.filter(candidate => browserRequiredIds.has(candidate.id))) {
   if (!Array.isArray(path.evidence) || !path.evidence.some(evidence => evidence.runner === 'playwright')) {
     throw new Error(`${path.id}必须保留真实Chromium玩家路径证据`)
