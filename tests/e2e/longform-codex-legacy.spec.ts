@@ -91,5 +91,5 @@ test('search cannot replace a legacy editor while its author draft failed to sav
   await expect(page.getByRole('alert').filter({ hasText: '输入已保留' })).toHaveCount(0)
   await page.getByRole('button', { name: new RegExp(politics.name) }).click()
   await page.getByText(politics.name, { exact: true }).filter({ visible: true }).click()
-  await expect(page.getByRole('region', { name: '旧版政经文化词条' }).getByPlaceholder('名称')).toHaveValue(politics.name)
+  await expect(page.getByRole('heading', { name: /政治制度 · 具体词条/ }).locator('..').getByPlaceholder('名称').first()).toHaveValue(politics.name)
 })

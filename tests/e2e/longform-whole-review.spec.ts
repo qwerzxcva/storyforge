@@ -6,8 +6,8 @@ import { routeProviderFixture } from './helpers/provider-route'
 const original = '两人安静清点工具。'.repeat(650) + '\n\n未出现付款动作，却记为已收款。'
 const quote = '未出现付款动作，却记为已收款。'
 async function setup(page: Page, small = false) {
-  await mockOllamaCapacity(page, [{ baseUrl: 'https://whole-review.invalid/v1', model: 'whole-review-test', contextWindow: small ? 1500 : 128000 }])
-  await page.addInitScript(({ small }) => localStorage.setItem('storyforge-ai-config', JSON.stringify({ provider: 'ollama', baseUrl: 'https://whole-review.invalid/v1', model: 'whole-review-test', maxTokens: small ? 500 : 4000, temperature: 0, contextWindow: small ? 1500 : 128000 })), { small })
+  await mockOllamaCapacity(page, [{ baseUrl: 'https://whole-review.invalid/v1', model: 'whole-review-test', contextWindow: small ? 24576 : 128000 }])
+  await page.addInitScript(({ small }) => localStorage.setItem('storyforge-ai-config', JSON.stringify({ provider: 'ollama', baseUrl: 'https://whole-review.invalid/v1', model: 'whole-review-test', maxTokens: small ? 500 : 4000, temperature: 0, contextWindow: small ? 24576 : 128000 })), { small })
   await createLongform(page, '全章评审实际路径')
   const target = await page.evaluate(async ({ original }) => {
     const imp = new Function('path', 'return import(path)') as (path: string) => Promise<any>

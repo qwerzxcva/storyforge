@@ -79,7 +79,7 @@
       "tsconfig.tests.open-world-experience.json": "7596a50c2d283b59660b6402b2c2a421c73b6d6482eb2b7a7a1612006622db31",
       "tsconfig.tooling.json": "2f8f44cd11e5314602f6a753d8898590d0e8b75f227de3cf4b0394f7df54761a"
     },
-    "lockfileHash": "6d24bf025b2f8a3a99cffbe8f8c232bc19c530b189b20c7d1a29e4ad73441138"
+    "lockfileHash": "8c1c5096e77af968aad517219d6433638de3ff9731d6b418883683a3fbd01e8f"
   },
   "entries": [
     {
@@ -3740,81 +3740,6 @@
         "column": 48,
         "start": 2894,
         "length": 9
-      }
-    },
-    {
-      "identity": "[\"typescript\",\"scripts/check-text-open-world-player-paths.mjs\",\"TS7006\",\"Parameter 'candidate' implicitly has an 'any' type.\",\"5cd38e722edd8623cc20246967549cbe3db19c40cd3ffc00d1c505d5c48680a9\",40,9]",
-      "count": 1,
-      "diagnostic": {
-        "kind": "typescript",
-        "file": "scripts/check-text-open-world-player-paths.mjs",
-        "code": "TS7006",
-        "message": "Parameter 'candidate' implicitly has an 'any' type.",
-        "anchor": "5cd38e722edd8623cc20246967549cbe3db19c40cd3ffc00d1c505d5c48680a9",
-        "line": 57,
-        "column": 40,
-        "start": 2444,
-        "length": 9
-      }
-    },
-    {
-      "identity": "[\"typescript\",\"scripts/check-text-open-world-player-paths.mjs\",\"TS7006\",\"Parameter 'evidence' implicitly has an 'any' type.\",\"544e650e6da69d974caab8f4209e8b55e553ddca54d1b71955468a3715077da6\",27,8]",
-      "count": 1,
-      "diagnostic": {
-        "kind": "typescript",
-        "file": "scripts/check-text-open-world-player-paths.mjs",
-        "code": "TS7006",
-        "message": "Parameter 'evidence' implicitly has an 'any' type.",
-        "anchor": "544e650e6da69d974caab8f4209e8b55e553ddca54d1b71955468a3715077da6",
-        "line": 58,
-        "column": 27,
-        "start": 2524,
-        "length": 8
-      }
-    },
-    {
-      "identity": "[\"typescript\",\"scripts/check-text-open-world-player-paths.mjs\",\"TS7006\",\"Parameter 'id' implicitly has an 'any' type.\",\"36a2146fb0be8876a44d5b4816e5647fe3edbcc86203231473a05248ebc59a01\",55,2]",
-      "count": 1,
-      "diagnostic": {
-        "kind": "typescript",
-        "file": "scripts/check-text-open-world-player-paths.mjs",
-        "code": "TS7006",
-        "message": "Parameter 'id' implicitly has an 'any' type.",
-        "anchor": "36a2146fb0be8876a44d5b4816e5647fe3edbcc86203231473a05248ebc59a01",
-        "line": 20,
-        "column": 55,
-        "start": 879,
-        "length": 2
-      }
-    },
-    {
-      "identity": "[\"typescript\",\"scripts/check-text-open-world-player-paths.mjs\",\"TS7006\",\"Parameter 'index' implicitly has an 'any' type.\",\"36a2146fb0be8876a44d5b4816e5647fe3edbcc86203231473a05248ebc59a01\",59,5]",
-      "count": 1,
-      "diagnostic": {
-        "kind": "typescript",
-        "file": "scripts/check-text-open-world-player-paths.mjs",
-        "code": "TS7006",
-        "message": "Parameter 'index' implicitly has an 'any' type.",
-        "anchor": "36a2146fb0be8876a44d5b4816e5647fe3edbcc86203231473a05248ebc59a01",
-        "line": 20,
-        "column": 59,
-        "start": 883,
-        "length": 5
-      }
-    },
-    {
-      "identity": "[\"typescript\",\"scripts/check-text-open-world-player-paths.mjs\",\"TS7006\",\"Parameter 'path' implicitly has an 'any' type.\",\"3dd70a321c2cfd1e215fcf00164e8c7abf07ccfb4da7a8cb2afce8cc6fe279d2\",36,4]",
-      "count": 1,
-      "diagnostic": {
-        "kind": "typescript",
-        "file": "scripts/check-text-open-world-player-paths.mjs",
-        "code": "TS7006",
-        "message": "Parameter 'path' implicitly has an 'any' type.",
-        "anchor": "3dd70a321c2cfd1e215fcf00164e8c7abf07ccfb4da7a8cb2afce8cc6fe279d2",
-        "line": 19,
-        "column": 36,
-        "start": 808,
-        "length": 4
       }
     },
     {
@@ -37745,21 +37670,6 @@
         "column": 96,
         "start": 10303,
         "length": 4
-      }
-    },
-    {
-      "identity": "[\"typescript\",\"tests/regression/R-TTRPGNW1-migration-compatibility.test.ts\",\"TS2339\",\"Property 'chapters' does not exist on type '{ version: number; }'.\",\"5af14e6adb5a277a0315b2509df2e481e8a4b490d9946e668ff0c80e19ff84d1\",27,8]",
-      "count": 1,
-      "diagnostic": {
-        "kind": "typescript",
-        "file": "tests/regression/R-TTRPGNW1-migration-compatibility.test.ts",
-        "code": "TS2339",
-        "message": "Property 'chapters' does not exist on type '{ version: number; }'.",
-        "anchor": "5af14e6adb5a277a0315b2509df2e481e8a4b490d9946e668ff0c80e19ff84d1",
-        "line": 88,
-        "column": 27,
-        "start": 5709,
-        "length": 8
       }
     },
     {

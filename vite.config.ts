@@ -122,7 +122,7 @@ function manualChunkFor(moduleId: string): string | undefined {
   }
   // All groups retain the standard scriptChunk size budget. AI/context and
   // author-production modules stay outside this deterministic replay closure.
-  const ttrpgModule = id.match(/\/src\/lib\/ttrpg\/([^/]+)\.ts$/)?.[1]
+  const ttrpgModule = id.match(/\/src\/lib\/(?:legacy-compat\/)?ttrpg\/([^/]+)\.ts$/)?.[1]
   if (ttrpgModule) {
     for (const [group, names] of Object.entries(TTRPG_REPLAY_CHUNK_MODULES)) {
       if ((names as readonly string[]).includes(ttrpgModule)) return `runtime-domain-ttrpg-${group}`

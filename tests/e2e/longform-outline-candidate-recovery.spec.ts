@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test'
 import { createLongform } from './helpers/product-entry'
 import { openLongformLeaf } from './helpers/longform-navigation'
+import { mockOllamaCapacity } from './helpers/model-capacity'
 import { routeProviderFixture } from './helpers/provider-route'
 
 const output = JSON.stringify([{ title: '第1卷', summary: '测绳人先检查绳结，再核算木料与退路；在桥边发现新钉痕，由此追查偷工减料。系统只记录已验证的路径，不预知对手的行动。' }])
@@ -15,6 +16,7 @@ async function generate(page: Page, options: { delayCandidate?: boolean; output?
     calls++
     await route.fulfill({ contentType: 'text/event-stream', body: `data: ${JSON.stringify({ choices: [{ delta: { content: options.output ?? output }, finish_reason: 'stop' }], usage: { prompt_tokens: 50, completion_tokens: 80, total_tokens: 130 } })}\n\ndata: [DONE]\n\n` })
   })
+  await mockOllamaCapacity(page, [{ baseUrl: 'https://outline-recovery.invalid/v1', model: 'isolated-outline-recovery', contextWindow: 64000 }])
   await createLongform(page, '单卷候选刷新恢复验收')
   await openLongformLeaf(page, '大纲')
   await page.getByRole('button', { name: '添加卷', exact: true }).click()

@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test'
 import { registerBrowserFixtureAIConfigV1, gotoWithBrowserFixtureAIConfigV1, reloadWithBrowserFixtureAIConfigV1 } from './helpers/browser-ai-config'
+import { mockOllamaCapacity } from './helpers/model-capacity'
 import { routeProviderFixture } from './helpers/provider-route'
 
 test('longform library creates a real work and retains edits across navigation and reload', async ({ page }) => {
@@ -75,11 +76,13 @@ test('Agent discussion and proposed plan survive reload without starting product
 
 test('chunked outline choices and formal candidates survive reload and adopt into their selected volume', async ({ page }) => {
   test.setTimeout(90000)
-  registerBrowserFixtureAIConfigV1(page, { provider: 'ollama', baseUrl: 'https://longform-chunked.invalid/v1', model: 'chunked-e2e', temperature: 0.2, maxTokens: 4000, apiKey: '' })
+  const providerOrigin = 'https://longform-chunked.invalid'
+  const service = { baseUrl: `${providerOrigin}/v1`, model: 'chunked-e2e' }
+  registerBrowserFixtureAIConfigV1(page, { provider: 'ollama', ...service, temperature: 0.2, maxTokens: 4000, apiKey: '' })
   await page.addInitScript(() => localStorage.setItem('storyforge_guide_completed', 'e2e'))
   let directionCalls = 0
   let chapterCalls = 0
-  await routeProviderFixture(page, 'https://longform-chunked.invalid/**', async route => {
+  await routeProviderFixture(page, `${providerOrigin}/**`, async route => {
     const body = route.request().postDataJSON()
     const text = body.messages.map((message: { content: string }) => message.content).join('\n')
     let content: string
@@ -94,6 +97,14 @@ test('chunked outline choices and formal candidates survive reload and adopt int
     }
     await route.fulfill({ contentType: 'application/json', body: JSON.stringify({ choices: [{ message: { content }, finish_reason: 'stop' }], usage: { prompt_tokens: 100, completion_tokens: 120, total_tokens: 220 } }) })
   })
+  // Playwright tries the last registered route first; only GET /api/ps bypasses the strict chat fixture.
+  await mockOllamaCapacity(page, [service])
+  let capacityStatus: number | undefined
+  page.on('response', response => {
+    if (response.url() === `${providerOrigin}/api/ps` && response.request().method() === 'GET') {
+      capacityStatus = response.status()
+    }
+  })
   await gotoWithBrowserFixtureAIConfigV1(page, './long')
   await page.getByRole('button', { name: '新建长篇', exact: true }).click()
   await page.getByRole('textbox', { name: '新长篇名称' }).fill('精细章纲浏览器验收')
@@ -106,6 +117,7 @@ test('chunked outline choices and formal candidates survive reload and adopt int
   await page.locator('input[type="range"][min="3"]').fill('3')
   await page.getByRole('button', { name: '确认生成', exact: true }).click()
   await expect(page.getByRole('button', { name: '选定此方案', exact: true })).toBeVisible()
+  expect(capacityStatus).toBe(200)
   expect(directionCalls).toBe(1); expect(chapterCalls).toBe(0)
   await reloadWithBrowserFixtureAIConfigV1(page)
   await page.getByRole('button', { name: '继续精细生成', exact: true }).click()

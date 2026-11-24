@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url'
 
 const repositoryRoot = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const matrixPath = resolve(repositoryRoot, 'tests/acceptance/text-open-world-g7-player-paths.json')
+/** @type {{ schema?: unknown, version?: unknown, paths: Array<{ id: string, title: unknown, evidence?: Array<{ runner: unknown, file: unknown, testName: unknown }> }> }} */
 const matrix = JSON.parse(await readFile(matrixPath, 'utf8'))
 
 if (matrix.schema !== 'storyforge.longform.backup-recovery-matrix' || matrix.version !== 1) {
@@ -29,7 +30,7 @@ for (const path of matrix.paths) {
     throw new Error(`${path.id}没有可执行测试证据`)
   }
   for (const evidence of path.evidence) {
-    if (!allowedRunners.has(evidence.runner)) {
+    if (typeof evidence.runner !== 'string' || !allowedRunners.has(evidence.runner)) {
       throw new Error(`${path.id}使用未登记测试运行器:${String(evidence.runner)}`)
     }
     const expectedRoot = evidence.runner === 'playwright' ? 'tests/e2e/' : 'tests/regression/'
@@ -49,7 +50,7 @@ for (const path of matrix.paths) {
 
 const browserRequiredIds = new Set(['LONGFORM-COMPAT-BACKUP-01'])
 for (const path of matrix.paths.filter(candidate => browserRequiredIds.has(candidate.id))) {
-  if (!path.evidence.some(evidence => evidence.runner === 'playwright')) {
+  if (!Array.isArray(path.evidence) || !path.evidence.some(evidence => evidence.runner === 'playwright')) {
     throw new Error(`${path.id}必须保留真实Chromium玩家路径证据`)
   }
 }
