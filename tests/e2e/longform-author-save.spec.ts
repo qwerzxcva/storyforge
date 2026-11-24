@@ -102,9 +102,12 @@ test(`rejected ${field} write keeps the draft and retries without a page crash`,
   await editFirst(page, '已保存的世界来源')
   await page.evaluate(async table => {
     const { db } = await (new Function('return import("/storyforge/src/lib/db/schema.ts")'))()
-    const original = db[table].update.bind(db[table])
-    db[table].update = async () => { throw new DOMException('隔离配额耗尽', 'QuotaExceededError') }
-    Object.assign(window, { restoreAuthorWrite: () => { db[table].update = original } })
+    const target = table === 'worldviews' ? db.worldviews : db.storyCores
+    const original = db.transaction.bind(db)
+    db.transaction = (mode, tables, ...args) => mode === 'rw' && Array.isArray(tables) && tables.includes(target)
+      ? Promise.reject(new DOMException('隔离配额耗尽', 'QuotaExceededError'))
+      : original(mode, tables, ...args)
+    Object.assign(window, { restoreAuthorWrite: () => { db.transaction = original } })
   }, table)
   const editor = await openFirstEditor(page)
   await editor.fill('写入失败但必须保留的中文草稿'); await page.getByRole('navigation', { name: '长篇一级导航' }).getByRole('button', { name: '作品库', exact: true }).focus()
