@@ -88,7 +88,7 @@ flowchart TB
 
 | 当前事实 | 数值 | 单一事实源 |
 |---|---:|---|
-| 应用语义版本 | `4.0.10` | `package.json` |
+| 应用语义版本 | `4.0.11` | `package.json` |
 | TypeScript 生产源码 | 运行 `npm run gen:project-metrics -- --source-size` 查看当前文件数和行数 | `tsconfig.json` |
 | IndexedDB schema | v16 / 135 张 required tables | `schema.ts` / `REQUIRED_TABLES` |
 | PROJECT_TABLES | 135 张表 | `project-tables.ts` |
